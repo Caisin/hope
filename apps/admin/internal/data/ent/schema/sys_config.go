@@ -1,0 +1,39 @@
+package schema
+
+import (
+	"entgo.io/ent"
+	"entgo.io/ent/schema/field"
+	"hope/pkg/ent/mixin"
+)
+
+// SysConfig holds the schema definition for the SysConfig entity.
+type SysConfig struct {
+	ent.Schema
+}
+
+// Fields of the SysConfig.
+func (SysConfig) Fields() []ent.Field {
+	fields := []ent.Field{
+		field.Int64("id").
+			Comment(`主键编码`),
+		field.String("configName").Optional().
+			Comment(`配置名称`),
+		field.String("configKey").Optional().
+			Comment(`配置Key`),
+		field.String("configValue").Optional().
+			Comment(`配置值`),
+		field.String("configType").Optional().
+			Comment(`配置类型`),
+		field.Int("isFrontend").Optional().
+			Comment(`是否前台`),
+		field.String("remark").Optional().
+			Comment(`备注`),
+	}
+	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	return fields
+}
+
+// Edges of the SysConfig.
+func (SysConfig) Edges() []ent.Edge {
+	return []ent.Edge{}
+}

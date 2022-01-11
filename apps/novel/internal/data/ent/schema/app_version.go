@@ -27,7 +27,7 @@ func (AppVersion) Fields() []ent.Field {
 		field.String("platform").Optional().
 			Comment(`平台`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

@@ -67,7 +67,7 @@ func (SocialUser) Fields() []ent.Field {
 		field.String("userType").Optional().
 			Comment(`用户类型`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

@@ -32,12 +32,9 @@ func (CustomerNovels) Fields() []ent.Field {
 			Comment(`排序字段,值越大,越靠前`),
 		field.String("remark").Optional().
 			Comment(`备注`),
-		field.Time("effectTime").Optional().
-			Comment(`生效时间`),
-		field.Time("expiredTime").Optional().
-			Comment(`失效时间`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.EETimeFields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

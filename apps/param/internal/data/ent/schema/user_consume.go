@@ -23,7 +23,7 @@ func (UserConsume) Fields() []ent.Field {
 		field.Int64("discount").Optional().
 			Comment(`VIP折扣金额`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

@@ -47,7 +47,7 @@ func (ActivityComponent) Fields() []ent.Field {
 		field.Int("resDays").Optional().
 			Comment(`获得资产有效时间`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

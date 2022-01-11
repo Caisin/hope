@@ -32,12 +32,9 @@ func (UserResourceRecord) Fields() []ent.Field {
 			Comment(`备注`),
 		field.Int("state").Optional().
 			Comment(`使用状态,1`),
-		field.Time("effectTime").Optional().
-			Comment(`生效时间`),
-		field.Time("expiredTime").Optional().
-			Comment(`失效时间`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.EETimeFields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

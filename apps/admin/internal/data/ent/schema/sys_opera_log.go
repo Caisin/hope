@@ -63,7 +63,7 @@ func (SysOperaLog) Fields() []ent.Field {
 		field.String("userAgent").Optional().
 			Comment(`ua`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

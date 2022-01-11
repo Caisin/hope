@@ -48,12 +48,9 @@ func (TaskLog) Fields() []ent.Field {
 			Comment(`完成次数`),
 		field.Int("allTimes").Optional().
 			Comment(`可完成次数`),
-		field.Time("effectTime").Optional().
-			Comment(`生效时间`),
-		field.Time("expiredTime").Optional().
-			Comment(`失效时间`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.EETimeFields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

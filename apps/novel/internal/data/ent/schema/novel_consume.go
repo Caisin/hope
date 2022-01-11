@@ -25,7 +25,7 @@ func (NovelConsume) Fields() []ent.Field {
 		field.Int64("reward").Optional().
 			Comment(`打赏金额`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

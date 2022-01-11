@@ -41,7 +41,7 @@ func (SysUser) Fields() []ent.Field {
 		field.String("extInfo").Optional().
 			Comment(`拓展信息,facebook回传用的`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

@@ -29,7 +29,7 @@ func (VipType) Fields() []ent.Field {
 		field.String("summary").Optional().
 			Comment(`描述`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

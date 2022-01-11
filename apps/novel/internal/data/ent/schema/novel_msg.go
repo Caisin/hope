@@ -25,7 +25,7 @@ func (NovelMsg) Fields() []ent.Field {
 		field.Bool("status").Optional().
 			Comment(`状态`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

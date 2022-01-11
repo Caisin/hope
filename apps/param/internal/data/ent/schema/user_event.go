@@ -33,7 +33,7 @@ func (UserEvent) Fields() []ent.Field {
 		field.String("keyword").Optional().
 			Comment(`搜索关键字`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

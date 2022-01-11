@@ -30,7 +30,7 @@ func (SysJobLog) Fields() []ent.Field {
 		field.String("info").Optional().
 			Comment(`执行详情,错误信息`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

@@ -22,12 +22,9 @@ func (AssetItem) Fields() []ent.Field {
 			Comment(`现金标记,0书券1现金`),
 		field.Int("validDays").Optional().
 			Comment(`有效天数`),
-		field.Time("effectTime").Optional().
-			Comment(`生效时间`),
-		field.Time("expiredTime").Optional().
-			Comment(`失效时间`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.EETimeFields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

@@ -36,7 +36,7 @@ func (AdChannel) Fields() []ent.Field {
 		field.String("img").Optional().
 			Comment(`落地页图片uri`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

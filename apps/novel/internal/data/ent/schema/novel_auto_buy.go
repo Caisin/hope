@@ -21,7 +21,7 @@ func (NovelAutoBuy) Fields() []ent.Field {
 		field.Int64("novelId").Optional().
 			Comment(`小说编号`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

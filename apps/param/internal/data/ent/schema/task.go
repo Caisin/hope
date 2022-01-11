@@ -54,12 +54,9 @@ func (Task) Fields() []ent.Field {
 			Comment(`排序字段`),
 		field.String("actionType").Optional().
 			Comment(`跳转动作,pay`),
-		field.Time("effectTime").Optional().
-			Comment(`生效时间`),
-		field.Time("expiredTime").Optional().
-			Comment(`失效时间`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.EETimeFields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

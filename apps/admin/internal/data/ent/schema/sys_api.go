@@ -27,7 +27,7 @@ func (SysApi) Fields() []ent.Field {
 		field.String("type").Optional().
 			Comment(`接口类型`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

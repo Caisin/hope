@@ -35,7 +35,7 @@ func (NovelBuyRecord) Fields() []ent.Field {
 		field.String("remark").Optional().
 			Comment(`备注`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

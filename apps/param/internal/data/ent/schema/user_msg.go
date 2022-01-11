@@ -23,7 +23,7 @@ func (UserMsg) Fields() []ent.Field {
 		field.Bool("isRead").Optional().
 			Comment(`是否阅读`),
 	}
-	fields = append(fields, mixin.HopeMixin{}.Fields()...)
+	fields = append(fields, mixin.Fields()...)
 	return fields
 }
 

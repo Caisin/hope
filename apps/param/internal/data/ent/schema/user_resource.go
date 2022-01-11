@@ -25,7 +25,7 @@ func (UserResource) Fields() []ent.Field {
 		field.String("summary").Optional().
 			Comment(`描述`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

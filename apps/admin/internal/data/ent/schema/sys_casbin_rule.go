@@ -29,7 +29,7 @@ func (CasbinRule) Fields() []ent.Field {
 		field.String("v5").Optional().
 			Comment(``),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

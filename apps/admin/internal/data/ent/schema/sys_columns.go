@@ -73,7 +73,7 @@ func (SysColumns) Fields() []ent.Field {
 		field.String("fkLabelName").Optional().
 			Comment(``),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

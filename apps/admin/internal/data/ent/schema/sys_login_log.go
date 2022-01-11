@@ -37,7 +37,7 @@ func (SysLoginLog) Fields() []ent.Field {
 		field.String("msg").Optional().
 			Comment(`信息`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

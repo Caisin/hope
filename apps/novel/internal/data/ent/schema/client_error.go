@@ -27,7 +27,7 @@ func (ClientError) Fields() []ent.Field {
 		field.Int64("userId").Optional().
 			Comment(`用户ID`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

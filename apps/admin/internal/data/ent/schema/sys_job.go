@@ -37,7 +37,7 @@ func (SysJob) Fields() []ent.Field {
 		field.Int("entry_id").Optional().
 			Comment(`job启动时返回的id`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

@@ -55,7 +55,7 @@ func (UserAnalysisStatistics) Fields() []ent.Field {
 		field.Int64("dayOldArpu").Optional().
 			Comment(`老用户充值客单价=老用户充值/老用户充值笔数`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

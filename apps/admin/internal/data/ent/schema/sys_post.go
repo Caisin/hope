@@ -27,7 +27,7 @@ func (SysPost) Fields() []ent.Field {
 		field.String("remark").Optional().
 			Comment(`描述`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

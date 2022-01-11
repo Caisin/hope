@@ -29,7 +29,7 @@ func (QiniuConfig) Fields() []ent.Field {
 		field.String("zone").Optional().
 			Comment(`机房`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

@@ -41,7 +41,7 @@ func (SysRole) Fields() []ent.Field {
 		field.String("sysMenu").Optional().
 			Comment(``),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

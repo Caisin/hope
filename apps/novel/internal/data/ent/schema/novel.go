@@ -71,7 +71,7 @@ func (Novel) Fields() []ent.Field {
 		field.String("mediaKey").Optional().
 			Comment(`阿里云音频目录`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

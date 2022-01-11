@@ -7,13 +7,13 @@ import (
 	"time"
 )
 
-type TimeMixin struct {
+type HopeMixin struct {
 	// We embed the `mixin.Schema` to avoid
 	// implementing the rest of the methods.
 	mixin.Schema
 }
 
-func (TimeMixin) Fields() []ent.Field {
+func (HopeMixin) Fields() []ent.Field {
 	return []ent.Field{
 		field.Time("createdAt").
 			Immutable().
@@ -21,5 +21,11 @@ func (TimeMixin) Fields() []ent.Field {
 		field.Time("updatedAt").
 			Default(time.Now).
 			UpdateDefault(time.Now),
+		field.Int64("createBy").
+			Default(0),
+		field.Int64("controlBy").
+			Default(0),
+		field.Int64("tenantId").
+			Default(0),
 	}
 }

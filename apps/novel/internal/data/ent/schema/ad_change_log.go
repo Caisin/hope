@@ -27,7 +27,7 @@ func (AdChangeLog) Fields() []ent.Field {
 		field.String("extInfo").Optional().
 			Comment(`手机拓展信息`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

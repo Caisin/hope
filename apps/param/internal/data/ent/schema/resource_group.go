@@ -19,7 +19,7 @@ func (ResourceGroup) Fields() []ent.Field {
 		field.String("name").Optional().
 			Comment(`Name`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

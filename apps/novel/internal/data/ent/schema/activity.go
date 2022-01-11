@@ -37,7 +37,7 @@ func (Activity) Fields() []ent.Field {
 		field.Time("expiredTime").Optional().
 			Comment(`活动失效时间`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

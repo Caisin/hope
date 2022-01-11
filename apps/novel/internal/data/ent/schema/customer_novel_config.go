@@ -35,7 +35,7 @@ func (CustomerNovelConfig) Fields() []ent.Field {
 		field.Bool("state").Optional().
 			Comment(`是否可用`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

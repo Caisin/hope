@@ -14,7 +14,7 @@ type PayOrder struct {
 
 func (PayOrder) Mixin() []ent.Mixin {
 	return []ent.Mixin{
-		mixin.TimeMixin{},
+		mixin.HopeMixin{},
 	}
 }
 

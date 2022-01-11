@@ -23,7 +23,7 @@ func (PageConfig) Fields() []ent.Field {
 		field.String("groupCodes").Optional().
 			Comment(`分组编码集,逗号分割`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

@@ -49,7 +49,7 @@ func (SysMenu) Fields() []ent.Field {
 		field.String("sysApi").Optional().
 			Comment(``),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

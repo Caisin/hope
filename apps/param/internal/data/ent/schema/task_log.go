@@ -53,7 +53,7 @@ func (TaskLog) Fields() []ent.Field {
 		field.Time("expiredTime").Optional().
 			Comment(`失效时间`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

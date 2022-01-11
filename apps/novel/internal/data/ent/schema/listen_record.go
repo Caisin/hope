@@ -30,7 +30,7 @@ func (ListenRecord) Fields() []ent.Field {
 		field.Int64("dayDuration").GoType(time.Duration(0)).Optional().
 			Comment(`当天播放时长`),
 	}
-	fields = append(fields, mixin.TimeMixin{}.Fields()...)
+	fields = append(fields, mixin.HopeMixin{}.Fields()...)
 	return fields
 }
 

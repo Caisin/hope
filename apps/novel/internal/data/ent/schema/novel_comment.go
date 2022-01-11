@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -49,5 +50,8 @@ func (NovelComment) Fields() []ent.Field {
 
 // Edges of the NovelComment.
 func (NovelComment) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("childes", NovelComment.Type).Comment("子评论").From("parent").Comment("父评论").Unique(),
+		edge.From("user", SocialUser.Type).Ref("comments").Unique(),
+	}
 }

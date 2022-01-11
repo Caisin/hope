@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -31,5 +32,7 @@ func (AdChangeLog) Fields() []ent.Field {
 
 // Edges of the AdChangeLog.
 func (AdChangeLog) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SocialUser.Type).Ref("ads").Unique(),
+	}
 }

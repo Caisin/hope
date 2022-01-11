@@ -57,14 +57,10 @@ func (PayOrder) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("orderId").
 			Comment("订单号"),
-		field.Int64("chId").
-			Comment("渠道ID"),
 		field.String("lastRead").
 			Comment("最后阅读书籍"),
 		field.String("lastChapter").
 			Comment("最后阅读章节"),
-		field.String("userName").
-			Comment("用户名"),
 		field.String("paymentName").
 			Comment("充值配置名称"),
 		field.String("paymentId").

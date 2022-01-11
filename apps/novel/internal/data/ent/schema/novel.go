@@ -80,5 +80,6 @@ func (Novel) Fields() []ent.Field {
 func (Novel) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("chapters", NovelChapter.Type).Comment("章节列表"),
+		edge.To("pkgs", BookPackage.Type).Comment("打包购买包"),
 	}
 }

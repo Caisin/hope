@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -37,5 +38,7 @@ func (NovelBookshelf) Fields() []ent.Field {
 
 // Edges of the NovelBookshelf.
 func (NovelBookshelf) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SocialUser.Type).Ref("bookshelves").Required().Unique(),
+	}
 }

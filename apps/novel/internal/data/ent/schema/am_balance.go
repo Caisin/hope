@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,14 +15,10 @@ type AmBalance struct {
 // Fields of the AmBalance.
 func (AmBalance) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("orderId").Optional().
 			Comment(`订单号`),
 		field.Int64("eventId").Optional().
 			Comment(`关联用户事件Id`),
-		field.Int64("userId").Optional().
-			Comment(`用户ID`),
 		field.Int("cashTag").Optional().
 			Comment(`现金标识,0优惠券 1书币`),
 		field.Int("assetItemId").Optional().
@@ -40,5 +37,7 @@ func (AmBalance) Fields() []ent.Field {
 
 // Edges of the AmBalance.
 func (AmBalance) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SocialUser.Type).Ref("balances").Unique(),
+	}
 }

@@ -14,8 +14,6 @@ type SysMenu struct {
 // Fields of the SysMenu.
 func (SysMenu) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("menuId").
-			Comment(`菜单编码`),
 		field.String("menuName").Optional().
 			Comment(`菜单名`),
 		field.String("title").Optional().

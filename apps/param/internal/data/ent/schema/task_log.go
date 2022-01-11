@@ -14,8 +14,6 @@ type TaskLog struct {
 // Fields of the TaskLog.
 func (TaskLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.Int64("userId").Optional().
 			Comment(`用户ID`),
 		field.String("taskGroup").Optional().

@@ -14,8 +14,6 @@ type SysConfig struct {
 // Fields of the SysConfig.
 func (SysConfig) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("configName").Optional().
 			Comment(`配置名称`),
 		field.String("configKey").Optional().

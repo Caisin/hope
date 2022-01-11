@@ -14,8 +14,6 @@ type Task struct {
 // Fields of the Task.
 func (Task) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("taskName").Optional().
 			Comment(`任务名称`),
 		field.String("taskGroup").Optional().

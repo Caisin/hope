@@ -14,8 +14,6 @@ type SysLoginLog struct {
 // Fields of the SysLoginLog.
 func (SysLoginLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("username").Optional().
 			Comment(`用户名`),
 		field.String("status").Optional().

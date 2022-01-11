@@ -14,8 +14,6 @@ type SysTables struct {
 // Fields of the SysTables.
 func (SysTables) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("tableId").
-			Comment(`标编码`),
 		field.String("tableName").Optional().
 			Comment(`表名称`),
 		field.String("tableComment").Optional().

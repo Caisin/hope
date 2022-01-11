@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,8 +15,6 @@ type SysUser struct {
 // Fields of the SysUser.
 func (SysUser) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").
-			Comment(`用户ID`),
 		field.String("username").Optional().
 			Comment(`用户名`),
 		field.String("nickName").Optional().
@@ -47,5 +46,7 @@ func (SysUser) Fields() []ent.Field {
 
 // Edges of the SysUser.
 func (SysUser) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("dept", SysDept.Type),
+	}
 }

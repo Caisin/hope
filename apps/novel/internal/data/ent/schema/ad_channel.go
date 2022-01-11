@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,9 +15,6 @@ type AdChannel struct {
 // Fields of the AdChannel.
 func (AdChannel) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Unique().
-			Comment(`主键编码`),
 		field.String("channelName").Optional().
 			Comment(`渠道名称`),
 		field.Int64("novelId").Optional().
@@ -42,5 +40,8 @@ func (AdChannel) Fields() []ent.Field {
 
 // Edges of the AdChannel.
 func (AdChannel) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("users", SocialUser.Type),
+		edge.To("orders", PayOrder.Type),
+	}
 }

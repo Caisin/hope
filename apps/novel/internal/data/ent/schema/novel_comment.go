@@ -14,8 +14,6 @@ type NovelComment struct {
 // Fields of the NovelComment.
 func (NovelComment) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("commentId").
-			Comment(`主键`),
 		field.Int64("novelId").Optional().
 			Comment(`小说编号`),
 		field.Int64("userId").Optional().

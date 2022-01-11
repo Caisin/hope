@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -52,7 +53,7 @@ func (Novel) Fields() []ent.Field {
 			Comment(`整本价格`),
 		field.Int("publish").Optional().
 			Comment(`发布状态`),
-		field.Int64("oldPrice").Optional().
+		field.Int64("hisPrice").Optional().
 			Comment(`原价,展示用`),
 		field.Int("chapterPrice").Optional().
 			Comment(`千字价格`),
@@ -77,5 +78,7 @@ func (Novel) Fields() []ent.Field {
 
 // Edges of the Novel.
 func (Novel) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("chapters", NovelChapter.Type).Comment("章节列表"),
+	}
 }

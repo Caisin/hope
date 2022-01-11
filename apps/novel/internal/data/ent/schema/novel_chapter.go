@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,8 +15,6 @@ type NovelChapter struct {
 // Fields of the NovelChapter.
 func (NovelChapter) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("chapterId").
-			Comment(`主键编码`),
 		field.Int64("novelId").Optional().
 			Comment(`小说编号`),
 		field.Int("orderNum").Optional().
@@ -47,5 +46,15 @@ func (NovelChapter) Fields() []ent.Field {
 
 // Edges of the NovelChapter.
 func (NovelChapter) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.
+			To("next", NovelChapter.Type).Comment("上一章").
+			Unique().
+			From("prev").Comment("下一章").
+			Unique(),
+		edge.
+			From("novel", Novel.Type).Comment("所属小说").
+			Ref("chapters").
+			Unique(),
+	}
 }

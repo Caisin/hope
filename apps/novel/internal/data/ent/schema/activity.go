@@ -14,8 +14,6 @@ type Activity struct {
 // Fields of the Activity.
 func (Activity) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("activityCode").Optional().
 			Comment(`活动编码`),
 		field.String("activityName").Optional().

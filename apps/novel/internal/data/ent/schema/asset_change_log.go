@@ -14,8 +14,6 @@ type AssetChangeLog struct {
 // Fields of the AssetChangeLog.
 func (AssetChangeLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("orderId").Optional().
 			Comment(`订单号`),
 		field.Int64("balanceId").Optional().

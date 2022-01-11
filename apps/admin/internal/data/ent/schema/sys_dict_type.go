@@ -14,8 +14,6 @@ type SysDictType struct {
 // Fields of the SysDictType.
 func (SysDictType) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("id").
-			Comment(`主键编码`),
 		field.String("dictName").Optional().
 			Comment(`字典名称`),
 		field.String("dictType").Optional().

@@ -14,8 +14,6 @@ type CustomerNovelConfig struct {
 // Fields of the CustomerNovelConfig.
 func (CustomerNovelConfig) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("groupCode").Optional().
 			Comment(`分组编码`),
 		field.String("innerGroupCode").Optional().

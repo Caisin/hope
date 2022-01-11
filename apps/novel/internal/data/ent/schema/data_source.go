@@ -14,8 +14,6 @@ type DataSource struct {
 // Fields of the DataSource.
 func (DataSource) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("dbName").Optional().
 			Comment(`数据源名称`),
 		field.String("host").Optional().

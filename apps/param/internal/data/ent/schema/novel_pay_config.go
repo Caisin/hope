@@ -14,8 +14,6 @@ type NovelPayConfig struct {
 // Fields of the NovelPayConfig.
 func (NovelPayConfig) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("productId").Optional().
 			Comment(`谷歌商品ID`),
 		field.String("paymentName").Optional().

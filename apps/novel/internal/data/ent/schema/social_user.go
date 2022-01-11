@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -73,5 +74,12 @@ func (SocialUser) Fields() []ent.Field {
 
 // Edges of the SocialUser.
 func (SocialUser) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("orders", PayOrder.Type).Comment("订单列表"),
+		edge.To("vips", VipUser.Type).Comment("会员列表"),
+		edge.To("balances", AmBalance.Type).Comment("账本列表"),
+		edge.To("buyChapterRecords", NovelBuyChapterRecord.Type).Comment("章节购买记录"),
+		edge.To("buyNovelRecords", NovelBuyRecord.Type).Comment("整本购买记录"),
+		edge.From("channel", AdChannel.Type).Ref("users").Comment("注册渠道").Unique(),
+	}
 }

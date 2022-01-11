@@ -14,8 +14,6 @@ type NovelBookshelf struct {
 // Fields of the NovelBookshelf.
 func (NovelBookshelf) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("bsId").
-			Comment(`书架编码`),
 		field.Int64("userId").Optional().
 			Comment(`用户ID`),
 		field.String("userName").Optional().

@@ -14,8 +14,6 @@ type SysApi struct {
 // Fields of the SysApi.
 func (SysApi) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("id").
-			Comment(`主键编码`),
 		field.String("handle").Optional().
 			Comment(`处理器`),
 		field.String("title").Optional().

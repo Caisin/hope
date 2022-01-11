@@ -14,8 +14,6 @@ type QiniuConfig struct {
 // Fields of the QiniuConfig.
 func (QiniuConfig) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("accessKey").Optional().
 			Comment(`accessKey`),
 		field.String("bucket").Optional().

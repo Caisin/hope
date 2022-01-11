@@ -14,8 +14,6 @@ type NovelClassify struct {
 // Fields of the NovelClassify.
 func (NovelClassify) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("classifyId").
-			Comment(`主键`),
 		field.Int64("pid").Optional().
 			Comment(`父类ID,默认0,表示无`),
 		field.String("classifyName").Optional().

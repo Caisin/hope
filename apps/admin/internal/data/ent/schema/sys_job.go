@@ -14,8 +14,6 @@ type SysJob struct {
 // Fields of the SysJob.
 func (SysJob) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("jobId").
-			Comment(`编码`),
 		field.String("jobName").Optional().
 			Comment(`名称`),
 		field.String("jobGroup").Optional().

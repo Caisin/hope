@@ -14,8 +14,6 @@ type AppVersion struct {
 // Fields of the AppVersion.
 func (AppVersion) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("title").Optional().
 			Comment(`标题`),
 		field.Int("version").Optional().

@@ -14,8 +14,6 @@ type UserResource struct {
 // Fields of the UserResource.
 func (UserResource) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("resType").Optional().
 			Comment(`资源类型,avatar`),
 		field.String("Name").Optional().

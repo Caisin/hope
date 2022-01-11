@@ -14,8 +14,6 @@ type NovelMsg struct {
 // Fields of the NovelMsg.
 func (NovelMsg) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("title").Optional().
 			Comment(`消息标题`),
 		field.String("msg").Optional().

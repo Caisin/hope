@@ -14,8 +14,6 @@ type PageConfig struct {
 // Fields of the PageConfig.
 func (PageConfig) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("pageCode").Optional().
 			Comment(`页面编码`),
 		field.String("pageName").Optional().

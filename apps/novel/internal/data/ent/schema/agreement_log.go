@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,8 +15,6 @@ type AgreementLog struct {
 // Fields of the AgreementLog.
 func (AgreementLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.String("agreementNo").
-			Comment(`协议号`),
 		field.String("outerAgreementNo").Optional().
 			Comment(`外部签约协议号`),
 		field.String("orderId").Optional().
@@ -53,5 +52,7 @@ func (AgreementLog) Fields() []ent.Field {
 
 // Edges of the AgreementLog.
 func (AgreementLog) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("orders", PayOrder.Type).Comment("自动扣款订单"),
+	}
 }

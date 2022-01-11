@@ -14,8 +14,6 @@ type SysPost struct {
 // Fields of the SysPost.
 func (SysPost) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("postId").
-			Comment(`岗位编号`),
 		field.String("postName").Optional().
 			Comment(`岗位名称`),
 		field.String("postCode").Optional().

@@ -14,8 +14,6 @@ type CustomerNovels struct {
 // Fields of the CustomerNovels.
 func (CustomerNovels) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.Int64("novelId").Optional().
 			Comment(`小说编码`),
 		field.Int("typeId").Optional().

@@ -14,8 +14,6 @@ type ResourceStorage struct {
 // Fields of the ResourceStorage.
 func (ResourceStorage) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.Int("groupId").Optional().
 			Comment(`分组`),
 		field.Int("storageType").Optional().

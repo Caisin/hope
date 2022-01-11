@@ -14,8 +14,6 @@ type NovelBuyRecord struct {
 // Fields of the NovelBuyRecord.
 func (NovelBuyRecord) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("recordId").
-			Comment(`主键编码`),
 		field.Int64("userId").Optional().
 			Comment(`用户ID`),
 		field.String("userName").Optional().

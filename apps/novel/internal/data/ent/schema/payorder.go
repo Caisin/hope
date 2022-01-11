@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"fmt"
 	"hope/pkg/ent/mixin"
@@ -56,8 +57,6 @@ func (PayOrder) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("orderId").
 			Comment("订单号"),
-		field.Int64("userId").
-			Comment("用户ID"),
 		field.Int64("chId").
 			Comment("渠道ID"),
 		field.String("lastRead").
@@ -114,5 +113,18 @@ func (PayOrder) Fields() []ent.Field {
 
 // Edges of the PayOrder.
 func (PayOrder) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.
+			From("user", SocialUser.Type).Comment("所属用户").
+			Ref("orders").
+			Unique(),
+		edge.
+			From("channel", AdChannel.Type).Comment("进入渠道").
+			Ref("orders").
+			Unique(),
+		edge.
+			From("agreement", AgreementLog.Type).Comment("自动扣费协议").
+			Ref("orders").
+			Unique(),
+	}
 }

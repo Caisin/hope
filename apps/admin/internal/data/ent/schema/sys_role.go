@@ -14,8 +14,6 @@ type SysRole struct {
 // Fields of the SysRole.
 func (SysRole) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("roleId").
-			Comment(`角色编码`),
 		field.String("roleName").Optional().
 			Comment(`角色名称`),
 		field.String("status").Optional().

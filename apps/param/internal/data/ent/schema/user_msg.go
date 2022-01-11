@@ -14,8 +14,6 @@ type UserMsg struct {
 // Fields of the UserMsg.
 func (UserMsg) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.Int64("userId").Optional().
 			Comment(`用户标识`),
 		field.Int64("msgId").Optional().

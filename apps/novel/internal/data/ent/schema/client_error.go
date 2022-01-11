@@ -14,8 +14,6 @@ type ClientError struct {
 // Fields of the ClientError.
 func (ClientError) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("appVersion").Optional().
 			Comment(`App版本`),
 		field.String("deviceName").Optional().

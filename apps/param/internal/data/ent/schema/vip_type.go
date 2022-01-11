@@ -14,8 +14,6 @@ type VipType struct {
 // Fields of the VipType.
 func (VipType) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("vipName").Optional().
 			Comment(`账本名称`),
 		field.Bool("isSuper").Optional().

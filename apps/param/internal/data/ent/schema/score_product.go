@@ -14,8 +14,6 @@ type ScoreProduct struct {
 // Fields of the ScoreProduct.
 func (ScoreProduct) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.String("productName").Optional().
 			Comment(`产品名称`),
 		field.String("summary").Optional().

@@ -15,8 +15,6 @@ type SysJobLog struct {
 // Fields of the SysJobLog.
 func (SysJobLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("id").
-			Comment(`主键编码`),
 		field.Int("jobId").Optional().
 			Comment(`编码`),
 		field.String("jobName").Optional().

@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 	"time"
@@ -36,5 +37,7 @@ func (ListenRecord) Fields() []ent.Field {
 
 // Edges of the ListenRecord.
 func (ListenRecord) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SocialUser.Type).Ref("listenRecords").Unique(),
+	}
 }

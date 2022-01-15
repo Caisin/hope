@@ -31,8 +31,6 @@ func (SysMenu) Fields() []ent.Field {
 			Comment(``),
 		field.String("permission").Optional().
 			Comment(`权限`),
-		field.Int("parentId").Optional().
-			Comment(`父节点`),
 		field.Bool("noCache").Optional().
 			Comment(`无缓存`),
 		field.String("breadcrumb").Optional().
@@ -56,5 +54,6 @@ func (SysMenu) Fields() []ent.Field {
 func (SysMenu) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("role", SysRole.Type).Ref("menus"),
+		edge.To("childes", SysMenu.Type).From("parent").Unique(),
 	}
 }

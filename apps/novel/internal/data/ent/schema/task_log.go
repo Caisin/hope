@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -54,5 +55,7 @@ func (TaskLog) Fields() []ent.Field {
 
 // Edges of the TaskLog.
 func (TaskLog) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SocialUser.Type).Ref("tasks").Unique(),
+	}
 }

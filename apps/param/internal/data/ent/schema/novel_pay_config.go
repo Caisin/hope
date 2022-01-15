@@ -21,8 +21,8 @@ func (NovelPayConfig) Fields() []ent.Field {
 		field.Int64("firstPayment").Optional().
 			Comment(`首次充值金额`),
 		field.Int64("payment").Optional().
-			Comment(`充值金额 分`),
-		field.Int64("oldPrice").Optional().
+			Comment(`充值金额:分`),
+		field.Int64("originalPrice").Optional().
 			Comment(`原价`),
 		field.String("cfgType").Optional().
 			Comment(`配置类型,activity`),
@@ -39,19 +39,17 @@ func (NovelPayConfig) Fields() []ent.Field {
 		field.Int("sort").Optional().
 			Comment(`排序`),
 		field.Bool("state").Optional().
-			Comment(`状态 1`),
+			Comment(`状态`),
 		field.Int("isSend").Optional().
 			Comment(`巨量引擎是否回传`),
 		field.Int("payType").Optional().
-			Comment(`充值类型,0`),
+			Comment(`充值类型`),
 		field.Int64("vipType").Optional().
 			Comment(`vip类型`),
 		field.Bool("isHot").Optional().
-			Comment(`展示火,0`),
+			Comment(`展示火`),
 		field.Int("cycleDay").Optional().
 			Comment(`扣款周期天数,有这个值就周期扣款`),
-		field.Int("width").Optional().
-			Comment(`6`),
 		field.String("summary").Optional().
 			Comment(`描述`),
 		field.String("remark").Optional().

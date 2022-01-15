@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,8 +15,6 @@ type SysDictData struct {
 // Fields of the SysDictData.
 func (SysDictData) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("dictCode").
-			Comment(`主键编码`),
 		field.Int("dictSort").Optional().
 			Comment(`字典排序`),
 		field.String("dictLabel").Optional().
@@ -24,10 +23,6 @@ func (SysDictData) Fields() []ent.Field {
 			Comment(`字典值`),
 		field.String("dictType").Optional().
 			Comment(`字典类型`),
-		field.String("cssClass").Optional().
-			Comment(`Css类名`),
-		field.String("listClass").Optional().
-			Comment(`ListClass`),
 		field.String("isDefault").Optional().
 			Comment(`是否默认`),
 		field.Int("status").Optional().
@@ -43,5 +38,7 @@ func (SysDictData) Fields() []ent.Field {
 
 // Edges of the SysDictData.
 func (SysDictData) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("dictType", SysDictType.Type).Ref("dataList").Unique(),
+	}
 }

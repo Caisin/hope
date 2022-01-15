@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -53,5 +54,7 @@ func (SysMenu) Fields() []ent.Field {
 
 // Edges of the SysMenu.
 func (SysMenu) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("role", SysRole.Type).Ref("menus"),
+	}
 }

@@ -75,6 +75,7 @@ func (SocialUser) Fields() []ent.Field {
 // Edges of the SocialUser.
 func (SocialUser) Edges() []ent.Edge {
 	return []ent.Edge{
+		edge.To("tasks", TaskLog.Type).Comment("任务日志"),
 		edge.To("listenRecords", ListenRecord.Type).Comment("收听阅读记录"),
 		edge.To("ads", AdChangeLog.Type).Comment("广告变化列表"),
 		edge.To("bookshelves", NovelBookshelf.Type).Comment("我的书架"),

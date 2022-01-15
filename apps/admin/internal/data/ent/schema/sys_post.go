@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -31,5 +32,7 @@ func (SysPost) Fields() []ent.Field {
 
 // Edges of the SysPost.
 func (SysPost) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("users", SysUser.Type).Comment("岗位上的用户"),
+	}
 }

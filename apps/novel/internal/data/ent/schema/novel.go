@@ -53,7 +53,7 @@ func (Novel) Fields() []ent.Field {
 			Comment(`整本价格`),
 		field.Int("publish").Optional().
 			Comment(`发布状态`),
-		field.Int64("hisPrice").Optional().
+		field.Int64("originalPrice").Optional().
 			Comment(`原价,展示用`),
 		field.Int("chapterPrice").Optional().
 			Comment(`千字价格`),

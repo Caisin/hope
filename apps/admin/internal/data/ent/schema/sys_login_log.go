@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,8 +15,6 @@ type SysLoginLog struct {
 // Fields of the SysLoginLog.
 func (SysLoginLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.String("username").Optional().
-			Comment(`用户名`),
 		field.String("status").Optional().
 			Comment(`状态`),
 		field.String("ipaddr").Optional().
@@ -41,5 +40,7 @@ func (SysLoginLog) Fields() []ent.Field {
 
 // Edges of the SysLoginLog.
 func (SysLoginLog) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SysUser.Type).Ref("loginLogs").Unique(),
+	}
 }

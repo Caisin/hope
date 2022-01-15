@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -26,13 +27,13 @@ func (SysJob) Fields() []ent.Field {
 			Comment(`调用目标`),
 		field.String("args").Optional().
 			Comment(`目标参数`),
-		field.Int("misfirePolicy").Optional().
+		field.Int("execPolicy").Optional().
 			Comment(`执行策略`),
 		field.Int("concurrent").Optional().
 			Comment(`是否并发`),
-		field.Int("status").Optional().
+		field.Enum("state").Values("Pause", "Run", "Stop").Default("U").
 			Comment(`状态`),
-		field.Int("entry_id").Optional().
+		field.Int("entryId").Optional().
 			Comment(`job启动时返回的id`),
 	}
 	fields = append(fields, mixin.Fields()...)
@@ -41,5 +42,7 @@ func (SysJob) Fields() []ent.Field {
 
 // Edges of the SysJob.
 func (SysJob) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("logs", SysJobLog.Type).Comment("执行日志"),
+	}
 }

@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,10 +15,6 @@ type SysDept struct {
 // Fields of the SysDept.
 func (SysDept) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("deptId").
-			Comment(`部门编码`),
-		field.Int("parentId").Optional().
-			Comment(`上级部门`),
 		field.String("deptPath").Optional().
 			Comment(`部门路径`),
 		field.String("deptName").Optional().
@@ -39,5 +36,8 @@ func (SysDept) Fields() []ent.Field {
 
 // Edges of the SysDept.
 func (SysDept) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("childes", SysDept.Type).From("parent").Ref("childes").Unique(),
+		edge.To("users", SysUser.Type),
+	}
 }

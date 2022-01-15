@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -29,5 +30,7 @@ func (SysDictType) Fields() []ent.Field {
 
 // Edges of the SysDictType.
 func (SysDictType) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("dataList", SysDictData.Type).Comment("字典值"),
+	}
 }

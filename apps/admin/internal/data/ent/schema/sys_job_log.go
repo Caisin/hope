@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 	"time"
@@ -34,5 +35,7 @@ func (SysJobLog) Fields() []ent.Field {
 
 // Edges of the SysJobLog.
 func (SysJobLog) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("job", SysJob.Type).Ref("logs").Unique(),
+	}
 }

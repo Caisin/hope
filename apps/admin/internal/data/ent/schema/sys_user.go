@@ -29,10 +29,6 @@ func (SysUser) Fields() []ent.Field {
 			Comment(`性别,0保密,1男,2女`),
 		field.String("email").Optional().
 			Comment(`邮箱`),
-		field.Int("deptId").Optional().
-			Comment(`部门`),
-		field.Int("postId").Optional().
-			Comment(`岗位`),
 		field.String("remark").Optional().
 			Comment(`备注`),
 		field.String("status").Optional().
@@ -47,6 +43,9 @@ func (SysUser) Fields() []ent.Field {
 // Edges of the SysUser.
 func (SysUser) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("dept", SysDept.Type),
+		edge.From("dept", SysDept.Type).Comment("部门").Ref("users").Unique(),
+		edge.From("post", SysPost.Type).Comment("岗位").Ref("users").Unique(),
+		edge.To("loginLogs", SysLoginLog.Type).Comment("登陆日志"),
+		edge.To("operaLogs", SysOperaLog.Type).Comment("操作日志"),
 	}
 }

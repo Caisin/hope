@@ -24,6 +24,10 @@ func (SysConfig) Fields() []ent.Field {
 			Comment(`配置类型`),
 		field.Int("isFrontend").Optional().
 			Comment(`是否前台`),
+		field.Enum("state").
+			Values("U", "E").
+			Default("U").
+			Comment(`状态:U:使用状态,E:失效状态`),
 		field.String("remark").Optional().
 			Comment(`备注`),
 	}

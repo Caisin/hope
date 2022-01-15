@@ -21,8 +21,6 @@ func (SysDictData) Fields() []ent.Field {
 			Comment(`字典标签`),
 		field.String("dictValue").Optional().
 			Comment(`字典值`),
-		field.String("dictType").Optional().
-			Comment(`字典类型`),
 		field.String("isDefault").Optional().
 			Comment(`是否默认`),
 		field.Int("status").Optional().

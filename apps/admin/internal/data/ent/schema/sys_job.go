@@ -31,7 +31,7 @@ func (SysJob) Fields() []ent.Field {
 			Comment(`执行策略`),
 		field.Int("concurrent").Optional().
 			Comment(`是否并发`),
-		field.Enum("state").Values("Pause", "Run", "Stop").Default("U").
+		field.Enum("state").Values("Pause", "Run", "Stop").Default("Stop").
 			Comment(`状态`),
 		field.Int("entryId").Optional().
 			Comment(`job启动时返回的id`),

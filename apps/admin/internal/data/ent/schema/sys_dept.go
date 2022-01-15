@@ -37,7 +37,7 @@ func (SysDept) Fields() []ent.Field {
 // Edges of the SysDept.
 func (SysDept) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("childes", SysDept.Type).From("parent").Ref("childes").Unique(),
+		edge.To("childes", SysDept.Type).From("parent").Unique(),
 		edge.To("users", SysUser.Type),
 	}
 }

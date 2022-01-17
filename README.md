@@ -1,3 +1,6 @@
+# document
+[kratos文档](https://go-kratos.dev/docs/getting-started/start/)
+
 # ent 生成代码
 
 ```shell
@@ -14,9 +17,21 @@ cd ./apps/param/internal/data && ent generate ./ent/schema
 go get -u github.com/go-kratos/kratos/cmd/kratos/v2@latest
 ```
 
-## Create a service
+## Install ent
 
 ```
+go get -u entgo.io/ent/cmd/ent
+```
+
+# install  protobuf
+
+```shell
+https://github.com/protocolbuffers/protobuf/releases 
+```
+
+## Create a service
+
+``` shell
 # Create a template project
 kratos new server
 

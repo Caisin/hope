@@ -16,20 +16,35 @@ function genEnt() {
   done
 }
 
+#生成api
 function genApiAndClient() {
   for n in "$@"; do
     echo "开始生成模块：$n api"
-#    ls "$projectPath/api/$n"
-    cd "$projectPath/api/$n" && find . -name "*.proto" -exec  kratos proto client {} \;
+    #    ls "$projectPath/api/$n"
+    cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto client {} \;
+    echo "开始生成模块：$n server"
+    cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto server {} -t "$projectPath/apps/$n/internal/service" \;
+    echo "开始生成模块：$n wire"
+    cd "$projectPath/apps/$n/cmd/$n" && wire
   done
   #error_reason.proto
 }
-
-#genEnt "${prods[@]}"
+#生成配置
+function genConfig() {
+  for n in "$@"; do
+    echo "开始生成模块：$n Config"
+    cd "$projectPath/apps/$n/internal" && find . -name "*.proto" -exec kratos proto {} \;
+  done
+}
+#配置
+genConfig "${prods[@]}"
+#ent生成
+genEnt "${prods[@]}"
+# api生成
 genApiAndClient "${prods[@]}"
 #for prod in "${prods[@]}"; do
 #  #
 #  echo "$prod"
 #done
 
-sleep 30
+sleep 1m

@@ -12,21 +12,18 @@ cd ./apps/param/internal/data && ent generate ./ent/schema
 # Kratos Project Template
 
 ## Install Kratos
-
 ```
+## Install Kratos
 go get -u github.com/go-kratos/kratos/cmd/kratos/v2@latest
-```
 
-## Install ent
-
-```
+## Install ent 
 go get -u entgo.io/ent/cmd/ent
-```
 
-# install  protobuf
-
-```shell
+# install  protobuf 
 https://github.com/protocolbuffers/protobuf/releases 
+
+# install  wire 
+go get github.com/google/wire/cmd/wire
 ```
 
 ## Create a service

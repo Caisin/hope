@@ -11,8 +11,8 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"hope/apps/param/internal/biz"
 	"hope/apps/param/internal/conf"
-	data2 "hope/apps/param/internal/data"
-	server2 "hope/apps/param/internal/server"
+	"hope/apps/param/internal/data"
+	"hope/apps/param/internal/server"
 	"hope/apps/param/internal/service"
 )
 
@@ -20,15 +20,15 @@ import (
 
 // initApp init kratos application.
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
-	dataData, cleanup, err := data2.NewData(confData, logger)
+	dataData, cleanup, err := data.NewData(confData, logger)
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data2.NewGreeterRepo(dataData, logger)
+	greeterRepo := data.NewGreeterRepo(dataData, logger)
 	greeterUsecase := biz.NewGreeterUsecase(greeterRepo, logger)
 	greeterService := service.NewGreeterService(greeterUsecase, logger)
-	httpServer := server2.NewHTTPServer(confServer, greeterService, logger)
-	grpcServer := server2.NewGRPCServer(confServer, greeterService, logger)
+	httpServer := server.NewHTTPServer(confServer, greeterService, logger)
+	grpcServer := server.NewGRPCServer(confServer, greeterService, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()

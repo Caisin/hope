@@ -12,7 +12,7 @@ echo 模块为: "${prods[@]}"
 function genEnt() {
   for n in "$@"; do
     echo "开始生成模块：$n ent"
-    cd "$projectPath/apps/$n/internal/data" && ent generate ./ent/schema
+    cd "$projectPath/apps/$n/internal/data" && ent generate --idtype=int64 ./ent/schema
   done
 }
 

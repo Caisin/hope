@@ -129,7 +129,7 @@ func genFields(fields []*load.Field, isModify bool) string {
 
 func genPageFields(fields []*load.Field) string {
 	bf := str.NewBuffer()
-	bf.Append("    int32 page = 1;\n")
+	bf.Append("    int64 page = 1;\n")
 	bf.Append("    int64 pageSize = 2;\n")
 	bf.Append("    int64 id = 3;\n")
 	tab := "    "

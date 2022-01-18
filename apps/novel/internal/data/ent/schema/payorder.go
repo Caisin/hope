@@ -19,7 +19,7 @@ func (PayOrder) Mixin() []ent.Mixin {
 	}
 }
 
-type OrderState int
+type OrderState int32
 
 const (
 	ToBePaid OrderState = iota + 1 //待支付
@@ -65,10 +65,10 @@ func (PayOrder) Fields() []ent.Field {
 			Comment("充值配置名称"),
 		field.String("paymentId").
 			Comment("充值配置ID"),
-		field.Int("state").
+		field.Int32("state").
 			GoType(OrderState(0)).
-			Default(int(ToBePaid)).
-			Validate(func(i int) error {
+			Default(int32(ToBePaid)).
+			Validate(func(i int32) error {
 				return OrderState(i).
 					Validate()
 			}).
@@ -96,7 +96,7 @@ func (PayOrder) Fields() []ent.Field {
 		field.String("vipName").
 			Optional().
 			Comment("vip名称"),
-		field.Int("times").
+		field.Int32("times").
 			Comment("充值次数"),
 		field.String("otherOrderId").
 			Optional().

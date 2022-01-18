@@ -19,7 +19,7 @@ func (SysJob) Fields() []ent.Field {
 			Comment(`名称`),
 		field.String("jobGroup").Optional().
 			Comment(`任务分组`),
-		field.Int("jobType").Optional().
+		field.Int32("jobType").Optional().
 			Comment(`任务类型 1`),
 		field.String("cronExpression").Optional().
 			Comment(`cron表达式`),
@@ -27,13 +27,13 @@ func (SysJob) Fields() []ent.Field {
 			Comment(`调用目标`),
 		field.String("args").Optional().
 			Comment(`目标参数`),
-		field.Int("execPolicy").Optional().
+		field.Int32("execPolicy").Optional().
 			Comment(`执行策略`),
-		field.Int("concurrent").Optional().
+		field.Int32("concurrent").Optional().
 			Comment(`是否并发`),
 		field.Enum("state").Values("Pause", "Run", "Stop").Default("Stop").
 			Comment(`状态`),
-		field.Int("entryId").Optional().
+		field.Int32("entryId").Optional().
 			Comment(`job启动时返回的id`),
 	}
 	fields = append(fields, mixin.Fields()...)

@@ -14,7 +14,7 @@ type SysColumns struct {
 // Fields of the SysColumns.
 func (SysColumns) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("columnId").
+		field.Int32("columnId").
 			Comment(``),
 		field.String("columnName").Optional().
 			Comment(``),
@@ -48,7 +48,7 @@ func (SysColumns) Fields() []ent.Field {
 			Comment(``),
 		field.String("dictType").Optional().
 			Comment(``),
-		field.Int("sort").Optional().
+		field.Int32("sort").Optional().
 			Comment(``),
 		field.String("list").Optional().
 			Comment(``),

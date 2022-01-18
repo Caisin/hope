@@ -36,13 +36,13 @@ func (ActivityComponent) Fields() []ent.Field {
 			Comment(`注册天数`),
 		field.String("summary").Optional().
 			Comment(`活动描述`),
-		field.Int("assetItemId").Optional().
+		field.Int32("assetItemId").Optional().
 			Comment(`活动期间赠送资金科目`),
 		field.Int64("amount").Optional().
 			Comment(`活动期间赠送金额,-1为赠送等额消耗书券`),
 		field.Int64("resId").Optional().
 			Comment(`获得资产编号`),
-		field.Int("resDays").Optional().
+		field.Int32("resDays").Optional().
 			Comment(`获得资产有效时间`),
 	}
 	fields = append(fields, mixin.Fields()...)

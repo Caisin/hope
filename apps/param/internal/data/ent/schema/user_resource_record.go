@@ -28,7 +28,7 @@ func (UserResourceRecord) Fields() []ent.Field {
 			Comment(`资源类型,avatar`),
 		field.String("remark").Optional().
 			Comment(`备注`),
-		field.Int("state").Optional().
+		field.Int32("state").Optional().
 			Comment(`使用状态,1`),
 	}
 	fields = append(fields, mixin.EETimeFields()...)

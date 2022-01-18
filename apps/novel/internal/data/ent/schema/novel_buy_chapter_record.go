@@ -21,7 +21,7 @@ func (NovelBuyChapterRecord) Fields() []ent.Field {
 			Comment(`用户名称`),
 		field.Int64("chapterId").Optional().
 			Comment(`章节ID`),
-		field.Int("chapterOrderNum").Optional().
+		field.Int32("chapterOrderNum").Optional().
 			Comment(`章节序号`),
 		field.Int64("novelId").Optional().
 			Comment(`书号`),

@@ -15,7 +15,7 @@ type SysDictData struct {
 // Fields of the SysDictData.
 func (SysDictData) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("dictSort").Optional().
+		field.Int32("dictSort").Optional().
 			Comment(`字典排序`),
 		field.String("dictLabel").Optional().
 			Comment(`字典标签`),
@@ -23,7 +23,7 @@ func (SysDictData) Fields() []ent.Field {
 			Comment(`字典值`),
 		field.String("isDefault").Optional().
 			Comment(`是否默认`),
-		field.Int("status").Optional().
+		field.Int32("status").Optional().
 			Comment(`状态`),
 		field.String("default").Optional().
 			Comment(`默认`),

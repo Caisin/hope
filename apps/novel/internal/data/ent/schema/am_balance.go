@@ -19,9 +19,9 @@ func (AmBalance) Fields() []ent.Field {
 			Comment(`订单号`),
 		field.Int64("eventId").Optional().
 			Comment(`关联用户事件Id`),
-		field.Int("cashTag").Optional().
+		field.Int32("cashTag").Optional().
 			Comment(`现金标识,0优惠券 1书币`),
-		field.Int("assetItemId").Optional().
+		field.Int32("assetItemId").Optional().
 			Comment(`账本科目`),
 		field.Int64("amount").Optional().
 			Comment(`原始金额`),

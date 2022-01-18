@@ -37,29 +37,29 @@ func (Novel) Fields() []ent.Field {
 			Comment(`关键字，用逗号隔开`),
 		field.String("source").Optional().
 			Comment(`来源`),
-		field.Int("score").Optional().
+		field.Int32("score").Optional().
 			Comment(`评分`),
 		field.String("cover").Optional().
 			Comment(`封面`),
 		field.String("tagIds").Optional().
 			Comment(`标签,关联标签表novel_tag`),
-		field.Int("wordNum").Optional().
+		field.Int32("wordNum").Optional().
 			Comment(`书本字数`),
-		field.Int("freeNum").Optional().
+		field.Int32("freeNum").Optional().
 			Comment(`免费章节数量`),
-		field.Int("onlineState").Optional().
+		field.Int32("onlineState").Optional().
 			Comment(`连载状态`),
 		field.Int64("price").Optional().
 			Comment(`整本价格`),
-		field.Int("publish").Optional().
+		field.Int32("publish").Optional().
 			Comment(`发布状态`),
 		field.Int64("originalPrice").Optional().
 			Comment(`原价,展示用`),
-		field.Int("chapterPrice").Optional().
+		field.Int32("chapterPrice").Optional().
 			Comment(`千字价格`),
-		field.Int("chapterCount").Optional().
+		field.Int32("chapterCount").Optional().
 			Comment(`章节数量`),
-		field.Int("signType").Optional().
+		field.Int32("signType").Optional().
 			Comment(`签约类型 0`),
 		field.Time("signDate").Optional().
 			Comment(`签约时间`),

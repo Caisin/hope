@@ -23,7 +23,7 @@ func (NovelBookshelf) Fields() []ent.Field {
 			Comment(`小说编号`),
 		field.Time("lastReadTime").Optional().
 			Comment(`最后阅读时间`),
-		field.Int("lastChapterOrder").Optional().
+		field.Int32("lastChapterOrder").Optional().
 			Comment(`章节序号`),
 		field.Int64("lastChapterId").Optional().
 			Comment(`章节ID`),

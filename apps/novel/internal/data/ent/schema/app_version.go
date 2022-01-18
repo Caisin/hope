@@ -16,7 +16,7 @@ func (AppVersion) Fields() []ent.Field {
 	fields := []ent.Field{
 		field.String("title").Optional().
 			Comment(`标题`),
-		field.Int("version").Optional().
+		field.Int32("version").Optional().
 			Comment(`版本号`),
 		field.String("updateInfo").Optional().
 			Comment(`更新信息`),

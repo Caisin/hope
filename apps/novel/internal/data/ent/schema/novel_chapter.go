@@ -17,7 +17,7 @@ func (NovelChapter) Fields() []ent.Field {
 	fields := []ent.Field{
 		field.Int64("novelId").Optional().
 			Comment(`小说编号`),
-		field.Int("orderNum").Optional().
+		field.Int32("orderNum").Optional().
 			Comment(`章节序号`),
 		field.String("chapterName").Optional().
 			Comment(`章节名称`),
@@ -29,13 +29,13 @@ func (NovelChapter) Fields() []ent.Field {
 			Comment(`音频时长`),
 		field.Time("publishTime").Optional().
 			Comment(`发布时间`),
-		field.Int("status").Optional().
+		field.Int32("status").Optional().
 			Comment(`状态：0 草稿 ，1 发布`),
 		field.Bool("isFree").Optional().
 			Comment(`0`),
 		field.Int64("price").Optional().
 			Comment(`价格`),
-		field.Int("wordNum").Optional().
+		field.Int32("wordNum").Optional().
 			Comment(`章节字数`),
 		field.String("remark").Optional().
 			Comment(`备注`),

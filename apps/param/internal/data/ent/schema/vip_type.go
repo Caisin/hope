@@ -18,7 +18,7 @@ func (VipType) Fields() []ent.Field {
 			Comment(`账本名称`),
 		field.Bool("isSuper").Optional().
 			Comment(`是否超级vip`),
-		field.Int("validDays").Optional().
+		field.Int32("validDays").Optional().
 			Comment(`有效天数`),
 		field.Int64("discountRate").Optional().
 			Comment(`折扣率`),

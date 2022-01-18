@@ -19,9 +19,9 @@ func (SysPost) Fields() []ent.Field {
 			Comment(`岗位名称`),
 		field.String("postCode").Optional().
 			Comment(`岗位代码`),
-		field.Int("sort").Optional().
+		field.Int32("sort").Optional().
 			Comment(`岗位排序`),
-		field.Int("status").Optional().
+		field.Int32("status").Optional().
 			Comment(`状态`),
 		field.String("remark").Optional().
 			Comment(`描述`),

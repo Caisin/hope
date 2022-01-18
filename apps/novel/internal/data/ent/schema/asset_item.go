@@ -14,13 +14,13 @@ type AssetItem struct {
 // Fields of the AssetItem.
 func (AssetItem) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int("assetItemId").
+		field.Int32("assetItemId").
 			Comment(`账本科目`),
 		field.String("assetName").Optional().
 			Comment(`账本名称`),
-		field.Int("cashTag").Optional().
+		field.Int32("cashTag").Optional().
 			Comment(`现金标记,0书券1现金`),
-		field.Int("validDays").Optional().
+		field.Int32("validDays").Optional().
 			Comment(`有效天数`),
 	}
 	fields = append(fields, mixin.EETimeFields()...)

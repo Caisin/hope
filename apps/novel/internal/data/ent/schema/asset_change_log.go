@@ -23,7 +23,7 @@ func (AssetChangeLog) Fields() []ent.Field {
 			Comment(`关联用户事件Id`),
 		field.Int64("userId").Optional().
 			Comment(`用户ID`),
-		field.Int("assetItemId").Optional().
+		field.Int32("assetItemId").Optional().
 			Comment(`账本科目`),
 		field.Int64("amount").Optional().
 			Comment(`变化金额`),

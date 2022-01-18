@@ -27,7 +27,7 @@ func (AdChannel) Fields() []ent.Field {
 			Comment(`书名`),
 		field.Int64("chapterId").Optional().
 			Comment(`章节号`),
-		field.Int("chapterNum").Optional().
+		field.Int32("chapterNum").Optional().
 			Comment(`章节数`),
 		field.String("adType").Optional().
 			Comment(`投放渠道`),

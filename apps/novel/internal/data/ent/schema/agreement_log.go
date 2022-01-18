@@ -29,7 +29,7 @@ func (AgreementLog) Fields() []ent.Field {
 			Comment(`商品名称`),
 		field.Int64("paymentId").Optional().
 			Comment(`支付配置ID payment_config表的ID`),
-		field.Int("state").Optional().
+		field.Int32("state").Optional().
 			Comment(`状态：1、待签约，2、签约成功，3、取消签约`),
 		field.Int64("payment").Optional().
 			Comment(`每期扣款金额,单位：分`),
@@ -39,7 +39,7 @@ func (AgreementLog) Fields() []ent.Field {
 			Comment(`vip类型`),
 		field.Int64("times").Optional().
 			Comment(`第几期`),
-		field.Int("cycleDays").Optional().
+		field.Int32("cycleDays").Optional().
 			Comment(`周期天数`),
 		field.Time("nextExecTime").Optional().
 			Comment(`下次执行时间`),

@@ -18,9 +18,9 @@ func (NovelClassify) Fields() []ent.Field {
 			Comment(`父类ID,默认0,表示无`),
 		field.String("classifyName").Optional().
 			Comment(`分类名称`),
-		field.Int("status").Optional().
+		field.Int32("status").Optional().
 			Comment(`状态 0`),
-		field.Int("orderNum").Optional().
+		field.Int32("orderNum").Optional().
 			Comment(`排序字段`),
 		field.String("remark").Optional().
 			Comment(`备注`),

@@ -16,7 +16,7 @@ func (CustomerNovels) Fields() []ent.Field {
 	fields := []ent.Field{
 		field.Int64("novelId").Optional().
 			Comment(`小说编码`),
-		field.Int("typeId").Optional().
+		field.Int32("typeId").Optional().
 			Comment(`类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值`),
 		field.String("typeCode").Optional().
 			Comment(`类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值`),
@@ -26,7 +26,7 @@ func (CustomerNovels) Fields() []ent.Field {
 			Comment(`字段`),
 		field.String("cover").Optional().
 			Comment(`封面,无值使用小说封面`),
-		field.Int("orderNum").Optional().
+		field.Int32("orderNum").Optional().
 			Comment(`排序字段,值越大,越靠前`),
 		field.String("remark").Optional().
 			Comment(`备注`),

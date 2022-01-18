@@ -19,7 +19,7 @@ func (SysDictType) Fields() []ent.Field {
 			Comment(`字典名称`),
 		field.String("dictType").Optional().
 			Comment(`字典类型`),
-		field.Int("status").Optional().
+		field.Int32("status").Optional().
 			Comment(`状态`),
 		field.String("remark").Optional().
 			Comment(`备注`),

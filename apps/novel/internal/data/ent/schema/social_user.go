@@ -39,7 +39,7 @@ func (SocialUser) Fields() []ent.Field {
 			Comment(`密码`),
 		field.String("avatar").Optional().
 			Comment(`用户头像`),
-		field.Int("sex").Optional().
+		field.Int32("sex").Optional().
 			Comment(`用户的性别，值为1时是男性，值为2时是女性，值为0时是未知`),
 		field.String("region").Optional().
 			Comment(`用户所在城市区域`),
@@ -55,13 +55,13 @@ func (SocialUser) Fields() []ent.Field {
 			Comment(`个性签名`),
 		field.String("remark").Optional().
 			Comment(`公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注`),
-		field.Int("groupid").Optional().
+		field.Int32("groupid").Optional().
 			Comment(`用户所在的分组ID（兼容旧的用户分组接口）`),
 		field.String("tagidList").Optional().
 			Comment(`用户被打上的标签ID列表`),
-		field.Int("subscribe").Optional().
+		field.Int32("subscribe").Optional().
 			Comment(`用户是否订阅该公众号标识`),
-		field.Int("subscribeTime").Optional().
+		field.Int32("subscribeTime").Optional().
 			Comment(`关注公众号时间`),
 		field.String("sessionKey").Optional().
 			Comment(`小程序用户会话密匙`),

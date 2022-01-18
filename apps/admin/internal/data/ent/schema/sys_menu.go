@@ -37,7 +37,7 @@ func (SysMenu) Fields() []ent.Field {
 			Comment(`面包屑`),
 		field.String("component").Optional().
 			Comment(`组件`),
-		field.Int("sort").Optional().
+		field.Int32("sort").Optional().
 			Comment(`排序`),
 		field.Bool("visible").Optional().
 			Comment(`是否可见`),

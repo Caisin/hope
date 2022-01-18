@@ -21,11 +21,11 @@ func (SysUser) Fields() []ent.Field {
 			Comment(`昵称`),
 		field.String("phone").Optional().
 			Comment(`手机号`),
-		field.Int("roleId").Optional().
+		field.Int32("roleId").Optional().
 			Comment(`角色ID`),
 		field.String("avatar").Optional().
 			Comment(`头像`),
-		field.Int("sex").Optional().
+		field.Int32("sex").Optional().
 			Comment(`性别,0保密,1男,2女`),
 		field.String("email").Optional().
 			Comment(`邮箱`),

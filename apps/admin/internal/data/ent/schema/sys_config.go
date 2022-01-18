@@ -22,7 +22,7 @@ func (SysConfig) Fields() []ent.Field {
 			Comment(`配置值`),
 		field.String("configType").Optional().
 			Comment(`配置类型`),
-		field.Int("isFrontend").Optional().
+		field.Int32("isFrontend").Optional().
 			Comment(`是否前台`),
 		field.Enum("state").
 			Values("U", "E").

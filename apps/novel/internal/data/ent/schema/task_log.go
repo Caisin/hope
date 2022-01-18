@@ -29,9 +29,9 @@ func (TaskLog) Fields() []ent.Field {
 			Comment(`奖励金额`),
 		field.Int64("reward").Optional().
 			Comment(`额外奖励金额`),
-		field.Int("amountItem").Optional().
+		field.Int32("amountItem").Optional().
 			Comment(`奖励资产科目`),
-		field.Int("rewardItem").Optional().
+		field.Int32("rewardItem").Optional().
 			Comment(`额外奖励资产科目`),
 		field.Int64("targetAmount").Optional().
 			Comment(`目标值`),
@@ -43,9 +43,9 @@ func (TaskLog) Fields() []ent.Field {
 			Comment(`完成时间`),
 		field.Time("obtainAt").Optional().
 			Comment(`领取奖励时间`),
-		field.Int("doneTimes").Optional().
+		field.Int32("doneTimes").Optional().
 			Comment(`完成次数`),
-		field.Int("allTimes").Optional().
+		field.Int32("allTimes").Optional().
 			Comment(`可完成次数`),
 	}
 	fields = append(fields, mixin.EETimeFields()...)

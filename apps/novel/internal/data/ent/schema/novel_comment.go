@@ -29,7 +29,7 @@ func (NovelComment) Fields() []ent.Field {
 			Comment(`回复用户ID`),
 		field.String("content").Optional().
 			Comment(`回复内容`),
-		field.Int("score").Optional().
+		field.Int32("score").Optional().
 			Comment(`评分,除以10`),
 		field.Int64("pId").Optional().
 			Comment(`回复评论ID`),

@@ -19,7 +19,7 @@ func (SysDept) Fields() []ent.Field {
 			Comment(`部门路径`),
 		field.String("deptName").Optional().
 			Comment(`部门名称`),
-		field.Int("sort").Optional().
+		field.Int32("sort").Optional().
 			Comment(`排序`),
 		field.String("leader").Optional().
 			Comment(`负责人`),
@@ -27,7 +27,7 @@ func (SysDept) Fields() []ent.Field {
 			Comment(`手机`),
 		field.String("email").Optional().
 			Comment(`邮箱`),
-		field.Int("status").Optional().
+		field.Int32("status").Optional().
 			Comment(`状态`),
 	}
 	fields = append(fields, mixin.Fields()...)

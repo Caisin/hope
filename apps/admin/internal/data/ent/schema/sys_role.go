@@ -21,7 +21,7 @@ func (SysRole) Fields() []ent.Field {
 			Comment(`状态`),
 		field.String("roleKey").Optional().
 			Comment(`角色代码`),
-		field.Int("roleSort").Optional().
+		field.Int32("roleSort").Optional().
 			Comment(`角色排序`),
 		field.String("flag").Optional().
 			Comment(`标记`),

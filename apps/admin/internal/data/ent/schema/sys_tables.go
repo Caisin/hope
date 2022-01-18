@@ -54,11 +54,11 @@ func (SysTables) Fields() []ent.Field {
 			Comment(``),
 		field.String("remark").Optional().
 			Comment(``),
-		field.Int("isDataScope").Optional().
+		field.Int32("isDataScope").Optional().
 			Comment(``),
-		field.Int("isActions").Optional().
+		field.Int32("isActions").Optional().
 			Comment(``),
-		field.Int("isAuth").Optional().
+		field.Int32("isAuth").Optional().
 			Comment(``),
 		field.String("isLogicalDelete").Optional().
 			Comment(``),

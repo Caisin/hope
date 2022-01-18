@@ -18,7 +18,7 @@ func (DataSource) Fields() []ent.Field {
 			Comment(`数据源名称`),
 		field.String("host").Optional().
 			Comment(`数据源名称`),
-		field.Int("port").Optional().
+		field.Int32("port").Optional().
 			Comment(`数据源名称`),
 		field.String("database").Optional().
 			Comment(`数据源名称`),
@@ -30,13 +30,13 @@ func (DataSource) Fields() []ent.Field {
 			Comment(`状态`),
 		field.String("driver").Optional().
 			Comment(`数据库类型`),
-		field.Int("connMaxIdleTime").Optional().
+		field.Int32("connMaxIdleTime").Optional().
 			Comment(`最大空闲连接数`),
-		field.Int("connMaxLifeTime").Optional().
+		field.Int32("connMaxLifeTime").Optional().
 			Comment(`连接可重用的最大时间长度`),
-		field.Int("maxIdleConns").Optional().
+		field.Int32("maxIdleConns").Optional().
 			Comment(`最大空闲`),
-		field.Int("maxOpenConns").Optional().
+		field.Int32("maxOpenConns").Optional().
 			Comment(`最大打开连接数`),
 		field.String("remark").Optional().
 			Comment(`备注`),

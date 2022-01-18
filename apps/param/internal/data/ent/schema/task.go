@@ -38,9 +38,9 @@ func (Task) Fields() []ent.Field {
 			Comment(`奖励金额`),
 		field.Int64("reward").Optional().
 			Comment(`额外奖励`),
-		field.Int("amountItem").Optional().
+		field.Int32("amountItem").Optional().
 			Comment(`奖励资金科目`),
-		field.Int("rewardItem").Optional().
+		field.Int32("rewardItem").Optional().
 			Comment(`额外奖励资金科目`),
 		field.String("targetNames").Optional().
 			Comment(`目标任务名,当任务为一天多次时,逗号分割`),

@@ -26,7 +26,7 @@ func (Activity) Fields() []ent.Field {
 			Comment(`活动规则繁体中文图`),
 		field.String("popupImg").Optional().
 			Comment(`弹出框图片地址`),
-		field.Int("regDays").Optional().
+		field.Int32("regDays").Optional().
 			Comment(`注册天数`),
 		field.String("cycleType").Optional().
 			Comment(`循环类型,默认`),

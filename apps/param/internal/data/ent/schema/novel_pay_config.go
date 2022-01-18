@@ -32,23 +32,23 @@ func (NovelPayConfig) Fields() []ent.Field {
 			Comment(`货币类型`),
 		field.Int64("coupon").Optional().
 			Comment(`书券`),
-		field.Int("coinItem").Optional().
+		field.Int32("coinItem").Optional().
 			Comment(`现金科目,查看asset_item表cash_flag=1`),
-		field.Int("couponItem").Optional().
+		field.Int32("couponItem").Optional().
 			Comment(`赠送科目,查看asset_item表cash_flag=0`),
-		field.Int("sort").Optional().
+		field.Int32("sort").Optional().
 			Comment(`排序`),
 		field.Bool("state").Optional().
 			Comment(`状态`),
-		field.Int("isSend").Optional().
+		field.Int32("isSend").Optional().
 			Comment(`巨量引擎是否回传`),
-		field.Int("payType").Optional().
+		field.Int32("payType").Optional().
 			Comment(`充值类型`),
 		field.Int64("vipType").Optional().
 			Comment(`vip类型`),
 		field.Bool("isHot").Optional().
 			Comment(`展示火`),
-		field.Int("cycleDay").Optional().
+		field.Int32("cycleDay").Optional().
 			Comment(`扣款周期天数,有这个值就周期扣款`),
 		field.String("summary").Optional().
 			Comment(`描述`),

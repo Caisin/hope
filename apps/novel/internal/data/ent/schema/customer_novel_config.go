@@ -20,7 +20,7 @@ func (CustomerNovelConfig) Fields() []ent.Field {
 			Comment(`嵌套分组`),
 		field.String("groupName").Optional().
 			Comment(`分组名称`),
-		field.Int("typeId").Optional().
+		field.Int32("typeId").Optional().
 			Comment(`类型ID`),
 		field.String("TypeCode").Optional().
 			Comment(`类型编码`),
@@ -28,7 +28,7 @@ func (CustomerNovelConfig) Fields() []ent.Field {
 			Comment(`类型名称`),
 		field.String("fieldName").Optional().
 			Comment(`字段名称`),
-		field.Int("defaultNum").Optional().
+		field.Int32("defaultNum").Optional().
 			Comment(`默认数量`),
 		field.Bool("state").Optional().
 			Comment(`是否可用`),

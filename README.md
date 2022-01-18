@@ -1,6 +1,7 @@
-# document
-[kratos文档](https://go-kratos.dev/docs/getting-started/start/)
+# D ocument
+[kratos文档](https://go-kratos.dev/docs/getting-started/start/?target="blank")
 
+[ent文档](https://entgo.io/zh/docs/getting-started)
 # ent 生成代码
 
 ```shell

@@ -23,8 +23,8 @@ func Fields() []ent.Field {
 			UpdateDefault(time.Now).Comment("更新时间"),
 		field.Int64("createBy").
 			Default(0).Comment("创建者"),
-		field.Int64("controlBy").
-			Default(0),
+		field.Int64("updateBy").
+			Default(0).Comment("更新者"),
 		field.Int64("tenantId").
 			Default(0).Comment("租户"),
 	}

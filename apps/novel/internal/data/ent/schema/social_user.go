@@ -80,7 +80,7 @@ func (SocialUser) Edges() []ent.Edge {
 		edge.To("ads", AdChangeLog.Type).Comment("广告变化列表"),
 		edge.To("bookshelves", NovelBookshelf.Type).Comment("我的书架"),
 		edge.To("autoBuyNovels", NovelAutoBuy.Type).Comment("自动购买书籍"),
-		edge.To("comments", UserMsg.Type).Comment("我的评论"),
+		edge.To("comments", NovelComment.Type).Comment("我的评论"),
 		edge.To("msgs", UserMsg.Type).Comment("用户消息"),
 		edge.To("orders", PayOrder.Type).Comment("订单列表"),
 		edge.To("vips", VipUser.Type).Comment("会员列表"),

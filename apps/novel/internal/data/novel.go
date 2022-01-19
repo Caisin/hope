@@ -26,6 +26,7 @@ func NewNovelRepo(data *Data, logger log.Logger) biz.NovelRepo {
 	}
 }
 
+// CreateNovel 创建
 func (r *novelRepo) CreateNovel(ctx context.Context, req *v1.NovelCreateReq) (*ent.Novel, error) {
 	now := time.Now()
 	return r.data.db.Novel.Create().
@@ -62,29 +63,34 @@ func (r *novelRepo) CreateNovel(ctx context.Context, req *v1.NovelCreateReq) (*e
 
 }
 
+// DeleteNovel 删除
 func (r *novelRepo) DeleteNovel(ctx context.Context, req *v1.NovelDeleteReq) error {
 	return r.data.db.Novel.DeleteOneID(req.Id).Exec(ctx)
 }
 
+// BatchDeleteNovel 批量删除
 func (r *novelRepo) BatchDeleteNovel(ctx context.Context, req *v1.NovelBatchDeleteReq) (int, error) {
 	return r.data.db.Novel.Delete().Where(novel.IDIn(req.Ids...)).Exec(ctx)
 }
 
+// UpdateNovel 更新
 func (r *novelRepo) UpdateNovel(ctx context.Context, req *v1.NovelUpdateReq) (*ent.Novel, error) {
 	return r.data.db.Novel.UpdateOne(convert.NovelUpdateReq2Data(req)).Save(ctx)
 }
 
+// GetNovel 根据Id查询
 func (r *novelRepo) GetNovel(ctx context.Context, req *v1.NovelReq) (*ent.Novel, error) {
 	return r.data.db.Novel.Get(ctx, req.Id)
 }
 
+// PageNovel 分页查询
 func (r *novelRepo) PageNovel(ctx context.Context, req *v1.NovelPageReq) ([]*ent.Novel, error) {
 	pagin := req.Pagin
 	query := r.data.db.Novel.
 		Query().
 		Where(
 			//查询条件构造
-			queryCondition(req.Param)...,
+			r.genCondition(req.Param)...,
 		)
 	count, err := query.Count(ctx)
 	if err != nil {
@@ -106,16 +112,108 @@ func (r *novelRepo) PageNovel(ctx context.Context, req *v1.NovelPageReq) ([]*ent
 	return query.All(ctx)
 }
 
-func queryCondition(req *v1.NovelReq) []predicate.Novel {
+// genCondition 构造查询条件
+func (r *novelRepo) genCondition(req *v1.NovelReq) []predicate.Novel {
 	list := make([]predicate.Novel, 0)
 	if req.Id > 0 {
 		list = append(list, novel.ID(req.Id))
 	}
+	if req.ClassifyId > 0 {
+		list = append(list, novel.ClassifyId(req.ClassifyId))
+	}
+	if str.IsBlank(req.ClassifyName) {
+		list = append(list, novel.ClassifyNameContains(req.ClassifyName))
+	}
+	if str.IsBlank(req.AuthorId) {
+		list = append(list, novel.AuthorIdContains(req.AuthorId))
+	}
+	if str.IsBlank(req.Title) {
+		list = append(list, novel.TitleContains(req.Title))
+	}
+	if str.IsBlank(req.Summary) {
+		list = append(list, novel.SummaryContains(req.Summary))
+	}
+	if str.IsBlank(req.Author) {
+		list = append(list, novel.AuthorContains(req.Author))
+	}
+	if str.IsBlank(req.Anchor) {
+		list = append(list, novel.AnchorContains(req.Anchor))
+	}
+	if req.Hits > 0 {
+		list = append(list, novel.Hits(req.Hits))
+	}
+	if str.IsBlank(req.Keywords) {
+		list = append(list, novel.KeywordsContains(req.Keywords))
+	}
+	if str.IsBlank(req.Source) {
+		list = append(list, novel.SourceContains(req.Source))
+	}
+	if req.Score > 0 {
+		list = append(list, novel.Score(req.Score))
+	}
 	if str.IsBlank(req.Cover) {
 		list = append(list, novel.CoverContains(req.Cover))
+	}
+	if str.IsBlank(req.TagIds) {
+		list = append(list, novel.TagIdsContains(req.TagIds))
+	}
+	if req.WordNum > 0 {
+		list = append(list, novel.WordNum(req.WordNum))
+	}
+	if req.FreeNum > 0 {
+		list = append(list, novel.FreeNum(req.FreeNum))
+	}
+	if req.OnlineState > 0 {
+		list = append(list, novel.OnlineState(req.OnlineState))
+	}
+	if req.Price > 0 {
+		list = append(list, novel.Price(req.Price))
+	}
+	if req.Publish > 0 {
+		list = append(list, novel.Publish(req.Publish))
+	}
+	if req.OriginalPrice > 0 {
+		list = append(list, novel.OriginalPrice(req.OriginalPrice))
+	}
+	if req.ChapterPrice > 0 {
+		list = append(list, novel.ChapterPrice(req.ChapterPrice))
+	}
+	if req.ChapterCount > 0 {
+		list = append(list, novel.ChapterCount(req.ChapterCount))
+	}
+	if req.SignType > 0 {
+		list = append(list, novel.SignType(req.SignType))
+	}
+	if req.SignDate.IsValid() && !req.SignDate.AsTime().IsZero() {
+		list = append(list, novel.SignDateGTE(req.SignDate.AsTime()))
+	}
+	if str.IsBlank(req.LeadingMan) {
+		list = append(list, novel.LeadingManContains(req.LeadingMan))
+	}
+	if str.IsBlank(req.LeadingLady) {
+		list = append(list, novel.LeadingLadyContains(req.LeadingLady))
+	}
+	if str.IsBlank(req.Remark) {
+		list = append(list, novel.RemarkContains(req.Remark))
+	}
+	if str.IsBlank(req.MediaKey) {
+		list = append(list, novel.MediaKeyContains(req.MediaKey))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, novel.CreatedAtGTE(req.CreatedAt.AsTime()))
 	}
+	if req.UpdatedAt.IsValid() && !req.UpdatedAt.AsTime().IsZero() {
+		list = append(list, novel.UpdatedAtGTE(req.UpdatedAt.AsTime()))
+	}
+	if req.CreateBy > 0 {
+		list = append(list, novel.CreateBy(req.CreateBy))
+	}
+	if req.UpdateBy > 0 {
+		list = append(list, novel.UpdateBy(req.UpdateBy))
+	}
+	if req.TenantId > 0 {
+		list = append(list, novel.TenantId(req.TenantId))
+	}
+
 	return list
 }

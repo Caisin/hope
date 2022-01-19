@@ -64,7 +64,7 @@ func (r *{{.llName}}Repo) Page{{.name}}(ctx context.Context, req *v1.{{.name}}Pa
 		Query().
 		Where(
 			//查询条件构造
-			r.queryCondition(req.Param)...,
+			r.genCondition(req.Param)...,
 		)
 	count, err := query.Count(ctx)
 	if err != nil {
@@ -92,6 +92,6 @@ func (r *{{.llName}}Repo) genCondition(req *v1.{{.name}}Req) []predicate.{{.name
 	if req.Id > 0 {
 		list = append(list, {{.pkg}}.ID(req.Id))
 	}
-	{{genQueryCondition .pkg .fields}}
+	{{genCondition .pkg .fields}}
 	return list
 }

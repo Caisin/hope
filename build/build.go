@@ -25,7 +25,7 @@ func main() {
 	projectPath := "D:/work/code/go/hope"
 	prods := []string{"admin", "param", "novel"}
 	funcMap := template.FuncMap{
-		"genQueryCondition":  genQueryCondition,
+		"genCondition":       genCondition,
 		"genCreateSetFields": genCreateSetFields,
 		"genCreateFields":    genCreateFields,
 		"genFields":          genFields,
@@ -219,7 +219,7 @@ func genCreateSetFields(fields []*load.Field) string {
 }
 
 //生成查询条件
-func genQueryCondition(pkg string, fields []*load.Field) string {
+func genCondition(pkg string, fields []*load.Field) string {
 	bf := str.NewBuffer()
 	tab := "    "
 	strTmp := `	if str.IsBlank(req.%s) {
@@ -236,13 +236,13 @@ func genQueryCondition(pkg string, fields []*load.Field) string {
 	`
 	for _, f := range fields {
 		name := f.Name
-		if name == "createdAt" {
-			break
+		if strings.EqualFold(name, "url") {
+			name = "URL"
 		}
 		leftUpper := str.LeftUpper(name)
 		switch f.Info.Type {
 		case field.TypeInt,
-			field.TypeEnum,
+			//field.TypeEnum,
 			field.TypeInt32,
 			field.TypeInt8,
 			field.TypeInt16,

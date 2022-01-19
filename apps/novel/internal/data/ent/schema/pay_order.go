@@ -54,7 +54,7 @@ func (p OrderState) Validate() error {
 
 // Fields of the PayOrder.
 func (PayOrder) Fields() []ent.Field {
-	return []ent.Field{
+	fields := []ent.Field{
 		field.String("orderId").
 			Comment("订单号"),
 		field.String("lastRead").
@@ -105,6 +105,8 @@ func (PayOrder) Fields() []ent.Field {
 			Optional().
 			Comment("备注"),
 	}
+	fields = append(fields, mixin.Fields()...)
+	return fields
 }
 
 // Edges of the PayOrder.

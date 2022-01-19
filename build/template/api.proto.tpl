@@ -5,6 +5,7 @@ package {{.pkg}}.v1;
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "proto/pagin.proto";
 
 option go_package = "hope/api/{{.model}}/{{.pkg}}/v1;v1";
 
@@ -59,15 +60,18 @@ service {{.name}} {
 
 // 查询搜索请求
 message {{.name}}PageReq {
-{{genPageFields .fields}}
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    {{.name}}Req param = 2;
 }
 
 // 查询搜索返回
 message {{.name}}PageReply {
-    int32 page = 1;
-    int64 pageSize = 2;
-    int64 total = 3;
-    repeated {{.name}}Reply items = 4;
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated {{.name}}Reply items = 2;
 }
 
 

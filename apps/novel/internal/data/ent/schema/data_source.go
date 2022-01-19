@@ -28,7 +28,7 @@ func (DataSource) Fields() []ent.Field {
 			Comment(`密码`),
 		field.Bool("status").Optional().
 			Comment(`状态`),
-		field.String("driver").Optional().
+		field.Enum("dbType").Values("mysql", "sqlite3", "postgres").Optional().
 			Comment(`数据库类型`),
 		field.Int32("connMaxIdleTime").Optional().
 			Comment(`最大空闲连接数`),

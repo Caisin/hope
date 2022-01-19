@@ -7,7 +7,6 @@ import (
 	"entgo.io/ent/entc/load"
 	"entgo.io/ent/schema/field"
 	"fmt"
-	"hope/pkg/command"
 	"hope/pkg/file"
 	"hope/pkg/str"
 	"log"
@@ -188,6 +187,9 @@ package convert
 	bf.Append(fmt.Sprintf(importTemp, model, lower, model))
 	funTmp := `
 func %s(v *%s) *%s {
+	if v == nil {
+		return nil
+	}
 	return &%s{
 %s
 	}
@@ -243,12 +245,13 @@ func %s(v *%s) *%s {
 	appendFun(bf, create2Data, data2Create, funTmp, name, "Create", "Req")
 	appendFun(bf, req2Data, data2Req, funTmp, name, "", "Req")
 	appendFun(bf, reply2Data, data2Reply, funTmp, name, "", "Reply")
+	appendFun(bf, reply2Data, data2Reply, funTmp, name, "Update", "Reply")
+	appendFun(bf, reply2Data, data2Reply, funTmp, name, "Create", "Reply")
 	buffer := bf.Buffer
 	fileName := fmt.Sprintf("%s/apps/%s/internal/convert/%s.go", projectPath, model, str.Camel2Case(name))
 	dir := path.Dir(fileName)
 	file.MakeDir(dir)
 	file.FileCreate(*buffer, fileName)
-	command.RunCommand(dir, "gofmt", "–w", ".")
 	return true
 }
 

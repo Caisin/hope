@@ -21,7 +21,7 @@ function genApiAndClient() {
   for n in "$@"; do
     echo "开始生成模块：$n api"
     #    ls "$projectPath/api/$n"
-    cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto client {} \;
+    cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto client --proto_path=$projectPath/third_party {} \;
     echo "开始生成模块：$n server"
     cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto server {} -t "$projectPath/apps/$n/internal/service" \;
     echo "开始生成模块：$n wire"

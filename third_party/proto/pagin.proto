@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pagin;
+
+option go_package = "hope/pkg/pagin;pagin";
+
+//分页对象
+message Pagination{
+  //第page页
+  int64 page = 1;
+  //每页大小
+  int64 pageSize = 2;
+  //总条数
+  int64 total = 3;
+  //排序字段
+  string field = 4;
+  //排序类型
+  string order = 5;
+}

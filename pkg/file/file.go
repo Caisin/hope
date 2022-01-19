@@ -2,11 +2,11 @@ package file
 
 import (
 	"bufio"
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
 	imgext "github.com/shamsher31/goimgext"
+	"hope/pkg/util/str"
 	"io"
 	"io/ioutil"
 	"log"
@@ -33,7 +33,7 @@ func PathExist(addr string) bool {
 	return s.IsDir()
 }
 
-func FileCreate(content bytes.Buffer, name string) {
+func FileCreate(content *str.Buffer, name string) {
 	file, err := os.Create(name)
 	if err != nil {
 		log.Println(err)

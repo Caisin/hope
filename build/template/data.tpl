@@ -30,10 +30,9 @@ func New{{.name}}Repo(data *Data, logger log.Logger) biz.{{.name}}Repo {
 func (r *{{.llName}}Repo) Create{{.name}}(ctx context.Context, req *v1.{{.name}}CreateReq) (*ent.{{.name}}, error) {
 	now := time.Now()
 	return r.data.db.{{.name}}.Create().
-{{genCreateSetFields .fields}}
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+{{ genCreateSetFields .fields }}	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 

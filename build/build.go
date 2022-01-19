@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"entgo.io/ent/entc"
 	"entgo.io/ent/entc/gen"
 	"entgo.io/ent/entc/load"
@@ -130,8 +129,8 @@ func main() {
 
 //根据模板
 func genFile(tmp *template.Template, m interface{}, fileName string) {
-	bf := bytes.Buffer{}
-	err := tmp.Execute(&bf, m)
+	bf := str.NewBuffer()
+	err := tmp.Execute(bf, m)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -221,7 +220,6 @@ func genCreateSetFields(fields []*load.Field) string {
 //生成查询条件
 func genCondition(pkg string, fields []*load.Field) string {
 	bf := str.NewBuffer()
-	tab := "    "
 	strTmp := `	if str.IsBlank(req.%s) {
 		list = append(list, %s.%sContains(req.%s))
 	}
@@ -254,11 +252,11 @@ func genCondition(pkg string, fields []*load.Field) string {
 			field.TypeFloat32,
 			field.TypeFloat64,
 			field.TypeInt64:
-			bf.Append(tab).Append(fmt.Sprintf(numTmp, leftUpper, pkg, leftUpper, leftUpper))
+			bf.Append(fmt.Sprintf(numTmp, leftUpper, pkg, leftUpper, leftUpper))
 		case field.TypeTime:
-			bf.Append(tab).Append(fmt.Sprintf(timeTmp, leftUpper, leftUpper, pkg, leftUpper, leftUpper))
+			bf.Append(fmt.Sprintf(timeTmp, leftUpper, leftUpper, pkg, leftUpper, leftUpper))
 		case field.TypeString:
-			bf.Append(tab).Append(fmt.Sprintf(strTmp, leftUpper, pkg, leftUpper, leftUpper))
+			bf.Append(fmt.Sprintf(strTmp, leftUpper, pkg, leftUpper, leftUpper))
 		}
 		//todo duration 字段处理
 		//备注
@@ -350,11 +348,10 @@ func %s(v *%s) *%s {
 	appendFun(bf, reply2Data, data2Reply, funTmp, name, "", "Reply")
 	appendFun(bf, reply2Data, data2Reply, funTmp, name, "Update", "Reply")
 	appendFun(bf, reply2Data, data2Reply, funTmp, name, "Create", "Reply")
-	buffer := bf.Buffer
 	fileName := fmt.Sprintf("%s/apps/%s/internal/convert/%s.go", projectPath, model, str.Camel2Case(name))
 	dir := path.Dir(fileName)
 	file.MakeDir(dir)
-	file.FileCreate(*buffer, fileName)
+	file.FileCreate(bf, fileName)
 	return true
 }
 
@@ -364,4 +361,29 @@ func appendFun(bf, toData, toReq *str.Buffer, funTmp, name, mode, typ string) {
 	v1Name := "v1." + modeName + typ
 	bf.Append(fmt.Sprintf(funTmp, modeName+typ+"2Data", v1Name, entName, entName, toData.String()))
 	bf.Append(fmt.Sprintf(funTmp, name+"Data2"+mode+typ, entName, v1Name, v1Name, toReq.String()))
+}
+
+func genProvider(projectPath, prod string, scs []*load.Schema) {
+	tmp := `package %s
+
+import "github.com/google/wire"
+
+// ProviderSet is %s providers.
+var ProviderSet = wire.NewSet(
+%s
+)
+`
+	biz := str.NewBuffer()
+	data := str.NewBuffer()
+	service := str.NewBuffer()
+	for _, sc := range scs {
+		name := sc.Name
+		biz.Append("\tNew").Append(name).Append("UseCase,\n")
+		data.Append("\tNew").Append(name).Append("Repo,\n")
+		service.Append("\tNew").Append(name).Append("Service,\n")
+	}
+	inPath := fmt.Sprintf("%s/apps/%s/internal/", projectPath, prod)
+
+	bizStr := "biz"
+	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, bizStr, bizStr, biz)), inPath+bizStr+"/")
 }

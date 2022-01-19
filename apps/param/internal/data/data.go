@@ -14,10 +14,14 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"hope/apps/param/internal/conf"
 	"hope/apps/param/internal/data/ent"
+	"hope/apps/param/internal/data/ent/migrate"
+
+	// init mysql driver
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewGreeterRepo)
+var ProviderSet = wire.NewSet(NewEntClient, NewRedisClient, NewData)
 
 // Data .
 type Data struct {
@@ -26,13 +30,13 @@ type Data struct {
 	rdb *redis.Client
 }
 
-// NewData .
-func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
-	helper := log.NewHelper(log.With(logger, "module", "param-service/data"))
+func NewEntClient(c *conf.Data, logger log.Logger) *ent.Client {
+	helper := log.NewHelper(log.With(logger, "module", "admin-service/data/ent"))
 	drv, err := sql.Open(
 		c.Database.Driver,
 		c.Database.Source,
 	)
+	//性能检测
 	sqlDrv := dialect.DebugWithContext(drv, func(ctx context.Context, i ...interface{}) {
 		helper.WithContext(ctx).Info(i...)
 		tracer := otel.Tracer("ent.")
@@ -48,15 +52,17 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	})
 	client := ent.NewClient(ent.Driver(sqlDrv))
 	if err != nil {
-		helper.Errorf("failed opening connection to sqlite: %v", err)
-		return nil, nil, err
+		helper.Fatalf("failed opening connection to db: %v", err)
+		return nil
 	}
 	// Run the auto migration tool.
-	if err := client.Schema.Create(context.Background()); err != nil {
-		helper.Errorf("failed creating schema resources: %v", err)
-		return nil, nil, err
+	if err := client.Schema.Create(context.Background(), migrate.WithForeignKeys(false)); err != nil {
+		helper.Fatalf("failed creating schema resources: %v", err)
 	}
+	return client
+}
 
+func NewRedisClient(c *conf.Data, logger log.Logger) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:         c.Redis.Addr,
 		Password:     c.Redis.Password,
@@ -66,13 +72,19 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 		ReadTimeout:  c.Redis.ReadTimeout.AsDuration(),
 	})
 	rdb.AddHook(redisotel.TracingHook{})
+	return rdb
+}
+
+// NewData .
+func NewData(entClient *ent.Client, rdb *redis.Client, logger log.Logger) (*Data, func(), error) {
+	helper := log.NewHelper(log.With(logger, "module", "param-service/data"))
+
 	d := &Data{
-		db:  client,
-		rdb: rdb,
+		db:  entClient,
 		log: helper,
+		rdb: rdb,
 	}
 	return d, func() {
-		helper.Info("message", "closing the data resources")
 		if err := d.db.Close(); err != nil {
 			helper.Error(err)
 		}

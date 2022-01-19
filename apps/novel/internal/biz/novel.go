@@ -31,7 +31,7 @@ func (uc *NovelUseCase) Create(ctx context.Context, req *v1.NovelCreateReq) (*en
 func (uc *NovelUseCase) Delete(ctx context.Context, req *v1.NovelDeleteReq) error {
 	return uc.repo.DeleteNovel(ctx, req)
 }
-func (uc *NovelUseCase) BatchDelete(ctx context.Context, req *v1.NovelBatchDeleteReq) error {
+func (uc *NovelUseCase) BatchDelete(ctx context.Context, req *v1.NovelBatchDeleteReq) (int, error) {
 	return uc.repo.BatchDeleteNovel(ctx, req)
 }
 func (uc *NovelUseCase) Update(ctx context.Context, req *v1.NovelUpdateReq) (*ent.Novel, error) {

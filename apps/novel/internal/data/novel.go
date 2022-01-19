@@ -8,6 +8,8 @@ import (
 	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novel"
+	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -59,29 +61,31 @@ func (r *novelRepo) CreateNovel(ctx context.Context, req *v1.NovelCreateReq) (*e
 		Save(ctx)
 
 }
+
 func (r *novelRepo) DeleteNovel(ctx context.Context, req *v1.NovelDeleteReq) error {
 	return r.data.db.Novel.DeleteOneID(req.Id).Exec(ctx)
 }
+
 func (r *novelRepo) BatchDeleteNovel(ctx context.Context, req *v1.NovelBatchDeleteReq) (int, error) {
 	return r.data.db.Novel.Delete().Where(novel.IDIn(req.Ids...)).Exec(ctx)
 }
+
 func (r *novelRepo) UpdateNovel(ctx context.Context, req *v1.NovelUpdateReq) (*ent.Novel, error) {
 	return r.data.db.Novel.UpdateOne(convert.NovelUpdateReq2Data(req)).Save(ctx)
 }
+
 func (r *novelRepo) GetNovel(ctx context.Context, req *v1.NovelReq) (*ent.Novel, error) {
 	return r.data.db.Novel.Get(ctx, req.Id)
 }
+
 func (r *novelRepo) PageNovel(ctx context.Context, req *v1.NovelPageReq) ([]*ent.Novel, error) {
-	req.Param.GetTitle()
 	pagin := req.Pagin
 	query := r.data.db.Novel.
 		Query().
 		Where(
 			//查询条件构造
-			novel.TitleContains(req.Param.Title),
-		).
-		Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
+			queryCondition(req.Param)...,
+		)
 	count, err := query.Count(ctx)
 	if err != nil {
 		return nil, err
@@ -90,6 +94,8 @@ func (r *novelRepo) PageNovel(ctx context.Context, req *v1.NovelPageReq) ([]*ent
 	if count == 0 {
 		return nil, nil
 	}
+	query.Limit(int(pagin.GetPage())).
+		Offset(int(pagin.GetOffSet()))
 	if pagin.NeedOrder() {
 		if pagin.IsDesc() {
 			query.Order(ent.Desc(pagin.GetField()))
@@ -98,4 +104,18 @@ func (r *novelRepo) PageNovel(ctx context.Context, req *v1.NovelPageReq) ([]*ent
 		}
 	}
 	return query.All(ctx)
+}
+
+func queryCondition(req *v1.NovelReq) []predicate.Novel {
+	list := make([]predicate.Novel, 0)
+	if req.Id > 0 {
+		list = append(list, novel.ID(req.Id))
+	}
+	if str.IsBlank(req.Cover) {
+		list = append(list, novel.CoverContains(req.Cover))
+	}
+	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
+		list = append(list, novel.CreatedAtGTE(req.CreatedAt.AsTime()))
+	}
+	return list
 }

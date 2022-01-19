@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -31,5 +32,7 @@ func (NovelClassify) Fields() []ent.Field {
 
 // Edges of the NovelClassify.
 func (NovelClassify) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("novels", Novel.Type).Comment("当前分类下的小说"),
+	}
 }

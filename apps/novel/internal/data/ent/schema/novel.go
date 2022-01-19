@@ -15,8 +15,6 @@ type Novel struct {
 // Fields of the Novel.
 func (Novel) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("novelId").
-			Comment(`小说编码`),
 		field.Int64("classifyId").Optional().
 			Comment(`分类ID`),
 		field.String("classifyName").Optional().
@@ -81,5 +79,6 @@ func (Novel) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("chapters", NovelChapter.Type).Comment("章节列表"),
 		edge.To("pkgs", BookPackage.Type).Comment("打包购买包"),
+		edge.From("classify", NovelClassify.Type).Comment("书本分类").Ref("novels").Unique(),
 	}
 }

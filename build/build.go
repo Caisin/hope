@@ -8,7 +8,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"fmt"
 	"hope/pkg/file"
-	"hope/pkg/str"
+	"hope/pkg/util/str"
 	"log"
 	"os"
 	"path"
@@ -24,20 +24,50 @@ func main() {
 	storage, _ := gen.NewStorage("sql")
 	projectPath := "D:/work/code/go/hope"
 	prods := []string{"admin", "param", "novel"}
-	s := fmt.Sprintf("%s/build/template/api.proto.tpl", projectPath)
-	readStr, _ := file.ReadStr(s)
-	apiTemplate, err := template.New("apiTemplate").Funcs(
-		template.FuncMap{
-			"genPageFields":   genPageFields,
-			"genCreateFields": genCreateFields,
-			"genFields":       genFields,
-			"add":             add,
-			"parseType":       parseType,
-		}).Parse(readStr)
+	funcMap := template.FuncMap{
+		"genQueryCondition":  genQueryCondition,
+		"genCreateSetFields": genCreateSetFields,
+		"genCreateFields":    genCreateFields,
+		"genFields":          genFields,
+		"add":                add,
+		"parseType":          parseType,
+	}
+	//api模板
+	apiTmpPath := fmt.Sprintf("%s/build/template/api.proto.tpl", projectPath)
+	apiReadStr, _ := file.ReadStr(apiTmpPath)
+	apiTemplate, err := template.New("apiTemplate").Funcs(funcMap).Parse(apiReadStr)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
+
+	//biz 模板
+	bizTmpPath := fmt.Sprintf("%s/build/template/biz.tpl", projectPath)
+	bizReadStr, _ := file.ReadStr(bizTmpPath)
+	bizTemplate, err := template.New("bizTemplate").Funcs(funcMap).Parse(bizReadStr)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	//service 模板
+	serviceTmpPath := fmt.Sprintf("%s/build/template/service.tpl", projectPath)
+	serviceReadStr, _ := file.ReadStr(serviceTmpPath)
+	serviceTemplate, err := template.New("serviceTemplate").Funcs(funcMap).Parse(serviceReadStr)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	//data 模板
+	dataTmpPath := fmt.Sprintf("%s/build/template/data.tpl", projectPath)
+	dataReadStr, _ := file.ReadStr(dataTmpPath)
+	dataTemplate, err := template.New("dataTemplate").Funcs(funcMap).Parse(dataReadStr)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
 	for _, prod := range prods {
 		tmpDir := fmt.Sprintf("%s/build/%s/schema", projectPath, prod)
 		file.MakeDir(tmpDir)
@@ -70,26 +100,45 @@ func main() {
 			name := sc.Name
 			//sc.Name
 			log.Printf("%v", fields)
-			bf := bytes.Buffer{}
 			m := make(map[string]interface{})
 			m["model"] = prod
 			m["name"] = name
+			m["llName"] = str.LeftLower(name)
 			lower := strings.ToLower(name)
 			m["pkg"] = lower
 			m["fields"] = fields
-			err := apiTemplate.Execute(&bf, m)
-			if err != nil {
-				fmt.Println(err.Error())
-				continue
-			}
-			fileName := fmt.Sprintf("%s/api/%s/%s/v1/%s.proto", projectPath, prod, lower, str.Camel2Case(name))
-			dir := path.Dir(fileName)
-			file.MakeDir(dir)
-			file.FileCreate(bf, fileName)
+
+			//生成api
+			apiFileName := fmt.Sprintf("%s/api/%s/%s/v1/%s.proto", projectPath, prod, lower, str.Camel2Case(name))
+			genFile(apiTemplate, m, apiFileName)
+
+			//生成biz
+			bizFileName := fmt.Sprintf("%s/apps/%s/internal/biz/%s.go", projectPath, prod, str.Camel2Case(name))
+			genFile(bizTemplate, m, bizFileName)
+
+			//生成data
+			dataFileName := fmt.Sprintf("%s/apps/%s/internal/data/%s.go", projectPath, prod, str.Camel2Case(name))
+			genFile(dataTemplate, m, dataFileName)
+
+			//生成data
+			serviceFileName := fmt.Sprintf("%s/apps/%s/internal/service/%s.go", projectPath, prod, str.Camel2Case(name))
+			genFile(serviceTemplate, m, serviceFileName)
 		}
 		file.RemoveAll(tmpDir)
 	}
+}
 
+//根据模板
+func genFile(tmp *template.Template, m interface{}, fileName string) {
+	bf := bytes.Buffer{}
+	err := tmp.Execute(&bf, m)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	dir := path.Dir(fileName)
+	file.MakeDir(dir)
+	file.FileCreate(bf, fileName)
 }
 
 func parseType(t field.Type) string {
@@ -125,25 +174,6 @@ func genFields(fields []*load.Field, isModify bool) string {
 	return bf.String()
 }
 
-func genPageFields(fields []*load.Field) string {
-	bf := str.NewBuffer()
-	bf.Append("    int64 page = 1;\n")
-	bf.Append("    int64 pageSize = 2;\n")
-	bf.Append("    int64 id = 3;\n")
-	tab := "    "
-	space := " "
-	//len := len(fields)
-	for i, f := range fields {
-		name := f.Name
-		//备注
-		bf.Append(tab).Append("//").Append(f.Comment).Append("\n")
-		//字段
-		bf.Append(tab).Append(parseType(f.Info.Type)).Append(space).Append(name).
-			Append(space).Append("=").Append(space).Append(i + 4).Append(";\n")
-	}
-	return bf.String()
-}
-
 func genCreateFields(fields []*load.Field) string {
 	bf := str.NewBuffer()
 	//bf.Append("    int64 id = 1;\n")
@@ -160,6 +190,79 @@ func genCreateFields(fields []*load.Field) string {
 		//字段
 		bf.Append(tab).Append(parseType(f.Info.Type)).Append(space).Append(name).
 			Append(space).Append("=").Append(space).Append(i + 1).Append(";\n")
+	}
+	return bf.String()
+}
+
+//生成创建SetXxx
+func genCreateSetFields(fields []*load.Field) string {
+	bf := str.NewBuffer()
+	//bf.Append("    int64 id = 1;\n")
+	tab := "    "
+	//len := len(fields)
+	for _, f := range fields {
+		name := f.Name
+		if name == "createdAt" {
+			break
+		}
+		leftUpper := str.LeftUpper(name)
+		inner := "req." + leftUpper
+		switch f.Info.Type {
+		case field.TypeTime:
+			inner += ".AsTime()"
+		}
+		//todo duration 字段处理
+		//备注
+		bf.Append(tab).Append(fmt.Sprintf("Set%s(%s).\n", leftUpper, inner))
+	}
+	return bf.String()
+}
+
+//生成查询条件
+func genQueryCondition(pkg string, fields []*load.Field) string {
+	bf := str.NewBuffer()
+	tab := "    "
+	strTmp := `	if str.IsBlank(req.%s) {
+		list = append(list, %s.%sContains(req.%s))
+	}
+	`
+	numTmp := `	if req.%s > 0 {
+		list = append(list, %s.%s(req.%s))
+	}
+	`
+	timeTmp := `if req.%s.IsValid() && !req.%s.AsTime().IsZero() {
+		list = append(list, %s.%sGTE(req.%s.AsTime()))
+	}
+	`
+	for _, f := range fields {
+		name := f.Name
+		if name == "createdAt" {
+			break
+		}
+		leftUpper := str.LeftUpper(name)
+		switch f.Info.Type {
+		case field.TypeInt,
+			field.TypeEnum,
+			field.TypeInt32,
+			field.TypeInt8,
+			field.TypeInt16,
+			field.TypeUint8,
+			field.TypeUint16,
+			field.TypeUint32,
+			field.TypeUint,
+			field.TypeUint64,
+			field.TypeFloat32,
+			field.TypeFloat64,
+			field.TypeInt64:
+			bf.Append(tab).Append(fmt.Sprintf(numTmp, leftUpper, pkg, leftUpper, leftUpper))
+		case field.TypeTime:
+			bf.Append(tab).Append(fmt.Sprintf(timeTmp, leftUpper, leftUpper, pkg, leftUpper, leftUpper))
+		case field.TypeString:
+			bf.Append(tab).Append(fmt.Sprintf(strTmp, leftUpper, pkg, leftUpper, leftUpper))
+		}
+		//todo duration 字段处理
+		//备注
+
 	}
 	return bf.String()
 }

@@ -33,7 +33,7 @@ function genApiAndClient() {
 function genConfig() {
   for n in "$@"; do
     echo "开始生成模块：$n Config"
-    cd "$projectPath/apps/$n/internal" && find . -name "*.proto" -exec kratos proto {} \;
+    cd "$projectPath/apps/$n/internal" && find . -name "*.proto" -exec kratos proto client {} \;
   done
 }
 #配置

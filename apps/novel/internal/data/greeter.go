@@ -20,6 +20,7 @@ func NewGreeterRepo(data *Data, logger log.Logger) biz.GreeterRepo {
 }
 
 func (r *greeterRepo) CreateGreeter(ctx context.Context, g *biz.Greeter) error {
+
 	return nil
 }
 

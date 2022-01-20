@@ -15,8 +15,8 @@ type {{.name}}Service struct {
 	log *log.Helper
 }
 
-func New{{.name}}Service(uc *biz.{{.name}}UseCase, log *log.Helper) *{{.name}}Service {
-	return &{{.name}}Service{uc: uc, log: log}
+func New{{.name}}Service(uc *biz.{{.name}}UseCase, logger log.Logger) *{{.name}}Service {
+	return &{{.name}}Service{uc: uc, log: log.NewHelper(logger)}
 }
 
 func (s *{{.name}}Service) GetPage{{.name}}(ctx context.Context, req *pb.{{.name}}PageReq) (*pb.{{.name}}PageReply, error) {

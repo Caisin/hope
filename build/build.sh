@@ -17,13 +17,18 @@ function genEnt() {
 }
 
 #生成api
-function genApiAndClient() {
+function genApi() {
   for n in "$@"; do
     echo "开始生成模块：$n api"
     #    ls "$projectPath/api/$n"
     cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto client --proto_path=$projectPath/third_party {} \;
-    echo "开始生成模块：$n server"
-    cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto server {} -t "$projectPath/apps/$n/internal/service" \;
+  done
+  #error_reason.proto
+}
+
+#生成api
+function genWire() {
+  for n in "$@"; do
     echo "开始生成模块：$n wire"
     cd "$projectPath/apps/$n/cmd/$n" && wire
   done
@@ -36,15 +41,36 @@ function genConfig() {
     cd "$projectPath/apps/$n/internal" && find . -name "*.proto" -exec kratos proto client {} \;
   done
 }
-#配置
-genConfig "${prods[@]}"
-#ent生成
-genEnt "${prods[@]}"
-# api生成
-genApiAndClient "${prods[@]}"
-#for prod in "${prods[@]}"; do
-#  #
-#  echo "$prod"
-#done
-
+mode=$1
+case $mode in
+wire)
+  echo 'You select wire'
+  genWire "${prods[@]}"
+  ;;
+ent)
+  echo 'You select ent'
+  genEnt "${prods[@]}"
+  ;;
+api)
+  echo 'You select api'
+  genApi "${prods[@]}"
+  ;;
+config)
+  echo 'You select config'
+  genConfig "${prods[@]}"
+  ;;
+all)
+  echo 'You select all'
+  genWire "${prods[@]}"
+  genEnt "${prods[@]}"
+  genApi "${prods[@]}"
+  genConfig "${prods[@]}"
+  ;;
+*)
+  "Usage: $mode [wire|ent|api|config|all]"
+  sleep 1m
+  exit 1
+  ;;
+esac
 sleep 1m
+

@@ -2,20 +2,37 @@ package server
 
 import (
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
-	"hope/api/param/helloworld/v1"
+	"github.com/go-kratos/swagger-api/openapiv2"
+	"github.com/gorilla/handlers"
+	"go.opentelemetry.io/otel"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	task "hope/api/param/task/v1"
 	"hope/apps/param/internal/conf"
 	"hope/apps/param/internal/service"
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), tp *tracesdk.TracerProvider, logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			tracing.Server(),
+			logging.Server(logger),
 		),
+		//跨域
+		http.Filter(handlers.CORS(
+			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
+			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}),
+			handlers.AllowedOrigins([]string{"*"}),
+		)),
 	}
+
+	otel.SetTracerProvider(tp)
+
 	if c.Http.Network != "" {
 		opts = append(opts, http.Network(c.Http.Network))
 	}
@@ -26,6 +43,21 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
-	v1.RegisterGreeterHTTPServer(srv, greeter)
+	//注册swagger-ui
+	h := openapiv2.NewHandler()
+	srv.HandlePrefix("/q/", h)
+	for _, f := range regFun {
+		f(srv)
+	}
 	return srv
+}
+
+func RegHttpFun(
+	taskService *service.TaskService,
+) []func(*http.Server) {
+	list := make([]func(*http.Server), 0)
+	list = append(list, func(srv *http.Server) {
+		task.RegisterTaskHTTPServer(srv, taskService)
+	})
+	return list
 }

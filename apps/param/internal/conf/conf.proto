@@ -1,13 +1,14 @@
 syntax = "proto3";
 package kratos.api;
 
-option go_package = "hope/internal/conf;conf";
+option go_package = "hope/apps/param/internal/conf;conf";
 
 import "google/protobuf/duration.proto";
 
 message Bootstrap {
   Server server = 1;
   Data data = 2;
+  Trace trace = 3;
 }
 
 message Server {
@@ -44,4 +45,12 @@ message Data {
 }
 message Trace {
   string endpoint = 1;
+}
+
+message Registry {
+  message Consul {
+    string address = 1;
+    string scheme = 2;
+  }
+  Consul consul = 1;
 }

@@ -8,7 +8,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-redis/redis/extra/redisotel"
 	"github.com/go-redis/redis/v8"
-	"github.com/google/wire"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
@@ -19,9 +18,6 @@ import (
 	// init mysql driver
 	_ "github.com/go-sql-driver/mysql"
 )
-
-// ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewEntClient, NewRedisClient, NewData)
 
 // Data .
 type Data struct {

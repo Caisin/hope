@@ -93,7 +93,8 @@ func main() {
 			fmt.Printf("%s", err.Error())
 			continue
 		}
-		for _, sc := range graph.Schemas {
+		schemas := graph.Schemas
+		for _, sc := range schemas {
 			genConvert(projectPath, prod, sc)
 			fields := sc.Fields
 			name := sc.Name
@@ -123,6 +124,7 @@ func main() {
 			serviceFileName := fmt.Sprintf("%s/apps/%s/internal/service/%s.go", projectPath, prod, str.Camel2Case(name))
 			genFile(serviceTemplate, m, serviceFileName)
 		}
+		genProvider(projectPath, prod, schemas)
 		file.RemoveAll(tmpDir)
 	}
 }
@@ -375,6 +377,10 @@ var ProviderSet = wire.NewSet(
 `
 	biz := str.NewBuffer()
 	data := str.NewBuffer()
+	//NewEntClient, NewRedisClient, NewData
+	data.Append("\tNewEntClient,\n")
+	data.Append("\tNewRedisClient,\n")
+	data.Append("\tNewData,\n")
 	service := str.NewBuffer()
 	for _, sc := range scs {
 		name := sc.Name
@@ -385,5 +391,46 @@ var ProviderSet = wire.NewSet(
 	inPath := fmt.Sprintf("%s/apps/%s/internal/", projectPath, prod)
 
 	bizStr := "biz"
-	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, bizStr, bizStr, biz)), inPath+bizStr+"/")
+	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, bizStr, bizStr, biz)), inPath+bizStr+"/biz.go")
+
+	dataStr := "data"
+	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, dataStr, dataStr, data)), inPath+dataStr+"/provider.go")
+
+	serviceStr := "service"
+	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, serviceStr, serviceStr, service)), inPath+serviceStr+"/service.go")
+}
+
+func genRegServer(projectPath, prod string, scs []*load.Schema) {
+	tmp := `package %s
+
+import "github.com/google/wire"
+
+// ProviderSet is %s providers.
+var ProviderSet = wire.NewSet(
+%s
+)
+`
+	biz := str.NewBuffer()
+	data := str.NewBuffer()
+	//NewEntClient, NewRedisClient, NewData
+	data.Append("\tNewEntClient,\n")
+	data.Append("\tNewRedisClient,\n")
+	data.Append("\tNewData,\n")
+	service := str.NewBuffer()
+	for _, sc := range scs {
+		name := sc.Name
+		biz.Append("\tNew").Append(name).Append("UseCase,\n")
+		data.Append("\tNew").Append(name).Append("Repo,\n")
+		service.Append("\tNew").Append(name).Append("Service,\n")
+	}
+	inPath := fmt.Sprintf("%s/apps/%s/internal/", projectPath, prod)
+
+	bizStr := "biz"
+	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, bizStr, bizStr, biz)), inPath+bizStr+"/biz.go")
+
+	dataStr := "data"
+	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, dataStr, dataStr, data)), inPath+dataStr+"/provider.go")
+
+	serviceStr := "service"
+	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, serviceStr, serviceStr, service)), inPath+serviceStr+"/service.go")
 }

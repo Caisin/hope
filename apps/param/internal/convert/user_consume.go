@@ -14,11 +14,10 @@ func UserConsumeUpdateReq2Data(v *v1.UserConsumeUpdateReq) *ent.UserConsume {
 		return nil
 	}
 	return &ent.UserConsume{
-		ID:       v.Id,
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		ID:      v.Id,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -27,11 +26,10 @@ func UserConsumeData2UpdateReq(v *ent.UserConsume) *v1.UserConsumeUpdateReq {
 		return nil
 	}
 	return &v1.UserConsumeUpdateReq{
-		Id:       v.ID,
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		Id:      v.ID,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -40,10 +38,9 @@ func UserConsumeCreateReq2Data(v *v1.UserConsumeCreateReq) *ent.UserConsume {
 		return nil
 	}
 	return &ent.UserConsume{
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -52,10 +49,9 @@ func UserConsumeData2CreateReq(v *ent.UserConsume) *v1.UserConsumeCreateReq {
 		return nil
 	}
 	return &v1.UserConsumeCreateReq{
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -64,10 +60,9 @@ func UserConsumeReq2Data(v *v1.UserConsumeReq) *ent.UserConsume {
 		return nil
 	}
 	return &ent.UserConsume{
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -76,10 +71,9 @@ func UserConsumeData2Req(v *ent.UserConsume) *v1.UserConsumeReq {
 		return nil
 	}
 	return &v1.UserConsumeReq{
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -93,7 +87,6 @@ func UserConsumeReply2Data(v *v1.UserConsumeReply) *ent.UserConsume {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Discount:  v.Discount,
-		Remark:    v.Remark,
 		CreatedAt: v.CreatedAt.AsTime(),
 		UpdatedAt: v.UpdatedAt.AsTime(),
 		CreateBy:  v.CreateBy,
@@ -112,7 +105,6 @@ func UserConsumeData2Reply(v *ent.UserConsume) *v1.UserConsumeReply {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Discount:  v.Discount,
-		Remark:    v.Remark,
 		CreatedAt: timestamppb.New(v.CreatedAt),
 		UpdatedAt: timestamppb.New(v.UpdatedAt),
 		CreateBy:  v.CreateBy,
@@ -126,11 +118,10 @@ func UserConsumeUpdateReply2Data(v *v1.UserConsumeUpdateReply) *ent.UserConsume 
 		return nil
 	}
 	return &ent.UserConsume{
-		ID:       v.Id,
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		ID:      v.Id,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -139,11 +130,10 @@ func UserConsumeData2UpdateReply(v *ent.UserConsume) *v1.UserConsumeUpdateReply 
 		return nil
 	}
 	return &v1.UserConsumeUpdateReply{
-		Id:       v.ID,
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
+		Id:      v.ID,
+		NovelId: v.NovelId,
+		Coin:    v.Coin,
+		Coupon:  v.Coupon,
 	}
 }
 
@@ -157,7 +147,6 @@ func UserConsumeCreateReply2Data(v *v1.UserConsumeCreateReply) *ent.UserConsume 
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Discount:  v.Discount,
-		Remark:    v.Remark,
 		CreatedAt: v.CreatedAt.AsTime(),
 		UpdatedAt: v.UpdatedAt.AsTime(),
 		CreateBy:  v.CreateBy,
@@ -176,7 +165,6 @@ func UserConsumeData2CreateReply(v *ent.UserConsume) *v1.UserConsumeCreateReply 
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Discount:  v.Discount,
-		Remark:    v.Remark,
 		CreatedAt: timestamppb.New(v.CreatedAt),
 		UpdatedAt: timestamppb.New(v.UpdatedAt),
 		CreateBy:  v.CreateBy,

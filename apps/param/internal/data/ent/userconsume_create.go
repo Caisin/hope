@@ -68,20 +68,6 @@ func (ucc *UserConsumeCreate) SetNillableDiscount(i *int64) *UserConsumeCreate {
 	return ucc
 }
 
-// SetRemark sets the "remark" field.
-func (ucc *UserConsumeCreate) SetRemark(s string) *UserConsumeCreate {
-	ucc.mutation.SetRemark(s)
-	return ucc
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (ucc *UserConsumeCreate) SetNillableRemark(s *string) *UserConsumeCreate {
-	if s != nil {
-		ucc.SetRemark(*s)
-	}
-	return ucc
-}
-
 // SetCreatedAt sets the "createdAt" field.
 func (ucc *UserConsumeCreate) SetCreatedAt(t time.Time) *UserConsumeCreate {
 	ucc.mutation.SetCreatedAt(t)
@@ -323,14 +309,6 @@ func (ucc *UserConsumeCreate) createSpec() (*UserConsume, *sqlgraph.CreateSpec) 
 			Column: userconsume.FieldDiscount,
 		})
 		_node.Discount = value
-	}
-	if value, ok := ucc.mutation.Remark(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: userconsume.FieldRemark,
-		})
-		_node.Remark = value
 	}
 	if value, ok := ucc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

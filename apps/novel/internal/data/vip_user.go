@@ -29,7 +29,7 @@ func NewVipUserRepo(data *Data, logger log.Logger) biz.VipUserRepo {
 // CreateVipUser 创建
 func (r *vipUserRepo) CreateVipUser(ctx context.Context, req *v1.VipUserCreateReq) (*ent.VipUser, error) {
 	now := time.Now()
-	return r.data.db.VipUser.Create().
+	save, err := r.data.db.VipUser.Create().
 		SetVipType(req.VipType).
 		SetSvipType(req.SvipType).
 		SetSvipEffectTime(req.SvipEffectTime.AsTime()).
@@ -40,6 +40,7 @@ func (r *vipUserRepo) CreateVipUser(ctx context.Context, req *v1.VipUserCreateRe
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		Save(ctx)
+	return save, err
 
 }
 

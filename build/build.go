@@ -219,6 +219,8 @@ func genCreateSetFields(fields []*load.Field) string {
 			inner += ".AsDuration()"
 		case t == field.TypeEnum:
 			inner = fmt.Sprintf("%s(%s)", f.Info.Ident, inner)
+		case str.IsNotBlank(f.Info.Ident):
+			inner = fmt.Sprintf("%s(%s)", f.Info.Ident, inner)
 		}
 		//todo duration 字段处理
 		//备注
@@ -239,7 +241,7 @@ func GetEntNameAndProtoName(f *load.Field) (entName, protoName string) {
 		entName = "URL"
 	case strings.EqualFold(name, "Md5code"):
 		protoName = "Md5Code"
-	case strings.Contains(name, "Duration"):
+	case strings.Contains(name, "State"):
 		fmt.Println(name)
 	}
 	return
@@ -268,28 +270,34 @@ func genCondition(pkg string, fields []*load.Field) string {
 `
 	for _, f := range fields {
 		entName, protoName := GetEntNameAndProtoName(f)
-		switch f.Info.Type {
-		case field.TypeInt,
-			field.TypeInt32,
-			field.TypeInt8,
-			field.TypeInt16,
-			field.TypeUint8,
-			field.TypeUint16,
-			field.TypeUint32,
-			field.TypeUint,
-			field.TypeUint64,
-			field.TypeFloat32,
-			field.TypeFloat64,
-			field.TypeInt64:
+		t := f.Info.Type
+		switch {
+		case
+			t == field.TypeInt,
+			t == field.TypeInt32,
+			t == field.TypeInt8,
+			t == field.TypeInt16,
+			t == field.TypeUint8,
+			t == field.TypeUint16,
+			t == field.TypeUint32,
+			t == field.TypeUint,
+			t == field.TypeUint64,
+			t == field.TypeFloat32,
+			t == field.TypeFloat64,
+			t == field.TypeInt64:
 			if f.Info.Ident == "time.Duration" {
 				protoName += ".AsDuration()"
 			}
 			bf.Append(fmt.Sprintf(numTmp, protoName, pkg, entName, protoName))
-		case field.TypeTime:
+		case t == field.TypeTime:
 			bf.Append(fmt.Sprintf(timeTmp, protoName, protoName, pkg, entName, protoName))
-		case field.TypeString:
+		case t == field.TypeString:
 			bf.Append(fmt.Sprintf(strTmp, protoName, pkg, entName, protoName))
-		case field.TypeEnum:
+		case t == field.TypeEnum:
+			name := f.Name
+			ident := f.Info.Ident
+			bf.Append(fmt.Sprintf(enumTmp, name, ident, protoName, ident, name, ident, name))
+		case str.IsNotBlank(f.Info.Ident):
 			name := f.Name
 			ident := f.Info.Ident
 			bf.Append(fmt.Sprintf(enumTmp, name, ident, protoName, ident, name, ident, name))
@@ -346,6 +354,10 @@ func %s(v *%s) *%s {
 	fields := sc.Fields
 	l := len(fields)
 	duflag := false
+	emflag := false
+	if sc.Name == "PayOrder" {
+		fmt.Println()
+	}
 	for i, f := range fields {
 		entName, protoName := GetEntNameAndProtoName(f)
 		toEnt := ""
@@ -362,6 +374,11 @@ func %s(v *%s) *%s {
 		case t == field.TypeEnum:
 			toEnt = fmt.Sprintf("\t\t%s:       %s(v.%s),\n", entName, f.Info.Ident, protoName)
 			toProto = fmt.Sprintf("\t\t%s:       string(v.%s),\n", protoName, entName)
+			emflag = true
+		case str.IsNotBlank(f.Info.Ident):
+			toEnt = fmt.Sprintf("\t\t%s:       %s(v.%s),\n", entName, f.Info.Ident, protoName)
+			toProto = fmt.Sprintf("\t\t%s:       %s(v.%s),\n", protoName, f.Info.Type, entName)
+			emflag = true
 		default:
 			toEnt = fmt.Sprintf("\t\t%s:       v.%s,\n", entName, protoName)
 			toProto = fmt.Sprintf("\t\t%s:       v.%s,\n", protoName, entName)
@@ -382,6 +399,10 @@ func %s(v *%s) *%s {
 	if duflag {
 		importTemp = strings.ReplaceAll(importTemp, "\"google.golang.org/protobuf/types/known/timestamppb\"",
 			"\"google.golang.org/protobuf/types/known/timestamppb\"\n\t\"google.golang.org/protobuf/types/known/durationpb\"")
+	}
+	if emflag {
+		importTemp = strings.ReplaceAll(importTemp, "\"google.golang.org/protobuf/types/known/timestamppb\"",
+			fmt.Sprintf("\"google.golang.org/protobuf/types/known/timestamppb\"\n\t\"hope/apps/%s/internal/data/ent/%s\"", model, lower))
 	}
 	bf.Append(fmt.Sprintf(importTemp, model, lower, model))
 	appendFun(bf, update2Data, data2Update, funTmp, name, "Update", "Req")

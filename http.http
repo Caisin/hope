@@ -1,0 +1,29 @@
+# curl -X 'POST'
+#  'https://editor.swagger.io/v1/vipuser'
+#  -H 'accept: application/json'
+#  -H 'Content-Type: application/json'
+#  -d '{
+#  "vipType": 0,
+#  "svipType": 0,
+#  "svipEffectTime": "string",
+#  "svipExpiredTime": "string",
+#  "remark": "string",
+#  "effectTime": "string",
+#  "expiredTime": "string"
+#}'
+POST http://localhost:8001/v1/vipuser
+accept: application/json
+Content-Type: application/json
+
+{
+  "vipType": 0,
+  "svipType": 0,
+  "svipEffectTime": "2022-01-01T00:00:00Z",
+  "svipExpiredTime": "2022-01-01T00:00:00Z",
+  "remark": "string",
+  "effectTime": "2022-01-01T00:00:00Z",
+  "expiredTime": "2022-01-01T00:00:00Z"
+}
+
+###
+

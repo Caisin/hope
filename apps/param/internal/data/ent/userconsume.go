@@ -28,9 +28,6 @@ type UserConsume struct {
 	// Discount holds the value of the "discount" field.
 	// VIP折扣金额
 	Discount int64 `json:"discount,omitempty"`
-	// Remark holds the value of the "remark" field.
-	// 备注
-	Remark string `json:"remark,omitempty"`
 	// CreatedAt holds the value of the "createdAt" field.
 	// 创建时间
 	CreatedAt time.Time `json:"createdAt,omitempty"`
@@ -55,8 +52,6 @@ func (*UserConsume) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case userconsume.FieldID, userconsume.FieldNovelId, userconsume.FieldCoin, userconsume.FieldCoupon, userconsume.FieldDiscount, userconsume.FieldCreateBy, userconsume.FieldUpdateBy, userconsume.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case userconsume.FieldRemark:
-			values[i] = new(sql.NullString)
 		case userconsume.FieldCreatedAt, userconsume.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		default:
@@ -103,12 +98,6 @@ func (uc *UserConsume) assignValues(columns []string, values []interface{}) erro
 				return fmt.Errorf("unexpected type %T for field discount", values[i])
 			} else if value.Valid {
 				uc.Discount = value.Int64
-			}
-		case userconsume.FieldRemark:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field remark", values[i])
-			} else if value.Valid {
-				uc.Remark = value.String
 			}
 		case userconsume.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -176,8 +165,6 @@ func (uc *UserConsume) String() string {
 	builder.WriteString(fmt.Sprintf("%v", uc.Coupon))
 	builder.WriteString(", discount=")
 	builder.WriteString(fmt.Sprintf("%v", uc.Discount))
-	builder.WriteString(", remark=")
-	builder.WriteString(uc.Remark)
 	builder.WriteString(", createdAt=")
 	builder.WriteString(uc.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", updatedAt=")

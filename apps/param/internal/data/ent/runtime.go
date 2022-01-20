@@ -267,25 +267,25 @@ func init() {
 	userconsumeFields := schema.UserConsume{}.Fields()
 	_ = userconsumeFields
 	// userconsumeDescCreatedAt is the schema descriptor for createdAt field.
-	userconsumeDescCreatedAt := userconsumeFields[5].Descriptor()
+	userconsumeDescCreatedAt := userconsumeFields[4].Descriptor()
 	// userconsume.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	userconsume.DefaultCreatedAt = userconsumeDescCreatedAt.Default.(func() time.Time)
 	// userconsumeDescUpdatedAt is the schema descriptor for updatedAt field.
-	userconsumeDescUpdatedAt := userconsumeFields[6].Descriptor()
+	userconsumeDescUpdatedAt := userconsumeFields[5].Descriptor()
 	// userconsume.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	userconsume.DefaultUpdatedAt = userconsumeDescUpdatedAt.Default.(func() time.Time)
 	// userconsume.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	userconsume.UpdateDefaultUpdatedAt = userconsumeDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// userconsumeDescCreateBy is the schema descriptor for createBy field.
-	userconsumeDescCreateBy := userconsumeFields[7].Descriptor()
+	userconsumeDescCreateBy := userconsumeFields[6].Descriptor()
 	// userconsume.DefaultCreateBy holds the default value on creation for the createBy field.
 	userconsume.DefaultCreateBy = userconsumeDescCreateBy.Default.(int64)
 	// userconsumeDescUpdateBy is the schema descriptor for updateBy field.
-	userconsumeDescUpdateBy := userconsumeFields[8].Descriptor()
+	userconsumeDescUpdateBy := userconsumeFields[7].Descriptor()
 	// userconsume.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	userconsume.DefaultUpdateBy = userconsumeDescUpdateBy.Default.(int64)
 	// userconsumeDescTenantId is the schema descriptor for tenantId field.
-	userconsumeDescTenantId := userconsumeFields[9].Descriptor()
+	userconsumeDescTenantId := userconsumeFields[8].Descriptor()
 	// userconsume.DefaultTenantId holds the default value on creation for the tenantId field.
 	userconsume.DefaultTenantId = userconsumeDescTenantId.Default.(int64)
 	userresourceFields := schema.UserResource{}.Fields()

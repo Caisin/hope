@@ -34,6 +34,6 @@ func (VipUser) Fields() []ent.Field {
 // Edges of the VipUser.
 func (VipUser) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Comment("用户").Ref("vips"),
+		edge.From("user", SocialUser.Type).Unique().Comment("用户").Ref("vips"),
 	}
 }

@@ -121,26 +121,6 @@ func (ucu *UserConsumeUpdate) ClearDiscount() *UserConsumeUpdate {
 	return ucu
 }
 
-// SetRemark sets the "remark" field.
-func (ucu *UserConsumeUpdate) SetRemark(s string) *UserConsumeUpdate {
-	ucu.mutation.SetRemark(s)
-	return ucu
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (ucu *UserConsumeUpdate) SetNillableRemark(s *string) *UserConsumeUpdate {
-	if s != nil {
-		ucu.SetRemark(*s)
-	}
-	return ucu
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (ucu *UserConsumeUpdate) ClearRemark() *UserConsumeUpdate {
-	ucu.mutation.ClearRemark()
-	return ucu
-}
-
 // SetUpdatedAt sets the "updatedAt" field.
 func (ucu *UserConsumeUpdate) SetUpdatedAt(t time.Time) *UserConsumeUpdate {
 	ucu.mutation.SetUpdatedAt(t)
@@ -370,19 +350,6 @@ func (ucu *UserConsumeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: userconsume.FieldDiscount,
 		})
 	}
-	if value, ok := ucu.mutation.Remark(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: userconsume.FieldRemark,
-		})
-	}
-	if ucu.mutation.RemarkCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: userconsume.FieldRemark,
-		})
-	}
 	if value, ok := ucu.mutation.UpdatedAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -542,26 +509,6 @@ func (ucuo *UserConsumeUpdateOne) AddDiscount(i int64) *UserConsumeUpdateOne {
 // ClearDiscount clears the value of the "discount" field.
 func (ucuo *UserConsumeUpdateOne) ClearDiscount() *UserConsumeUpdateOne {
 	ucuo.mutation.ClearDiscount()
-	return ucuo
-}
-
-// SetRemark sets the "remark" field.
-func (ucuo *UserConsumeUpdateOne) SetRemark(s string) *UserConsumeUpdateOne {
-	ucuo.mutation.SetRemark(s)
-	return ucuo
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (ucuo *UserConsumeUpdateOne) SetNillableRemark(s *string) *UserConsumeUpdateOne {
-	if s != nil {
-		ucuo.SetRemark(*s)
-	}
-	return ucuo
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (ucuo *UserConsumeUpdateOne) ClearRemark() *UserConsumeUpdateOne {
-	ucuo.mutation.ClearRemark()
 	return ucuo
 }
 
@@ -816,19 +763,6 @@ func (ucuo *UserConsumeUpdateOne) sqlSave(ctx context.Context) (_node *UserConsu
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Column: userconsume.FieldDiscount,
-		})
-	}
-	if value, ok := ucuo.mutation.Remark(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: userconsume.FieldRemark,
-		})
-	}
-	if ucuo.mutation.RemarkCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: userconsume.FieldRemark,
 		})
 	}
 	if value, ok := ucuo.mutation.UpdatedAt(); ok {

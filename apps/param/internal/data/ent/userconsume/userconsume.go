@@ -19,8 +19,6 @@ const (
 	FieldCoupon = "coupon"
 	// FieldDiscount holds the string denoting the discount field in the database.
 	FieldDiscount = "discount"
-	// FieldRemark holds the string denoting the remark field in the database.
-	FieldRemark = "remark"
 	// FieldCreatedAt holds the string denoting the createdat field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updatedat field in the database.
@@ -42,7 +40,6 @@ var Columns = []string{
 	FieldCoin,
 	FieldCoupon,
 	FieldDiscount,
-	FieldRemark,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldCreateBy,

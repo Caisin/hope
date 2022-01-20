@@ -9,7 +9,6 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userconsume"
-	"hope/pkg/util/str"
 	"time"
 )
 
@@ -34,7 +33,6 @@ func (r *userConsumeRepo) CreateUserConsume(ctx context.Context, req *v1.UserCon
 		SetCoin(req.Coin).
 		SetCoupon(req.Coupon).
 		SetDiscount(req.Discount).
-		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		Save(ctx)
@@ -107,9 +105,6 @@ func (r *userConsumeRepo) genCondition(req *v1.UserConsumeReq) []predicate.UserC
 	}
 	if req.Discount > 0 {
 		list = append(list, userconsume.Discount(req.Discount))
-	}
-	if str.IsBlank(req.Remark) {
-		list = append(list, userconsume.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, userconsume.CreatedAtGTE(req.CreatedAt.AsTime()))

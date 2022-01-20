@@ -251,7 +251,6 @@ var (
 		{Name: "coin", Type: field.TypeInt64, Nullable: true},
 		{Name: "coupon", Type: field.TypeInt64, Nullable: true},
 		{Name: "discount", Type: field.TypeInt64, Nullable: true},
-		{Name: "remark", Type: field.TypeString, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},

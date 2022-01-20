@@ -14262,7 +14262,6 @@ type UserConsumeMutation struct {
 	addcoupon     *int64
 	discount      *int64
 	adddiscount   *int64
-	remark        *string
 	createdAt     *time.Time
 	updatedAt     *time.Time
 	createBy      *int64
@@ -14622,55 +14621,6 @@ func (m *UserConsumeMutation) ResetDiscount() {
 	delete(m.clearedFields, userconsume.FieldDiscount)
 }
 
-// SetRemark sets the "remark" field.
-func (m *UserConsumeMutation) SetRemark(s string) {
-	m.remark = &s
-}
-
-// Remark returns the value of the "remark" field in the mutation.
-func (m *UserConsumeMutation) Remark() (r string, exists bool) {
-	v := m.remark
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldRemark returns the old "remark" field's value of the UserConsume entity.
-// If the UserConsume object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserConsumeMutation) OldRemark(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldRemark is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldRemark requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldRemark: %w", err)
-	}
-	return oldValue.Remark, nil
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (m *UserConsumeMutation) ClearRemark() {
-	m.remark = nil
-	m.clearedFields[userconsume.FieldRemark] = struct{}{}
-}
-
-// RemarkCleared returns if the "remark" field was cleared in this mutation.
-func (m *UserConsumeMutation) RemarkCleared() bool {
-	_, ok := m.clearedFields[userconsume.FieldRemark]
-	return ok
-}
-
-// ResetRemark resets all changes to the "remark" field.
-func (m *UserConsumeMutation) ResetRemark() {
-	m.remark = nil
-	delete(m.clearedFields, userconsume.FieldRemark)
-}
-
 // SetCreatedAt sets the "createdAt" field.
 func (m *UserConsumeMutation) SetCreatedAt(t time.Time) {
 	m.createdAt = &t
@@ -14930,7 +14880,7 @@ func (m *UserConsumeMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *UserConsumeMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 9)
 	if m.novelId != nil {
 		fields = append(fields, userconsume.FieldNovelId)
 	}
@@ -14942,9 +14892,6 @@ func (m *UserConsumeMutation) Fields() []string {
 	}
 	if m.discount != nil {
 		fields = append(fields, userconsume.FieldDiscount)
-	}
-	if m.remark != nil {
-		fields = append(fields, userconsume.FieldRemark)
 	}
 	if m.createdAt != nil {
 		fields = append(fields, userconsume.FieldCreatedAt)
@@ -14977,8 +14924,6 @@ func (m *UserConsumeMutation) Field(name string) (ent.Value, bool) {
 		return m.Coupon()
 	case userconsume.FieldDiscount:
 		return m.Discount()
-	case userconsume.FieldRemark:
-		return m.Remark()
 	case userconsume.FieldCreatedAt:
 		return m.CreatedAt()
 	case userconsume.FieldUpdatedAt:
@@ -15006,8 +14951,6 @@ func (m *UserConsumeMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldCoupon(ctx)
 	case userconsume.FieldDiscount:
 		return m.OldDiscount(ctx)
-	case userconsume.FieldRemark:
-		return m.OldRemark(ctx)
 	case userconsume.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case userconsume.FieldUpdatedAt:
@@ -15054,13 +14997,6 @@ func (m *UserConsumeMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDiscount(v)
-		return nil
-	case userconsume.FieldRemark:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetRemark(v)
 		return nil
 	case userconsume.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -15223,9 +15159,6 @@ func (m *UserConsumeMutation) ClearedFields() []string {
 	if m.FieldCleared(userconsume.FieldDiscount) {
 		fields = append(fields, userconsume.FieldDiscount)
 	}
-	if m.FieldCleared(userconsume.FieldRemark) {
-		fields = append(fields, userconsume.FieldRemark)
-	}
 	return fields
 }
 
@@ -15249,9 +15182,6 @@ func (m *UserConsumeMutation) ClearField(name string) error {
 	case userconsume.FieldDiscount:
 		m.ClearDiscount()
 		return nil
-	case userconsume.FieldRemark:
-		m.ClearRemark()
-		return nil
 	}
 	return fmt.Errorf("unknown UserConsume nullable field %s", name)
 }
@@ -15271,9 +15201,6 @@ func (m *UserConsumeMutation) ResetField(name string) error {
 		return nil
 	case userconsume.FieldDiscount:
 		m.ResetDiscount()
-		return nil
-	case userconsume.FieldRemark:
-		m.ResetRemark()
 		return nil
 	case userconsume.FieldCreatedAt:
 		m.ResetCreatedAt()

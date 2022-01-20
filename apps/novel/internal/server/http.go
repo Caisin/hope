@@ -8,7 +8,7 @@ import (
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
@@ -24,5 +24,8 @@ func NewHTTPServer(c *conf.Server, logger log.Logger) *http.Server {
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
+	for _, f := range regFun {
+		f(srv)
+	}
 	return srv
 }

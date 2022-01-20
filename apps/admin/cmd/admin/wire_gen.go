@@ -9,17 +9,77 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"hope/apps/admin/internal/biz"
 	"hope/apps/admin/internal/conf"
+	"hope/apps/admin/internal/data"
 	"hope/apps/admin/internal/server"
+	"hope/apps/admin/internal/service"
 )
 
 // Injectors from wire.go:
 
 // initApp init kratos application.
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
-	httpServer := server.NewHTTPServer(confServer, logger)
-	grpcServer := server.NewGRPCServer(confServer, logger)
+	client := data.NewEntClient(confData, logger)
+	redisClient := data.NewRedisClient(confData, logger)
+	dataData, cleanup, err := data.NewData(client, redisClient, logger)
+	if err != nil {
+		return nil, nil, err
+	}
+	casbinRuleRepo := data.NewCasbinRuleRepo(dataData, logger)
+	casbinRuleUseCase := biz.NewCasbinRuleUseCase(casbinRuleRepo, logger)
+	casbinRuleService := service.NewCasbinRuleService(casbinRuleUseCase, logger)
+	sysApiRepo := data.NewSysApiRepo(dataData, logger)
+	sysApiUseCase := biz.NewSysApiUseCase(sysApiRepo, logger)
+	sysApiService := service.NewSysApiService(sysApiUseCase, logger)
+	sysColumnsRepo := data.NewSysColumnsRepo(dataData, logger)
+	sysColumnsUseCase := biz.NewSysColumnsUseCase(sysColumnsRepo, logger)
+	sysColumnsService := service.NewSysColumnsService(sysColumnsUseCase, logger)
+	sysConfigRepo := data.NewSysConfigRepo(dataData, logger)
+	sysConfigUseCase := biz.NewSysConfigUseCase(sysConfigRepo, logger)
+	sysConfigService := service.NewSysConfigService(sysConfigUseCase, logger)
+	sysDeptRepo := data.NewSysDeptRepo(dataData, logger)
+	sysDeptUseCase := biz.NewSysDeptUseCase(sysDeptRepo, logger)
+	sysDeptService := service.NewSysDeptService(sysDeptUseCase, logger)
+	sysDictDataRepo := data.NewSysDictDataRepo(dataData, logger)
+	sysDictDataUseCase := biz.NewSysDictDataUseCase(sysDictDataRepo, logger)
+	sysDictDataService := service.NewSysDictDataService(sysDictDataUseCase, logger)
+	sysDictTypeRepo := data.NewSysDictTypeRepo(dataData, logger)
+	sysDictTypeUseCase := biz.NewSysDictTypeUseCase(sysDictTypeRepo, logger)
+	sysDictTypeService := service.NewSysDictTypeService(sysDictTypeUseCase, logger)
+	sysJobRepo := data.NewSysJobRepo(dataData, logger)
+	sysJobUseCase := biz.NewSysJobUseCase(sysJobRepo, logger)
+	sysJobService := service.NewSysJobService(sysJobUseCase, logger)
+	sysJobLogRepo := data.NewSysJobLogRepo(dataData, logger)
+	sysJobLogUseCase := biz.NewSysJobLogUseCase(sysJobLogRepo, logger)
+	sysJobLogService := service.NewSysJobLogService(sysJobLogUseCase, logger)
+	sysLoginLogRepo := data.NewSysLoginLogRepo(dataData, logger)
+	sysLoginLogUseCase := biz.NewSysLoginLogUseCase(sysLoginLogRepo, logger)
+	sysLoginLogService := service.NewSysLoginLogService(sysLoginLogUseCase, logger)
+	sysMenuRepo := data.NewSysMenuRepo(dataData, logger)
+	sysMenuUseCase := biz.NewSysMenuUseCase(sysMenuRepo, logger)
+	sysMenuService := service.NewSysMenuService(sysMenuUseCase, logger)
+	sysOperaLogRepo := data.NewSysOperaLogRepo(dataData, logger)
+	sysOperaLogUseCase := biz.NewSysOperaLogUseCase(sysOperaLogRepo, logger)
+	sysOperaLogService := service.NewSysOperaLogService(sysOperaLogUseCase, logger)
+	sysPostRepo := data.NewSysPostRepo(dataData, logger)
+	sysPostUseCase := biz.NewSysPostUseCase(sysPostRepo, logger)
+	sysPostService := service.NewSysPostService(sysPostUseCase, logger)
+	sysRoleRepo := data.NewSysRoleRepo(dataData, logger)
+	sysRoleUseCase := biz.NewSysRoleUseCase(sysRoleRepo, logger)
+	sysRoleService := service.NewSysRoleService(sysRoleUseCase, logger)
+	sysTablesRepo := data.NewSysTablesRepo(dataData, logger)
+	sysTablesUseCase := biz.NewSysTablesUseCase(sysTablesRepo, logger)
+	sysTablesService := service.NewSysTablesService(sysTablesUseCase, logger)
+	sysUserRepo := data.NewSysUserRepo(dataData, logger)
+	sysUserUseCase := biz.NewSysUserUseCase(sysUserRepo, logger)
+	sysUserService := service.NewSysUserService(sysUserUseCase, logger)
+	v := server.RegisterHTTPServer(casbinRuleService, sysApiService, sysColumnsService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysTablesService, sysUserService)
+	httpServer := server.NewHTTPServer(confServer, v, logger)
+	v2 := server.RegisterGRPCServer(casbinRuleService, sysApiService, sysColumnsService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysTablesService, sysUserService)
+	grpcServer := server.NewGRPCServer(confServer, v2, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
+		cleanup()
 	}, nil
 }

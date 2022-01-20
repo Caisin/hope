@@ -54,7 +54,12 @@ func NewEntClient(c *conf.Data, logger log.Logger) *ent.Client {
 		return nil
 	}
 	// Run the auto migration tool.
-	if err := client.Schema.Create(context.Background(), migrate.WithForeignKeys(false)); err != nil {
+	if err := client.Schema.Create(
+		context.Background(),
+		migrate.WithForeignKeys(false),
+		migrate.WithDropColumn(true),
+		migrate.WithDropIndex(true),
+	); err != nil {
 		helper.Fatalf("failed creating schema resources: %v", err)
 	}
 	return client

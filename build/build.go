@@ -143,13 +143,15 @@ func genFile(tmp *template.Template, m interface{}, fileName string) {
 	file.FileCreate(bf, fileName)
 }
 
-func parseType(t field.Type) string {
-	switch t.String() {
-	case "int":
+func parseType(f *load.Field) string {
+	t := f.Info.Type
+	//r := f.Info.RType
+	switch {
+	case t == field.TypeInt:
 		return "int32"
-	case "time.Time":
+	case t == field.TypeTime:
 		return "google.protobuf.Timestamp"
-	case "time.Duration":
+	case f.Info.Ident == "time.Duration":
 		return "google.protobuf.Duration"
 	default:
 		return t.String()
@@ -168,9 +170,9 @@ func genFields(fields []*load.Field, isModify bool) string {
 			break
 		}
 		//备注
-		bf.Append(tab).Append("//").Append(f.Comment).Append("\n")
+		bf.Append(tab).Append("//").Append(strings.ReplaceAll(f.Comment, "\n", " ")).Append("\n")
 		//字段
-		bf.Append(tab).Append(parseType(f.Info.Type)).Append(space).Append(name).
+		bf.Append(tab).Append(parseType(f)).Append(space).Append(name).
 			Append(space).Append("=").Append(space).Append(i + 2).Append(";\n")
 	}
 	return bf.String()
@@ -190,7 +192,7 @@ func genCreateFields(fields []*load.Field) string {
 		//备注
 		bf.Append(tab).Append("//").Append(f.Comment).Append("\n")
 		//字段
-		bf.Append(tab).Append(parseType(f.Info.Type)).Append(space).Append(name).
+		bf.Append(tab).Append(parseType(f)).Append(space).Append(name).
 			Append(space).Append("=").Append(space).Append(i + 1).Append(";\n")
 	}
 	return bf.String()
@@ -207,11 +209,16 @@ func genCreateSetFields(fields []*load.Field) string {
 		if name == "createdAt" {
 			break
 		}
-		entName, protoName := GetEntNameAndProtoName(name)
+		entName, protoName := GetEntNameAndProtoName(f)
 		inner := "req." + protoName
-		switch f.Info.Type {
-		case field.TypeTime:
+		t := f.Info.Type
+		switch {
+		case t == field.TypeTime:
 			inner += ".AsTime()"
+		case f.Info.Ident == "time.Duration":
+			inner += ".AsDuration()"
+		case t == field.TypeEnum:
+			inner = fmt.Sprintf("%s(%s)", f.Info.Ident, inner)
 		}
 		//todo duration 字段处理
 		//备注
@@ -220,15 +227,20 @@ func genCreateSetFields(fields []*load.Field) string {
 	return bf.String()
 }
 
-func GetEntNameAndProtoName(name string) (entName, protoName string) {
+func GetEntNameAndProtoName(f *load.Field) (entName, protoName string) {
+	name := f.Name
+	name = str.Case2Camel(name)
 	leftUpper := str.LeftUpper(name)
 	entName, protoName = leftUpper, leftUpper
 	//字段
 	switch {
+	case f.Info.Type == field.TypeEnum:
 	case strings.EqualFold(name, "url"):
 		entName = "URL"
 	case strings.EqualFold(name, "Md5code"):
 		protoName = "Md5Code"
+	case strings.Contains(name, "Duration"):
+		fmt.Println(name)
 	}
 	return
 }
@@ -236,11 +248,11 @@ func GetEntNameAndProtoName(name string) (entName, protoName string) {
 //生成查询条件
 func genCondition(pkg string, fields []*load.Field) string {
 	bf := str.NewBuffer()
-	strTmp := `	if str.IsBlank(req.%s) {
+	strTmp := `if str.IsBlank(req.%s) {
 		list = append(list, %s.%sContains(req.%s))
 	}
 	`
-	numTmp := `	if req.%s > 0 {
+	numTmp := `if req.%s > 0 {
 		list = append(list, %s.%s(req.%s))
 	}
 	`
@@ -248,12 +260,16 @@ func genCondition(pkg string, fields []*load.Field) string {
 		list = append(list, %s.%sGTE(req.%s.AsTime()))
 	}
 	`
+
+	enumTmp := `%s := %s(req.%s)
+	if %sValidator(%s)==nil {
+		list = append(list, %sEQ(%s))
+	}
+`
 	for _, f := range fields {
-		name := f.Name
-		entName, protoName := GetEntNameAndProtoName(name)
+		entName, protoName := GetEntNameAndProtoName(f)
 		switch f.Info.Type {
 		case field.TypeInt,
-			//field.TypeEnum,
 			field.TypeInt32,
 			field.TypeInt8,
 			field.TypeInt16,
@@ -265,11 +281,18 @@ func genCondition(pkg string, fields []*load.Field) string {
 			field.TypeFloat32,
 			field.TypeFloat64,
 			field.TypeInt64:
+			if f.Info.Ident == "time.Duration" {
+				protoName += ".AsDuration()"
+			}
 			bf.Append(fmt.Sprintf(numTmp, protoName, pkg, entName, protoName))
 		case field.TypeTime:
 			bf.Append(fmt.Sprintf(timeTmp, protoName, protoName, pkg, entName, protoName))
 		case field.TypeString:
 			bf.Append(fmt.Sprintf(strTmp, protoName, pkg, entName, protoName))
+		case field.TypeEnum:
+			name := f.Name
+			ident := f.Info.Ident
+			bf.Append(fmt.Sprintf(enumTmp, name, ident, protoName, ident, name, ident, name))
 		}
 		//todo duration 字段处理
 		//备注
@@ -297,8 +320,6 @@ package convert
 	"hope/apps/%s/internal/data/ent"
 )`
 	name := sc.Name
-	lower := strings.ToLower(name)
-	bf.Append(fmt.Sprintf(importTemp, model, lower, model))
 	funTmp := `
 func %s(v *%s) *%s {
 	if v == nil {
@@ -324,46 +345,45 @@ func %s(v *%s) *%s {
 	data2Reply.Append("\t\tId:       v.ID,\n")
 	fields := sc.Fields
 	l := len(fields)
+	duflag := false
 	for i, f := range fields {
-		fieldName := f.Name
-		leftUpper := str.LeftUpper(fieldName)
-		entName := leftUpper
-		protoName := leftUpper
-		//字段
+		entName, protoName := GetEntNameAndProtoName(f)
+		toEnt := ""
+		toProto := ""
+		t := f.Info.Type
 		switch {
-		case strings.EqualFold(fieldName, "url"):
-			entName = "URL"
-		case strings.EqualFold(fieldName, "Md5code"):
-			protoName = "Md5Code"
+		case t == field.TypeTime:
+			toEnt = fmt.Sprintf("\t\t%s:       v.%s.AsTime(),\n", entName, protoName)
+			toProto = fmt.Sprintf("\t\t%s:       timestamppb.New(v.%s),\n", protoName, entName)
+		case f.Info.Ident == "time.Duration":
+			toEnt = fmt.Sprintf("\t\t%s:       v.%s.AsDuration(),\n", entName, protoName)
+			toProto = fmt.Sprintf("\t\t%s:       durationpb.New(v.%s),\n", protoName, entName)
+			duflag = true
+		case t == field.TypeEnum:
+			toEnt = fmt.Sprintf("\t\t%s:       %s(v.%s),\n", entName, f.Info.Ident, protoName)
+			toProto = fmt.Sprintf("\t\t%s:       string(v.%s),\n", protoName, entName)
+		default:
+			toEnt = fmt.Sprintf("\t\t%s:       v.%s,\n", entName, protoName)
+			toProto = fmt.Sprintf("\t\t%s:       v.%s,\n", protoName, entName)
+
 		}
-		if f.Info.Type == field.TypeTime {
-			toEnt := fmt.Sprintf("\t\t%s:       v.%s.AsTime(),\n", entName, protoName)
-			toProto := fmt.Sprintf("\t\t%s:       timestamppb.New(v.%s),\n", protoName, entName)
-			reply2Data.Append(toEnt)
-			data2Reply.Append(toProto)
-			if l-i > 6 {
-				create2Data.Append(toEnt)
-				data2Create.Append(toProto)
-				update2Data.Append(toEnt)
-				data2Update.Append(toProto)
-				req2Data.Append(toEnt)
-				data2Req.Append(toProto)
-			}
-		} else {
-			toEnt := fmt.Sprintf("\t\t%s:       v.%s,\n", entName, protoName)
-			toProto := fmt.Sprintf("\t\t%s:       v.%s,\n", protoName, entName)
-			reply2Data.Append(toEnt)
-			data2Reply.Append(toProto)
-			if l-i > 6 {
-				create2Data.Append(toEnt)
-				data2Create.Append(toProto)
-				update2Data.Append(toEnt)
-				data2Update.Append(toProto)
-				req2Data.Append(toEnt)
-				data2Req.Append(toProto)
-			}
+		reply2Data.Append(toEnt)
+		data2Reply.Append(toProto)
+		if l-i > 6 {
+			create2Data.Append(toEnt)
+			data2Create.Append(toProto)
+			update2Data.Append(toEnt)
+			data2Update.Append(toProto)
+			req2Data.Append(toEnt)
+			data2Req.Append(toProto)
 		}
 	}
+	lower := strings.ToLower(name)
+	if duflag {
+		importTemp = strings.ReplaceAll(importTemp, "\"google.golang.org/protobuf/types/known/timestamppb\"",
+			"\"google.golang.org/protobuf/types/known/timestamppb\"\n\t\"google.golang.org/protobuf/types/known/durationpb\"")
+	}
+	bf.Append(fmt.Sprintf(importTemp, model, lower, model))
 	appendFun(bf, update2Data, data2Update, funTmp, name, "Update", "Req")
 	appendFun(bf, create2Data, data2Create, funTmp, name, "Create", "Req")
 	appendFun(bf, req2Data, data2Req, funTmp, name, "", "Req")

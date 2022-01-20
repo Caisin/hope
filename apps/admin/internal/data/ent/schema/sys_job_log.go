@@ -20,7 +20,7 @@ func (SysJobLog) Fields() []ent.Field {
 			Comment(`编码`),
 		field.String("jobName").Optional().
 			Comment(`名称`),
-		field.Int32("entry_id").Optional().
+		field.Int32("entryId").Optional().
 			Comment(`job启动时返回的id`),
 		field.Bool("status").Optional().
 			Comment(`状态`),

@@ -125,6 +125,7 @@ func main() {
 			genFile(serviceTemplate, m, serviceFileName)
 		}
 		genProvider(projectPath, prod, schemas)
+		genRegServer(projectPath, prod, schemas)
 		file.RemoveAll(tmpDir)
 	}
 }
@@ -206,17 +207,30 @@ func genCreateSetFields(fields []*load.Field) string {
 		if name == "createdAt" {
 			break
 		}
-		leftUpper := str.LeftUpper(name)
-		inner := "req." + leftUpper
+		entName, protoName := GetEntNameAndProtoName(name)
+		inner := "req." + protoName
 		switch f.Info.Type {
 		case field.TypeTime:
 			inner += ".AsTime()"
 		}
 		//todo duration 字段处理
 		//备注
-		bf.Append(tab).Append(fmt.Sprintf("Set%s(%s).\n", leftUpper, inner))
+		bf.Append(tab).Append(fmt.Sprintf("Set%s(%s).\n", entName, inner))
 	}
 	return bf.String()
+}
+
+func GetEntNameAndProtoName(name string) (entName, protoName string) {
+	leftUpper := str.LeftUpper(name)
+	entName, protoName = leftUpper, leftUpper
+	//字段
+	switch {
+	case strings.EqualFold(name, "url"):
+		entName = "URL"
+	case strings.EqualFold(name, "Md5code"):
+		protoName = "Md5Code"
+	}
+	return
 }
 
 //生成查询条件
@@ -236,10 +250,7 @@ func genCondition(pkg string, fields []*load.Field) string {
 	`
 	for _, f := range fields {
 		name := f.Name
-		if strings.EqualFold(name, "url") {
-			name = "URL"
-		}
-		leftUpper := str.LeftUpper(name)
+		entName, protoName := GetEntNameAndProtoName(name)
 		switch f.Info.Type {
 		case field.TypeInt,
 			//field.TypeEnum,
@@ -254,11 +265,11 @@ func genCondition(pkg string, fields []*load.Field) string {
 			field.TypeFloat32,
 			field.TypeFloat64,
 			field.TypeInt64:
-			bf.Append(fmt.Sprintf(numTmp, leftUpper, pkg, leftUpper, leftUpper))
+			bf.Append(fmt.Sprintf(numTmp, protoName, pkg, entName, protoName))
 		case field.TypeTime:
-			bf.Append(fmt.Sprintf(timeTmp, leftUpper, leftUpper, pkg, leftUpper, leftUpper))
+			bf.Append(fmt.Sprintf(timeTmp, protoName, protoName, pkg, entName, protoName))
 		case field.TypeString:
-			bf.Append(fmt.Sprintf(strTmp, leftUpper, pkg, leftUpper, leftUpper))
+			bf.Append(fmt.Sprintf(strTmp, protoName, pkg, entName, protoName))
 		}
 		//todo duration 字段处理
 		//备注
@@ -315,32 +326,41 @@ func %s(v *%s) *%s {
 	l := len(fields)
 	for i, f := range fields {
 		fieldName := f.Name
+		leftUpper := str.LeftUpper(fieldName)
+		entName := leftUpper
+		protoName := leftUpper
 		//字段
-		lu := str.LeftUpper(fieldName)
+		switch {
+		case strings.EqualFold(fieldName, "url"):
+			entName = "URL"
+		case strings.EqualFold(fieldName, "Md5code"):
+			protoName = "Md5Code"
+		}
 		if f.Info.Type == field.TypeTime {
-			s := fmt.Sprintf("\t\t%s:       v.%s.AsTime(),\n", lu, lu)
-			timeNew := fmt.Sprintf("\t\t%s:       timestamppb.New(v.%s),\n", lu, lu)
-			reply2Data.Append(s)
-			data2Reply.Append(timeNew)
+			toEnt := fmt.Sprintf("\t\t%s:       v.%s.AsTime(),\n", entName, protoName)
+			toProto := fmt.Sprintf("\t\t%s:       timestamppb.New(v.%s),\n", protoName, entName)
+			reply2Data.Append(toEnt)
+			data2Reply.Append(toProto)
 			if l-i > 6 {
-				create2Data.Append(s)
-				data2Create.Append(timeNew)
-				update2Data.Append(s)
-				data2Update.Append(timeNew)
-				req2Data.Append(s)
-				data2Req.Append(timeNew)
+				create2Data.Append(toEnt)
+				data2Create.Append(toProto)
+				update2Data.Append(toEnt)
+				data2Update.Append(toProto)
+				req2Data.Append(toEnt)
+				data2Req.Append(toProto)
 			}
 		} else {
-			s := fmt.Sprintf("\t\t%s:       v.%s,\n", lu, lu)
-			reply2Data.Append(s)
-			data2Reply.Append(s)
+			toEnt := fmt.Sprintf("\t\t%s:       v.%s,\n", entName, protoName)
+			toProto := fmt.Sprintf("\t\t%s:       v.%s,\n", protoName, entName)
+			reply2Data.Append(toEnt)
+			data2Reply.Append(toProto)
 			if l-i > 6 {
-				create2Data.Append(s)
-				data2Create.Append(s)
-				update2Data.Append(s)
-				data2Update.Append(s)
-				req2Data.Append(s)
-				data2Req.Append(s)
+				create2Data.Append(toEnt)
+				data2Create.Append(toProto)
+				update2Data.Append(toEnt)
+				data2Update.Append(toProto)
+				req2Data.Append(toEnt)
+				data2Req.Append(toProto)
 			}
 		}
 	}
@@ -348,7 +368,7 @@ func %s(v *%s) *%s {
 	appendFun(bf, create2Data, data2Create, funTmp, name, "Create", "Req")
 	appendFun(bf, req2Data, data2Req, funTmp, name, "", "Req")
 	appendFun(bf, reply2Data, data2Reply, funTmp, name, "", "Reply")
-	appendFun(bf, reply2Data, data2Reply, funTmp, name, "Update", "Reply")
+	appendFun(bf, update2Data, data2Update, funTmp, name, "Update", "Reply")
 	appendFun(bf, reply2Data, data2Reply, funTmp, name, "Create", "Reply")
 	fileName := fmt.Sprintf("%s/apps/%s/internal/convert/%s.go", projectPath, model, str.Camel2Case(name))
 	dir := path.Dir(fileName)
@@ -401,36 +421,54 @@ var ProviderSet = wire.NewSet(
 }
 
 func genRegServer(projectPath, prod string, scs []*load.Schema) {
-	tmp := `package %s
+	tmp := `package server
 
-import "github.com/google/wire"
-
-// ProviderSet is %s providers.
-var ProviderSet = wire.NewSet(
-%s
+import (
+	"github.com/go-kratos/kratos/v2/transport/{{.svcType}}"
+{{ range .scs }}
+	{{.pkg}} "hope/api/{{$.mode}}/{{.pkg}}/v1"
+{{- end }}
+	"hope/apps/{{.mode}}/internal/service"
 )
+
+func Register{{.upSvcType}}Server(
+{{ range .scs }}
+	{{.llName}}Service *service.{{.name}}Service,
+{{- end }}
+) []func(*{{.svcType}}.Server) {
+	list := make([]func(*{{.svcType}}.Server), 0)
+{{ range .scs }}
+	list = append(list, func(srv *{{$.svcType}}.Server) {
+		{{.pkg}}.Register{{.name}}{{$.regType}}Server(srv, {{.llName}}Service)
+	})
+{{- end }}
+	return list
+}
 `
-	biz := str.NewBuffer()
-	data := str.NewBuffer()
-	//NewEntClient, NewRedisClient, NewData
-	data.Append("\tNewEntClient,\n")
-	data.Append("\tNewRedisClient,\n")
-	data.Append("\tNewData,\n")
-	service := str.NewBuffer()
-	for _, sc := range scs {
-		name := sc.Name
-		biz.Append("\tNew").Append(name).Append("UseCase,\n")
-		data.Append("\tNew").Append(name).Append("Repo,\n")
-		service.Append("\tNew").Append(name).Append("Service,\n")
+	parse, err := template.New("tpl").Parse(tmp)
+	if err != nil {
+		panic(err)
 	}
-	inPath := fmt.Sprintf("%s/apps/%s/internal/", projectPath, prod)
-
-	bizStr := "biz"
-	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, bizStr, bizStr, biz)), inPath+bizStr+"/biz.go")
-
-	dataStr := "data"
-	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, dataStr, dataStr, data)), inPath+dataStr+"/provider.go")
-
-	serviceStr := "service"
-	file.FileCreate(str.NewBuffer().Append(fmt.Sprintf(tmp, serviceStr, serviceStr, service)), inPath+serviceStr+"/service.go")
+	m := make(map[string]interface{})
+	list := make([]map[string]interface{}, 0)
+	for _, sc := range scs {
+		item := make(map[string]interface{})
+		name := sc.Name
+		item["name"] = name
+		item["llName"] = str.LeftLower(name)
+		item["pkg"] = strings.ToLower(name)
+		list = append(list, item)
+	}
+	m["scs"] = list
+	m["mode"] = prod
+	m["upSvcType"] = "HTTP"
+	m["svcType"] = "http"
+	m["regType"] = "HTTP"
+	httpFileName := fmt.Sprintf("%s/apps/%s/internal/server/reg_http.go", projectPath, prod)
+	genFile(parse, m, httpFileName)
+	m["upSvcType"] = "GRPC"
+	m["svcType"] = "grpc"
+	m["regType"] = ""
+	grpcFileName := fmt.Sprintf("%s/apps/%s/internal/server/reg_grpc.go", projectPath, prod)
+	genFile(parse, m, grpcFileName)
 }

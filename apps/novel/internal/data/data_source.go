@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/datasource"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,22 +30,22 @@ func NewDataSourceRepo(data *Data, logger log.Logger) biz.DataSourceRepo {
 func (r *dataSourceRepo) CreateDataSource(ctx context.Context, req *v1.DataSourceCreateReq) (*ent.DataSource, error) {
 	now := time.Now()
 	return r.data.db.DataSource.Create().
-		SetDbName(req.DbName).
-		SetHost(req.Host).
-		SetPort(req.Port).
-		SetDatabase(req.Database).
-		SetUserName(req.UserName).
-		SetPwd(req.Pwd).
-		SetStatus(req.Status).
-		SetDbType(datasource.DbType(req.DbType)).
-		SetConnMaxIdleTime(req.ConnMaxIdleTime).
-		SetConnMaxLifeTime(req.ConnMaxLifeTime).
-		SetMaxIdleConns(req.MaxIdleConns).
-		SetMaxOpenConns(req.MaxOpenConns).
-		SetRemark(req.Remark).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetDbName(req.DbName).
+    SetHost(req.Host).
+    SetPort(req.Port).
+    SetDatabase(req.Database).
+    SetUserName(req.UserName).
+    SetPwd(req.Pwd).
+    SetStatus(req.Status).
+    SetDbType(datasource.DbType(req.DbType)).
+    SetConnMaxIdleTime(req.ConnMaxIdleTime).
+    SetConnMaxLifeTime(req.ConnMaxLifeTime).
+    SetMaxIdleConns(req.MaxIdleConns).
+    SetMaxOpenConns(req.MaxOpenConns).
+    SetRemark(req.Remark).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -71,7 +71,10 @@ func (r *dataSourceRepo) GetDataSource(ctx context.Context, req *v1.DataSourceRe
 
 // PageDataSource 分页查询
 func (r *dataSourceRepo) PageDataSource(ctx context.Context, req *v1.DataSourcePageReq) ([]*ent.DataSource, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.DataSource.
 		Query().
 		Where(
@@ -86,13 +89,13 @@ func (r *dataSourceRepo) PageDataSource(ctx context.Context, req *v1.DataSourceP
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -100,6 +103,9 @@ func (r *dataSourceRepo) PageDataSource(ctx context.Context, req *v1.DataSourceP
 
 // genCondition 构造查询条件
 func (r *dataSourceRepo) genCondition(req *v1.DataSourceReq) []predicate.DataSource {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.DataSource, 0)
 	if req.Id > 0 {
 		list = append(list, datasource.ID(req.Id))
@@ -123,10 +129,10 @@ func (r *dataSourceRepo) genCondition(req *v1.DataSourceReq) []predicate.DataSou
 		list = append(list, datasource.PwdContains(req.Pwd))
 	}
 	dbType := datasource.DbType(req.DbType)
-	if datasource.DbTypeValidator(dbType) == nil {
+	if datasource.DbTypeValidator(dbType)==nil {
 		list = append(list, datasource.DbTypeEQ(dbType))
 	}
-	if req.ConnMaxIdleTime > 0 {
+if req.ConnMaxIdleTime > 0 {
 		list = append(list, datasource.ConnMaxIdleTime(req.ConnMaxIdleTime))
 	}
 	if req.ConnMaxLifeTime > 0 {
@@ -156,6 +162,6 @@ func (r *dataSourceRepo) genCondition(req *v1.DataSourceReq) []predicate.DataSou
 	if req.TenantId > 0 {
 		list = append(list, datasource.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

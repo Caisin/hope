@@ -79,7 +79,7 @@ func main() {
 
 		graph, err := entc.LoadGraph(tmpDir, &gen.Config{
 			Storage: storage,
-			IDType:  &field.TypeInfo{Type: field.TypeInt},
+			IDType:  &field.TypeInfo{Type: field.TypeInt64},
 			Target:  target,
 			Package: "entgo.io/ent/entc/integration/ent",
 			/*Templates: []*gen.Template{

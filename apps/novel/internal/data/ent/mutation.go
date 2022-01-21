@@ -47138,6 +47138,42 @@ func (m *UserMsgMutation) ID() (id int64, exists bool) {
 	return *m.id, true
 }
 
+// SetUserId sets the "userId" field.
+func (m *UserMsgMutation) SetUserId(i int64) {
+	m.user = &i
+}
+
+// UserId returns the value of the "userId" field in the mutation.
+func (m *UserMsgMutation) UserId() (r int64, exists bool) {
+	v := m.user
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUserId returns the old "userId" field's value of the UserMsg entity.
+// If the UserMsg object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMsgMutation) OldUserId(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUserId is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUserId requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUserId: %w", err)
+	}
+	return oldValue.UserId, nil
+}
+
+// ResetUserId resets all changes to the "userId" field.
+func (m *UserMsgMutation) ResetUserId() {
+	m.user = nil
+}
+
 // SetMsgId sets the "msgId" field.
 func (m *UserMsgMutation) SetMsgId(i int64) {
 	m.msgId = &i
@@ -47555,7 +47591,10 @@ func (m *UserMsgMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *UserMsgMutation) Fields() []string {
-	fields := make([]string, 0, 7)
+	fields := make([]string, 0, 8)
+	if m.user != nil {
+		fields = append(fields, usermsg.FieldUserId)
+	}
 	if m.msgId != nil {
 		fields = append(fields, usermsg.FieldMsgId)
 	}
@@ -47585,6 +47624,8 @@ func (m *UserMsgMutation) Fields() []string {
 // schema.
 func (m *UserMsgMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case usermsg.FieldUserId:
+		return m.UserId()
 	case usermsg.FieldMsgId:
 		return m.MsgId()
 	case usermsg.FieldIsRead:
@@ -47608,6 +47649,8 @@ func (m *UserMsgMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *UserMsgMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case usermsg.FieldUserId:
+		return m.OldUserId(ctx)
 	case usermsg.FieldMsgId:
 		return m.OldMsgId(ctx)
 	case usermsg.FieldIsRead:
@@ -47631,6 +47674,13 @@ func (m *UserMsgMutation) OldField(ctx context.Context, name string) (ent.Value,
 // type.
 func (m *UserMsgMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case usermsg.FieldUserId:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUserId(v)
+		return nil
 	case usermsg.FieldMsgId:
 		v, ok := value.(int64)
 		if !ok {
@@ -47795,6 +47845,9 @@ func (m *UserMsgMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *UserMsgMutation) ResetField(name string) error {
 	switch name {
+	case usermsg.FieldUserId:
+		m.ResetUserId()
+		return nil
 	case usermsg.FieldMsgId:
 		m.ResetMsgId()
 		return nil
@@ -47920,8 +47973,7 @@ type VipUserMutation struct {
 	tenantId        *int64
 	addtenantId     *int64
 	clearedFields   map[string]struct{}
-	user            map[int64]struct{}
-	removeduser     map[int64]struct{}
+	user            *int64
 	cleareduser     bool
 	done            bool
 	oldValue        func(context.Context) (*VipUser, error)
@@ -48606,14 +48658,9 @@ func (m *VipUserMutation) ResetTenantId() {
 	m.addtenantId = nil
 }
 
-// AddUserIDs adds the "user" edge to the SocialUser entity by ids.
-func (m *VipUserMutation) AddUserIDs(ids ...int64) {
-	if m.user == nil {
-		m.user = make(map[int64]struct{})
-	}
-	for i := range ids {
-		m.user[ids[i]] = struct{}{}
-	}
+// SetUserID sets the "user" edge to the SocialUser entity by id.
+func (m *VipUserMutation) SetUserID(id int64) {
+	m.user = &id
 }
 
 // ClearUser clears the "user" edge to the SocialUser entity.
@@ -48626,29 +48673,20 @@ func (m *VipUserMutation) UserCleared() bool {
 	return m.cleareduser
 }
 
-// RemoveUserIDs removes the "user" edge to the SocialUser entity by IDs.
-func (m *VipUserMutation) RemoveUserIDs(ids ...int64) {
-	if m.removeduser == nil {
-		m.removeduser = make(map[int64]struct{})
-	}
-	for i := range ids {
-		delete(m.user, ids[i])
-		m.removeduser[ids[i]] = struct{}{}
-	}
-}
-
-// RemovedUser returns the removed IDs of the "user" edge to the SocialUser entity.
-func (m *VipUserMutation) RemovedUserIDs() (ids []int64) {
-	for id := range m.removeduser {
-		ids = append(ids, id)
+// UserID returns the "user" edge ID in the mutation.
+func (m *VipUserMutation) UserID() (id int64, exists bool) {
+	if m.user != nil {
+		return *m.user, true
 	}
 	return
 }
 
 // UserIDs returns the "user" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// UserID instead. It exists only for internal usage by the builders.
 func (m *VipUserMutation) UserIDs() (ids []int64) {
-	for id := range m.user {
-		ids = append(ids, id)
+	if id := m.user; id != nil {
+		ids = append(ids, *id)
 	}
 	return
 }
@@ -48657,7 +48695,6 @@ func (m *VipUserMutation) UserIDs() (ids []int64) {
 func (m *VipUserMutation) ResetUser() {
 	m.user = nil
 	m.cleareduser = false
-	m.removeduser = nil
 }
 
 // Where appends a list predicates to the VipUserMutation builder.
@@ -49073,11 +49110,9 @@ func (m *VipUserMutation) AddedEdges() []string {
 func (m *VipUserMutation) AddedIDs(name string) []ent.Value {
 	switch name {
 	case vipuser.EdgeUser:
-		ids := make([]ent.Value, 0, len(m.user))
-		for id := range m.user {
-			ids = append(ids, id)
+		if id := m.user; id != nil {
+			return []ent.Value{*id}
 		}
-		return ids
 	}
 	return nil
 }
@@ -49085,9 +49120,6 @@ func (m *VipUserMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *VipUserMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 1)
-	if m.removeduser != nil {
-		edges = append(edges, vipuser.EdgeUser)
-	}
 	return edges
 }
 
@@ -49095,12 +49127,6 @@ func (m *VipUserMutation) RemovedEdges() []string {
 // the given name in this mutation.
 func (m *VipUserMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
-	case vipuser.EdgeUser:
-		ids := make([]ent.Value, 0, len(m.removeduser))
-		for id := range m.removeduser {
-			ids = append(ids, id)
-		}
-		return ids
 	}
 	return nil
 }
@@ -49128,6 +49154,9 @@ func (m *VipUserMutation) EdgeCleared(name string) bool {
 // if that edge is not defined in the schema.
 func (m *VipUserMutation) ClearEdge(name string) error {
 	switch name {
+	case vipuser.EdgeUser:
+		m.ClearUser()
+		return nil
 	}
 	return fmt.Errorf("unknown VipUser unique edge %s", name)
 }

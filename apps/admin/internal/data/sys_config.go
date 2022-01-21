@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysconfig"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -65,7 +66,10 @@ func (r *sysConfigRepo) GetSysConfig(ctx context.Context, req *v1.SysConfigReq) 
 
 // PageSysConfig 分页查询
 func (r *sysConfigRepo) PageSysConfig(ctx context.Context, req *v1.SysConfigPageReq) ([]*ent.SysConfig, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.SysConfig.
 		Query().
 		Where(
@@ -80,13 +84,13 @@ func (r *sysConfigRepo) PageSysConfig(ctx context.Context, req *v1.SysConfigPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -94,6 +98,9 @@ func (r *sysConfigRepo) PageSysConfig(ctx context.Context, req *v1.SysConfigPage
 
 // genCondition 构造查询条件
 func (r *sysConfigRepo) genCondition(req *v1.SysConfigReq) []predicate.SysConfig {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.SysConfig, 0)
 	if req.Id > 0 {
 		list = append(list, sysconfig.ID(req.Id))

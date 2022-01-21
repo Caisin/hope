@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/novelmsg"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,13 +30,13 @@ func NewNovelMsgRepo(data *Data, logger log.Logger) biz.NovelMsgRepo {
 func (r *novelMsgRepo) CreateNovelMsg(ctx context.Context, req *v1.NovelMsgCreateReq) (*ent.NovelMsg, error) {
 	now := time.Now()
 	return r.data.db.NovelMsg.Create().
-		SetTitle(req.Title).
-		SetMsg(req.Msg).
-		SetMsgType(req.MsgType).
-		SetStatus(req.Status).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetTitle(req.Title).
+    SetMsg(req.Msg).
+    SetMsgType(req.MsgType).
+    SetStatus(req.Status).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -62,7 +62,10 @@ func (r *novelMsgRepo) GetNovelMsg(ctx context.Context, req *v1.NovelMsgReq) (*e
 
 // PageNovelMsg 分页查询
 func (r *novelMsgRepo) PageNovelMsg(ctx context.Context, req *v1.NovelMsgPageReq) ([]*ent.NovelMsg, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.NovelMsg.
 		Query().
 		Where(
@@ -77,13 +80,13 @@ func (r *novelMsgRepo) PageNovelMsg(ctx context.Context, req *v1.NovelMsgPageReq
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -91,6 +94,9 @@ func (r *novelMsgRepo) PageNovelMsg(ctx context.Context, req *v1.NovelMsgPageReq
 
 // genCondition 构造查询条件
 func (r *novelMsgRepo) genCondition(req *v1.NovelMsgReq) []predicate.NovelMsg {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelMsg, 0)
 	if req.Id > 0 {
 		list = append(list, novelmsg.ID(req.Id))
@@ -119,6 +125,6 @@ func (r *novelMsgRepo) genCondition(req *v1.NovelMsgReq) []predicate.NovelMsg {
 	if req.TenantId > 0 {
 		list = append(list, novelmsg.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

@@ -11,6 +11,8 @@ const (
 	Label = "user_msg"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldUserId holds the string denoting the userid field in the database.
+	FieldUserId = "user_id"
 	// FieldMsgId holds the string denoting the msgid field in the database.
 	FieldMsgId = "msg_id"
 	// FieldIsRead holds the string denoting the isread field in the database.
@@ -35,12 +37,13 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
 	UserInverseTable = "social_users"
 	// UserColumn is the table column denoting the user relation/edge.
-	UserColumn = "social_user_msgs"
+	UserColumn = "user_id"
 )
 
 // Columns holds all SQL columns for usermsg fields.
 var Columns = []string{
 	FieldID,
+	FieldUserId,
 	FieldMsgId,
 	FieldIsRead,
 	FieldCreatedAt,
@@ -50,21 +53,10 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "user_msgs"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"social_user_msgs",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

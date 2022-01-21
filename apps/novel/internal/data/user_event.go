@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -7,9 +6,10 @@ import (
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
-	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/userevent"
+	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,17 +30,17 @@ func NewUserEventRepo(data *Data, logger log.Logger) biz.UserEventRepo {
 func (r *userEventRepo) CreateUserEvent(ctx context.Context, req *v1.UserEventCreateReq) (*ent.UserEvent, error) {
 	now := time.Now()
 	return r.data.db.UserEvent.Create().
-		SetUserId(req.UserId).
-		SetEventType(req.EventType).
-		SetNovelId(req.NovelId).
-		SetChapterId(req.ChapterId).
-		SetCoin(req.Coin).
-		SetCoupon(req.Coupon).
-		SetMoney(req.Money).
-		SetKeyword(req.Keyword).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetUserId(req.UserId).
+    SetEventType(req.EventType).
+    SetNovelId(req.NovelId).
+    SetChapterId(req.ChapterId).
+    SetCoin(req.Coin).
+    SetCoupon(req.Coupon).
+    SetMoney(req.Money).
+    SetKeyword(req.Keyword).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -66,7 +66,10 @@ func (r *userEventRepo) GetUserEvent(ctx context.Context, req *v1.UserEventReq) 
 
 // PageUserEvent 分页查询
 func (r *userEventRepo) PageUserEvent(ctx context.Context, req *v1.UserEventPageReq) ([]*ent.UserEvent, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.UserEvent.
 		Query().
 		Where(
@@ -81,13 +84,13 @@ func (r *userEventRepo) PageUserEvent(ctx context.Context, req *v1.UserEventPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -95,6 +98,9 @@ func (r *userEventRepo) PageUserEvent(ctx context.Context, req *v1.UserEventPage
 
 // genCondition 构造查询条件
 func (r *userEventRepo) genCondition(req *v1.UserEventReq) []predicate.UserEvent {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.UserEvent, 0)
 	if req.Id > 0 {
 		list = append(list, userevent.ID(req.Id))
@@ -138,6 +144,6 @@ func (r *userEventRepo) genCondition(req *v1.UserEventReq) []predicate.UserEvent
 	if req.TenantId > 0 {
 		list = append(list, userevent.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

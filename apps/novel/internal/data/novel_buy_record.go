@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/novelbuyrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,18 +30,18 @@ func NewNovelBuyRecordRepo(data *Data, logger log.Logger) biz.NovelBuyRecordRepo
 func (r *novelBuyRecordRepo) CreateNovelBuyRecord(ctx context.Context, req *v1.NovelBuyRecordCreateReq) (*ent.NovelBuyRecord, error) {
 	now := time.Now()
 	return r.data.db.NovelBuyRecord.Create().
-		SetUserId(req.UserId).
-		SetUserName(req.UserName).
-		SetNovelId(req.NovelId).
-		SetNovelName(req.NovelName).
-		SetPackageId(req.PackageId).
-		SetCover(req.Cover).
-		SetCoin(req.Coin).
-		SetCoupon(req.Coupon).
-		SetRemark(req.Remark).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetUserId(req.UserId).
+    SetUserName(req.UserName).
+    SetNovelId(req.NovelId).
+    SetNovelName(req.NovelName).
+    SetPackageId(req.PackageId).
+    SetCover(req.Cover).
+    SetCoin(req.Coin).
+    SetCoupon(req.Coupon).
+    SetRemark(req.Remark).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -67,7 +67,10 @@ func (r *novelBuyRecordRepo) GetNovelBuyRecord(ctx context.Context, req *v1.Nove
 
 // PageNovelBuyRecord 分页查询
 func (r *novelBuyRecordRepo) PageNovelBuyRecord(ctx context.Context, req *v1.NovelBuyRecordPageReq) ([]*ent.NovelBuyRecord, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.NovelBuyRecord.
 		Query().
 		Where(
@@ -82,13 +85,13 @@ func (r *novelBuyRecordRepo) PageNovelBuyRecord(ctx context.Context, req *v1.Nov
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -96,6 +99,9 @@ func (r *novelBuyRecordRepo) PageNovelBuyRecord(ctx context.Context, req *v1.Nov
 
 // genCondition 构造查询条件
 func (r *novelBuyRecordRepo) genCondition(req *v1.NovelBuyRecordReq) []predicate.NovelBuyRecord {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelBuyRecord, 0)
 	if req.Id > 0 {
 		list = append(list, novelbuyrecord.ID(req.Id))
@@ -142,6 +148,6 @@ func (r *novelBuyRecordRepo) genCondition(req *v1.NovelBuyRecordReq) []predicate
 	if req.TenantId > 0 {
 		list = append(list, novelbuyrecord.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

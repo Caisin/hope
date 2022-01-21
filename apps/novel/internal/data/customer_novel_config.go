@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/customernovelconfig"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,18 +30,18 @@ func NewCustomerNovelConfigRepo(data *Data, logger log.Logger) biz.CustomerNovel
 func (r *customerNovelConfigRepo) CreateCustomerNovelConfig(ctx context.Context, req *v1.CustomerNovelConfigCreateReq) (*ent.CustomerNovelConfig, error) {
 	now := time.Now()
 	return r.data.db.CustomerNovelConfig.Create().
-		SetGroupCode(req.GroupCode).
-		SetInnerGroupCode(req.InnerGroupCode).
-		SetGroupName(req.GroupName).
-		SetTypeId(req.TypeId).
-		SetTypeCode(req.TypeCode).
-		SetTypeName(req.TypeName).
-		SetFieldName(req.FieldName).
-		SetDefaultNum(req.DefaultNum).
-		SetState(req.State).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetGroupCode(req.GroupCode).
+    SetInnerGroupCode(req.InnerGroupCode).
+    SetGroupName(req.GroupName).
+    SetTypeId(req.TypeId).
+    SetTypeCode(req.TypeCode).
+    SetTypeName(req.TypeName).
+    SetFieldName(req.FieldName).
+    SetDefaultNum(req.DefaultNum).
+    SetState(req.State).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -67,7 +67,10 @@ func (r *customerNovelConfigRepo) GetCustomerNovelConfig(ctx context.Context, re
 
 // PageCustomerNovelConfig 分页查询
 func (r *customerNovelConfigRepo) PageCustomerNovelConfig(ctx context.Context, req *v1.CustomerNovelConfigPageReq) ([]*ent.CustomerNovelConfig, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.CustomerNovelConfig.
 		Query().
 		Where(
@@ -82,13 +85,13 @@ func (r *customerNovelConfigRepo) PageCustomerNovelConfig(ctx context.Context, r
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -96,6 +99,9 @@ func (r *customerNovelConfigRepo) PageCustomerNovelConfig(ctx context.Context, r
 
 // genCondition 构造查询条件
 func (r *customerNovelConfigRepo) genCondition(req *v1.CustomerNovelConfigReq) []predicate.CustomerNovelConfig {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.CustomerNovelConfig, 0)
 	if req.Id > 0 {
 		list = append(list, customernovelconfig.ID(req.Id))
@@ -139,6 +145,6 @@ func (r *customerNovelConfigRepo) genCondition(req *v1.CustomerNovelConfigReq) [
 	if req.TenantId > 0 {
 		list = append(list, customernovelconfig.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

@@ -1216,10 +1216,10 @@ func (suc *SocialUserCreate) createSpec() (*SocialUser, *sqlgraph.CreateSpec) {
 	}
 	if nodes := suc.mutation.VipsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   socialuser.VipsTable,
-			Columns: socialuser.VipsPrimaryKey,
+			Columns: []string{socialuser.VipsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

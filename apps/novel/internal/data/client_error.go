@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/clienterror"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,14 +30,14 @@ func NewClientErrorRepo(data *Data, logger log.Logger) biz.ClientErrorRepo {
 func (r *clientErrorRepo) CreateClientError(ctx context.Context, req *v1.ClientErrorCreateReq) (*ent.ClientError, error) {
 	now := time.Now()
 	return r.data.db.ClientError.Create().
-		SetAppVersion(req.AppVersion).
-		SetDeviceName(req.DeviceName).
-		SetOsName(req.OsName).
-		SetErrorInfo(req.ErrorInfo).
-		SetUserId(req.UserId).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetAppVersion(req.AppVersion).
+    SetDeviceName(req.DeviceName).
+    SetOsName(req.OsName).
+    SetErrorInfo(req.ErrorInfo).
+    SetUserId(req.UserId).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -63,7 +63,10 @@ func (r *clientErrorRepo) GetClientError(ctx context.Context, req *v1.ClientErro
 
 // PageClientError 分页查询
 func (r *clientErrorRepo) PageClientError(ctx context.Context, req *v1.ClientErrorPageReq) ([]*ent.ClientError, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.ClientError.
 		Query().
 		Where(
@@ -78,13 +81,13 @@ func (r *clientErrorRepo) PageClientError(ctx context.Context, req *v1.ClientErr
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -92,6 +95,9 @@ func (r *clientErrorRepo) PageClientError(ctx context.Context, req *v1.ClientErr
 
 // genCondition 构造查询条件
 func (r *clientErrorRepo) genCondition(req *v1.ClientErrorReq) []predicate.ClientError {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.ClientError, 0)
 	if req.Id > 0 {
 		list = append(list, clienterror.ID(req.Id))
@@ -126,6 +132,6 @@ func (r *clientErrorRepo) genCondition(req *v1.ClientErrorReq) []predicate.Clien
 	if req.TenantId > 0 {
 		list = append(list, clienterror.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

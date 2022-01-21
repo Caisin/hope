@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/novelpayconfig"
 	"hope/apps/param/internal/data/ent/predicate"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -80,7 +81,10 @@ func (r *novelPayConfigRepo) GetNovelPayConfig(ctx context.Context, req *v1.Nove
 
 // PageNovelPayConfig 分页查询
 func (r *novelPayConfigRepo) PageNovelPayConfig(ctx context.Context, req *v1.NovelPayConfigPageReq) ([]*ent.NovelPayConfig, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.NovelPayConfig.
 		Query().
 		Where(
@@ -95,13 +99,13 @@ func (r *novelPayConfigRepo) PageNovelPayConfig(ctx context.Context, req *v1.Nov
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -109,6 +113,9 @@ func (r *novelPayConfigRepo) PageNovelPayConfig(ctx context.Context, req *v1.Nov
 
 // genCondition 构造查询条件
 func (r *novelPayConfigRepo) genCondition(req *v1.NovelPayConfigReq) []predicate.NovelPayConfig {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelPayConfig, 0)
 	if req.Id > 0 {
 		list = append(list, novelpayconfig.ID(req.Id))

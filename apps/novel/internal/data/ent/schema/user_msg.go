@@ -15,6 +15,8 @@ type UserMsg struct {
 // Fields of the UserMsg.
 func (UserMsg) Fields() []ent.Field {
 	fields := []ent.Field{
+		field.Int64("userId").
+			Comment(`用户ID`),
 		field.Int64("msgId").Optional().
 			Comment(`消息编码`),
 		field.Bool("isRead").Optional().
@@ -27,6 +29,6 @@ func (UserMsg) Fields() []ent.Field {
 // Edges of the UserMsg.
 func (UserMsg) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("msgs").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("msgs").Unique(),
 	}
 }

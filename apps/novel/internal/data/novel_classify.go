@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/novelclassify"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,14 +30,14 @@ func NewNovelClassifyRepo(data *Data, logger log.Logger) biz.NovelClassifyRepo {
 func (r *novelClassifyRepo) CreateNovelClassify(ctx context.Context, req *v1.NovelClassifyCreateReq) (*ent.NovelClassify, error) {
 	now := time.Now()
 	return r.data.db.NovelClassify.Create().
-		SetPid(req.Pid).
-		SetClassifyName(req.ClassifyName).
-		SetStatus(req.Status).
-		SetOrderNum(req.OrderNum).
-		SetRemark(req.Remark).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetPid(req.Pid).
+    SetClassifyName(req.ClassifyName).
+    SetStatus(req.Status).
+    SetOrderNum(req.OrderNum).
+    SetRemark(req.Remark).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -63,7 +63,10 @@ func (r *novelClassifyRepo) GetNovelClassify(ctx context.Context, req *v1.NovelC
 
 // PageNovelClassify 分页查询
 func (r *novelClassifyRepo) PageNovelClassify(ctx context.Context, req *v1.NovelClassifyPageReq) ([]*ent.NovelClassify, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.NovelClassify.
 		Query().
 		Where(
@@ -78,13 +81,13 @@ func (r *novelClassifyRepo) PageNovelClassify(ctx context.Context, req *v1.Novel
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -92,6 +95,9 @@ func (r *novelClassifyRepo) PageNovelClassify(ctx context.Context, req *v1.Novel
 
 // genCondition 构造查询条件
 func (r *novelClassifyRepo) genCondition(req *v1.NovelClassifyReq) []predicate.NovelClassify {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelClassify, 0)
 	if req.Id > 0 {
 		list = append(list, novelclassify.ID(req.Id))
@@ -126,6 +132,6 @@ func (r *novelClassifyRepo) genCondition(req *v1.NovelClassifyReq) []predicate.N
 	if req.TenantId > 0 {
 		list = append(list, novelclassify.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

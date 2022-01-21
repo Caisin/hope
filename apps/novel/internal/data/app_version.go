@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/appversion"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,14 +30,14 @@ func NewAppVersionRepo(data *Data, logger log.Logger) biz.AppVersionRepo {
 func (r *appVersionRepo) CreateAppVersion(ctx context.Context, req *v1.AppVersionCreateReq) (*ent.AppVersion, error) {
 	now := time.Now()
 	return r.data.db.AppVersion.Create().
-		SetTitle(req.Title).
-		SetVersion(req.Version).
-		SetUpdateInfo(req.UpdateInfo).
-		SetDownloadUrl(req.DownloadUrl).
-		SetPlatform(req.Platform).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetTitle(req.Title).
+    SetVersion(req.Version).
+    SetUpdateInfo(req.UpdateInfo).
+    SetDownloadUrl(req.DownloadUrl).
+    SetPlatform(req.Platform).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -63,7 +63,10 @@ func (r *appVersionRepo) GetAppVersion(ctx context.Context, req *v1.AppVersionRe
 
 // PageAppVersion 分页查询
 func (r *appVersionRepo) PageAppVersion(ctx context.Context, req *v1.AppVersionPageReq) ([]*ent.AppVersion, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.AppVersion.
 		Query().
 		Where(
@@ -78,13 +81,13 @@ func (r *appVersionRepo) PageAppVersion(ctx context.Context, req *v1.AppVersionP
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -92,6 +95,9 @@ func (r *appVersionRepo) PageAppVersion(ctx context.Context, req *v1.AppVersionP
 
 // genCondition 构造查询条件
 func (r *appVersionRepo) genCondition(req *v1.AppVersionReq) []predicate.AppVersion {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.AppVersion, 0)
 	if req.Id > 0 {
 		list = append(list, appversion.ID(req.Id))
@@ -126,6 +132,6 @@ func (r *appVersionRepo) genCondition(req *v1.AppVersionReq) []predicate.AppVers
 	if req.TenantId > 0 {
 		list = append(list, appversion.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

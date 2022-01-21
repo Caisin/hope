@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/assetitem"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,15 +30,15 @@ func NewAssetItemRepo(data *Data, logger log.Logger) biz.AssetItemRepo {
 func (r *assetItemRepo) CreateAssetItem(ctx context.Context, req *v1.AssetItemCreateReq) (*ent.AssetItem, error) {
 	now := time.Now()
 	return r.data.db.AssetItem.Create().
-		SetAssetItemId(req.AssetItemId).
-		SetAssetName(req.AssetName).
-		SetCashTag(req.CashTag).
-		SetValidDays(req.ValidDays).
-		SetEffectTime(req.EffectTime.AsTime()).
-		SetExpiredTime(req.ExpiredTime.AsTime()).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetAssetItemId(req.AssetItemId).
+    SetAssetName(req.AssetName).
+    SetCashTag(req.CashTag).
+    SetValidDays(req.ValidDays).
+    SetEffectTime(req.EffectTime.AsTime()).
+    SetExpiredTime(req.ExpiredTime.AsTime()).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -64,7 +64,10 @@ func (r *assetItemRepo) GetAssetItem(ctx context.Context, req *v1.AssetItemReq) 
 
 // PageAssetItem 分页查询
 func (r *assetItemRepo) PageAssetItem(ctx context.Context, req *v1.AssetItemPageReq) ([]*ent.AssetItem, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.AssetItem.
 		Query().
 		Where(
@@ -79,13 +82,13 @@ func (r *assetItemRepo) PageAssetItem(ctx context.Context, req *v1.AssetItemPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -93,6 +96,9 @@ func (r *assetItemRepo) PageAssetItem(ctx context.Context, req *v1.AssetItemPage
 
 // genCondition 构造查询条件
 func (r *assetItemRepo) genCondition(req *v1.AssetItemReq) []predicate.AssetItem {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.AssetItem, 0)
 	if req.Id > 0 {
 		list = append(list, assetitem.ID(req.Id))
@@ -130,6 +136,6 @@ func (r *assetItemRepo) genCondition(req *v1.AssetItemReq) []predicate.AssetItem
 	if req.TenantId > 0 {
 		list = append(list, assetitem.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

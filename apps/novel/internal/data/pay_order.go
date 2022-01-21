@@ -10,6 +10,7 @@ import (
 	"hope/apps/novel/internal/data/ent/payorder"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/schema"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -77,7 +78,10 @@ func (r *payOrderRepo) GetPayOrder(ctx context.Context, req *v1.PayOrderReq) (*e
 
 // PagePayOrder 分页查询
 func (r *payOrderRepo) PagePayOrder(ctx context.Context, req *v1.PayOrderPageReq) ([]*ent.PayOrder, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.PayOrder.
 		Query().
 		Where(
@@ -92,13 +96,13 @@ func (r *payOrderRepo) PagePayOrder(ctx context.Context, req *v1.PayOrderPageReq
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -106,6 +110,9 @@ func (r *payOrderRepo) PagePayOrder(ctx context.Context, req *v1.PayOrderPageReq
 
 // genCondition 构造查询条件
 func (r *payOrderRepo) genCondition(req *v1.PayOrderReq) []predicate.PayOrder {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.PayOrder, 0)
 	if req.Id > 0 {
 		list = append(list, payorder.ID(req.Id))

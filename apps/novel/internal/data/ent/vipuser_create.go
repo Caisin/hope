@@ -189,19 +189,23 @@ func (vuc *VipUserCreate) SetNillableTenantId(i *int64) *VipUserCreate {
 	return vuc
 }
 
-// AddUserIDs adds the "user" edge to the SocialUser entity by IDs.
-func (vuc *VipUserCreate) AddUserIDs(ids ...int64) *VipUserCreate {
-	vuc.mutation.AddUserIDs(ids...)
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (vuc *VipUserCreate) SetUserID(id int64) *VipUserCreate {
+	vuc.mutation.SetUserID(id)
 	return vuc
 }
 
-// AddUser adds the "user" edges to the SocialUser entity.
-func (vuc *VipUserCreate) AddUser(s ...*SocialUser) *VipUserCreate {
-	ids := make([]int64, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
+func (vuc *VipUserCreate) SetNillableUserID(id *int64) *VipUserCreate {
+	if id != nil {
+		vuc = vuc.SetUserID(*id)
 	}
-	return vuc.AddUserIDs(ids...)
+	return vuc
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (vuc *VipUserCreate) SetUser(s *SocialUser) *VipUserCreate {
+	return vuc.SetUserID(s.ID)
 }
 
 // Mutation returns the VipUserMutation object of the builder.
@@ -453,10 +457,10 @@ func (vuc *VipUserCreate) createSpec() (*VipUser, *sqlgraph.CreateSpec) {
 	}
 	if nodes := vuc.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.M2O,
 			Inverse: true,
 			Table:   vipuser.UserTable,
-			Columns: vipuser.UserPrimaryKey,
+			Columns: []string{vipuser.UserColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -468,6 +472,7 @@ func (vuc *VipUserCreate) createSpec() (*VipUser, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
+		_node.social_user_vips = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

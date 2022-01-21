@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/scoreproduct"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -65,7 +66,10 @@ func (r *scoreProductRepo) GetScoreProduct(ctx context.Context, req *v1.ScorePro
 
 // PageScoreProduct 分页查询
 func (r *scoreProductRepo) PageScoreProduct(ctx context.Context, req *v1.ScoreProductPageReq) ([]*ent.ScoreProduct, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.ScoreProduct.
 		Query().
 		Where(
@@ -80,13 +84,13 @@ func (r *scoreProductRepo) PageScoreProduct(ctx context.Context, req *v1.ScorePr
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -94,6 +98,9 @@ func (r *scoreProductRepo) PageScoreProduct(ctx context.Context, req *v1.ScorePr
 
 // genCondition 构造查询条件
 func (r *scoreProductRepo) genCondition(req *v1.ScoreProductReq) []predicate.ScoreProduct {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.ScoreProduct, 0)
 	if req.Id > 0 {
 		list = append(list, scoreproduct.ID(req.Id))

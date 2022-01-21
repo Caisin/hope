@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/resourcestorage"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -76,7 +77,10 @@ func (r *resourceStorageRepo) GetResourceStorage(ctx context.Context, req *v1.Re
 
 // PageResourceStorage 分页查询
 func (r *resourceStorageRepo) PageResourceStorage(ctx context.Context, req *v1.ResourceStoragePageReq) ([]*ent.ResourceStorage, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.ResourceStorage.
 		Query().
 		Where(
@@ -91,13 +95,13 @@ func (r *resourceStorageRepo) PageResourceStorage(ctx context.Context, req *v1.R
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -105,6 +109,9 @@ func (r *resourceStorageRepo) PageResourceStorage(ctx context.Context, req *v1.R
 
 // genCondition 构造查询条件
 func (r *resourceStorageRepo) genCondition(req *v1.ResourceStorageReq) []predicate.ResourceStorage {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.ResourceStorage, 0)
 	if req.Id > 0 {
 		list = append(list, resourcestorage.ID(req.Id))

@@ -14,8 +14,9 @@ func UserMsgUpdateReq2Data(v *v1.UserMsgUpdateReq) *ent.UserMsg {
 		return nil
 	}
 	return &ent.UserMsg{
-		ID:    v.Id,
-		MsgId: v.MsgId,
+		ID:     v.Id,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -24,8 +25,9 @@ func UserMsgData2UpdateReq(v *ent.UserMsg) *v1.UserMsgUpdateReq {
 		return nil
 	}
 	return &v1.UserMsgUpdateReq{
-		Id:    v.ID,
-		MsgId: v.MsgId,
+		Id:     v.ID,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -34,7 +36,8 @@ func UserMsgCreateReq2Data(v *v1.UserMsgCreateReq) *ent.UserMsg {
 		return nil
 	}
 	return &ent.UserMsg{
-		MsgId: v.MsgId,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -43,7 +46,8 @@ func UserMsgData2CreateReq(v *ent.UserMsg) *v1.UserMsgCreateReq {
 		return nil
 	}
 	return &v1.UserMsgCreateReq{
-		MsgId: v.MsgId,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -52,7 +56,8 @@ func UserMsgReq2Data(v *v1.UserMsgReq) *ent.UserMsg {
 		return nil
 	}
 	return &ent.UserMsg{
-		MsgId: v.MsgId,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -61,7 +66,8 @@ func UserMsgData2Req(v *ent.UserMsg) *v1.UserMsgReq {
 		return nil
 	}
 	return &v1.UserMsgReq{
-		MsgId: v.MsgId,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -71,6 +77,7 @@ func UserMsgReply2Data(v *v1.UserMsgReply) *ent.UserMsg {
 	}
 	return &ent.UserMsg{
 		ID:        v.Id,
+		UserId:    v.UserId,
 		MsgId:     v.MsgId,
 		IsRead:    v.IsRead,
 		CreatedAt: v.CreatedAt.AsTime(),
@@ -87,6 +94,7 @@ func UserMsgData2Reply(v *ent.UserMsg) *v1.UserMsgReply {
 	}
 	return &v1.UserMsgReply{
 		Id:        v.ID,
+		UserId:    v.UserId,
 		MsgId:     v.MsgId,
 		IsRead:    v.IsRead,
 		CreatedAt: timestamppb.New(v.CreatedAt),
@@ -102,8 +110,9 @@ func UserMsgUpdateReply2Data(v *v1.UserMsgUpdateReply) *ent.UserMsg {
 		return nil
 	}
 	return &ent.UserMsg{
-		ID:    v.Id,
-		MsgId: v.MsgId,
+		ID:     v.Id,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -112,8 +121,9 @@ func UserMsgData2UpdateReply(v *ent.UserMsg) *v1.UserMsgUpdateReply {
 		return nil
 	}
 	return &v1.UserMsgUpdateReply{
-		Id:    v.ID,
-		MsgId: v.MsgId,
+		Id:     v.ID,
+		UserId: v.UserId,
+		MsgId:  v.MsgId,
 	}
 }
 
@@ -123,6 +133,7 @@ func UserMsgCreateReply2Data(v *v1.UserMsgCreateReply) *ent.UserMsg {
 	}
 	return &ent.UserMsg{
 		ID:        v.Id,
+		UserId:    v.UserId,
 		MsgId:     v.MsgId,
 		IsRead:    v.IsRead,
 		CreatedAt: v.CreatedAt.AsTime(),
@@ -139,6 +150,7 @@ func UserMsgData2CreateReply(v *ent.UserMsg) *v1.UserMsgCreateReply {
 	}
 	return &v1.UserMsgCreateReply{
 		Id:        v.ID,
+		UserId:    v.UserId,
 		MsgId:     v.MsgId,
 		IsRead:    v.IsRead,
 		CreatedAt: timestamppb.New(v.CreatedAt),

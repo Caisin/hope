@@ -21,6 +21,12 @@ type UserMsgCreate struct {
 	hooks    []Hook
 }
 
+// SetUserId sets the "userId" field.
+func (umc *UserMsgCreate) SetUserId(i int64) *UserMsgCreate {
+	umc.mutation.SetUserId(i)
+	return umc
+}
+
 // SetMsgId sets the "msgId" field.
 func (umc *UserMsgCreate) SetMsgId(i int64) *UserMsgCreate {
 	umc.mutation.SetMsgId(i)
@@ -125,14 +131,6 @@ func (umc *UserMsgCreate) SetUserID(id int64) *UserMsgCreate {
 	return umc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (umc *UserMsgCreate) SetNillableUserID(id *int64) *UserMsgCreate {
-	if id != nil {
-		umc = umc.SetUserID(*id)
-	}
-	return umc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (umc *UserMsgCreate) SetUser(s *SocialUser) *UserMsgCreate {
 	return umc.SetUserID(s.ID)
@@ -233,6 +231,9 @@ func (umc *UserMsgCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (umc *UserMsgCreate) check() error {
+	if _, ok := umc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := umc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -247,6 +248,9 @@ func (umc *UserMsgCreate) check() error {
 	}
 	if _, ok := umc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := umc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -348,7 +352,7 @@ func (umc *UserMsgCreate) createSpec() (*UserMsg, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_msgs = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

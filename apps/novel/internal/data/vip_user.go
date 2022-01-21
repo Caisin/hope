@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -7,9 +6,10 @@ import (
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
-	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/vipuser"
+	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -29,18 +29,17 @@ func NewVipUserRepo(data *Data, logger log.Logger) biz.VipUserRepo {
 // CreateVipUser 创建
 func (r *vipUserRepo) CreateVipUser(ctx context.Context, req *v1.VipUserCreateReq) (*ent.VipUser, error) {
 	now := time.Now()
-	save, err := r.data.db.VipUser.Create().
-		SetVipType(req.VipType).
-		SetSvipType(req.SvipType).
-		SetSvipEffectTime(req.SvipEffectTime.AsTime()).
-		SetSvipExpiredTime(req.SvipExpiredTime.AsTime()).
-		SetRemark(req.Remark).
-		SetEffectTime(req.EffectTime.AsTime()).
-		SetExpiredTime(req.ExpiredTime.AsTime()).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
-	return save, err
+	return r.data.db.VipUser.Create().
+    SetVipType(req.VipType).
+    SetSvipType(req.SvipType).
+    SetSvipEffectTime(req.SvipEffectTime.AsTime()).
+    SetSvipExpiredTime(req.SvipExpiredTime.AsTime()).
+    SetRemark(req.Remark).
+    SetEffectTime(req.EffectTime.AsTime()).
+    SetExpiredTime(req.ExpiredTime.AsTime()).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -66,7 +65,10 @@ func (r *vipUserRepo) GetVipUser(ctx context.Context, req *v1.VipUserReq) (*ent.
 
 // PageVipUser 分页查询
 func (r *vipUserRepo) PageVipUser(ctx context.Context, req *v1.VipUserPageReq) ([]*ent.VipUser, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.VipUser.
 		Query().
 		Where(
@@ -81,13 +83,13 @@ func (r *vipUserRepo) PageVipUser(ctx context.Context, req *v1.VipUserPageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -95,6 +97,9 @@ func (r *vipUserRepo) PageVipUser(ctx context.Context, req *v1.VipUserPageReq) (
 
 // genCondition 构造查询条件
 func (r *vipUserRepo) genCondition(req *v1.VipUserReq) []predicate.VipUser {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.VipUser, 0)
 	if req.Id > 0 {
 		list = append(list, vipuser.ID(req.Id))
@@ -135,6 +140,6 @@ func (r *vipUserRepo) genCondition(req *v1.VipUserReq) []predicate.VipUser {
 	if req.TenantId > 0 {
 		list = append(list, vipuser.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

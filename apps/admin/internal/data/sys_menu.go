@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysmenu"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -73,7 +74,10 @@ func (r *sysMenuRepo) GetSysMenu(ctx context.Context, req *v1.SysMenuReq) (*ent.
 
 // PageSysMenu 分页查询
 func (r *sysMenuRepo) PageSysMenu(ctx context.Context, req *v1.SysMenuPageReq) ([]*ent.SysMenu, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.SysMenu.
 		Query().
 		Where(
@@ -88,13 +92,13 @@ func (r *sysMenuRepo) PageSysMenu(ctx context.Context, req *v1.SysMenuPageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -102,6 +106,9 @@ func (r *sysMenuRepo) PageSysMenu(ctx context.Context, req *v1.SysMenuPageReq) (
 
 // genCondition 构造查询条件
 func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.SysMenu, 0)
 	if req.Id > 0 {
 		list = append(list, sysmenu.ID(req.Id))

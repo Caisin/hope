@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysjoblog"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -64,7 +65,10 @@ func (r *sysJobLogRepo) GetSysJobLog(ctx context.Context, req *v1.SysJobLogReq) 
 
 // PageSysJobLog 分页查询
 func (r *sysJobLogRepo) PageSysJobLog(ctx context.Context, req *v1.SysJobLogPageReq) ([]*ent.SysJobLog, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.SysJobLog.
 		Query().
 		Where(
@@ -79,13 +83,13 @@ func (r *sysJobLogRepo) PageSysJobLog(ctx context.Context, req *v1.SysJobLogPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -93,6 +97,9 @@ func (r *sysJobLogRepo) PageSysJobLog(ctx context.Context, req *v1.SysJobLogPage
 
 // genCondition 构造查询条件
 func (r *sysJobLogRepo) genCondition(req *v1.SysJobLogReq) []predicate.SysJobLog {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.SysJobLog, 0)
 	if req.Id > 0 {
 		list = append(list, sysjoblog.ID(req.Id))

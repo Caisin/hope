@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userresourcerecord"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -68,7 +69,10 @@ func (r *userResourceRecordRepo) GetUserResourceRecord(ctx context.Context, req 
 
 // PageUserResourceRecord 分页查询
 func (r *userResourceRecordRepo) PageUserResourceRecord(ctx context.Context, req *v1.UserResourceRecordPageReq) ([]*ent.UserResourceRecord, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.UserResourceRecord.
 		Query().
 		Where(
@@ -83,13 +87,13 @@ func (r *userResourceRecordRepo) PageUserResourceRecord(ctx context.Context, req
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -97,6 +101,9 @@ func (r *userResourceRecordRepo) PageUserResourceRecord(ctx context.Context, req
 
 // genCondition 构造查询条件
 func (r *userResourceRecordRepo) genCondition(req *v1.UserResourceRecordReq) []predicate.UserResourceRecord {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.UserResourceRecord, 0)
 	if req.Id > 0 {
 		list = append(list, userresourcerecord.ID(req.Id))

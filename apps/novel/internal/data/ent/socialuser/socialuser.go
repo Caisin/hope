@@ -151,7 +151,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "usermsg" package.
 	MsgsInverseTable = "user_msgs"
 	// MsgsColumn is the table column denoting the msgs relation/edge.
-	MsgsColumn = "social_user_msgs"
+	MsgsColumn = "user_id"
 	// OrdersTable is the table that holds the orders relation/edge.
 	OrdersTable = "pay_orders"
 	// OrdersInverseTable is the table name for the PayOrder entity.
@@ -159,11 +159,13 @@ const (
 	OrdersInverseTable = "pay_orders"
 	// OrdersColumn is the table column denoting the orders relation/edge.
 	OrdersColumn = "social_user_orders"
-	// VipsTable is the table that holds the vips relation/edge. The primary key declared below.
-	VipsTable = "social_user_vips"
+	// VipsTable is the table that holds the vips relation/edge.
+	VipsTable = "vip_users"
 	// VipsInverseTable is the table name for the VipUser entity.
 	// It exists in this package in order to avoid circular dependency with the "vipuser" package.
 	VipsInverseTable = "vip_users"
+	// VipsColumn is the table column denoting the vips relation/edge.
+	VipsColumn = "social_user_vips"
 	// BalancesTable is the table that holds the balances relation/edge.
 	BalancesTable = "am_balances"
 	// BalancesInverseTable is the table name for the AmBalance entity.
@@ -242,12 +244,6 @@ var Columns = []string{
 var ForeignKeys = []string{
 	"ad_channel_users",
 }
-
-var (
-	// VipsPrimaryKey and VipsColumn2 are the table columns denoting the
-	// primary key for the vips relation (M2M).
-	VipsPrimaryKey = []string{"social_user_id", "vip_user_id"}
-)
 
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {

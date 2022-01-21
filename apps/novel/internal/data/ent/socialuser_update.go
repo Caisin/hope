@@ -2080,10 +2080,10 @@ func (suu *SocialUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if suu.mutation.VipsCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   socialuser.VipsTable,
-			Columns: socialuser.VipsPrimaryKey,
+			Columns: []string{socialuser.VipsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -2096,10 +2096,10 @@ func (suu *SocialUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if nodes := suu.mutation.RemovedVipsIDs(); len(nodes) > 0 && !suu.mutation.VipsCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   socialuser.VipsTable,
-			Columns: socialuser.VipsPrimaryKey,
+			Columns: []string{socialuser.VipsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -2115,10 +2115,10 @@ func (suu *SocialUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if nodes := suu.mutation.VipsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   socialuser.VipsTable,
-			Columns: socialuser.VipsPrimaryKey,
+			Columns: []string{socialuser.VipsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -4465,10 +4465,10 @@ func (suuo *SocialUserUpdateOne) sqlSave(ctx context.Context) (_node *SocialUser
 	}
 	if suuo.mutation.VipsCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   socialuser.VipsTable,
-			Columns: socialuser.VipsPrimaryKey,
+			Columns: []string{socialuser.VipsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -4481,10 +4481,10 @@ func (suuo *SocialUserUpdateOne) sqlSave(ctx context.Context) (_node *SocialUser
 	}
 	if nodes := suuo.mutation.RemovedVipsIDs(); len(nodes) > 0 && !suuo.mutation.VipsCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   socialuser.VipsTable,
-			Columns: socialuser.VipsPrimaryKey,
+			Columns: []string{socialuser.VipsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -4500,10 +4500,10 @@ func (suuo *SocialUserUpdateOne) sqlSave(ctx context.Context) (_node *SocialUser
 	}
 	if nodes := suuo.mutation.VipsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   socialuser.VipsTable,
-			Columns: socialuser.VipsPrimaryKey,
+			Columns: []string{socialuser.VipsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

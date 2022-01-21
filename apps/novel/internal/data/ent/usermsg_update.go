@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
@@ -25,6 +26,12 @@ type UserMsgUpdate struct {
 // Where appends a list predicates to the UserMsgUpdate builder.
 func (umu *UserMsgUpdate) Where(ps ...predicate.UserMsg) *UserMsgUpdate {
 	umu.mutation.Where(ps...)
+	return umu
+}
+
+// SetUserId sets the "userId" field.
+func (umu *UserMsgUpdate) SetUserId(i int64) *UserMsgUpdate {
+	umu.mutation.SetUserId(i)
 	return umu
 }
 
@@ -150,14 +157,6 @@ func (umu *UserMsgUpdate) SetUserID(id int64) *UserMsgUpdate {
 	return umu
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (umu *UserMsgUpdate) SetNillableUserID(id *int64) *UserMsgUpdate {
-	if id != nil {
-		umu = umu.SetUserID(*id)
-	}
-	return umu
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (umu *UserMsgUpdate) SetUser(s *SocialUser) *UserMsgUpdate {
 	return umu.SetUserID(s.ID)
@@ -182,12 +181,18 @@ func (umu *UserMsgUpdate) Save(ctx context.Context) (int, error) {
 	)
 	umu.defaults()
 	if len(umu.hooks) == 0 {
+		if err = umu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = umu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*UserMsgMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = umu.check(); err != nil {
+				return 0, err
 			}
 			umu.mutation = mutation
 			affected, err = umu.sqlSave(ctx)
@@ -235,6 +240,14 @@ func (umu *UserMsgUpdate) defaults() {
 		v := usermsg.UpdateDefaultUpdatedAt()
 		umu.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (umu *UserMsgUpdate) check() error {
+	if _, ok := umu.mutation.UserID(); umu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (umu *UserMsgUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -391,6 +404,12 @@ type UserMsgUpdateOne struct {
 	mutation *UserMsgMutation
 }
 
+// SetUserId sets the "userId" field.
+func (umuo *UserMsgUpdateOne) SetUserId(i int64) *UserMsgUpdateOne {
+	umuo.mutation.SetUserId(i)
+	return umuo
+}
+
 // SetMsgId sets the "msgId" field.
 func (umuo *UserMsgUpdateOne) SetMsgId(i int64) *UserMsgUpdateOne {
 	umuo.mutation.ResetMsgId()
@@ -513,14 +532,6 @@ func (umuo *UserMsgUpdateOne) SetUserID(id int64) *UserMsgUpdateOne {
 	return umuo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (umuo *UserMsgUpdateOne) SetNillableUserID(id *int64) *UserMsgUpdateOne {
-	if id != nil {
-		umuo = umuo.SetUserID(*id)
-	}
-	return umuo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (umuo *UserMsgUpdateOne) SetUser(s *SocialUser) *UserMsgUpdateOne {
 	return umuo.SetUserID(s.ID)
@@ -552,12 +563,18 @@ func (umuo *UserMsgUpdateOne) Save(ctx context.Context) (*UserMsg, error) {
 	)
 	umuo.defaults()
 	if len(umuo.hooks) == 0 {
+		if err = umuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = umuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*UserMsgMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = umuo.check(); err != nil {
+				return nil, err
 			}
 			umuo.mutation = mutation
 			node, err = umuo.sqlSave(ctx)
@@ -605,6 +622,14 @@ func (umuo *UserMsgUpdateOne) defaults() {
 		v := usermsg.UpdateDefaultUpdatedAt()
 		umuo.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (umuo *UserMsgUpdateOne) check() error {
+	if _, ok := umuo.mutation.UserID(); umuo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (umuo *UserMsgUpdateOne) sqlSave(ctx context.Context) (_node *UserMsg, err error) {

@@ -27,7 +27,6 @@ type UserMsgQuery struct {
 	predicates []predicate.UserMsg
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -291,12 +290,12 @@ func (umq *UserMsgQuery) WithUser(opts ...func(*SocialUserQuery)) *UserMsgQuery 
 // Example:
 //
 //	var v []struct {
-//		MsgId int64 `json:"msgId,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.UserMsg.Query().
-//		GroupBy(usermsg.FieldMsgId).
+//		GroupBy(usermsg.FieldUserId).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -318,11 +317,11 @@ func (umq *UserMsgQuery) GroupBy(field string, fields ...string) *UserMsgGroupBy
 // Example:
 //
 //	var v []struct {
-//		MsgId int64 `json:"msgId,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //	}
 //
 //	client.UserMsg.Query().
-//		Select(usermsg.FieldMsgId).
+//		Select(usermsg.FieldUserId).
 //		Scan(ctx, &v)
 //
 func (umq *UserMsgQuery) Select(fields ...string) *UserMsgSelect {
@@ -349,18 +348,11 @@ func (umq *UserMsgQuery) prepareQuery(ctx context.Context) error {
 func (umq *UserMsgQuery) sqlAll(ctx context.Context) ([]*UserMsg, error) {
 	var (
 		nodes       = []*UserMsg{}
-		withFKs     = umq.withFKs
 		_spec       = umq.querySpec()
 		loadedTypes = [1]bool{
 			umq.withUser != nil,
 		}
 	)
-	if umq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, usermsg.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &UserMsg{config: umq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (umq *UserMsgQuery) sqlAll(ctx context.Context) ([]*UserMsg, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*UserMsg)
 		for i := range nodes {
-			if nodes[i].social_user_msgs == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_msgs
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (umq *UserMsgQuery) sqlAll(ctx context.Context) ([]*UserMsg, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_msgs" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

@@ -281,7 +281,7 @@ func (suq *SocialUserQuery) QueryVips() *VipUserQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(socialuser.Table, socialuser.FieldID, selector),
 			sqlgraph.To(vipuser.Table, vipuser.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, socialuser.VipsTable, socialuser.VipsPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.O2M, false, socialuser.VipsTable, socialuser.VipsColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(suq.driver.Dialect(), step)
 		return fromU, nil
@@ -1045,7 +1045,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Msgs = []*UserMsg{}
 		}
-		query.withFKs = true
 		query.Where(predicate.UserMsg(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.MsgsColumn, fks...))
 		}))
@@ -1054,13 +1053,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_msgs
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_msgs" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_msgs" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Msgs = append(node.Edges.Msgs, n)
 		}
@@ -1097,66 +1093,30 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 
 	if query := suq.withVips; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
-		ids := make(map[int64]*SocialUser, len(nodes))
-		for _, node := range nodes {
-			ids[node.ID] = node
-			fks = append(fks, node.ID)
-			node.Edges.Vips = []*VipUser{}
+		nodeids := make(map[int64]*SocialUser)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.Vips = []*VipUser{}
 		}
-		var (
-			edgeids []int64
-			edges   = make(map[int64][]*SocialUser)
-		)
-		_spec := &sqlgraph.EdgeQuerySpec{
-			Edge: &sqlgraph.EdgeSpec{
-				Inverse: false,
-				Table:   socialuser.VipsTable,
-				Columns: socialuser.VipsPrimaryKey,
-			},
-			Predicate: func(s *sql.Selector) {
-				s.Where(sql.InValues(socialuser.VipsPrimaryKey[0], fks...))
-			},
-			ScanValues: func() [2]interface{} {
-				return [2]interface{}{new(sql.NullInt64), new(sql.NullInt64)}
-			},
-			Assign: func(out, in interface{}) error {
-				eout, ok := out.(*sql.NullInt64)
-				if !ok || eout == nil {
-					return fmt.Errorf("unexpected id value for edge-out")
-				}
-				ein, ok := in.(*sql.NullInt64)
-				if !ok || ein == nil {
-					return fmt.Errorf("unexpected id value for edge-in")
-				}
-				outValue := eout.Int64
-				inValue := ein.Int64
-				node, ok := ids[outValue]
-				if !ok {
-					return fmt.Errorf("unexpected node id in edges: %v", outValue)
-				}
-				if _, ok := edges[inValue]; !ok {
-					edgeids = append(edgeids, inValue)
-				}
-				edges[inValue] = append(edges[inValue], node)
-				return nil
-			},
-		}
-		if err := sqlgraph.QueryEdges(ctx, suq.driver, _spec); err != nil {
-			return nil, fmt.Errorf(`query edges "vips": %w`, err)
-		}
-		query.Where(vipuser.IDIn(edgeids...))
+		query.withFKs = true
+		query.Where(predicate.VipUser(func(s *sql.Selector) {
+			s.Where(sql.InValues(socialuser.VipsColumn, fks...))
+		}))
 		neighbors, err := query.All(ctx)
 		if err != nil {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			nodes, ok := edges[n.ID]
+			fk := n.social_user_vips
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "social_user_vips" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected "vips" node returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "social_user_vips" returned %v for node %v`, *fk, n.ID)
 			}
-			for i := range nodes {
-				nodes[i].Edges.Vips = append(nodes[i].Edges.Vips, n)
-			}
+			node.Edges.Vips = append(node.Edges.Vips, n)
 		}
 	}
 

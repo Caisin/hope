@@ -791,25 +791,25 @@ func init() {
 	usermsgFields := schema.UserMsg{}.Fields()
 	_ = usermsgFields
 	// usermsgDescCreatedAt is the schema descriptor for createdAt field.
-	usermsgDescCreatedAt := usermsgFields[2].Descriptor()
+	usermsgDescCreatedAt := usermsgFields[3].Descriptor()
 	// usermsg.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	usermsg.DefaultCreatedAt = usermsgDescCreatedAt.Default.(func() time.Time)
 	// usermsgDescUpdatedAt is the schema descriptor for updatedAt field.
-	usermsgDescUpdatedAt := usermsgFields[3].Descriptor()
+	usermsgDescUpdatedAt := usermsgFields[4].Descriptor()
 	// usermsg.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	usermsg.DefaultUpdatedAt = usermsgDescUpdatedAt.Default.(func() time.Time)
 	// usermsg.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	usermsg.UpdateDefaultUpdatedAt = usermsgDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// usermsgDescCreateBy is the schema descriptor for createBy field.
-	usermsgDescCreateBy := usermsgFields[4].Descriptor()
+	usermsgDescCreateBy := usermsgFields[5].Descriptor()
 	// usermsg.DefaultCreateBy holds the default value on creation for the createBy field.
 	usermsg.DefaultCreateBy = usermsgDescCreateBy.Default.(int64)
 	// usermsgDescUpdateBy is the schema descriptor for updateBy field.
-	usermsgDescUpdateBy := usermsgFields[5].Descriptor()
+	usermsgDescUpdateBy := usermsgFields[6].Descriptor()
 	// usermsg.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	usermsg.DefaultUpdateBy = usermsgDescUpdateBy.Default.(int64)
 	// usermsgDescTenantId is the schema descriptor for tenantId field.
-	usermsgDescTenantId := usermsgFields[6].Descriptor()
+	usermsgDescTenantId := usermsgFields[7].Descriptor()
 	// usermsg.DefaultTenantId holds the default value on creation for the tenantId field.
 	usermsg.DefaultTenantId = usermsgDescTenantId.Default.(int64)
 	vipuserFields := schema.VipUser{}.Fields()

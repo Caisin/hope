@@ -3277,7 +3277,7 @@ func (c *SocialUserClient) QueryVips(su *SocialUser) *VipUserQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(socialuser.Table, socialuser.FieldID, id),
 			sqlgraph.To(vipuser.Table, vipuser.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, socialuser.VipsTable, socialuser.VipsPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.O2M, false, socialuser.VipsTable, socialuser.VipsColumn),
 		)
 		fromV = sqlgraph.Neighbors(su.driver.Dialect(), step)
 		return fromV, nil
@@ -3765,7 +3765,7 @@ func (c *VipUserClient) QueryUser(vu *VipUser) *SocialUserQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(vipuser.Table, vipuser.FieldID, id),
 			sqlgraph.To(socialuser.Table, socialuser.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, true, vipuser.UserTable, vipuser.UserPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.M2O, true, vipuser.UserTable, vipuser.UserColumn),
 		)
 		fromV = sqlgraph.Neighbors(vu.driver.Dialect(), step)
 		return fromV, nil

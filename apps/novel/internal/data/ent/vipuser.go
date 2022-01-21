@@ -4,6 +4,7 @@ package ent
 
 import (
 	"fmt"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"hope/apps/novel/internal/data/ent/vipuser"
 	"strings"
 	"time"
@@ -54,22 +55,28 @@ type VipUser struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the VipUserQuery when eager-loading is set.
-	Edges VipUserEdges `json:"edges"`
+	Edges            VipUserEdges `json:"edges"`
+	social_user_vips *int64
 }
 
 // VipUserEdges holds the relations/edges for other nodes in the graph.
 type VipUserEdges struct {
 	// User holds the value of the user edge.
-	User []*SocialUser `json:"user,omitempty"`
+	User *SocialUser `json:"user,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [1]bool
 }
 
 // UserOrErr returns the User value or an error if the edge
-// was not loaded in eager-loading.
-func (e VipUserEdges) UserOrErr() ([]*SocialUser, error) {
+// was not loaded in eager-loading, or loaded but was not found.
+func (e VipUserEdges) UserOrErr() (*SocialUser, error) {
 	if e.loadedTypes[0] {
+		if e.User == nil {
+			// The edge user was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: socialuser.Label}
+		}
 		return e.User, nil
 	}
 	return nil, &NotLoadedError{edge: "user"}
@@ -86,6 +93,8 @@ func (*VipUser) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case vipuser.FieldSvipEffectTime, vipuser.FieldSvipExpiredTime, vipuser.FieldEffectTime, vipuser.FieldExpiredTime, vipuser.FieldCreatedAt, vipuser.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
+		case vipuser.ForeignKeys[0]: // social_user_vips
+			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type VipUser", columns[i])
 		}
@@ -178,6 +187,13 @@ func (vu *VipUser) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				vu.TenantId = value.Int64
+			}
+		case vipuser.ForeignKeys[0]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field social_user_vips", value)
+			} else if value.Valid {
+				vu.social_user_vips = new(int64)
+				*vu.social_user_vips = int64(value.Int64)
 			}
 		}
 	}

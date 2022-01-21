@@ -239,19 +239,23 @@ func (vuu *VipUserUpdate) AddTenantId(i int64) *VipUserUpdate {
 	return vuu
 }
 
-// AddUserIDs adds the "user" edge to the SocialUser entity by IDs.
-func (vuu *VipUserUpdate) AddUserIDs(ids ...int64) *VipUserUpdate {
-	vuu.mutation.AddUserIDs(ids...)
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (vuu *VipUserUpdate) SetUserID(id int64) *VipUserUpdate {
+	vuu.mutation.SetUserID(id)
 	return vuu
 }
 
-// AddUser adds the "user" edges to the SocialUser entity.
-func (vuu *VipUserUpdate) AddUser(s ...*SocialUser) *VipUserUpdate {
-	ids := make([]int64, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
+func (vuu *VipUserUpdate) SetNillableUserID(id *int64) *VipUserUpdate {
+	if id != nil {
+		vuu = vuu.SetUserID(*id)
 	}
-	return vuu.AddUserIDs(ids...)
+	return vuu
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (vuu *VipUserUpdate) SetUser(s *SocialUser) *VipUserUpdate {
+	return vuu.SetUserID(s.ID)
 }
 
 // Mutation returns the VipUserMutation object of the builder.
@@ -259,25 +263,10 @@ func (vuu *VipUserUpdate) Mutation() *VipUserMutation {
 	return vuu.mutation
 }
 
-// ClearUser clears all "user" edges to the SocialUser entity.
+// ClearUser clears the "user" edge to the SocialUser entity.
 func (vuu *VipUserUpdate) ClearUser() *VipUserUpdate {
 	vuu.mutation.ClearUser()
 	return vuu
-}
-
-// RemoveUserIDs removes the "user" edge to SocialUser entities by IDs.
-func (vuu *VipUserUpdate) RemoveUserIDs(ids ...int64) *VipUserUpdate {
-	vuu.mutation.RemoveUserIDs(ids...)
-	return vuu
-}
-
-// RemoveUser removes "user" edges to SocialUser entities.
-func (vuu *VipUserUpdate) RemoveUser(s ...*SocialUser) *VipUserUpdate {
-	ids := make([]int64, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
-	}
-	return vuu.RemoveUserIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -505,10 +494,10 @@ func (vuu *VipUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if vuu.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.M2O,
 			Inverse: true,
 			Table:   vipuser.UserTable,
-			Columns: vipuser.UserPrimaryKey,
+			Columns: []string{vipuser.UserColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -516,34 +505,15 @@ func (vuu *VipUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 					Column: socialuser.FieldID,
 				},
 			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := vuu.mutation.RemovedUserIDs(); len(nodes) > 0 && !vuu.mutation.UserCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   vipuser.UserTable,
-			Columns: vipuser.UserPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt64,
-					Column: socialuser.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := vuu.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.M2O,
 			Inverse: true,
 			Table:   vipuser.UserTable,
-			Columns: vipuser.UserPrimaryKey,
+			Columns: []string{vipuser.UserColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -787,19 +757,23 @@ func (vuuo *VipUserUpdateOne) AddTenantId(i int64) *VipUserUpdateOne {
 	return vuuo
 }
 
-// AddUserIDs adds the "user" edge to the SocialUser entity by IDs.
-func (vuuo *VipUserUpdateOne) AddUserIDs(ids ...int64) *VipUserUpdateOne {
-	vuuo.mutation.AddUserIDs(ids...)
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (vuuo *VipUserUpdateOne) SetUserID(id int64) *VipUserUpdateOne {
+	vuuo.mutation.SetUserID(id)
 	return vuuo
 }
 
-// AddUser adds the "user" edges to the SocialUser entity.
-func (vuuo *VipUserUpdateOne) AddUser(s ...*SocialUser) *VipUserUpdateOne {
-	ids := make([]int64, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
+func (vuuo *VipUserUpdateOne) SetNillableUserID(id *int64) *VipUserUpdateOne {
+	if id != nil {
+		vuuo = vuuo.SetUserID(*id)
 	}
-	return vuuo.AddUserIDs(ids...)
+	return vuuo
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (vuuo *VipUserUpdateOne) SetUser(s *SocialUser) *VipUserUpdateOne {
+	return vuuo.SetUserID(s.ID)
 }
 
 // Mutation returns the VipUserMutation object of the builder.
@@ -807,25 +781,10 @@ func (vuuo *VipUserUpdateOne) Mutation() *VipUserMutation {
 	return vuuo.mutation
 }
 
-// ClearUser clears all "user" edges to the SocialUser entity.
+// ClearUser clears the "user" edge to the SocialUser entity.
 func (vuuo *VipUserUpdateOne) ClearUser() *VipUserUpdateOne {
 	vuuo.mutation.ClearUser()
 	return vuuo
-}
-
-// RemoveUserIDs removes the "user" edge to SocialUser entities by IDs.
-func (vuuo *VipUserUpdateOne) RemoveUserIDs(ids ...int64) *VipUserUpdateOne {
-	vuuo.mutation.RemoveUserIDs(ids...)
-	return vuuo
-}
-
-// RemoveUser removes "user" edges to SocialUser entities.
-func (vuuo *VipUserUpdateOne) RemoveUser(s ...*SocialUser) *VipUserUpdateOne {
-	ids := make([]int64, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
-	}
-	return vuuo.RemoveUserIDs(ids...)
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -1077,10 +1036,10 @@ func (vuuo *VipUserUpdateOne) sqlSave(ctx context.Context) (_node *VipUser, err 
 	}
 	if vuuo.mutation.UserCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.M2O,
 			Inverse: true,
 			Table:   vipuser.UserTable,
-			Columns: vipuser.UserPrimaryKey,
+			Columns: []string{vipuser.UserColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -1088,34 +1047,15 @@ func (vuuo *VipUserUpdateOne) sqlSave(ctx context.Context) (_node *VipUser, err 
 					Column: socialuser.FieldID,
 				},
 			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := vuuo.mutation.RemovedUserIDs(); len(nodes) > 0 && !vuuo.mutation.UserCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   vipuser.UserTable,
-			Columns: vipuser.UserPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt64,
-					Column: socialuser.FieldID,
-				},
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := vuuo.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.M2O,
 			Inverse: true,
 			Table:   vipuser.UserTable,
-			Columns: vipuser.UserPrimaryKey,
+			Columns: []string{vipuser.UserColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/novelchapter"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,21 +30,21 @@ func NewNovelChapterRepo(data *Data, logger log.Logger) biz.NovelChapterRepo {
 func (r *novelChapterRepo) CreateNovelChapter(ctx context.Context, req *v1.NovelChapterCreateReq) (*ent.NovelChapter, error) {
 	now := time.Now()
 	return r.data.db.NovelChapter.Create().
-		SetNovelId(req.NovelId).
-		SetOrderNum(req.OrderNum).
-		SetChapterName(req.ChapterName).
-		SetContent(req.Content).
-		SetMediaKey(req.MediaKey).
-		SetDuration(req.Duration).
-		SetPublishTime(req.PublishTime.AsTime()).
-		SetStatus(req.Status).
-		SetIsFree(req.IsFree).
-		SetPrice(req.Price).
-		SetWordNum(req.WordNum).
-		SetRemark(req.Remark).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetNovelId(req.NovelId).
+    SetOrderNum(req.OrderNum).
+    SetChapterName(req.ChapterName).
+    SetContent(req.Content).
+    SetMediaKey(req.MediaKey).
+    SetDuration(req.Duration).
+    SetPublishTime(req.PublishTime.AsTime()).
+    SetStatus(req.Status).
+    SetIsFree(req.IsFree).
+    SetPrice(req.Price).
+    SetWordNum(req.WordNum).
+    SetRemark(req.Remark).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -70,7 +70,10 @@ func (r *novelChapterRepo) GetNovelChapter(ctx context.Context, req *v1.NovelCha
 
 // PageNovelChapter 分页查询
 func (r *novelChapterRepo) PageNovelChapter(ctx context.Context, req *v1.NovelChapterPageReq) ([]*ent.NovelChapter, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.NovelChapter.
 		Query().
 		Where(
@@ -85,13 +88,13 @@ func (r *novelChapterRepo) PageNovelChapter(ctx context.Context, req *v1.NovelCh
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -99,6 +102,9 @@ func (r *novelChapterRepo) PageNovelChapter(ctx context.Context, req *v1.NovelCh
 
 // genCondition 构造查询条件
 func (r *novelChapterRepo) genCondition(req *v1.NovelChapterReq) []predicate.NovelChapter {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelChapter, 0)
 	if req.Id > 0 {
 		list = append(list, novelchapter.ID(req.Id))
@@ -151,6 +157,6 @@ func (r *novelChapterRepo) genCondition(req *v1.NovelChapterReq) []predicate.Nov
 	if req.TenantId > 0 {
 		list = append(list, novelchapter.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

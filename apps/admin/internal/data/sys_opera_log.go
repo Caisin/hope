@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -81,7 +82,10 @@ func (r *sysOperaLogRepo) GetSysOperaLog(ctx context.Context, req *v1.SysOperaLo
 
 // PageSysOperaLog 分页查询
 func (r *sysOperaLogRepo) PageSysOperaLog(ctx context.Context, req *v1.SysOperaLogPageReq) ([]*ent.SysOperaLog, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.SysOperaLog.
 		Query().
 		Where(
@@ -96,13 +100,13 @@ func (r *sysOperaLogRepo) PageSysOperaLog(ctx context.Context, req *v1.SysOperaL
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -110,6 +114,9 @@ func (r *sysOperaLogRepo) PageSysOperaLog(ctx context.Context, req *v1.SysOperaL
 
 // genCondition 构造查询条件
 func (r *sysOperaLogRepo) genCondition(req *v1.SysOperaLogReq) []predicate.SysOperaLog {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.SysOperaLog, 0)
 	if req.Id > 0 {
 		list = append(list, sysoperalog.ID(req.Id))

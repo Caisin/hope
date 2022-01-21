@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/assetchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,18 +30,18 @@ func NewAssetChangeLogRepo(data *Data, logger log.Logger) biz.AssetChangeLogRepo
 func (r *assetChangeLogRepo) CreateAssetChangeLog(ctx context.Context, req *v1.AssetChangeLogCreateReq) (*ent.AssetChangeLog, error) {
 	now := time.Now()
 	return r.data.db.AssetChangeLog.Create().
-		SetOrderId(req.OrderId).
-		SetBalanceId(req.BalanceId).
-		SetEventId(req.EventId).
-		SetUserId(req.UserId).
-		SetAssetItemId(req.AssetItemId).
-		SetAmount(req.Amount).
-		SetOldBalance(req.OldBalance).
-		SetNewBalance(req.NewBalance).
-		SetRemark(req.Remark).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetOrderId(req.OrderId).
+    SetBalanceId(req.BalanceId).
+    SetEventId(req.EventId).
+    SetUserId(req.UserId).
+    SetAssetItemId(req.AssetItemId).
+    SetAmount(req.Amount).
+    SetOldBalance(req.OldBalance).
+    SetNewBalance(req.NewBalance).
+    SetRemark(req.Remark).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -67,7 +67,10 @@ func (r *assetChangeLogRepo) GetAssetChangeLog(ctx context.Context, req *v1.Asse
 
 // PageAssetChangeLog 分页查询
 func (r *assetChangeLogRepo) PageAssetChangeLog(ctx context.Context, req *v1.AssetChangeLogPageReq) ([]*ent.AssetChangeLog, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.AssetChangeLog.
 		Query().
 		Where(
@@ -82,13 +85,13 @@ func (r *assetChangeLogRepo) PageAssetChangeLog(ctx context.Context, req *v1.Ass
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -96,6 +99,9 @@ func (r *assetChangeLogRepo) PageAssetChangeLog(ctx context.Context, req *v1.Ass
 
 // genCondition 构造查询条件
 func (r *assetChangeLogRepo) genCondition(req *v1.AssetChangeLogReq) []predicate.AssetChangeLog {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.AssetChangeLog, 0)
 	if req.Id > 0 {
 		list = append(list, assetchangelog.ID(req.Id))
@@ -142,6 +148,6 @@ func (r *assetChangeLogRepo) genCondition(req *v1.AssetChangeLogReq) []predicate
 	if req.TenantId > 0 {
 		list = append(list, assetchangelog.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/novelcomment"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,23 +30,23 @@ func NewNovelCommentRepo(data *Data, logger log.Logger) biz.NovelCommentRepo {
 func (r *novelCommentRepo) CreateNovelComment(ctx context.Context, req *v1.NovelCommentCreateReq) (*ent.NovelComment, error) {
 	now := time.Now()
 	return r.data.db.NovelComment.Create().
-		SetNovelId(req.NovelId).
-		SetUserId(req.UserId).
-		SetAvatar(req.Avatar).
-		SetUserName(req.UserName).
-		SetRepUserId(req.RepUserId).
-		SetRepUserName(req.RepUserName).
-		SetContent(req.Content).
-		SetScore(req.Score).
-		SetPId(req.PId).
-		SetIsTop(req.IsTop).
-		SetState(novelcomment.State(req.State)).
-		SetIsHighlight(req.IsHighlight).
-		SetIsHot(req.IsHot).
-		SetRemark(req.Remark).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetNovelId(req.NovelId).
+    SetUserId(req.UserId).
+    SetAvatar(req.Avatar).
+    SetUserName(req.UserName).
+    SetRepUserId(req.RepUserId).
+    SetRepUserName(req.RepUserName).
+    SetContent(req.Content).
+    SetScore(req.Score).
+    SetPId(req.PId).
+    SetIsTop(req.IsTop).
+    SetState(novelcomment.State(req.State)).
+    SetIsHighlight(req.IsHighlight).
+    SetIsHot(req.IsHot).
+    SetRemark(req.Remark).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -72,7 +72,10 @@ func (r *novelCommentRepo) GetNovelComment(ctx context.Context, req *v1.NovelCom
 
 // PageNovelComment 分页查询
 func (r *novelCommentRepo) PageNovelComment(ctx context.Context, req *v1.NovelCommentPageReq) ([]*ent.NovelComment, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.NovelComment.
 		Query().
 		Where(
@@ -87,13 +90,13 @@ func (r *novelCommentRepo) PageNovelComment(ctx context.Context, req *v1.NovelCo
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -101,6 +104,9 @@ func (r *novelCommentRepo) PageNovelComment(ctx context.Context, req *v1.NovelCo
 
 // genCondition 构造查询条件
 func (r *novelCommentRepo) genCondition(req *v1.NovelCommentReq) []predicate.NovelComment {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelComment, 0)
 	if req.Id > 0 {
 		list = append(list, novelcomment.ID(req.Id))
@@ -133,10 +139,10 @@ func (r *novelCommentRepo) genCondition(req *v1.NovelCommentReq) []predicate.Nov
 		list = append(list, novelcomment.PId(req.PId))
 	}
 	state := novelcomment.State(req.State)
-	if novelcomment.StateValidator(state) == nil {
+	if novelcomment.StateValidator(state)==nil {
 		list = append(list, novelcomment.StateEQ(state))
 	}
-	if str.IsBlank(req.Remark) {
+if str.IsBlank(req.Remark) {
 		list = append(list, novelcomment.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
@@ -154,6 +160,6 @@ func (r *novelCommentRepo) genCondition(req *v1.NovelCommentReq) []predicate.Nov
 	if req.TenantId > 0 {
 		list = append(list, novelcomment.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

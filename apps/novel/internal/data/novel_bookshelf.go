@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/novelbookshelf"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,17 +30,17 @@ func NewNovelBookshelfRepo(data *Data, logger log.Logger) biz.NovelBookshelfRepo
 func (r *novelBookshelfRepo) CreateNovelBookshelf(ctx context.Context, req *v1.NovelBookshelfCreateReq) (*ent.NovelBookshelf, error) {
 	now := time.Now()
 	return r.data.db.NovelBookshelf.Create().
-		SetUserId(req.UserId).
-		SetUserName(req.UserName).
-		SetNovelId(req.NovelId).
-		SetLastReadTime(req.LastReadTime.AsTime()).
-		SetLastChapterOrder(req.LastChapterOrder).
-		SetLastChapterId(req.LastChapterId).
-		SetLastChapterName(req.LastChapterName).
-		SetRemark(req.Remark).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetUserId(req.UserId).
+    SetUserName(req.UserName).
+    SetNovelId(req.NovelId).
+    SetLastReadTime(req.LastReadTime.AsTime()).
+    SetLastChapterOrder(req.LastChapterOrder).
+    SetLastChapterId(req.LastChapterId).
+    SetLastChapterName(req.LastChapterName).
+    SetRemark(req.Remark).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -66,7 +66,10 @@ func (r *novelBookshelfRepo) GetNovelBookshelf(ctx context.Context, req *v1.Nove
 
 // PageNovelBookshelf 分页查询
 func (r *novelBookshelfRepo) PageNovelBookshelf(ctx context.Context, req *v1.NovelBookshelfPageReq) ([]*ent.NovelBookshelf, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.NovelBookshelf.
 		Query().
 		Where(
@@ -81,13 +84,13 @@ func (r *novelBookshelfRepo) PageNovelBookshelf(ctx context.Context, req *v1.Nov
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -95,6 +98,9 @@ func (r *novelBookshelfRepo) PageNovelBookshelf(ctx context.Context, req *v1.Nov
 
 // genCondition 构造查询条件
 func (r *novelBookshelfRepo) genCondition(req *v1.NovelBookshelfReq) []predicate.NovelBookshelf {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelBookshelf, 0)
 	if req.Id > 0 {
 		list = append(list, novelbookshelf.ID(req.Id))
@@ -138,6 +144,6 @@ func (r *novelBookshelfRepo) genCondition(req *v1.NovelBookshelfReq) []predicate
 	if req.TenantId > 0 {
 		list = append(list, novelbookshelf.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

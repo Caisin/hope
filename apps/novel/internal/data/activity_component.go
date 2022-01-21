@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/activitycomponent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,24 +30,24 @@ func NewActivityComponentRepo(data *Data, logger log.Logger) biz.ActivityCompone
 func (r *activityComponentRepo) CreateActivityComponent(ctx context.Context, req *v1.ActivityComponentCreateReq) (*ent.ActivityComponent, error) {
 	now := time.Now()
 	return r.data.db.ActivityComponent.Create().
-		SetActivityCode(req.ActivityCode).
-		SetComponentType(req.ComponentType).
-		SetPolicy(req.Policy).
-		SetVipDays(req.VipDays).
-		SetMinConsume(req.MinConsume).
-		SetMaxConsume(req.MaxConsume).
-		SetMinPayNum(req.MinPayNum).
-		SetPayTimes(req.PayTimes).
-		SetPayAmount(req.PayAmount).
-		SetRegDays(req.RegDays).
-		SetSummary(req.Summary).
-		SetAssetItemId(req.AssetItemId).
-		SetAmount(req.Amount).
-		SetResId(req.ResId).
-		SetResDays(req.ResDays).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetActivityCode(req.ActivityCode).
+    SetComponentType(req.ComponentType).
+    SetPolicy(req.Policy).
+    SetVipDays(req.VipDays).
+    SetMinConsume(req.MinConsume).
+    SetMaxConsume(req.MaxConsume).
+    SetMinPayNum(req.MinPayNum).
+    SetPayTimes(req.PayTimes).
+    SetPayAmount(req.PayAmount).
+    SetRegDays(req.RegDays).
+    SetSummary(req.Summary).
+    SetAssetItemId(req.AssetItemId).
+    SetAmount(req.Amount).
+    SetResId(req.ResId).
+    SetResDays(req.ResDays).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -73,7 +73,10 @@ func (r *activityComponentRepo) GetActivityComponent(ctx context.Context, req *v
 
 // PageActivityComponent 分页查询
 func (r *activityComponentRepo) PageActivityComponent(ctx context.Context, req *v1.ActivityComponentPageReq) ([]*ent.ActivityComponent, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.ActivityComponent.
 		Query().
 		Where(
@@ -88,13 +91,13 @@ func (r *activityComponentRepo) PageActivityComponent(ctx context.Context, req *
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -102,6 +105,9 @@ func (r *activityComponentRepo) PageActivityComponent(ctx context.Context, req *
 
 // genCondition 构造查询条件
 func (r *activityComponentRepo) genCondition(req *v1.ActivityComponentReq) []predicate.ActivityComponent {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.ActivityComponent, 0)
 	if req.Id > 0 {
 		list = append(list, activitycomponent.ID(req.Id))
@@ -163,6 +169,6 @@ func (r *activityComponentRepo) genCondition(req *v1.ActivityComponentReq) []pre
 	if req.TenantId > 0 {
 		list = append(list, activitycomponent.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

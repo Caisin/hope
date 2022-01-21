@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelconsume"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -62,7 +63,10 @@ func (r *novelConsumeRepo) GetNovelConsume(ctx context.Context, req *v1.NovelCon
 
 // PageNovelConsume 分页查询
 func (r *novelConsumeRepo) PageNovelConsume(ctx context.Context, req *v1.NovelConsumePageReq) ([]*ent.NovelConsume, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.NovelConsume.
 		Query().
 		Where(
@@ -77,13 +81,13 @@ func (r *novelConsumeRepo) PageNovelConsume(ctx context.Context, req *v1.NovelCo
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -91,6 +95,9 @@ func (r *novelConsumeRepo) PageNovelConsume(ctx context.Context, req *v1.NovelCo
 
 // genCondition 构造查询条件
 func (r *novelConsumeRepo) genCondition(req *v1.NovelConsumeReq) []predicate.NovelConsume {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.NovelConsume, 0)
 	if req.Id > 0 {
 		list = append(list, novelconsume.ID(req.Id))

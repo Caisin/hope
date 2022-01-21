@@ -909,7 +909,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_msgs", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// UserMsgsTable holds the schema information for the "user_msgs" table.
 	UserMsgsTable = &schema.Table{
@@ -940,12 +940,21 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
+		{Name: "social_user_vips", Type: field.TypeInt64, Nullable: true},
 	}
 	// VipUsersTable holds the schema information for the "vip_users" table.
 	VipUsersTable = &schema.Table{
 		Name:       "vip_users",
 		Columns:    VipUsersColumns,
 		PrimaryKey: []*schema.Column{VipUsersColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "vip_users_social_users_vips",
+				Columns:    []*schema.Column{VipUsersColumns[13]},
+				RefColumns: []*schema.Column{SocialUsersColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 	}
 	// NovelPkgsColumns holds the columns for the "novel_pkgs" table.
 	NovelPkgsColumns = []*schema.Column{
@@ -968,31 +977,6 @@ var (
 				Symbol:     "novel_pkgs_book_package_id",
 				Columns:    []*schema.Column{NovelPkgsColumns[1]},
 				RefColumns: []*schema.Column{BookPackagesColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-		},
-	}
-	// SocialUserVipsColumns holds the columns for the "social_user_vips" table.
-	SocialUserVipsColumns = []*schema.Column{
-		{Name: "social_user_id", Type: field.TypeInt},
-		{Name: "vip_user_id", Type: field.TypeInt},
-	}
-	// SocialUserVipsTable holds the schema information for the "social_user_vips" table.
-	SocialUserVipsTable = &schema.Table{
-		Name:       "social_user_vips",
-		Columns:    SocialUserVipsColumns,
-		PrimaryKey: []*schema.Column{SocialUserVipsColumns[0], SocialUserVipsColumns[1]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "social_user_vips_social_user_id",
-				Columns:    []*schema.Column{SocialUserVipsColumns[0]},
-				RefColumns: []*schema.Column{SocialUsersColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-			{
-				Symbol:     "social_user_vips_vip_user_id",
-				Columns:    []*schema.Column{SocialUserVipsColumns[1]},
-				RefColumns: []*schema.Column{VipUsersColumns[0]},
 				OnDelete:   schema.Cascade,
 			},
 		},
@@ -1031,7 +1015,6 @@ var (
 		UserMsgsTable,
 		VipUsersTable,
 		NovelPkgsTable,
-		SocialUserVipsTable,
 	}
 )
 
@@ -1055,8 +1038,7 @@ func init() {
 	SocialUsersTable.ForeignKeys[0].RefTable = AdChannelsTable
 	TaskLogsTable.ForeignKeys[0].RefTable = SocialUsersTable
 	UserMsgsTable.ForeignKeys[0].RefTable = SocialUsersTable
+	VipUsersTable.ForeignKeys[0].RefTable = SocialUsersTable
 	NovelPkgsTable.ForeignKeys[0].RefTable = NovelsTable
 	NovelPkgsTable.ForeignKeys[1].RefTable = BookPackagesTable
-	SocialUserVipsTable.ForeignKeys[0].RefTable = SocialUsersTable
-	SocialUserVipsTable.ForeignKeys[1].RefTable = VipUsersTable
 }

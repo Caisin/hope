@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -7,9 +6,10 @@ import (
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
-	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
+	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,35 +30,35 @@ func NewSocialUserRepo(data *Data, logger log.Logger) biz.SocialUserRepo {
 func (r *socialUserRepo) CreateSocialUser(ctx context.Context, req *v1.SocialUserCreateReq) (*ent.SocialUser, error) {
 	now := time.Now()
 	return r.data.db.SocialUser.Create().
-		SetUserId(req.UserId).
-		SetUnionid(req.Unionid).
-		SetToken(req.Token).
-		SetOpenid(req.Openid).
-		SetRoutineOpenid(req.RoutineOpenid).
-		SetUserName(req.UserName).
-		SetNickName(req.NickName).
-		SetBirthday(req.Birthday.AsTime()).
-		SetPhone(req.Phone).
-		SetEmail(req.Email).
-		SetPassword(req.Password).
-		SetAvatar(req.Avatar).
-		SetSex(req.Sex).
-		SetRegion(req.Region).
-		SetCity(req.City).
-		SetLanguage(req.Language).
-		SetProvince(req.Province).
-		SetCountry(req.Country).
-		SetSignature(req.Signature).
-		SetRemark(req.Remark).
-		SetGroupid(req.Groupid).
-		SetTagidList(req.TagidList).
-		SetSubscribe(req.Subscribe).
-		SetSubscribeTime(req.SubscribeTime).
-		SetSessionKey(req.SessionKey).
-		SetUserType(req.UserType).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetUserId(req.UserId).
+    SetUnionid(req.Unionid).
+    SetToken(req.Token).
+    SetOpenid(req.Openid).
+    SetRoutineOpenid(req.RoutineOpenid).
+    SetUserName(req.UserName).
+    SetNickName(req.NickName).
+    SetBirthday(req.Birthday.AsTime()).
+    SetPhone(req.Phone).
+    SetEmail(req.Email).
+    SetPassword(req.Password).
+    SetAvatar(req.Avatar).
+    SetSex(req.Sex).
+    SetRegion(req.Region).
+    SetCity(req.City).
+    SetLanguage(req.Language).
+    SetProvince(req.Province).
+    SetCountry(req.Country).
+    SetSignature(req.Signature).
+    SetRemark(req.Remark).
+    SetGroupid(req.Groupid).
+    SetTagidList(req.TagidList).
+    SetSubscribe(req.Subscribe).
+    SetSubscribeTime(req.SubscribeTime).
+    SetSessionKey(req.SessionKey).
+    SetUserType(req.UserType).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -84,7 +84,10 @@ func (r *socialUserRepo) GetSocialUser(ctx context.Context, req *v1.SocialUserRe
 
 // PageSocialUser 分页查询
 func (r *socialUserRepo) PageSocialUser(ctx context.Context, req *v1.SocialUserPageReq) ([]*ent.SocialUser, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.SocialUser.
 		Query().
 		Where(
@@ -99,13 +102,13 @@ func (r *socialUserRepo) PageSocialUser(ctx context.Context, req *v1.SocialUserP
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -213,6 +216,6 @@ func (r *socialUserRepo) genCondition(req *v1.SocialUserReq) []predicate.SocialU
 	if req.TenantId > 0 {
 		list = append(list, socialuser.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

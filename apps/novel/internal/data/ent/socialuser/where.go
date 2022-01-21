@@ -3946,7 +3946,7 @@ func HasVips() predicate.SocialUser {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(VipsTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, VipsTable, VipsPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.O2M, false, VipsTable, VipsColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
@@ -3958,7 +3958,7 @@ func HasVipsWith(preds ...predicate.VipUser) predicate.SocialUser {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(VipsInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, VipsTable, VipsPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.O2M, false, VipsTable, VipsColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

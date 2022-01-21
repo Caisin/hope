@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdicttype"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -62,7 +63,10 @@ func (r *sysDictTypeRepo) GetSysDictType(ctx context.Context, req *v1.SysDictTyp
 
 // PageSysDictType 分页查询
 func (r *sysDictTypeRepo) PageSysDictType(ctx context.Context, req *v1.SysDictTypePageReq) ([]*ent.SysDictType, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.SysDictType.
 		Query().
 		Where(
@@ -77,13 +81,13 @@ func (r *sysDictTypeRepo) PageSysDictType(ctx context.Context, req *v1.SysDictTy
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -91,6 +95,9 @@ func (r *sysDictTypeRepo) PageSysDictType(ctx context.Context, req *v1.SysDictTy
 
 // genCondition 构造查询条件
 func (r *sysDictTypeRepo) genCondition(req *v1.SysDictTypeReq) []predicate.SysDictType {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.SysDictType, 0)
 	if req.Id > 0 {
 		list = append(list, sysdicttype.ID(req.Id))

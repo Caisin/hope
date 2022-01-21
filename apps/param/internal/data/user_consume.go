@@ -9,6 +9,8 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userconsume"
+	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -61,7 +63,10 @@ func (r *userConsumeRepo) GetUserConsume(ctx context.Context, req *v1.UserConsum
 
 // PageUserConsume 分页查询
 func (r *userConsumeRepo) PageUserConsume(ctx context.Context, req *v1.UserConsumePageReq) ([]*ent.UserConsume, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.UserConsume.
 		Query().
 		Where(
@@ -76,13 +81,13 @@ func (r *userConsumeRepo) PageUserConsume(ctx context.Context, req *v1.UserConsu
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -90,6 +95,9 @@ func (r *userConsumeRepo) PageUserConsume(ctx context.Context, req *v1.UserConsu
 
 // genCondition 构造查询条件
 func (r *userConsumeRepo) genCondition(req *v1.UserConsumeReq) []predicate.UserConsume {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.UserConsume, 0)
 	if req.Id > 0 {
 		list = append(list, userconsume.ID(req.Id))

@@ -1,5 +1,4 @@
-package data
-
+package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent/adchannel"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/pkg/util/str"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -30,18 +30,18 @@ func NewAdChannelRepo(data *Data, logger log.Logger) biz.AdChannelRepo {
 func (r *adChannelRepo) CreateAdChannel(ctx context.Context, req *v1.AdChannelCreateReq) (*ent.AdChannel, error) {
 	now := time.Now()
 	return r.data.db.AdChannel.Create().
-		SetChannelName(req.ChannelName).
-		SetNovelId(req.NovelId).
-		SetReg(req.Reg).
-		SetPay(req.Pay).
-		SetNovelName(req.NovelName).
-		SetChapterId(req.ChapterId).
-		SetChapterNum(req.ChapterNum).
-		SetAdType(req.AdType).
-		SetImg(req.Img).
-		SetCreatedAt(now).
-		SetUpdatedAt(now).
-		Save(ctx)
+    SetChannelName(req.ChannelName).
+    SetNovelId(req.NovelId).
+    SetReg(req.Reg).
+    SetPay(req.Pay).
+    SetNovelName(req.NovelName).
+    SetChapterId(req.ChapterId).
+    SetChapterNum(req.ChapterNum).
+    SetAdType(req.AdType).
+    SetImg(req.Img).
+	SetCreatedAt(now).
+	SetUpdatedAt(now).
+	Save(ctx)
 
 }
 
@@ -67,7 +67,10 @@ func (r *adChannelRepo) GetAdChannel(ctx context.Context, req *v1.AdChannelReq) 
 
 // PageAdChannel 分页查询
 func (r *adChannelRepo) PageAdChannel(ctx context.Context, req *v1.AdChannelPageReq) ([]*ent.AdChannel, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin=&pagin.Pagination{}
+	}
 	query := r.data.db.AdChannel.
 		Query().
 		Where(
@@ -82,13 +85,13 @@ func (r *adChannelRepo) PageAdChannel(ctx context.Context, req *v1.AdChannelPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -96,6 +99,9 @@ func (r *adChannelRepo) PageAdChannel(ctx context.Context, req *v1.AdChannelPage
 
 // genCondition 构造查询条件
 func (r *adChannelRepo) genCondition(req *v1.AdChannelReq) []predicate.AdChannel {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.AdChannel, 0)
 	if req.Id > 0 {
 		list = append(list, adchannel.ID(req.Id))
@@ -142,6 +148,6 @@ func (r *adChannelRepo) genCondition(req *v1.AdChannelReq) []predicate.AdChannel
 	if req.TenantId > 0 {
 		list = append(list, adchannel.TenantId(req.TenantId))
 	}
-
+	
 	return list
 }

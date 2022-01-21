@@ -17,6 +17,9 @@ type UserMsg struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
+	// UserId holds the value of the "userId" field.
+	// 用户ID
+	UserId int64 `json:"userId,omitempty"`
 	// MsgId holds the value of the "msgId" field.
 	// 消息编码
 	MsgId int64 `json:"msgId,omitempty"`
@@ -40,8 +43,7 @@ type UserMsg struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the UserMsgQuery when eager-loading is set.
-	Edges            UserMsgEdges `json:"edges"`
-	social_user_msgs *int64
+	Edges UserMsgEdges `json:"edges"`
 }
 
 // UserMsgEdges holds the relations/edges for other nodes in the graph.
@@ -74,12 +76,10 @@ func (*UserMsg) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case usermsg.FieldIsRead:
 			values[i] = new(sql.NullBool)
-		case usermsg.FieldID, usermsg.FieldMsgId, usermsg.FieldCreateBy, usermsg.FieldUpdateBy, usermsg.FieldTenantId:
+		case usermsg.FieldID, usermsg.FieldUserId, usermsg.FieldMsgId, usermsg.FieldCreateBy, usermsg.FieldUpdateBy, usermsg.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case usermsg.FieldCreatedAt, usermsg.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case usermsg.ForeignKeys[0]: // social_user_msgs
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type UserMsg", columns[i])
 		}
@@ -101,6 +101,12 @@ func (um *UserMsg) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			um.ID = int64(value.Int64)
+		case usermsg.FieldUserId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field userId", values[i])
+			} else if value.Valid {
+				um.UserId = value.Int64
+			}
 		case usermsg.FieldMsgId:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field msgId", values[i])
@@ -143,13 +149,6 @@ func (um *UserMsg) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				um.TenantId = value.Int64
 			}
-		case usermsg.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_msgs", value)
-			} else if value.Valid {
-				um.social_user_msgs = new(int64)
-				*um.social_user_msgs = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -183,6 +182,8 @@ func (um *UserMsg) String() string {
 	var builder strings.Builder
 	builder.WriteString("UserMsg(")
 	builder.WriteString(fmt.Sprintf("id=%v", um.ID))
+	builder.WriteString(", userId=")
+	builder.WriteString(fmt.Sprintf("%v", um.UserId))
 	builder.WriteString(", msgId=")
 	builder.WriteString(fmt.Sprintf("%v", um.MsgId))
 	builder.WriteString(", isRead=")

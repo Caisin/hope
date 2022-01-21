@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/usermsg"
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -29,6 +30,7 @@ func NewUserMsgRepo(data *Data, logger log.Logger) biz.UserMsgRepo {
 func (r *userMsgRepo) CreateUserMsg(ctx context.Context, req *v1.UserMsgCreateReq) (*ent.UserMsg, error) {
 	now := time.Now()
 	return r.data.db.UserMsg.Create().
+		SetUserId(req.UserId).
 		SetMsgId(req.MsgId).
 		SetIsRead(req.IsRead).
 		SetCreatedAt(now).
@@ -59,7 +61,10 @@ func (r *userMsgRepo) GetUserMsg(ctx context.Context, req *v1.UserMsgReq) (*ent.
 
 // PageUserMsg 分页查询
 func (r *userMsgRepo) PageUserMsg(ctx context.Context, req *v1.UserMsgPageReq) ([]*ent.UserMsg, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.UserMsg.
 		Query().
 		Where(
@@ -74,13 +79,13 @@ func (r *userMsgRepo) PageUserMsg(ctx context.Context, req *v1.UserMsgPageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -88,9 +93,15 @@ func (r *userMsgRepo) PageUserMsg(ctx context.Context, req *v1.UserMsgPageReq) (
 
 // genCondition 构造查询条件
 func (r *userMsgRepo) genCondition(req *v1.UserMsgReq) []predicate.UserMsg {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.UserMsg, 0)
 	if req.Id > 0 {
 		list = append(list, usermsg.ID(req.Id))
+	}
+	if req.UserId > 0 {
+		list = append(list, usermsg.UserId(req.UserId))
 	}
 	if req.MsgId > 0 {
 		list = append(list, usermsg.MsgId(req.MsgId))

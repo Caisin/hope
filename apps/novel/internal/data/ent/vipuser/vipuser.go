@@ -39,11 +39,13 @@ const (
 	EdgeUser = "user"
 	// Table holds the table name of the vipuser in the database.
 	Table = "vip_users"
-	// UserTable is the table that holds the user relation/edge. The primary key declared below.
-	UserTable = "social_user_vips"
+	// UserTable is the table that holds the user relation/edge.
+	UserTable = "vip_users"
 	// UserInverseTable is the table name for the SocialUser entity.
 	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
 	UserInverseTable = "social_users"
+	// UserColumn is the table column denoting the user relation/edge.
+	UserColumn = "social_user_vips"
 )
 
 // Columns holds all SQL columns for vipuser fields.
@@ -63,16 +65,21 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-var (
-	// UserPrimaryKey and UserColumn2 are the table columns denoting the
-	// primary key for the user relation (M2M).
-	UserPrimaryKey = []string{"social_user_id", "vip_user_id"}
-)
+// ForeignKeys holds the SQL foreign-keys that are owned by the "vip_users"
+// table and are not defined as standalone fields in the schema.
+var ForeignKeys = []string{
+	"social_user_vips",
+}
 
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
+			return true
+		}
+	}
+	for i := range ForeignKeys {
+		if column == ForeignKeys[i] {
 			return true
 		}
 	}

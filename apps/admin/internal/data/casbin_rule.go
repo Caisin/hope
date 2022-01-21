@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/predicate"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -65,7 +66,10 @@ func (r *casbinRuleRepo) GetCasbinRule(ctx context.Context, req *v1.CasbinRuleRe
 
 // PageCasbinRule 分页查询
 func (r *casbinRuleRepo) PageCasbinRule(ctx context.Context, req *v1.CasbinRulePageReq) ([]*ent.CasbinRule, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.CasbinRule.
 		Query().
 		Where(
@@ -80,13 +84,13 @@ func (r *casbinRuleRepo) PageCasbinRule(ctx context.Context, req *v1.CasbinRuleP
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -94,6 +98,9 @@ func (r *casbinRuleRepo) PageCasbinRule(ctx context.Context, req *v1.CasbinRuleP
 
 // genCondition 构造查询条件
 func (r *casbinRuleRepo) genCondition(req *v1.CasbinRuleReq) []predicate.CasbinRule {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.CasbinRule, 0)
 	if req.Id > 0 {
 		list = append(list, casbinrule.ID(req.Id))

@@ -8,239 +8,262 @@ import (
 	v1 "hope/api/admin/sysrole/v1"
 	"hope/apps/admin/internal/data/ent"
 )
-
 func SysRoleUpdateReq2Data(v *v1.SysRoleUpdateReq) *ent.SysRole {
 	if v == nil {
 		return nil
 	}
 	return &ent.SysRole{
-		ID:        v.Id,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		ID:       v.Id,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleData2UpdateReq(v *ent.SysRole) *v1.SysRoleUpdateReq {
 	if v == nil {
 		return nil
 	}
 	return &v1.SysRoleUpdateReq{
-		Id:        v.ID,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		Id:       v.ID,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleCreateReq2Data(v *v1.SysRoleCreateReq) *ent.SysRole {
 	if v == nil {
 		return nil
 	}
 	return &ent.SysRole{
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleData2CreateReq(v *ent.SysRole) *v1.SysRoleCreateReq {
 	if v == nil {
 		return nil
 	}
 	return &v1.SysRoleCreateReq{
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleReq2Data(v *v1.SysRoleReq) *ent.SysRole {
 	if v == nil {
 		return nil
 	}
 	return &ent.SysRole{
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleData2Req(v *ent.SysRole) *v1.SysRoleReq {
 	if v == nil {
 		return nil
 	}
 	return &v1.SysRoleReq{
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleReply2Data(v *v1.SysRoleReply) *ent.SysRole {
 	if v == nil {
 		return nil
 	}
 	return &ent.SysRole{
-		ID:        v.Id,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
+		ID:       v.Id,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+		SysMenu:       v.SysMenu,
+		CreatedAt:       v.CreatedAt.AsTime(),
+		UpdatedAt:       v.UpdatedAt.AsTime(),
+		CreateBy:       v.CreateBy,
+		UpdateBy:       v.UpdateBy,
+		TenantId:       v.TenantId,
+
 	}
 }
+
 
 func SysRoleData2Reply(v *ent.SysRole) *v1.SysRoleReply {
 	if v == nil {
 		return nil
 	}
 	return &v1.SysRoleReply{
-		Id:        v.ID,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
+		Id:       v.ID,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+		SysMenu:       v.SysMenu,
+		CreatedAt:       timestamppb.New(v.CreatedAt),
+		UpdatedAt:       timestamppb.New(v.UpdatedAt),
+		CreateBy:       v.CreateBy,
+		UpdateBy:       v.UpdateBy,
+		TenantId:       v.TenantId,
+
 	}
 }
+
 
 func SysRoleUpdateReply2Data(v *v1.SysRoleUpdateReply) *ent.SysRole {
 	if v == nil {
 		return nil
 	}
 	return &ent.SysRole{
-		ID:        v.Id,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		ID:       v.Id,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleData2UpdateReply(v *ent.SysRole) *v1.SysRoleUpdateReply {
 	if v == nil {
 		return nil
 	}
 	return &v1.SysRoleUpdateReply{
-		Id:        v.ID,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
+		Id:       v.ID,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+
 	}
 }
+
 
 func SysRoleCreateReply2Data(v *v1.SysRoleCreateReply) *ent.SysRole {
 	if v == nil {
 		return nil
 	}
 	return &ent.SysRole{
-		ID:        v.Id,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
+		ID:       v.Id,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+		SysMenu:       v.SysMenu,
+		CreatedAt:       v.CreatedAt.AsTime(),
+		UpdatedAt:       v.UpdatedAt.AsTime(),
+		CreateBy:       v.CreateBy,
+		UpdateBy:       v.UpdateBy,
+		TenantId:       v.TenantId,
+
 	}
 }
+
 
 func SysRoleData2CreateReply(v *ent.SysRole) *v1.SysRoleCreateReply {
 	if v == nil {
 		return nil
 	}
 	return &v1.SysRoleCreateReply{
-		Id:        v.ID,
-		RoleName:  v.RoleName,
-		Status:    v.Status,
-		RoleKey:   v.RoleKey,
-		RoleSort:  v.RoleSort,
-		Flag:      v.Flag,
-		Remark:    v.Remark,
-		Admin:     v.Admin,
-		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
+		Id:       v.ID,
+		RoleName:       v.RoleName,
+		Status:       v.Status,
+		RoleKey:       v.RoleKey,
+		RoleSort:       v.RoleSort,
+		Flag:       v.Flag,
+		Remark:       v.Remark,
+		Admin:       v.Admin,
+		DataScope:       v.DataScope,
+		SysDept:       v.SysDept,
+		SysMenu:       v.SysMenu,
+		CreatedAt:       timestamppb.New(v.CreatedAt),
+		UpdatedAt:       timestamppb.New(v.UpdatedAt),
+		CreateBy:       v.CreateBy,
+		UpdateBy:       v.UpdateBy,
+		TenantId:       v.TenantId,
+
 	}
 }
+

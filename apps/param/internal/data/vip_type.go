@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/viptype"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -64,7 +65,10 @@ func (r *vipTypeRepo) GetVipType(ctx context.Context, req *v1.VipTypeReq) (*ent.
 
 // PageVipType 分页查询
 func (r *vipTypeRepo) PageVipType(ctx context.Context, req *v1.VipTypePageReq) ([]*ent.VipType, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.VipType.
 		Query().
 		Where(
@@ -79,13 +83,13 @@ func (r *vipTypeRepo) PageVipType(ctx context.Context, req *v1.VipTypePageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -93,6 +97,9 @@ func (r *vipTypeRepo) PageVipType(ctx context.Context, req *v1.VipTypePageReq) (
 
 // genCondition 构造查询条件
 func (r *vipTypeRepo) genCondition(req *v1.VipTypeReq) []predicate.VipType {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.VipType, 0)
 	if req.Id > 0 {
 		list = append(list, viptype.ID(req.Id))

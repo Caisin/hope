@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysrole"
+	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
 )
@@ -68,7 +69,10 @@ func (r *sysRoleRepo) GetSysRole(ctx context.Context, req *v1.SysRoleReq) (*ent.
 
 // PageSysRole 分页查询
 func (r *sysRoleRepo) PageSysRole(ctx context.Context, req *v1.SysRolePageReq) ([]*ent.SysRole, error) {
-	pagin := req.Pagin
+	p := req.Pagin
+	if p == nil {
+		req.Pagin = &pagin.Pagination{}
+	}
 	query := r.data.db.SysRole.
 		Query().
 		Where(
@@ -83,13 +87,13 @@ func (r *sysRoleRepo) PageSysRole(ctx context.Context, req *v1.SysRolePageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(pagin.GetPage())).
-		Offset(int(pagin.GetOffSet()))
-	if pagin.NeedOrder() {
-		if pagin.IsDesc() {
-			query.Order(ent.Desc(pagin.GetField()))
+	query.Limit(int(p.GetPage())).
+		Offset(int(p.GetOffSet()))
+	if p.NeedOrder() {
+		if p.IsDesc() {
+			query.Order(ent.Desc(p.GetField()))
 		} else {
-			query.Order(ent.Asc(pagin.GetField()))
+			query.Order(ent.Asc(p.GetField()))
 		}
 	}
 	return query.All(ctx)
@@ -97,6 +101,9 @@ func (r *sysRoleRepo) PageSysRole(ctx context.Context, req *v1.SysRolePageReq) (
 
 // genCondition 构造查询条件
 func (r *sysRoleRepo) genCondition(req *v1.SysRoleReq) []predicate.SysRole {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.SysRole, 0)
 	if req.Id > 0 {
 		list = append(list, sysrole.ID(req.Id))

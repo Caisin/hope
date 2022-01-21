@@ -1,0 +1,1415 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/param/task/v1/task.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Task"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/task": {
+      "delete": {
+        "summary": "批量删除Task",
+        "operationId": "Task_BatchDeleteTask",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "Task"
+        ]
+      },
+      "post": {
+        "summary": "创建Task",
+        "operationId": "Task_CreateTask",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TaskCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "Task"
+        ]
+      }
+    },
+    "/v1/task/page": {
+      "get": {
+        "summary": "分页查询Task",
+        "operationId": "Task_GetPageTask",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.taskName",
+            "description": "任务名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.taskGroup",
+            "description": "任务分组.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.unit",
+            "description": "单位.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.topic",
+            "description": "订阅主题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.function",
+            "description": "处理方法.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.taskCode",
+            "description": "任务类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.preTask",
+            "description": "前置任务ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.novelId",
+            "description": "点击跳转书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.cycleType",
+            "description": "循环类型,once.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "描述信息.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.amount",
+            "description": "奖励金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.reward",
+            "description": "额外奖励.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.amountItem",
+            "description": "奖励资金科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.rewardItem",
+            "description": "额外奖励资金科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.targetNames",
+            "description": "目标任务名,当任务为一天多次时,逗号分割.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.targetAmounts",
+            "description": "目标值,当任务为一天多次时,逗号分割.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.status",
+            "description": "是否启用.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.sortNum",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.actionType",
+            "description": "跳转动作,pay.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Task"
+        ]
+      }
+    },
+    "/v1/task/{id}": {
+      "get": {
+        "summary": "获取Task",
+        "operationId": "Task_GetTask",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "taskName",
+            "description": "任务名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "taskGroup",
+            "description": "任务分组.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "description": "单位.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "topic",
+            "description": "订阅主题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "function",
+            "description": "处理方法.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "taskCode",
+            "description": "任务类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "preTask",
+            "description": "前置任务ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "novelId",
+            "description": "点击跳转书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "cycleType",
+            "description": "循环类型,once.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "描述信息.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "amount",
+            "description": "奖励金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "reward",
+            "description": "额外奖励.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "amountItem",
+            "description": "奖励资金科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "rewardItem",
+            "description": "额外奖励资金科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "targetNames",
+            "description": "目标任务名,当任务为一天多次时,逗号分割.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "targetAmounts",
+            "description": "目标值,当任务为一天多次时,逗号分割.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "description": "是否启用.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "sortNum",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "actionType",
+            "description": "跳转动作,pay.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Task"
+        ]
+      },
+      "delete": {
+        "summary": "删除Task",
+        "operationId": "Task_DeleteTask",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Task"
+        ]
+      },
+      "put": {
+        "summary": "更新Task",
+        "operationId": "Task_UpdateTask",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "taskName": {
+                  "type": "string",
+                  "title": "任务名称"
+                },
+                "taskGroup": {
+                  "type": "string",
+                  "title": "任务分组"
+                },
+                "unit": {
+                  "type": "string",
+                  "title": "单位"
+                },
+                "topic": {
+                  "type": "string",
+                  "title": "订阅主题"
+                },
+                "function": {
+                  "type": "string",
+                  "title": "处理方法"
+                },
+                "taskCode": {
+                  "type": "string",
+                  "title": "任务类型"
+                },
+                "preTask": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "前置任务ID"
+                },
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "点击跳转书号"
+                },
+                "cycleType": {
+                  "type": "string",
+                  "title": "循环类型,once"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "描述信息"
+                },
+                "amount": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "奖励金额"
+                },
+                "reward": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "额外奖励"
+                },
+                "amountItem": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "奖励资金科目"
+                },
+                "rewardItem": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "额外奖励资金科目"
+                },
+                "targetNames": {
+                  "type": "string",
+                  "title": "目标任务名,当任务为一天多次时,逗号分割"
+                },
+                "targetAmounts": {
+                  "type": "string",
+                  "title": "目标值,当任务为一天多次时,逗号分割"
+                },
+                "status": {
+                  "type": "boolean",
+                  "title": "是否启用"
+                },
+                "sortNum": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "排序字段"
+                },
+                "actionType": {
+                  "type": "string",
+                  "title": "跳转动作,pay"
+                },
+                "effectTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "生效时间"
+                },
+                "expiredTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "失效时间"
+                }
+              },
+              "title": "更新Task请求"
+            }
+          }
+        ],
+        "tags": [
+          "Task"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1TaskCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "unit": {
+          "type": "string",
+          "title": "单位"
+        },
+        "topic": {
+          "type": "string",
+          "title": "订阅主题"
+        },
+        "function": {
+          "type": "string",
+          "title": "处理方法"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务类型"
+        },
+        "preTask": {
+          "type": "string",
+          "format": "int64",
+          "title": "前置任务ID"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击跳转书号"
+        },
+        "cycleType": {
+          "type": "string",
+          "title": "循环类型,once"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述信息"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资金科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资金科目"
+        },
+        "targetNames": {
+          "type": "string",
+          "title": "目标任务名,当任务为一天多次时,逗号分割"
+        },
+        "targetAmounts": {
+          "type": "string",
+          "title": "目标值,当任务为一天多次时,逗号分割"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "是否启用"
+        },
+        "sortNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "排序字段"
+        },
+        "actionType": {
+          "type": "string",
+          "title": "跳转动作,pay"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建Task返回"
+    },
+    "v1TaskCreateReq": {
+      "type": "object",
+      "properties": {
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "unit": {
+          "type": "string",
+          "title": "单位"
+        },
+        "topic": {
+          "type": "string",
+          "title": "订阅主题"
+        },
+        "function": {
+          "type": "string",
+          "title": "处理方法"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务类型"
+        },
+        "preTask": {
+          "type": "string",
+          "format": "int64",
+          "title": "前置任务ID"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击跳转书号"
+        },
+        "cycleType": {
+          "type": "string",
+          "title": "循环类型,once"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述信息"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资金科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资金科目"
+        },
+        "targetNames": {
+          "type": "string",
+          "title": "目标任务名,当任务为一天多次时,逗号分割"
+        },
+        "targetAmounts": {
+          "type": "string",
+          "title": "目标值,当任务为一天多次时,逗号分割"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "是否启用"
+        },
+        "sortNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "排序字段"
+        },
+        "actionType": {
+          "type": "string",
+          "title": "跳转动作,pay"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "创建Task请求"
+    },
+    "v1TaskDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除Task返回"
+    },
+    "v1TaskPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1TaskReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1TaskReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "unit": {
+          "type": "string",
+          "title": "单位"
+        },
+        "topic": {
+          "type": "string",
+          "title": "订阅主题"
+        },
+        "function": {
+          "type": "string",
+          "title": "处理方法"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务类型"
+        },
+        "preTask": {
+          "type": "string",
+          "format": "int64",
+          "title": "前置任务ID"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击跳转书号"
+        },
+        "cycleType": {
+          "type": "string",
+          "title": "循环类型,once"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述信息"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资金科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资金科目"
+        },
+        "targetNames": {
+          "type": "string",
+          "title": "目标任务名,当任务为一天多次时,逗号分割"
+        },
+        "targetAmounts": {
+          "type": "string",
+          "title": "目标值,当任务为一天多次时,逗号分割"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "是否启用"
+        },
+        "sortNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "排序字段"
+        },
+        "actionType": {
+          "type": "string",
+          "title": "跳转动作,pay"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1TaskReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "unit": {
+          "type": "string",
+          "title": "单位"
+        },
+        "topic": {
+          "type": "string",
+          "title": "订阅主题"
+        },
+        "function": {
+          "type": "string",
+          "title": "处理方法"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务类型"
+        },
+        "preTask": {
+          "type": "string",
+          "format": "int64",
+          "title": "前置任务ID"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击跳转书号"
+        },
+        "cycleType": {
+          "type": "string",
+          "title": "循环类型,once"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述信息"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资金科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资金科目"
+        },
+        "targetNames": {
+          "type": "string",
+          "title": "目标任务名,当任务为一天多次时,逗号分割"
+        },
+        "targetAmounts": {
+          "type": "string",
+          "title": "目标值,当任务为一天多次时,逗号分割"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "是否启用"
+        },
+        "sortNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "排序字段"
+        },
+        "actionType": {
+          "type": "string",
+          "title": "跳转动作,pay"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1TaskUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "unit": {
+          "type": "string",
+          "title": "单位"
+        },
+        "topic": {
+          "type": "string",
+          "title": "订阅主题"
+        },
+        "function": {
+          "type": "string",
+          "title": "处理方法"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务类型"
+        },
+        "preTask": {
+          "type": "string",
+          "format": "int64",
+          "title": "前置任务ID"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击跳转书号"
+        },
+        "cycleType": {
+          "type": "string",
+          "title": "循环类型,once"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述信息"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资金科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资金科目"
+        },
+        "targetNames": {
+          "type": "string",
+          "title": "目标任务名,当任务为一天多次时,逗号分割"
+        },
+        "targetAmounts": {
+          "type": "string",
+          "title": "目标值,当任务为一天多次时,逗号分割"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "是否启用"
+        },
+        "sortNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "排序字段"
+        },
+        "actionType": {
+          "type": "string",
+          "title": "跳转动作,pay"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "更新Task返回"
+    }
+  }
+}

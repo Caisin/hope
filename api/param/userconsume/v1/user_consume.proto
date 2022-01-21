@@ -1,0 +1,208 @@
+syntax = "proto3";
+package userconsume.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/userconsume/v1;v1";
+
+// The UserConsume service definition.
+service UserConsume {
+
+  // 分页查询UserConsume
+  rpc GetPageUserConsume (UserConsumePageReq) returns (UserConsumePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/userconsume/page"
+    };
+  }
+
+  // 获取UserConsume
+  rpc GetUserConsume (UserConsumeReq) returns (UserConsumeReply)  {
+    option (google.api.http) = {
+      get: "/v1/userconsume/{id}"
+    };
+  }
+
+  // 更新UserConsume
+  rpc UpdateUserConsume (UserConsumeUpdateReq) returns (UserConsumeUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/userconsume/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建UserConsume
+  rpc CreateUserConsume (UserConsumeCreateReq) returns (UserConsumeCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/userconsume"
+      body: "*"
+    };
+  }
+
+  // 删除UserConsume
+  rpc DeleteUserConsume (UserConsumeDeleteReq) returns (UserConsumeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userconsume/{id}"
+    };
+  }
+
+  // 批量删除UserConsume
+  rpc BatchDeleteUserConsume (UserConsumeBatchDeleteReq) returns (UserConsumeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userconsume"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message UserConsumePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    UserConsumeReq param = 2;
+}
+
+// 查询搜索返回
+message UserConsumePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated UserConsumeReply items = 2;
+}
+
+
+// 查询搜索请求
+message UserConsumeReq {
+    int64 id = 1;
+    //用户ID
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 查询搜索返回
+message UserConsumeReply {
+    int64 id = 1;
+    //用户ID
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 创建UserConsume请求
+message UserConsumeCreateReq {
+    //用户ID
+    int64 novelId = 1;
+    //书币
+    int64 coin = 2;
+    //书券
+    int64 coupon = 3;
+    //VIP折扣金额
+    int64 discount = 4;
+
+}
+
+// 创建UserConsume返回
+message UserConsumeCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 更新UserConsume请求
+message UserConsumeUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+
+}
+
+
+// 更新UserConsume返回
+message UserConsumeUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+
+}
+
+// 删除UserConsume请求
+message UserConsumeDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除UserConsume请求
+message UserConsumeBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除UserConsume返回
+message UserConsumeDeleteReply {
+    bool result = 1;
+}
+

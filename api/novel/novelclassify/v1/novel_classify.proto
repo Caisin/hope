@@ -1,0 +1,220 @@
+syntax = "proto3";
+package novelclassify.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novelclassify/v1;v1";
+
+// The NovelClassify service definition.
+service NovelClassify {
+
+  // 分页查询NovelClassify
+  rpc GetPageNovelClassify (NovelClassifyPageReq) returns (NovelClassifyPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelclassify/page"
+    };
+  }
+
+  // 获取NovelClassify
+  rpc GetNovelClassify (NovelClassifyReq) returns (NovelClassifyReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelclassify/{id}"
+    };
+  }
+
+  // 更新NovelClassify
+  rpc UpdateNovelClassify (NovelClassifyUpdateReq) returns (NovelClassifyUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelclassify/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelClassify
+  rpc CreateNovelClassify (NovelClassifyCreateReq) returns (NovelClassifyCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelclassify"
+      body: "*"
+    };
+  }
+
+  // 删除NovelClassify
+  rpc DeleteNovelClassify (NovelClassifyDeleteReq) returns (NovelClassifyDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelclassify/{id}"
+    };
+  }
+
+  // 批量删除NovelClassify
+  rpc BatchDeleteNovelClassify (NovelClassifyBatchDeleteReq) returns (NovelClassifyDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelclassify"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelClassifyPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelClassifyReq param = 2;
+}
+
+// 查询搜索返回
+message NovelClassifyPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelClassifyReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelClassifyReq {
+    int64 id = 1;
+    //父类ID,默认0,表示无
+    int64 pid = 2;
+    //分类名称
+    string classifyName = 3;
+    //状态 0
+    int32 status = 4;
+    //排序字段
+    int32 orderNum = 5;
+    //备注
+    string remark = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 查询搜索返回
+message NovelClassifyReply {
+    int64 id = 1;
+    //父类ID,默认0,表示无
+    int64 pid = 2;
+    //分类名称
+    string classifyName = 3;
+    //状态 0
+    int32 status = 4;
+    //排序字段
+    int32 orderNum = 5;
+    //备注
+    string remark = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 创建NovelClassify请求
+message NovelClassifyCreateReq {
+    //父类ID,默认0,表示无
+    int64 pid = 1;
+    //分类名称
+    string classifyName = 2;
+    //状态 0
+    int32 status = 3;
+    //排序字段
+    int32 orderNum = 4;
+    //备注
+    string remark = 5;
+
+}
+
+// 创建NovelClassify返回
+message NovelClassifyCreateReply {
+    int64 id = 1;
+    //父类ID,默认0,表示无
+    int64 pid = 2;
+    //分类名称
+    string classifyName = 3;
+    //状态 0
+    int32 status = 4;
+    //排序字段
+    int32 orderNum = 5;
+    //备注
+    string remark = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 更新NovelClassify请求
+message NovelClassifyUpdateReq {
+    int64 id = 1;
+    //父类ID,默认0,表示无
+    int64 pid = 2;
+    //分类名称
+    string classifyName = 3;
+    //状态 0
+    int32 status = 4;
+    //排序字段
+    int32 orderNum = 5;
+    //备注
+    string remark = 6;
+
+}
+
+
+// 更新NovelClassify返回
+message NovelClassifyUpdateReply {
+    int64 id = 1;
+    //父类ID,默认0,表示无
+    int64 pid = 2;
+    //分类名称
+    string classifyName = 3;
+    //状态 0
+    int32 status = 4;
+    //排序字段
+    int32 orderNum = 5;
+    //备注
+    string remark = 6;
+
+}
+
+// 删除NovelClassify请求
+message NovelClassifyDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelClassify请求
+message NovelClassifyBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelClassify返回
+message NovelClassifyDeleteReply {
+    bool result = 1;
+}
+

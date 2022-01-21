@@ -1,0 +1,232 @@
+syntax = "proto3";
+package viptype.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/viptype/v1;v1";
+
+// The VipType service definition.
+service VipType {
+
+  // 分页查询VipType
+  rpc GetPageVipType (VipTypePageReq) returns (VipTypePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/viptype/page"
+    };
+  }
+
+  // 获取VipType
+  rpc GetVipType (VipTypeReq) returns (VipTypeReply)  {
+    option (google.api.http) = {
+      get: "/v1/viptype/{id}"
+    };
+  }
+
+  // 更新VipType
+  rpc UpdateVipType (VipTypeUpdateReq) returns (VipTypeUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/viptype/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建VipType
+  rpc CreateVipType (VipTypeCreateReq) returns (VipTypeCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/viptype"
+      body: "*"
+    };
+  }
+
+  // 删除VipType
+  rpc DeleteVipType (VipTypeDeleteReq) returns (VipTypeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/viptype/{id}"
+    };
+  }
+
+  // 批量删除VipType
+  rpc BatchDeleteVipType (VipTypeBatchDeleteReq) returns (VipTypeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/viptype"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message VipTypePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    VipTypeReq param = 2;
+}
+
+// 查询搜索返回
+message VipTypePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated VipTypeReply items = 2;
+}
+
+
+// 查询搜索请求
+message VipTypeReq {
+    int64 id = 1;
+    //账本名称
+    string vipName = 2;
+    //是否超级vip
+    bool isSuper = 3;
+    //有效天数
+    int32 validDays = 4;
+    //折扣率
+    int64 discountRate = 5;
+    //头像ID
+    int64 avatarId = 6;
+    //描述
+    string summary = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 查询搜索返回
+message VipTypeReply {
+    int64 id = 1;
+    //账本名称
+    string vipName = 2;
+    //是否超级vip
+    bool isSuper = 3;
+    //有效天数
+    int32 validDays = 4;
+    //折扣率
+    int64 discountRate = 5;
+    //头像ID
+    int64 avatarId = 6;
+    //描述
+    string summary = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 创建VipType请求
+message VipTypeCreateReq {
+    //账本名称
+    string vipName = 1;
+    //是否超级vip
+    bool isSuper = 2;
+    //有效天数
+    int32 validDays = 3;
+    //折扣率
+    int64 discountRate = 4;
+    //头像ID
+    int64 avatarId = 5;
+    //描述
+    string summary = 6;
+
+}
+
+// 创建VipType返回
+message VipTypeCreateReply {
+    int64 id = 1;
+    //账本名称
+    string vipName = 2;
+    //是否超级vip
+    bool isSuper = 3;
+    //有效天数
+    int32 validDays = 4;
+    //折扣率
+    int64 discountRate = 5;
+    //头像ID
+    int64 avatarId = 6;
+    //描述
+    string summary = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 更新VipType请求
+message VipTypeUpdateReq {
+    int64 id = 1;
+    //账本名称
+    string vipName = 2;
+    //是否超级vip
+    bool isSuper = 3;
+    //有效天数
+    int32 validDays = 4;
+    //折扣率
+    int64 discountRate = 5;
+    //头像ID
+    int64 avatarId = 6;
+    //描述
+    string summary = 7;
+
+}
+
+
+// 更新VipType返回
+message VipTypeUpdateReply {
+    int64 id = 1;
+    //账本名称
+    string vipName = 2;
+    //是否超级vip
+    bool isSuper = 3;
+    //有效天数
+    int32 validDays = 4;
+    //折扣率
+    int64 discountRate = 5;
+    //头像ID
+    int64 avatarId = 6;
+    //描述
+    string summary = 7;
+
+}
+
+// 删除VipType请求
+message VipTypeDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除VipType请求
+message VipTypeBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除VipType返回
+message VipTypeDeleteReply {
+    bool result = 1;
+}
+

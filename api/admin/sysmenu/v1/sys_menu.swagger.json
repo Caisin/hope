@@ -1,0 +1,1107 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/admin/sysmenu/v1/sys_menu.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SysMenu"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/sysmenu": {
+      "delete": {
+        "summary": "批量删除SysMenu",
+        "operationId": "SysMenu_BatchDeleteSysMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysMenuDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "SysMenu"
+        ]
+      },
+      "post": {
+        "summary": "创建SysMenu",
+        "operationId": "SysMenu_CreateSysMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysMenuCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SysMenuCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "SysMenu"
+        ]
+      }
+    },
+    "/v1/sysmenu/page": {
+      "get": {
+        "summary": "分页查询SysMenu",
+        "operationId": "SysMenu_GetPageSysMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysMenuPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.menuName",
+            "description": "菜单名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.title",
+            "description": "菜单标题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.icon",
+            "description": "图标.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.path",
+            "description": "路径.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.paths",
+            "description": "多级路径.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.menuType",
+            "description": "M-目录C-菜单F-按钮.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.action",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.permission",
+            "description": "权限.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.noCache",
+            "description": "无缓存.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.breadcrumb",
+            "description": "面包屑.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.component",
+            "description": "组件.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.sort",
+            "description": "排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.visible",
+            "description": "是否可见.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.isFrame",
+            "description": "是否外链1是0否.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.sysApi",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysMenu"
+        ]
+      }
+    },
+    "/v1/sysmenu/{id}": {
+      "get": {
+        "summary": "获取SysMenu",
+        "operationId": "SysMenu_GetSysMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysMenuReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "menuName",
+            "description": "菜单名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "description": "菜单标题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "icon",
+            "description": "图标.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "路径.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paths",
+            "description": "多级路径.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "menuType",
+            "description": "M-目录C-菜单F-按钮.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "permission",
+            "description": "权限.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "noCache",
+            "description": "无缓存.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "breadcrumb",
+            "description": "面包屑.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "component",
+            "description": "组件.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "description": "排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "visible",
+            "description": "是否可见.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "isFrame",
+            "description": "是否外链1是0否.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "sysApi",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysMenu"
+        ]
+      },
+      "delete": {
+        "summary": "删除SysMenu",
+        "operationId": "SysMenu_DeleteSysMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysMenuDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysMenu"
+        ]
+      },
+      "put": {
+        "summary": "更新SysMenu",
+        "operationId": "SysMenu_UpdateSysMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysMenuUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "menuName": {
+                  "type": "string",
+                  "title": "菜单名"
+                },
+                "title": {
+                  "type": "string",
+                  "title": "菜单标题"
+                },
+                "icon": {
+                  "type": "string",
+                  "title": "图标"
+                },
+                "path": {
+                  "type": "string",
+                  "title": "路径"
+                },
+                "paths": {
+                  "type": "string",
+                  "title": "多级路径"
+                },
+                "menuType": {
+                  "type": "string",
+                  "title": "M-目录C-菜单F-按钮"
+                },
+                "action": {
+                  "type": "string"
+                },
+                "permission": {
+                  "type": "string",
+                  "title": "权限"
+                },
+                "noCache": {
+                  "type": "boolean",
+                  "title": "无缓存"
+                },
+                "breadcrumb": {
+                  "type": "string",
+                  "title": "面包屑"
+                },
+                "component": {
+                  "type": "string",
+                  "title": "组件"
+                },
+                "sort": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "排序"
+                },
+                "visible": {
+                  "type": "boolean",
+                  "title": "是否可见"
+                },
+                "isFrame": {
+                  "type": "boolean",
+                  "title": "是否外链1是0否"
+                },
+                "sysApi": {
+                  "type": "string"
+                }
+              },
+              "title": "更新SysMenu请求"
+            }
+          }
+        ],
+        "tags": [
+          "SysMenu"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SysMenuCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "menuName": {
+          "type": "string",
+          "title": "菜单名"
+        },
+        "title": {
+          "type": "string",
+          "title": "菜单标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "图标"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "paths": {
+          "type": "string",
+          "title": "多级路径"
+        },
+        "menuType": {
+          "type": "string",
+          "title": "M-目录C-菜单F-按钮"
+        },
+        "action": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string",
+          "title": "权限"
+        },
+        "noCache": {
+          "type": "boolean",
+          "title": "无缓存"
+        },
+        "breadcrumb": {
+          "type": "string",
+          "title": "面包屑"
+        },
+        "component": {
+          "type": "string",
+          "title": "组件"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "visible": {
+          "type": "boolean",
+          "title": "是否可见"
+        },
+        "isFrame": {
+          "type": "boolean",
+          "title": "是否外链1是0否"
+        },
+        "sysApi": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建SysMenu返回"
+    },
+    "v1SysMenuCreateReq": {
+      "type": "object",
+      "properties": {
+        "menuName": {
+          "type": "string",
+          "title": "菜单名"
+        },
+        "title": {
+          "type": "string",
+          "title": "菜单标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "图标"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "paths": {
+          "type": "string",
+          "title": "多级路径"
+        },
+        "menuType": {
+          "type": "string",
+          "title": "M-目录C-菜单F-按钮"
+        },
+        "action": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string",
+          "title": "权限"
+        },
+        "noCache": {
+          "type": "boolean",
+          "title": "无缓存"
+        },
+        "breadcrumb": {
+          "type": "string",
+          "title": "面包屑"
+        },
+        "component": {
+          "type": "string",
+          "title": "组件"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "visible": {
+          "type": "boolean",
+          "title": "是否可见"
+        },
+        "isFrame": {
+          "type": "boolean",
+          "title": "是否外链1是0否"
+        },
+        "sysApi": {
+          "type": "string"
+        }
+      },
+      "title": "创建SysMenu请求"
+    },
+    "v1SysMenuDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除SysMenu返回"
+    },
+    "v1SysMenuPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysMenuReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysMenuReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "menuName": {
+          "type": "string",
+          "title": "菜单名"
+        },
+        "title": {
+          "type": "string",
+          "title": "菜单标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "图标"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "paths": {
+          "type": "string",
+          "title": "多级路径"
+        },
+        "menuType": {
+          "type": "string",
+          "title": "M-目录C-菜单F-按钮"
+        },
+        "action": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string",
+          "title": "权限"
+        },
+        "noCache": {
+          "type": "boolean",
+          "title": "无缓存"
+        },
+        "breadcrumb": {
+          "type": "string",
+          "title": "面包屑"
+        },
+        "component": {
+          "type": "string",
+          "title": "组件"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "visible": {
+          "type": "boolean",
+          "title": "是否可见"
+        },
+        "isFrame": {
+          "type": "boolean",
+          "title": "是否外链1是0否"
+        },
+        "sysApi": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysMenuReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "menuName": {
+          "type": "string",
+          "title": "菜单名"
+        },
+        "title": {
+          "type": "string",
+          "title": "菜单标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "图标"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "paths": {
+          "type": "string",
+          "title": "多级路径"
+        },
+        "menuType": {
+          "type": "string",
+          "title": "M-目录C-菜单F-按钮"
+        },
+        "action": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string",
+          "title": "权限"
+        },
+        "noCache": {
+          "type": "boolean",
+          "title": "无缓存"
+        },
+        "breadcrumb": {
+          "type": "string",
+          "title": "面包屑"
+        },
+        "component": {
+          "type": "string",
+          "title": "组件"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "visible": {
+          "type": "boolean",
+          "title": "是否可见"
+        },
+        "isFrame": {
+          "type": "boolean",
+          "title": "是否外链1是0否"
+        },
+        "sysApi": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1SysMenuUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "menuName": {
+          "type": "string",
+          "title": "菜单名"
+        },
+        "title": {
+          "type": "string",
+          "title": "菜单标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "图标"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "paths": {
+          "type": "string",
+          "title": "多级路径"
+        },
+        "menuType": {
+          "type": "string",
+          "title": "M-目录C-菜单F-按钮"
+        },
+        "action": {
+          "type": "string"
+        },
+        "permission": {
+          "type": "string",
+          "title": "权限"
+        },
+        "noCache": {
+          "type": "boolean",
+          "title": "无缓存"
+        },
+        "breadcrumb": {
+          "type": "string",
+          "title": "面包屑"
+        },
+        "component": {
+          "type": "string",
+          "title": "组件"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "visible": {
+          "type": "boolean",
+          "title": "是否可见"
+        },
+        "isFrame": {
+          "type": "boolean",
+          "title": "是否外链1是0否"
+        },
+        "sysApi": {
+          "type": "string"
+        }
+      },
+      "title": "更新SysMenu返回"
+    }
+  }
+}

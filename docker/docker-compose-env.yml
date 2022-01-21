@@ -1,0 +1,79 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root #设置root帐号密码
+    ports:
+      - 3306:3306
+    volumes:
+      - D:/work/data/mysql/db:/var/lib/mysql #数据文件挂载
+      - D:/work/data/mysql/conf:/etc/mysql/conf.d #配置文件挂载
+      - D:/work/data/mysql/log:/var/log/mysql #日志文件挂载
+      
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server --appendonly yes
+    restart: always
+    volumes:
+      - D:/work/data/redis/data:/data #数据文件挂载
+    ports:
+      - 6379:6379
+      
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+    restart: always
+    volumes:
+      - D:/work/data/metabase/data:/metabase-data #数据文件挂载
+    ports:
+      - 3000:3000
+      
+  jaegertracing:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaegertracing
+    environment:
+      SAMPLING_STRATEGIES_FILE: /etc/jaeger/sampling_strategies.json
+    restart: always
+    volumes:
+      - D:/work/data/jaegertracing/tmp:/tmp #数据文件挂载
+    ports:
+      - 5775:5775
+      - 6831:6831
+      - 6832:6832
+      - 5778:5778
+      - 14268:14268
+      - 14250:14250
+      - 16686:16686 #ui地址  
+      
+  prometheus:
+    image: prom/prometheus
+    network_mode: "host"
+    container_name: prometheus-compose
+    ports:
+      - "9090:9090"
+    volumes:
+      - D:/work/data/prometheus/etc:/etc/prometheus   #prometheus主配置文件
+      - D:/work/data/prometheus/prometheus-data:/prometheus  #数据存储映射
+      #- D:/work/data/prometheus/conf:/etc/prometheus/conf   #prometheus子配置文件路径
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'    #加载主配置文件
+      - '--storage.tsdb.path=/prometheus'    #启动数据持久存储
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    network_mode: "host"
+    container_name: grafana-compose
+    ports:
+      - "4000:3000"
+    volumes:
+      - D:/work/data/grafana/etc:/etc/grafana #grafana配置文件
+      - D:/work/data/grafana/grafana_data:/var/lib/grafana   #数据存储映射
+    restart: always

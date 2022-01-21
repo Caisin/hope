@@ -1,0 +1,220 @@
+syntax = "proto3";
+package adchangelog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/adchangelog/v1;v1";
+
+// The AdChangeLog service definition.
+service AdChangeLog {
+
+  // 分页查询AdChangeLog
+  rpc GetPageAdChangeLog (AdChangeLogPageReq) returns (AdChangeLogPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/adchangelog/page"
+    };
+  }
+
+  // 获取AdChangeLog
+  rpc GetAdChangeLog (AdChangeLogReq) returns (AdChangeLogReply)  {
+    option (google.api.http) = {
+      get: "/v1/adchangelog/{id}"
+    };
+  }
+
+  // 更新AdChangeLog
+  rpc UpdateAdChangeLog (AdChangeLogUpdateReq) returns (AdChangeLogUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/adchangelog/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建AdChangeLog
+  rpc CreateAdChangeLog (AdChangeLogCreateReq) returns (AdChangeLogCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/adchangelog"
+      body: "*"
+    };
+  }
+
+  // 删除AdChangeLog
+  rpc DeleteAdChangeLog (AdChangeLogDeleteReq) returns (AdChangeLogDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/adchangelog/{id}"
+    };
+  }
+
+  // 批量删除AdChangeLog
+  rpc BatchDeleteAdChangeLog (AdChangeLogBatchDeleteReq) returns (AdChangeLogDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/adchangelog"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message AdChangeLogPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    AdChangeLogReq param = 2;
+}
+
+// 查询搜索返回
+message AdChangeLogPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated AdChangeLogReply items = 2;
+}
+
+
+// 查询搜索请求
+message AdChangeLogReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //广告ID
+    string adId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //设备号
+    string deviceId = 5;
+    //手机拓展信息
+    string extInfo = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 查询搜索返回
+message AdChangeLogReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //广告ID
+    string adId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //设备号
+    string deviceId = 5;
+    //手机拓展信息
+    string extInfo = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 创建AdChangeLog请求
+message AdChangeLogCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //广告ID
+    string adId = 2;
+    //渠道ID
+    int64 chId = 3;
+    //设备号
+    string deviceId = 4;
+    //手机拓展信息
+    string extInfo = 5;
+
+}
+
+// 创建AdChangeLog返回
+message AdChangeLogCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //广告ID
+    string adId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //设备号
+    string deviceId = 5;
+    //手机拓展信息
+    string extInfo = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 更新AdChangeLog请求
+message AdChangeLogUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //广告ID
+    string adId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //设备号
+    string deviceId = 5;
+    //手机拓展信息
+    string extInfo = 6;
+
+}
+
+
+// 更新AdChangeLog返回
+message AdChangeLogUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //广告ID
+    string adId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //设备号
+    string deviceId = 5;
+    //手机拓展信息
+    string extInfo = 6;
+
+}
+
+// 删除AdChangeLog请求
+message AdChangeLogDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除AdChangeLog请求
+message AdChangeLogBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除AdChangeLog返回
+message AdChangeLogDeleteReply {
+    bool result = 1;
+}
+

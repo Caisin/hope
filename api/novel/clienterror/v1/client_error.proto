@@ -1,0 +1,220 @@
+syntax = "proto3";
+package clienterror.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/clienterror/v1;v1";
+
+// The ClientError service definition.
+service ClientError {
+
+  // 分页查询ClientError
+  rpc GetPageClientError (ClientErrorPageReq) returns (ClientErrorPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/clienterror/page"
+    };
+  }
+
+  // 获取ClientError
+  rpc GetClientError (ClientErrorReq) returns (ClientErrorReply)  {
+    option (google.api.http) = {
+      get: "/v1/clienterror/{id}"
+    };
+  }
+
+  // 更新ClientError
+  rpc UpdateClientError (ClientErrorUpdateReq) returns (ClientErrorUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/clienterror/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建ClientError
+  rpc CreateClientError (ClientErrorCreateReq) returns (ClientErrorCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/clienterror"
+      body: "*"
+    };
+  }
+
+  // 删除ClientError
+  rpc DeleteClientError (ClientErrorDeleteReq) returns (ClientErrorDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/clienterror/{id}"
+    };
+  }
+
+  // 批量删除ClientError
+  rpc BatchDeleteClientError (ClientErrorBatchDeleteReq) returns (ClientErrorDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/clienterror"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message ClientErrorPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    ClientErrorReq param = 2;
+}
+
+// 查询搜索返回
+message ClientErrorPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated ClientErrorReply items = 2;
+}
+
+
+// 查询搜索请求
+message ClientErrorReq {
+    int64 id = 1;
+    //App版本
+    string appVersion = 2;
+    //设备名称
+    string deviceName = 3;
+    //操作系统名称
+    string osName = 4;
+    //错误信息
+    string errorInfo = 5;
+    //用户ID
+    int64 userId = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 查询搜索返回
+message ClientErrorReply {
+    int64 id = 1;
+    //App版本
+    string appVersion = 2;
+    //设备名称
+    string deviceName = 3;
+    //操作系统名称
+    string osName = 4;
+    //错误信息
+    string errorInfo = 5;
+    //用户ID
+    int64 userId = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 创建ClientError请求
+message ClientErrorCreateReq {
+    //App版本
+    string appVersion = 1;
+    //设备名称
+    string deviceName = 2;
+    //操作系统名称
+    string osName = 3;
+    //错误信息
+    string errorInfo = 4;
+    //用户ID
+    int64 userId = 5;
+
+}
+
+// 创建ClientError返回
+message ClientErrorCreateReply {
+    int64 id = 1;
+    //App版本
+    string appVersion = 2;
+    //设备名称
+    string deviceName = 3;
+    //操作系统名称
+    string osName = 4;
+    //错误信息
+    string errorInfo = 5;
+    //用户ID
+    int64 userId = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 更新ClientError请求
+message ClientErrorUpdateReq {
+    int64 id = 1;
+    //App版本
+    string appVersion = 2;
+    //设备名称
+    string deviceName = 3;
+    //操作系统名称
+    string osName = 4;
+    //错误信息
+    string errorInfo = 5;
+    //用户ID
+    int64 userId = 6;
+
+}
+
+
+// 更新ClientError返回
+message ClientErrorUpdateReply {
+    int64 id = 1;
+    //App版本
+    string appVersion = 2;
+    //设备名称
+    string deviceName = 3;
+    //操作系统名称
+    string osName = 4;
+    //错误信息
+    string errorInfo = 5;
+    //用户ID
+    int64 userId = 6;
+
+}
+
+// 删除ClientError请求
+message ClientErrorDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除ClientError请求
+message ClientErrorBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除ClientError返回
+message ClientErrorDeleteReply {
+    bool result = 1;
+}
+

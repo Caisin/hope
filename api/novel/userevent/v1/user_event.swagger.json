@@ -1,0 +1,897 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/userevent/v1/user_event.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "UserEvent"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/userevent": {
+      "delete": {
+        "summary": "批量删除UserEvent",
+        "operationId": "UserEvent_BatchDeleteUserEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserEventDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "UserEvent"
+        ]
+      },
+      "post": {
+        "summary": "创建UserEvent",
+        "operationId": "UserEvent_CreateUserEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserEventCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UserEventCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "UserEvent"
+        ]
+      }
+    },
+    "/v1/userevent/page": {
+      "get": {
+        "summary": "分页查询UserEvent",
+        "operationId": "UserEvent_GetPageUserEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserEventPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.eventType",
+            "description": "事件类型,read.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.novelId",
+            "description": "书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.chapterId",
+            "description": "章节号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.coin",
+            "description": "书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.coupon",
+            "description": "书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.money",
+            "description": "金额,充值金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.keyword",
+            "description": "搜索关键字.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "UserEvent"
+        ]
+      }
+    },
+    "/v1/userevent/{id}": {
+      "get": {
+        "summary": "获取UserEvent",
+        "operationId": "UserEvent_GetUserEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserEventReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "eventType",
+            "description": "事件类型,read.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "novelId",
+            "description": "书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "chapterId",
+            "description": "章节号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "coin",
+            "description": "书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "coupon",
+            "description": "书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "money",
+            "description": "金额,充值金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "keyword",
+            "description": "搜索关键字.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "UserEvent"
+        ]
+      },
+      "delete": {
+        "summary": "删除UserEvent",
+        "operationId": "UserEvent_DeleteUserEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserEventDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "UserEvent"
+        ]
+      },
+      "put": {
+        "summary": "更新UserEvent",
+        "operationId": "UserEvent_UpdateUserEvent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UserEventUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "eventType": {
+                  "type": "string",
+                  "title": "事件类型,read"
+                },
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书号"
+                },
+                "chapterId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "章节号"
+                },
+                "coin": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书币"
+                },
+                "coupon": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书券"
+                },
+                "money": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "金额,充值金额"
+                },
+                "keyword": {
+                  "type": "string",
+                  "title": "搜索关键字"
+                }
+              },
+              "title": "更新UserEvent请求"
+            }
+          }
+        ],
+        "tags": [
+          "UserEvent"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1UserEventCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "eventType": {
+          "type": "string",
+          "title": "事件类型,read"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "money": {
+          "type": "string",
+          "format": "int64",
+          "title": "金额,充值金额"
+        },
+        "keyword": {
+          "type": "string",
+          "title": "搜索关键字"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建UserEvent返回"
+    },
+    "v1UserEventCreateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "eventType": {
+          "type": "string",
+          "title": "事件类型,read"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "money": {
+          "type": "string",
+          "format": "int64",
+          "title": "金额,充值金额"
+        },
+        "keyword": {
+          "type": "string",
+          "title": "搜索关键字"
+        }
+      },
+      "title": "创建UserEvent请求"
+    },
+    "v1UserEventDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除UserEvent返回"
+    },
+    "v1UserEventPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1UserEventReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1UserEventReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "eventType": {
+          "type": "string",
+          "title": "事件类型,read"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "money": {
+          "type": "string",
+          "format": "int64",
+          "title": "金额,充值金额"
+        },
+        "keyword": {
+          "type": "string",
+          "title": "搜索关键字"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1UserEventReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "eventType": {
+          "type": "string",
+          "title": "事件类型,read"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "money": {
+          "type": "string",
+          "format": "int64",
+          "title": "金额,充值金额"
+        },
+        "keyword": {
+          "type": "string",
+          "title": "搜索关键字"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1UserEventUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "eventType": {
+          "type": "string",
+          "title": "事件类型,read"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "money": {
+          "type": "string",
+          "format": "int64",
+          "title": "金额,充值金额"
+        },
+        "keyword": {
+          "type": "string",
+          "title": "搜索关键字"
+        }
+      },
+      "title": "更新UserEvent返回"
+    }
+  }
+}

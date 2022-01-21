@@ -1,0 +1,280 @@
+syntax = "proto3";
+package ambalance.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/ambalance/v1;v1";
+
+// The AmBalance service definition.
+service AmBalance {
+
+  // 分页查询AmBalance
+  rpc GetPageAmBalance (AmBalancePageReq) returns (AmBalancePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/ambalance/page"
+    };
+  }
+
+  // 获取AmBalance
+  rpc GetAmBalance (AmBalanceReq) returns (AmBalanceReply)  {
+    option (google.api.http) = {
+      get: "/v1/ambalance/{id}"
+    };
+  }
+
+  // 更新AmBalance
+  rpc UpdateAmBalance (AmBalanceUpdateReq) returns (AmBalanceUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/ambalance/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建AmBalance
+  rpc CreateAmBalance (AmBalanceCreateReq) returns (AmBalanceCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/ambalance"
+      body: "*"
+    };
+  }
+
+  // 删除AmBalance
+  rpc DeleteAmBalance (AmBalanceDeleteReq) returns (AmBalanceDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/ambalance/{id}"
+    };
+  }
+
+  // 批量删除AmBalance
+  rpc BatchDeleteAmBalance (AmBalanceBatchDeleteReq) returns (AmBalanceDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/ambalance"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message AmBalancePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    AmBalanceReq param = 2;
+}
+
+// 查询搜索返回
+message AmBalancePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated AmBalanceReply items = 2;
+}
+
+
+// 查询搜索请求
+message AmBalanceReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //订单号
+    string orderId = 3;
+    //关联用户事件Id
+    int64 eventId = 4;
+    //现金标识,0优惠券 1书币
+    int32 cashTag = 5;
+    //账本科目
+    int32 assetItemId = 6;
+    //原始金额
+    int64 amount = 7;
+    //剩余可用
+    int64 balance = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 查询搜索返回
+message AmBalanceReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //订单号
+    string orderId = 3;
+    //关联用户事件Id
+    int64 eventId = 4;
+    //现金标识,0优惠券 1书币
+    int32 cashTag = 5;
+    //账本科目
+    int32 assetItemId = 6;
+    //原始金额
+    int64 amount = 7;
+    //剩余可用
+    int64 balance = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 创建AmBalance请求
+message AmBalanceCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //订单号
+    string orderId = 2;
+    //关联用户事件Id
+    int64 eventId = 3;
+    //现金标识,0优惠券 1书币
+    int32 cashTag = 4;
+    //账本科目
+    int32 assetItemId = 5;
+    //原始金额
+    int64 amount = 6;
+    //剩余可用
+    int64 balance = 7;
+    //备注
+    string remark = 8;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 9;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 10;
+
+}
+
+// 创建AmBalance返回
+message AmBalanceCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //订单号
+    string orderId = 3;
+    //关联用户事件Id
+    int64 eventId = 4;
+    //现金标识,0优惠券 1书币
+    int32 cashTag = 5;
+    //账本科目
+    int32 assetItemId = 6;
+    //原始金额
+    int64 amount = 7;
+    //剩余可用
+    int64 balance = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 更新AmBalance请求
+message AmBalanceUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //订单号
+    string orderId = 3;
+    //关联用户事件Id
+    int64 eventId = 4;
+    //现金标识,0优惠券 1书币
+    int32 cashTag = 5;
+    //账本科目
+    int32 assetItemId = 6;
+    //原始金额
+    int64 amount = 7;
+    //剩余可用
+    int64 balance = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+
+// 更新AmBalance返回
+message AmBalanceUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //订单号
+    string orderId = 3;
+    //关联用户事件Id
+    int64 eventId = 4;
+    //现金标识,0优惠券 1书币
+    int32 cashTag = 5;
+    //账本科目
+    int32 assetItemId = 6;
+    //原始金额
+    int64 amount = 7;
+    //剩余可用
+    int64 balance = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+// 删除AmBalance请求
+message AmBalanceDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除AmBalance请求
+message AmBalanceBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除AmBalance返回
+message AmBalanceDeleteReply {
+    bool result = 1;
+}
+

@@ -1,0 +1,232 @@
+syntax = "proto3";
+package assetitem.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/assetitem/v1;v1";
+
+// The AssetItem service definition.
+service AssetItem {
+
+  // 分页查询AssetItem
+  rpc GetPageAssetItem (AssetItemPageReq) returns (AssetItemPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/assetitem/page"
+    };
+  }
+
+  // 获取AssetItem
+  rpc GetAssetItem (AssetItemReq) returns (AssetItemReply)  {
+    option (google.api.http) = {
+      get: "/v1/assetitem/{id}"
+    };
+  }
+
+  // 更新AssetItem
+  rpc UpdateAssetItem (AssetItemUpdateReq) returns (AssetItemUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/assetitem/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建AssetItem
+  rpc CreateAssetItem (AssetItemCreateReq) returns (AssetItemCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/assetitem"
+      body: "*"
+    };
+  }
+
+  // 删除AssetItem
+  rpc DeleteAssetItem (AssetItemDeleteReq) returns (AssetItemDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/assetitem/{id}"
+    };
+  }
+
+  // 批量删除AssetItem
+  rpc BatchDeleteAssetItem (AssetItemBatchDeleteReq) returns (AssetItemDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/assetitem"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message AssetItemPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    AssetItemReq param = 2;
+}
+
+// 查询搜索返回
+message AssetItemPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated AssetItemReply items = 2;
+}
+
+
+// 查询搜索请求
+message AssetItemReq {
+    int64 id = 1;
+    //账本科目
+    int32 assetItemId = 2;
+    //账本名称
+    string assetName = 3;
+    //现金标记,0书券1现金
+    int32 cashTag = 4;
+    //有效天数
+    int32 validDays = 5;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 6;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 查询搜索返回
+message AssetItemReply {
+    int64 id = 1;
+    //账本科目
+    int32 assetItemId = 2;
+    //账本名称
+    string assetName = 3;
+    //现金标记,0书券1现金
+    int32 cashTag = 4;
+    //有效天数
+    int32 validDays = 5;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 6;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 创建AssetItem请求
+message AssetItemCreateReq {
+    //账本科目
+    int32 assetItemId = 1;
+    //账本名称
+    string assetName = 2;
+    //现金标记,0书券1现金
+    int32 cashTag = 3;
+    //有效天数
+    int32 validDays = 4;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 5;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 6;
+
+}
+
+// 创建AssetItem返回
+message AssetItemCreateReply {
+    int64 id = 1;
+    //账本科目
+    int32 assetItemId = 2;
+    //账本名称
+    string assetName = 3;
+    //现金标记,0书券1现金
+    int32 cashTag = 4;
+    //有效天数
+    int32 validDays = 5;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 6;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 更新AssetItem请求
+message AssetItemUpdateReq {
+    int64 id = 1;
+    //账本科目
+    int32 assetItemId = 2;
+    //账本名称
+    string assetName = 3;
+    //现金标记,0书券1现金
+    int32 cashTag = 4;
+    //有效天数
+    int32 validDays = 5;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 6;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 7;
+
+}
+
+
+// 更新AssetItem返回
+message AssetItemUpdateReply {
+    int64 id = 1;
+    //账本科目
+    int32 assetItemId = 2;
+    //账本名称
+    string assetName = 3;
+    //现金标记,0书券1现金
+    int32 cashTag = 4;
+    //有效天数
+    int32 validDays = 5;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 6;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 7;
+
+}
+
+// 删除AssetItem请求
+message AssetItemDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除AssetItem请求
+message AssetItemBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除AssetItem返回
+message AssetItemDeleteReply {
+    bool result = 1;
+}
+

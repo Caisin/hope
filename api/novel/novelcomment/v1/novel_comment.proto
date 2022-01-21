@@ -1,0 +1,328 @@
+syntax = "proto3";
+package novelcomment.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novelcomment/v1;v1";
+
+// The NovelComment service definition.
+service NovelComment {
+
+  // 分页查询NovelComment
+  rpc GetPageNovelComment (NovelCommentPageReq) returns (NovelCommentPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelcomment/page"
+    };
+  }
+
+  // 获取NovelComment
+  rpc GetNovelComment (NovelCommentReq) returns (NovelCommentReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelcomment/{id}"
+    };
+  }
+
+  // 更新NovelComment
+  rpc UpdateNovelComment (NovelCommentUpdateReq) returns (NovelCommentUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelcomment/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelComment
+  rpc CreateNovelComment (NovelCommentCreateReq) returns (NovelCommentCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelcomment"
+      body: "*"
+    };
+  }
+
+  // 删除NovelComment
+  rpc DeleteNovelComment (NovelCommentDeleteReq) returns (NovelCommentDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelcomment/{id}"
+    };
+  }
+
+  // 批量删除NovelComment
+  rpc BatchDeleteNovelComment (NovelCommentBatchDeleteReq) returns (NovelCommentDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelcomment"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelCommentPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelCommentReq param = 2;
+}
+
+// 查询搜索返回
+message NovelCommentPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelCommentReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelCommentReq {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //用户Id
+    int64 userId = 3;
+    //评论用户头像
+    string avatar = 4;
+    //用户名
+    string userName = 5;
+    //回复用户
+    int64 repUserId = 6;
+    //回复用户ID
+    string repUserName = 7;
+    //回复内容
+    string content = 8;
+    //评分,除以10
+    int32 score = 9;
+    //回复评论ID
+    int64 pId = 10;
+    //置顶
+    bool isTop = 11;
+    //状态,0
+    string state = 12;
+    //高亮
+    bool isHighlight = 13;
+    //是否热门
+    bool isHot = 14;
+    //备注
+    string remark = 15;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 16;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 17;
+    //创建者
+    int64 createBy = 18;
+    //更新者
+    int64 updateBy = 19;
+    //租户
+    int64 tenantId = 20;
+
+}
+
+// 查询搜索返回
+message NovelCommentReply {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //用户Id
+    int64 userId = 3;
+    //评论用户头像
+    string avatar = 4;
+    //用户名
+    string userName = 5;
+    //回复用户
+    int64 repUserId = 6;
+    //回复用户ID
+    string repUserName = 7;
+    //回复内容
+    string content = 8;
+    //评分,除以10
+    int32 score = 9;
+    //回复评论ID
+    int64 pId = 10;
+    //置顶
+    bool isTop = 11;
+    //状态,0
+    string state = 12;
+    //高亮
+    bool isHighlight = 13;
+    //是否热门
+    bool isHot = 14;
+    //备注
+    string remark = 15;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 16;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 17;
+    //创建者
+    int64 createBy = 18;
+    //更新者
+    int64 updateBy = 19;
+    //租户
+    int64 tenantId = 20;
+
+}
+
+// 创建NovelComment请求
+message NovelCommentCreateReq {
+    //小说编号
+    int64 novelId = 1;
+    //用户Id
+    int64 userId = 2;
+    //评论用户头像
+    string avatar = 3;
+    //用户名
+    string userName = 4;
+    //回复用户
+    int64 repUserId = 5;
+    //回复用户ID
+    string repUserName = 6;
+    //回复内容
+    string content = 7;
+    //评分,除以10
+    int32 score = 8;
+    //回复评论ID
+    int64 pId = 9;
+    //置顶
+    bool isTop = 10;
+    //状态,0
+    string state = 11;
+    //高亮
+    bool isHighlight = 12;
+    //是否热门
+    bool isHot = 13;
+    //备注
+    string remark = 14;
+
+}
+
+// 创建NovelComment返回
+message NovelCommentCreateReply {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //用户Id
+    int64 userId = 3;
+    //评论用户头像
+    string avatar = 4;
+    //用户名
+    string userName = 5;
+    //回复用户
+    int64 repUserId = 6;
+    //回复用户ID
+    string repUserName = 7;
+    //回复内容
+    string content = 8;
+    //评分,除以10
+    int32 score = 9;
+    //回复评论ID
+    int64 pId = 10;
+    //置顶
+    bool isTop = 11;
+    //状态,0
+    string state = 12;
+    //高亮
+    bool isHighlight = 13;
+    //是否热门
+    bool isHot = 14;
+    //备注
+    string remark = 15;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 16;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 17;
+    //创建者
+    int64 createBy = 18;
+    //更新者
+    int64 updateBy = 19;
+    //租户
+    int64 tenantId = 20;
+
+}
+
+// 更新NovelComment请求
+message NovelCommentUpdateReq {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //用户Id
+    int64 userId = 3;
+    //评论用户头像
+    string avatar = 4;
+    //用户名
+    string userName = 5;
+    //回复用户
+    int64 repUserId = 6;
+    //回复用户ID
+    string repUserName = 7;
+    //回复内容
+    string content = 8;
+    //评分,除以10
+    int32 score = 9;
+    //回复评论ID
+    int64 pId = 10;
+    //置顶
+    bool isTop = 11;
+    //状态,0
+    string state = 12;
+    //高亮
+    bool isHighlight = 13;
+    //是否热门
+    bool isHot = 14;
+    //备注
+    string remark = 15;
+
+}
+
+
+// 更新NovelComment返回
+message NovelCommentUpdateReply {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //用户Id
+    int64 userId = 3;
+    //评论用户头像
+    string avatar = 4;
+    //用户名
+    string userName = 5;
+    //回复用户
+    int64 repUserId = 6;
+    //回复用户ID
+    string repUserName = 7;
+    //回复内容
+    string content = 8;
+    //评分,除以10
+    int32 score = 9;
+    //回复评论ID
+    int64 pId = 10;
+    //置顶
+    bool isTop = 11;
+    //状态,0
+    string state = 12;
+    //高亮
+    bool isHighlight = 13;
+    //是否热门
+    bool isHot = 14;
+    //备注
+    string remark = 15;
+
+}
+
+// 删除NovelComment请求
+message NovelCommentDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelComment请求
+message NovelCommentBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelComment返回
+message NovelCommentDeleteReply {
+    bool result = 1;
+}
+

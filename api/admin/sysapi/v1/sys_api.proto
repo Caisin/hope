@@ -1,0 +1,220 @@
+syntax = "proto3";
+package sysapi.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/sysapi/v1;v1";
+
+// The SysApi service definition.
+service SysApi {
+
+  // 分页查询SysApi
+  rpc GetPageSysApi (SysApiPageReq) returns (SysApiPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysapi/page"
+    };
+  }
+
+  // 获取SysApi
+  rpc GetSysApi (SysApiReq) returns (SysApiReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysapi/{id}"
+    };
+  }
+
+  // 更新SysApi
+  rpc UpdateSysApi (SysApiUpdateReq) returns (SysApiUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/sysapi/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建SysApi
+  rpc CreateSysApi (SysApiCreateReq) returns (SysApiCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/sysapi"
+      body: "*"
+    };
+  }
+
+  // 删除SysApi
+  rpc DeleteSysApi (SysApiDeleteReq) returns (SysApiDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysapi/{id}"
+    };
+  }
+
+  // 批量删除SysApi
+  rpc BatchDeleteSysApi (SysApiBatchDeleteReq) returns (SysApiDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysapi"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message SysApiPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    SysApiReq param = 2;
+}
+
+// 查询搜索返回
+message SysApiPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated SysApiReply items = 2;
+}
+
+
+// 查询搜索请求
+message SysApiReq {
+    int64 id = 1;
+    //处理器
+    string handle = 2;
+    //标题
+    string title = 3;
+    //地址
+    string path = 4;
+    //请求类型
+    string action = 5;
+    //接口类型
+    string type = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 查询搜索返回
+message SysApiReply {
+    int64 id = 1;
+    //处理器
+    string handle = 2;
+    //标题
+    string title = 3;
+    //地址
+    string path = 4;
+    //请求类型
+    string action = 5;
+    //接口类型
+    string type = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 创建SysApi请求
+message SysApiCreateReq {
+    //处理器
+    string handle = 1;
+    //标题
+    string title = 2;
+    //地址
+    string path = 3;
+    //请求类型
+    string action = 4;
+    //接口类型
+    string type = 5;
+
+}
+
+// 创建SysApi返回
+message SysApiCreateReply {
+    int64 id = 1;
+    //处理器
+    string handle = 2;
+    //标题
+    string title = 3;
+    //地址
+    string path = 4;
+    //请求类型
+    string action = 5;
+    //接口类型
+    string type = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 更新SysApi请求
+message SysApiUpdateReq {
+    int64 id = 1;
+    //处理器
+    string handle = 2;
+    //标题
+    string title = 3;
+    //地址
+    string path = 4;
+    //请求类型
+    string action = 5;
+    //接口类型
+    string type = 6;
+
+}
+
+
+// 更新SysApi返回
+message SysApiUpdateReply {
+    int64 id = 1;
+    //处理器
+    string handle = 2;
+    //标题
+    string title = 3;
+    //地址
+    string path = 4;
+    //请求类型
+    string action = 5;
+    //接口类型
+    string type = 6;
+
+}
+
+// 删除SysApi请求
+message SysApiDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除SysApi请求
+message SysApiBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除SysApi返回
+message SysApiDeleteReply {
+    bool result = 1;
+}
+

@@ -1,0 +1,751 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/admin/syspost/v1/sys_post.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SysPost"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/syspost": {
+      "delete": {
+        "summary": "批量删除SysPost",
+        "operationId": "SysPost_BatchDeleteSysPost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysPostDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "SysPost"
+        ]
+      },
+      "post": {
+        "summary": "创建SysPost",
+        "operationId": "SysPost_CreateSysPost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysPostCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SysPostCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "SysPost"
+        ]
+      }
+    },
+    "/v1/syspost/page": {
+      "get": {
+        "summary": "分页查询SysPost",
+        "operationId": "SysPost_GetPageSysPost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysPostPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.postName",
+            "description": "岗位名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.postCode",
+            "description": "岗位代码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.sort",
+            "description": "岗位排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.status",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.remark",
+            "description": "描述.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysPost"
+        ]
+      }
+    },
+    "/v1/syspost/{id}": {
+      "get": {
+        "summary": "获取SysPost",
+        "operationId": "SysPost_GetSysPost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysPostReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "postName",
+            "description": "岗位名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "postCode",
+            "description": "岗位代码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "description": "岗位排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "status",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "remark",
+            "description": "描述.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysPost"
+        ]
+      },
+      "delete": {
+        "summary": "删除SysPost",
+        "operationId": "SysPost_DeleteSysPost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysPostDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysPost"
+        ]
+      },
+      "put": {
+        "summary": "更新SysPost",
+        "operationId": "SysPost_UpdateSysPost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysPostUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postName": {
+                  "type": "string",
+                  "title": "岗位名称"
+                },
+                "postCode": {
+                  "type": "string",
+                  "title": "岗位代码"
+                },
+                "sort": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "岗位排序"
+                },
+                "status": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "状态"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "描述"
+                }
+              },
+              "title": "更新SysPost请求"
+            }
+          }
+        ],
+        "tags": [
+          "SysPost"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SysPostCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "postName": {
+          "type": "string",
+          "title": "岗位名称"
+        },
+        "postCode": {
+          "type": "string",
+          "title": "岗位代码"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "岗位排序"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建SysPost返回"
+    },
+    "v1SysPostCreateReq": {
+      "type": "object",
+      "properties": {
+        "postName": {
+          "type": "string",
+          "title": "岗位名称"
+        },
+        "postCode": {
+          "type": "string",
+          "title": "岗位代码"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "岗位排序"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述"
+        }
+      },
+      "title": "创建SysPost请求"
+    },
+    "v1SysPostDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除SysPost返回"
+    },
+    "v1SysPostPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysPostReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysPostReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "postName": {
+          "type": "string",
+          "title": "岗位名称"
+        },
+        "postCode": {
+          "type": "string",
+          "title": "岗位代码"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "岗位排序"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysPostReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "postName": {
+          "type": "string",
+          "title": "岗位名称"
+        },
+        "postCode": {
+          "type": "string",
+          "title": "岗位代码"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "岗位排序"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1SysPostUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "postName": {
+          "type": "string",
+          "title": "岗位名称"
+        },
+        "postCode": {
+          "type": "string",
+          "title": "岗位代码"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "岗位排序"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态"
+        },
+        "remark": {
+          "type": "string",
+          "title": "描述"
+        }
+      },
+      "title": "更新SysPost返回"
+    }
+  }
+}

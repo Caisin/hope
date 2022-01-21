@@ -1,0 +1,220 @@
+syntax = "proto3";
+package syspost.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/syspost/v1;v1";
+
+// The SysPost service definition.
+service SysPost {
+
+  // 分页查询SysPost
+  rpc GetPageSysPost (SysPostPageReq) returns (SysPostPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/syspost/page"
+    };
+  }
+
+  // 获取SysPost
+  rpc GetSysPost (SysPostReq) returns (SysPostReply)  {
+    option (google.api.http) = {
+      get: "/v1/syspost/{id}"
+    };
+  }
+
+  // 更新SysPost
+  rpc UpdateSysPost (SysPostUpdateReq) returns (SysPostUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/syspost/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建SysPost
+  rpc CreateSysPost (SysPostCreateReq) returns (SysPostCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/syspost"
+      body: "*"
+    };
+  }
+
+  // 删除SysPost
+  rpc DeleteSysPost (SysPostDeleteReq) returns (SysPostDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/syspost/{id}"
+    };
+  }
+
+  // 批量删除SysPost
+  rpc BatchDeleteSysPost (SysPostBatchDeleteReq) returns (SysPostDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/syspost"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message SysPostPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    SysPostReq param = 2;
+}
+
+// 查询搜索返回
+message SysPostPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated SysPostReply items = 2;
+}
+
+
+// 查询搜索请求
+message SysPostReq {
+    int64 id = 1;
+    //岗位名称
+    string postName = 2;
+    //岗位代码
+    string postCode = 3;
+    //岗位排序
+    int32 sort = 4;
+    //状态
+    int32 status = 5;
+    //描述
+    string remark = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 查询搜索返回
+message SysPostReply {
+    int64 id = 1;
+    //岗位名称
+    string postName = 2;
+    //岗位代码
+    string postCode = 3;
+    //岗位排序
+    int32 sort = 4;
+    //状态
+    int32 status = 5;
+    //描述
+    string remark = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 创建SysPost请求
+message SysPostCreateReq {
+    //岗位名称
+    string postName = 1;
+    //岗位代码
+    string postCode = 2;
+    //岗位排序
+    int32 sort = 3;
+    //状态
+    int32 status = 4;
+    //描述
+    string remark = 5;
+
+}
+
+// 创建SysPost返回
+message SysPostCreateReply {
+    int64 id = 1;
+    //岗位名称
+    string postName = 2;
+    //岗位代码
+    string postCode = 3;
+    //岗位排序
+    int32 sort = 4;
+    //状态
+    int32 status = 5;
+    //描述
+    string remark = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 更新SysPost请求
+message SysPostUpdateReq {
+    int64 id = 1;
+    //岗位名称
+    string postName = 2;
+    //岗位代码
+    string postCode = 3;
+    //岗位排序
+    int32 sort = 4;
+    //状态
+    int32 status = 5;
+    //描述
+    string remark = 6;
+
+}
+
+
+// 更新SysPost返回
+message SysPostUpdateReply {
+    int64 id = 1;
+    //岗位名称
+    string postName = 2;
+    //岗位代码
+    string postCode = 3;
+    //岗位排序
+    int32 sort = 4;
+    //状态
+    int32 status = 5;
+    //描述
+    string remark = 6;
+
+}
+
+// 删除SysPost请求
+message SysPostDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除SysPost请求
+message SysPostBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除SysPost返回
+message SysPostDeleteReply {
+    bool result = 1;
+}
+

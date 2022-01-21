@@ -1,0 +1,743 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/clienterror/v1/client_error.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ClientError"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/clienterror": {
+      "delete": {
+        "summary": "批量删除ClientError",
+        "operationId": "ClientError_BatchDeleteClientError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ClientErrorDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "ClientError"
+        ]
+      },
+      "post": {
+        "summary": "创建ClientError",
+        "operationId": "ClientError_CreateClientError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ClientErrorCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ClientErrorCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "ClientError"
+        ]
+      }
+    },
+    "/v1/clienterror/page": {
+      "get": {
+        "summary": "分页查询ClientError",
+        "operationId": "ClientError_GetPageClientError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ClientErrorPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.appVersion",
+            "description": "App版本.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.deviceName",
+            "description": "设备名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.osName",
+            "description": "操作系统名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.errorInfo",
+            "description": "错误信息.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ClientError"
+        ]
+      }
+    },
+    "/v1/clienterror/{id}": {
+      "get": {
+        "summary": "获取ClientError",
+        "operationId": "ClientError_GetClientError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ClientErrorReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "appVersion",
+            "description": "App版本.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "deviceName",
+            "description": "设备名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "osName",
+            "description": "操作系统名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "errorInfo",
+            "description": "错误信息.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ClientError"
+        ]
+      },
+      "delete": {
+        "summary": "删除ClientError",
+        "operationId": "ClientError_DeleteClientError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ClientErrorDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ClientError"
+        ]
+      },
+      "put": {
+        "summary": "更新ClientError",
+        "operationId": "ClientError_UpdateClientError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ClientErrorUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appVersion": {
+                  "type": "string",
+                  "title": "App版本"
+                },
+                "deviceName": {
+                  "type": "string",
+                  "title": "设备名称"
+                },
+                "osName": {
+                  "type": "string",
+                  "title": "操作系统名称"
+                },
+                "errorInfo": {
+                  "type": "string",
+                  "title": "错误信息"
+                },
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                }
+              },
+              "title": "更新ClientError请求"
+            }
+          }
+        ],
+        "tags": [
+          "ClientError"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ClientErrorCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "appVersion": {
+          "type": "string",
+          "title": "App版本"
+        },
+        "deviceName": {
+          "type": "string",
+          "title": "设备名称"
+        },
+        "osName": {
+          "type": "string",
+          "title": "操作系统名称"
+        },
+        "errorInfo": {
+          "type": "string",
+          "title": "错误信息"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建ClientError返回"
+    },
+    "v1ClientErrorCreateReq": {
+      "type": "object",
+      "properties": {
+        "appVersion": {
+          "type": "string",
+          "title": "App版本"
+        },
+        "deviceName": {
+          "type": "string",
+          "title": "设备名称"
+        },
+        "osName": {
+          "type": "string",
+          "title": "操作系统名称"
+        },
+        "errorInfo": {
+          "type": "string",
+          "title": "错误信息"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        }
+      },
+      "title": "创建ClientError请求"
+    },
+    "v1ClientErrorDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除ClientError返回"
+    },
+    "v1ClientErrorPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ClientErrorReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ClientErrorReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "appVersion": {
+          "type": "string",
+          "title": "App版本"
+        },
+        "deviceName": {
+          "type": "string",
+          "title": "设备名称"
+        },
+        "osName": {
+          "type": "string",
+          "title": "操作系统名称"
+        },
+        "errorInfo": {
+          "type": "string",
+          "title": "错误信息"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ClientErrorReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "appVersion": {
+          "type": "string",
+          "title": "App版本"
+        },
+        "deviceName": {
+          "type": "string",
+          "title": "设备名称"
+        },
+        "osName": {
+          "type": "string",
+          "title": "操作系统名称"
+        },
+        "errorInfo": {
+          "type": "string",
+          "title": "错误信息"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1ClientErrorUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "appVersion": {
+          "type": "string",
+          "title": "App版本"
+        },
+        "deviceName": {
+          "type": "string",
+          "title": "设备名称"
+        },
+        "osName": {
+          "type": "string",
+          "title": "操作系统名称"
+        },
+        "errorInfo": {
+          "type": "string",
+          "title": "错误信息"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        }
+      },
+      "title": "更新ClientError返回"
+    }
+  }
+}

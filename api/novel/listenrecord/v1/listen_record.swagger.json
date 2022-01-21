@@ -1,0 +1,843 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/listenrecord/v1/listen_record.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ListenRecord"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/listenrecord": {
+      "delete": {
+        "summary": "批量删除ListenRecord",
+        "operationId": "ListenRecord_BatchDeleteListenRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListenRecordDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "ListenRecord"
+        ]
+      },
+      "post": {
+        "summary": "创建ListenRecord",
+        "operationId": "ListenRecord_CreateListenRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListenRecordCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListenRecordCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "ListenRecord"
+        ]
+      }
+    },
+    "/v1/listenrecord/page": {
+      "get": {
+        "summary": "分页查询ListenRecord",
+        "operationId": "ListenRecord_GetPageListenRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListenRecordPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.chapterId",
+            "description": "主键编码.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.novelId",
+            "description": "小说编号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.listenTimes",
+            "description": "播放次数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.duration",
+            "description": "音频时长.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.allDuration",
+            "description": "总播放时长.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.dayDuration",
+            "description": "当天播放时长.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ListenRecord"
+        ]
+      }
+    },
+    "/v1/listenrecord/{id}": {
+      "get": {
+        "summary": "获取ListenRecord",
+        "operationId": "ListenRecord_GetListenRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListenRecordReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "chapterId",
+            "description": "主键编码.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "novelId",
+            "description": "小说编号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "listenTimes",
+            "description": "播放次数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "duration",
+            "description": "音频时长.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "allDuration",
+            "description": "总播放时长.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dayDuration",
+            "description": "当天播放时长.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ListenRecord"
+        ]
+      },
+      "delete": {
+        "summary": "删除ListenRecord",
+        "operationId": "ListenRecord_DeleteListenRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListenRecordDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ListenRecord"
+        ]
+      },
+      "put": {
+        "summary": "更新ListenRecord",
+        "operationId": "ListenRecord_UpdateListenRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListenRecordUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "chapterId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "主键编码"
+                },
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "小说编号"
+                },
+                "listenTimes": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "播放次数"
+                },
+                "duration": {
+                  "type": "string",
+                  "title": "音频时长"
+                },
+                "allDuration": {
+                  "type": "string",
+                  "title": "总播放时长"
+                },
+                "dayDuration": {
+                  "type": "string",
+                  "title": "当天播放时长"
+                }
+              },
+              "title": "更新ListenRecord请求"
+            }
+          }
+        ],
+        "tags": [
+          "ListenRecord"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ListenRecordCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "主键编码"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "listenTimes": {
+          "type": "string",
+          "format": "int64",
+          "title": "播放次数"
+        },
+        "duration": {
+          "type": "string",
+          "title": "音频时长"
+        },
+        "allDuration": {
+          "type": "string",
+          "title": "总播放时长"
+        },
+        "dayDuration": {
+          "type": "string",
+          "title": "当天播放时长"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建ListenRecord返回"
+    },
+    "v1ListenRecordCreateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "主键编码"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "listenTimes": {
+          "type": "string",
+          "format": "int64",
+          "title": "播放次数"
+        },
+        "duration": {
+          "type": "string",
+          "title": "音频时长"
+        },
+        "allDuration": {
+          "type": "string",
+          "title": "总播放时长"
+        },
+        "dayDuration": {
+          "type": "string",
+          "title": "当天播放时长"
+        }
+      },
+      "title": "创建ListenRecord请求"
+    },
+    "v1ListenRecordDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除ListenRecord返回"
+    },
+    "v1ListenRecordPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ListenRecordReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ListenRecordReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "主键编码"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "listenTimes": {
+          "type": "string",
+          "format": "int64",
+          "title": "播放次数"
+        },
+        "duration": {
+          "type": "string",
+          "title": "音频时长"
+        },
+        "allDuration": {
+          "type": "string",
+          "title": "总播放时长"
+        },
+        "dayDuration": {
+          "type": "string",
+          "title": "当天播放时长"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ListenRecordReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "主键编码"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "listenTimes": {
+          "type": "string",
+          "format": "int64",
+          "title": "播放次数"
+        },
+        "duration": {
+          "type": "string",
+          "title": "音频时长"
+        },
+        "allDuration": {
+          "type": "string",
+          "title": "总播放时长"
+        },
+        "dayDuration": {
+          "type": "string",
+          "title": "当天播放时长"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1ListenRecordUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "主键编码"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "listenTimes": {
+          "type": "string",
+          "format": "int64",
+          "title": "播放次数"
+        },
+        "duration": {
+          "type": "string",
+          "title": "音频时长"
+        },
+        "allDuration": {
+          "type": "string",
+          "title": "总播放时长"
+        },
+        "dayDuration": {
+          "type": "string",
+          "title": "当天播放时长"
+        }
+      },
+      "title": "更新ListenRecord返回"
+    }
+  }
+}

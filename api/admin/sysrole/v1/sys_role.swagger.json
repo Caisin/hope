@@ -1,0 +1,917 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/admin/sysrole/v1/sys_role.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SysRole"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/sysrole": {
+      "delete": {
+        "summary": "批量删除SysRole",
+        "operationId": "SysRole_BatchDeleteSysRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysRoleDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "SysRole"
+        ]
+      },
+      "post": {
+        "summary": "创建SysRole",
+        "operationId": "SysRole_CreateSysRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysRoleCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SysRoleCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "SysRole"
+        ]
+      }
+    },
+    "/v1/sysrole/page": {
+      "get": {
+        "summary": "分页查询SysRole",
+        "operationId": "SysRole_GetPageSysRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysRolePageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.roleName",
+            "description": "角色名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.status",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.roleKey",
+            "description": "角色代码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.roleSort",
+            "description": "角色排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.flag",
+            "description": "标记.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.admin",
+            "description": "是否管理员.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.dataScope",
+            "description": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.sysDept",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.sysMenu",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysRole"
+        ]
+      }
+    },
+    "/v1/sysrole/{id}": {
+      "get": {
+        "summary": "获取SysRole",
+        "operationId": "SysRole_GetSysRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysRoleReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "roleName",
+            "description": "角色名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roleKey",
+            "description": "角色代码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roleSort",
+            "description": "角色排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "flag",
+            "description": "标记.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "admin",
+            "description": "是否管理员.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "dataScope",
+            "description": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sysDept",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sysMenu",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysRole"
+        ]
+      },
+      "delete": {
+        "summary": "删除SysRole",
+        "operationId": "SysRole_DeleteSysRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysRoleDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysRole"
+        ]
+      },
+      "put": {
+        "summary": "更新SysRole",
+        "operationId": "SysRole_UpdateSysRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysRoleUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "roleName": {
+                  "type": "string",
+                  "title": "角色名称"
+                },
+                "status": {
+                  "type": "string",
+                  "title": "状态"
+                },
+                "roleKey": {
+                  "type": "string",
+                  "title": "角色代码"
+                },
+                "roleSort": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "角色排序"
+                },
+                "flag": {
+                  "type": "string",
+                  "title": "标记"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                },
+                "admin": {
+                  "type": "boolean",
+                  "title": "是否管理员"
+                },
+                "dataScope": {
+                  "type": "string",
+                  "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
+                },
+                "sysDept": {
+                  "type": "string"
+                },
+                "sysMenu": {
+                  "type": "string"
+                }
+              },
+              "title": "更新SysRole请求"
+            }
+          }
+        ],
+        "tags": [
+          "SysRole"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SysRoleCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string",
+          "title": "角色名称"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "roleKey": {
+          "type": "string",
+          "title": "角色代码"
+        },
+        "roleSort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "角色排序"
+        },
+        "flag": {
+          "type": "string",
+          "title": "标记"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "admin": {
+          "type": "boolean",
+          "title": "是否管理员"
+        },
+        "dataScope": {
+          "type": "string",
+          "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
+        },
+        "sysDept": {
+          "type": "string"
+        },
+        "sysMenu": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建SysRole返回"
+    },
+    "v1SysRoleCreateReq": {
+      "type": "object",
+      "properties": {
+        "roleName": {
+          "type": "string",
+          "title": "角色名称"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "roleKey": {
+          "type": "string",
+          "title": "角色代码"
+        },
+        "roleSort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "角色排序"
+        },
+        "flag": {
+          "type": "string",
+          "title": "标记"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "admin": {
+          "type": "boolean",
+          "title": "是否管理员"
+        },
+        "dataScope": {
+          "type": "string",
+          "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
+        },
+        "sysDept": {
+          "type": "string"
+        },
+        "sysMenu": {
+          "type": "string"
+        }
+      },
+      "title": "创建SysRole请求"
+    },
+    "v1SysRoleDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除SysRole返回"
+    },
+    "v1SysRolePageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysRoleReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysRoleReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string",
+          "title": "角色名称"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "roleKey": {
+          "type": "string",
+          "title": "角色代码"
+        },
+        "roleSort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "角色排序"
+        },
+        "flag": {
+          "type": "string",
+          "title": "标记"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "admin": {
+          "type": "boolean",
+          "title": "是否管理员"
+        },
+        "dataScope": {
+          "type": "string",
+          "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
+        },
+        "sysDept": {
+          "type": "string"
+        },
+        "sysMenu": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysRoleReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string",
+          "title": "角色名称"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "roleKey": {
+          "type": "string",
+          "title": "角色代码"
+        },
+        "roleSort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "角色排序"
+        },
+        "flag": {
+          "type": "string",
+          "title": "标记"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "admin": {
+          "type": "boolean",
+          "title": "是否管理员"
+        },
+        "dataScope": {
+          "type": "string",
+          "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
+        },
+        "sysDept": {
+          "type": "string"
+        },
+        "sysMenu": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1SysRoleUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string",
+          "title": "角色名称"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "roleKey": {
+          "type": "string",
+          "title": "角色代码"
+        },
+        "roleSort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "角色排序"
+        },
+        "flag": {
+          "type": "string",
+          "title": "标记"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "admin": {
+          "type": "boolean",
+          "title": "是否管理员"
+        },
+        "dataScope": {
+          "type": "string",
+          "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
+        },
+        "sysDept": {
+          "type": "string"
+        },
+        "sysMenu": {
+          "type": "string"
+        }
+      },
+      "title": "更新SysRole返回"
+    }
+  }
+}

@@ -1,0 +1,943 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/assetchangelog/v1/asset_change_log.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AssetChangeLog"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/assetchangelog": {
+      "delete": {
+        "summary": "批量删除AssetChangeLog",
+        "operationId": "AssetChangeLog_BatchDeleteAssetChangeLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetChangeLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "AssetChangeLog"
+        ]
+      },
+      "post": {
+        "summary": "创建AssetChangeLog",
+        "operationId": "AssetChangeLog_CreateAssetChangeLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetChangeLogCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AssetChangeLogCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "AssetChangeLog"
+        ]
+      }
+    },
+    "/v1/assetchangelog/page": {
+      "get": {
+        "summary": "分页查询AssetChangeLog",
+        "operationId": "AssetChangeLog_GetPageAssetChangeLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetChangeLogPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.orderId",
+            "description": "订单号.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.balanceId",
+            "description": "账本ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.eventId",
+            "description": "关联用户事件Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.assetItemId",
+            "description": "账本科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.amount",
+            "description": "变化金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.oldBalance",
+            "description": "变化前剩余可用.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.newBalance",
+            "description": "变化后剩余可用.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AssetChangeLog"
+        ]
+      }
+    },
+    "/v1/assetchangelog/{id}": {
+      "get": {
+        "summary": "获取AssetChangeLog",
+        "operationId": "AssetChangeLog_GetAssetChangeLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetChangeLogReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orderId",
+            "description": "订单号.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "balanceId",
+            "description": "账本ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "eventId",
+            "description": "关联用户事件Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "assetItemId",
+            "description": "账本科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "amount",
+            "description": "变化金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "oldBalance",
+            "description": "变化前剩余可用.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "newBalance",
+            "description": "变化后剩余可用.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AssetChangeLog"
+        ]
+      },
+      "delete": {
+        "summary": "删除AssetChangeLog",
+        "operationId": "AssetChangeLog_DeleteAssetChangeLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetChangeLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AssetChangeLog"
+        ]
+      },
+      "put": {
+        "summary": "更新AssetChangeLog",
+        "operationId": "AssetChangeLog_UpdateAssetChangeLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AssetChangeLogUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orderId": {
+                  "type": "string",
+                  "title": "订单号"
+                },
+                "balanceId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "账本ID"
+                },
+                "eventId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "关联用户事件Id"
+                },
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "assetItemId": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "账本科目"
+                },
+                "amount": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "变化金额"
+                },
+                "oldBalance": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "变化前剩余可用"
+                },
+                "newBalance": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "变化后剩余可用"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                }
+              },
+              "title": "更新AssetChangeLog请求"
+            }
+          }
+        ],
+        "tags": [
+          "AssetChangeLog"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AssetChangeLogCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "balanceId": {
+          "type": "string",
+          "format": "int64",
+          "title": "账本ID"
+        },
+        "eventId": {
+          "type": "string",
+          "format": "int64",
+          "title": "关联用户事件Id"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "assetItemId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "账本科目"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化金额"
+        },
+        "oldBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化前剩余可用"
+        },
+        "newBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化后剩余可用"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建AssetChangeLog返回"
+    },
+    "v1AssetChangeLogCreateReq": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "balanceId": {
+          "type": "string",
+          "format": "int64",
+          "title": "账本ID"
+        },
+        "eventId": {
+          "type": "string",
+          "format": "int64",
+          "title": "关联用户事件Id"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "assetItemId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "账本科目"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化金额"
+        },
+        "oldBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化前剩余可用"
+        },
+        "newBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化后剩余可用"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "创建AssetChangeLog请求"
+    },
+    "v1AssetChangeLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除AssetChangeLog返回"
+    },
+    "v1AssetChangeLogPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AssetChangeLogReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1AssetChangeLogReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "balanceId": {
+          "type": "string",
+          "format": "int64",
+          "title": "账本ID"
+        },
+        "eventId": {
+          "type": "string",
+          "format": "int64",
+          "title": "关联用户事件Id"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "assetItemId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "账本科目"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化金额"
+        },
+        "oldBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化前剩余可用"
+        },
+        "newBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化后剩余可用"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1AssetChangeLogReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "balanceId": {
+          "type": "string",
+          "format": "int64",
+          "title": "账本ID"
+        },
+        "eventId": {
+          "type": "string",
+          "format": "int64",
+          "title": "关联用户事件Id"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "assetItemId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "账本科目"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化金额"
+        },
+        "oldBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化前剩余可用"
+        },
+        "newBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化后剩余可用"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1AssetChangeLogUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "balanceId": {
+          "type": "string",
+          "format": "int64",
+          "title": "账本ID"
+        },
+        "eventId": {
+          "type": "string",
+          "format": "int64",
+          "title": "关联用户事件Id"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "assetItemId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "账本科目"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化金额"
+        },
+        "oldBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化前剩余可用"
+        },
+        "newBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "变化后剩余可用"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "更新AssetChangeLog返回"
+    }
+  }
+}

@@ -1,0 +1,1349 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/tasklog/v1/task_log.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "TaskLog"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/tasklog": {
+      "delete": {
+        "summary": "批量删除TaskLog",
+        "operationId": "TaskLog_BatchDeleteTaskLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "TaskLog"
+        ]
+      },
+      "post": {
+        "summary": "创建TaskLog",
+        "operationId": "TaskLog_CreateTaskLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskLogCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TaskLogCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "TaskLog"
+        ]
+      }
+    },
+    "/v1/tasklog/page": {
+      "get": {
+        "summary": "分页查询TaskLog",
+        "operationId": "TaskLog_GetPageTaskLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskLogPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.taskGroup",
+            "description": "任务分组.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.taskCode",
+            "description": "任务编码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.taskId",
+            "description": "任务Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.taskName",
+            "description": "任务名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.amount",
+            "description": "奖励金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.reward",
+            "description": "额外奖励金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.amountItem",
+            "description": "奖励资产科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.rewardItem",
+            "description": "额外奖励资产科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.targetAmount",
+            "description": "目标值.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.doneAmount",
+            "description": "完成值.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.state",
+            "description": "状态,0.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.doneAt",
+            "description": "完成时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.obtainAt",
+            "description": "领取奖励时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.doneTimes",
+            "description": "完成次数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.allTimes",
+            "description": "可完成次数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "TaskLog"
+        ]
+      }
+    },
+    "/v1/tasklog/{id}": {
+      "get": {
+        "summary": "获取TaskLog",
+        "operationId": "TaskLog_GetTaskLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskLogReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "taskGroup",
+            "description": "任务分组.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "taskCode",
+            "description": "任务编码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "taskId",
+            "description": "任务Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "taskName",
+            "description": "任务名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "amount",
+            "description": "奖励金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "reward",
+            "description": "额外奖励金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "amountItem",
+            "description": "奖励资产科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "rewardItem",
+            "description": "额外奖励资产科目.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "targetAmount",
+            "description": "目标值.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "doneAmount",
+            "description": "完成值.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "state",
+            "description": "状态,0.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "doneAt",
+            "description": "完成时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "obtainAt",
+            "description": "领取奖励时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "doneTimes",
+            "description": "完成次数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "allTimes",
+            "description": "可完成次数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "TaskLog"
+        ]
+      },
+      "delete": {
+        "summary": "删除TaskLog",
+        "operationId": "TaskLog_DeleteTaskLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "TaskLog"
+        ]
+      },
+      "put": {
+        "summary": "更新TaskLog",
+        "operationId": "TaskLog_UpdateTaskLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TaskLogUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "taskGroup": {
+                  "type": "string",
+                  "title": "任务分组"
+                },
+                "taskCode": {
+                  "type": "string",
+                  "title": "任务编码"
+                },
+                "taskId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "任务Id"
+                },
+                "taskName": {
+                  "type": "string",
+                  "title": "任务名称"
+                },
+                "amount": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "奖励金额"
+                },
+                "reward": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "额外奖励金额"
+                },
+                "amountItem": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "奖励资产科目"
+                },
+                "rewardItem": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "额外奖励资产科目"
+                },
+                "targetAmount": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "目标值"
+                },
+                "doneAmount": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "完成值"
+                },
+                "state": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "状态,0"
+                },
+                "doneAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "完成时间"
+                },
+                "obtainAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "领取奖励时间"
+                },
+                "doneTimes": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "完成次数"
+                },
+                "allTimes": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "可完成次数"
+                },
+                "effectTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "生效时间"
+                },
+                "expiredTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "失效时间"
+                }
+              },
+              "title": "更新TaskLog请求"
+            }
+          }
+        ],
+        "tags": [
+          "TaskLog"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1TaskLogCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务编码"
+        },
+        "taskId": {
+          "type": "string",
+          "format": "int64",
+          "title": "任务Id"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励金额"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资产科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资产科目"
+        },
+        "targetAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "目标值"
+        },
+        "doneAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "完成值"
+        },
+        "state": {
+          "type": "string",
+          "format": "int64",
+          "title": "状态,0"
+        },
+        "doneAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "完成时间"
+        },
+        "obtainAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "领取奖励时间"
+        },
+        "doneTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "完成次数"
+        },
+        "allTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "可完成次数"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建TaskLog返回"
+    },
+    "v1TaskLogCreateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务编码"
+        },
+        "taskId": {
+          "type": "string",
+          "format": "int64",
+          "title": "任务Id"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励金额"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资产科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资产科目"
+        },
+        "targetAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "目标值"
+        },
+        "doneAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "完成值"
+        },
+        "state": {
+          "type": "string",
+          "format": "int64",
+          "title": "状态,0"
+        },
+        "doneAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "完成时间"
+        },
+        "obtainAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "领取奖励时间"
+        },
+        "doneTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "完成次数"
+        },
+        "allTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "可完成次数"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "创建TaskLog请求"
+    },
+    "v1TaskLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除TaskLog返回"
+    },
+    "v1TaskLogPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1TaskLogReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1TaskLogReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务编码"
+        },
+        "taskId": {
+          "type": "string",
+          "format": "int64",
+          "title": "任务Id"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励金额"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资产科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资产科目"
+        },
+        "targetAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "目标值"
+        },
+        "doneAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "完成值"
+        },
+        "state": {
+          "type": "string",
+          "format": "int64",
+          "title": "状态,0"
+        },
+        "doneAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "完成时间"
+        },
+        "obtainAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "领取奖励时间"
+        },
+        "doneTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "完成次数"
+        },
+        "allTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "可完成次数"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1TaskLogReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务编码"
+        },
+        "taskId": {
+          "type": "string",
+          "format": "int64",
+          "title": "任务Id"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励金额"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资产科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资产科目"
+        },
+        "targetAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "目标值"
+        },
+        "doneAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "完成值"
+        },
+        "state": {
+          "type": "string",
+          "format": "int64",
+          "title": "状态,0"
+        },
+        "doneAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "完成时间"
+        },
+        "obtainAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "领取奖励时间"
+        },
+        "doneTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "完成次数"
+        },
+        "allTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "可完成次数"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1TaskLogUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "taskGroup": {
+          "type": "string",
+          "title": "任务分组"
+        },
+        "taskCode": {
+          "type": "string",
+          "title": "任务编码"
+        },
+        "taskId": {
+          "type": "string",
+          "format": "int64",
+          "title": "任务Id"
+        },
+        "taskName": {
+          "type": "string",
+          "title": "任务名称"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64",
+          "title": "奖励金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "额外奖励金额"
+        },
+        "amountItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "奖励资产科目"
+        },
+        "rewardItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "额外奖励资产科目"
+        },
+        "targetAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "目标值"
+        },
+        "doneAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "完成值"
+        },
+        "state": {
+          "type": "string",
+          "format": "int64",
+          "title": "状态,0"
+        },
+        "doneAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "完成时间"
+        },
+        "obtainAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "领取奖励时间"
+        },
+        "doneTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "完成次数"
+        },
+        "allTimes": {
+          "type": "integer",
+          "format": "int32",
+          "title": "可完成次数"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "更新TaskLog返回"
+    }
+  }
+}

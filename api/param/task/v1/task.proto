@@ -1,0 +1,412 @@
+syntax = "proto3";
+package task.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/task/v1;v1";
+
+// The Task service definition.
+service Task {
+
+  // 分页查询Task
+  rpc GetPageTask (TaskPageReq) returns (TaskPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/task/page"
+    };
+  }
+
+  // 获取Task
+  rpc GetTask (TaskReq) returns (TaskReply)  {
+    option (google.api.http) = {
+      get: "/v1/task/{id}"
+    };
+  }
+
+  // 更新Task
+  rpc UpdateTask (TaskUpdateReq) returns (TaskUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/task/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建Task
+  rpc CreateTask (TaskCreateReq) returns (TaskCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/task"
+      body: "*"
+    };
+  }
+
+  // 删除Task
+  rpc DeleteTask (TaskDeleteReq) returns (TaskDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/task/{id}"
+    };
+  }
+
+  // 批量删除Task
+  rpc BatchDeleteTask (TaskBatchDeleteReq) returns (TaskDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/task"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message TaskPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    TaskReq param = 2;
+}
+
+// 查询搜索返回
+message TaskPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated TaskReply items = 2;
+}
+
+
+// 查询搜索请求
+message TaskReq {
+    int64 id = 1;
+    //任务名称
+    string taskName = 2;
+    //任务分组
+    string taskGroup = 3;
+    //单位
+    string unit = 4;
+    //订阅主题
+    string topic = 5;
+    //处理方法
+    string function = 6;
+    //任务类型
+    string taskCode = 7;
+    //前置任务ID
+    int64 preTask = 8;
+    //点击跳转书号
+    int64 novelId = 9;
+    //循环类型,once
+    string cycleType = 10;
+    //描述信息
+    string remark = 11;
+    //奖励金额
+    int64 amount = 12;
+    //额外奖励
+    int64 reward = 13;
+    //奖励资金科目
+    int32 amountItem = 14;
+    //额外奖励资金科目
+    int32 rewardItem = 15;
+    //目标任务名,当任务为一天多次时,逗号分割
+    string targetNames = 16;
+    //目标值,当任务为一天多次时,逗号分割
+    string targetAmounts = 17;
+    //是否启用
+    bool status = 18;
+    //排序字段
+    int64 sortNum = 19;
+    //跳转动作,pay
+    string actionType = 20;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 21;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 22;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 23;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 24;
+    //创建者
+    int64 createBy = 25;
+    //更新者
+    int64 updateBy = 26;
+    //租户
+    int64 tenantId = 27;
+
+}
+
+// 查询搜索返回
+message TaskReply {
+    int64 id = 1;
+    //任务名称
+    string taskName = 2;
+    //任务分组
+    string taskGroup = 3;
+    //单位
+    string unit = 4;
+    //订阅主题
+    string topic = 5;
+    //处理方法
+    string function = 6;
+    //任务类型
+    string taskCode = 7;
+    //前置任务ID
+    int64 preTask = 8;
+    //点击跳转书号
+    int64 novelId = 9;
+    //循环类型,once
+    string cycleType = 10;
+    //描述信息
+    string remark = 11;
+    //奖励金额
+    int64 amount = 12;
+    //额外奖励
+    int64 reward = 13;
+    //奖励资金科目
+    int32 amountItem = 14;
+    //额外奖励资金科目
+    int32 rewardItem = 15;
+    //目标任务名,当任务为一天多次时,逗号分割
+    string targetNames = 16;
+    //目标值,当任务为一天多次时,逗号分割
+    string targetAmounts = 17;
+    //是否启用
+    bool status = 18;
+    //排序字段
+    int64 sortNum = 19;
+    //跳转动作,pay
+    string actionType = 20;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 21;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 22;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 23;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 24;
+    //创建者
+    int64 createBy = 25;
+    //更新者
+    int64 updateBy = 26;
+    //租户
+    int64 tenantId = 27;
+
+}
+
+// 创建Task请求
+message TaskCreateReq {
+    //任务名称
+    string taskName = 1;
+    //任务分组
+    string taskGroup = 2;
+    //单位
+    string unit = 3;
+    //订阅主题
+    string topic = 4;
+    //处理方法
+    string function = 5;
+    //任务类型
+    string taskCode = 6;
+    //前置任务ID
+    int64 preTask = 7;
+    //点击跳转书号
+    int64 novelId = 8;
+    //循环类型,once
+    string cycleType = 9;
+    //描述信息
+    string remark = 10;
+    //奖励金额
+    int64 amount = 11;
+    //额外奖励
+    int64 reward = 12;
+    //奖励资金科目
+    int32 amountItem = 13;
+    //额外奖励资金科目
+    int32 rewardItem = 14;
+    //目标任务名,当任务为一天多次时,逗号分割
+    string targetNames = 15;
+    //目标值,当任务为一天多次时,逗号分割
+    string targetAmounts = 16;
+    //是否启用
+    bool status = 17;
+    //排序字段
+    int64 sortNum = 18;
+    //跳转动作,pay
+    string actionType = 19;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 20;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 21;
+
+}
+
+// 创建Task返回
+message TaskCreateReply {
+    int64 id = 1;
+    //任务名称
+    string taskName = 2;
+    //任务分组
+    string taskGroup = 3;
+    //单位
+    string unit = 4;
+    //订阅主题
+    string topic = 5;
+    //处理方法
+    string function = 6;
+    //任务类型
+    string taskCode = 7;
+    //前置任务ID
+    int64 preTask = 8;
+    //点击跳转书号
+    int64 novelId = 9;
+    //循环类型,once
+    string cycleType = 10;
+    //描述信息
+    string remark = 11;
+    //奖励金额
+    int64 amount = 12;
+    //额外奖励
+    int64 reward = 13;
+    //奖励资金科目
+    int32 amountItem = 14;
+    //额外奖励资金科目
+    int32 rewardItem = 15;
+    //目标任务名,当任务为一天多次时,逗号分割
+    string targetNames = 16;
+    //目标值,当任务为一天多次时,逗号分割
+    string targetAmounts = 17;
+    //是否启用
+    bool status = 18;
+    //排序字段
+    int64 sortNum = 19;
+    //跳转动作,pay
+    string actionType = 20;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 21;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 22;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 23;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 24;
+    //创建者
+    int64 createBy = 25;
+    //更新者
+    int64 updateBy = 26;
+    //租户
+    int64 tenantId = 27;
+
+}
+
+// 更新Task请求
+message TaskUpdateReq {
+    int64 id = 1;
+    //任务名称
+    string taskName = 2;
+    //任务分组
+    string taskGroup = 3;
+    //单位
+    string unit = 4;
+    //订阅主题
+    string topic = 5;
+    //处理方法
+    string function = 6;
+    //任务类型
+    string taskCode = 7;
+    //前置任务ID
+    int64 preTask = 8;
+    //点击跳转书号
+    int64 novelId = 9;
+    //循环类型,once
+    string cycleType = 10;
+    //描述信息
+    string remark = 11;
+    //奖励金额
+    int64 amount = 12;
+    //额外奖励
+    int64 reward = 13;
+    //奖励资金科目
+    int32 amountItem = 14;
+    //额外奖励资金科目
+    int32 rewardItem = 15;
+    //目标任务名,当任务为一天多次时,逗号分割
+    string targetNames = 16;
+    //目标值,当任务为一天多次时,逗号分割
+    string targetAmounts = 17;
+    //是否启用
+    bool status = 18;
+    //排序字段
+    int64 sortNum = 19;
+    //跳转动作,pay
+    string actionType = 20;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 21;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 22;
+
+}
+
+
+// 更新Task返回
+message TaskUpdateReply {
+    int64 id = 1;
+    //任务名称
+    string taskName = 2;
+    //任务分组
+    string taskGroup = 3;
+    //单位
+    string unit = 4;
+    //订阅主题
+    string topic = 5;
+    //处理方法
+    string function = 6;
+    //任务类型
+    string taskCode = 7;
+    //前置任务ID
+    int64 preTask = 8;
+    //点击跳转书号
+    int64 novelId = 9;
+    //循环类型,once
+    string cycleType = 10;
+    //描述信息
+    string remark = 11;
+    //奖励金额
+    int64 amount = 12;
+    //额外奖励
+    int64 reward = 13;
+    //奖励资金科目
+    int32 amountItem = 14;
+    //额外奖励资金科目
+    int32 rewardItem = 15;
+    //目标任务名,当任务为一天多次时,逗号分割
+    string targetNames = 16;
+    //目标值,当任务为一天多次时,逗号分割
+    string targetAmounts = 17;
+    //是否启用
+    bool status = 18;
+    //排序字段
+    int64 sortNum = 19;
+    //跳转动作,pay
+    string actionType = 20;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 21;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 22;
+
+}
+
+// 删除Task请求
+message TaskDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除Task请求
+message TaskBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除Task返回
+message TaskDeleteReply {
+    bool result = 1;
+}
+

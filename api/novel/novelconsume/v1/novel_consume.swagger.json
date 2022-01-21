@@ -1,0 +1,775 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/novelconsume/v1/novel_consume.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "NovelConsume"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/novelconsume": {
+      "delete": {
+        "summary": "批量删除NovelConsume",
+        "operationId": "NovelConsume_BatchDeleteNovelConsume",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelConsumeDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "NovelConsume"
+        ]
+      },
+      "post": {
+        "summary": "创建NovelConsume",
+        "operationId": "NovelConsume_CreateNovelConsume",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelConsumeCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1NovelConsumeCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "NovelConsume"
+        ]
+      }
+    },
+    "/v1/novelconsume/page": {
+      "get": {
+        "summary": "分页查询NovelConsume",
+        "operationId": "NovelConsume_GetPageNovelConsume",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelConsumePageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.novelId",
+            "description": "书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.coin",
+            "description": "书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.coupon",
+            "description": "书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.discount",
+            "description": "VIP折扣金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.reward",
+            "description": "打赏金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelConsume"
+        ]
+      }
+    },
+    "/v1/novelconsume/{id}": {
+      "get": {
+        "summary": "获取NovelConsume",
+        "operationId": "NovelConsume_GetNovelConsume",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelConsumeReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "novelId",
+            "description": "书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "coin",
+            "description": "书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "coupon",
+            "description": "书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "discount",
+            "description": "VIP折扣金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "reward",
+            "description": "打赏金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelConsume"
+        ]
+      },
+      "delete": {
+        "summary": "删除NovelConsume",
+        "operationId": "NovelConsume_DeleteNovelConsume",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelConsumeDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelConsume"
+        ]
+      },
+      "put": {
+        "summary": "更新NovelConsume",
+        "operationId": "NovelConsume_UpdateNovelConsume",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelConsumeUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书号"
+                },
+                "coin": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书币"
+                },
+                "coupon": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书券"
+                },
+                "discount": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "VIP折扣金额"
+                },
+                "reward": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "打赏金额"
+                }
+              },
+              "title": "更新NovelConsume请求"
+            }
+          }
+        ],
+        "tags": [
+          "NovelConsume"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1NovelConsumeCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "discount": {
+          "type": "string",
+          "format": "int64",
+          "title": "VIP折扣金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "打赏金额"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建NovelConsume返回"
+    },
+    "v1NovelConsumeCreateReq": {
+      "type": "object",
+      "properties": {
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "discount": {
+          "type": "string",
+          "format": "int64",
+          "title": "VIP折扣金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "打赏金额"
+        }
+      },
+      "title": "创建NovelConsume请求"
+    },
+    "v1NovelConsumeDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除NovelConsume返回"
+    },
+    "v1NovelConsumePageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelConsumeReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelConsumeReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "discount": {
+          "type": "string",
+          "format": "int64",
+          "title": "VIP折扣金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "打赏金额"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelConsumeReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "discount": {
+          "type": "string",
+          "format": "int64",
+          "title": "VIP折扣金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "打赏金额"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1NovelConsumeUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "discount": {
+          "type": "string",
+          "format": "int64",
+          "title": "VIP折扣金额"
+        },
+        "reward": {
+          "type": "string",
+          "format": "int64",
+          "title": "打赏金额"
+        }
+      },
+      "title": "更新NovelConsume返回"
+    }
+  }
+}

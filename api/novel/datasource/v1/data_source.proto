@@ -1,0 +1,316 @@
+syntax = "proto3";
+package datasource.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/datasource/v1;v1";
+
+// The DataSource service definition.
+service DataSource {
+
+  // 分页查询DataSource
+  rpc GetPageDataSource (DataSourcePageReq) returns (DataSourcePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/datasource/page"
+    };
+  }
+
+  // 获取DataSource
+  rpc GetDataSource (DataSourceReq) returns (DataSourceReply)  {
+    option (google.api.http) = {
+      get: "/v1/datasource/{id}"
+    };
+  }
+
+  // 更新DataSource
+  rpc UpdateDataSource (DataSourceUpdateReq) returns (DataSourceUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/datasource/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建DataSource
+  rpc CreateDataSource (DataSourceCreateReq) returns (DataSourceCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/datasource"
+      body: "*"
+    };
+  }
+
+  // 删除DataSource
+  rpc DeleteDataSource (DataSourceDeleteReq) returns (DataSourceDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/datasource/{id}"
+    };
+  }
+
+  // 批量删除DataSource
+  rpc BatchDeleteDataSource (DataSourceBatchDeleteReq) returns (DataSourceDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/datasource"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message DataSourcePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    DataSourceReq param = 2;
+}
+
+// 查询搜索返回
+message DataSourcePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated DataSourceReply items = 2;
+}
+
+
+// 查询搜索请求
+message DataSourceReq {
+    int64 id = 1;
+    //数据源名称
+    string dbName = 2;
+    //数据源名称
+    string host = 3;
+    //数据源名称
+    int32 port = 4;
+    //数据源名称
+    string database = 5;
+    //用户名
+    string userName = 6;
+    //密码
+    string pwd = 7;
+    //状态
+    bool status = 8;
+    //数据库类型
+    string dbType = 9;
+    //最大空闲连接数
+    int32 connMaxIdleTime = 10;
+    //连接可重用的最大时间长度
+    int32 connMaxLifeTime = 11;
+    //最大空闲
+    int32 maxIdleConns = 12;
+    //最大打开连接数
+    int32 maxOpenConns = 13;
+    //备注
+    string remark = 14;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 15;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 16;
+    //创建者
+    int64 createBy = 17;
+    //更新者
+    int64 updateBy = 18;
+    //租户
+    int64 tenantId = 19;
+
+}
+
+// 查询搜索返回
+message DataSourceReply {
+    int64 id = 1;
+    //数据源名称
+    string dbName = 2;
+    //数据源名称
+    string host = 3;
+    //数据源名称
+    int32 port = 4;
+    //数据源名称
+    string database = 5;
+    //用户名
+    string userName = 6;
+    //密码
+    string pwd = 7;
+    //状态
+    bool status = 8;
+    //数据库类型
+    string dbType = 9;
+    //最大空闲连接数
+    int32 connMaxIdleTime = 10;
+    //连接可重用的最大时间长度
+    int32 connMaxLifeTime = 11;
+    //最大空闲
+    int32 maxIdleConns = 12;
+    //最大打开连接数
+    int32 maxOpenConns = 13;
+    //备注
+    string remark = 14;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 15;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 16;
+    //创建者
+    int64 createBy = 17;
+    //更新者
+    int64 updateBy = 18;
+    //租户
+    int64 tenantId = 19;
+
+}
+
+// 创建DataSource请求
+message DataSourceCreateReq {
+    //数据源名称
+    string dbName = 1;
+    //数据源名称
+    string host = 2;
+    //数据源名称
+    int32 port = 3;
+    //数据源名称
+    string database = 4;
+    //用户名
+    string userName = 5;
+    //密码
+    string pwd = 6;
+    //状态
+    bool status = 7;
+    //数据库类型
+    string dbType = 8;
+    //最大空闲连接数
+    int32 connMaxIdleTime = 9;
+    //连接可重用的最大时间长度
+    int32 connMaxLifeTime = 10;
+    //最大空闲
+    int32 maxIdleConns = 11;
+    //最大打开连接数
+    int32 maxOpenConns = 12;
+    //备注
+    string remark = 13;
+
+}
+
+// 创建DataSource返回
+message DataSourceCreateReply {
+    int64 id = 1;
+    //数据源名称
+    string dbName = 2;
+    //数据源名称
+    string host = 3;
+    //数据源名称
+    int32 port = 4;
+    //数据源名称
+    string database = 5;
+    //用户名
+    string userName = 6;
+    //密码
+    string pwd = 7;
+    //状态
+    bool status = 8;
+    //数据库类型
+    string dbType = 9;
+    //最大空闲连接数
+    int32 connMaxIdleTime = 10;
+    //连接可重用的最大时间长度
+    int32 connMaxLifeTime = 11;
+    //最大空闲
+    int32 maxIdleConns = 12;
+    //最大打开连接数
+    int32 maxOpenConns = 13;
+    //备注
+    string remark = 14;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 15;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 16;
+    //创建者
+    int64 createBy = 17;
+    //更新者
+    int64 updateBy = 18;
+    //租户
+    int64 tenantId = 19;
+
+}
+
+// 更新DataSource请求
+message DataSourceUpdateReq {
+    int64 id = 1;
+    //数据源名称
+    string dbName = 2;
+    //数据源名称
+    string host = 3;
+    //数据源名称
+    int32 port = 4;
+    //数据源名称
+    string database = 5;
+    //用户名
+    string userName = 6;
+    //密码
+    string pwd = 7;
+    //状态
+    bool status = 8;
+    //数据库类型
+    string dbType = 9;
+    //最大空闲连接数
+    int32 connMaxIdleTime = 10;
+    //连接可重用的最大时间长度
+    int32 connMaxLifeTime = 11;
+    //最大空闲
+    int32 maxIdleConns = 12;
+    //最大打开连接数
+    int32 maxOpenConns = 13;
+    //备注
+    string remark = 14;
+
+}
+
+
+// 更新DataSource返回
+message DataSourceUpdateReply {
+    int64 id = 1;
+    //数据源名称
+    string dbName = 2;
+    //数据源名称
+    string host = 3;
+    //数据源名称
+    int32 port = 4;
+    //数据源名称
+    string database = 5;
+    //用户名
+    string userName = 6;
+    //密码
+    string pwd = 7;
+    //状态
+    bool status = 8;
+    //数据库类型
+    string dbType = 9;
+    //最大空闲连接数
+    int32 connMaxIdleTime = 10;
+    //连接可重用的最大时间长度
+    int32 connMaxLifeTime = 11;
+    //最大空闲
+    int32 maxIdleConns = 12;
+    //最大打开连接数
+    int32 maxOpenConns = 13;
+    //备注
+    string remark = 14;
+
+}
+
+// 删除DataSource请求
+message DataSourceDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除DataSource请求
+message DataSourceBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除DataSource返回
+message DataSourceDeleteReply {
+    bool result = 1;
+}
+

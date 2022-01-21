@@ -1,0 +1,268 @@
+syntax = "proto3";
+package sysdictdata.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/sysdictdata/v1;v1";
+
+// The SysDictData service definition.
+service SysDictData {
+
+  // 分页查询SysDictData
+  rpc GetPageSysDictData (SysDictDataPageReq) returns (SysDictDataPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysdictdata/page"
+    };
+  }
+
+  // 获取SysDictData
+  rpc GetSysDictData (SysDictDataReq) returns (SysDictDataReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysdictdata/{id}"
+    };
+  }
+
+  // 更新SysDictData
+  rpc UpdateSysDictData (SysDictDataUpdateReq) returns (SysDictDataUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/sysdictdata/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建SysDictData
+  rpc CreateSysDictData (SysDictDataCreateReq) returns (SysDictDataCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/sysdictdata"
+      body: "*"
+    };
+  }
+
+  // 删除SysDictData
+  rpc DeleteSysDictData (SysDictDataDeleteReq) returns (SysDictDataDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysdictdata/{id}"
+    };
+  }
+
+  // 批量删除SysDictData
+  rpc BatchDeleteSysDictData (SysDictDataBatchDeleteReq) returns (SysDictDataDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysdictdata"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message SysDictDataPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    SysDictDataReq param = 2;
+}
+
+// 查询搜索返回
+message SysDictDataPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated SysDictDataReply items = 2;
+}
+
+
+// 查询搜索请求
+message SysDictDataReq {
+    int64 id = 1;
+    //字典类型ID
+    int64 typeId = 2;
+    //字典类型
+    string typeCode = 3;
+    //字典排序
+    int32 dictSort = 4;
+    //字典标签
+    string dictLabel = 5;
+    //字典值
+    string dictValue = 6;
+    //是否默认
+    string isDefault = 7;
+    //状态
+    int32 status = 8;
+    //默认
+    string default = 9;
+    //备注
+    string remark = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
+// 查询搜索返回
+message SysDictDataReply {
+    int64 id = 1;
+    //字典类型ID
+    int64 typeId = 2;
+    //字典类型
+    string typeCode = 3;
+    //字典排序
+    int32 dictSort = 4;
+    //字典标签
+    string dictLabel = 5;
+    //字典值
+    string dictValue = 6;
+    //是否默认
+    string isDefault = 7;
+    //状态
+    int32 status = 8;
+    //默认
+    string default = 9;
+    //备注
+    string remark = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
+// 创建SysDictData请求
+message SysDictDataCreateReq {
+    //字典类型ID
+    int64 typeId = 1;
+    //字典类型
+    string typeCode = 2;
+    //字典排序
+    int32 dictSort = 3;
+    //字典标签
+    string dictLabel = 4;
+    //字典值
+    string dictValue = 5;
+    //是否默认
+    string isDefault = 6;
+    //状态
+    int32 status = 7;
+    //默认
+    string default = 8;
+    //备注
+    string remark = 9;
+
+}
+
+// 创建SysDictData返回
+message SysDictDataCreateReply {
+    int64 id = 1;
+    //字典类型ID
+    int64 typeId = 2;
+    //字典类型
+    string typeCode = 3;
+    //字典排序
+    int32 dictSort = 4;
+    //字典标签
+    string dictLabel = 5;
+    //字典值
+    string dictValue = 6;
+    //是否默认
+    string isDefault = 7;
+    //状态
+    int32 status = 8;
+    //默认
+    string default = 9;
+    //备注
+    string remark = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
+// 更新SysDictData请求
+message SysDictDataUpdateReq {
+    int64 id = 1;
+    //字典类型ID
+    int64 typeId = 2;
+    //字典类型
+    string typeCode = 3;
+    //字典排序
+    int32 dictSort = 4;
+    //字典标签
+    string dictLabel = 5;
+    //字典值
+    string dictValue = 6;
+    //是否默认
+    string isDefault = 7;
+    //状态
+    int32 status = 8;
+    //默认
+    string default = 9;
+    //备注
+    string remark = 10;
+
+}
+
+
+// 更新SysDictData返回
+message SysDictDataUpdateReply {
+    int64 id = 1;
+    //字典类型ID
+    int64 typeId = 2;
+    //字典类型
+    string typeCode = 3;
+    //字典排序
+    int32 dictSort = 4;
+    //字典标签
+    string dictLabel = 5;
+    //字典值
+    string dictValue = 6;
+    //是否默认
+    string isDefault = 7;
+    //状态
+    int32 status = 8;
+    //默认
+    string default = 9;
+    //备注
+    string remark = 10;
+
+}
+
+// 删除SysDictData请求
+message SysDictDataDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除SysDictData请求
+message SysDictDataBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除SysDictData返回
+message SysDictDataDeleteReply {
+    bool result = 1;
+}
+

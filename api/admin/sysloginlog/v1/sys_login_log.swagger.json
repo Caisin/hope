@@ -1,0 +1,941 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/admin/sysloginlog/v1/sys_login_log.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SysLoginLog"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/sysloginlog": {
+      "delete": {
+        "summary": "批量删除SysLoginLog",
+        "operationId": "SysLoginLog_BatchDeleteSysLoginLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysLoginLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "SysLoginLog"
+        ]
+      },
+      "post": {
+        "summary": "创建SysLoginLog",
+        "operationId": "SysLoginLog_CreateSysLoginLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysLoginLogCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SysLoginLogCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "SysLoginLog"
+        ]
+      }
+    },
+    "/v1/sysloginlog/page": {
+      "get": {
+        "summary": "分页查询SysLoginLog",
+        "operationId": "SysLoginLog_GetPageSysLoginLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysLoginLogPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.status",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.ipaddr",
+            "description": "ip地址.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.loginLocation",
+            "description": "归属地.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.browser",
+            "description": "浏览器.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.os",
+            "description": "系统.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.platform",
+            "description": "固件.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.loginTime",
+            "description": "登录时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.msg",
+            "description": "信息.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysLoginLog"
+        ]
+      }
+    },
+    "/v1/sysloginlog/{id}": {
+      "get": {
+        "summary": "获取SysLoginLog",
+        "operationId": "SysLoginLog_GetSysLoginLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysLoginLogReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "status",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ipaddr",
+            "description": "ip地址.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "loginLocation",
+            "description": "归属地.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "browser",
+            "description": "浏览器.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "os",
+            "description": "系统.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "description": "固件.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "loginTime",
+            "description": "登录时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "msg",
+            "description": "信息.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysLoginLog"
+        ]
+      },
+      "delete": {
+        "summary": "删除SysLoginLog",
+        "operationId": "SysLoginLog_DeleteSysLoginLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysLoginLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysLoginLog"
+        ]
+      },
+      "put": {
+        "summary": "更新SysLoginLog",
+        "operationId": "SysLoginLog_UpdateSysLoginLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysLoginLogUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "status": {
+                  "type": "string",
+                  "title": "状态"
+                },
+                "ipaddr": {
+                  "type": "string",
+                  "title": "ip地址"
+                },
+                "loginLocation": {
+                  "type": "string",
+                  "title": "归属地"
+                },
+                "browser": {
+                  "type": "string",
+                  "title": "浏览器"
+                },
+                "os": {
+                  "type": "string",
+                  "title": "系统"
+                },
+                "platform": {
+                  "type": "string",
+                  "title": "固件"
+                },
+                "loginTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "登录时间"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "信息"
+                }
+              },
+              "title": "更新SysLoginLog请求"
+            }
+          }
+        ],
+        "tags": [
+          "SysLoginLog"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SysLoginLogCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "ipaddr": {
+          "type": "string",
+          "title": "ip地址"
+        },
+        "loginLocation": {
+          "type": "string",
+          "title": "归属地"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "loginTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "登录时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "msg": {
+          "type": "string",
+          "title": "信息"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建SysLoginLog返回"
+    },
+    "v1SysLoginLogCreateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "ipaddr": {
+          "type": "string",
+          "title": "ip地址"
+        },
+        "loginLocation": {
+          "type": "string",
+          "title": "归属地"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "loginTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "登录时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "msg": {
+          "type": "string",
+          "title": "信息"
+        }
+      },
+      "title": "创建SysLoginLog请求"
+    },
+    "v1SysLoginLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除SysLoginLog返回"
+    },
+    "v1SysLoginLogPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysLoginLogReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysLoginLogReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "ipaddr": {
+          "type": "string",
+          "title": "ip地址"
+        },
+        "loginLocation": {
+          "type": "string",
+          "title": "归属地"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "loginTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "登录时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "msg": {
+          "type": "string",
+          "title": "信息"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysLoginLogReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "ipaddr": {
+          "type": "string",
+          "title": "ip地址"
+        },
+        "loginLocation": {
+          "type": "string",
+          "title": "归属地"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "loginTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "登录时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "msg": {
+          "type": "string",
+          "title": "信息"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1SysLoginLogUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "status": {
+          "type": "string",
+          "title": "状态"
+        },
+        "ipaddr": {
+          "type": "string",
+          "title": "ip地址"
+        },
+        "loginLocation": {
+          "type": "string",
+          "title": "归属地"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "loginTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "登录时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "msg": {
+          "type": "string",
+          "title": "信息"
+        }
+      },
+      "title": "更新SysLoginLog返回"
+    }
+  }
+}

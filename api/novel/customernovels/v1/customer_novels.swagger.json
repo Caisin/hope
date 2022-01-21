@@ -1,0 +1,965 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/customernovels/v1/customer_novels.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CustomerNovels"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/customernovels": {
+      "delete": {
+        "summary": "批量删除CustomerNovels",
+        "operationId": "CustomerNovels_BatchDeleteCustomerNovels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CustomerNovelsDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "CustomerNovels"
+        ]
+      },
+      "post": {
+        "summary": "创建CustomerNovels",
+        "operationId": "CustomerNovels_CreateCustomerNovels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CustomerNovelsCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CustomerNovelsCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "CustomerNovels"
+        ]
+      }
+    },
+    "/v1/customernovels/page": {
+      "get": {
+        "summary": "分页查询CustomerNovels",
+        "operationId": "CustomerNovels_GetPageCustomerNovels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CustomerNovelsPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.novelId",
+            "description": "小说编码.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.typeId",
+            "description": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.typeCode",
+            "description": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.groupCode",
+            "description": "分组编码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.fieldName",
+            "description": "字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.cover",
+            "description": "封面,无值使用小说封面.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.orderNum",
+            "description": "排序字段,值越大,越靠前.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "CustomerNovels"
+        ]
+      }
+    },
+    "/v1/customernovels/{id}": {
+      "get": {
+        "summary": "获取CustomerNovels",
+        "operationId": "CustomerNovels_GetCustomerNovels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CustomerNovelsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "novelId",
+            "description": "小说编码.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "typeId",
+            "description": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "typeCode",
+            "description": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "groupCode",
+            "description": "分组编码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fieldName",
+            "description": "字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "cover",
+            "description": "封面,无值使用小说封面.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderNum",
+            "description": "排序字段,值越大,越靠前.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "CustomerNovels"
+        ]
+      },
+      "delete": {
+        "summary": "删除CustomerNovels",
+        "operationId": "CustomerNovels_DeleteCustomerNovels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CustomerNovelsDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "CustomerNovels"
+        ]
+      },
+      "put": {
+        "summary": "更新CustomerNovels",
+        "operationId": "CustomerNovels_UpdateCustomerNovels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CustomerNovelsUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "小说编码"
+                },
+                "typeId": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
+                },
+                "typeCode": {
+                  "type": "string",
+                  "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+                },
+                "groupCode": {
+                  "type": "string",
+                  "title": "分组编码"
+                },
+                "fieldName": {
+                  "type": "string",
+                  "title": "字段"
+                },
+                "cover": {
+                  "type": "string",
+                  "title": "封面,无值使用小说封面"
+                },
+                "orderNum": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "排序字段,值越大,越靠前"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                },
+                "effectTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "生效时间"
+                },
+                "expiredTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "失效时间"
+                }
+              },
+              "title": "更新CustomerNovels请求"
+            }
+          }
+        ],
+        "tags": [
+          "CustomerNovels"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1CustomerNovelsCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编码"
+        },
+        "typeId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
+        },
+        "typeCode": {
+          "type": "string",
+          "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+        },
+        "groupCode": {
+          "type": "string",
+          "title": "分组编码"
+        },
+        "fieldName": {
+          "type": "string",
+          "title": "字段"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面,无值使用小说封面"
+        },
+        "orderNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序字段,值越大,越靠前"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建CustomerNovels返回"
+    },
+    "v1CustomerNovelsCreateReq": {
+      "type": "object",
+      "properties": {
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编码"
+        },
+        "typeId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
+        },
+        "typeCode": {
+          "type": "string",
+          "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+        },
+        "groupCode": {
+          "type": "string",
+          "title": "分组编码"
+        },
+        "fieldName": {
+          "type": "string",
+          "title": "字段"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面,无值使用小说封面"
+        },
+        "orderNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序字段,值越大,越靠前"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "创建CustomerNovels请求"
+    },
+    "v1CustomerNovelsDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除CustomerNovels返回"
+    },
+    "v1CustomerNovelsPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1CustomerNovelsReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1CustomerNovelsReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编码"
+        },
+        "typeId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
+        },
+        "typeCode": {
+          "type": "string",
+          "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+        },
+        "groupCode": {
+          "type": "string",
+          "title": "分组编码"
+        },
+        "fieldName": {
+          "type": "string",
+          "title": "字段"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面,无值使用小说封面"
+        },
+        "orderNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序字段,值越大,越靠前"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1CustomerNovelsReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编码"
+        },
+        "typeId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
+        },
+        "typeCode": {
+          "type": "string",
+          "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+        },
+        "groupCode": {
+          "type": "string",
+          "title": "分组编码"
+        },
+        "fieldName": {
+          "type": "string",
+          "title": "字段"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面,无值使用小说封面"
+        },
+        "orderNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序字段,值越大,越靠前"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1CustomerNovelsUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编码"
+        },
+        "typeId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
+        },
+        "typeCode": {
+          "type": "string",
+          "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+        },
+        "groupCode": {
+          "type": "string",
+          "title": "分组编码"
+        },
+        "fieldName": {
+          "type": "string",
+          "title": "字段"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面,无值使用小说封面"
+        },
+        "orderNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序字段,值越大,越靠前"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "更新CustomerNovels返回"
+    }
+  }
+}

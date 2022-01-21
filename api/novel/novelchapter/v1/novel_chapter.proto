@@ -1,0 +1,304 @@
+syntax = "proto3";
+package novelchapter.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novelchapter/v1;v1";
+
+// The NovelChapter service definition.
+service NovelChapter {
+
+  // 分页查询NovelChapter
+  rpc GetPageNovelChapter (NovelChapterPageReq) returns (NovelChapterPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelchapter/page"
+    };
+  }
+
+  // 获取NovelChapter
+  rpc GetNovelChapter (NovelChapterReq) returns (NovelChapterReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelchapter/{id}"
+    };
+  }
+
+  // 更新NovelChapter
+  rpc UpdateNovelChapter (NovelChapterUpdateReq) returns (NovelChapterUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelchapter/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelChapter
+  rpc CreateNovelChapter (NovelChapterCreateReq) returns (NovelChapterCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelchapter"
+      body: "*"
+    };
+  }
+
+  // 删除NovelChapter
+  rpc DeleteNovelChapter (NovelChapterDeleteReq) returns (NovelChapterDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelchapter/{id}"
+    };
+  }
+
+  // 批量删除NovelChapter
+  rpc BatchDeleteNovelChapter (NovelChapterBatchDeleteReq) returns (NovelChapterDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelchapter"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelChapterPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelChapterReq param = 2;
+}
+
+// 查询搜索返回
+message NovelChapterPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelChapterReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelChapterReq {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //章节序号
+    int32 orderNum = 3;
+    //章节名称
+    string chapterName = 4;
+    //章节内容
+    string content = 5;
+    //阿里云音频目录
+    string mediaKey = 6;
+    //音频时长
+    string duration = 7;
+    //发布时间
+    google.protobuf.Timestamp publishTime = 8;
+    //状态：0 草稿 ，1 发布
+    int32 status = 9;
+    //0
+    bool isFree = 10;
+    //价格
+    int64 price = 11;
+    //章节字数
+    int32 wordNum = 12;
+    //备注
+    string remark = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 查询搜索返回
+message NovelChapterReply {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //章节序号
+    int32 orderNum = 3;
+    //章节名称
+    string chapterName = 4;
+    //章节内容
+    string content = 5;
+    //阿里云音频目录
+    string mediaKey = 6;
+    //音频时长
+    string duration = 7;
+    //发布时间
+    google.protobuf.Timestamp publishTime = 8;
+    //状态：0 草稿 ，1 发布
+    int32 status = 9;
+    //0
+    bool isFree = 10;
+    //价格
+    int64 price = 11;
+    //章节字数
+    int32 wordNum = 12;
+    //备注
+    string remark = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 创建NovelChapter请求
+message NovelChapterCreateReq {
+    //小说编号
+    int64 novelId = 1;
+    //章节序号
+    int32 orderNum = 2;
+    //章节名称
+    string chapterName = 3;
+    //章节内容
+    string content = 4;
+    //阿里云音频目录
+    string mediaKey = 5;
+    //音频时长
+    string duration = 6;
+    //发布时间
+    google.protobuf.Timestamp publishTime = 7;
+    //状态：0 草稿 ，1 发布
+    int32 status = 8;
+    //0
+    bool isFree = 9;
+    //价格
+    int64 price = 10;
+    //章节字数
+    int32 wordNum = 11;
+    //备注
+    string remark = 12;
+
+}
+
+// 创建NovelChapter返回
+message NovelChapterCreateReply {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //章节序号
+    int32 orderNum = 3;
+    //章节名称
+    string chapterName = 4;
+    //章节内容
+    string content = 5;
+    //阿里云音频目录
+    string mediaKey = 6;
+    //音频时长
+    string duration = 7;
+    //发布时间
+    google.protobuf.Timestamp publishTime = 8;
+    //状态：0 草稿 ，1 发布
+    int32 status = 9;
+    //0
+    bool isFree = 10;
+    //价格
+    int64 price = 11;
+    //章节字数
+    int32 wordNum = 12;
+    //备注
+    string remark = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 更新NovelChapter请求
+message NovelChapterUpdateReq {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //章节序号
+    int32 orderNum = 3;
+    //章节名称
+    string chapterName = 4;
+    //章节内容
+    string content = 5;
+    //阿里云音频目录
+    string mediaKey = 6;
+    //音频时长
+    string duration = 7;
+    //发布时间
+    google.protobuf.Timestamp publishTime = 8;
+    //状态：0 草稿 ，1 发布
+    int32 status = 9;
+    //0
+    bool isFree = 10;
+    //价格
+    int64 price = 11;
+    //章节字数
+    int32 wordNum = 12;
+    //备注
+    string remark = 13;
+
+}
+
+
+// 更新NovelChapter返回
+message NovelChapterUpdateReply {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //章节序号
+    int32 orderNum = 3;
+    //章节名称
+    string chapterName = 4;
+    //章节内容
+    string content = 5;
+    //阿里云音频目录
+    string mediaKey = 6;
+    //音频时长
+    string duration = 7;
+    //发布时间
+    google.protobuf.Timestamp publishTime = 8;
+    //状态：0 草稿 ，1 发布
+    int32 status = 9;
+    //0
+    bool isFree = 10;
+    //价格
+    int64 price = 11;
+    //章节字数
+    int32 wordNum = 12;
+    //备注
+    string remark = 13;
+
+}
+
+// 删除NovelChapter请求
+message NovelChapterDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelChapter请求
+message NovelChapterBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelChapter返回
+message NovelChapterDeleteReply {
+    bool result = 1;
+}
+

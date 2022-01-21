@@ -1,0 +1,1245 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/param/resourcestorage/v1/resource_storage.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ResourceStorage"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/resourcestorage": {
+      "delete": {
+        "summary": "批量删除ResourceStorage",
+        "operationId": "ResourceStorage_BatchDeleteResourceStorage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResourceStorageDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "ResourceStorage"
+        ]
+      },
+      "post": {
+        "summary": "创建ResourceStorage",
+        "operationId": "ResourceStorage_CreateResourceStorage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResourceStorageCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ResourceStorageCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "ResourceStorage"
+        ]
+      }
+    },
+    "/v1/resourcestorage/page": {
+      "get": {
+        "summary": "分页查询ResourceStorage",
+        "operationId": "ResourceStorage_GetPageResourceStorage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResourceStoragePageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.groupId",
+            "description": "分组.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.storageType",
+            "description": "存储类型 1.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.realName",
+            "description": "文件真实的名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.bucket",
+            "description": "Bucket 识别符(七牛).",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.name",
+            "description": "文件名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.suffix",
+            "description": "后缀.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.path",
+            "description": "路径.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.type",
+            "description": "类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.size",
+            "description": "大小.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.deleteUrl",
+            "description": "(sm.sm)删除的URL.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.filename",
+            "description": "(sm.sm)图片名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.key",
+            "description": "文件名(七牛).",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.height",
+            "description": "(sm.sm)图片高度.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.url",
+            "description": "(sm.sm)图片地址.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.username",
+            "description": "(sm.sm)用户名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.width",
+            "description": "(sm.sm)图片宽度.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.md5code",
+            "description": "(sm.sm)文件的MD5值.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ResourceStorage"
+        ]
+      }
+    },
+    "/v1/resourcestorage/{id}": {
+      "get": {
+        "summary": "获取ResourceStorage",
+        "operationId": "ResourceStorage_GetResourceStorage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResourceStorageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "groupId",
+            "description": "分组.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "storageType",
+            "description": "存储类型 1.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "realName",
+            "description": "文件真实的名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bucket",
+            "description": "Bucket 识别符(七牛).",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "文件名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "suffix",
+            "description": "后缀.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "路径.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "description": "类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "description": "大小.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "deleteUrl",
+            "description": "(sm.sm)删除的URL.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filename",
+            "description": "(sm.sm)图片名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "description": "文件名(七牛).",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "height",
+            "description": "(sm.sm)图片高度.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "description": "(sm.sm)图片地址.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "description": "(sm.sm)用户名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "width",
+            "description": "(sm.sm)图片宽度.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "md5code",
+            "description": "(sm.sm)文件的MD5值.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ResourceStorage"
+        ]
+      },
+      "delete": {
+        "summary": "删除ResourceStorage",
+        "operationId": "ResourceStorage_DeleteResourceStorage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResourceStorageDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ResourceStorage"
+        ]
+      },
+      "put": {
+        "summary": "更新ResourceStorage",
+        "operationId": "ResourceStorage_UpdateResourceStorage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResourceStorageUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "groupId": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "分组"
+                },
+                "storageType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "存储类型 1"
+                },
+                "realName": {
+                  "type": "string",
+                  "title": "文件真实的名称"
+                },
+                "bucket": {
+                  "type": "string",
+                  "title": "Bucket 识别符(七牛)"
+                },
+                "name": {
+                  "type": "string",
+                  "title": "文件名称"
+                },
+                "suffix": {
+                  "type": "string",
+                  "title": "后缀"
+                },
+                "path": {
+                  "type": "string",
+                  "title": "路径"
+                },
+                "type": {
+                  "type": "string",
+                  "title": "类型"
+                },
+                "size": {
+                  "type": "string",
+                  "title": "大小"
+                },
+                "deleteUrl": {
+                  "type": "string",
+                  "title": "(sm.sm)删除的URL"
+                },
+                "filename": {
+                  "type": "string",
+                  "title": "(sm.sm)图片名称"
+                },
+                "key": {
+                  "type": "string",
+                  "title": "文件名(七牛)"
+                },
+                "height": {
+                  "type": "string",
+                  "title": "(sm.sm)图片高度"
+                },
+                "url": {
+                  "type": "string",
+                  "title": "(sm.sm)图片地址"
+                },
+                "username": {
+                  "type": "string",
+                  "title": "(sm.sm)用户名称"
+                },
+                "width": {
+                  "type": "string",
+                  "title": "(sm.sm)图片宽度"
+                },
+                "md5code": {
+                  "type": "string",
+                  "title": "(sm.sm)文件的MD5值"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                }
+              },
+              "title": "更新ResourceStorage请求"
+            }
+          }
+        ],
+        "tags": [
+          "ResourceStorage"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ResourceStorageCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "groupId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分组"
+        },
+        "storageType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "存储类型 1"
+        },
+        "realName": {
+          "type": "string",
+          "title": "文件真实的名称"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符(七牛)"
+        },
+        "name": {
+          "type": "string",
+          "title": "文件名称"
+        },
+        "suffix": {
+          "type": "string",
+          "title": "后缀"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "type": {
+          "type": "string",
+          "title": "类型"
+        },
+        "size": {
+          "type": "string",
+          "title": "大小"
+        },
+        "deleteUrl": {
+          "type": "string",
+          "title": "(sm.sm)删除的URL"
+        },
+        "filename": {
+          "type": "string",
+          "title": "(sm.sm)图片名称"
+        },
+        "key": {
+          "type": "string",
+          "title": "文件名(七牛)"
+        },
+        "height": {
+          "type": "string",
+          "title": "(sm.sm)图片高度"
+        },
+        "url": {
+          "type": "string",
+          "title": "(sm.sm)图片地址"
+        },
+        "username": {
+          "type": "string",
+          "title": "(sm.sm)用户名称"
+        },
+        "width": {
+          "type": "string",
+          "title": "(sm.sm)图片宽度"
+        },
+        "md5code": {
+          "type": "string",
+          "title": "(sm.sm)文件的MD5值"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建ResourceStorage返回"
+    },
+    "v1ResourceStorageCreateReq": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分组"
+        },
+        "storageType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "存储类型 1"
+        },
+        "realName": {
+          "type": "string",
+          "title": "文件真实的名称"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符(七牛)"
+        },
+        "name": {
+          "type": "string",
+          "title": "文件名称"
+        },
+        "suffix": {
+          "type": "string",
+          "title": "后缀"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "type": {
+          "type": "string",
+          "title": "类型"
+        },
+        "size": {
+          "type": "string",
+          "title": "大小"
+        },
+        "deleteUrl": {
+          "type": "string",
+          "title": "(sm.sm)删除的URL"
+        },
+        "filename": {
+          "type": "string",
+          "title": "(sm.sm)图片名称"
+        },
+        "key": {
+          "type": "string",
+          "title": "文件名(七牛)"
+        },
+        "height": {
+          "type": "string",
+          "title": "(sm.sm)图片高度"
+        },
+        "url": {
+          "type": "string",
+          "title": "(sm.sm)图片地址"
+        },
+        "username": {
+          "type": "string",
+          "title": "(sm.sm)用户名称"
+        },
+        "width": {
+          "type": "string",
+          "title": "(sm.sm)图片宽度"
+        },
+        "md5code": {
+          "type": "string",
+          "title": "(sm.sm)文件的MD5值"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "创建ResourceStorage请求"
+    },
+    "v1ResourceStorageDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除ResourceStorage返回"
+    },
+    "v1ResourceStoragePageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ResourceStorageReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ResourceStorageReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "groupId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分组"
+        },
+        "storageType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "存储类型 1"
+        },
+        "realName": {
+          "type": "string",
+          "title": "文件真实的名称"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符(七牛)"
+        },
+        "name": {
+          "type": "string",
+          "title": "文件名称"
+        },
+        "suffix": {
+          "type": "string",
+          "title": "后缀"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "type": {
+          "type": "string",
+          "title": "类型"
+        },
+        "size": {
+          "type": "string",
+          "title": "大小"
+        },
+        "deleteUrl": {
+          "type": "string",
+          "title": "(sm.sm)删除的URL"
+        },
+        "filename": {
+          "type": "string",
+          "title": "(sm.sm)图片名称"
+        },
+        "key": {
+          "type": "string",
+          "title": "文件名(七牛)"
+        },
+        "height": {
+          "type": "string",
+          "title": "(sm.sm)图片高度"
+        },
+        "url": {
+          "type": "string",
+          "title": "(sm.sm)图片地址"
+        },
+        "username": {
+          "type": "string",
+          "title": "(sm.sm)用户名称"
+        },
+        "width": {
+          "type": "string",
+          "title": "(sm.sm)图片宽度"
+        },
+        "md5code": {
+          "type": "string",
+          "title": "(sm.sm)文件的MD5值"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ResourceStorageReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "groupId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分组"
+        },
+        "storageType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "存储类型 1"
+        },
+        "realName": {
+          "type": "string",
+          "title": "文件真实的名称"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符(七牛)"
+        },
+        "name": {
+          "type": "string",
+          "title": "文件名称"
+        },
+        "suffix": {
+          "type": "string",
+          "title": "后缀"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "type": {
+          "type": "string",
+          "title": "类型"
+        },
+        "size": {
+          "type": "string",
+          "title": "大小"
+        },
+        "deleteUrl": {
+          "type": "string",
+          "title": "(sm.sm)删除的URL"
+        },
+        "filename": {
+          "type": "string",
+          "title": "(sm.sm)图片名称"
+        },
+        "key": {
+          "type": "string",
+          "title": "文件名(七牛)"
+        },
+        "height": {
+          "type": "string",
+          "title": "(sm.sm)图片高度"
+        },
+        "url": {
+          "type": "string",
+          "title": "(sm.sm)图片地址"
+        },
+        "username": {
+          "type": "string",
+          "title": "(sm.sm)用户名称"
+        },
+        "width": {
+          "type": "string",
+          "title": "(sm.sm)图片宽度"
+        },
+        "md5code": {
+          "type": "string",
+          "title": "(sm.sm)文件的MD5值"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1ResourceStorageUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "groupId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "分组"
+        },
+        "storageType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "存储类型 1"
+        },
+        "realName": {
+          "type": "string",
+          "title": "文件真实的名称"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符(七牛)"
+        },
+        "name": {
+          "type": "string",
+          "title": "文件名称"
+        },
+        "suffix": {
+          "type": "string",
+          "title": "后缀"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "type": {
+          "type": "string",
+          "title": "类型"
+        },
+        "size": {
+          "type": "string",
+          "title": "大小"
+        },
+        "deleteUrl": {
+          "type": "string",
+          "title": "(sm.sm)删除的URL"
+        },
+        "filename": {
+          "type": "string",
+          "title": "(sm.sm)图片名称"
+        },
+        "key": {
+          "type": "string",
+          "title": "文件名(七牛)"
+        },
+        "height": {
+          "type": "string",
+          "title": "(sm.sm)图片高度"
+        },
+        "url": {
+          "type": "string",
+          "title": "(sm.sm)图片地址"
+        },
+        "username": {
+          "type": "string",
+          "title": "(sm.sm)用户名称"
+        },
+        "width": {
+          "type": "string",
+          "title": "(sm.sm)图片宽度"
+        },
+        "md5code": {
+          "type": "string",
+          "title": "(sm.sm)文件的MD5值"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "更新ResourceStorage返回"
+    }
+  }
+}

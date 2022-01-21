@@ -1,0 +1,805 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/bookpackage/v1/book_package.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "BookPackage"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/bookpackage": {
+      "delete": {
+        "summary": "批量删除BookPackage",
+        "operationId": "BookPackage_BatchDeleteBookPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BookPackageDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "BookPackage"
+        ]
+      },
+      "post": {
+        "summary": "创建BookPackage",
+        "operationId": "BookPackage_CreateBookPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BookPackageCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BookPackageCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "BookPackage"
+        ]
+      }
+    },
+    "/v1/bookpackage/page": {
+      "get": {
+        "summary": "分页查询BookPackage",
+        "operationId": "BookPackage_GetPageBookPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BookPackagePageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.activityCode",
+            "description": "活动编码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.packageName",
+            "description": "书籍包名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.price",
+            "description": "活动打包价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.dailyPrice",
+            "description": "日常价格,既所有书本正常购买的价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "BookPackage"
+        ]
+      }
+    },
+    "/v1/bookpackage/{id}": {
+      "get": {
+        "summary": "获取BookPackage",
+        "operationId": "BookPackage_GetBookPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BookPackageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "activityCode",
+            "description": "活动编码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "packageName",
+            "description": "书籍包名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "description": "活动打包价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "dailyPrice",
+            "description": "日常价格,既所有书本正常购买的价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "BookPackage"
+        ]
+      },
+      "delete": {
+        "summary": "删除BookPackage",
+        "operationId": "BookPackage_DeleteBookPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BookPackageDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "BookPackage"
+        ]
+      },
+      "put": {
+        "summary": "更新BookPackage",
+        "operationId": "BookPackage_UpdateBookPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BookPackageUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activityCode": {
+                  "type": "string",
+                  "title": "活动编码"
+                },
+                "packageName": {
+                  "type": "string",
+                  "title": "书籍包名称"
+                },
+                "price": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "活动打包价格"
+                },
+                "dailyPrice": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "日常价格,既所有书本正常购买的价格"
+                },
+                "effectTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "生效时间"
+                },
+                "expiredTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "失效时间"
+                }
+              },
+              "title": "更新BookPackage请求"
+            }
+          }
+        ],
+        "tags": [
+          "BookPackage"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1BookPackageCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activityCode": {
+          "type": "string",
+          "title": "活动编码"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "书籍包名称"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "活动打包价格"
+        },
+        "dailyPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "日常价格,既所有书本正常购买的价格"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建BookPackage返回"
+    },
+    "v1BookPackageCreateReq": {
+      "type": "object",
+      "properties": {
+        "activityCode": {
+          "type": "string",
+          "title": "活动编码"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "书籍包名称"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "活动打包价格"
+        },
+        "dailyPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "日常价格,既所有书本正常购买的价格"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "创建BookPackage请求"
+    },
+    "v1BookPackageDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除BookPackage返回"
+    },
+    "v1BookPackagePageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1BookPackageReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1BookPackageReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activityCode": {
+          "type": "string",
+          "title": "活动编码"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "书籍包名称"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "活动打包价格"
+        },
+        "dailyPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "日常价格,既所有书本正常购买的价格"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1BookPackageReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activityCode": {
+          "type": "string",
+          "title": "活动编码"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "书籍包名称"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "活动打包价格"
+        },
+        "dailyPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "日常价格,既所有书本正常购买的价格"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1BookPackageUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activityCode": {
+          "type": "string",
+          "title": "活动编码"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "书籍包名称"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "活动打包价格"
+        },
+        "dailyPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "日常价格,既所有书本正常购买的价格"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "更新BookPackage返回"
+    }
+  }
+}

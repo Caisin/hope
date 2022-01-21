@@ -1,0 +1,196 @@
+syntax = "proto3";
+package pageconfig.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/pageconfig/v1;v1";
+
+// The PageConfig service definition.
+service PageConfig {
+
+  // 分页查询PageConfig
+  rpc GetPagePageConfig (PageConfigPageReq) returns (PageConfigPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/pageconfig/page"
+    };
+  }
+
+  // 获取PageConfig
+  rpc GetPageConfig (PageConfigReq) returns (PageConfigReply)  {
+    option (google.api.http) = {
+      get: "/v1/pageconfig/{id}"
+    };
+  }
+
+  // 更新PageConfig
+  rpc UpdatePageConfig (PageConfigUpdateReq) returns (PageConfigUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/pageconfig/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建PageConfig
+  rpc CreatePageConfig (PageConfigCreateReq) returns (PageConfigCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/pageconfig"
+      body: "*"
+    };
+  }
+
+  // 删除PageConfig
+  rpc DeletePageConfig (PageConfigDeleteReq) returns (PageConfigDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/pageconfig/{id}"
+    };
+  }
+
+  // 批量删除PageConfig
+  rpc BatchDeletePageConfig (PageConfigBatchDeleteReq) returns (PageConfigDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/pageconfig"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message PageConfigPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    PageConfigReq param = 2;
+}
+
+// 查询搜索返回
+message PageConfigPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated PageConfigReply items = 2;
+}
+
+
+// 查询搜索请求
+message PageConfigReq {
+    int64 id = 1;
+    //页面编码
+    string pageCode = 2;
+    //页面名称
+    string pageName = 3;
+    //分组编码集,逗号分割
+    string groupCodes = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 查询搜索返回
+message PageConfigReply {
+    int64 id = 1;
+    //页面编码
+    string pageCode = 2;
+    //页面名称
+    string pageName = 3;
+    //分组编码集,逗号分割
+    string groupCodes = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 创建PageConfig请求
+message PageConfigCreateReq {
+    //页面编码
+    string pageCode = 1;
+    //页面名称
+    string pageName = 2;
+    //分组编码集,逗号分割
+    string groupCodes = 3;
+
+}
+
+// 创建PageConfig返回
+message PageConfigCreateReply {
+    int64 id = 1;
+    //页面编码
+    string pageCode = 2;
+    //页面名称
+    string pageName = 3;
+    //分组编码集,逗号分割
+    string groupCodes = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 更新PageConfig请求
+message PageConfigUpdateReq {
+    int64 id = 1;
+    //页面编码
+    string pageCode = 2;
+    //页面名称
+    string pageName = 3;
+    //分组编码集,逗号分割
+    string groupCodes = 4;
+
+}
+
+
+// 更新PageConfig返回
+message PageConfigUpdateReply {
+    int64 id = 1;
+    //页面编码
+    string pageCode = 2;
+    //页面名称
+    string pageName = 3;
+    //分组编码集,逗号分割
+    string groupCodes = 4;
+
+}
+
+// 删除PageConfig请求
+message PageConfigDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除PageConfig请求
+message PageConfigBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除PageConfig返回
+message PageConfigDeleteReply {
+    bool result = 1;
+}
+

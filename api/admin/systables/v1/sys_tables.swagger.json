@@ -1,0 +1,1413 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/admin/systables/v1/sys_tables.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SysTables"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/systables": {
+      "delete": {
+        "summary": "批量删除SysTables",
+        "operationId": "SysTables_BatchDeleteSysTables",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysTablesDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "SysTables"
+        ]
+      },
+      "post": {
+        "summary": "创建SysTables",
+        "operationId": "SysTables_CreateSysTables",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysTablesCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SysTablesCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "SysTables"
+        ]
+      }
+    },
+    "/v1/systables/page": {
+      "get": {
+        "summary": "分页查询SysTables",
+        "operationId": "SysTables_GetPageSysTables",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysTablesPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tableName",
+            "description": "表名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.tableComment",
+            "description": "表备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.className",
+            "description": "类名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.tplCategory",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.packageName",
+            "description": "包名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.moduleName",
+            "description": "go文件名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.moduleFrontName",
+            "description": "前端文件名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.businessName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.functionName",
+            "description": "功能名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.functionAuthor",
+            "description": "功能作者.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.pkColumn",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.pkGoField",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.pkJsonField",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.options",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.treeCode",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.treeParentCode",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.treeName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.tree",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.crud",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.remark",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.isDataScope",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.isActions",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.isAuth",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.isLogicalDelete",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.logicalDelete",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.logicalDeleteColumn",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysTables"
+        ]
+      }
+    },
+    "/v1/systables/{id}": {
+      "get": {
+        "summary": "获取SysTables",
+        "operationId": "SysTables_GetSysTables",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysTablesReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tableName",
+            "description": "表名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tableComment",
+            "description": "表备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "className",
+            "description": "类名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tplCategory",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "packageName",
+            "description": "包名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "moduleName",
+            "description": "go文件名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "moduleFrontName",
+            "description": "前端文件名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "businessName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "functionName",
+            "description": "功能名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "functionAuthor",
+            "description": "功能作者.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pkColumn",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pkGoField",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pkJsonField",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "treeCode",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "treeParentCode",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "treeName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tree",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "crud",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "isDataScope",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "isActions",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "isAuth",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "isLogicalDelete",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "logicalDelete",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "logicalDeleteColumn",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysTables"
+        ]
+      },
+      "delete": {
+        "summary": "删除SysTables",
+        "operationId": "SysTables_DeleteSysTables",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysTablesDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysTables"
+        ]
+      },
+      "put": {
+        "summary": "更新SysTables",
+        "operationId": "SysTables_UpdateSysTables",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysTablesUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tableName": {
+                  "type": "string",
+                  "title": "表名称"
+                },
+                "tableComment": {
+                  "type": "string",
+                  "title": "表备注"
+                },
+                "className": {
+                  "type": "string",
+                  "title": "类名"
+                },
+                "tplCategory": {
+                  "type": "string"
+                },
+                "packageName": {
+                  "type": "string",
+                  "title": "包名"
+                },
+                "moduleName": {
+                  "type": "string",
+                  "title": "go文件名"
+                },
+                "moduleFrontName": {
+                  "type": "string",
+                  "title": "前端文件名"
+                },
+                "businessName": {
+                  "type": "string"
+                },
+                "functionName": {
+                  "type": "string",
+                  "title": "功能名称"
+                },
+                "functionAuthor": {
+                  "type": "string",
+                  "title": "功能作者"
+                },
+                "pkColumn": {
+                  "type": "string"
+                },
+                "pkGoField": {
+                  "type": "string"
+                },
+                "pkJsonField": {
+                  "type": "string"
+                },
+                "options": {
+                  "type": "string"
+                },
+                "treeCode": {
+                  "type": "string"
+                },
+                "treeParentCode": {
+                  "type": "string"
+                },
+                "treeName": {
+                  "type": "string"
+                },
+                "tree": {
+                  "type": "boolean"
+                },
+                "crud": {
+                  "type": "boolean"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "isDataScope": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "isActions": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "isAuth": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "isLogicalDelete": {
+                  "type": "string"
+                },
+                "logicalDelete": {
+                  "type": "boolean"
+                },
+                "logicalDeleteColumn": {
+                  "type": "string"
+                }
+              },
+              "title": "更新SysTables请求"
+            }
+          }
+        ],
+        "tags": [
+          "SysTables"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SysTablesCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tableName": {
+          "type": "string",
+          "title": "表名称"
+        },
+        "tableComment": {
+          "type": "string",
+          "title": "表备注"
+        },
+        "className": {
+          "type": "string",
+          "title": "类名"
+        },
+        "tplCategory": {
+          "type": "string"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "包名"
+        },
+        "moduleName": {
+          "type": "string",
+          "title": "go文件名"
+        },
+        "moduleFrontName": {
+          "type": "string",
+          "title": "前端文件名"
+        },
+        "businessName": {
+          "type": "string"
+        },
+        "functionName": {
+          "type": "string",
+          "title": "功能名称"
+        },
+        "functionAuthor": {
+          "type": "string",
+          "title": "功能作者"
+        },
+        "pkColumn": {
+          "type": "string"
+        },
+        "pkGoField": {
+          "type": "string"
+        },
+        "pkJsonField": {
+          "type": "string"
+        },
+        "options": {
+          "type": "string"
+        },
+        "treeCode": {
+          "type": "string"
+        },
+        "treeParentCode": {
+          "type": "string"
+        },
+        "treeName": {
+          "type": "string"
+        },
+        "tree": {
+          "type": "boolean"
+        },
+        "crud": {
+          "type": "boolean"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "isDataScope": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isActions": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isAuth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isLogicalDelete": {
+          "type": "string"
+        },
+        "logicalDelete": {
+          "type": "boolean"
+        },
+        "logicalDeleteColumn": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建SysTables返回"
+    },
+    "v1SysTablesCreateReq": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "title": "表名称"
+        },
+        "tableComment": {
+          "type": "string",
+          "title": "表备注"
+        },
+        "className": {
+          "type": "string",
+          "title": "类名"
+        },
+        "tplCategory": {
+          "type": "string"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "包名"
+        },
+        "moduleName": {
+          "type": "string",
+          "title": "go文件名"
+        },
+        "moduleFrontName": {
+          "type": "string",
+          "title": "前端文件名"
+        },
+        "businessName": {
+          "type": "string"
+        },
+        "functionName": {
+          "type": "string",
+          "title": "功能名称"
+        },
+        "functionAuthor": {
+          "type": "string",
+          "title": "功能作者"
+        },
+        "pkColumn": {
+          "type": "string"
+        },
+        "pkGoField": {
+          "type": "string"
+        },
+        "pkJsonField": {
+          "type": "string"
+        },
+        "options": {
+          "type": "string"
+        },
+        "treeCode": {
+          "type": "string"
+        },
+        "treeParentCode": {
+          "type": "string"
+        },
+        "treeName": {
+          "type": "string"
+        },
+        "tree": {
+          "type": "boolean"
+        },
+        "crud": {
+          "type": "boolean"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "isDataScope": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isActions": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isAuth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isLogicalDelete": {
+          "type": "string"
+        },
+        "logicalDelete": {
+          "type": "boolean"
+        },
+        "logicalDeleteColumn": {
+          "type": "string"
+        }
+      },
+      "title": "创建SysTables请求"
+    },
+    "v1SysTablesDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除SysTables返回"
+    },
+    "v1SysTablesPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysTablesReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysTablesReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tableName": {
+          "type": "string",
+          "title": "表名称"
+        },
+        "tableComment": {
+          "type": "string",
+          "title": "表备注"
+        },
+        "className": {
+          "type": "string",
+          "title": "类名"
+        },
+        "tplCategory": {
+          "type": "string"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "包名"
+        },
+        "moduleName": {
+          "type": "string",
+          "title": "go文件名"
+        },
+        "moduleFrontName": {
+          "type": "string",
+          "title": "前端文件名"
+        },
+        "businessName": {
+          "type": "string"
+        },
+        "functionName": {
+          "type": "string",
+          "title": "功能名称"
+        },
+        "functionAuthor": {
+          "type": "string",
+          "title": "功能作者"
+        },
+        "pkColumn": {
+          "type": "string"
+        },
+        "pkGoField": {
+          "type": "string"
+        },
+        "pkJsonField": {
+          "type": "string"
+        },
+        "options": {
+          "type": "string"
+        },
+        "treeCode": {
+          "type": "string"
+        },
+        "treeParentCode": {
+          "type": "string"
+        },
+        "treeName": {
+          "type": "string"
+        },
+        "tree": {
+          "type": "boolean"
+        },
+        "crud": {
+          "type": "boolean"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "isDataScope": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isActions": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isAuth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isLogicalDelete": {
+          "type": "string"
+        },
+        "logicalDelete": {
+          "type": "boolean"
+        },
+        "logicalDeleteColumn": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysTablesReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tableName": {
+          "type": "string",
+          "title": "表名称"
+        },
+        "tableComment": {
+          "type": "string",
+          "title": "表备注"
+        },
+        "className": {
+          "type": "string",
+          "title": "类名"
+        },
+        "tplCategory": {
+          "type": "string"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "包名"
+        },
+        "moduleName": {
+          "type": "string",
+          "title": "go文件名"
+        },
+        "moduleFrontName": {
+          "type": "string",
+          "title": "前端文件名"
+        },
+        "businessName": {
+          "type": "string"
+        },
+        "functionName": {
+          "type": "string",
+          "title": "功能名称"
+        },
+        "functionAuthor": {
+          "type": "string",
+          "title": "功能作者"
+        },
+        "pkColumn": {
+          "type": "string"
+        },
+        "pkGoField": {
+          "type": "string"
+        },
+        "pkJsonField": {
+          "type": "string"
+        },
+        "options": {
+          "type": "string"
+        },
+        "treeCode": {
+          "type": "string"
+        },
+        "treeParentCode": {
+          "type": "string"
+        },
+        "treeName": {
+          "type": "string"
+        },
+        "tree": {
+          "type": "boolean"
+        },
+        "crud": {
+          "type": "boolean"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "isDataScope": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isActions": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isAuth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isLogicalDelete": {
+          "type": "string"
+        },
+        "logicalDelete": {
+          "type": "boolean"
+        },
+        "logicalDeleteColumn": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1SysTablesUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tableName": {
+          "type": "string",
+          "title": "表名称"
+        },
+        "tableComment": {
+          "type": "string",
+          "title": "表备注"
+        },
+        "className": {
+          "type": "string",
+          "title": "类名"
+        },
+        "tplCategory": {
+          "type": "string"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "包名"
+        },
+        "moduleName": {
+          "type": "string",
+          "title": "go文件名"
+        },
+        "moduleFrontName": {
+          "type": "string",
+          "title": "前端文件名"
+        },
+        "businessName": {
+          "type": "string"
+        },
+        "functionName": {
+          "type": "string",
+          "title": "功能名称"
+        },
+        "functionAuthor": {
+          "type": "string",
+          "title": "功能作者"
+        },
+        "pkColumn": {
+          "type": "string"
+        },
+        "pkGoField": {
+          "type": "string"
+        },
+        "pkJsonField": {
+          "type": "string"
+        },
+        "options": {
+          "type": "string"
+        },
+        "treeCode": {
+          "type": "string"
+        },
+        "treeParentCode": {
+          "type": "string"
+        },
+        "treeName": {
+          "type": "string"
+        },
+        "tree": {
+          "type": "boolean"
+        },
+        "crud": {
+          "type": "boolean"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "isDataScope": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isActions": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isAuth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isLogicalDelete": {
+          "type": "string"
+        },
+        "logicalDelete": {
+          "type": "boolean"
+        },
+        "logicalDeleteColumn": {
+          "type": "string"
+        }
+      },
+      "title": "更新SysTables返回"
+    }
+  }
+}

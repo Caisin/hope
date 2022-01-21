@@ -1,0 +1,340 @@
+syntax = "proto3";
+package activitycomponent.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/activitycomponent/v1;v1";
+
+// The ActivityComponent service definition.
+service ActivityComponent {
+
+  // 分页查询ActivityComponent
+  rpc GetPageActivityComponent (ActivityComponentPageReq) returns (ActivityComponentPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/activitycomponent/page"
+    };
+  }
+
+  // 获取ActivityComponent
+  rpc GetActivityComponent (ActivityComponentReq) returns (ActivityComponentReply)  {
+    option (google.api.http) = {
+      get: "/v1/activitycomponent/{id}"
+    };
+  }
+
+  // 更新ActivityComponent
+  rpc UpdateActivityComponent (ActivityComponentUpdateReq) returns (ActivityComponentUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/activitycomponent/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建ActivityComponent
+  rpc CreateActivityComponent (ActivityComponentCreateReq) returns (ActivityComponentCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/activitycomponent"
+      body: "*"
+    };
+  }
+
+  // 删除ActivityComponent
+  rpc DeleteActivityComponent (ActivityComponentDeleteReq) returns (ActivityComponentDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/activitycomponent/{id}"
+    };
+  }
+
+  // 批量删除ActivityComponent
+  rpc BatchDeleteActivityComponent (ActivityComponentBatchDeleteReq) returns (ActivityComponentDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/activitycomponent"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message ActivityComponentPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    ActivityComponentReq param = 2;
+}
+
+// 查询搜索返回
+message ActivityComponentPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated ActivityComponentReply items = 2;
+}
+
+
+// 查询搜索请求
+message ActivityComponentReq {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动组成类型,reg
+    string componentType = 3;
+    //策略,all
+    string policy = 4;
+    //vip拓展天数,当用户为vip时生效
+    bool vipDays = 5;
+    //最小消耗金额
+    int64 minConsume = 6;
+    //最大消耗金额
+    int64 maxConsume = 7;
+    //充值次数
+    int64 minPayNum = 8;
+    //第几次充值
+    int64 payTimes = 9;
+    //充值金额
+    int64 payAmount = 10;
+    //注册天数
+    int64 regDays = 11;
+    //活动描述
+    string summary = 12;
+    //活动期间赠送资金科目
+    int32 assetItemId = 13;
+    //活动期间赠送金额,-1为赠送等额消耗书券
+    int64 amount = 14;
+    //获得资产编号
+    int64 resId = 15;
+    //获得资产有效时间
+    int32 resDays = 16;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 17;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 18;
+    //创建者
+    int64 createBy = 19;
+    //更新者
+    int64 updateBy = 20;
+    //租户
+    int64 tenantId = 21;
+
+}
+
+// 查询搜索返回
+message ActivityComponentReply {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动组成类型,reg
+    string componentType = 3;
+    //策略,all
+    string policy = 4;
+    //vip拓展天数,当用户为vip时生效
+    bool vipDays = 5;
+    //最小消耗金额
+    int64 minConsume = 6;
+    //最大消耗金额
+    int64 maxConsume = 7;
+    //充值次数
+    int64 minPayNum = 8;
+    //第几次充值
+    int64 payTimes = 9;
+    //充值金额
+    int64 payAmount = 10;
+    //注册天数
+    int64 regDays = 11;
+    //活动描述
+    string summary = 12;
+    //活动期间赠送资金科目
+    int32 assetItemId = 13;
+    //活动期间赠送金额,-1为赠送等额消耗书券
+    int64 amount = 14;
+    //获得资产编号
+    int64 resId = 15;
+    //获得资产有效时间
+    int32 resDays = 16;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 17;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 18;
+    //创建者
+    int64 createBy = 19;
+    //更新者
+    int64 updateBy = 20;
+    //租户
+    int64 tenantId = 21;
+
+}
+
+// 创建ActivityComponent请求
+message ActivityComponentCreateReq {
+    //活动编码
+    string activityCode = 1;
+    //活动组成类型,reg
+    string componentType = 2;
+    //策略,all
+    string policy = 3;
+    //vip拓展天数,当用户为vip时生效
+    bool vipDays = 4;
+    //最小消耗金额
+    int64 minConsume = 5;
+    //最大消耗金额
+    int64 maxConsume = 6;
+    //充值次数
+    int64 minPayNum = 7;
+    //第几次充值
+    int64 payTimes = 8;
+    //充值金额
+    int64 payAmount = 9;
+    //注册天数
+    int64 regDays = 10;
+    //活动描述
+    string summary = 11;
+    //活动期间赠送资金科目
+    int32 assetItemId = 12;
+    //活动期间赠送金额,-1为赠送等额消耗书券
+    int64 amount = 13;
+    //获得资产编号
+    int64 resId = 14;
+    //获得资产有效时间
+    int32 resDays = 15;
+
+}
+
+// 创建ActivityComponent返回
+message ActivityComponentCreateReply {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动组成类型,reg
+    string componentType = 3;
+    //策略,all
+    string policy = 4;
+    //vip拓展天数,当用户为vip时生效
+    bool vipDays = 5;
+    //最小消耗金额
+    int64 minConsume = 6;
+    //最大消耗金额
+    int64 maxConsume = 7;
+    //充值次数
+    int64 minPayNum = 8;
+    //第几次充值
+    int64 payTimes = 9;
+    //充值金额
+    int64 payAmount = 10;
+    //注册天数
+    int64 regDays = 11;
+    //活动描述
+    string summary = 12;
+    //活动期间赠送资金科目
+    int32 assetItemId = 13;
+    //活动期间赠送金额,-1为赠送等额消耗书券
+    int64 amount = 14;
+    //获得资产编号
+    int64 resId = 15;
+    //获得资产有效时间
+    int32 resDays = 16;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 17;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 18;
+    //创建者
+    int64 createBy = 19;
+    //更新者
+    int64 updateBy = 20;
+    //租户
+    int64 tenantId = 21;
+
+}
+
+// 更新ActivityComponent请求
+message ActivityComponentUpdateReq {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动组成类型,reg
+    string componentType = 3;
+    //策略,all
+    string policy = 4;
+    //vip拓展天数,当用户为vip时生效
+    bool vipDays = 5;
+    //最小消耗金额
+    int64 minConsume = 6;
+    //最大消耗金额
+    int64 maxConsume = 7;
+    //充值次数
+    int64 minPayNum = 8;
+    //第几次充值
+    int64 payTimes = 9;
+    //充值金额
+    int64 payAmount = 10;
+    //注册天数
+    int64 regDays = 11;
+    //活动描述
+    string summary = 12;
+    //活动期间赠送资金科目
+    int32 assetItemId = 13;
+    //活动期间赠送金额,-1为赠送等额消耗书券
+    int64 amount = 14;
+    //获得资产编号
+    int64 resId = 15;
+    //获得资产有效时间
+    int32 resDays = 16;
+
+}
+
+
+// 更新ActivityComponent返回
+message ActivityComponentUpdateReply {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动组成类型,reg
+    string componentType = 3;
+    //策略,all
+    string policy = 4;
+    //vip拓展天数,当用户为vip时生效
+    bool vipDays = 5;
+    //最小消耗金额
+    int64 minConsume = 6;
+    //最大消耗金额
+    int64 maxConsume = 7;
+    //充值次数
+    int64 minPayNum = 8;
+    //第几次充值
+    int64 payTimes = 9;
+    //充值金额
+    int64 payAmount = 10;
+    //注册天数
+    int64 regDays = 11;
+    //活动描述
+    string summary = 12;
+    //活动期间赠送资金科目
+    int32 assetItemId = 13;
+    //活动期间赠送金额,-1为赠送等额消耗书券
+    int64 amount = 14;
+    //获得资产编号
+    int64 resId = 15;
+    //获得资产有效时间
+    int32 resDays = 16;
+
+}
+
+// 删除ActivityComponent请求
+message ActivityComponentDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除ActivityComponent请求
+message ActivityComponentBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除ActivityComponent返回
+message ActivityComponentDeleteReply {
+    bool result = 1;
+}
+

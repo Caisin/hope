@@ -1,0 +1,244 @@
+syntax = "proto3";
+package listenrecord.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/listenrecord/v1;v1";
+
+// The ListenRecord service definition.
+service ListenRecord {
+
+  // 分页查询ListenRecord
+  rpc GetPageListenRecord (ListenRecordPageReq) returns (ListenRecordPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/listenrecord/page"
+    };
+  }
+
+  // 获取ListenRecord
+  rpc GetListenRecord (ListenRecordReq) returns (ListenRecordReply)  {
+    option (google.api.http) = {
+      get: "/v1/listenrecord/{id}"
+    };
+  }
+
+  // 更新ListenRecord
+  rpc UpdateListenRecord (ListenRecordUpdateReq) returns (ListenRecordUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/listenrecord/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建ListenRecord
+  rpc CreateListenRecord (ListenRecordCreateReq) returns (ListenRecordCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/listenrecord"
+      body: "*"
+    };
+  }
+
+  // 删除ListenRecord
+  rpc DeleteListenRecord (ListenRecordDeleteReq) returns (ListenRecordDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/listenrecord/{id}"
+    };
+  }
+
+  // 批量删除ListenRecord
+  rpc BatchDeleteListenRecord (ListenRecordBatchDeleteReq) returns (ListenRecordDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/listenrecord"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message ListenRecordPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    ListenRecordReq param = 2;
+}
+
+// 查询搜索返回
+message ListenRecordPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated ListenRecordReply items = 2;
+}
+
+
+// 查询搜索请求
+message ListenRecordReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //主键编码
+    int64 chapterId = 3;
+    //小说编号
+    int64 novelId = 4;
+    //播放次数
+    int64 listenTimes = 5;
+    //音频时长
+    google.protobuf.Duration duration = 6;
+    //总播放时长
+    google.protobuf.Duration allDuration = 7;
+    //当天播放时长
+    google.protobuf.Duration dayDuration = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 查询搜索返回
+message ListenRecordReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //主键编码
+    int64 chapterId = 3;
+    //小说编号
+    int64 novelId = 4;
+    //播放次数
+    int64 listenTimes = 5;
+    //音频时长
+    google.protobuf.Duration duration = 6;
+    //总播放时长
+    google.protobuf.Duration allDuration = 7;
+    //当天播放时长
+    google.protobuf.Duration dayDuration = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 创建ListenRecord请求
+message ListenRecordCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //主键编码
+    int64 chapterId = 2;
+    //小说编号
+    int64 novelId = 3;
+    //播放次数
+    int64 listenTimes = 4;
+    //音频时长
+    google.protobuf.Duration duration = 5;
+    //总播放时长
+    google.protobuf.Duration allDuration = 6;
+    //当天播放时长
+    google.protobuf.Duration dayDuration = 7;
+
+}
+
+// 创建ListenRecord返回
+message ListenRecordCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //主键编码
+    int64 chapterId = 3;
+    //小说编号
+    int64 novelId = 4;
+    //播放次数
+    int64 listenTimes = 5;
+    //音频时长
+    google.protobuf.Duration duration = 6;
+    //总播放时长
+    google.protobuf.Duration allDuration = 7;
+    //当天播放时长
+    google.protobuf.Duration dayDuration = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 更新ListenRecord请求
+message ListenRecordUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //主键编码
+    int64 chapterId = 3;
+    //小说编号
+    int64 novelId = 4;
+    //播放次数
+    int64 listenTimes = 5;
+    //音频时长
+    google.protobuf.Duration duration = 6;
+    //总播放时长
+    google.protobuf.Duration allDuration = 7;
+    //当天播放时长
+    google.protobuf.Duration dayDuration = 8;
+
+}
+
+
+// 更新ListenRecord返回
+message ListenRecordUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //主键编码
+    int64 chapterId = 3;
+    //小说编号
+    int64 novelId = 4;
+    //播放次数
+    int64 listenTimes = 5;
+    //音频时长
+    google.protobuf.Duration duration = 6;
+    //总播放时长
+    google.protobuf.Duration allDuration = 7;
+    //当天播放时长
+    google.protobuf.Duration dayDuration = 8;
+
+}
+
+// 删除ListenRecord请求
+message ListenRecordDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除ListenRecord请求
+message ListenRecordBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除ListenRecord返回
+message ListenRecordDeleteReply {
+    bool result = 1;
+}
+

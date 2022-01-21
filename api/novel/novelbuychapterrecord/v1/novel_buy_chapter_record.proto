@@ -1,0 +1,304 @@
+syntax = "proto3";
+package novelbuychapterrecord.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novelbuychapterrecord/v1;v1";
+
+// The NovelBuyChapterRecord service definition.
+service NovelBuyChapterRecord {
+
+  // 分页查询NovelBuyChapterRecord
+  rpc GetPageNovelBuyChapterRecord (NovelBuyChapterRecordPageReq) returns (NovelBuyChapterRecordPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelbuychapterrecord/page"
+    };
+  }
+
+  // 获取NovelBuyChapterRecord
+  rpc GetNovelBuyChapterRecord (NovelBuyChapterRecordReq) returns (NovelBuyChapterRecordReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelbuychapterrecord/{id}"
+    };
+  }
+
+  // 更新NovelBuyChapterRecord
+  rpc UpdateNovelBuyChapterRecord (NovelBuyChapterRecordUpdateReq) returns (NovelBuyChapterRecordUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelbuychapterrecord/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelBuyChapterRecord
+  rpc CreateNovelBuyChapterRecord (NovelBuyChapterRecordCreateReq) returns (NovelBuyChapterRecordCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelbuychapterrecord"
+      body: "*"
+    };
+  }
+
+  // 删除NovelBuyChapterRecord
+  rpc DeleteNovelBuyChapterRecord (NovelBuyChapterRecordDeleteReq) returns (NovelBuyChapterRecordDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelbuychapterrecord/{id}"
+    };
+  }
+
+  // 批量删除NovelBuyChapterRecord
+  rpc BatchDeleteNovelBuyChapterRecord (NovelBuyChapterRecordBatchDeleteReq) returns (NovelBuyChapterRecordDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelbuychapterrecord"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelBuyChapterRecordPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelBuyChapterRecordReq param = 2;
+}
+
+// 查询搜索返回
+message NovelBuyChapterRecordPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelBuyChapterRecordReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelBuyChapterRecordReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名称
+    string userName = 3;
+    //章节ID
+    int64 chapterId = 4;
+    //章节序号
+    int32 chapterOrderNum = 5;
+    //书号
+    int64 novelId = 6;
+    //书名
+    string novelName = 7;
+    //章节名称
+    string chapterName = 8;
+    //是否超级vip记录
+    bool isSvip = 9;
+    //花费书币
+    int64 coin = 10;
+    //花费书券
+    int64 coupon = 11;
+    //折扣金额
+    int64 discount = 12;
+    //备注
+    string remark = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 查询搜索返回
+message NovelBuyChapterRecordReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名称
+    string userName = 3;
+    //章节ID
+    int64 chapterId = 4;
+    //章节序号
+    int32 chapterOrderNum = 5;
+    //书号
+    int64 novelId = 6;
+    //书名
+    string novelName = 7;
+    //章节名称
+    string chapterName = 8;
+    //是否超级vip记录
+    bool isSvip = 9;
+    //花费书币
+    int64 coin = 10;
+    //花费书券
+    int64 coupon = 11;
+    //折扣金额
+    int64 discount = 12;
+    //备注
+    string remark = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 创建NovelBuyChapterRecord请求
+message NovelBuyChapterRecordCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //用户名称
+    string userName = 2;
+    //章节ID
+    int64 chapterId = 3;
+    //章节序号
+    int32 chapterOrderNum = 4;
+    //书号
+    int64 novelId = 5;
+    //书名
+    string novelName = 6;
+    //章节名称
+    string chapterName = 7;
+    //是否超级vip记录
+    bool isSvip = 8;
+    //花费书币
+    int64 coin = 9;
+    //花费书券
+    int64 coupon = 10;
+    //折扣金额
+    int64 discount = 11;
+    //备注
+    string remark = 12;
+
+}
+
+// 创建NovelBuyChapterRecord返回
+message NovelBuyChapterRecordCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名称
+    string userName = 3;
+    //章节ID
+    int64 chapterId = 4;
+    //章节序号
+    int32 chapterOrderNum = 5;
+    //书号
+    int64 novelId = 6;
+    //书名
+    string novelName = 7;
+    //章节名称
+    string chapterName = 8;
+    //是否超级vip记录
+    bool isSvip = 9;
+    //花费书币
+    int64 coin = 10;
+    //花费书券
+    int64 coupon = 11;
+    //折扣金额
+    int64 discount = 12;
+    //备注
+    string remark = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 更新NovelBuyChapterRecord请求
+message NovelBuyChapterRecordUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名称
+    string userName = 3;
+    //章节ID
+    int64 chapterId = 4;
+    //章节序号
+    int32 chapterOrderNum = 5;
+    //书号
+    int64 novelId = 6;
+    //书名
+    string novelName = 7;
+    //章节名称
+    string chapterName = 8;
+    //是否超级vip记录
+    bool isSvip = 9;
+    //花费书币
+    int64 coin = 10;
+    //花费书券
+    int64 coupon = 11;
+    //折扣金额
+    int64 discount = 12;
+    //备注
+    string remark = 13;
+
+}
+
+
+// 更新NovelBuyChapterRecord返回
+message NovelBuyChapterRecordUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名称
+    string userName = 3;
+    //章节ID
+    int64 chapterId = 4;
+    //章节序号
+    int32 chapterOrderNum = 5;
+    //书号
+    int64 novelId = 6;
+    //书名
+    string novelName = 7;
+    //章节名称
+    string chapterName = 8;
+    //是否超级vip记录
+    bool isSvip = 9;
+    //花费书币
+    int64 coin = 10;
+    //花费书券
+    int64 coupon = 11;
+    //折扣金额
+    int64 discount = 12;
+    //备注
+    string remark = 13;
+
+}
+
+// 删除NovelBuyChapterRecord请求
+message NovelBuyChapterRecordDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelBuyChapterRecord请求
+message NovelBuyChapterRecordBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelBuyChapterRecord返回
+message NovelBuyChapterRecordDeleteReply {
+    bool result = 1;
+}
+

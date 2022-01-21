@@ -1,0 +1,843 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/param/scoreproduct/v1/score_product.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ScoreProduct"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/scoreproduct": {
+      "delete": {
+        "summary": "批量删除ScoreProduct",
+        "operationId": "ScoreProduct_BatchDeleteScoreProduct",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ScoreProductDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "ScoreProduct"
+        ]
+      },
+      "post": {
+        "summary": "创建ScoreProduct",
+        "operationId": "ScoreProduct_CreateScoreProduct",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ScoreProductCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ScoreProductCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "ScoreProduct"
+        ]
+      }
+    },
+    "/v1/scoreproduct/page": {
+      "get": {
+        "summary": "分页查询ScoreProduct",
+        "operationId": "ScoreProduct_GetPageScoreProduct",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ScoreProductPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.productName",
+            "description": "产品名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.summary",
+            "description": "产品描述.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.cardUrl",
+            "description": "vip卡图片.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.score",
+            "description": "需消耗积分价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.vipType",
+            "description": "兑换VIP类型.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ScoreProduct"
+        ]
+      }
+    },
+    "/v1/scoreproduct/{id}": {
+      "get": {
+        "summary": "获取ScoreProduct",
+        "operationId": "ScoreProduct_GetScoreProduct",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ScoreProductReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "productName",
+            "description": "产品名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "summary",
+            "description": "产品描述.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "cardUrl",
+            "description": "vip卡图片.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "score",
+            "description": "需消耗积分价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "vipType",
+            "description": "兑换VIP类型.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ScoreProduct"
+        ]
+      },
+      "delete": {
+        "summary": "删除ScoreProduct",
+        "operationId": "ScoreProduct_DeleteScoreProduct",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ScoreProductDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ScoreProduct"
+        ]
+      },
+      "put": {
+        "summary": "更新ScoreProduct",
+        "operationId": "ScoreProduct_UpdateScoreProduct",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ScoreProductUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "type": "string",
+                  "title": "产品名称"
+                },
+                "summary": {
+                  "type": "string",
+                  "title": "产品描述"
+                },
+                "cardUrl": {
+                  "type": "string",
+                  "title": "vip卡图片"
+                },
+                "score": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "需消耗积分价格"
+                },
+                "vipType": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "兑换VIP类型"
+                },
+                "effectTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "生效时间"
+                },
+                "expiredTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "失效时间"
+                }
+              },
+              "title": "更新ScoreProduct请求"
+            }
+          }
+        ],
+        "tags": [
+          "ScoreProduct"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ScoreProductCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productName": {
+          "type": "string",
+          "title": "产品名称"
+        },
+        "summary": {
+          "type": "string",
+          "title": "产品描述"
+        },
+        "cardUrl": {
+          "type": "string",
+          "title": "vip卡图片"
+        },
+        "score": {
+          "type": "string",
+          "format": "int64",
+          "title": "需消耗积分价格"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "兑换VIP类型"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建ScoreProduct返回"
+    },
+    "v1ScoreProductCreateReq": {
+      "type": "object",
+      "properties": {
+        "productName": {
+          "type": "string",
+          "title": "产品名称"
+        },
+        "summary": {
+          "type": "string",
+          "title": "产品描述"
+        },
+        "cardUrl": {
+          "type": "string",
+          "title": "vip卡图片"
+        },
+        "score": {
+          "type": "string",
+          "format": "int64",
+          "title": "需消耗积分价格"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "兑换VIP类型"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "创建ScoreProduct请求"
+    },
+    "v1ScoreProductDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除ScoreProduct返回"
+    },
+    "v1ScoreProductPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ScoreProductReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ScoreProductReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productName": {
+          "type": "string",
+          "title": "产品名称"
+        },
+        "summary": {
+          "type": "string",
+          "title": "产品描述"
+        },
+        "cardUrl": {
+          "type": "string",
+          "title": "vip卡图片"
+        },
+        "score": {
+          "type": "string",
+          "format": "int64",
+          "title": "需消耗积分价格"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "兑换VIP类型"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1ScoreProductReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productName": {
+          "type": "string",
+          "title": "产品名称"
+        },
+        "summary": {
+          "type": "string",
+          "title": "产品描述"
+        },
+        "cardUrl": {
+          "type": "string",
+          "title": "vip卡图片"
+        },
+        "score": {
+          "type": "string",
+          "format": "int64",
+          "title": "需消耗积分价格"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "兑换VIP类型"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1ScoreProductUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productName": {
+          "type": "string",
+          "title": "产品名称"
+        },
+        "summary": {
+          "type": "string",
+          "title": "产品描述"
+        },
+        "cardUrl": {
+          "type": "string",
+          "title": "vip卡图片"
+        },
+        "score": {
+          "type": "string",
+          "format": "int64",
+          "title": "需消耗积分价格"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "兑换VIP类型"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "更新ScoreProduct返回"
+    }
+  }
+}

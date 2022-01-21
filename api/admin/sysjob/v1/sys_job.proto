@@ -1,0 +1,280 @@
+syntax = "proto3";
+package sysjob.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/sysjob/v1;v1";
+
+// The SysJob service definition.
+service SysJob {
+
+  // 分页查询SysJob
+  rpc GetPageSysJob (SysJobPageReq) returns (SysJobPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysjob/page"
+    };
+  }
+
+  // 获取SysJob
+  rpc GetSysJob (SysJobReq) returns (SysJobReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysjob/{id}"
+    };
+  }
+
+  // 更新SysJob
+  rpc UpdateSysJob (SysJobUpdateReq) returns (SysJobUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/sysjob/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建SysJob
+  rpc CreateSysJob (SysJobCreateReq) returns (SysJobCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/sysjob"
+      body: "*"
+    };
+  }
+
+  // 删除SysJob
+  rpc DeleteSysJob (SysJobDeleteReq) returns (SysJobDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysjob/{id}"
+    };
+  }
+
+  // 批量删除SysJob
+  rpc BatchDeleteSysJob (SysJobBatchDeleteReq) returns (SysJobDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysjob"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message SysJobPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    SysJobReq param = 2;
+}
+
+// 查询搜索返回
+message SysJobPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated SysJobReply items = 2;
+}
+
+
+// 查询搜索请求
+message SysJobReq {
+    int64 id = 1;
+    //名称
+    string jobName = 2;
+    //任务分组
+    string jobGroup = 3;
+    //任务类型 1
+    int32 jobType = 4;
+    //cron表达式
+    string cronExpression = 5;
+    //调用目标
+    string invokeTarget = 6;
+    //目标参数
+    string args = 7;
+    //执行策略
+    int32 execPolicy = 8;
+    //是否并发
+    int32 concurrent = 9;
+    //状态
+    string state = 10;
+    //job启动时返回的id
+    int32 entryId = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 查询搜索返回
+message SysJobReply {
+    int64 id = 1;
+    //名称
+    string jobName = 2;
+    //任务分组
+    string jobGroup = 3;
+    //任务类型 1
+    int32 jobType = 4;
+    //cron表达式
+    string cronExpression = 5;
+    //调用目标
+    string invokeTarget = 6;
+    //目标参数
+    string args = 7;
+    //执行策略
+    int32 execPolicy = 8;
+    //是否并发
+    int32 concurrent = 9;
+    //状态
+    string state = 10;
+    //job启动时返回的id
+    int32 entryId = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 创建SysJob请求
+message SysJobCreateReq {
+    //名称
+    string jobName = 1;
+    //任务分组
+    string jobGroup = 2;
+    //任务类型 1
+    int32 jobType = 3;
+    //cron表达式
+    string cronExpression = 4;
+    //调用目标
+    string invokeTarget = 5;
+    //目标参数
+    string args = 6;
+    //执行策略
+    int32 execPolicy = 7;
+    //是否并发
+    int32 concurrent = 8;
+    //状态
+    string state = 9;
+    //job启动时返回的id
+    int32 entryId = 10;
+
+}
+
+// 创建SysJob返回
+message SysJobCreateReply {
+    int64 id = 1;
+    //名称
+    string jobName = 2;
+    //任务分组
+    string jobGroup = 3;
+    //任务类型 1
+    int32 jobType = 4;
+    //cron表达式
+    string cronExpression = 5;
+    //调用目标
+    string invokeTarget = 6;
+    //目标参数
+    string args = 7;
+    //执行策略
+    int32 execPolicy = 8;
+    //是否并发
+    int32 concurrent = 9;
+    //状态
+    string state = 10;
+    //job启动时返回的id
+    int32 entryId = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 更新SysJob请求
+message SysJobUpdateReq {
+    int64 id = 1;
+    //名称
+    string jobName = 2;
+    //任务分组
+    string jobGroup = 3;
+    //任务类型 1
+    int32 jobType = 4;
+    //cron表达式
+    string cronExpression = 5;
+    //调用目标
+    string invokeTarget = 6;
+    //目标参数
+    string args = 7;
+    //执行策略
+    int32 execPolicy = 8;
+    //是否并发
+    int32 concurrent = 9;
+    //状态
+    string state = 10;
+    //job启动时返回的id
+    int32 entryId = 11;
+
+}
+
+
+// 更新SysJob返回
+message SysJobUpdateReply {
+    int64 id = 1;
+    //名称
+    string jobName = 2;
+    //任务分组
+    string jobGroup = 3;
+    //任务类型 1
+    int32 jobType = 4;
+    //cron表达式
+    string cronExpression = 5;
+    //调用目标
+    string invokeTarget = 6;
+    //目标参数
+    string args = 7;
+    //执行策略
+    int32 execPolicy = 8;
+    //是否并发
+    int32 concurrent = 9;
+    //状态
+    string state = 10;
+    //job启动时返回的id
+    int32 entryId = 11;
+
+}
+
+// 删除SysJob请求
+message SysJobDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除SysJob请求
+message SysJobBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除SysJob返回
+message SysJobDeleteReply {
+    bool result = 1;
+}
+

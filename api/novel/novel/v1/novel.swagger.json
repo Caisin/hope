@@ -1,0 +1,1675 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/novel/v1/novel.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Novel"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/novel": {
+      "delete": {
+        "summary": "批量删除Novel",
+        "operationId": "Novel_BatchDeleteNovel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "Novel"
+        ]
+      },
+      "post": {
+        "summary": "创建Novel",
+        "operationId": "Novel_CreateNovel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1NovelCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "Novel"
+        ]
+      }
+    },
+    "/v1/novel/page": {
+      "get": {
+        "summary": "分页查询Novel",
+        "operationId": "Novel_GetPageNovel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.classifyId",
+            "description": "分类ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.classifyName",
+            "description": "分类名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.authorId",
+            "description": "作者ID,本站小说有.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.title",
+            "description": "小说标题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.summary",
+            "description": "小说摘要.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.author",
+            "description": "作者.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.anchor",
+            "description": "主播.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.hits",
+            "description": "点击量.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.keywords",
+            "description": "关键字，用逗号隔开.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.source",
+            "description": "来源.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.score",
+            "description": "评分.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.cover",
+            "description": "封面.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.tagIds",
+            "description": "标签,关联标签表novel_tag.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.wordNum",
+            "description": "书本字数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.freeNum",
+            "description": "免费章节数量.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.onlineState",
+            "description": "连载状态.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.price",
+            "description": "整本价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.publish",
+            "description": "发布状态.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.originalPrice",
+            "description": "原价,展示用.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.chapterPrice",
+            "description": "千字价格.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.chapterCount",
+            "description": "章节数量.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.signType",
+            "description": "签约类型 0.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.signDate",
+            "description": "签约时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.leadingMan",
+            "description": "男主角.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.leadingLady",
+            "description": "女主角.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.mediaKey",
+            "description": "阿里云音频目录.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Novel"
+        ]
+      }
+    },
+    "/v1/novel/{id}": {
+      "get": {
+        "summary": "获取Novel",
+        "operationId": "Novel_GetNovel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "classifyId",
+            "description": "分类ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "classifyName",
+            "description": "分类名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "authorId",
+            "description": "作者ID,本站小说有.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "description": "小说标题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "summary",
+            "description": "小说摘要.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "author",
+            "description": "作者.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "anchor",
+            "description": "主播.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "hits",
+            "description": "点击量.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "keywords",
+            "description": "关键字，用逗号隔开.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "description": "来源.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "score",
+            "description": "评分.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cover",
+            "description": "封面.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tagIds",
+            "description": "标签,关联标签表novel_tag.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "wordNum",
+            "description": "书本字数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "freeNum",
+            "description": "免费章节数量.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "onlineState",
+            "description": "连载状态.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "price",
+            "description": "整本价格.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "publish",
+            "description": "发布状态.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "originalPrice",
+            "description": "原价,展示用.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "chapterPrice",
+            "description": "千字价格.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "chapterCount",
+            "description": "章节数量.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "signType",
+            "description": "签约类型 0.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "signDate",
+            "description": "签约时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "leadingMan",
+            "description": "男主角.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "leadingLady",
+            "description": "女主角.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mediaKey",
+            "description": "阿里云音频目录.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Novel"
+        ]
+      },
+      "delete": {
+        "summary": "删除Novel",
+        "operationId": "Novel_DeleteNovel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Novel"
+        ]
+      },
+      "put": {
+        "summary": "更新Novel",
+        "operationId": "Novel_UpdateNovel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "classifyId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "分类ID"
+                },
+                "classifyName": {
+                  "type": "string",
+                  "title": "分类名称"
+                },
+                "authorId": {
+                  "type": "string",
+                  "title": "作者ID,本站小说有"
+                },
+                "title": {
+                  "type": "string",
+                  "title": "小说标题"
+                },
+                "summary": {
+                  "type": "string",
+                  "title": "小说摘要"
+                },
+                "author": {
+                  "type": "string",
+                  "title": "作者"
+                },
+                "anchor": {
+                  "type": "string",
+                  "title": "主播"
+                },
+                "hits": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "点击量"
+                },
+                "keywords": {
+                  "type": "string",
+                  "title": "关键字，用逗号隔开"
+                },
+                "source": {
+                  "type": "string",
+                  "title": "来源"
+                },
+                "score": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "评分"
+                },
+                "cover": {
+                  "type": "string",
+                  "title": "封面"
+                },
+                "tagIds": {
+                  "type": "string",
+                  "title": "标签,关联标签表novel_tag"
+                },
+                "wordNum": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "书本字数"
+                },
+                "freeNum": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "免费章节数量"
+                },
+                "onlineState": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "连载状态"
+                },
+                "price": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "整本价格"
+                },
+                "publish": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "发布状态"
+                },
+                "originalPrice": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "原价,展示用"
+                },
+                "chapterPrice": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "千字价格"
+                },
+                "chapterCount": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "章节数量"
+                },
+                "signType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "签约类型 0"
+                },
+                "signDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "签约时间"
+                },
+                "leadingMan": {
+                  "type": "string",
+                  "title": "男主角"
+                },
+                "leadingLady": {
+                  "type": "string",
+                  "title": "女主角"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                },
+                "mediaKey": {
+                  "type": "string",
+                  "title": "阿里云音频目录"
+                }
+              },
+              "title": "更新Novel请求"
+            }
+          }
+        ],
+        "tags": [
+          "Novel"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1NovelCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classifyId": {
+          "type": "string",
+          "format": "int64",
+          "title": "分类ID"
+        },
+        "classifyName": {
+          "type": "string",
+          "title": "分类名称"
+        },
+        "authorId": {
+          "type": "string",
+          "title": "作者ID,本站小说有"
+        },
+        "title": {
+          "type": "string",
+          "title": "小说标题"
+        },
+        "summary": {
+          "type": "string",
+          "title": "小说摘要"
+        },
+        "author": {
+          "type": "string",
+          "title": "作者"
+        },
+        "anchor": {
+          "type": "string",
+          "title": "主播"
+        },
+        "hits": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击量"
+        },
+        "keywords": {
+          "type": "string",
+          "title": "关键字，用逗号隔开"
+        },
+        "source": {
+          "type": "string",
+          "title": "来源"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面"
+        },
+        "tagIds": {
+          "type": "string",
+          "title": "标签,关联标签表novel_tag"
+        },
+        "wordNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "书本字数"
+        },
+        "freeNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "免费章节数量"
+        },
+        "onlineState": {
+          "type": "integer",
+          "format": "int32",
+          "title": "连载状态"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "整本价格"
+        },
+        "publish": {
+          "type": "integer",
+          "format": "int32",
+          "title": "发布状态"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价,展示用"
+        },
+        "chapterPrice": {
+          "type": "integer",
+          "format": "int32",
+          "title": "千字价格"
+        },
+        "chapterCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节数量"
+        },
+        "signType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "签约类型 0"
+        },
+        "signDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "签约时间"
+        },
+        "leadingMan": {
+          "type": "string",
+          "title": "男主角"
+        },
+        "leadingLady": {
+          "type": "string",
+          "title": "女主角"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "mediaKey": {
+          "type": "string",
+          "title": "阿里云音频目录"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建Novel返回"
+    },
+    "v1NovelCreateReq": {
+      "type": "object",
+      "properties": {
+        "classifyId": {
+          "type": "string",
+          "format": "int64",
+          "title": "分类ID"
+        },
+        "classifyName": {
+          "type": "string",
+          "title": "分类名称"
+        },
+        "authorId": {
+          "type": "string",
+          "title": "作者ID,本站小说有"
+        },
+        "title": {
+          "type": "string",
+          "title": "小说标题"
+        },
+        "summary": {
+          "type": "string",
+          "title": "小说摘要"
+        },
+        "author": {
+          "type": "string",
+          "title": "作者"
+        },
+        "anchor": {
+          "type": "string",
+          "title": "主播"
+        },
+        "hits": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击量"
+        },
+        "keywords": {
+          "type": "string",
+          "title": "关键字，用逗号隔开"
+        },
+        "source": {
+          "type": "string",
+          "title": "来源"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面"
+        },
+        "tagIds": {
+          "type": "string",
+          "title": "标签,关联标签表novel_tag"
+        },
+        "wordNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "书本字数"
+        },
+        "freeNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "免费章节数量"
+        },
+        "onlineState": {
+          "type": "integer",
+          "format": "int32",
+          "title": "连载状态"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "整本价格"
+        },
+        "publish": {
+          "type": "integer",
+          "format": "int32",
+          "title": "发布状态"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价,展示用"
+        },
+        "chapterPrice": {
+          "type": "integer",
+          "format": "int32",
+          "title": "千字价格"
+        },
+        "chapterCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节数量"
+        },
+        "signType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "签约类型 0"
+        },
+        "signDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "签约时间"
+        },
+        "leadingMan": {
+          "type": "string",
+          "title": "男主角"
+        },
+        "leadingLady": {
+          "type": "string",
+          "title": "女主角"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "mediaKey": {
+          "type": "string",
+          "title": "阿里云音频目录"
+        }
+      },
+      "title": "创建Novel请求"
+    },
+    "v1NovelDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除Novel返回"
+    },
+    "v1NovelPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classifyId": {
+          "type": "string",
+          "format": "int64",
+          "title": "分类ID"
+        },
+        "classifyName": {
+          "type": "string",
+          "title": "分类名称"
+        },
+        "authorId": {
+          "type": "string",
+          "title": "作者ID,本站小说有"
+        },
+        "title": {
+          "type": "string",
+          "title": "小说标题"
+        },
+        "summary": {
+          "type": "string",
+          "title": "小说摘要"
+        },
+        "author": {
+          "type": "string",
+          "title": "作者"
+        },
+        "anchor": {
+          "type": "string",
+          "title": "主播"
+        },
+        "hits": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击量"
+        },
+        "keywords": {
+          "type": "string",
+          "title": "关键字，用逗号隔开"
+        },
+        "source": {
+          "type": "string",
+          "title": "来源"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面"
+        },
+        "tagIds": {
+          "type": "string",
+          "title": "标签,关联标签表novel_tag"
+        },
+        "wordNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "书本字数"
+        },
+        "freeNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "免费章节数量"
+        },
+        "onlineState": {
+          "type": "integer",
+          "format": "int32",
+          "title": "连载状态"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "整本价格"
+        },
+        "publish": {
+          "type": "integer",
+          "format": "int32",
+          "title": "发布状态"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价,展示用"
+        },
+        "chapterPrice": {
+          "type": "integer",
+          "format": "int32",
+          "title": "千字价格"
+        },
+        "chapterCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节数量"
+        },
+        "signType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "签约类型 0"
+        },
+        "signDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "签约时间"
+        },
+        "leadingMan": {
+          "type": "string",
+          "title": "男主角"
+        },
+        "leadingLady": {
+          "type": "string",
+          "title": "女主角"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "mediaKey": {
+          "type": "string",
+          "title": "阿里云音频目录"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classifyId": {
+          "type": "string",
+          "format": "int64",
+          "title": "分类ID"
+        },
+        "classifyName": {
+          "type": "string",
+          "title": "分类名称"
+        },
+        "authorId": {
+          "type": "string",
+          "title": "作者ID,本站小说有"
+        },
+        "title": {
+          "type": "string",
+          "title": "小说标题"
+        },
+        "summary": {
+          "type": "string",
+          "title": "小说摘要"
+        },
+        "author": {
+          "type": "string",
+          "title": "作者"
+        },
+        "anchor": {
+          "type": "string",
+          "title": "主播"
+        },
+        "hits": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击量"
+        },
+        "keywords": {
+          "type": "string",
+          "title": "关键字，用逗号隔开"
+        },
+        "source": {
+          "type": "string",
+          "title": "来源"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面"
+        },
+        "tagIds": {
+          "type": "string",
+          "title": "标签,关联标签表novel_tag"
+        },
+        "wordNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "书本字数"
+        },
+        "freeNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "免费章节数量"
+        },
+        "onlineState": {
+          "type": "integer",
+          "format": "int32",
+          "title": "连载状态"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "整本价格"
+        },
+        "publish": {
+          "type": "integer",
+          "format": "int32",
+          "title": "发布状态"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价,展示用"
+        },
+        "chapterPrice": {
+          "type": "integer",
+          "format": "int32",
+          "title": "千字价格"
+        },
+        "chapterCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节数量"
+        },
+        "signType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "签约类型 0"
+        },
+        "signDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "签约时间"
+        },
+        "leadingMan": {
+          "type": "string",
+          "title": "男主角"
+        },
+        "leadingLady": {
+          "type": "string",
+          "title": "女主角"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "mediaKey": {
+          "type": "string",
+          "title": "阿里云音频目录"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1NovelUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "classifyId": {
+          "type": "string",
+          "format": "int64",
+          "title": "分类ID"
+        },
+        "classifyName": {
+          "type": "string",
+          "title": "分类名称"
+        },
+        "authorId": {
+          "type": "string",
+          "title": "作者ID,本站小说有"
+        },
+        "title": {
+          "type": "string",
+          "title": "小说标题"
+        },
+        "summary": {
+          "type": "string",
+          "title": "小说摘要"
+        },
+        "author": {
+          "type": "string",
+          "title": "作者"
+        },
+        "anchor": {
+          "type": "string",
+          "title": "主播"
+        },
+        "hits": {
+          "type": "string",
+          "format": "int64",
+          "title": "点击量"
+        },
+        "keywords": {
+          "type": "string",
+          "title": "关键字，用逗号隔开"
+        },
+        "source": {
+          "type": "string",
+          "title": "来源"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分"
+        },
+        "cover": {
+          "type": "string",
+          "title": "封面"
+        },
+        "tagIds": {
+          "type": "string",
+          "title": "标签,关联标签表novel_tag"
+        },
+        "wordNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "书本字数"
+        },
+        "freeNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "免费章节数量"
+        },
+        "onlineState": {
+          "type": "integer",
+          "format": "int32",
+          "title": "连载状态"
+        },
+        "price": {
+          "type": "string",
+          "format": "int64",
+          "title": "整本价格"
+        },
+        "publish": {
+          "type": "integer",
+          "format": "int32",
+          "title": "发布状态"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价,展示用"
+        },
+        "chapterPrice": {
+          "type": "integer",
+          "format": "int32",
+          "title": "千字价格"
+        },
+        "chapterCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节数量"
+        },
+        "signType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "签约类型 0"
+        },
+        "signDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "签约时间"
+        },
+        "leadingMan": {
+          "type": "string",
+          "title": "男主角"
+        },
+        "leadingLady": {
+          "type": "string",
+          "title": "女主角"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "mediaKey": {
+          "type": "string",
+          "title": "阿里云音频目录"
+        }
+      },
+      "title": "更新Novel返回"
+    }
+  }
+}

@@ -1,0 +1,184 @@
+syntax = "proto3";
+package novelautobuy.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novelautobuy/v1;v1";
+
+// The NovelAutoBuy service definition.
+service NovelAutoBuy {
+
+  // 分页查询NovelAutoBuy
+  rpc GetPageNovelAutoBuy (NovelAutoBuyPageReq) returns (NovelAutoBuyPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelautobuy/page"
+    };
+  }
+
+  // 获取NovelAutoBuy
+  rpc GetNovelAutoBuy (NovelAutoBuyReq) returns (NovelAutoBuyReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelautobuy/{id}"
+    };
+  }
+
+  // 更新NovelAutoBuy
+  rpc UpdateNovelAutoBuy (NovelAutoBuyUpdateReq) returns (NovelAutoBuyUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelautobuy/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelAutoBuy
+  rpc CreateNovelAutoBuy (NovelAutoBuyCreateReq) returns (NovelAutoBuyCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelautobuy"
+      body: "*"
+    };
+  }
+
+  // 删除NovelAutoBuy
+  rpc DeleteNovelAutoBuy (NovelAutoBuyDeleteReq) returns (NovelAutoBuyDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelautobuy/{id}"
+    };
+  }
+
+  // 批量删除NovelAutoBuy
+  rpc BatchDeleteNovelAutoBuy (NovelAutoBuyBatchDeleteReq) returns (NovelAutoBuyDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelautobuy"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelAutoBuyPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelAutoBuyReq param = 2;
+}
+
+// 查询搜索返回
+message NovelAutoBuyPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelAutoBuyReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelAutoBuyReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //小说编号
+    int64 novelId = 3;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 4;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 5;
+    //创建者
+    int64 createBy = 6;
+    //更新者
+    int64 updateBy = 7;
+    //租户
+    int64 tenantId = 8;
+
+}
+
+// 查询搜索返回
+message NovelAutoBuyReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //小说编号
+    int64 novelId = 3;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 4;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 5;
+    //创建者
+    int64 createBy = 6;
+    //更新者
+    int64 updateBy = 7;
+    //租户
+    int64 tenantId = 8;
+
+}
+
+// 创建NovelAutoBuy请求
+message NovelAutoBuyCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //小说编号
+    int64 novelId = 2;
+
+}
+
+// 创建NovelAutoBuy返回
+message NovelAutoBuyCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //小说编号
+    int64 novelId = 3;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 4;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 5;
+    //创建者
+    int64 createBy = 6;
+    //更新者
+    int64 updateBy = 7;
+    //租户
+    int64 tenantId = 8;
+
+}
+
+// 更新NovelAutoBuy请求
+message NovelAutoBuyUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //小说编号
+    int64 novelId = 3;
+
+}
+
+
+// 更新NovelAutoBuy返回
+message NovelAutoBuyUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //小说编号
+    int64 novelId = 3;
+
+}
+
+// 删除NovelAutoBuy请求
+message NovelAutoBuyDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelAutoBuy请求
+message NovelAutoBuyBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelAutoBuy返回
+message NovelAutoBuyDeleteReply {
+    bool result = 1;
+}
+

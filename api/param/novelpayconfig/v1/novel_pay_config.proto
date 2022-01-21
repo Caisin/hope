@@ -1,0 +1,424 @@
+syntax = "proto3";
+package novelpayconfig.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/novelpayconfig/v1;v1";
+
+// The NovelPayConfig service definition.
+service NovelPayConfig {
+
+  // 分页查询NovelPayConfig
+  rpc GetPageNovelPayConfig (NovelPayConfigPageReq) returns (NovelPayConfigPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelpayconfig/page"
+    };
+  }
+
+  // 获取NovelPayConfig
+  rpc GetNovelPayConfig (NovelPayConfigReq) returns (NovelPayConfigReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelpayconfig/{id}"
+    };
+  }
+
+  // 更新NovelPayConfig
+  rpc UpdateNovelPayConfig (NovelPayConfigUpdateReq) returns (NovelPayConfigUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelpayconfig/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelPayConfig
+  rpc CreateNovelPayConfig (NovelPayConfigCreateReq) returns (NovelPayConfigCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelpayconfig"
+      body: "*"
+    };
+  }
+
+  // 删除NovelPayConfig
+  rpc DeleteNovelPayConfig (NovelPayConfigDeleteReq) returns (NovelPayConfigDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelpayconfig/{id}"
+    };
+  }
+
+  // 批量删除NovelPayConfig
+  rpc BatchDeleteNovelPayConfig (NovelPayConfigBatchDeleteReq) returns (NovelPayConfigDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelpayconfig"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelPayConfigPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelPayConfigReq param = 2;
+}
+
+// 查询搜索返回
+message NovelPayConfigPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelPayConfigReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelPayConfigReq {
+    int64 id = 1;
+    //谷歌商品ID
+    string productId = 2;
+    //商品名称
+    string paymentName = 3;
+    //首次充值金额
+    int64 firstPayment = 4;
+    //充值金额:分
+    int64 payment = 5;
+    //原价
+    int64 originalPrice = 6;
+    //配置类型,activity
+    string cfgType = 7;
+    //书币
+    int64 coin = 8;
+    //货币类型
+    string currency = 9;
+    //书券
+    int64 coupon = 10;
+    //现金科目,查看asset_item表cash_flag=1
+    int32 coinItem = 11;
+    //赠送科目,查看asset_item表cash_flag=0
+    int32 couponItem = 12;
+    //排序
+    int32 sort = 13;
+    //状态
+    bool state = 14;
+    //巨量引擎是否回传
+    int32 isSend = 15;
+    //充值类型
+    int32 payType = 16;
+    //vip类型
+    int64 vipType = 17;
+    //展示火
+    bool isHot = 18;
+    //扣款周期天数,有这个值就周期扣款
+    int32 cycleDay = 19;
+    //描述
+    string summary = 20;
+    //备注
+    string remark = 21;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 22;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 23;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 24;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 25;
+    //创建者
+    int64 createBy = 26;
+    //更新者
+    int64 updateBy = 27;
+    //租户
+    int64 tenantId = 28;
+
+}
+
+// 查询搜索返回
+message NovelPayConfigReply {
+    int64 id = 1;
+    //谷歌商品ID
+    string productId = 2;
+    //商品名称
+    string paymentName = 3;
+    //首次充值金额
+    int64 firstPayment = 4;
+    //充值金额:分
+    int64 payment = 5;
+    //原价
+    int64 originalPrice = 6;
+    //配置类型,activity
+    string cfgType = 7;
+    //书币
+    int64 coin = 8;
+    //货币类型
+    string currency = 9;
+    //书券
+    int64 coupon = 10;
+    //现金科目,查看asset_item表cash_flag=1
+    int32 coinItem = 11;
+    //赠送科目,查看asset_item表cash_flag=0
+    int32 couponItem = 12;
+    //排序
+    int32 sort = 13;
+    //状态
+    bool state = 14;
+    //巨量引擎是否回传
+    int32 isSend = 15;
+    //充值类型
+    int32 payType = 16;
+    //vip类型
+    int64 vipType = 17;
+    //展示火
+    bool isHot = 18;
+    //扣款周期天数,有这个值就周期扣款
+    int32 cycleDay = 19;
+    //描述
+    string summary = 20;
+    //备注
+    string remark = 21;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 22;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 23;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 24;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 25;
+    //创建者
+    int64 createBy = 26;
+    //更新者
+    int64 updateBy = 27;
+    //租户
+    int64 tenantId = 28;
+
+}
+
+// 创建NovelPayConfig请求
+message NovelPayConfigCreateReq {
+    //谷歌商品ID
+    string productId = 1;
+    //商品名称
+    string paymentName = 2;
+    //首次充值金额
+    int64 firstPayment = 3;
+    //充值金额:分
+    int64 payment = 4;
+    //原价
+    int64 originalPrice = 5;
+    //配置类型,activity
+    string cfgType = 6;
+    //书币
+    int64 coin = 7;
+    //货币类型
+    string currency = 8;
+    //书券
+    int64 coupon = 9;
+    //现金科目,查看asset_item表cash_flag=1
+    int32 coinItem = 10;
+    //赠送科目,查看asset_item表cash_flag=0
+    int32 couponItem = 11;
+    //排序
+    int32 sort = 12;
+    //状态
+    bool state = 13;
+    //巨量引擎是否回传
+    int32 isSend = 14;
+    //充值类型
+    int32 payType = 15;
+    //vip类型
+    int64 vipType = 16;
+    //展示火
+    bool isHot = 17;
+    //扣款周期天数,有这个值就周期扣款
+    int32 cycleDay = 18;
+    //描述
+    string summary = 19;
+    //备注
+    string remark = 20;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 21;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 22;
+
+}
+
+// 创建NovelPayConfig返回
+message NovelPayConfigCreateReply {
+    int64 id = 1;
+    //谷歌商品ID
+    string productId = 2;
+    //商品名称
+    string paymentName = 3;
+    //首次充值金额
+    int64 firstPayment = 4;
+    //充值金额:分
+    int64 payment = 5;
+    //原价
+    int64 originalPrice = 6;
+    //配置类型,activity
+    string cfgType = 7;
+    //书币
+    int64 coin = 8;
+    //货币类型
+    string currency = 9;
+    //书券
+    int64 coupon = 10;
+    //现金科目,查看asset_item表cash_flag=1
+    int32 coinItem = 11;
+    //赠送科目,查看asset_item表cash_flag=0
+    int32 couponItem = 12;
+    //排序
+    int32 sort = 13;
+    //状态
+    bool state = 14;
+    //巨量引擎是否回传
+    int32 isSend = 15;
+    //充值类型
+    int32 payType = 16;
+    //vip类型
+    int64 vipType = 17;
+    //展示火
+    bool isHot = 18;
+    //扣款周期天数,有这个值就周期扣款
+    int32 cycleDay = 19;
+    //描述
+    string summary = 20;
+    //备注
+    string remark = 21;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 22;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 23;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 24;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 25;
+    //创建者
+    int64 createBy = 26;
+    //更新者
+    int64 updateBy = 27;
+    //租户
+    int64 tenantId = 28;
+
+}
+
+// 更新NovelPayConfig请求
+message NovelPayConfigUpdateReq {
+    int64 id = 1;
+    //谷歌商品ID
+    string productId = 2;
+    //商品名称
+    string paymentName = 3;
+    //首次充值金额
+    int64 firstPayment = 4;
+    //充值金额:分
+    int64 payment = 5;
+    //原价
+    int64 originalPrice = 6;
+    //配置类型,activity
+    string cfgType = 7;
+    //书币
+    int64 coin = 8;
+    //货币类型
+    string currency = 9;
+    //书券
+    int64 coupon = 10;
+    //现金科目,查看asset_item表cash_flag=1
+    int32 coinItem = 11;
+    //赠送科目,查看asset_item表cash_flag=0
+    int32 couponItem = 12;
+    //排序
+    int32 sort = 13;
+    //状态
+    bool state = 14;
+    //巨量引擎是否回传
+    int32 isSend = 15;
+    //充值类型
+    int32 payType = 16;
+    //vip类型
+    int64 vipType = 17;
+    //展示火
+    bool isHot = 18;
+    //扣款周期天数,有这个值就周期扣款
+    int32 cycleDay = 19;
+    //描述
+    string summary = 20;
+    //备注
+    string remark = 21;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 22;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 23;
+
+}
+
+
+// 更新NovelPayConfig返回
+message NovelPayConfigUpdateReply {
+    int64 id = 1;
+    //谷歌商品ID
+    string productId = 2;
+    //商品名称
+    string paymentName = 3;
+    //首次充值金额
+    int64 firstPayment = 4;
+    //充值金额:分
+    int64 payment = 5;
+    //原价
+    int64 originalPrice = 6;
+    //配置类型,activity
+    string cfgType = 7;
+    //书币
+    int64 coin = 8;
+    //货币类型
+    string currency = 9;
+    //书券
+    int64 coupon = 10;
+    //现金科目,查看asset_item表cash_flag=1
+    int32 coinItem = 11;
+    //赠送科目,查看asset_item表cash_flag=0
+    int32 couponItem = 12;
+    //排序
+    int32 sort = 13;
+    //状态
+    bool state = 14;
+    //巨量引擎是否回传
+    int32 isSend = 15;
+    //充值类型
+    int32 payType = 16;
+    //vip类型
+    int64 vipType = 17;
+    //展示火
+    bool isHot = 18;
+    //扣款周期天数,有这个值就周期扣款
+    int32 cycleDay = 19;
+    //描述
+    string summary = 20;
+    //备注
+    string remark = 21;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 22;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 23;
+
+}
+
+// 删除NovelPayConfig请求
+message NovelPayConfigDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelPayConfig请求
+message NovelPayConfigBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelPayConfig返回
+message NovelPayConfigDeleteReply {
+    bool result = 1;
+}
+

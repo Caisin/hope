@@ -1,0 +1,1581 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/socialuser/v1/social_user.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SocialUser"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/socialuser": {
+      "delete": {
+        "summary": "批量删除SocialUser",
+        "operationId": "SocialUser_BatchDeleteSocialUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SocialUserDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "SocialUser"
+        ]
+      },
+      "post": {
+        "summary": "创建SocialUser",
+        "operationId": "SocialUser_CreateSocialUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SocialUserCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SocialUserCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "SocialUser"
+        ]
+      }
+    },
+    "/v1/socialuser/page": {
+      "get": {
+        "summary": "分页查询SocialUser",
+        "operationId": "SocialUser_GetPageSocialUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SocialUserPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.chId",
+            "description": "注册渠道.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.unionid",
+            "description": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.token",
+            "description": "第三方登录token.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.openid",
+            "description": "用户的标识，对当前公众号唯一.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.routineOpenid",
+            "description": "小程序唯一身份ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.userName",
+            "description": "用户名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.nickName",
+            "description": "用户的昵称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.birthday",
+            "description": "生日.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.phone",
+            "description": "手机.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.email",
+            "description": "邮箱.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.password",
+            "description": "密码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.avatar",
+            "description": "用户头像.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.sex",
+            "description": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.region",
+            "description": "用户所在城市区域.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.city",
+            "description": "用户所在城市.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.language",
+            "description": "用户的语言，简体中文为zh_CN.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.province",
+            "description": "用户所在省份.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.country",
+            "description": "用户所在国家.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.signature",
+            "description": "个性签名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.groupid",
+            "description": "用户所在的分组ID（兼容旧的用户分组接口）.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.tagidList",
+            "description": "用户被打上的标签ID列表.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.subscribe",
+            "description": "用户是否订阅该公众号标识.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.subscribeTime",
+            "description": "关注公众号时间.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.sessionKey",
+            "description": "小程序用户会话密匙.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.userType",
+            "description": "用户类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SocialUser"
+        ]
+      }
+    },
+    "/v1/socialuser/{id}": {
+      "get": {
+        "summary": "获取SocialUser",
+        "operationId": "SocialUser_GetSocialUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SocialUserReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "chId",
+            "description": "注册渠道.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "unionid",
+            "description": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "token",
+            "description": "第三方登录token.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid",
+            "description": "用户的标识，对当前公众号唯一.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "routineOpenid",
+            "description": "小程序唯一身份ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userName",
+            "description": "用户名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nickName",
+            "description": "用户的昵称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "birthday",
+            "description": "生日.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "phone",
+            "description": "手机.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": "邮箱.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "description": "密码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "avatar",
+            "description": "用户头像.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sex",
+            "description": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "region",
+            "description": "用户所在城市区域.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "description": "用户所在城市.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "description": "用户的语言，简体中文为zh_CN.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "province",
+            "description": "用户所在省份.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "country",
+            "description": "用户所在国家.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "signature",
+            "description": "个性签名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "groupid",
+            "description": "用户所在的分组ID（兼容旧的用户分组接口）.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "tagidList",
+            "description": "用户被打上的标签ID列表.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "subscribe",
+            "description": "用户是否订阅该公众号标识.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "subscribeTime",
+            "description": "关注公众号时间.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sessionKey",
+            "description": "小程序用户会话密匙.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userType",
+            "description": "用户类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SocialUser"
+        ]
+      },
+      "delete": {
+        "summary": "删除SocialUser",
+        "operationId": "SocialUser_DeleteSocialUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SocialUserDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SocialUser"
+        ]
+      },
+      "put": {
+        "summary": "更新SocialUser",
+        "operationId": "SocialUser_UpdateSocialUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SocialUserUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "chId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "注册渠道"
+                },
+                "unionid": {
+                  "type": "string",
+                  "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+                },
+                "token": {
+                  "type": "string",
+                  "title": "第三方登录token"
+                },
+                "openid": {
+                  "type": "string",
+                  "title": "用户的标识，对当前公众号唯一"
+                },
+                "routineOpenid": {
+                  "type": "string",
+                  "title": "小程序唯一身份ID"
+                },
+                "userName": {
+                  "type": "string",
+                  "title": "用户名"
+                },
+                "nickName": {
+                  "type": "string",
+                  "title": "用户的昵称"
+                },
+                "birthday": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "生日"
+                },
+                "phone": {
+                  "type": "string",
+                  "title": "手机"
+                },
+                "email": {
+                  "type": "string",
+                  "title": "邮箱"
+                },
+                "password": {
+                  "type": "string",
+                  "title": "密码"
+                },
+                "avatar": {
+                  "type": "string",
+                  "title": "用户头像"
+                },
+                "sex": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
+                },
+                "region": {
+                  "type": "string",
+                  "title": "用户所在城市区域"
+                },
+                "city": {
+                  "type": "string",
+                  "title": "用户所在城市"
+                },
+                "language": {
+                  "type": "string",
+                  "title": "用户的语言，简体中文为zh_CN"
+                },
+                "province": {
+                  "type": "string",
+                  "title": "用户所在省份"
+                },
+                "country": {
+                  "type": "string",
+                  "title": "用户所在国家"
+                },
+                "signature": {
+                  "type": "string",
+                  "title": "个性签名"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
+                },
+                "groupid": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "用户所在的分组ID（兼容旧的用户分组接口）"
+                },
+                "tagidList": {
+                  "type": "string",
+                  "title": "用户被打上的标签ID列表"
+                },
+                "subscribe": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "用户是否订阅该公众号标识"
+                },
+                "subscribeTime": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "关注公众号时间"
+                },
+                "sessionKey": {
+                  "type": "string",
+                  "title": "小程序用户会话密匙"
+                },
+                "userType": {
+                  "type": "string",
+                  "title": "用户类型"
+                }
+              },
+              "title": "更新SocialUser请求"
+            }
+          }
+        ],
+        "tags": [
+          "SocialUser"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SocialUserCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "注册渠道"
+        },
+        "unionid": {
+          "type": "string",
+          "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+        },
+        "token": {
+          "type": "string",
+          "title": "第三方登录token"
+        },
+        "openid": {
+          "type": "string",
+          "title": "用户的标识，对当前公众号唯一"
+        },
+        "routineOpenid": {
+          "type": "string",
+          "title": "小程序唯一身份ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "nickName": {
+          "type": "string",
+          "title": "用户的昵称"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生日"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机"
+        },
+        "email": {
+          "type": "string",
+          "title": "邮箱"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
+        },
+        "region": {
+          "type": "string",
+          "title": "用户所在城市区域"
+        },
+        "city": {
+          "type": "string",
+          "title": "用户所在城市"
+        },
+        "language": {
+          "type": "string",
+          "title": "用户的语言，简体中文为zh_CN"
+        },
+        "province": {
+          "type": "string",
+          "title": "用户所在省份"
+        },
+        "country": {
+          "type": "string",
+          "title": "用户所在国家"
+        },
+        "signature": {
+          "type": "string",
+          "title": "个性签名"
+        },
+        "remark": {
+          "type": "string",
+          "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
+        },
+        "groupid": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户所在的分组ID（兼容旧的用户分组接口）"
+        },
+        "tagidList": {
+          "type": "string",
+          "title": "用户被打上的标签ID列表"
+        },
+        "subscribe": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户是否订阅该公众号标识"
+        },
+        "subscribeTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "关注公众号时间"
+        },
+        "sessionKey": {
+          "type": "string",
+          "title": "小程序用户会话密匙"
+        },
+        "userType": {
+          "type": "string",
+          "title": "用户类型"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建SocialUser返回"
+    },
+    "v1SocialUserCreateReq": {
+      "type": "object",
+      "properties": {
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "注册渠道"
+        },
+        "unionid": {
+          "type": "string",
+          "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+        },
+        "token": {
+          "type": "string",
+          "title": "第三方登录token"
+        },
+        "openid": {
+          "type": "string",
+          "title": "用户的标识，对当前公众号唯一"
+        },
+        "routineOpenid": {
+          "type": "string",
+          "title": "小程序唯一身份ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "nickName": {
+          "type": "string",
+          "title": "用户的昵称"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生日"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机"
+        },
+        "email": {
+          "type": "string",
+          "title": "邮箱"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
+        },
+        "region": {
+          "type": "string",
+          "title": "用户所在城市区域"
+        },
+        "city": {
+          "type": "string",
+          "title": "用户所在城市"
+        },
+        "language": {
+          "type": "string",
+          "title": "用户的语言，简体中文为zh_CN"
+        },
+        "province": {
+          "type": "string",
+          "title": "用户所在省份"
+        },
+        "country": {
+          "type": "string",
+          "title": "用户所在国家"
+        },
+        "signature": {
+          "type": "string",
+          "title": "个性签名"
+        },
+        "remark": {
+          "type": "string",
+          "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
+        },
+        "groupid": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户所在的分组ID（兼容旧的用户分组接口）"
+        },
+        "tagidList": {
+          "type": "string",
+          "title": "用户被打上的标签ID列表"
+        },
+        "subscribe": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户是否订阅该公众号标识"
+        },
+        "subscribeTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "关注公众号时间"
+        },
+        "sessionKey": {
+          "type": "string",
+          "title": "小程序用户会话密匙"
+        },
+        "userType": {
+          "type": "string",
+          "title": "用户类型"
+        }
+      },
+      "title": "创建SocialUser请求"
+    },
+    "v1SocialUserDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除SocialUser返回"
+    },
+    "v1SocialUserPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SocialUserReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SocialUserReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "注册渠道"
+        },
+        "unionid": {
+          "type": "string",
+          "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+        },
+        "token": {
+          "type": "string",
+          "title": "第三方登录token"
+        },
+        "openid": {
+          "type": "string",
+          "title": "用户的标识，对当前公众号唯一"
+        },
+        "routineOpenid": {
+          "type": "string",
+          "title": "小程序唯一身份ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "nickName": {
+          "type": "string",
+          "title": "用户的昵称"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生日"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机"
+        },
+        "email": {
+          "type": "string",
+          "title": "邮箱"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
+        },
+        "region": {
+          "type": "string",
+          "title": "用户所在城市区域"
+        },
+        "city": {
+          "type": "string",
+          "title": "用户所在城市"
+        },
+        "language": {
+          "type": "string",
+          "title": "用户的语言，简体中文为zh_CN"
+        },
+        "province": {
+          "type": "string",
+          "title": "用户所在省份"
+        },
+        "country": {
+          "type": "string",
+          "title": "用户所在国家"
+        },
+        "signature": {
+          "type": "string",
+          "title": "个性签名"
+        },
+        "remark": {
+          "type": "string",
+          "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
+        },
+        "groupid": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户所在的分组ID（兼容旧的用户分组接口）"
+        },
+        "tagidList": {
+          "type": "string",
+          "title": "用户被打上的标签ID列表"
+        },
+        "subscribe": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户是否订阅该公众号标识"
+        },
+        "subscribeTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "关注公众号时间"
+        },
+        "sessionKey": {
+          "type": "string",
+          "title": "小程序用户会话密匙"
+        },
+        "userType": {
+          "type": "string",
+          "title": "用户类型"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SocialUserReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "注册渠道"
+        },
+        "unionid": {
+          "type": "string",
+          "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+        },
+        "token": {
+          "type": "string",
+          "title": "第三方登录token"
+        },
+        "openid": {
+          "type": "string",
+          "title": "用户的标识，对当前公众号唯一"
+        },
+        "routineOpenid": {
+          "type": "string",
+          "title": "小程序唯一身份ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "nickName": {
+          "type": "string",
+          "title": "用户的昵称"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生日"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机"
+        },
+        "email": {
+          "type": "string",
+          "title": "邮箱"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
+        },
+        "region": {
+          "type": "string",
+          "title": "用户所在城市区域"
+        },
+        "city": {
+          "type": "string",
+          "title": "用户所在城市"
+        },
+        "language": {
+          "type": "string",
+          "title": "用户的语言，简体中文为zh_CN"
+        },
+        "province": {
+          "type": "string",
+          "title": "用户所在省份"
+        },
+        "country": {
+          "type": "string",
+          "title": "用户所在国家"
+        },
+        "signature": {
+          "type": "string",
+          "title": "个性签名"
+        },
+        "remark": {
+          "type": "string",
+          "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
+        },
+        "groupid": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户所在的分组ID（兼容旧的用户分组接口）"
+        },
+        "tagidList": {
+          "type": "string",
+          "title": "用户被打上的标签ID列表"
+        },
+        "subscribe": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户是否订阅该公众号标识"
+        },
+        "subscribeTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "关注公众号时间"
+        },
+        "sessionKey": {
+          "type": "string",
+          "title": "小程序用户会话密匙"
+        },
+        "userType": {
+          "type": "string",
+          "title": "用户类型"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1SocialUserUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "注册渠道"
+        },
+        "unionid": {
+          "type": "string",
+          "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+        },
+        "token": {
+          "type": "string",
+          "title": "第三方登录token"
+        },
+        "openid": {
+          "type": "string",
+          "title": "用户的标识，对当前公众号唯一"
+        },
+        "routineOpenid": {
+          "type": "string",
+          "title": "小程序唯一身份ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "nickName": {
+          "type": "string",
+          "title": "用户的昵称"
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生日"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机"
+        },
+        "email": {
+          "type": "string",
+          "title": "邮箱"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
+        },
+        "region": {
+          "type": "string",
+          "title": "用户所在城市区域"
+        },
+        "city": {
+          "type": "string",
+          "title": "用户所在城市"
+        },
+        "language": {
+          "type": "string",
+          "title": "用户的语言，简体中文为zh_CN"
+        },
+        "province": {
+          "type": "string",
+          "title": "用户所在省份"
+        },
+        "country": {
+          "type": "string",
+          "title": "用户所在国家"
+        },
+        "signature": {
+          "type": "string",
+          "title": "个性签名"
+        },
+        "remark": {
+          "type": "string",
+          "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
+        },
+        "groupid": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户所在的分组ID（兼容旧的用户分组接口）"
+        },
+        "tagidList": {
+          "type": "string",
+          "title": "用户被打上的标签ID列表"
+        },
+        "subscribe": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户是否订阅该公众号标识"
+        },
+        "subscribeTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "关注公众号时间"
+        },
+        "sessionKey": {
+          "type": "string",
+          "title": "小程序用户会话密匙"
+        },
+        "userType": {
+          "type": "string",
+          "title": "用户类型"
+        }
+      },
+      "title": "更新SocialUser返回"
+    }
+  }
+}

@@ -1,0 +1,280 @@
+syntax = "proto3";
+package activity.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/activity/v1;v1";
+
+// The Activity service definition.
+service Activity {
+
+  // 分页查询Activity
+  rpc GetPageActivity (ActivityPageReq) returns (ActivityPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/activity/page"
+    };
+  }
+
+  // 获取Activity
+  rpc GetActivity (ActivityReq) returns (ActivityReply)  {
+    option (google.api.http) = {
+      get: "/v1/activity/{id}"
+    };
+  }
+
+  // 更新Activity
+  rpc UpdateActivity (ActivityUpdateReq) returns (ActivityUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/activity/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建Activity
+  rpc CreateActivity (ActivityCreateReq) returns (ActivityCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/activity"
+      body: "*"
+    };
+  }
+
+  // 删除Activity
+  rpc DeleteActivity (ActivityDeleteReq) returns (ActivityDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/activity/{id}"
+    };
+  }
+
+  // 批量删除Activity
+  rpc BatchDeleteActivity (ActivityBatchDeleteReq) returns (ActivityDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/activity"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message ActivityPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    ActivityReq param = 2;
+}
+
+// 查询搜索返回
+message ActivityPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated ActivityReply items = 2;
+}
+
+
+// 查询搜索请求
+message ActivityReq {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动名称
+    string activityName = 3;
+    //活动描述
+    string summary = 4;
+    //活动规则简体中文图
+    string ruleImgSc = 5;
+    //活动规则繁体中文图
+    string ruleImgTc = 6;
+    //弹出框图片地址
+    string popupImg = 7;
+    //注册天数
+    int32 regDays = 8;
+    //循环类型,默认
+    string cycleType = 9;
+    //活动生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //活动失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 查询搜索返回
+message ActivityReply {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动名称
+    string activityName = 3;
+    //活动描述
+    string summary = 4;
+    //活动规则简体中文图
+    string ruleImgSc = 5;
+    //活动规则繁体中文图
+    string ruleImgTc = 6;
+    //弹出框图片地址
+    string popupImg = 7;
+    //注册天数
+    int32 regDays = 8;
+    //循环类型,默认
+    string cycleType = 9;
+    //活动生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //活动失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 创建Activity请求
+message ActivityCreateReq {
+    //活动编码
+    string activityCode = 1;
+    //活动名称
+    string activityName = 2;
+    //活动描述
+    string summary = 3;
+    //活动规则简体中文图
+    string ruleImgSc = 4;
+    //活动规则繁体中文图
+    string ruleImgTc = 5;
+    //弹出框图片地址
+    string popupImg = 6;
+    //注册天数
+    int32 regDays = 7;
+    //循环类型,默认
+    string cycleType = 8;
+    //活动生效时间
+    google.protobuf.Timestamp effectTime = 9;
+    //活动失效时间
+    google.protobuf.Timestamp expiredTime = 10;
+
+}
+
+// 创建Activity返回
+message ActivityCreateReply {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动名称
+    string activityName = 3;
+    //活动描述
+    string summary = 4;
+    //活动规则简体中文图
+    string ruleImgSc = 5;
+    //活动规则繁体中文图
+    string ruleImgTc = 6;
+    //弹出框图片地址
+    string popupImg = 7;
+    //注册天数
+    int32 regDays = 8;
+    //循环类型,默认
+    string cycleType = 9;
+    //活动生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //活动失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 更新Activity请求
+message ActivityUpdateReq {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动名称
+    string activityName = 3;
+    //活动描述
+    string summary = 4;
+    //活动规则简体中文图
+    string ruleImgSc = 5;
+    //活动规则繁体中文图
+    string ruleImgTc = 6;
+    //弹出框图片地址
+    string popupImg = 7;
+    //注册天数
+    int32 regDays = 8;
+    //循环类型,默认
+    string cycleType = 9;
+    //活动生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //活动失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+
+// 更新Activity返回
+message ActivityUpdateReply {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //活动名称
+    string activityName = 3;
+    //活动描述
+    string summary = 4;
+    //活动规则简体中文图
+    string ruleImgSc = 5;
+    //活动规则繁体中文图
+    string ruleImgTc = 6;
+    //弹出框图片地址
+    string popupImg = 7;
+    //注册天数
+    int32 regDays = 8;
+    //循环类型,默认
+    string cycleType = 9;
+    //活动生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //活动失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+// 删除Activity请求
+message ActivityDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除Activity请求
+message ActivityBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除Activity返回
+message ActivityDeleteReply {
+    bool result = 1;
+}
+

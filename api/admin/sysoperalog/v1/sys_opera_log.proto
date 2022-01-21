@@ -1,0 +1,436 @@
+syntax = "proto3";
+package sysoperalog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/sysoperalog/v1;v1";
+
+// The SysOperaLog service definition.
+service SysOperaLog {
+
+  // 分页查询SysOperaLog
+  rpc GetPageSysOperaLog (SysOperaLogPageReq) returns (SysOperaLogPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysoperalog/page"
+    };
+  }
+
+  // 获取SysOperaLog
+  rpc GetSysOperaLog (SysOperaLogReq) returns (SysOperaLogReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysoperalog/{id}"
+    };
+  }
+
+  // 更新SysOperaLog
+  rpc UpdateSysOperaLog (SysOperaLogUpdateReq) returns (SysOperaLogUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/sysoperalog/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建SysOperaLog
+  rpc CreateSysOperaLog (SysOperaLogCreateReq) returns (SysOperaLogCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/sysoperalog"
+      body: "*"
+    };
+  }
+
+  // 删除SysOperaLog
+  rpc DeleteSysOperaLog (SysOperaLogDeleteReq) returns (SysOperaLogDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysoperalog/{id}"
+    };
+  }
+
+  // 批量删除SysOperaLog
+  rpc BatchDeleteSysOperaLog (SysOperaLogBatchDeleteReq) returns (SysOperaLogDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysoperalog"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message SysOperaLogPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    SysOperaLogReq param = 2;
+}
+
+// 查询搜索返回
+message SysOperaLogPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated SysOperaLogReply items = 2;
+}
+
+
+// 查询搜索请求
+message SysOperaLogReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //操作模块
+    string title = 3;
+    //请求ID
+    string requestId = 4;
+    //操作类型
+    string businessType = 5;
+    //BusinessTypes
+    string businessTypes = 6;
+    //函数
+    string method = 7;
+    //请求方式
+    string requestMethod = 8;
+    //操作类型
+    string operatorType = 9;
+    //操作者
+    string operName = 10;
+    //部门名称
+    string deptName = 11;
+    //访问地址
+    string operUrl = 12;
+    //客户端ip
+    string operIp = 13;
+    //浏览器
+    string browser = 14;
+    //系统
+    string os = 15;
+    //固件
+    string platform = 16;
+    //访问位置
+    string operLocation = 17;
+    //请求参数
+    string operParam = 18;
+    //操作状态
+    string status = 19;
+    //操作时间
+    google.protobuf.Timestamp operTime = 20;
+    //返回数据
+    string jsonResult = 21;
+    //备注
+    string remark = 22;
+    //耗时
+    string latencyTime = 23;
+    //ua
+    string userAgent = 24;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 25;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 26;
+    //创建者
+    int64 createBy = 27;
+    //更新者
+    int64 updateBy = 28;
+    //租户
+    int64 tenantId = 29;
+
+}
+
+// 查询搜索返回
+message SysOperaLogReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //操作模块
+    string title = 3;
+    //请求ID
+    string requestId = 4;
+    //操作类型
+    string businessType = 5;
+    //BusinessTypes
+    string businessTypes = 6;
+    //函数
+    string method = 7;
+    //请求方式
+    string requestMethod = 8;
+    //操作类型
+    string operatorType = 9;
+    //操作者
+    string operName = 10;
+    //部门名称
+    string deptName = 11;
+    //访问地址
+    string operUrl = 12;
+    //客户端ip
+    string operIp = 13;
+    //浏览器
+    string browser = 14;
+    //系统
+    string os = 15;
+    //固件
+    string platform = 16;
+    //访问位置
+    string operLocation = 17;
+    //请求参数
+    string operParam = 18;
+    //操作状态
+    string status = 19;
+    //操作时间
+    google.protobuf.Timestamp operTime = 20;
+    //返回数据
+    string jsonResult = 21;
+    //备注
+    string remark = 22;
+    //耗时
+    string latencyTime = 23;
+    //ua
+    string userAgent = 24;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 25;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 26;
+    //创建者
+    int64 createBy = 27;
+    //更新者
+    int64 updateBy = 28;
+    //租户
+    int64 tenantId = 29;
+
+}
+
+// 创建SysOperaLog请求
+message SysOperaLogCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //操作模块
+    string title = 2;
+    //请求ID
+    string requestId = 3;
+    //操作类型
+    string businessType = 4;
+    //BusinessTypes
+    string businessTypes = 5;
+    //函数
+    string method = 6;
+    //请求方式
+    string requestMethod = 7;
+    //操作类型
+    string operatorType = 8;
+    //操作者
+    string operName = 9;
+    //部门名称
+    string deptName = 10;
+    //访问地址
+    string operUrl = 11;
+    //客户端ip
+    string operIp = 12;
+    //浏览器
+    string browser = 13;
+    //系统
+    string os = 14;
+    //固件
+    string platform = 15;
+    //访问位置
+    string operLocation = 16;
+    //请求参数
+    string operParam = 17;
+    //操作状态
+    string status = 18;
+    //操作时间
+    google.protobuf.Timestamp operTime = 19;
+    //返回数据
+    string jsonResult = 20;
+    //备注
+    string remark = 21;
+    //耗时
+    string latencyTime = 22;
+    //ua
+    string userAgent = 23;
+
+}
+
+// 创建SysOperaLog返回
+message SysOperaLogCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //操作模块
+    string title = 3;
+    //请求ID
+    string requestId = 4;
+    //操作类型
+    string businessType = 5;
+    //BusinessTypes
+    string businessTypes = 6;
+    //函数
+    string method = 7;
+    //请求方式
+    string requestMethod = 8;
+    //操作类型
+    string operatorType = 9;
+    //操作者
+    string operName = 10;
+    //部门名称
+    string deptName = 11;
+    //访问地址
+    string operUrl = 12;
+    //客户端ip
+    string operIp = 13;
+    //浏览器
+    string browser = 14;
+    //系统
+    string os = 15;
+    //固件
+    string platform = 16;
+    //访问位置
+    string operLocation = 17;
+    //请求参数
+    string operParam = 18;
+    //操作状态
+    string status = 19;
+    //操作时间
+    google.protobuf.Timestamp operTime = 20;
+    //返回数据
+    string jsonResult = 21;
+    //备注
+    string remark = 22;
+    //耗时
+    string latencyTime = 23;
+    //ua
+    string userAgent = 24;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 25;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 26;
+    //创建者
+    int64 createBy = 27;
+    //更新者
+    int64 updateBy = 28;
+    //租户
+    int64 tenantId = 29;
+
+}
+
+// 更新SysOperaLog请求
+message SysOperaLogUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //操作模块
+    string title = 3;
+    //请求ID
+    string requestId = 4;
+    //操作类型
+    string businessType = 5;
+    //BusinessTypes
+    string businessTypes = 6;
+    //函数
+    string method = 7;
+    //请求方式
+    string requestMethod = 8;
+    //操作类型
+    string operatorType = 9;
+    //操作者
+    string operName = 10;
+    //部门名称
+    string deptName = 11;
+    //访问地址
+    string operUrl = 12;
+    //客户端ip
+    string operIp = 13;
+    //浏览器
+    string browser = 14;
+    //系统
+    string os = 15;
+    //固件
+    string platform = 16;
+    //访问位置
+    string operLocation = 17;
+    //请求参数
+    string operParam = 18;
+    //操作状态
+    string status = 19;
+    //操作时间
+    google.protobuf.Timestamp operTime = 20;
+    //返回数据
+    string jsonResult = 21;
+    //备注
+    string remark = 22;
+    //耗时
+    string latencyTime = 23;
+    //ua
+    string userAgent = 24;
+
+}
+
+
+// 更新SysOperaLog返回
+message SysOperaLogUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //操作模块
+    string title = 3;
+    //请求ID
+    string requestId = 4;
+    //操作类型
+    string businessType = 5;
+    //BusinessTypes
+    string businessTypes = 6;
+    //函数
+    string method = 7;
+    //请求方式
+    string requestMethod = 8;
+    //操作类型
+    string operatorType = 9;
+    //操作者
+    string operName = 10;
+    //部门名称
+    string deptName = 11;
+    //访问地址
+    string operUrl = 12;
+    //客户端ip
+    string operIp = 13;
+    //浏览器
+    string browser = 14;
+    //系统
+    string os = 15;
+    //固件
+    string platform = 16;
+    //访问位置
+    string operLocation = 17;
+    //请求参数
+    string operParam = 18;
+    //操作状态
+    string status = 19;
+    //操作时间
+    google.protobuf.Timestamp operTime = 20;
+    //返回数据
+    string jsonResult = 21;
+    //备注
+    string remark = 22;
+    //耗时
+    string latencyTime = 23;
+    //ua
+    string userAgent = 24;
+
+}
+
+// 删除SysOperaLog请求
+message SysOperaLogDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除SysOperaLog请求
+message SysOperaLogBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除SysOperaLog返回
+message SysOperaLogDeleteReply {
+    bool result = 1;
+}
+

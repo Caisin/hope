@@ -1,0 +1,244 @@
+syntax = "proto3";
+package casbinrule.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/casbinrule/v1;v1";
+
+// The CasbinRule service definition.
+service CasbinRule {
+
+  // 分页查询CasbinRule
+  rpc GetPageCasbinRule (CasbinRulePageReq) returns (CasbinRulePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/casbinrule/page"
+    };
+  }
+
+  // 获取CasbinRule
+  rpc GetCasbinRule (CasbinRuleReq) returns (CasbinRuleReply)  {
+    option (google.api.http) = {
+      get: "/v1/casbinrule/{id}"
+    };
+  }
+
+  // 更新CasbinRule
+  rpc UpdateCasbinRule (CasbinRuleUpdateReq) returns (CasbinRuleUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/casbinrule/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建CasbinRule
+  rpc CreateCasbinRule (CasbinRuleCreateReq) returns (CasbinRuleCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/casbinrule"
+      body: "*"
+    };
+  }
+
+  // 删除CasbinRule
+  rpc DeleteCasbinRule (CasbinRuleDeleteReq) returns (CasbinRuleDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/casbinrule/{id}"
+    };
+  }
+
+  // 批量删除CasbinRule
+  rpc BatchDeleteCasbinRule (CasbinRuleBatchDeleteReq) returns (CasbinRuleDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/casbinrule"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message CasbinRulePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    CasbinRuleReq param = 2;
+}
+
+// 查询搜索返回
+message CasbinRulePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated CasbinRuleReply items = 2;
+}
+
+
+// 查询搜索请求
+message CasbinRuleReq {
+    int64 id = 1;
+    //
+    string p_type = 2;
+    //
+    string v0 = 3;
+    //
+    string v1 = 4;
+    //
+    string v2 = 5;
+    //
+    string v3 = 6;
+    //
+    string v4 = 7;
+    //
+    string v5 = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 查询搜索返回
+message CasbinRuleReply {
+    int64 id = 1;
+    //
+    string p_type = 2;
+    //
+    string v0 = 3;
+    //
+    string v1 = 4;
+    //
+    string v2 = 5;
+    //
+    string v3 = 6;
+    //
+    string v4 = 7;
+    //
+    string v5 = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 创建CasbinRule请求
+message CasbinRuleCreateReq {
+    //
+    string p_type = 1;
+    //
+    string v0 = 2;
+    //
+    string v1 = 3;
+    //
+    string v2 = 4;
+    //
+    string v3 = 5;
+    //
+    string v4 = 6;
+    //
+    string v5 = 7;
+
+}
+
+// 创建CasbinRule返回
+message CasbinRuleCreateReply {
+    int64 id = 1;
+    //
+    string p_type = 2;
+    //
+    string v0 = 3;
+    //
+    string v1 = 4;
+    //
+    string v2 = 5;
+    //
+    string v3 = 6;
+    //
+    string v4 = 7;
+    //
+    string v5 = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 更新CasbinRule请求
+message CasbinRuleUpdateReq {
+    int64 id = 1;
+    //
+    string p_type = 2;
+    //
+    string v0 = 3;
+    //
+    string v1 = 4;
+    //
+    string v2 = 5;
+    //
+    string v3 = 6;
+    //
+    string v4 = 7;
+    //
+    string v5 = 8;
+
+}
+
+
+// 更新CasbinRule返回
+message CasbinRuleUpdateReply {
+    int64 id = 1;
+    //
+    string p_type = 2;
+    //
+    string v0 = 3;
+    //
+    string v1 = 4;
+    //
+    string v2 = 5;
+    //
+    string v3 = 6;
+    //
+    string v4 = 7;
+    //
+    string v5 = 8;
+
+}
+
+// 删除CasbinRule请求
+message CasbinRuleDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除CasbinRule请求
+message CasbinRuleBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除CasbinRule返回
+message CasbinRuleDeleteReply {
+    bool result = 1;
+}
+

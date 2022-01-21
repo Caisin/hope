@@ -1,0 +1,1435 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/admin/sysoperalog/v1/sys_opera_log.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SysOperaLog"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/sysoperalog": {
+      "delete": {
+        "summary": "批量删除SysOperaLog",
+        "operationId": "SysOperaLog_BatchDeleteSysOperaLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysOperaLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "SysOperaLog"
+        ]
+      },
+      "post": {
+        "summary": "创建SysOperaLog",
+        "operationId": "SysOperaLog_CreateSysOperaLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysOperaLogCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SysOperaLogCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "SysOperaLog"
+        ]
+      }
+    },
+    "/v1/sysoperalog/page": {
+      "get": {
+        "summary": "分页查询SysOperaLog",
+        "operationId": "SysOperaLog_GetPageSysOperaLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysOperaLogPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.title",
+            "description": "操作模块.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.requestId",
+            "description": "请求ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.businessType",
+            "description": "操作类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.businessTypes",
+            "description": "BusinessTypes.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.method",
+            "description": "函数.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.requestMethod",
+            "description": "请求方式.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.operatorType",
+            "description": "操作类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.operName",
+            "description": "操作者.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.deptName",
+            "description": "部门名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.operUrl",
+            "description": "访问地址.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.operIp",
+            "description": "客户端ip.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.browser",
+            "description": "浏览器.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.os",
+            "description": "系统.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.platform",
+            "description": "固件.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.operLocation",
+            "description": "访问位置.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.operParam",
+            "description": "请求参数.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.status",
+            "description": "操作状态.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.operTime",
+            "description": "操作时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.jsonResult",
+            "description": "返回数据.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.latencyTime",
+            "description": "耗时.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.userAgent",
+            "description": "ua.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysOperaLog"
+        ]
+      }
+    },
+    "/v1/sysoperalog/{id}": {
+      "get": {
+        "summary": "获取SysOperaLog",
+        "operationId": "SysOperaLog_GetSysOperaLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysOperaLogReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "title",
+            "description": "操作模块.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "requestId",
+            "description": "请求ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "businessType",
+            "description": "操作类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "businessTypes",
+            "description": "BusinessTypes.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "description": "函数.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "requestMethod",
+            "description": "请求方式.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operatorType",
+            "description": "操作类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operName",
+            "description": "操作者.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "deptName",
+            "description": "部门名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operUrl",
+            "description": "访问地址.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operIp",
+            "description": "客户端ip.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "browser",
+            "description": "浏览器.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "os",
+            "description": "系统.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "description": "固件.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operLocation",
+            "description": "访问位置.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operParam",
+            "description": "请求参数.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "description": "操作状态.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operTime",
+            "description": "操作时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "jsonResult",
+            "description": "返回数据.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "latencyTime",
+            "description": "耗时.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userAgent",
+            "description": "ua.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysOperaLog"
+        ]
+      },
+      "delete": {
+        "summary": "删除SysOperaLog",
+        "operationId": "SysOperaLog_DeleteSysOperaLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysOperaLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SysOperaLog"
+        ]
+      },
+      "put": {
+        "summary": "更新SysOperaLog",
+        "operationId": "SysOperaLog_UpdateSysOperaLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SysOperaLogUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "title": {
+                  "type": "string",
+                  "title": "操作模块"
+                },
+                "requestId": {
+                  "type": "string",
+                  "title": "请求ID"
+                },
+                "businessType": {
+                  "type": "string",
+                  "title": "操作类型"
+                },
+                "businessTypes": {
+                  "type": "string",
+                  "title": "BusinessTypes"
+                },
+                "method": {
+                  "type": "string",
+                  "title": "函数"
+                },
+                "requestMethod": {
+                  "type": "string",
+                  "title": "请求方式"
+                },
+                "operatorType": {
+                  "type": "string",
+                  "title": "操作类型"
+                },
+                "operName": {
+                  "type": "string",
+                  "title": "操作者"
+                },
+                "deptName": {
+                  "type": "string",
+                  "title": "部门名称"
+                },
+                "operUrl": {
+                  "type": "string",
+                  "title": "访问地址"
+                },
+                "operIp": {
+                  "type": "string",
+                  "title": "客户端ip"
+                },
+                "browser": {
+                  "type": "string",
+                  "title": "浏览器"
+                },
+                "os": {
+                  "type": "string",
+                  "title": "系统"
+                },
+                "platform": {
+                  "type": "string",
+                  "title": "固件"
+                },
+                "operLocation": {
+                  "type": "string",
+                  "title": "访问位置"
+                },
+                "operParam": {
+                  "type": "string",
+                  "title": "请求参数"
+                },
+                "status": {
+                  "type": "string",
+                  "title": "操作状态"
+                },
+                "operTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "操作时间"
+                },
+                "jsonResult": {
+                  "type": "string",
+                  "title": "返回数据"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                },
+                "latencyTime": {
+                  "type": "string",
+                  "title": "耗时"
+                },
+                "userAgent": {
+                  "type": "string",
+                  "title": "ua"
+                }
+              },
+              "title": "更新SysOperaLog请求"
+            }
+          }
+        ],
+        "tags": [
+          "SysOperaLog"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SysOperaLogCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "title": {
+          "type": "string",
+          "title": "操作模块"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "businessType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "businessTypes": {
+          "type": "string",
+          "title": "BusinessTypes"
+        },
+        "method": {
+          "type": "string",
+          "title": "函数"
+        },
+        "requestMethod": {
+          "type": "string",
+          "title": "请求方式"
+        },
+        "operatorType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "operName": {
+          "type": "string",
+          "title": "操作者"
+        },
+        "deptName": {
+          "type": "string",
+          "title": "部门名称"
+        },
+        "operUrl": {
+          "type": "string",
+          "title": "访问地址"
+        },
+        "operIp": {
+          "type": "string",
+          "title": "客户端ip"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "operLocation": {
+          "type": "string",
+          "title": "访问位置"
+        },
+        "operParam": {
+          "type": "string",
+          "title": "请求参数"
+        },
+        "status": {
+          "type": "string",
+          "title": "操作状态"
+        },
+        "operTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "操作时间"
+        },
+        "jsonResult": {
+          "type": "string",
+          "title": "返回数据"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "latencyTime": {
+          "type": "string",
+          "title": "耗时"
+        },
+        "userAgent": {
+          "type": "string",
+          "title": "ua"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建SysOperaLog返回"
+    },
+    "v1SysOperaLogCreateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "title": {
+          "type": "string",
+          "title": "操作模块"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "businessType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "businessTypes": {
+          "type": "string",
+          "title": "BusinessTypes"
+        },
+        "method": {
+          "type": "string",
+          "title": "函数"
+        },
+        "requestMethod": {
+          "type": "string",
+          "title": "请求方式"
+        },
+        "operatorType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "operName": {
+          "type": "string",
+          "title": "操作者"
+        },
+        "deptName": {
+          "type": "string",
+          "title": "部门名称"
+        },
+        "operUrl": {
+          "type": "string",
+          "title": "访问地址"
+        },
+        "operIp": {
+          "type": "string",
+          "title": "客户端ip"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "operLocation": {
+          "type": "string",
+          "title": "访问位置"
+        },
+        "operParam": {
+          "type": "string",
+          "title": "请求参数"
+        },
+        "status": {
+          "type": "string",
+          "title": "操作状态"
+        },
+        "operTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "操作时间"
+        },
+        "jsonResult": {
+          "type": "string",
+          "title": "返回数据"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "latencyTime": {
+          "type": "string",
+          "title": "耗时"
+        },
+        "userAgent": {
+          "type": "string",
+          "title": "ua"
+        }
+      },
+      "title": "创建SysOperaLog请求"
+    },
+    "v1SysOperaLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除SysOperaLog返回"
+    },
+    "v1SysOperaLogPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysOperaLogReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysOperaLogReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "title": {
+          "type": "string",
+          "title": "操作模块"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "businessType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "businessTypes": {
+          "type": "string",
+          "title": "BusinessTypes"
+        },
+        "method": {
+          "type": "string",
+          "title": "函数"
+        },
+        "requestMethod": {
+          "type": "string",
+          "title": "请求方式"
+        },
+        "operatorType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "operName": {
+          "type": "string",
+          "title": "操作者"
+        },
+        "deptName": {
+          "type": "string",
+          "title": "部门名称"
+        },
+        "operUrl": {
+          "type": "string",
+          "title": "访问地址"
+        },
+        "operIp": {
+          "type": "string",
+          "title": "客户端ip"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "operLocation": {
+          "type": "string",
+          "title": "访问位置"
+        },
+        "operParam": {
+          "type": "string",
+          "title": "请求参数"
+        },
+        "status": {
+          "type": "string",
+          "title": "操作状态"
+        },
+        "operTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "操作时间"
+        },
+        "jsonResult": {
+          "type": "string",
+          "title": "返回数据"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "latencyTime": {
+          "type": "string",
+          "title": "耗时"
+        },
+        "userAgent": {
+          "type": "string",
+          "title": "ua"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1SysOperaLogReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "title": {
+          "type": "string",
+          "title": "操作模块"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "businessType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "businessTypes": {
+          "type": "string",
+          "title": "BusinessTypes"
+        },
+        "method": {
+          "type": "string",
+          "title": "函数"
+        },
+        "requestMethod": {
+          "type": "string",
+          "title": "请求方式"
+        },
+        "operatorType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "operName": {
+          "type": "string",
+          "title": "操作者"
+        },
+        "deptName": {
+          "type": "string",
+          "title": "部门名称"
+        },
+        "operUrl": {
+          "type": "string",
+          "title": "访问地址"
+        },
+        "operIp": {
+          "type": "string",
+          "title": "客户端ip"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "operLocation": {
+          "type": "string",
+          "title": "访问位置"
+        },
+        "operParam": {
+          "type": "string",
+          "title": "请求参数"
+        },
+        "status": {
+          "type": "string",
+          "title": "操作状态"
+        },
+        "operTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "操作时间"
+        },
+        "jsonResult": {
+          "type": "string",
+          "title": "返回数据"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "latencyTime": {
+          "type": "string",
+          "title": "耗时"
+        },
+        "userAgent": {
+          "type": "string",
+          "title": "ua"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1SysOperaLogUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "title": {
+          "type": "string",
+          "title": "操作模块"
+        },
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "businessType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "businessTypes": {
+          "type": "string",
+          "title": "BusinessTypes"
+        },
+        "method": {
+          "type": "string",
+          "title": "函数"
+        },
+        "requestMethod": {
+          "type": "string",
+          "title": "请求方式"
+        },
+        "operatorType": {
+          "type": "string",
+          "title": "操作类型"
+        },
+        "operName": {
+          "type": "string",
+          "title": "操作者"
+        },
+        "deptName": {
+          "type": "string",
+          "title": "部门名称"
+        },
+        "operUrl": {
+          "type": "string",
+          "title": "访问地址"
+        },
+        "operIp": {
+          "type": "string",
+          "title": "客户端ip"
+        },
+        "browser": {
+          "type": "string",
+          "title": "浏览器"
+        },
+        "os": {
+          "type": "string",
+          "title": "系统"
+        },
+        "platform": {
+          "type": "string",
+          "title": "固件"
+        },
+        "operLocation": {
+          "type": "string",
+          "title": "访问位置"
+        },
+        "operParam": {
+          "type": "string",
+          "title": "请求参数"
+        },
+        "status": {
+          "type": "string",
+          "title": "操作状态"
+        },
+        "operTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "操作时间"
+        },
+        "jsonResult": {
+          "type": "string",
+          "title": "返回数据"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "latencyTime": {
+          "type": "string",
+          "title": "耗时"
+        },
+        "userAgent": {
+          "type": "string",
+          "title": "ua"
+        }
+      },
+      "title": "更新SysOperaLog返回"
+    }
+  }
+}

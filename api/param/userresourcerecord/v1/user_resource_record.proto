@@ -1,0 +1,280 @@
+syntax = "proto3";
+package userresourcerecord.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/userresourcerecord/v1;v1";
+
+// The UserResourceRecord service definition.
+service UserResourceRecord {
+
+  // 分页查询UserResourceRecord
+  rpc GetPageUserResourceRecord (UserResourceRecordPageReq) returns (UserResourceRecordPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/userresourcerecord/page"
+    };
+  }
+
+  // 获取UserResourceRecord
+  rpc GetUserResourceRecord (UserResourceRecordReq) returns (UserResourceRecordReply)  {
+    option (google.api.http) = {
+      get: "/v1/userresourcerecord/{id}"
+    };
+  }
+
+  // 更新UserResourceRecord
+  rpc UpdateUserResourceRecord (UserResourceRecordUpdateReq) returns (UserResourceRecordUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/userresourcerecord/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建UserResourceRecord
+  rpc CreateUserResourceRecord (UserResourceRecordCreateReq) returns (UserResourceRecordCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/userresourcerecord"
+      body: "*"
+    };
+  }
+
+  // 删除UserResourceRecord
+  rpc DeleteUserResourceRecord (UserResourceRecordDeleteReq) returns (UserResourceRecordDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userresourcerecord/{id}"
+    };
+  }
+
+  // 批量删除UserResourceRecord
+  rpc BatchDeleteUserResourceRecord (UserResourceRecordBatchDeleteReq) returns (UserResourceRecordDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userresourcerecord"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message UserResourceRecordPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    UserResourceRecordReq param = 2;
+}
+
+// 查询搜索返回
+message UserResourceRecordPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated UserResourceRecordReply items = 2;
+}
+
+
+// 查询搜索请求
+message UserResourceRecordReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //资源ID
+    int64 resId = 3;
+    //是否默认
+    bool def = 4;
+    //头像名称
+    string name = 5;
+    //资源地址
+    string url = 6;
+    //资源类型,avatar
+    string resType = 7;
+    //备注
+    string remark = 8;
+    //使用状态,1
+    int32 state = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 查询搜索返回
+message UserResourceRecordReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //资源ID
+    int64 resId = 3;
+    //是否默认
+    bool def = 4;
+    //头像名称
+    string name = 5;
+    //资源地址
+    string url = 6;
+    //资源类型,avatar
+    string resType = 7;
+    //备注
+    string remark = 8;
+    //使用状态,1
+    int32 state = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 创建UserResourceRecord请求
+message UserResourceRecordCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //资源ID
+    int64 resId = 2;
+    //是否默认
+    bool def = 3;
+    //头像名称
+    string name = 4;
+    //资源地址
+    string url = 5;
+    //资源类型,avatar
+    string resType = 6;
+    //备注
+    string remark = 7;
+    //使用状态,1
+    int32 state = 8;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 9;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 10;
+
+}
+
+// 创建UserResourceRecord返回
+message UserResourceRecordCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //资源ID
+    int64 resId = 3;
+    //是否默认
+    bool def = 4;
+    //头像名称
+    string name = 5;
+    //资源地址
+    string url = 6;
+    //资源类型,avatar
+    string resType = 7;
+    //备注
+    string remark = 8;
+    //使用状态,1
+    int32 state = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 更新UserResourceRecord请求
+message UserResourceRecordUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //资源ID
+    int64 resId = 3;
+    //是否默认
+    bool def = 4;
+    //头像名称
+    string name = 5;
+    //资源地址
+    string url = 6;
+    //资源类型,avatar
+    string resType = 7;
+    //备注
+    string remark = 8;
+    //使用状态,1
+    int32 state = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+
+// 更新UserResourceRecord返回
+message UserResourceRecordUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //资源ID
+    int64 resId = 3;
+    //是否默认
+    bool def = 4;
+    //头像名称
+    string name = 5;
+    //资源地址
+    string url = 6;
+    //资源类型,avatar
+    string resType = 7;
+    //备注
+    string remark = 8;
+    //使用状态,1
+    int32 state = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+// 删除UserResourceRecord请求
+message UserResourceRecordDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除UserResourceRecord请求
+message UserResourceRecordBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除UserResourceRecord返回
+message UserResourceRecordDeleteReply {
+    bool result = 1;
+}
+

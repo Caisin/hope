@@ -1,0 +1,244 @@
+syntax = "proto3";
+package scoreproduct.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/scoreproduct/v1;v1";
+
+// The ScoreProduct service definition.
+service ScoreProduct {
+
+  // 分页查询ScoreProduct
+  rpc GetPageScoreProduct (ScoreProductPageReq) returns (ScoreProductPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/scoreproduct/page"
+    };
+  }
+
+  // 获取ScoreProduct
+  rpc GetScoreProduct (ScoreProductReq) returns (ScoreProductReply)  {
+    option (google.api.http) = {
+      get: "/v1/scoreproduct/{id}"
+    };
+  }
+
+  // 更新ScoreProduct
+  rpc UpdateScoreProduct (ScoreProductUpdateReq) returns (ScoreProductUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/scoreproduct/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建ScoreProduct
+  rpc CreateScoreProduct (ScoreProductCreateReq) returns (ScoreProductCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/scoreproduct"
+      body: "*"
+    };
+  }
+
+  // 删除ScoreProduct
+  rpc DeleteScoreProduct (ScoreProductDeleteReq) returns (ScoreProductDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/scoreproduct/{id}"
+    };
+  }
+
+  // 批量删除ScoreProduct
+  rpc BatchDeleteScoreProduct (ScoreProductBatchDeleteReq) returns (ScoreProductDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/scoreproduct"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message ScoreProductPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    ScoreProductReq param = 2;
+}
+
+// 查询搜索返回
+message ScoreProductPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated ScoreProductReply items = 2;
+}
+
+
+// 查询搜索请求
+message ScoreProductReq {
+    int64 id = 1;
+    //产品名称
+    string productName = 2;
+    //产品描述
+    string summary = 3;
+    //vip卡图片
+    string cardUrl = 4;
+    //需消耗积分价格
+    int64 score = 5;
+    //兑换VIP类型
+    int64 vipType = 6;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 7;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 查询搜索返回
+message ScoreProductReply {
+    int64 id = 1;
+    //产品名称
+    string productName = 2;
+    //产品描述
+    string summary = 3;
+    //vip卡图片
+    string cardUrl = 4;
+    //需消耗积分价格
+    int64 score = 5;
+    //兑换VIP类型
+    int64 vipType = 6;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 7;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 创建ScoreProduct请求
+message ScoreProductCreateReq {
+    //产品名称
+    string productName = 1;
+    //产品描述
+    string summary = 2;
+    //vip卡图片
+    string cardUrl = 3;
+    //需消耗积分价格
+    int64 score = 4;
+    //兑换VIP类型
+    int64 vipType = 5;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 6;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 7;
+
+}
+
+// 创建ScoreProduct返回
+message ScoreProductCreateReply {
+    int64 id = 1;
+    //产品名称
+    string productName = 2;
+    //产品描述
+    string summary = 3;
+    //vip卡图片
+    string cardUrl = 4;
+    //需消耗积分价格
+    int64 score = 5;
+    //兑换VIP类型
+    int64 vipType = 6;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 7;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
+// 更新ScoreProduct请求
+message ScoreProductUpdateReq {
+    int64 id = 1;
+    //产品名称
+    string productName = 2;
+    //产品描述
+    string summary = 3;
+    //vip卡图片
+    string cardUrl = 4;
+    //需消耗积分价格
+    int64 score = 5;
+    //兑换VIP类型
+    int64 vipType = 6;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 7;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 8;
+
+}
+
+
+// 更新ScoreProduct返回
+message ScoreProductUpdateReply {
+    int64 id = 1;
+    //产品名称
+    string productName = 2;
+    //产品描述
+    string summary = 3;
+    //vip卡图片
+    string cardUrl = 4;
+    //需消耗积分价格
+    int64 score = 5;
+    //兑换VIP类型
+    int64 vipType = 6;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 7;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 8;
+
+}
+
+// 删除ScoreProduct请求
+message ScoreProductDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除ScoreProduct请求
+message ScoreProductBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除ScoreProduct返回
+message ScoreProductDeleteReply {
+    bool result = 1;
+}
+

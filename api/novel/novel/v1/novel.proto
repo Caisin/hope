@@ -1,0 +1,484 @@
+syntax = "proto3";
+package novel.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novel/v1;v1";
+
+// The Novel service definition.
+service Novel {
+
+  // 分页查询Novel
+  rpc GetPageNovel (NovelPageReq) returns (NovelPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novel/page"
+    };
+  }
+
+  // 获取Novel
+  rpc GetNovel (NovelReq) returns (NovelReply)  {
+    option (google.api.http) = {
+      get: "/v1/novel/{id}"
+    };
+  }
+
+  // 更新Novel
+  rpc UpdateNovel (NovelUpdateReq) returns (NovelUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novel/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建Novel
+  rpc CreateNovel (NovelCreateReq) returns (NovelCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novel"
+      body: "*"
+    };
+  }
+
+  // 删除Novel
+  rpc DeleteNovel (NovelDeleteReq) returns (NovelDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novel/{id}"
+    };
+  }
+
+  // 批量删除Novel
+  rpc BatchDeleteNovel (NovelBatchDeleteReq) returns (NovelDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novel"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelReq param = 2;
+}
+
+// 查询搜索返回
+message NovelPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelReq {
+    int64 id = 1;
+    //分类ID
+    int64 classifyId = 2;
+    //分类名称
+    string classifyName = 3;
+    //作者ID,本站小说有
+    string authorId = 4;
+    //小说标题
+    string title = 5;
+    //小说摘要
+    string summary = 6;
+    //作者
+    string author = 7;
+    //主播
+    string anchor = 8;
+    //点击量
+    int64 hits = 9;
+    //关键字，用逗号隔开
+    string keywords = 10;
+    //来源
+    string source = 11;
+    //评分
+    int32 score = 12;
+    //封面
+    string cover = 13;
+    //标签,关联标签表novel_tag
+    string tagIds = 14;
+    //书本字数
+    int32 wordNum = 15;
+    //免费章节数量
+    int32 freeNum = 16;
+    //连载状态
+    int32 onlineState = 17;
+    //整本价格
+    int64 price = 18;
+    //发布状态
+    int32 publish = 19;
+    //原价,展示用
+    int64 originalPrice = 20;
+    //千字价格
+    int32 chapterPrice = 21;
+    //章节数量
+    int32 chapterCount = 22;
+    //签约类型 0
+    int32 signType = 23;
+    //签约时间
+    google.protobuf.Timestamp signDate = 24;
+    //男主角
+    string leadingMan = 25;
+    //女主角
+    string leadingLady = 26;
+    //备注
+    string remark = 27;
+    //阿里云音频目录
+    string mediaKey = 28;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 29;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 30;
+    //创建者
+    int64 createBy = 31;
+    //更新者
+    int64 updateBy = 32;
+    //租户
+    int64 tenantId = 33;
+
+}
+
+// 查询搜索返回
+message NovelReply {
+    int64 id = 1;
+    //分类ID
+    int64 classifyId = 2;
+    //分类名称
+    string classifyName = 3;
+    //作者ID,本站小说有
+    string authorId = 4;
+    //小说标题
+    string title = 5;
+    //小说摘要
+    string summary = 6;
+    //作者
+    string author = 7;
+    //主播
+    string anchor = 8;
+    //点击量
+    int64 hits = 9;
+    //关键字，用逗号隔开
+    string keywords = 10;
+    //来源
+    string source = 11;
+    //评分
+    int32 score = 12;
+    //封面
+    string cover = 13;
+    //标签,关联标签表novel_tag
+    string tagIds = 14;
+    //书本字数
+    int32 wordNum = 15;
+    //免费章节数量
+    int32 freeNum = 16;
+    //连载状态
+    int32 onlineState = 17;
+    //整本价格
+    int64 price = 18;
+    //发布状态
+    int32 publish = 19;
+    //原价,展示用
+    int64 originalPrice = 20;
+    //千字价格
+    int32 chapterPrice = 21;
+    //章节数量
+    int32 chapterCount = 22;
+    //签约类型 0
+    int32 signType = 23;
+    //签约时间
+    google.protobuf.Timestamp signDate = 24;
+    //男主角
+    string leadingMan = 25;
+    //女主角
+    string leadingLady = 26;
+    //备注
+    string remark = 27;
+    //阿里云音频目录
+    string mediaKey = 28;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 29;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 30;
+    //创建者
+    int64 createBy = 31;
+    //更新者
+    int64 updateBy = 32;
+    //租户
+    int64 tenantId = 33;
+
+}
+
+// 创建Novel请求
+message NovelCreateReq {
+    //分类ID
+    int64 classifyId = 1;
+    //分类名称
+    string classifyName = 2;
+    //作者ID,本站小说有
+    string authorId = 3;
+    //小说标题
+    string title = 4;
+    //小说摘要
+    string summary = 5;
+    //作者
+    string author = 6;
+    //主播
+    string anchor = 7;
+    //点击量
+    int64 hits = 8;
+    //关键字，用逗号隔开
+    string keywords = 9;
+    //来源
+    string source = 10;
+    //评分
+    int32 score = 11;
+    //封面
+    string cover = 12;
+    //标签,关联标签表novel_tag
+    string tagIds = 13;
+    //书本字数
+    int32 wordNum = 14;
+    //免费章节数量
+    int32 freeNum = 15;
+    //连载状态
+    int32 onlineState = 16;
+    //整本价格
+    int64 price = 17;
+    //发布状态
+    int32 publish = 18;
+    //原价,展示用
+    int64 originalPrice = 19;
+    //千字价格
+    int32 chapterPrice = 20;
+    //章节数量
+    int32 chapterCount = 21;
+    //签约类型 0
+    int32 signType = 22;
+    //签约时间
+    google.protobuf.Timestamp signDate = 23;
+    //男主角
+    string leadingMan = 24;
+    //女主角
+    string leadingLady = 25;
+    //备注
+    string remark = 26;
+    //阿里云音频目录
+    string mediaKey = 27;
+
+}
+
+// 创建Novel返回
+message NovelCreateReply {
+    int64 id = 1;
+    //分类ID
+    int64 classifyId = 2;
+    //分类名称
+    string classifyName = 3;
+    //作者ID,本站小说有
+    string authorId = 4;
+    //小说标题
+    string title = 5;
+    //小说摘要
+    string summary = 6;
+    //作者
+    string author = 7;
+    //主播
+    string anchor = 8;
+    //点击量
+    int64 hits = 9;
+    //关键字，用逗号隔开
+    string keywords = 10;
+    //来源
+    string source = 11;
+    //评分
+    int32 score = 12;
+    //封面
+    string cover = 13;
+    //标签,关联标签表novel_tag
+    string tagIds = 14;
+    //书本字数
+    int32 wordNum = 15;
+    //免费章节数量
+    int32 freeNum = 16;
+    //连载状态
+    int32 onlineState = 17;
+    //整本价格
+    int64 price = 18;
+    //发布状态
+    int32 publish = 19;
+    //原价,展示用
+    int64 originalPrice = 20;
+    //千字价格
+    int32 chapterPrice = 21;
+    //章节数量
+    int32 chapterCount = 22;
+    //签约类型 0
+    int32 signType = 23;
+    //签约时间
+    google.protobuf.Timestamp signDate = 24;
+    //男主角
+    string leadingMan = 25;
+    //女主角
+    string leadingLady = 26;
+    //备注
+    string remark = 27;
+    //阿里云音频目录
+    string mediaKey = 28;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 29;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 30;
+    //创建者
+    int64 createBy = 31;
+    //更新者
+    int64 updateBy = 32;
+    //租户
+    int64 tenantId = 33;
+
+}
+
+// 更新Novel请求
+message NovelUpdateReq {
+    int64 id = 1;
+    //分类ID
+    int64 classifyId = 2;
+    //分类名称
+    string classifyName = 3;
+    //作者ID,本站小说有
+    string authorId = 4;
+    //小说标题
+    string title = 5;
+    //小说摘要
+    string summary = 6;
+    //作者
+    string author = 7;
+    //主播
+    string anchor = 8;
+    //点击量
+    int64 hits = 9;
+    //关键字，用逗号隔开
+    string keywords = 10;
+    //来源
+    string source = 11;
+    //评分
+    int32 score = 12;
+    //封面
+    string cover = 13;
+    //标签,关联标签表novel_tag
+    string tagIds = 14;
+    //书本字数
+    int32 wordNum = 15;
+    //免费章节数量
+    int32 freeNum = 16;
+    //连载状态
+    int32 onlineState = 17;
+    //整本价格
+    int64 price = 18;
+    //发布状态
+    int32 publish = 19;
+    //原价,展示用
+    int64 originalPrice = 20;
+    //千字价格
+    int32 chapterPrice = 21;
+    //章节数量
+    int32 chapterCount = 22;
+    //签约类型 0
+    int32 signType = 23;
+    //签约时间
+    google.protobuf.Timestamp signDate = 24;
+    //男主角
+    string leadingMan = 25;
+    //女主角
+    string leadingLady = 26;
+    //备注
+    string remark = 27;
+    //阿里云音频目录
+    string mediaKey = 28;
+
+}
+
+
+// 更新Novel返回
+message NovelUpdateReply {
+    int64 id = 1;
+    //分类ID
+    int64 classifyId = 2;
+    //分类名称
+    string classifyName = 3;
+    //作者ID,本站小说有
+    string authorId = 4;
+    //小说标题
+    string title = 5;
+    //小说摘要
+    string summary = 6;
+    //作者
+    string author = 7;
+    //主播
+    string anchor = 8;
+    //点击量
+    int64 hits = 9;
+    //关键字，用逗号隔开
+    string keywords = 10;
+    //来源
+    string source = 11;
+    //评分
+    int32 score = 12;
+    //封面
+    string cover = 13;
+    //标签,关联标签表novel_tag
+    string tagIds = 14;
+    //书本字数
+    int32 wordNum = 15;
+    //免费章节数量
+    int32 freeNum = 16;
+    //连载状态
+    int32 onlineState = 17;
+    //整本价格
+    int64 price = 18;
+    //发布状态
+    int32 publish = 19;
+    //原价,展示用
+    int64 originalPrice = 20;
+    //千字价格
+    int32 chapterPrice = 21;
+    //章节数量
+    int32 chapterCount = 22;
+    //签约类型 0
+    int32 signType = 23;
+    //签约时间
+    google.protobuf.Timestamp signDate = 24;
+    //男主角
+    string leadingMan = 25;
+    //女主角
+    string leadingLady = 26;
+    //备注
+    string remark = 27;
+    //阿里云音频目录
+    string mediaKey = 28;
+
+}
+
+// 删除Novel请求
+message NovelDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除Novel请求
+message NovelBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除Novel返回
+message NovelDeleteReply {
+    bool result = 1;
+}
+

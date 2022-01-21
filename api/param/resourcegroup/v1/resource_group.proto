@@ -1,0 +1,172 @@
+syntax = "proto3";
+package resourcegroup.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/resourcegroup/v1;v1";
+
+// The ResourceGroup service definition.
+service ResourceGroup {
+
+  // 分页查询ResourceGroup
+  rpc GetPageResourceGroup (ResourceGroupPageReq) returns (ResourceGroupPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/resourcegroup/page"
+    };
+  }
+
+  // 获取ResourceGroup
+  rpc GetResourceGroup (ResourceGroupReq) returns (ResourceGroupReply)  {
+    option (google.api.http) = {
+      get: "/v1/resourcegroup/{id}"
+    };
+  }
+
+  // 更新ResourceGroup
+  rpc UpdateResourceGroup (ResourceGroupUpdateReq) returns (ResourceGroupUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/resourcegroup/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建ResourceGroup
+  rpc CreateResourceGroup (ResourceGroupCreateReq) returns (ResourceGroupCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/resourcegroup"
+      body: "*"
+    };
+  }
+
+  // 删除ResourceGroup
+  rpc DeleteResourceGroup (ResourceGroupDeleteReq) returns (ResourceGroupDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/resourcegroup/{id}"
+    };
+  }
+
+  // 批量删除ResourceGroup
+  rpc BatchDeleteResourceGroup (ResourceGroupBatchDeleteReq) returns (ResourceGroupDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/resourcegroup"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message ResourceGroupPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    ResourceGroupReq param = 2;
+}
+
+// 查询搜索返回
+message ResourceGroupPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated ResourceGroupReply items = 2;
+}
+
+
+// 查询搜索请求
+message ResourceGroupReq {
+    int64 id = 1;
+    //Name
+    string name = 2;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 3;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 4;
+    //创建者
+    int64 createBy = 5;
+    //更新者
+    int64 updateBy = 6;
+    //租户
+    int64 tenantId = 7;
+
+}
+
+// 查询搜索返回
+message ResourceGroupReply {
+    int64 id = 1;
+    //Name
+    string name = 2;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 3;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 4;
+    //创建者
+    int64 createBy = 5;
+    //更新者
+    int64 updateBy = 6;
+    //租户
+    int64 tenantId = 7;
+
+}
+
+// 创建ResourceGroup请求
+message ResourceGroupCreateReq {
+    //Name
+    string name = 1;
+
+}
+
+// 创建ResourceGroup返回
+message ResourceGroupCreateReply {
+    int64 id = 1;
+    //Name
+    string name = 2;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 3;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 4;
+    //创建者
+    int64 createBy = 5;
+    //更新者
+    int64 updateBy = 6;
+    //租户
+    int64 tenantId = 7;
+
+}
+
+// 更新ResourceGroup请求
+message ResourceGroupUpdateReq {
+    int64 id = 1;
+    //Name
+    string name = 2;
+
+}
+
+
+// 更新ResourceGroup返回
+message ResourceGroupUpdateReply {
+    int64 id = 1;
+    //Name
+    string name = 2;
+
+}
+
+// 删除ResourceGroup请求
+message ResourceGroupDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除ResourceGroup请求
+message ResourceGroupBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除ResourceGroup返回
+message ResourceGroupDeleteReply {
+    bool result = 1;
+}
+

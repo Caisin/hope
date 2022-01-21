@@ -1,0 +1,304 @@
+syntax = "proto3";
+package sysuser.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/sysuser/v1;v1";
+
+// The SysUser service definition.
+service SysUser {
+
+  // 分页查询SysUser
+  rpc GetPageSysUser (SysUserPageReq) returns (SysUserPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysuser/page"
+    };
+  }
+
+  // 获取SysUser
+  rpc GetSysUser (SysUserReq) returns (SysUserReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysuser/{id}"
+    };
+  }
+
+  // 更新SysUser
+  rpc UpdateSysUser (SysUserUpdateReq) returns (SysUserUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/sysuser/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建SysUser
+  rpc CreateSysUser (SysUserCreateReq) returns (SysUserCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/sysuser"
+      body: "*"
+    };
+  }
+
+  // 删除SysUser
+  rpc DeleteSysUser (SysUserDeleteReq) returns (SysUserDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysuser/{id}"
+    };
+  }
+
+  // 批量删除SysUser
+  rpc BatchDeleteSysUser (SysUserBatchDeleteReq) returns (SysUserDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysuser"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message SysUserPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    SysUserReq param = 2;
+}
+
+// 查询搜索返回
+message SysUserPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated SysUserReply items = 2;
+}
+
+
+// 查询搜索请求
+message SysUserReq {
+    int64 id = 1;
+    //用户名
+    string username = 2;
+    //昵称
+    string nickName = 3;
+    //手机号
+    string phone = 4;
+    //部门ID
+    int64 deptId = 5;
+    //岗位ID
+    int64 postId = 6;
+    //角色ID
+    int64 roleId = 7;
+    //头像
+    string avatar = 8;
+    //性别,0保密,1男,2女
+    int32 sex = 9;
+    //邮箱
+    string email = 10;
+    //备注
+    string remark = 11;
+    //状态
+    string status = 12;
+    //拓展信息,facebook回传用的
+    string extInfo = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 查询搜索返回
+message SysUserReply {
+    int64 id = 1;
+    //用户名
+    string username = 2;
+    //昵称
+    string nickName = 3;
+    //手机号
+    string phone = 4;
+    //部门ID
+    int64 deptId = 5;
+    //岗位ID
+    int64 postId = 6;
+    //角色ID
+    int64 roleId = 7;
+    //头像
+    string avatar = 8;
+    //性别,0保密,1男,2女
+    int32 sex = 9;
+    //邮箱
+    string email = 10;
+    //备注
+    string remark = 11;
+    //状态
+    string status = 12;
+    //拓展信息,facebook回传用的
+    string extInfo = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 创建SysUser请求
+message SysUserCreateReq {
+    //用户名
+    string username = 1;
+    //昵称
+    string nickName = 2;
+    //手机号
+    string phone = 3;
+    //部门ID
+    int64 deptId = 4;
+    //岗位ID
+    int64 postId = 5;
+    //角色ID
+    int64 roleId = 6;
+    //头像
+    string avatar = 7;
+    //性别,0保密,1男,2女
+    int32 sex = 8;
+    //邮箱
+    string email = 9;
+    //备注
+    string remark = 10;
+    //状态
+    string status = 11;
+    //拓展信息,facebook回传用的
+    string extInfo = 12;
+
+}
+
+// 创建SysUser返回
+message SysUserCreateReply {
+    int64 id = 1;
+    //用户名
+    string username = 2;
+    //昵称
+    string nickName = 3;
+    //手机号
+    string phone = 4;
+    //部门ID
+    int64 deptId = 5;
+    //岗位ID
+    int64 postId = 6;
+    //角色ID
+    int64 roleId = 7;
+    //头像
+    string avatar = 8;
+    //性别,0保密,1男,2女
+    int32 sex = 9;
+    //邮箱
+    string email = 10;
+    //备注
+    string remark = 11;
+    //状态
+    string status = 12;
+    //拓展信息,facebook回传用的
+    string extInfo = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
+// 更新SysUser请求
+message SysUserUpdateReq {
+    int64 id = 1;
+    //用户名
+    string username = 2;
+    //昵称
+    string nickName = 3;
+    //手机号
+    string phone = 4;
+    //部门ID
+    int64 deptId = 5;
+    //岗位ID
+    int64 postId = 6;
+    //角色ID
+    int64 roleId = 7;
+    //头像
+    string avatar = 8;
+    //性别,0保密,1男,2女
+    int32 sex = 9;
+    //邮箱
+    string email = 10;
+    //备注
+    string remark = 11;
+    //状态
+    string status = 12;
+    //拓展信息,facebook回传用的
+    string extInfo = 13;
+
+}
+
+
+// 更新SysUser返回
+message SysUserUpdateReply {
+    int64 id = 1;
+    //用户名
+    string username = 2;
+    //昵称
+    string nickName = 3;
+    //手机号
+    string phone = 4;
+    //部门ID
+    int64 deptId = 5;
+    //岗位ID
+    int64 postId = 6;
+    //角色ID
+    int64 roleId = 7;
+    //头像
+    string avatar = 8;
+    //性别,0保密,1男,2女
+    int32 sex = 9;
+    //邮箱
+    string email = 10;
+    //备注
+    string remark = 11;
+    //状态
+    string status = 12;
+    //拓展信息,facebook回传用的
+    string extInfo = 13;
+
+}
+
+// 删除SysUser请求
+message SysUserDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除SysUser请求
+message SysUserBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除SysUser返回
+message SysUserDeleteReply {
+    bool result = 1;
+}
+

@@ -1,0 +1,1493 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/param/novelpayconfig/v1/novel_pay_config.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "NovelPayConfig"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/novelpayconfig": {
+      "delete": {
+        "summary": "批量删除NovelPayConfig",
+        "operationId": "NovelPayConfig_BatchDeleteNovelPayConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelPayConfigDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "NovelPayConfig"
+        ]
+      },
+      "post": {
+        "summary": "创建NovelPayConfig",
+        "operationId": "NovelPayConfig_CreateNovelPayConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelPayConfigCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1NovelPayConfigCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "NovelPayConfig"
+        ]
+      }
+    },
+    "/v1/novelpayconfig/page": {
+      "get": {
+        "summary": "分页查询NovelPayConfig",
+        "operationId": "NovelPayConfig_GetPageNovelPayConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelPayConfigPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.productId",
+            "description": "谷歌商品ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.paymentName",
+            "description": "商品名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.firstPayment",
+            "description": "首次充值金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.payment",
+            "description": "充值金额:分.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.originalPrice",
+            "description": "原价.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.cfgType",
+            "description": "配置类型,activity.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.coin",
+            "description": "书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.currency",
+            "description": "货币类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.coupon",
+            "description": "书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.coinItem",
+            "description": "现金科目,查看asset_item表cash_flag=1.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.couponItem",
+            "description": "赠送科目,查看asset_item表cash_flag=0.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.sort",
+            "description": "排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.state",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.isSend",
+            "description": "巨量引擎是否回传.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.payType",
+            "description": "充值类型.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.vipType",
+            "description": "vip类型.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.isHot",
+            "description": "展示火.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.cycleDay",
+            "description": "扣款周期天数,有这个值就周期扣款.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.summary",
+            "description": "描述.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelPayConfig"
+        ]
+      }
+    },
+    "/v1/novelpayconfig/{id}": {
+      "get": {
+        "summary": "获取NovelPayConfig",
+        "operationId": "NovelPayConfig_GetNovelPayConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelPayConfigReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "productId",
+            "description": "谷歌商品ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paymentName",
+            "description": "商品名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "firstPayment",
+            "description": "首次充值金额.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "payment",
+            "description": "充值金额:分.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "originalPrice",
+            "description": "原价.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "cfgType",
+            "description": "配置类型,activity.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "coin",
+            "description": "书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "currency",
+            "description": "货币类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "coupon",
+            "description": "书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "coinItem",
+            "description": "现金科目,查看asset_item表cash_flag=1.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "couponItem",
+            "description": "赠送科目,查看asset_item表cash_flag=0.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "排序.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "state",
+            "description": "状态.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "isSend",
+            "description": "巨量引擎是否回传.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "payType",
+            "description": "充值类型.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "vipType",
+            "description": "vip类型.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "isHot",
+            "description": "展示火.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "cycleDay",
+            "description": "扣款周期天数,有这个值就周期扣款.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "summary",
+            "description": "描述.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "effectTime",
+            "description": "生效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "expiredTime",
+            "description": "失效时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelPayConfig"
+        ]
+      },
+      "delete": {
+        "summary": "删除NovelPayConfig",
+        "operationId": "NovelPayConfig_DeleteNovelPayConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelPayConfigDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelPayConfig"
+        ]
+      },
+      "put": {
+        "summary": "更新NovelPayConfig",
+        "operationId": "NovelPayConfig_UpdateNovelPayConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelPayConfigUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "title": "谷歌商品ID"
+                },
+                "paymentName": {
+                  "type": "string",
+                  "title": "商品名称"
+                },
+                "firstPayment": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "首次充值金额"
+                },
+                "payment": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "充值金额:分"
+                },
+                "originalPrice": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "原价"
+                },
+                "cfgType": {
+                  "type": "string",
+                  "title": "配置类型,activity"
+                },
+                "coin": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书币"
+                },
+                "currency": {
+                  "type": "string",
+                  "title": "货币类型"
+                },
+                "coupon": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书券"
+                },
+                "coinItem": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "现金科目,查看asset_item表cash_flag=1"
+                },
+                "couponItem": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "赠送科目,查看asset_item表cash_flag=0"
+                },
+                "sort": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "排序"
+                },
+                "state": {
+                  "type": "boolean",
+                  "title": "状态"
+                },
+                "isSend": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "巨量引擎是否回传"
+                },
+                "payType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "充值类型"
+                },
+                "vipType": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "vip类型"
+                },
+                "isHot": {
+                  "type": "boolean",
+                  "title": "展示火"
+                },
+                "cycleDay": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "扣款周期天数,有这个值就周期扣款"
+                },
+                "summary": {
+                  "type": "string",
+                  "title": "描述"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                },
+                "effectTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "生效时间"
+                },
+                "expiredTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "失效时间"
+                }
+              },
+              "title": "更新NovelPayConfig请求"
+            }
+          }
+        ],
+        "tags": [
+          "NovelPayConfig"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1NovelPayConfigCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productId": {
+          "type": "string",
+          "title": "谷歌商品ID"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "firstPayment": {
+          "type": "string",
+          "format": "int64",
+          "title": "首次充值金额"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "充值金额:分"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价"
+        },
+        "cfgType": {
+          "type": "string",
+          "title": "配置类型,activity"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "currency": {
+          "type": "string",
+          "title": "货币类型"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "coinItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "现金科目,查看asset_item表cash_flag=1"
+        },
+        "couponItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "赠送科目,查看asset_item表cash_flag=0"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "state": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "isSend": {
+          "type": "integer",
+          "format": "int32",
+          "title": "巨量引擎是否回传"
+        },
+        "payType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "充值类型"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "展示火"
+        },
+        "cycleDay": {
+          "type": "integer",
+          "format": "int32",
+          "title": "扣款周期天数,有这个值就周期扣款"
+        },
+        "summary": {
+          "type": "string",
+          "title": "描述"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建NovelPayConfig返回"
+    },
+    "v1NovelPayConfigCreateReq": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "title": "谷歌商品ID"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "firstPayment": {
+          "type": "string",
+          "format": "int64",
+          "title": "首次充值金额"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "充值金额:分"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价"
+        },
+        "cfgType": {
+          "type": "string",
+          "title": "配置类型,activity"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "currency": {
+          "type": "string",
+          "title": "货币类型"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "coinItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "现金科目,查看asset_item表cash_flag=1"
+        },
+        "couponItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "赠送科目,查看asset_item表cash_flag=0"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "state": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "isSend": {
+          "type": "integer",
+          "format": "int32",
+          "title": "巨量引擎是否回传"
+        },
+        "payType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "充值类型"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "展示火"
+        },
+        "cycleDay": {
+          "type": "integer",
+          "format": "int32",
+          "title": "扣款周期天数,有这个值就周期扣款"
+        },
+        "summary": {
+          "type": "string",
+          "title": "描述"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "创建NovelPayConfig请求"
+    },
+    "v1NovelPayConfigDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除NovelPayConfig返回"
+    },
+    "v1NovelPayConfigPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelPayConfigReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelPayConfigReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productId": {
+          "type": "string",
+          "title": "谷歌商品ID"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "firstPayment": {
+          "type": "string",
+          "format": "int64",
+          "title": "首次充值金额"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "充值金额:分"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价"
+        },
+        "cfgType": {
+          "type": "string",
+          "title": "配置类型,activity"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "currency": {
+          "type": "string",
+          "title": "货币类型"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "coinItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "现金科目,查看asset_item表cash_flag=1"
+        },
+        "couponItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "赠送科目,查看asset_item表cash_flag=0"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "state": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "isSend": {
+          "type": "integer",
+          "format": "int32",
+          "title": "巨量引擎是否回传"
+        },
+        "payType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "充值类型"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "展示火"
+        },
+        "cycleDay": {
+          "type": "integer",
+          "format": "int32",
+          "title": "扣款周期天数,有这个值就周期扣款"
+        },
+        "summary": {
+          "type": "string",
+          "title": "描述"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelPayConfigReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productId": {
+          "type": "string",
+          "title": "谷歌商品ID"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "firstPayment": {
+          "type": "string",
+          "format": "int64",
+          "title": "首次充值金额"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "充值金额:分"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价"
+        },
+        "cfgType": {
+          "type": "string",
+          "title": "配置类型,activity"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "currency": {
+          "type": "string",
+          "title": "货币类型"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "coinItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "现金科目,查看asset_item表cash_flag=1"
+        },
+        "couponItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "赠送科目,查看asset_item表cash_flag=0"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "state": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "isSend": {
+          "type": "integer",
+          "format": "int32",
+          "title": "巨量引擎是否回传"
+        },
+        "payType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "充值类型"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "展示火"
+        },
+        "cycleDay": {
+          "type": "integer",
+          "format": "int32",
+          "title": "扣款周期天数,有这个值就周期扣款"
+        },
+        "summary": {
+          "type": "string",
+          "title": "描述"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1NovelPayConfigUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "productId": {
+          "type": "string",
+          "title": "谷歌商品ID"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "firstPayment": {
+          "type": "string",
+          "format": "int64",
+          "title": "首次充值金额"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "充值金额:分"
+        },
+        "originalPrice": {
+          "type": "string",
+          "format": "int64",
+          "title": "原价"
+        },
+        "cfgType": {
+          "type": "string",
+          "title": "配置类型,activity"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "书币"
+        },
+        "currency": {
+          "type": "string",
+          "title": "货币类型"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "书券"
+        },
+        "coinItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "现金科目,查看asset_item表cash_flag=1"
+        },
+        "couponItem": {
+          "type": "integer",
+          "format": "int32",
+          "title": "赠送科目,查看asset_item表cash_flag=0"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "state": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "isSend": {
+          "type": "integer",
+          "format": "int32",
+          "title": "巨量引擎是否回传"
+        },
+        "payType": {
+          "type": "integer",
+          "format": "int32",
+          "title": "充值类型"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "展示火"
+        },
+        "cycleDay": {
+          "type": "integer",
+          "format": "int32",
+          "title": "扣款周期天数,有这个值就周期扣款"
+        },
+        "summary": {
+          "type": "string",
+          "title": "描述"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "effectTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "生效时间"
+        },
+        "expiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "失效时间"
+        }
+      },
+      "title": "更新NovelPayConfig返回"
+    }
+  }
+}

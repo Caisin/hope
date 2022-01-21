@@ -1,0 +1,220 @@
+syntax = "proto3";
+package novelconsume.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novelconsume/v1;v1";
+
+// The NovelConsume service definition.
+service NovelConsume {
+
+  // 分页查询NovelConsume
+  rpc GetPageNovelConsume (NovelConsumePageReq) returns (NovelConsumePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelconsume/page"
+    };
+  }
+
+  // 获取NovelConsume
+  rpc GetNovelConsume (NovelConsumeReq) returns (NovelConsumeReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelconsume/{id}"
+    };
+  }
+
+  // 更新NovelConsume
+  rpc UpdateNovelConsume (NovelConsumeUpdateReq) returns (NovelConsumeUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelconsume/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelConsume
+  rpc CreateNovelConsume (NovelConsumeCreateReq) returns (NovelConsumeCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelconsume"
+      body: "*"
+    };
+  }
+
+  // 删除NovelConsume
+  rpc DeleteNovelConsume (NovelConsumeDeleteReq) returns (NovelConsumeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelconsume/{id}"
+    };
+  }
+
+  // 批量删除NovelConsume
+  rpc BatchDeleteNovelConsume (NovelConsumeBatchDeleteReq) returns (NovelConsumeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelconsume"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelConsumePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelConsumeReq param = 2;
+}
+
+// 查询搜索返回
+message NovelConsumePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelConsumeReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelConsumeReq {
+    int64 id = 1;
+    //书号
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //打赏金额
+    int64 reward = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 查询搜索返回
+message NovelConsumeReply {
+    int64 id = 1;
+    //书号
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //打赏金额
+    int64 reward = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 创建NovelConsume请求
+message NovelConsumeCreateReq {
+    //书号
+    int64 novelId = 1;
+    //书币
+    int64 coin = 2;
+    //书券
+    int64 coupon = 3;
+    //VIP折扣金额
+    int64 discount = 4;
+    //打赏金额
+    int64 reward = 5;
+
+}
+
+// 创建NovelConsume返回
+message NovelConsumeCreateReply {
+    int64 id = 1;
+    //书号
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //打赏金额
+    int64 reward = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 更新NovelConsume请求
+message NovelConsumeUpdateReq {
+    int64 id = 1;
+    //书号
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //打赏金额
+    int64 reward = 6;
+
+}
+
+
+// 更新NovelConsume返回
+message NovelConsumeUpdateReply {
+    int64 id = 1;
+    //书号
+    int64 novelId = 2;
+    //书币
+    int64 coin = 3;
+    //书券
+    int64 coupon = 4;
+    //VIP折扣金额
+    int64 discount = 5;
+    //打赏金额
+    int64 reward = 6;
+
+}
+
+// 删除NovelConsume请求
+message NovelConsumeDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelConsume请求
+message NovelConsumeBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelConsume返回
+message NovelConsumeDeleteReply {
+    bool result = 1;
+}
+

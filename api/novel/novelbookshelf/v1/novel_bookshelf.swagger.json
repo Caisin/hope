@@ -1,0 +1,889 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/novelbookshelf/v1/novel_bookshelf.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "NovelBookshelf"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/novelbookshelf": {
+      "delete": {
+        "summary": "批量删除NovelBookshelf",
+        "operationId": "NovelBookshelf_BatchDeleteNovelBookshelf",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBookshelfDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "NovelBookshelf"
+        ]
+      },
+      "post": {
+        "summary": "创建NovelBookshelf",
+        "operationId": "NovelBookshelf_CreateNovelBookshelf",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBookshelfCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1NovelBookshelfCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "NovelBookshelf"
+        ]
+      }
+    },
+    "/v1/novelbookshelf/page": {
+      "get": {
+        "summary": "分页查询NovelBookshelf",
+        "operationId": "NovelBookshelf_GetPageNovelBookshelf",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBookshelfPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userName",
+            "description": "用户名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.novelId",
+            "description": "小说编号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.lastReadTime",
+            "description": "最后阅读时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.lastChapterOrder",
+            "description": "章节序号.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.lastChapterId",
+            "description": "章节ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.lastChapterName",
+            "description": "最后阅读章节名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelBookshelf"
+        ]
+      }
+    },
+    "/v1/novelbookshelf/{id}": {
+      "get": {
+        "summary": "获取NovelBookshelf",
+        "operationId": "NovelBookshelf_GetNovelBookshelf",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBookshelfReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userName",
+            "description": "用户名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "novelId",
+            "description": "小说编号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "lastReadTime",
+            "description": "最后阅读时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "lastChapterOrder",
+            "description": "章节序号.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "lastChapterId",
+            "description": "章节ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "lastChapterName",
+            "description": "最后阅读章节名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelBookshelf"
+        ]
+      },
+      "delete": {
+        "summary": "删除NovelBookshelf",
+        "operationId": "NovelBookshelf_DeleteNovelBookshelf",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBookshelfDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelBookshelf"
+        ]
+      },
+      "put": {
+        "summary": "更新NovelBookshelf",
+        "operationId": "NovelBookshelf_UpdateNovelBookshelf",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBookshelfUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "userName": {
+                  "type": "string",
+                  "title": "用户名"
+                },
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "小说编号"
+                },
+                "lastReadTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "最后阅读时间"
+                },
+                "lastChapterOrder": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "章节序号"
+                },
+                "lastChapterId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "章节ID"
+                },
+                "lastChapterName": {
+                  "type": "string",
+                  "title": "最后阅读章节名称"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                }
+              },
+              "title": "更新NovelBookshelf请求"
+            }
+          }
+        ],
+        "tags": [
+          "NovelBookshelf"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1NovelBookshelfCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "lastReadTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "最后阅读时间"
+        },
+        "lastChapterOrder": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节序号"
+        },
+        "lastChapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节ID"
+        },
+        "lastChapterName": {
+          "type": "string",
+          "title": "最后阅读章节名称"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建NovelBookshelf返回"
+    },
+    "v1NovelBookshelfCreateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "lastReadTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "最后阅读时间"
+        },
+        "lastChapterOrder": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节序号"
+        },
+        "lastChapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节ID"
+        },
+        "lastChapterName": {
+          "type": "string",
+          "title": "最后阅读章节名称"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "创建NovelBookshelf请求"
+    },
+    "v1NovelBookshelfDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除NovelBookshelf返回"
+    },
+    "v1NovelBookshelfPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelBookshelfReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelBookshelfReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "lastReadTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "最后阅读时间"
+        },
+        "lastChapterOrder": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节序号"
+        },
+        "lastChapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节ID"
+        },
+        "lastChapterName": {
+          "type": "string",
+          "title": "最后阅读章节名称"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelBookshelfReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "lastReadTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "最后阅读时间"
+        },
+        "lastChapterOrder": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节序号"
+        },
+        "lastChapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节ID"
+        },
+        "lastChapterName": {
+          "type": "string",
+          "title": "最后阅读章节名称"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1NovelBookshelfUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "lastReadTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "最后阅读时间"
+        },
+        "lastChapterOrder": {
+          "type": "integer",
+          "format": "int32",
+          "title": "章节序号"
+        },
+        "lastChapterId": {
+          "type": "string",
+          "format": "int64",
+          "title": "章节ID"
+        },
+        "lastChapterName": {
+          "type": "string",
+          "title": "最后阅读章节名称"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "更新NovelBookshelf返回"
+    }
+  }
+}

@@ -1,0 +1,1187 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/agreementlog/v1/agreement_log.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AgreementLog"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/agreementlog": {
+      "delete": {
+        "summary": "批量删除AgreementLog",
+        "operationId": "AgreementLog_BatchDeleteAgreementLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AgreementLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "AgreementLog"
+        ]
+      },
+      "post": {
+        "summary": "创建AgreementLog",
+        "operationId": "AgreementLog_CreateAgreementLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AgreementLogCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AgreementLogCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "AgreementLog"
+        ]
+      }
+    },
+    "/v1/agreementlog/page": {
+      "get": {
+        "summary": "分页查询AgreementLog",
+        "operationId": "AgreementLog_GetPageAgreementLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AgreementLogPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.outerAgreementNo",
+            "description": "外部签约协议号.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.orderId",
+            "description": "订单号.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.chId",
+            "description": "渠道.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userName",
+            "description": "用户名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.paymentName",
+            "description": "商品名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.paymentId",
+            "description": "支付配置ID payment_config表的ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.state",
+            "description": "状态：1、待签约，2、签约成功，3、取消签约.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.payment",
+            "description": "每期扣款金额,单位：分.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.agreementType",
+            "description": "支付方式：Alipay,Google,WeChat.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.vipType",
+            "description": "vip类型.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.times",
+            "description": "第几期.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.cycleDays",
+            "description": "周期天数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.nextExecTime",
+            "description": "下次执行时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AgreementLog"
+        ]
+      }
+    },
+    "/v1/agreementlog/{id}": {
+      "get": {
+        "summary": "获取AgreementLog",
+        "operationId": "AgreementLog_GetAgreementLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AgreementLogReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "outerAgreementNo",
+            "description": "外部签约协议号.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderId",
+            "description": "订单号.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "chId",
+            "description": "渠道.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userName",
+            "description": "用户名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paymentName",
+            "description": "商品名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paymentId",
+            "description": "支付配置ID payment_config表的ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "state",
+            "description": "状态：1、待签约，2、签约成功，3、取消签约.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "payment",
+            "description": "每期扣款金额,单位：分.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "agreementType",
+            "description": "支付方式：Alipay,Google,WeChat.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "vipType",
+            "description": "vip类型.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "times",
+            "description": "第几期.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "cycleDays",
+            "description": "周期天数.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "nextExecTime",
+            "description": "下次执行时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AgreementLog"
+        ]
+      },
+      "delete": {
+        "summary": "删除AgreementLog",
+        "operationId": "AgreementLog_DeleteAgreementLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AgreementLogDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "AgreementLog"
+        ]
+      },
+      "put": {
+        "summary": "更新AgreementLog",
+        "operationId": "AgreementLog_UpdateAgreementLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AgreementLogUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "outerAgreementNo": {
+                  "type": "string",
+                  "title": "外部签约协议号"
+                },
+                "orderId": {
+                  "type": "string",
+                  "title": "订单号"
+                },
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "chId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "渠道"
+                },
+                "userName": {
+                  "type": "string",
+                  "title": "用户名称"
+                },
+                "paymentName": {
+                  "type": "string",
+                  "title": "商品名称"
+                },
+                "paymentId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "支付配置ID payment_config表的ID"
+                },
+                "state": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "状态：1、待签约，2、签约成功，3、取消签约"
+                },
+                "payment": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "每期扣款金额,单位：分"
+                },
+                "agreementType": {
+                  "type": "string",
+                  "title": "支付方式：Alipay,Google,WeChat"
+                },
+                "vipType": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "vip类型"
+                },
+                "times": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "第几期"
+                },
+                "cycleDays": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "周期天数"
+                },
+                "nextExecTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "下次执行时间"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                }
+              },
+              "title": "更新AgreementLog请求"
+            }
+          }
+        ],
+        "tags": [
+          "AgreementLog"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AgreementLogCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "outerAgreementNo": {
+          "type": "string",
+          "title": "外部签约协议号"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "渠道"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "paymentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "支付配置ID payment_config表的ID"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态：1、待签约，2、签约成功，3、取消签约"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "每期扣款金额,单位：分"
+        },
+        "agreementType": {
+          "type": "string",
+          "title": "支付方式：Alipay,Google,WeChat"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "times": {
+          "type": "string",
+          "format": "int64",
+          "title": "第几期"
+        },
+        "cycleDays": {
+          "type": "integer",
+          "format": "int32",
+          "title": "周期天数"
+        },
+        "nextExecTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "下次执行时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建AgreementLog返回"
+    },
+    "v1AgreementLogCreateReq": {
+      "type": "object",
+      "properties": {
+        "outerAgreementNo": {
+          "type": "string",
+          "title": "外部签约协议号"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "渠道"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "paymentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "支付配置ID payment_config表的ID"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态：1、待签约，2、签约成功，3、取消签约"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "每期扣款金额,单位：分"
+        },
+        "agreementType": {
+          "type": "string",
+          "title": "支付方式：Alipay,Google,WeChat"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "times": {
+          "type": "string",
+          "format": "int64",
+          "title": "第几期"
+        },
+        "cycleDays": {
+          "type": "integer",
+          "format": "int32",
+          "title": "周期天数"
+        },
+        "nextExecTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "下次执行时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "创建AgreementLog请求"
+    },
+    "v1AgreementLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除AgreementLog返回"
+    },
+    "v1AgreementLogPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AgreementLogReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1AgreementLogReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "outerAgreementNo": {
+          "type": "string",
+          "title": "外部签约协议号"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "渠道"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "paymentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "支付配置ID payment_config表的ID"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态：1、待签约，2、签约成功，3、取消签约"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "每期扣款金额,单位：分"
+        },
+        "agreementType": {
+          "type": "string",
+          "title": "支付方式：Alipay,Google,WeChat"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "times": {
+          "type": "string",
+          "format": "int64",
+          "title": "第几期"
+        },
+        "cycleDays": {
+          "type": "integer",
+          "format": "int32",
+          "title": "周期天数"
+        },
+        "nextExecTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "下次执行时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1AgreementLogReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "outerAgreementNo": {
+          "type": "string",
+          "title": "外部签约协议号"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "渠道"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "paymentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "支付配置ID payment_config表的ID"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态：1、待签约，2、签约成功，3、取消签约"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "每期扣款金额,单位：分"
+        },
+        "agreementType": {
+          "type": "string",
+          "title": "支付方式：Alipay,Google,WeChat"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "times": {
+          "type": "string",
+          "format": "int64",
+          "title": "第几期"
+        },
+        "cycleDays": {
+          "type": "integer",
+          "format": "int32",
+          "title": "周期天数"
+        },
+        "nextExecTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "下次执行时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1AgreementLogUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "outerAgreementNo": {
+          "type": "string",
+          "title": "外部签约协议号"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "订单号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "chId": {
+          "type": "string",
+          "format": "int64",
+          "title": "渠道"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "paymentName": {
+          "type": "string",
+          "title": "商品名称"
+        },
+        "paymentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "支付配置ID payment_config表的ID"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态：1、待签约，2、签约成功，3、取消签约"
+        },
+        "payment": {
+          "type": "string",
+          "format": "int64",
+          "title": "每期扣款金额,单位：分"
+        },
+        "agreementType": {
+          "type": "string",
+          "title": "支付方式：Alipay,Google,WeChat"
+        },
+        "vipType": {
+          "type": "string",
+          "format": "int64",
+          "title": "vip类型"
+        },
+        "times": {
+          "type": "string",
+          "format": "int64",
+          "title": "第几期"
+        },
+        "cycleDays": {
+          "type": "integer",
+          "format": "int32",
+          "title": "周期天数"
+        },
+        "nextExecTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "下次执行时间"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "更新AgreementLog返回"
+    }
+  }
+}

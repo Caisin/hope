@@ -1,0 +1,208 @@
+syntax = "proto3";
+package userresource.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/userresource/v1;v1";
+
+// The UserResource service definition.
+service UserResource {
+
+  // 分页查询UserResource
+  rpc GetPageUserResource (UserResourcePageReq) returns (UserResourcePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/userresource/page"
+    };
+  }
+
+  // 获取UserResource
+  rpc GetUserResource (UserResourceReq) returns (UserResourceReply)  {
+    option (google.api.http) = {
+      get: "/v1/userresource/{id}"
+    };
+  }
+
+  // 更新UserResource
+  rpc UpdateUserResource (UserResourceUpdateReq) returns (UserResourceUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/userresource/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建UserResource
+  rpc CreateUserResource (UserResourceCreateReq) returns (UserResourceCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/userresource"
+      body: "*"
+    };
+  }
+
+  // 删除UserResource
+  rpc DeleteUserResource (UserResourceDeleteReq) returns (UserResourceDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userresource/{id}"
+    };
+  }
+
+  // 批量删除UserResource
+  rpc BatchDeleteUserResource (UserResourceBatchDeleteReq) returns (UserResourceDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userresource"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message UserResourcePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    UserResourceReq param = 2;
+}
+
+// 查询搜索返回
+message UserResourcePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated UserResourceReply items = 2;
+}
+
+
+// 查询搜索请求
+message UserResourceReq {
+    int64 id = 1;
+    //资源类型,avatar
+    string resType = 2;
+    //头像名称
+    string Name = 3;
+    //图片地址
+    string url = 4;
+    //描述
+    string summary = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 查询搜索返回
+message UserResourceReply {
+    int64 id = 1;
+    //资源类型,avatar
+    string resType = 2;
+    //头像名称
+    string Name = 3;
+    //图片地址
+    string url = 4;
+    //描述
+    string summary = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 创建UserResource请求
+message UserResourceCreateReq {
+    //资源类型,avatar
+    string resType = 1;
+    //头像名称
+    string Name = 2;
+    //图片地址
+    string url = 3;
+    //描述
+    string summary = 4;
+
+}
+
+// 创建UserResource返回
+message UserResourceCreateReply {
+    int64 id = 1;
+    //资源类型,avatar
+    string resType = 2;
+    //头像名称
+    string Name = 3;
+    //图片地址
+    string url = 4;
+    //描述
+    string summary = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 更新UserResource请求
+message UserResourceUpdateReq {
+    int64 id = 1;
+    //资源类型,avatar
+    string resType = 2;
+    //头像名称
+    string Name = 3;
+    //图片地址
+    string url = 4;
+    //描述
+    string summary = 5;
+
+}
+
+
+// 更新UserResource返回
+message UserResourceUpdateReply {
+    int64 id = 1;
+    //资源类型,avatar
+    string resType = 2;
+    //头像名称
+    string Name = 3;
+    //图片地址
+    string url = 4;
+    //描述
+    string summary = 5;
+
+}
+
+// 删除UserResource请求
+message UserResourceDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除UserResource请求
+message UserResourceBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除UserResource返回
+message UserResourceDeleteReply {
+    bool result = 1;
+}
+

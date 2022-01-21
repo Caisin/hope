@@ -1,0 +1,256 @@
+syntax = "proto3";
+package novelbookshelf.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/novelbookshelf/v1;v1";
+
+// The NovelBookshelf service definition.
+service NovelBookshelf {
+
+  // 分页查询NovelBookshelf
+  rpc GetPageNovelBookshelf (NovelBookshelfPageReq) returns (NovelBookshelfPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelbookshelf/page"
+    };
+  }
+
+  // 获取NovelBookshelf
+  rpc GetNovelBookshelf (NovelBookshelfReq) returns (NovelBookshelfReply)  {
+    option (google.api.http) = {
+      get: "/v1/novelbookshelf/{id}"
+    };
+  }
+
+  // 更新NovelBookshelf
+  rpc UpdateNovelBookshelf (NovelBookshelfUpdateReq) returns (NovelBookshelfUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/novelbookshelf/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelBookshelf
+  rpc CreateNovelBookshelf (NovelBookshelfCreateReq) returns (NovelBookshelfCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/novelbookshelf"
+      body: "*"
+    };
+  }
+
+  // 删除NovelBookshelf
+  rpc DeleteNovelBookshelf (NovelBookshelfDeleteReq) returns (NovelBookshelfDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelbookshelf/{id}"
+    };
+  }
+
+  // 批量删除NovelBookshelf
+  rpc BatchDeleteNovelBookshelf (NovelBookshelfBatchDeleteReq) returns (NovelBookshelfDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/novelbookshelf"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelBookshelfPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelBookshelfReq param = 2;
+}
+
+// 查询搜索返回
+message NovelBookshelfPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelBookshelfReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelBookshelfReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名
+    string userName = 3;
+    //小说编号
+    int64 novelId = 4;
+    //最后阅读时间
+    google.protobuf.Timestamp lastReadTime = 5;
+    //章节序号
+    int32 lastChapterOrder = 6;
+    //章节ID
+    int64 lastChapterId = 7;
+    //最后阅读章节名称
+    string lastChapterName = 8;
+    //备注
+    string remark = 9;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 10;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 11;
+    //创建者
+    int64 createBy = 12;
+    //更新者
+    int64 updateBy = 13;
+    //租户
+    int64 tenantId = 14;
+
+}
+
+// 查询搜索返回
+message NovelBookshelfReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名
+    string userName = 3;
+    //小说编号
+    int64 novelId = 4;
+    //最后阅读时间
+    google.protobuf.Timestamp lastReadTime = 5;
+    //章节序号
+    int32 lastChapterOrder = 6;
+    //章节ID
+    int64 lastChapterId = 7;
+    //最后阅读章节名称
+    string lastChapterName = 8;
+    //备注
+    string remark = 9;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 10;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 11;
+    //创建者
+    int64 createBy = 12;
+    //更新者
+    int64 updateBy = 13;
+    //租户
+    int64 tenantId = 14;
+
+}
+
+// 创建NovelBookshelf请求
+message NovelBookshelfCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //用户名
+    string userName = 2;
+    //小说编号
+    int64 novelId = 3;
+    //最后阅读时间
+    google.protobuf.Timestamp lastReadTime = 4;
+    //章节序号
+    int32 lastChapterOrder = 5;
+    //章节ID
+    int64 lastChapterId = 6;
+    //最后阅读章节名称
+    string lastChapterName = 7;
+    //备注
+    string remark = 8;
+
+}
+
+// 创建NovelBookshelf返回
+message NovelBookshelfCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名
+    string userName = 3;
+    //小说编号
+    int64 novelId = 4;
+    //最后阅读时间
+    google.protobuf.Timestamp lastReadTime = 5;
+    //章节序号
+    int32 lastChapterOrder = 6;
+    //章节ID
+    int64 lastChapterId = 7;
+    //最后阅读章节名称
+    string lastChapterName = 8;
+    //备注
+    string remark = 9;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 10;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 11;
+    //创建者
+    int64 createBy = 12;
+    //更新者
+    int64 updateBy = 13;
+    //租户
+    int64 tenantId = 14;
+
+}
+
+// 更新NovelBookshelf请求
+message NovelBookshelfUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名
+    string userName = 3;
+    //小说编号
+    int64 novelId = 4;
+    //最后阅读时间
+    google.protobuf.Timestamp lastReadTime = 5;
+    //章节序号
+    int32 lastChapterOrder = 6;
+    //章节ID
+    int64 lastChapterId = 7;
+    //最后阅读章节名称
+    string lastChapterName = 8;
+    //备注
+    string remark = 9;
+
+}
+
+
+// 更新NovelBookshelf返回
+message NovelBookshelfUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名
+    string userName = 3;
+    //小说编号
+    int64 novelId = 4;
+    //最后阅读时间
+    google.protobuf.Timestamp lastReadTime = 5;
+    //章节序号
+    int32 lastChapterOrder = 6;
+    //章节ID
+    int64 lastChapterId = 7;
+    //最后阅读章节名称
+    string lastChapterName = 8;
+    //备注
+    string remark = 9;
+
+}
+
+// 删除NovelBookshelf请求
+message NovelBookshelfDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelBookshelf请求
+message NovelBookshelfBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelBookshelf返回
+message NovelBookshelfDeleteReply {
+    bool result = 1;
+}
+

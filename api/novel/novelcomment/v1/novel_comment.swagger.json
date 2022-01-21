@@ -1,0 +1,1117 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/novelcomment/v1/novel_comment.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "NovelComment"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/novelcomment": {
+      "delete": {
+        "summary": "批量删除NovelComment",
+        "operationId": "NovelComment_BatchDeleteNovelComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelCommentDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "NovelComment"
+        ]
+      },
+      "post": {
+        "summary": "创建NovelComment",
+        "operationId": "NovelComment_CreateNovelComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelCommentCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1NovelCommentCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "NovelComment"
+        ]
+      }
+    },
+    "/v1/novelcomment/page": {
+      "get": {
+        "summary": "分页查询NovelComment",
+        "operationId": "NovelComment_GetPageNovelComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelCommentPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.novelId",
+            "description": "小说编号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.avatar",
+            "description": "评论用户头像.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.userName",
+            "description": "用户名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.repUserId",
+            "description": "回复用户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.repUserName",
+            "description": "回复用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.content",
+            "description": "回复内容.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.score",
+            "description": "评分,除以10.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "param.pId",
+            "description": "回复评论ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.isTop",
+            "description": "置顶.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.state",
+            "description": "状态,0.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.isHighlight",
+            "description": "高亮.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.isHot",
+            "description": "是否热门.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelComment"
+        ]
+      }
+    },
+    "/v1/novelcomment/{id}": {
+      "get": {
+        "summary": "获取NovelComment",
+        "operationId": "NovelComment_GetNovelComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelCommentReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "novelId",
+            "description": "小说编号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "avatar",
+            "description": "评论用户头像.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userName",
+            "description": "用户名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "repUserId",
+            "description": "回复用户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "repUserName",
+            "description": "回复用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "description": "回复内容.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "score",
+            "description": "评分,除以10.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pId",
+            "description": "回复评论ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "isTop",
+            "description": "置顶.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "state",
+            "description": "状态,0.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "isHighlight",
+            "description": "高亮.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "isHot",
+            "description": "是否热门.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelComment"
+        ]
+      },
+      "delete": {
+        "summary": "删除NovelComment",
+        "operationId": "NovelComment_DeleteNovelComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelCommentDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelComment"
+        ]
+      },
+      "put": {
+        "summary": "更新NovelComment",
+        "operationId": "NovelComment_UpdateNovelComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelCommentUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "小说编号"
+                },
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户Id"
+                },
+                "avatar": {
+                  "type": "string",
+                  "title": "评论用户头像"
+                },
+                "userName": {
+                  "type": "string",
+                  "title": "用户名"
+                },
+                "repUserId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "回复用户"
+                },
+                "repUserName": {
+                  "type": "string",
+                  "title": "回复用户ID"
+                },
+                "content": {
+                  "type": "string",
+                  "title": "回复内容"
+                },
+                "score": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "评分,除以10"
+                },
+                "pId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "回复评论ID"
+                },
+                "isTop": {
+                  "type": "boolean",
+                  "title": "置顶"
+                },
+                "state": {
+                  "type": "string",
+                  "title": "状态,0"
+                },
+                "isHighlight": {
+                  "type": "boolean",
+                  "title": "高亮"
+                },
+                "isHot": {
+                  "type": "boolean",
+                  "title": "是否热门"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                }
+              },
+              "title": "更新NovelComment请求"
+            }
+          }
+        ],
+        "tags": [
+          "NovelComment"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1NovelCommentCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户Id"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "评论用户头像"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "repUserId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复用户"
+        },
+        "repUserName": {
+          "type": "string",
+          "title": "回复用户ID"
+        },
+        "content": {
+          "type": "string",
+          "title": "回复内容"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分,除以10"
+        },
+        "pId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复评论ID"
+        },
+        "isTop": {
+          "type": "boolean",
+          "title": "置顶"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态,0"
+        },
+        "isHighlight": {
+          "type": "boolean",
+          "title": "高亮"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "是否热门"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建NovelComment返回"
+    },
+    "v1NovelCommentCreateReq": {
+      "type": "object",
+      "properties": {
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户Id"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "评论用户头像"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "repUserId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复用户"
+        },
+        "repUserName": {
+          "type": "string",
+          "title": "回复用户ID"
+        },
+        "content": {
+          "type": "string",
+          "title": "回复内容"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分,除以10"
+        },
+        "pId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复评论ID"
+        },
+        "isTop": {
+          "type": "boolean",
+          "title": "置顶"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态,0"
+        },
+        "isHighlight": {
+          "type": "boolean",
+          "title": "高亮"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "是否热门"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "创建NovelComment请求"
+    },
+    "v1NovelCommentDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除NovelComment返回"
+    },
+    "v1NovelCommentPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelCommentReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelCommentReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户Id"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "评论用户头像"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "repUserId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复用户"
+        },
+        "repUserName": {
+          "type": "string",
+          "title": "回复用户ID"
+        },
+        "content": {
+          "type": "string",
+          "title": "回复内容"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分,除以10"
+        },
+        "pId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复评论ID"
+        },
+        "isTop": {
+          "type": "boolean",
+          "title": "置顶"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态,0"
+        },
+        "isHighlight": {
+          "type": "boolean",
+          "title": "高亮"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "是否热门"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelCommentReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户Id"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "评论用户头像"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "repUserId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复用户"
+        },
+        "repUserName": {
+          "type": "string",
+          "title": "回复用户ID"
+        },
+        "content": {
+          "type": "string",
+          "title": "回复内容"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分,除以10"
+        },
+        "pId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复评论ID"
+        },
+        "isTop": {
+          "type": "boolean",
+          "title": "置顶"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态,0"
+        },
+        "isHighlight": {
+          "type": "boolean",
+          "title": "高亮"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "是否热门"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1NovelCommentUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "小说编号"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户Id"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "评论用户头像"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "repUserId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复用户"
+        },
+        "repUserName": {
+          "type": "string",
+          "title": "回复用户ID"
+        },
+        "content": {
+          "type": "string",
+          "title": "回复内容"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "title": "评分,除以10"
+        },
+        "pId": {
+          "type": "string",
+          "format": "int64",
+          "title": "回复评论ID"
+        },
+        "isTop": {
+          "type": "boolean",
+          "title": "置顶"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态,0"
+        },
+        "isHighlight": {
+          "type": "boolean",
+          "title": "高亮"
+        },
+        "isHot": {
+          "type": "boolean",
+          "title": "是否热门"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "更新NovelComment返回"
+    }
+  }
+}

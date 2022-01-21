@@ -1,0 +1,256 @@
+syntax = "proto3";
+package userevent.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/userevent/v1;v1";
+
+// The UserEvent service definition.
+service UserEvent {
+
+  // 分页查询UserEvent
+  rpc GetPageUserEvent (UserEventPageReq) returns (UserEventPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/userevent/page"
+    };
+  }
+
+  // 获取UserEvent
+  rpc GetUserEvent (UserEventReq) returns (UserEventReply)  {
+    option (google.api.http) = {
+      get: "/v1/userevent/{id}"
+    };
+  }
+
+  // 更新UserEvent
+  rpc UpdateUserEvent (UserEventUpdateReq) returns (UserEventUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/userevent/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建UserEvent
+  rpc CreateUserEvent (UserEventCreateReq) returns (UserEventCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/userevent"
+      body: "*"
+    };
+  }
+
+  // 删除UserEvent
+  rpc DeleteUserEvent (UserEventDeleteReq) returns (UserEventDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userevent/{id}"
+    };
+  }
+
+  // 批量删除UserEvent
+  rpc BatchDeleteUserEvent (UserEventBatchDeleteReq) returns (UserEventDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/userevent"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message UserEventPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    UserEventReq param = 2;
+}
+
+// 查询搜索返回
+message UserEventPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated UserEventReply items = 2;
+}
+
+
+// 查询搜索请求
+message UserEventReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //事件类型,read
+    string eventType = 3;
+    //书号
+    int64 novelId = 4;
+    //章节号
+    int64 chapterId = 5;
+    //书币
+    int64 coin = 6;
+    //书券
+    int64 coupon = 7;
+    //金额,充值金额
+    int64 money = 8;
+    //搜索关键字
+    string keyword = 9;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 10;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 11;
+    //创建者
+    int64 createBy = 12;
+    //更新者
+    int64 updateBy = 13;
+    //租户
+    int64 tenantId = 14;
+
+}
+
+// 查询搜索返回
+message UserEventReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //事件类型,read
+    string eventType = 3;
+    //书号
+    int64 novelId = 4;
+    //章节号
+    int64 chapterId = 5;
+    //书币
+    int64 coin = 6;
+    //书券
+    int64 coupon = 7;
+    //金额,充值金额
+    int64 money = 8;
+    //搜索关键字
+    string keyword = 9;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 10;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 11;
+    //创建者
+    int64 createBy = 12;
+    //更新者
+    int64 updateBy = 13;
+    //租户
+    int64 tenantId = 14;
+
+}
+
+// 创建UserEvent请求
+message UserEventCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //事件类型,read
+    string eventType = 2;
+    //书号
+    int64 novelId = 3;
+    //章节号
+    int64 chapterId = 4;
+    //书币
+    int64 coin = 5;
+    //书券
+    int64 coupon = 6;
+    //金额,充值金额
+    int64 money = 7;
+    //搜索关键字
+    string keyword = 8;
+
+}
+
+// 创建UserEvent返回
+message UserEventCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //事件类型,read
+    string eventType = 3;
+    //书号
+    int64 novelId = 4;
+    //章节号
+    int64 chapterId = 5;
+    //书币
+    int64 coin = 6;
+    //书券
+    int64 coupon = 7;
+    //金额,充值金额
+    int64 money = 8;
+    //搜索关键字
+    string keyword = 9;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 10;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 11;
+    //创建者
+    int64 createBy = 12;
+    //更新者
+    int64 updateBy = 13;
+    //租户
+    int64 tenantId = 14;
+
+}
+
+// 更新UserEvent请求
+message UserEventUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //事件类型,read
+    string eventType = 3;
+    //书号
+    int64 novelId = 4;
+    //章节号
+    int64 chapterId = 5;
+    //书币
+    int64 coin = 6;
+    //书券
+    int64 coupon = 7;
+    //金额,充值金额
+    int64 money = 8;
+    //搜索关键字
+    string keyword = 9;
+
+}
+
+
+// 更新UserEvent返回
+message UserEventUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //事件类型,read
+    string eventType = 3;
+    //书号
+    int64 novelId = 4;
+    //章节号
+    int64 chapterId = 5;
+    //书币
+    int64 coin = 6;
+    //书券
+    int64 coupon = 7;
+    //金额,充值金额
+    int64 money = 8;
+    //搜索关键字
+    string keyword = 9;
+
+}
+
+// 删除UserEvent请求
+message UserEventDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除UserEvent请求
+message UserEventBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除UserEvent返回
+message UserEventDeleteReply {
+    bool result = 1;
+}
+

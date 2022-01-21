@@ -1,0 +1,208 @@
+syntax = "proto3";
+package sysdicttype.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/admin/sysdicttype/v1;v1";
+
+// The SysDictType service definition.
+service SysDictType {
+
+  // 分页查询SysDictType
+  rpc GetPageSysDictType (SysDictTypePageReq) returns (SysDictTypePageReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysdicttype/page"
+    };
+  }
+
+  // 获取SysDictType
+  rpc GetSysDictType (SysDictTypeReq) returns (SysDictTypeReply)  {
+    option (google.api.http) = {
+      get: "/v1/sysdicttype/{id}"
+    };
+  }
+
+  // 更新SysDictType
+  rpc UpdateSysDictType (SysDictTypeUpdateReq) returns (SysDictTypeUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/sysdicttype/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建SysDictType
+  rpc CreateSysDictType (SysDictTypeCreateReq) returns (SysDictTypeCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/sysdicttype"
+      body: "*"
+    };
+  }
+
+  // 删除SysDictType
+  rpc DeleteSysDictType (SysDictTypeDeleteReq) returns (SysDictTypeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysdicttype/{id}"
+    };
+  }
+
+  // 批量删除SysDictType
+  rpc BatchDeleteSysDictType (SysDictTypeBatchDeleteReq) returns (SysDictTypeDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/sysdicttype"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message SysDictTypePageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    SysDictTypeReq param = 2;
+}
+
+// 查询搜索返回
+message SysDictTypePageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated SysDictTypeReply items = 2;
+}
+
+
+// 查询搜索请求
+message SysDictTypeReq {
+    int64 id = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string typeCode = 3;
+    //状态
+    int32 status = 4;
+    //备注
+    string remark = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 查询搜索返回
+message SysDictTypeReply {
+    int64 id = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string typeCode = 3;
+    //状态
+    int32 status = 4;
+    //备注
+    string remark = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 创建SysDictType请求
+message SysDictTypeCreateReq {
+    //字典名称
+    string dictName = 1;
+    //字典类型
+    string typeCode = 2;
+    //状态
+    int32 status = 3;
+    //备注
+    string remark = 4;
+
+}
+
+// 创建SysDictType返回
+message SysDictTypeCreateReply {
+    int64 id = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string typeCode = 3;
+    //状态
+    int32 status = 4;
+    //备注
+    string remark = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
+// 更新SysDictType请求
+message SysDictTypeUpdateReq {
+    int64 id = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string typeCode = 3;
+    //状态
+    int32 status = 4;
+    //备注
+    string remark = 5;
+
+}
+
+
+// 更新SysDictType返回
+message SysDictTypeUpdateReply {
+    int64 id = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string typeCode = 3;
+    //状态
+    int32 status = 4;
+    //备注
+    string remark = 5;
+
+}
+
+// 删除SysDictType请求
+message SysDictTypeDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除SysDictType请求
+message SysDictTypeBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除SysDictType返回
+message SysDictTypeDeleteReply {
+    bool result = 1;
+}
+

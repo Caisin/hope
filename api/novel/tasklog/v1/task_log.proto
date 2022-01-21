@@ -1,0 +1,376 @@
+syntax = "proto3";
+package tasklog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/tasklog/v1;v1";
+
+// The TaskLog service definition.
+service TaskLog {
+
+  // 分页查询TaskLog
+  rpc GetPageTaskLog (TaskLogPageReq) returns (TaskLogPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/tasklog/page"
+    };
+  }
+
+  // 获取TaskLog
+  rpc GetTaskLog (TaskLogReq) returns (TaskLogReply)  {
+    option (google.api.http) = {
+      get: "/v1/tasklog/{id}"
+    };
+  }
+
+  // 更新TaskLog
+  rpc UpdateTaskLog (TaskLogUpdateReq) returns (TaskLogUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/tasklog/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建TaskLog
+  rpc CreateTaskLog (TaskLogCreateReq) returns (TaskLogCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/tasklog"
+      body: "*"
+    };
+  }
+
+  // 删除TaskLog
+  rpc DeleteTaskLog (TaskLogDeleteReq) returns (TaskLogDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/tasklog/{id}"
+    };
+  }
+
+  // 批量删除TaskLog
+  rpc BatchDeleteTaskLog (TaskLogBatchDeleteReq) returns (TaskLogDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/tasklog"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message TaskLogPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    TaskLogReq param = 2;
+}
+
+// 查询搜索返回
+message TaskLogPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated TaskLogReply items = 2;
+}
+
+
+// 查询搜索请求
+message TaskLogReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //任务分组
+    string taskGroup = 3;
+    //任务编码
+    string taskCode = 4;
+    //任务Id
+    int64 taskId = 5;
+    //任务名称
+    string taskName = 6;
+    //奖励金额
+    int64 amount = 7;
+    //额外奖励金额
+    int64 reward = 8;
+    //奖励资产科目
+    int32 amountItem = 9;
+    //额外奖励资产科目
+    int32 rewardItem = 10;
+    //目标值
+    int64 targetAmount = 11;
+    //完成值
+    int64 doneAmount = 12;
+    //状态,0
+    int64 state = 13;
+    //完成时间
+    google.protobuf.Timestamp doneAt = 14;
+    //领取奖励时间
+    google.protobuf.Timestamp obtainAt = 15;
+    //完成次数
+    int32 doneTimes = 16;
+    //可完成次数
+    int32 allTimes = 17;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 18;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 19;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 20;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 21;
+    //创建者
+    int64 createBy = 22;
+    //更新者
+    int64 updateBy = 23;
+    //租户
+    int64 tenantId = 24;
+
+}
+
+// 查询搜索返回
+message TaskLogReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //任务分组
+    string taskGroup = 3;
+    //任务编码
+    string taskCode = 4;
+    //任务Id
+    int64 taskId = 5;
+    //任务名称
+    string taskName = 6;
+    //奖励金额
+    int64 amount = 7;
+    //额外奖励金额
+    int64 reward = 8;
+    //奖励资产科目
+    int32 amountItem = 9;
+    //额外奖励资产科目
+    int32 rewardItem = 10;
+    //目标值
+    int64 targetAmount = 11;
+    //完成值
+    int64 doneAmount = 12;
+    //状态,0
+    int64 state = 13;
+    //完成时间
+    google.protobuf.Timestamp doneAt = 14;
+    //领取奖励时间
+    google.protobuf.Timestamp obtainAt = 15;
+    //完成次数
+    int32 doneTimes = 16;
+    //可完成次数
+    int32 allTimes = 17;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 18;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 19;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 20;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 21;
+    //创建者
+    int64 createBy = 22;
+    //更新者
+    int64 updateBy = 23;
+    //租户
+    int64 tenantId = 24;
+
+}
+
+// 创建TaskLog请求
+message TaskLogCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //任务分组
+    string taskGroup = 2;
+    //任务编码
+    string taskCode = 3;
+    //任务Id
+    int64 taskId = 4;
+    //任务名称
+    string taskName = 5;
+    //奖励金额
+    int64 amount = 6;
+    //额外奖励金额
+    int64 reward = 7;
+    //奖励资产科目
+    int32 amountItem = 8;
+    //额外奖励资产科目
+    int32 rewardItem = 9;
+    //目标值
+    int64 targetAmount = 10;
+    //完成值
+    int64 doneAmount = 11;
+    //状态,0
+    int64 state = 12;
+    //完成时间
+    google.protobuf.Timestamp doneAt = 13;
+    //领取奖励时间
+    google.protobuf.Timestamp obtainAt = 14;
+    //完成次数
+    int32 doneTimes = 15;
+    //可完成次数
+    int32 allTimes = 16;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 17;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 18;
+
+}
+
+// 创建TaskLog返回
+message TaskLogCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //任务分组
+    string taskGroup = 3;
+    //任务编码
+    string taskCode = 4;
+    //任务Id
+    int64 taskId = 5;
+    //任务名称
+    string taskName = 6;
+    //奖励金额
+    int64 amount = 7;
+    //额外奖励金额
+    int64 reward = 8;
+    //奖励资产科目
+    int32 amountItem = 9;
+    //额外奖励资产科目
+    int32 rewardItem = 10;
+    //目标值
+    int64 targetAmount = 11;
+    //完成值
+    int64 doneAmount = 12;
+    //状态,0
+    int64 state = 13;
+    //完成时间
+    google.protobuf.Timestamp doneAt = 14;
+    //领取奖励时间
+    google.protobuf.Timestamp obtainAt = 15;
+    //完成次数
+    int32 doneTimes = 16;
+    //可完成次数
+    int32 allTimes = 17;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 18;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 19;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 20;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 21;
+    //创建者
+    int64 createBy = 22;
+    //更新者
+    int64 updateBy = 23;
+    //租户
+    int64 tenantId = 24;
+
+}
+
+// 更新TaskLog请求
+message TaskLogUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //任务分组
+    string taskGroup = 3;
+    //任务编码
+    string taskCode = 4;
+    //任务Id
+    int64 taskId = 5;
+    //任务名称
+    string taskName = 6;
+    //奖励金额
+    int64 amount = 7;
+    //额外奖励金额
+    int64 reward = 8;
+    //奖励资产科目
+    int32 amountItem = 9;
+    //额外奖励资产科目
+    int32 rewardItem = 10;
+    //目标值
+    int64 targetAmount = 11;
+    //完成值
+    int64 doneAmount = 12;
+    //状态,0
+    int64 state = 13;
+    //完成时间
+    google.protobuf.Timestamp doneAt = 14;
+    //领取奖励时间
+    google.protobuf.Timestamp obtainAt = 15;
+    //完成次数
+    int32 doneTimes = 16;
+    //可完成次数
+    int32 allTimes = 17;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 18;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 19;
+
+}
+
+
+// 更新TaskLog返回
+message TaskLogUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //任务分组
+    string taskGroup = 3;
+    //任务编码
+    string taskCode = 4;
+    //任务Id
+    int64 taskId = 5;
+    //任务名称
+    string taskName = 6;
+    //奖励金额
+    int64 amount = 7;
+    //额外奖励金额
+    int64 reward = 8;
+    //奖励资产科目
+    int32 amountItem = 9;
+    //额外奖励资产科目
+    int32 rewardItem = 10;
+    //目标值
+    int64 targetAmount = 11;
+    //完成值
+    int64 doneAmount = 12;
+    //状态,0
+    int64 state = 13;
+    //完成时间
+    google.protobuf.Timestamp doneAt = 14;
+    //领取奖励时间
+    google.protobuf.Timestamp obtainAt = 15;
+    //完成次数
+    int32 doneTimes = 16;
+    //可完成次数
+    int32 allTimes = 17;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 18;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 19;
+
+}
+
+// 删除TaskLog请求
+message TaskLogDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除TaskLog请求
+message TaskLogBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除TaskLog返回
+message TaskLogDeleteReply {
+    bool result = 1;
+}
+

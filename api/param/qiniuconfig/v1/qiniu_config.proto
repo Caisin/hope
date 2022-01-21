@@ -1,0 +1,232 @@
+syntax = "proto3";
+package qiniuconfig.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/qiniuconfig/v1;v1";
+
+// The QiniuConfig service definition.
+service QiniuConfig {
+
+  // 分页查询QiniuConfig
+  rpc GetPageQiniuConfig (QiniuConfigPageReq) returns (QiniuConfigPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/qiniuconfig/page"
+    };
+  }
+
+  // 获取QiniuConfig
+  rpc GetQiniuConfig (QiniuConfigReq) returns (QiniuConfigReply)  {
+    option (google.api.http) = {
+      get: "/v1/qiniuconfig/{id}"
+    };
+  }
+
+  // 更新QiniuConfig
+  rpc UpdateQiniuConfig (QiniuConfigUpdateReq) returns (QiniuConfigUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/qiniuconfig/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建QiniuConfig
+  rpc CreateQiniuConfig (QiniuConfigCreateReq) returns (QiniuConfigCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/qiniuconfig"
+      body: "*"
+    };
+  }
+
+  // 删除QiniuConfig
+  rpc DeleteQiniuConfig (QiniuConfigDeleteReq) returns (QiniuConfigDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/qiniuconfig/{id}"
+    };
+  }
+
+  // 批量删除QiniuConfig
+  rpc BatchDeleteQiniuConfig (QiniuConfigBatchDeleteReq) returns (QiniuConfigDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/qiniuconfig"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message QiniuConfigPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    QiniuConfigReq param = 2;
+}
+
+// 查询搜索返回
+message QiniuConfigPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated QiniuConfigReply items = 2;
+}
+
+
+// 查询搜索请求
+message QiniuConfigReq {
+    int64 id = 1;
+    //accessKey
+    string accessKey = 2;
+    //Bucket 识别符
+    string bucket = 3;
+    //外链域名
+    string host = 4;
+    //secretKey
+    string secretKey = 5;
+    //空间类型
+    string type = 6;
+    //机房
+    string zone = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 查询搜索返回
+message QiniuConfigReply {
+    int64 id = 1;
+    //accessKey
+    string accessKey = 2;
+    //Bucket 识别符
+    string bucket = 3;
+    //外链域名
+    string host = 4;
+    //secretKey
+    string secretKey = 5;
+    //空间类型
+    string type = 6;
+    //机房
+    string zone = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 创建QiniuConfig请求
+message QiniuConfigCreateReq {
+    //accessKey
+    string accessKey = 1;
+    //Bucket 识别符
+    string bucket = 2;
+    //外链域名
+    string host = 3;
+    //secretKey
+    string secretKey = 4;
+    //空间类型
+    string type = 5;
+    //机房
+    string zone = 6;
+
+}
+
+// 创建QiniuConfig返回
+message QiniuConfigCreateReply {
+    int64 id = 1;
+    //accessKey
+    string accessKey = 2;
+    //Bucket 识别符
+    string bucket = 3;
+    //外链域名
+    string host = 4;
+    //secretKey
+    string secretKey = 5;
+    //空间类型
+    string type = 6;
+    //机房
+    string zone = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
+// 更新QiniuConfig请求
+message QiniuConfigUpdateReq {
+    int64 id = 1;
+    //accessKey
+    string accessKey = 2;
+    //Bucket 识别符
+    string bucket = 3;
+    //外链域名
+    string host = 4;
+    //secretKey
+    string secretKey = 5;
+    //空间类型
+    string type = 6;
+    //机房
+    string zone = 7;
+
+}
+
+
+// 更新QiniuConfig返回
+message QiniuConfigUpdateReply {
+    int64 id = 1;
+    //accessKey
+    string accessKey = 2;
+    //Bucket 识别符
+    string bucket = 3;
+    //外链域名
+    string host = 4;
+    //secretKey
+    string secretKey = 5;
+    //空间类型
+    string type = 6;
+    //机房
+    string zone = 7;
+
+}
+
+// 删除QiniuConfig请求
+message QiniuConfigDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除QiniuConfig请求
+message QiniuConfigBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除QiniuConfig返回
+message QiniuConfigDeleteReply {
+    bool result = 1;
+}
+

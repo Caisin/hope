@@ -1,0 +1,773 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/param/qiniuconfig/v1/qiniu_config.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "QiniuConfig"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/qiniuconfig": {
+      "delete": {
+        "summary": "批量删除QiniuConfig",
+        "operationId": "QiniuConfig_BatchDeleteQiniuConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QiniuConfigDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "QiniuConfig"
+        ]
+      },
+      "post": {
+        "summary": "创建QiniuConfig",
+        "operationId": "QiniuConfig_CreateQiniuConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QiniuConfigCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1QiniuConfigCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "QiniuConfig"
+        ]
+      }
+    },
+    "/v1/qiniuconfig/page": {
+      "get": {
+        "summary": "分页查询QiniuConfig",
+        "operationId": "QiniuConfig_GetPageQiniuConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QiniuConfigPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.accessKey",
+            "description": "accessKey.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.bucket",
+            "description": "Bucket 识别符.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.host",
+            "description": "外链域名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.secretKey",
+            "description": "secretKey.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.type",
+            "description": "空间类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.zone",
+            "description": "机房.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "QiniuConfig"
+        ]
+      }
+    },
+    "/v1/qiniuconfig/{id}": {
+      "get": {
+        "summary": "获取QiniuConfig",
+        "operationId": "QiniuConfig_GetQiniuConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QiniuConfigReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "accessKey",
+            "description": "accessKey.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "bucket",
+            "description": "Bucket 识别符.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "host",
+            "description": "外链域名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "secretKey",
+            "description": "secretKey.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "description": "空间类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "zone",
+            "description": "机房.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "QiniuConfig"
+        ]
+      },
+      "delete": {
+        "summary": "删除QiniuConfig",
+        "operationId": "QiniuConfig_DeleteQiniuConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QiniuConfigDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "QiniuConfig"
+        ]
+      },
+      "put": {
+        "summary": "更新QiniuConfig",
+        "operationId": "QiniuConfig_UpdateQiniuConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QiniuConfigUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessKey": {
+                  "type": "string",
+                  "title": "accessKey"
+                },
+                "bucket": {
+                  "type": "string",
+                  "title": "Bucket 识别符"
+                },
+                "host": {
+                  "type": "string",
+                  "title": "外链域名"
+                },
+                "secretKey": {
+                  "type": "string",
+                  "title": "secretKey"
+                },
+                "type": {
+                  "type": "string",
+                  "title": "空间类型"
+                },
+                "zone": {
+                  "type": "string",
+                  "title": "机房"
+                }
+              },
+              "title": "更新QiniuConfig请求"
+            }
+          }
+        ],
+        "tags": [
+          "QiniuConfig"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1QiniuConfigCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "accessKey": {
+          "type": "string",
+          "title": "accessKey"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符"
+        },
+        "host": {
+          "type": "string",
+          "title": "外链域名"
+        },
+        "secretKey": {
+          "type": "string",
+          "title": "secretKey"
+        },
+        "type": {
+          "type": "string",
+          "title": "空间类型"
+        },
+        "zone": {
+          "type": "string",
+          "title": "机房"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建QiniuConfig返回"
+    },
+    "v1QiniuConfigCreateReq": {
+      "type": "object",
+      "properties": {
+        "accessKey": {
+          "type": "string",
+          "title": "accessKey"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符"
+        },
+        "host": {
+          "type": "string",
+          "title": "外链域名"
+        },
+        "secretKey": {
+          "type": "string",
+          "title": "secretKey"
+        },
+        "type": {
+          "type": "string",
+          "title": "空间类型"
+        },
+        "zone": {
+          "type": "string",
+          "title": "机房"
+        }
+      },
+      "title": "创建QiniuConfig请求"
+    },
+    "v1QiniuConfigDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除QiniuConfig返回"
+    },
+    "v1QiniuConfigPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1QiniuConfigReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1QiniuConfigReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "accessKey": {
+          "type": "string",
+          "title": "accessKey"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符"
+        },
+        "host": {
+          "type": "string",
+          "title": "外链域名"
+        },
+        "secretKey": {
+          "type": "string",
+          "title": "secretKey"
+        },
+        "type": {
+          "type": "string",
+          "title": "空间类型"
+        },
+        "zone": {
+          "type": "string",
+          "title": "机房"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1QiniuConfigReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "accessKey": {
+          "type": "string",
+          "title": "accessKey"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符"
+        },
+        "host": {
+          "type": "string",
+          "title": "外链域名"
+        },
+        "secretKey": {
+          "type": "string",
+          "title": "secretKey"
+        },
+        "type": {
+          "type": "string",
+          "title": "空间类型"
+        },
+        "zone": {
+          "type": "string",
+          "title": "机房"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1QiniuConfigUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "accessKey": {
+          "type": "string",
+          "title": "accessKey"
+        },
+        "bucket": {
+          "type": "string",
+          "title": "Bucket 识别符"
+        },
+        "host": {
+          "type": "string",
+          "title": "外链域名"
+        },
+        "secretKey": {
+          "type": "string",
+          "title": "secretKey"
+        },
+        "type": {
+          "type": "string",
+          "title": "空间类型"
+        },
+        "zone": {
+          "type": "string",
+          "title": "机房"
+        }
+      },
+      "title": "更新QiniuConfig返回"
+    }
+  }
+}

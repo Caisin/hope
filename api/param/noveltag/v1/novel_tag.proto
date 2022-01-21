@@ -1,0 +1,196 @@
+syntax = "proto3";
+package noveltag.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/param/noveltag/v1;v1";
+
+// The NovelTag service definition.
+service NovelTag {
+
+  // 分页查询NovelTag
+  rpc GetPageNovelTag (NovelTagPageReq) returns (NovelTagPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/noveltag/page"
+    };
+  }
+
+  // 获取NovelTag
+  rpc GetNovelTag (NovelTagReq) returns (NovelTagReply)  {
+    option (google.api.http) = {
+      get: "/v1/noveltag/{id}"
+    };
+  }
+
+  // 更新NovelTag
+  rpc UpdateNovelTag (NovelTagUpdateReq) returns (NovelTagUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/noveltag/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建NovelTag
+  rpc CreateNovelTag (NovelTagCreateReq) returns (NovelTagCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/noveltag"
+      body: "*"
+    };
+  }
+
+  // 删除NovelTag
+  rpc DeleteNovelTag (NovelTagDeleteReq) returns (NovelTagDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/noveltag/{id}"
+    };
+  }
+
+  // 批量删除NovelTag
+  rpc BatchDeleteNovelTag (NovelTagBatchDeleteReq) returns (NovelTagDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/noveltag"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message NovelTagPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    NovelTagReq param = 2;
+}
+
+// 查询搜索返回
+message NovelTagPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated NovelTagReply items = 2;
+}
+
+
+// 查询搜索请求
+message NovelTagReq {
+    int64 id = 1;
+    //主键
+    int64 tagId = 2;
+    //标签名称
+    string tagName = 3;
+    //备注
+    string remark = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 查询搜索返回
+message NovelTagReply {
+    int64 id = 1;
+    //主键
+    int64 tagId = 2;
+    //标签名称
+    string tagName = 3;
+    //备注
+    string remark = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 创建NovelTag请求
+message NovelTagCreateReq {
+    //主键
+    int64 tagId = 1;
+    //标签名称
+    string tagName = 2;
+    //备注
+    string remark = 3;
+
+}
+
+// 创建NovelTag返回
+message NovelTagCreateReply {
+    int64 id = 1;
+    //主键
+    int64 tagId = 2;
+    //标签名称
+    string tagName = 3;
+    //备注
+    string remark = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 更新NovelTag请求
+message NovelTagUpdateReq {
+    int64 id = 1;
+    //主键
+    int64 tagId = 2;
+    //标签名称
+    string tagName = 3;
+    //备注
+    string remark = 4;
+
+}
+
+
+// 更新NovelTag返回
+message NovelTagUpdateReply {
+    int64 id = 1;
+    //主键
+    int64 tagId = 2;
+    //标签名称
+    string tagName = 3;
+    //备注
+    string remark = 4;
+
+}
+
+// 删除NovelTag请求
+message NovelTagDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除NovelTag请求
+message NovelTagBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除NovelTag返回
+message NovelTagDeleteReply {
+    bool result = 1;
+}
+

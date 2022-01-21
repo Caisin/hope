@@ -1,0 +1,412 @@
+syntax = "proto3";
+package payorder.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/payorder/v1;v1";
+
+// The PayOrder service definition.
+service PayOrder {
+
+  // 分页查询PayOrder
+  rpc GetPagePayOrder (PayOrderPageReq) returns (PayOrderPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/payorder/page"
+    };
+  }
+
+  // 获取PayOrder
+  rpc GetPayOrder (PayOrderReq) returns (PayOrderReply)  {
+    option (google.api.http) = {
+      get: "/v1/payorder/{id}"
+    };
+  }
+
+  // 更新PayOrder
+  rpc UpdatePayOrder (PayOrderUpdateReq) returns (PayOrderUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/payorder/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建PayOrder
+  rpc CreatePayOrder (PayOrderCreateReq) returns (PayOrderCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/payorder"
+      body: "*"
+    };
+  }
+
+  // 删除PayOrder
+  rpc DeletePayOrder (PayOrderDeleteReq) returns (PayOrderDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/payorder/{id}"
+    };
+  }
+
+  // 批量删除PayOrder
+  rpc BatchDeletePayOrder (PayOrderBatchDeleteReq) returns (PayOrderDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/payorder"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message PayOrderPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    PayOrderReq param = 2;
+}
+
+// 查询搜索返回
+message PayOrderPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated PayOrderReply items = 2;
+}
+
+
+// 查询搜索请求
+message PayOrderReq {
+    int64 id = 1;
+    //订单号
+    string orderId = 2;
+    //用户ID
+    int64 userId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //签约协议号
+    int64 agreementId = 5;
+    //最后阅读书籍
+    string lastRead = 6;
+    //最后阅读章节
+    string lastChapter = 7;
+    //充值配置名称
+    string paymentName = 8;
+    //充值配置ID
+    string paymentId = 9;
+    //订单状态:1、待付款，2、已付款，3、取消，4、退款
+    int32 state = 10;
+    //充值金额
+    int64 payment = 11;
+    //支付时间
+    google.protobuf.Timestamp paymentTime = 12;
+    //订单关闭时间
+    google.protobuf.Timestamp closeTime = 13;
+    //支付类型
+    string payType = 14;
+    //书币
+    int64 coin = 15;
+    //书券
+    int64 coupon = 16;
+    //vip天数
+    string vipDays = 17;
+    //vip类型
+    int64 vipType = 18;
+    //vip名称
+    string vipName = 19;
+    //充值次数
+    int32 times = 20;
+    //第三方订单
+    string otherOrderId = 21;
+    //备注
+    string remark = 22;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 23;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 24;
+    //创建者
+    int64 createBy = 25;
+    //更新者
+    int64 updateBy = 26;
+    //租户
+    int64 tenantId = 27;
+
+}
+
+// 查询搜索返回
+message PayOrderReply {
+    int64 id = 1;
+    //订单号
+    string orderId = 2;
+    //用户ID
+    int64 userId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //签约协议号
+    int64 agreementId = 5;
+    //最后阅读书籍
+    string lastRead = 6;
+    //最后阅读章节
+    string lastChapter = 7;
+    //充值配置名称
+    string paymentName = 8;
+    //充值配置ID
+    string paymentId = 9;
+    //订单状态:1、待付款，2、已付款，3、取消，4、退款
+    int32 state = 10;
+    //充值金额
+    int64 payment = 11;
+    //支付时间
+    google.protobuf.Timestamp paymentTime = 12;
+    //订单关闭时间
+    google.protobuf.Timestamp closeTime = 13;
+    //支付类型
+    string payType = 14;
+    //书币
+    int64 coin = 15;
+    //书券
+    int64 coupon = 16;
+    //vip天数
+    string vipDays = 17;
+    //vip类型
+    int64 vipType = 18;
+    //vip名称
+    string vipName = 19;
+    //充值次数
+    int32 times = 20;
+    //第三方订单
+    string otherOrderId = 21;
+    //备注
+    string remark = 22;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 23;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 24;
+    //创建者
+    int64 createBy = 25;
+    //更新者
+    int64 updateBy = 26;
+    //租户
+    int64 tenantId = 27;
+
+}
+
+// 创建PayOrder请求
+message PayOrderCreateReq {
+    //订单号
+    string orderId = 1;
+    //用户ID
+    int64 userId = 2;
+    //渠道ID
+    int64 chId = 3;
+    //签约协议号
+    int64 agreementId = 4;
+    //最后阅读书籍
+    string lastRead = 5;
+    //最后阅读章节
+    string lastChapter = 6;
+    //充值配置名称
+    string paymentName = 7;
+    //充值配置ID
+    string paymentId = 8;
+    //订单状态:1、待付款，2、已付款，3、取消，4、退款
+    int32 state = 9;
+    //充值金额
+    int64 payment = 10;
+    //支付时间
+    google.protobuf.Timestamp paymentTime = 11;
+    //订单关闭时间
+    google.protobuf.Timestamp closeTime = 12;
+    //支付类型
+    string payType = 13;
+    //书币
+    int64 coin = 14;
+    //书券
+    int64 coupon = 15;
+    //vip天数
+    string vipDays = 16;
+    //vip类型
+    int64 vipType = 17;
+    //vip名称
+    string vipName = 18;
+    //充值次数
+    int32 times = 19;
+    //第三方订单
+    string otherOrderId = 20;
+    //备注
+    string remark = 21;
+
+}
+
+// 创建PayOrder返回
+message PayOrderCreateReply {
+    int64 id = 1;
+    //订单号
+    string orderId = 2;
+    //用户ID
+    int64 userId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //签约协议号
+    int64 agreementId = 5;
+    //最后阅读书籍
+    string lastRead = 6;
+    //最后阅读章节
+    string lastChapter = 7;
+    //充值配置名称
+    string paymentName = 8;
+    //充值配置ID
+    string paymentId = 9;
+    //订单状态:1、待付款，2、已付款，3、取消，4、退款
+    int32 state = 10;
+    //充值金额
+    int64 payment = 11;
+    //支付时间
+    google.protobuf.Timestamp paymentTime = 12;
+    //订单关闭时间
+    google.protobuf.Timestamp closeTime = 13;
+    //支付类型
+    string payType = 14;
+    //书币
+    int64 coin = 15;
+    //书券
+    int64 coupon = 16;
+    //vip天数
+    string vipDays = 17;
+    //vip类型
+    int64 vipType = 18;
+    //vip名称
+    string vipName = 19;
+    //充值次数
+    int32 times = 20;
+    //第三方订单
+    string otherOrderId = 21;
+    //备注
+    string remark = 22;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 23;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 24;
+    //创建者
+    int64 createBy = 25;
+    //更新者
+    int64 updateBy = 26;
+    //租户
+    int64 tenantId = 27;
+
+}
+
+// 更新PayOrder请求
+message PayOrderUpdateReq {
+    int64 id = 1;
+    //订单号
+    string orderId = 2;
+    //用户ID
+    int64 userId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //签约协议号
+    int64 agreementId = 5;
+    //最后阅读书籍
+    string lastRead = 6;
+    //最后阅读章节
+    string lastChapter = 7;
+    //充值配置名称
+    string paymentName = 8;
+    //充值配置ID
+    string paymentId = 9;
+    //订单状态:1、待付款，2、已付款，3、取消，4、退款
+    int32 state = 10;
+    //充值金额
+    int64 payment = 11;
+    //支付时间
+    google.protobuf.Timestamp paymentTime = 12;
+    //订单关闭时间
+    google.protobuf.Timestamp closeTime = 13;
+    //支付类型
+    string payType = 14;
+    //书币
+    int64 coin = 15;
+    //书券
+    int64 coupon = 16;
+    //vip天数
+    string vipDays = 17;
+    //vip类型
+    int64 vipType = 18;
+    //vip名称
+    string vipName = 19;
+    //充值次数
+    int32 times = 20;
+    //第三方订单
+    string otherOrderId = 21;
+    //备注
+    string remark = 22;
+
+}
+
+
+// 更新PayOrder返回
+message PayOrderUpdateReply {
+    int64 id = 1;
+    //订单号
+    string orderId = 2;
+    //用户ID
+    int64 userId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //签约协议号
+    int64 agreementId = 5;
+    //最后阅读书籍
+    string lastRead = 6;
+    //最后阅读章节
+    string lastChapter = 7;
+    //充值配置名称
+    string paymentName = 8;
+    //充值配置ID
+    string paymentId = 9;
+    //订单状态:1、待付款，2、已付款，3、取消，4、退款
+    int32 state = 10;
+    //充值金额
+    int64 payment = 11;
+    //支付时间
+    google.protobuf.Timestamp paymentTime = 12;
+    //订单关闭时间
+    google.protobuf.Timestamp closeTime = 13;
+    //支付类型
+    string payType = 14;
+    //书币
+    int64 coin = 15;
+    //书券
+    int64 coupon = 16;
+    //vip天数
+    string vipDays = 17;
+    //vip类型
+    int64 vipType = 18;
+    //vip名称
+    string vipName = 19;
+    //充值次数
+    int32 times = 20;
+    //第三方订单
+    string otherOrderId = 21;
+    //备注
+    string remark = 22;
+
+}
+
+// 删除PayOrder请求
+message PayOrderDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除PayOrder请求
+message PayOrderBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除PayOrder返回
+message PayOrderDeleteReply {
+    bool result = 1;
+}
+

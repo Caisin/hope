@@ -1,0 +1,280 @@
+syntax = "proto3";
+package customernovels.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/customernovels/v1;v1";
+
+// The CustomerNovels service definition.
+service CustomerNovels {
+
+  // 分页查询CustomerNovels
+  rpc GetPageCustomerNovels (CustomerNovelsPageReq) returns (CustomerNovelsPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/customernovels/page"
+    };
+  }
+
+  // 获取CustomerNovels
+  rpc GetCustomerNovels (CustomerNovelsReq) returns (CustomerNovelsReply)  {
+    option (google.api.http) = {
+      get: "/v1/customernovels/{id}"
+    };
+  }
+
+  // 更新CustomerNovels
+  rpc UpdateCustomerNovels (CustomerNovelsUpdateReq) returns (CustomerNovelsUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/customernovels/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建CustomerNovels
+  rpc CreateCustomerNovels (CustomerNovelsCreateReq) returns (CustomerNovelsCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/customernovels"
+      body: "*"
+    };
+  }
+
+  // 删除CustomerNovels
+  rpc DeleteCustomerNovels (CustomerNovelsDeleteReq) returns (CustomerNovelsDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/customernovels/{id}"
+    };
+  }
+
+  // 批量删除CustomerNovels
+  rpc BatchDeleteCustomerNovels (CustomerNovelsBatchDeleteReq) returns (CustomerNovelsDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/customernovels"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message CustomerNovelsPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    CustomerNovelsReq param = 2;
+}
+
+// 查询搜索返回
+message CustomerNovelsPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated CustomerNovelsReply items = 2;
+}
+
+
+// 查询搜索请求
+message CustomerNovelsReq {
+    int64 id = 1;
+    //小说编码
+    int64 novelId = 2;
+    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
+    int32 typeId = 3;
+    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
+    string typeCode = 4;
+    //分组编码
+    string groupCode = 5;
+    //字段
+    string fieldName = 6;
+    //封面,无值使用小说封面
+    string cover = 7;
+    //排序字段,值越大,越靠前
+    int32 orderNum = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 查询搜索返回
+message CustomerNovelsReply {
+    int64 id = 1;
+    //小说编码
+    int64 novelId = 2;
+    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
+    int32 typeId = 3;
+    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
+    string typeCode = 4;
+    //分组编码
+    string groupCode = 5;
+    //字段
+    string fieldName = 6;
+    //封面,无值使用小说封面
+    string cover = 7;
+    //排序字段,值越大,越靠前
+    int32 orderNum = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 创建CustomerNovels请求
+message CustomerNovelsCreateReq {
+    //小说编码
+    int64 novelId = 1;
+    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
+    int32 typeId = 2;
+    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
+    string typeCode = 3;
+    //分组编码
+    string groupCode = 4;
+    //字段
+    string fieldName = 5;
+    //封面,无值使用小说封面
+    string cover = 6;
+    //排序字段,值越大,越靠前
+    int32 orderNum = 7;
+    //备注
+    string remark = 8;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 9;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 10;
+
+}
+
+// 创建CustomerNovels返回
+message CustomerNovelsCreateReply {
+    int64 id = 1;
+    //小说编码
+    int64 novelId = 2;
+    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
+    int32 typeId = 3;
+    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
+    string typeCode = 4;
+    //分组编码
+    string groupCode = 5;
+    //字段
+    string fieldName = 6;
+    //封面,无值使用小说封面
+    string cover = 7;
+    //排序字段,值越大,越靠前
+    int32 orderNum = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
+// 更新CustomerNovels请求
+message CustomerNovelsUpdateReq {
+    int64 id = 1;
+    //小说编码
+    int64 novelId = 2;
+    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
+    int32 typeId = 3;
+    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
+    string typeCode = 4;
+    //分组编码
+    string groupCode = 5;
+    //字段
+    string fieldName = 6;
+    //封面,无值使用小说封面
+    string cover = 7;
+    //排序字段,值越大,越靠前
+    int32 orderNum = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+
+// 更新CustomerNovels返回
+message CustomerNovelsUpdateReply {
+    int64 id = 1;
+    //小说编码
+    int64 novelId = 2;
+    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
+    int32 typeId = 3;
+    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
+    string typeCode = 4;
+    //分组编码
+    string groupCode = 5;
+    //字段
+    string fieldName = 6;
+    //封面,无值使用小说封面
+    string cover = 7;
+    //排序字段,值越大,越靠前
+    int32 orderNum = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+
+}
+
+// 删除CustomerNovels请求
+message CustomerNovelsDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除CustomerNovels请求
+message CustomerNovelsBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除CustomerNovels返回
+message CustomerNovelsDeleteReply {
+    bool result = 1;
+}
+

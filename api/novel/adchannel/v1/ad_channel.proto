@@ -1,0 +1,268 @@
+syntax = "proto3";
+package adchannel.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/adchannel/v1;v1";
+
+// The AdChannel service definition.
+service AdChannel {
+
+  // 分页查询AdChannel
+  rpc GetPageAdChannel (AdChannelPageReq) returns (AdChannelPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/adchannel/page"
+    };
+  }
+
+  // 获取AdChannel
+  rpc GetAdChannel (AdChannelReq) returns (AdChannelReply)  {
+    option (google.api.http) = {
+      get: "/v1/adchannel/{id}"
+    };
+  }
+
+  // 更新AdChannel
+  rpc UpdateAdChannel (AdChannelUpdateReq) returns (AdChannelUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/adchannel/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建AdChannel
+  rpc CreateAdChannel (AdChannelCreateReq) returns (AdChannelCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/adchannel"
+      body: "*"
+    };
+  }
+
+  // 删除AdChannel
+  rpc DeleteAdChannel (AdChannelDeleteReq) returns (AdChannelDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/adchannel/{id}"
+    };
+  }
+
+  // 批量删除AdChannel
+  rpc BatchDeleteAdChannel (AdChannelBatchDeleteReq) returns (AdChannelDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/adchannel"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message AdChannelPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    AdChannelReq param = 2;
+}
+
+// 查询搜索返回
+message AdChannelPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated AdChannelReply items = 2;
+}
+
+
+// 查询搜索请求
+message AdChannelReq {
+    int64 id = 1;
+    //渠道名称
+    string channelName = 2;
+    //书号
+    int64 novelId = 3;
+    //充值回传比例
+    int64 reg = 4;
+    //付费回传比例
+    int64 pay = 5;
+    //书名
+    string novelName = 6;
+    //章节号
+    int64 chapterId = 7;
+    //章节数
+    int32 chapterNum = 8;
+    //投放渠道
+    string adType = 9;
+    //落地页图片uri
+    string img = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
+// 查询搜索返回
+message AdChannelReply {
+    int64 id = 1;
+    //渠道名称
+    string channelName = 2;
+    //书号
+    int64 novelId = 3;
+    //充值回传比例
+    int64 reg = 4;
+    //付费回传比例
+    int64 pay = 5;
+    //书名
+    string novelName = 6;
+    //章节号
+    int64 chapterId = 7;
+    //章节数
+    int32 chapterNum = 8;
+    //投放渠道
+    string adType = 9;
+    //落地页图片uri
+    string img = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
+// 创建AdChannel请求
+message AdChannelCreateReq {
+    //渠道名称
+    string channelName = 1;
+    //书号
+    int64 novelId = 2;
+    //充值回传比例
+    int64 reg = 3;
+    //付费回传比例
+    int64 pay = 4;
+    //书名
+    string novelName = 5;
+    //章节号
+    int64 chapterId = 6;
+    //章节数
+    int32 chapterNum = 7;
+    //投放渠道
+    string adType = 8;
+    //落地页图片uri
+    string img = 9;
+
+}
+
+// 创建AdChannel返回
+message AdChannelCreateReply {
+    int64 id = 1;
+    //渠道名称
+    string channelName = 2;
+    //书号
+    int64 novelId = 3;
+    //充值回传比例
+    int64 reg = 4;
+    //付费回传比例
+    int64 pay = 5;
+    //书名
+    string novelName = 6;
+    //章节号
+    int64 chapterId = 7;
+    //章节数
+    int32 chapterNum = 8;
+    //投放渠道
+    string adType = 9;
+    //落地页图片uri
+    string img = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
+// 更新AdChannel请求
+message AdChannelUpdateReq {
+    int64 id = 1;
+    //渠道名称
+    string channelName = 2;
+    //书号
+    int64 novelId = 3;
+    //充值回传比例
+    int64 reg = 4;
+    //付费回传比例
+    int64 pay = 5;
+    //书名
+    string novelName = 6;
+    //章节号
+    int64 chapterId = 7;
+    //章节数
+    int32 chapterNum = 8;
+    //投放渠道
+    string adType = 9;
+    //落地页图片uri
+    string img = 10;
+
+}
+
+
+// 更新AdChannel返回
+message AdChannelUpdateReply {
+    int64 id = 1;
+    //渠道名称
+    string channelName = 2;
+    //书号
+    int64 novelId = 3;
+    //充值回传比例
+    int64 reg = 4;
+    //付费回传比例
+    int64 pay = 5;
+    //书名
+    string novelName = 6;
+    //章节号
+    int64 chapterId = 7;
+    //章节数
+    int32 chapterNum = 8;
+    //投放渠道
+    string adType = 9;
+    //落地页图片uri
+    string img = 10;
+
+}
+
+// 删除AdChannel请求
+message AdChannelDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除AdChannel请求
+message AdChannelBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除AdChannel返回
+message AdChannelDeleteReply {
+    bool result = 1;
+}
+

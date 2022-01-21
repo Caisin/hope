@@ -1,0 +1,220 @@
+syntax = "proto3";
+package appversion.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/appversion/v1;v1";
+
+// The AppVersion service definition.
+service AppVersion {
+
+  // 分页查询AppVersion
+  rpc GetPageAppVersion (AppVersionPageReq) returns (AppVersionPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/appversion/page"
+    };
+  }
+
+  // 获取AppVersion
+  rpc GetAppVersion (AppVersionReq) returns (AppVersionReply)  {
+    option (google.api.http) = {
+      get: "/v1/appversion/{id}"
+    };
+  }
+
+  // 更新AppVersion
+  rpc UpdateAppVersion (AppVersionUpdateReq) returns (AppVersionUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/appversion/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建AppVersion
+  rpc CreateAppVersion (AppVersionCreateReq) returns (AppVersionCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/appversion"
+      body: "*"
+    };
+  }
+
+  // 删除AppVersion
+  rpc DeleteAppVersion (AppVersionDeleteReq) returns (AppVersionDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/appversion/{id}"
+    };
+  }
+
+  // 批量删除AppVersion
+  rpc BatchDeleteAppVersion (AppVersionBatchDeleteReq) returns (AppVersionDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/appversion"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message AppVersionPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    AppVersionReq param = 2;
+}
+
+// 查询搜索返回
+message AppVersionPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated AppVersionReply items = 2;
+}
+
+
+// 查询搜索请求
+message AppVersionReq {
+    int64 id = 1;
+    //标题
+    string title = 2;
+    //版本号
+    int32 version = 3;
+    //更新信息
+    string updateInfo = 4;
+    //下载地址
+    string downloadUrl = 5;
+    //平台
+    string platform = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 查询搜索返回
+message AppVersionReply {
+    int64 id = 1;
+    //标题
+    string title = 2;
+    //版本号
+    int32 version = 3;
+    //更新信息
+    string updateInfo = 4;
+    //下载地址
+    string downloadUrl = 5;
+    //平台
+    string platform = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 创建AppVersion请求
+message AppVersionCreateReq {
+    //标题
+    string title = 1;
+    //版本号
+    int32 version = 2;
+    //更新信息
+    string updateInfo = 3;
+    //下载地址
+    string downloadUrl = 4;
+    //平台
+    string platform = 5;
+
+}
+
+// 创建AppVersion返回
+message AppVersionCreateReply {
+    int64 id = 1;
+    //标题
+    string title = 2;
+    //版本号
+    int32 version = 3;
+    //更新信息
+    string updateInfo = 4;
+    //下载地址
+    string downloadUrl = 5;
+    //平台
+    string platform = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
+// 更新AppVersion请求
+message AppVersionUpdateReq {
+    int64 id = 1;
+    //标题
+    string title = 2;
+    //版本号
+    int32 version = 3;
+    //更新信息
+    string updateInfo = 4;
+    //下载地址
+    string downloadUrl = 5;
+    //平台
+    string platform = 6;
+
+}
+
+
+// 更新AppVersion返回
+message AppVersionUpdateReply {
+    int64 id = 1;
+    //标题
+    string title = 2;
+    //版本号
+    int32 version = 3;
+    //更新信息
+    string updateInfo = 4;
+    //下载地址
+    string downloadUrl = 5;
+    //平台
+    string platform = 6;
+
+}
+
+// 删除AppVersion请求
+message AppVersionDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除AppVersion请求
+message AppVersionBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除AppVersion返回
+message AppVersionDeleteReply {
+    bool result = 1;
+}
+

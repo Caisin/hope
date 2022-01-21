@@ -1,0 +1,196 @@
+syntax = "proto3";
+package usermsg.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/novel/usermsg/v1;v1";
+
+// The UserMsg service definition.
+service UserMsg {
+
+  // 分页查询UserMsg
+  rpc GetPageUserMsg (UserMsgPageReq) returns (UserMsgPageReply)  {
+    option (google.api.http) = {
+      get: "/v1/usermsg/page"
+    };
+  }
+
+  // 获取UserMsg
+  rpc GetUserMsg (UserMsgReq) returns (UserMsgReply)  {
+    option (google.api.http) = {
+      get: "/v1/usermsg/{id}"
+    };
+  }
+
+  // 更新UserMsg
+  rpc UpdateUserMsg (UserMsgUpdateReq) returns (UserMsgUpdateReply)  {
+    option (google.api.http) = {
+      put: "/v1/usermsg/{id}"
+      body: "*"
+    };
+  }
+
+  // 创建UserMsg
+  rpc CreateUserMsg (UserMsgCreateReq) returns (UserMsgCreateReply)  {
+    option (google.api.http) = {
+      post: "/v1/usermsg"
+      body: "*"
+    };
+  }
+
+  // 删除UserMsg
+  rpc DeleteUserMsg (UserMsgDeleteReq) returns (UserMsgDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/usermsg/{id}"
+    };
+  }
+
+  // 批量删除UserMsg
+  rpc BatchDeleteUserMsg (UserMsgBatchDeleteReq) returns (UserMsgDeleteReply)  {
+    option (google.api.http) = {
+      delete: "/v1/usermsg"
+    };
+  }
+
+}
+
+// 查询搜索请求
+message UserMsgPageReq {
+    //分页查询参数
+    pagin.Pagination pagin = 1;
+    //查询条件参数
+    UserMsgReq param = 2;
+}
+
+// 查询搜索返回
+message UserMsgPageReply {
+    //分页参数
+    pagin.Pagination pagin = 1;
+    //查询条目
+    repeated UserMsgReply items = 2;
+}
+
+
+// 查询搜索请求
+message UserMsgReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //消息编码
+    int64 msgId = 3;
+    //是否阅读
+    bool isRead = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 查询搜索返回
+message UserMsgReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //消息编码
+    int64 msgId = 3;
+    //是否阅读
+    bool isRead = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 创建UserMsg请求
+message UserMsgCreateReq {
+    //用户ID
+    int64 userId = 1;
+    //消息编码
+    int64 msgId = 2;
+    //是否阅读
+    bool isRead = 3;
+
+}
+
+// 创建UserMsg返回
+message UserMsgCreateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //消息编码
+    int64 msgId = 3;
+    //是否阅读
+    bool isRead = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
+// 更新UserMsg请求
+message UserMsgUpdateReq {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //消息编码
+    int64 msgId = 3;
+    //是否阅读
+    bool isRead = 4;
+
+}
+
+
+// 更新UserMsg返回
+message UserMsgUpdateReply {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //消息编码
+    int64 msgId = 3;
+    //是否阅读
+    bool isRead = 4;
+
+}
+
+// 删除UserMsg请求
+message UserMsgDeleteReq {
+    int64 id = 1;
+}
+
+
+// 批量删除UserMsg请求
+message UserMsgBatchDeleteReq {
+    repeated int64 ids = 1;
+}
+
+
+// 删除UserMsg返回
+message UserMsgDeleteReply {
+    bool result = 1;
+}
+

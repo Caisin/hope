@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+  apollo-mysql:
+    container_name: apollo-mysql
+    image: pengfeilu/apollo/apollo-mysql:5.7.22_1.6.0
+    ports:
+      - "13306:3306"
+    volumes:
+      - "$PWD/mysql/data:/var/lib/mysql"
+      - "$PWD/mysql/logs:/logs"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - MYSQL_ROOT_PASSWORD=你的数据库密码
+      - UPDATE_EUREKA_URL_SQL=update ApolloConfigDB.ServerConfig set `Value`="http://部署环境的主机IP:8080/eureka/" where `Key`="eureka.service.url"
+      - TZ=Asia/Shanghai
+  apollo-configservice:
+    container_name: apollo-configservice
+    image: pengfeilu/apollo-configservice:1.6.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - apollo-mysql
+    volumes:
+      - "$PWD/logs/100003171:/opt/logs/100003171"
+    environment:
+      - spring_datasource_url=jdbc:mysql://数据库的主机IP:13306/ApolloConfigDB?characterEncoding=utf8
+      - spring_datasource_username=数据库名称
+      - spring_datasource_password=数据库密码
+      - host_ip=这个是我自己加的Eureka上服务的IP地址（部署服务的宿主机IP）
+  apollo-adminservice:
+    container_name: apollo-adminservice
+    image: pengfeilu/apollo-adminservice:1.6.0
+    ports:
+      - "8090:8090"
+    depends_on:
+      - apollo-mysql
+      - apollo-configservice
+    links:
+      - apollo-configservice
+    volumes:
+      - "$PWD/logs/100003172:/opt/logs/100003172"
+    environment:
+      - spring_datasource_url=jdbc:mysql://数据库的主机IP:13306/ApolloConfigDB?characterEncoding=utf8
+      - spring_datasource_username=数据库的用户名
+      - spring_datasource_password=数据库密码
+      - host_ip=这个是我自己加的Eureka上服务的IP地址（部署服务的宿主机IP）
+  apolo-portal:
+    container_name: apollo-portal
+    image: pengfeilu/apollo-portal:1.6.0
+    ports:
+      - "8070:8070"
+    volumes:
+      - "$PWD/logs/100003173:/opt/logs/100003173"
+      - "$PWD/apollo-env.properties:/apollo-portal/config/apollo-env.properties"
+    environment:
+      - spring_datasource_url=jdbc:mysql://数据库的主机IP:13306/ApolloPortalDB?characterEncoding=utf8
+      - spring_datasource_username=数据库的用户名
+      - spring_datasource_password=数据库密码
+    depends_on:
+      - apollo-mysql

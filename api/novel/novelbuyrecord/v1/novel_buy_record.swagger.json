@@ -1,0 +1,927 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/novel/novelbuyrecord/v1/novel_buy_record.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "NovelBuyRecord"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/novelbuyrecord": {
+      "delete": {
+        "summary": "批量删除NovelBuyRecord",
+        "operationId": "NovelBuyRecord_BatchDeleteNovelBuyRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBuyRecordDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "NovelBuyRecord"
+        ]
+      },
+      "post": {
+        "summary": "创建NovelBuyRecord",
+        "operationId": "NovelBuyRecord_CreateNovelBuyRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBuyRecordCreateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1NovelBuyRecordCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "NovelBuyRecord"
+        ]
+      }
+    },
+    "/v1/novelbuyrecord/page": {
+      "get": {
+        "summary": "分页查询NovelBuyRecord",
+        "operationId": "NovelBuyRecord_GetPageNovelBuyRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBuyRecordPageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagin.page",
+            "description": "第page页.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.pageSize",
+            "description": "每页大小.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.total",
+            "description": "总条数.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "pagin.field",
+            "description": "排序字段.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagin.order",
+            "description": "排序类型.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.userName",
+            "description": "用户名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.novelId",
+            "description": "书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.novelName",
+            "description": "书名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.packageId",
+            "description": "书籍打包ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.cover",
+            "description": "书封面.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.coin",
+            "description": "花费书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.coupon",
+            "description": "花费书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "param.createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelBuyRecord"
+        ]
+      }
+    },
+    "/v1/novelbuyrecord/{id}": {
+      "get": {
+        "summary": "获取NovelBuyRecord",
+        "operationId": "NovelBuyRecord_GetNovelBuyRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBuyRecordReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userId",
+            "description": "用户ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "userName",
+            "description": "用户名称.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "novelId",
+            "description": "书号.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "novelName",
+            "description": "书名.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "packageId",
+            "description": "书籍打包ID.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "cover",
+            "description": "书封面.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "coin",
+            "description": "花费书币.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "coupon",
+            "description": "花费书券.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "remark",
+            "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "description": "创建时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "updatedAt",
+            "description": "更新时间.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createBy",
+            "description": "创建者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "updateBy",
+            "description": "更新者.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "tenantId",
+            "description": "租户.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelBuyRecord"
+        ]
+      },
+      "delete": {
+        "summary": "删除NovelBuyRecord",
+        "operationId": "NovelBuyRecord_DeleteNovelBuyRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBuyRecordDeleteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "NovelBuyRecord"
+        ]
+      },
+      "put": {
+        "summary": "更新NovelBuyRecord",
+        "operationId": "NovelBuyRecord_UpdateNovelBuyRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NovelBuyRecordUpdateReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "用户ID"
+                },
+                "userName": {
+                  "type": "string",
+                  "title": "用户名称"
+                },
+                "novelId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书号"
+                },
+                "novelName": {
+                  "type": "string",
+                  "title": "书名"
+                },
+                "packageId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "书籍打包ID"
+                },
+                "cover": {
+                  "type": "string",
+                  "title": "书封面"
+                },
+                "coin": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "花费书币"
+                },
+                "coupon": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "花费书券"
+                },
+                "remark": {
+                  "type": "string",
+                  "title": "备注"
+                }
+              },
+              "title": "更新NovelBuyRecord请求"
+            }
+          }
+        ],
+        "tags": [
+          "NovelBuyRecord"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "paginPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "format": "int64",
+          "title": "第page页"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64",
+          "title": "每页大小"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "field": {
+          "type": "string",
+          "title": "排序字段"
+        },
+        "order": {
+          "type": "string",
+          "title": "排序类型"
+        }
+      },
+      "title": "分页对象"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1NovelBuyRecordCreateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "novelName": {
+          "type": "string",
+          "title": "书名"
+        },
+        "packageId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书籍打包ID"
+        },
+        "cover": {
+          "type": "string",
+          "title": "书封面"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书券"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "创建NovelBuyRecord返回"
+    },
+    "v1NovelBuyRecordCreateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "novelName": {
+          "type": "string",
+          "title": "书名"
+        },
+        "packageId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书籍打包ID"
+        },
+        "cover": {
+          "type": "string",
+          "title": "书封面"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书券"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "创建NovelBuyRecord请求"
+    },
+    "v1NovelBuyRecordDeleteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      },
+      "title": "删除NovelBuyRecord返回"
+    },
+    "v1NovelBuyRecordPageReply": {
+      "type": "object",
+      "properties": {
+        "pagin": {
+          "$ref": "#/definitions/paginPagination",
+          "title": "分页参数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelBuyRecordReply"
+          },
+          "title": "查询条目"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelBuyRecordReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "novelName": {
+          "type": "string",
+          "title": "书名"
+        },
+        "packageId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书籍打包ID"
+        },
+        "cover": {
+          "type": "string",
+          "title": "书封面"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书券"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索返回"
+    },
+    "v1NovelBuyRecordReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "novelName": {
+          "type": "string",
+          "title": "书名"
+        },
+        "packageId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书籍打包ID"
+        },
+        "cover": {
+          "type": "string",
+          "title": "书封面"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书券"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建者"
+        },
+        "updateBy": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新者"
+        },
+        "tenantId": {
+          "type": "string",
+          "format": "int64",
+          "title": "租户"
+        }
+      },
+      "title": "查询搜索请求"
+    },
+    "v1NovelBuyRecordUpdateReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "title": "用户名称"
+        },
+        "novelId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书号"
+        },
+        "novelName": {
+          "type": "string",
+          "title": "书名"
+        },
+        "packageId": {
+          "type": "string",
+          "format": "int64",
+          "title": "书籍打包ID"
+        },
+        "cover": {
+          "type": "string",
+          "title": "书封面"
+        },
+        "coin": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书币"
+        },
+        "coupon": {
+          "type": "string",
+          "format": "int64",
+          "title": "花费书券"
+        },
+        "remark": {
+          "type": "string",
+          "title": "备注"
+        }
+      },
+      "title": "更新NovelBuyRecord返回"
+    }
+  }
+}

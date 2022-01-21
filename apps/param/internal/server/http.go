@@ -43,12 +43,12 @@ func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), tp *tracesdk.Tra
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
-	//注册swagger-ui
-	h := openapiv2.NewHandler()
-	srv.HandlePrefix("/q/", h)
 	for _, f := range regFun {
 		f(srv)
 	}
+	//注册swagger-ui
+	h := openapiv2.NewHandler()
+	srv.HandlePrefix("/q/", h)
 	return srv
 }
 

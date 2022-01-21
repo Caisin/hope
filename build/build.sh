@@ -18,25 +18,25 @@ function genEnt() {
 
 #生成api
 function genApi() {
-  for n in "$@"; do
-    echo "开始生成模块：$n api"
-    #    ls "$projectPath/api/$n"
-    cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto client --proto_path=$projectPath/third_party {} \;
-  done
+  cd "$projectPath/" && find api -name "*.proto" -exec kratos proto client \
+                  --proto_path=$projectPath/third_party \
+                  --proto_path=$projectPath/third_party/proto  {} \;
+#  for n in "$@"; do
+#    echo "开始生成模块：$n api"
+#    #    ls "$projectPath/api/$n"
+#    cd "$projectPath/api/$n" && find . -name "*.proto" -exec kratos proto client --proto_path=$projectPath/third_party {} \;
+#  done
   #error_reason.proto
 }
 #生成api
 function genSwagger() {
-  for n in "$@"; do
-    echo "开始生成模块：$n api"
-    #    ls "$projectPath/api/$n"
-#    protoc --proto_path=. \
-     #        --proto_path=./third_party \
-     #        --openapiv2_out . \
-     #        --openapiv2_opt logtostderr=true \
-     #        --openapiv2_opt json_names_for_fields=false \
-    cd "$projectPath/api/$n" && find . -name "*.proto" -exec protoc --proto_path=. --proto_path=$projectPath/third_party --openapiv2_out . --openapiv2_opt logtostderr=true --openapiv2_opt json_names_for_fields=false {} \;
-  done
+cd "$projectPath/" && find api -name "*.proto" -exec \
+ protoc --proto_path=. \
+         --proto_path=./third_party \
+         --proto_path=$projectPath/third_party/proto \
+         --openapiv2_out . \
+         --openapiv2_opt logtostderr=true \
+         --openapiv2_opt json_names_for_fields=false  {} \;
   #error_reason.proto
 }
 

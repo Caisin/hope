@@ -458,7 +458,7 @@ func ListDir(dir, suffix string) (files []string, err error) {
 	return files, nil
 }
 
-/* 获取指定路径下以及所有子目录下的所有文件，可匹配后缀过滤（suffix为空则不过滤）*/
+// WalkDir /* 获取指定路径下以及所有子目录下的所有文件，可匹配后缀过滤（suffix为空则不过滤）*/
 func WalkDir(dir, suffix string) (files []string, err error) {
 	files = []string{}
 

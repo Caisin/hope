@@ -5,7 +5,8 @@ package {{.pkg}}.v1;
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/pagin.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
 
 option go_package = "hope/api/{{.model}}/{{.pkg}}/v1;v1";
 

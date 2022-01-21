@@ -8,8 +8,8 @@ require (
 	github.com/go-kratos/kratos/v2 v2.1.4
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/wire v0.5.0
-	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb
-	google.golang.org/grpc v1.42.0
+	google.golang.org/genproto v0.0.0-20220118154757-00ab72f36ad5
+	google.golang.org/grpc v1.43.0
 	google.golang.org/protobuf v1.27.1
 )
 
@@ -54,8 +54,8 @@ require (
 	github.com/go-logr/stdr v1.2.0 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/go-redis/redis/extra/rediscmd v0.2.0 // indirect
-	github.com/golang/glog v0.0.0-20210429001901-424d2337a529 // indirect
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.5.0 // indirect
+	github.com/golang/glog v1.0.0 // indirect
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.3 // indirect
 	github.com/rakyll/statik v0.1.7 // indirect
 	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/tools v0.1.5 // indirect

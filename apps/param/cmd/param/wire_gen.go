@@ -69,7 +69,7 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, tr
 	v := server.RegisterHTTPServer(novelPayConfigService, novelTagService, pageConfigService, qiniuConfigService, resourceGroupService, resourceStorageService, scoreProductService, taskService, userAnalysisStatisticsService, userConsumeService, userResourceService, userResourceRecordService, vipTypeService)
 	httpServer := server.NewHTTPServer(confServer, v, tracerProvider, logger)
 	v2 := server.RegisterGRPCServer(novelPayConfigService, novelTagService, pageConfigService, qiniuConfigService, resourceGroupService, resourceStorageService, scoreProductService, taskService, userAnalysisStatisticsService, userConsumeService, userResourceService, userResourceRecordService, vipTypeService)
-	grpcServer := server.NewGRPCServer(confServer, v2, logger)
+	grpcServer := server.NewGRPCServer(confServer, v2, tracerProvider, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()

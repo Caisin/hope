@@ -27,9 +27,15 @@ type SysUser struct {
 	// Phone holds the value of the "phone" field.
 	// 手机号
 	Phone string `json:"phone,omitempty"`
+	// DeptId holds the value of the "deptId" field.
+	// 部门ID
+	DeptId int64 `json:"deptId,omitempty"`
+	// PostId holds the value of the "postId" field.
+	// 岗位ID
+	PostId int64 `json:"postId,omitempty"`
 	// RoleId holds the value of the "roleId" field.
 	// 角色ID
-	RoleId int32 `json:"roleId,omitempty"`
+	RoleId int64 `json:"roleId,omitempty"`
 	// Avatar holds the value of the "avatar" field.
 	// 头像
 	Avatar string `json:"avatar,omitempty"`
@@ -65,9 +71,7 @@ type SysUser struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysUserQuery when eager-loading is set.
-	Edges          SysUserEdges `json:"edges"`
-	sys_dept_users *int64
-	sys_post_users *int64
+	Edges SysUserEdges `json:"edges"`
 }
 
 // SysUserEdges holds the relations/edges for other nodes in the graph.
@@ -76,13 +80,15 @@ type SysUserEdges struct {
 	Dept *SysDept `json:"dept,omitempty"`
 	// Post holds the value of the post edge.
 	Post *SysPost `json:"post,omitempty"`
+	// Role holds the value of the role edge.
+	Role []*SysRole `json:"role,omitempty"`
 	// LoginLogs holds the value of the loginLogs edge.
 	LoginLogs []*SysLoginLog `json:"loginLogs,omitempty"`
 	// OperaLogs holds the value of the operaLogs edge.
 	OperaLogs []*SysOperaLog `json:"operaLogs,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [4]bool
+	loadedTypes [5]bool
 }
 
 // DeptOrErr returns the Dept value or an error if the edge
@@ -113,10 +119,19 @@ func (e SysUserEdges) PostOrErr() (*SysPost, error) {
 	return nil, &NotLoadedError{edge: "post"}
 }
 
+// RoleOrErr returns the Role value or an error if the edge
+// was not loaded in eager-loading.
+func (e SysUserEdges) RoleOrErr() ([]*SysRole, error) {
+	if e.loadedTypes[2] {
+		return e.Role, nil
+	}
+	return nil, &NotLoadedError{edge: "role"}
+}
+
 // LoginLogsOrErr returns the LoginLogs value or an error if the edge
 // was not loaded in eager-loading.
 func (e SysUserEdges) LoginLogsOrErr() ([]*SysLoginLog, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[3] {
 		return e.LoginLogs, nil
 	}
 	return nil, &NotLoadedError{edge: "loginLogs"}
@@ -125,7 +140,7 @@ func (e SysUserEdges) LoginLogsOrErr() ([]*SysLoginLog, error) {
 // OperaLogsOrErr returns the OperaLogs value or an error if the edge
 // was not loaded in eager-loading.
 func (e SysUserEdges) OperaLogsOrErr() ([]*SysOperaLog, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[4] {
 		return e.OperaLogs, nil
 	}
 	return nil, &NotLoadedError{edge: "operaLogs"}
@@ -136,16 +151,12 @@ func (*SysUser) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysuser.FieldID, sysuser.FieldRoleId, sysuser.FieldSex, sysuser.FieldCreateBy, sysuser.FieldUpdateBy, sysuser.FieldTenantId:
+		case sysuser.FieldID, sysuser.FieldDeptId, sysuser.FieldPostId, sysuser.FieldRoleId, sysuser.FieldSex, sysuser.FieldCreateBy, sysuser.FieldUpdateBy, sysuser.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case sysuser.FieldUsername, sysuser.FieldNickName, sysuser.FieldPhone, sysuser.FieldAvatar, sysuser.FieldEmail, sysuser.FieldRemark, sysuser.FieldStatus, sysuser.FieldExtInfo:
 			values[i] = new(sql.NullString)
 		case sysuser.FieldCreatedAt, sysuser.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case sysuser.ForeignKeys[0]: // sys_dept_users
-			values[i] = new(sql.NullInt64)
-		case sysuser.ForeignKeys[1]: // sys_post_users
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysUser", columns[i])
 		}
@@ -185,11 +196,23 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				su.Phone = value.String
 			}
+		case sysuser.FieldDeptId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field deptId", values[i])
+			} else if value.Valid {
+				su.DeptId = value.Int64
+			}
+		case sysuser.FieldPostId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field postId", values[i])
+			} else if value.Valid {
+				su.PostId = value.Int64
+			}
 		case sysuser.FieldRoleId:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field roleId", values[i])
 			} else if value.Valid {
-				su.RoleId = int32(value.Int64)
+				su.RoleId = value.Int64
 			}
 		case sysuser.FieldAvatar:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -257,20 +280,6 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				su.TenantId = value.Int64
 			}
-		case sysuser.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field sys_dept_users", value)
-			} else if value.Valid {
-				su.sys_dept_users = new(int64)
-				*su.sys_dept_users = int64(value.Int64)
-			}
-		case sysuser.ForeignKeys[1]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field sys_post_users", value)
-			} else if value.Valid {
-				su.sys_post_users = new(int64)
-				*su.sys_post_users = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -284,6 +293,11 @@ func (su *SysUser) QueryDept() *SysDeptQuery {
 // QueryPost queries the "post" edge of the SysUser entity.
 func (su *SysUser) QueryPost() *SysPostQuery {
 	return (&SysUserClient{config: su.config}).QueryPost(su)
+}
+
+// QueryRole queries the "role" edge of the SysUser entity.
+func (su *SysUser) QueryRole() *SysRoleQuery {
+	return (&SysUserClient{config: su.config}).QueryRole(su)
 }
 
 // QueryLoginLogs queries the "loginLogs" edge of the SysUser entity.
@@ -325,6 +339,10 @@ func (su *SysUser) String() string {
 	builder.WriteString(su.NickName)
 	builder.WriteString(", phone=")
 	builder.WriteString(su.Phone)
+	builder.WriteString(", deptId=")
+	builder.WriteString(fmt.Sprintf("%v", su.DeptId))
+	builder.WriteString(", postId=")
+	builder.WriteString(fmt.Sprintf("%v", su.PostId))
 	builder.WriteString(", roleId=")
 	builder.WriteString(fmt.Sprintf("%v", su.RoleId))
 	builder.WriteString(", avatar=")

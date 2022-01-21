@@ -122,26 +122,6 @@ func (bpu *BookPackageUpdate) ClearDailyPrice() *BookPackageUpdate {
 	return bpu
 }
 
-// SetNovelIds sets the "novelIds" field.
-func (bpu *BookPackageUpdate) SetNovelIds(s string) *BookPackageUpdate {
-	bpu.mutation.SetNovelIds(s)
-	return bpu
-}
-
-// SetNillableNovelIds sets the "novelIds" field if the given value is not nil.
-func (bpu *BookPackageUpdate) SetNillableNovelIds(s *string) *BookPackageUpdate {
-	if s != nil {
-		bpu.SetNovelIds(*s)
-	}
-	return bpu
-}
-
-// ClearNovelIds clears the value of the "novelIds" field.
-func (bpu *BookPackageUpdate) ClearNovelIds() *BookPackageUpdate {
-	bpu.mutation.ClearNovelIds()
-	return bpu
-}
-
 // SetEffectTime sets the "effectTime" field.
 func (bpu *BookPackageUpdate) SetEffectTime(t time.Time) *BookPackageUpdate {
 	bpu.mutation.SetEffectTime(t)
@@ -427,19 +407,6 @@ func (bpu *BookPackageUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: bookpackage.FieldDailyPrice,
 		})
 	}
-	if value, ok := bpu.mutation.NovelIds(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: bookpackage.FieldNovelIds,
-		})
-	}
-	if bpu.mutation.NovelIdsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: bookpackage.FieldNovelIds,
-		})
-	}
 	if value, ok := bpu.mutation.EffectTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -667,26 +634,6 @@ func (bpuo *BookPackageUpdateOne) AddDailyPrice(i int64) *BookPackageUpdateOne {
 // ClearDailyPrice clears the value of the "dailyPrice" field.
 func (bpuo *BookPackageUpdateOne) ClearDailyPrice() *BookPackageUpdateOne {
 	bpuo.mutation.ClearDailyPrice()
-	return bpuo
-}
-
-// SetNovelIds sets the "novelIds" field.
-func (bpuo *BookPackageUpdateOne) SetNovelIds(s string) *BookPackageUpdateOne {
-	bpuo.mutation.SetNovelIds(s)
-	return bpuo
-}
-
-// SetNillableNovelIds sets the "novelIds" field if the given value is not nil.
-func (bpuo *BookPackageUpdateOne) SetNillableNovelIds(s *string) *BookPackageUpdateOne {
-	if s != nil {
-		bpuo.SetNovelIds(*s)
-	}
-	return bpuo
-}
-
-// ClearNovelIds clears the value of the "novelIds" field.
-func (bpuo *BookPackageUpdateOne) ClearNovelIds() *BookPackageUpdateOne {
-	bpuo.mutation.ClearNovelIds()
 	return bpuo
 }
 
@@ -997,19 +944,6 @@ func (bpuo *BookPackageUpdateOne) sqlSave(ctx context.Context) (_node *BookPacka
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Column: bookpackage.FieldDailyPrice,
-		})
-	}
-	if value, ok := bpuo.mutation.NovelIds(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: bookpackage.FieldNovelIds,
-		})
-	}
-	if bpuo.mutation.NovelIdsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: bookpackage.FieldNovelIds,
 		})
 	}
 	if value, ok := bpuo.mutation.EffectTime(); ok {

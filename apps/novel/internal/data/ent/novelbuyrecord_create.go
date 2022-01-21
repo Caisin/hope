@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novelbuyrecord"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -23,14 +24,6 @@ type NovelBuyRecordCreate struct {
 // SetUserId sets the "userId" field.
 func (nbrc *NovelBuyRecordCreate) SetUserId(i int64) *NovelBuyRecordCreate {
 	nbrc.mutation.SetUserId(i)
-	return nbrc
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbrc *NovelBuyRecordCreate) SetNillableUserId(i *int64) *NovelBuyRecordCreate {
-	if i != nil {
-		nbrc.SetUserId(*i)
-	}
 	return nbrc
 }
 
@@ -216,6 +209,17 @@ func (nbrc *NovelBuyRecordCreate) SetNillableTenantId(i *int64) *NovelBuyRecordC
 	return nbrc
 }
 
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (nbrc *NovelBuyRecordCreate) SetUserID(id int64) *NovelBuyRecordCreate {
+	nbrc.mutation.SetUserID(id)
+	return nbrc
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (nbrc *NovelBuyRecordCreate) SetUser(s *SocialUser) *NovelBuyRecordCreate {
+	return nbrc.SetUserID(s.ID)
+}
+
 // Mutation returns the NovelBuyRecordMutation object of the builder.
 func (nbrc *NovelBuyRecordCreate) Mutation() *NovelBuyRecordMutation {
 	return nbrc.mutation
@@ -311,6 +315,9 @@ func (nbrc *NovelBuyRecordCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (nbrc *NovelBuyRecordCreate) check() error {
+	if _, ok := nbrc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := nbrc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -325,6 +332,9 @@ func (nbrc *NovelBuyRecordCreate) check() error {
 	}
 	if _, ok := nbrc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := nbrc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -353,14 +363,6 @@ func (nbrc *NovelBuyRecordCreate) createSpec() (*NovelBuyRecord, *sqlgraph.Creat
 			},
 		}
 	)
-	if value, ok := nbrc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuyrecord.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := nbrc.mutation.UserName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -464,6 +466,26 @@ func (nbrc *NovelBuyRecordCreate) createSpec() (*NovelBuyRecord, *sqlgraph.Creat
 			Column: novelbuyrecord.FieldTenantId,
 		})
 		_node.TenantId = value
+	}
+	if nodes := nbrc.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   novelbuyrecord.UserTable,
+			Columns: []string{novelbuyrecord.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.UserId = nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

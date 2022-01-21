@@ -33,6 +33,9 @@ func (r *payOrderRepo) CreatePayOrder(ctx context.Context, req *v1.PayOrderCreat
 	now := time.Now()
 	return r.data.db.PayOrder.Create().
 		SetOrderId(req.OrderId).
+		SetUserId(req.UserId).
+		SetChId(req.ChId).
+		SetAgreementId(req.AgreementId).
 		SetLastRead(req.LastRead).
 		SetLastChapter(req.LastChapter).
 		SetPaymentName(req.PaymentName).
@@ -119,6 +122,15 @@ func (r *payOrderRepo) genCondition(req *v1.PayOrderReq) []predicate.PayOrder {
 	}
 	if str.IsBlank(req.OrderId) {
 		list = append(list, payorder.OrderIdContains(req.OrderId))
+	}
+	if req.UserId > 0 {
+		list = append(list, payorder.UserId(req.UserId))
+	}
+	if req.ChId > 0 {
+		list = append(list, payorder.ChId(req.ChId))
+	}
+	if req.AgreementId > 0 {
+		list = append(list, payorder.AgreementId(req.AgreementId))
 	}
 	if str.IsBlank(req.LastRead) {
 		list = append(list, payorder.LastReadContains(req.LastRead))

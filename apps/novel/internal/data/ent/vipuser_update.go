@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
@@ -25,6 +26,12 @@ type VipUserUpdate struct {
 // Where appends a list predicates to the VipUserUpdate builder.
 func (vuu *VipUserUpdate) Where(ps ...predicate.VipUser) *VipUserUpdate {
 	vuu.mutation.Where(ps...)
+	return vuu
+}
+
+// SetUserId sets the "userId" field.
+func (vuu *VipUserUpdate) SetUserId(i int64) *VipUserUpdate {
+	vuu.mutation.SetUserId(i)
 	return vuu
 }
 
@@ -245,14 +252,6 @@ func (vuu *VipUserUpdate) SetUserID(id int64) *VipUserUpdate {
 	return vuu
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (vuu *VipUserUpdate) SetNillableUserID(id *int64) *VipUserUpdate {
-	if id != nil {
-		vuu = vuu.SetUserID(*id)
-	}
-	return vuu
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (vuu *VipUserUpdate) SetUser(s *SocialUser) *VipUserUpdate {
 	return vuu.SetUserID(s.ID)
@@ -277,12 +276,18 @@ func (vuu *VipUserUpdate) Save(ctx context.Context) (int, error) {
 	)
 	vuu.defaults()
 	if len(vuu.hooks) == 0 {
+		if err = vuu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = vuu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*VipUserMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = vuu.check(); err != nil {
+				return 0, err
 			}
 			vuu.mutation = mutation
 			affected, err = vuu.sqlSave(ctx)
@@ -330,6 +335,14 @@ func (vuu *VipUserUpdate) defaults() {
 		v := vipuser.UpdateDefaultUpdatedAt()
 		vuu.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (vuu *VipUserUpdate) check() error {
+	if _, ok := vuu.mutation.UserID(); vuu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (vuu *VipUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -544,6 +557,12 @@ type VipUserUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *VipUserMutation
+}
+
+// SetUserId sets the "userId" field.
+func (vuuo *VipUserUpdateOne) SetUserId(i int64) *VipUserUpdateOne {
+	vuuo.mutation.SetUserId(i)
+	return vuuo
 }
 
 // SetVipType sets the "vipType" field.
@@ -763,14 +782,6 @@ func (vuuo *VipUserUpdateOne) SetUserID(id int64) *VipUserUpdateOne {
 	return vuuo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (vuuo *VipUserUpdateOne) SetNillableUserID(id *int64) *VipUserUpdateOne {
-	if id != nil {
-		vuuo = vuuo.SetUserID(*id)
-	}
-	return vuuo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (vuuo *VipUserUpdateOne) SetUser(s *SocialUser) *VipUserUpdateOne {
 	return vuuo.SetUserID(s.ID)
@@ -802,12 +813,18 @@ func (vuuo *VipUserUpdateOne) Save(ctx context.Context) (*VipUser, error) {
 	)
 	vuuo.defaults()
 	if len(vuuo.hooks) == 0 {
+		if err = vuuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = vuuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*VipUserMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = vuuo.check(); err != nil {
+				return nil, err
 			}
 			vuuo.mutation = mutation
 			node, err = vuuo.sqlSave(ctx)
@@ -855,6 +872,14 @@ func (vuuo *VipUserUpdateOne) defaults() {
 		v := vipuser.UpdateDefaultUpdatedAt()
 		vuuo.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (vuuo *VipUserUpdateOne) check() error {
+	if _, ok := vuuo.mutation.UserID(); vuuo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (vuuo *VipUserUpdateOne) sqlSave(ctx context.Context) (_node *VipUser, err error) {

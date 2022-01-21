@@ -10,6 +10,7 @@ import (
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysmenu"
 	"hope/apps/admin/internal/data/ent/sysrole"
+	"hope/apps/admin/internal/data/ent/sysuser"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
@@ -28,6 +29,7 @@ type SysRoleQuery struct {
 	predicates []predicate.SysRole
 	// eager-loading edges.
 	withMenus *SysMenuQuery
+	withUsers *SysUserQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -79,6 +81,28 @@ func (srq *SysRoleQuery) QueryMenus() *SysMenuQuery {
 			sqlgraph.From(sysrole.Table, sysrole.FieldID, selector),
 			sqlgraph.To(sysmenu.Table, sysmenu.FieldID),
 			sqlgraph.Edge(sqlgraph.M2M, false, sysrole.MenusTable, sysrole.MenusPrimaryKey...),
+		)
+		fromU = sqlgraph.SetNeighbors(srq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryUsers chains the current query on the "users" edge.
+func (srq *SysRoleQuery) QueryUsers() *SysUserQuery {
+	query := &SysUserQuery{config: srq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := srq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := srq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysrole.Table, sysrole.FieldID, selector),
+			sqlgraph.To(sysuser.Table, sysuser.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, sysrole.UsersTable, sysrole.UsersPrimaryKey...),
 		)
 		fromU = sqlgraph.SetNeighbors(srq.driver.Dialect(), step)
 		return fromU, nil
@@ -268,6 +292,7 @@ func (srq *SysRoleQuery) Clone() *SysRoleQuery {
 		order:      append([]OrderFunc{}, srq.order...),
 		predicates: append([]predicate.SysRole{}, srq.predicates...),
 		withMenus:  srq.withMenus.Clone(),
+		withUsers:  srq.withUsers.Clone(),
 		// clone intermediate query.
 		sql:  srq.sql.Clone(),
 		path: srq.path,
@@ -282,6 +307,17 @@ func (srq *SysRoleQuery) WithMenus(opts ...func(*SysMenuQuery)) *SysRoleQuery {
 		opt(query)
 	}
 	srq.withMenus = query
+	return srq
+}
+
+// WithUsers tells the query-builder to eager-load the nodes that are connected to
+// the "users" edge. The optional arguments are used to configure the query builder of the edge.
+func (srq *SysRoleQuery) WithUsers(opts ...func(*SysUserQuery)) *SysRoleQuery {
+	query := &SysUserQuery{config: srq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	srq.withUsers = query
 	return srq
 }
 
@@ -350,8 +386,9 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context) ([]*SysRole, error) {
 	var (
 		nodes       = []*SysRole{}
 		_spec       = srq.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [2]bool{
 			srq.withMenus != nil,
+			srq.withUsers != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
@@ -435,6 +472,71 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context) ([]*SysRole, error) {
 			}
 			for i := range nodes {
 				nodes[i].Edges.Menus = append(nodes[i].Edges.Menus, n)
+			}
+		}
+	}
+
+	if query := srq.withUsers; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		ids := make(map[int64]*SysRole, len(nodes))
+		for _, node := range nodes {
+			ids[node.ID] = node
+			fks = append(fks, node.ID)
+			node.Edges.Users = []*SysUser{}
+		}
+		var (
+			edgeids []int64
+			edges   = make(map[int64][]*SysRole)
+		)
+		_spec := &sqlgraph.EdgeQuerySpec{
+			Edge: &sqlgraph.EdgeSpec{
+				Inverse: false,
+				Table:   sysrole.UsersTable,
+				Columns: sysrole.UsersPrimaryKey,
+			},
+			Predicate: func(s *sql.Selector) {
+				s.Where(sql.InValues(sysrole.UsersPrimaryKey[0], fks...))
+			},
+			ScanValues: func() [2]interface{} {
+				return [2]interface{}{new(sql.NullInt64), new(sql.NullInt64)}
+			},
+			Assign: func(out, in interface{}) error {
+				eout, ok := out.(*sql.NullInt64)
+				if !ok || eout == nil {
+					return fmt.Errorf("unexpected id value for edge-out")
+				}
+				ein, ok := in.(*sql.NullInt64)
+				if !ok || ein == nil {
+					return fmt.Errorf("unexpected id value for edge-in")
+				}
+				outValue := eout.Int64
+				inValue := ein.Int64
+				node, ok := ids[outValue]
+				if !ok {
+					return fmt.Errorf("unexpected node id in edges: %v", outValue)
+				}
+				if _, ok := edges[inValue]; !ok {
+					edgeids = append(edgeids, inValue)
+				}
+				edges[inValue] = append(edges[inValue], node)
+				return nil
+			},
+		}
+		if err := sqlgraph.QueryEdges(ctx, srq.driver, _spec); err != nil {
+			return nil, fmt.Errorf(`query edges "users": %w`, err)
+		}
+		query.Where(sysuser.IDIn(edgeids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := edges[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected "users" node returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.Users = append(nodes[i].Edges.Users, n)
 			}
 		}
 	}

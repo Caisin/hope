@@ -382,7 +382,6 @@ func (alq *AgreementLogQuery) sqlAll(ctx context.Context) ([]*AgreementLog, erro
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Orders = []*PayOrder{}
 		}
-		query.withFKs = true
 		query.Where(predicate.PayOrder(func(s *sql.Selector) {
 			s.Where(sql.InValues(agreementlog.OrdersColumn, fks...))
 		}))
@@ -391,13 +390,10 @@ func (alq *AgreementLogQuery) sqlAll(ctx context.Context) ([]*AgreementLog, erro
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.agreement_log_orders
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "agreement_log_orders" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.AgreementId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "agreement_log_orders" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "agreementId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Orders = append(node.Edges.Orders, n)
 		}

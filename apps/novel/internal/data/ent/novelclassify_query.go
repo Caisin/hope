@@ -382,7 +382,6 @@ func (ncq *NovelClassifyQuery) sqlAll(ctx context.Context) ([]*NovelClassify, er
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Novels = []*Novel{}
 		}
-		query.withFKs = true
 		query.Where(predicate.Novel(func(s *sql.Selector) {
 			s.Where(sql.InValues(novelclassify.NovelsColumn, fks...))
 		}))
@@ -391,13 +390,10 @@ func (ncq *NovelClassifyQuery) sqlAll(ctx context.Context) ([]*NovelClassify, er
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.novel_classify_novels
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "novel_classify_novels" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ClassifyId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "novel_classify_novels" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "classifyId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Novels = append(node.Edges.Novels, n)
 		}

@@ -4,8 +4,10 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"hope/apps/novel/internal/data/ent/userevent"
 	"time"
 
@@ -29,28 +31,7 @@ func (ueu *UserEventUpdate) Where(ps ...predicate.UserEvent) *UserEventUpdate {
 
 // SetUserId sets the "userId" field.
 func (ueu *UserEventUpdate) SetUserId(i int64) *UserEventUpdate {
-	ueu.mutation.ResetUserId()
 	ueu.mutation.SetUserId(i)
-	return ueu
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (ueu *UserEventUpdate) SetNillableUserId(i *int64) *UserEventUpdate {
-	if i != nil {
-		ueu.SetUserId(*i)
-	}
-	return ueu
-}
-
-// AddUserId adds i to the "userId" field.
-func (ueu *UserEventUpdate) AddUserId(i int64) *UserEventUpdate {
-	ueu.mutation.AddUserId(i)
-	return ueu
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (ueu *UserEventUpdate) ClearUserId() *UserEventUpdate {
-	ueu.mutation.ClearUserId()
 	return ueu
 }
 
@@ -298,9 +279,26 @@ func (ueu *UserEventUpdate) AddTenantId(i int64) *UserEventUpdate {
 	return ueu
 }
 
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (ueu *UserEventUpdate) SetUserID(id int64) *UserEventUpdate {
+	ueu.mutation.SetUserID(id)
+	return ueu
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (ueu *UserEventUpdate) SetUser(s *SocialUser) *UserEventUpdate {
+	return ueu.SetUserID(s.ID)
+}
+
 // Mutation returns the UserEventMutation object of the builder.
 func (ueu *UserEventUpdate) Mutation() *UserEventMutation {
 	return ueu.mutation
+}
+
+// ClearUser clears the "user" edge to the SocialUser entity.
+func (ueu *UserEventUpdate) ClearUser() *UserEventUpdate {
+	ueu.mutation.ClearUser()
+	return ueu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -311,12 +309,18 @@ func (ueu *UserEventUpdate) Save(ctx context.Context) (int, error) {
 	)
 	ueu.defaults()
 	if len(ueu.hooks) == 0 {
+		if err = ueu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = ueu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*UserEventMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = ueu.check(); err != nil {
+				return 0, err
 			}
 			ueu.mutation = mutation
 			affected, err = ueu.sqlSave(ctx)
@@ -366,6 +370,14 @@ func (ueu *UserEventUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (ueu *UserEventUpdate) check() error {
+	if _, ok := ueu.mutation.UserID(); ueu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (ueu *UserEventUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -383,26 +395,6 @@ func (ueu *UserEventUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := ueu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: userevent.FieldUserId,
-		})
-	}
-	if value, ok := ueu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: userevent.FieldUserId,
-		})
-	}
-	if ueu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: userevent.FieldUserId,
-		})
 	}
 	if value, ok := ueu.mutation.EventType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -579,6 +571,41 @@ func (ueu *UserEventUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: userevent.FieldTenantId,
 		})
 	}
+	if ueu.mutation.UserCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   userevent.UserTable,
+			Columns: []string{userevent.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ueu.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   userevent.UserTable,
+			Columns: []string{userevent.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, ueu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{userevent.Label}
@@ -600,28 +627,7 @@ type UserEventUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (ueuo *UserEventUpdateOne) SetUserId(i int64) *UserEventUpdateOne {
-	ueuo.mutation.ResetUserId()
 	ueuo.mutation.SetUserId(i)
-	return ueuo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (ueuo *UserEventUpdateOne) SetNillableUserId(i *int64) *UserEventUpdateOne {
-	if i != nil {
-		ueuo.SetUserId(*i)
-	}
-	return ueuo
-}
-
-// AddUserId adds i to the "userId" field.
-func (ueuo *UserEventUpdateOne) AddUserId(i int64) *UserEventUpdateOne {
-	ueuo.mutation.AddUserId(i)
-	return ueuo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (ueuo *UserEventUpdateOne) ClearUserId() *UserEventUpdateOne {
-	ueuo.mutation.ClearUserId()
 	return ueuo
 }
 
@@ -869,9 +875,26 @@ func (ueuo *UserEventUpdateOne) AddTenantId(i int64) *UserEventUpdateOne {
 	return ueuo
 }
 
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (ueuo *UserEventUpdateOne) SetUserID(id int64) *UserEventUpdateOne {
+	ueuo.mutation.SetUserID(id)
+	return ueuo
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (ueuo *UserEventUpdateOne) SetUser(s *SocialUser) *UserEventUpdateOne {
+	return ueuo.SetUserID(s.ID)
+}
+
 // Mutation returns the UserEventMutation object of the builder.
 func (ueuo *UserEventUpdateOne) Mutation() *UserEventMutation {
 	return ueuo.mutation
+}
+
+// ClearUser clears the "user" edge to the SocialUser entity.
+func (ueuo *UserEventUpdateOne) ClearUser() *UserEventUpdateOne {
+	ueuo.mutation.ClearUser()
+	return ueuo
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -889,12 +912,18 @@ func (ueuo *UserEventUpdateOne) Save(ctx context.Context) (*UserEvent, error) {
 	)
 	ueuo.defaults()
 	if len(ueuo.hooks) == 0 {
+		if err = ueuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = ueuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*UserEventMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = ueuo.check(); err != nil {
+				return nil, err
 			}
 			ueuo.mutation = mutation
 			node, err = ueuo.sqlSave(ctx)
@@ -944,6 +973,14 @@ func (ueuo *UserEventUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (ueuo *UserEventUpdateOne) check() error {
+	if _, ok := ueuo.mutation.UserID(); ueuo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (ueuo *UserEventUpdateOne) sqlSave(ctx context.Context) (_node *UserEvent, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -978,26 +1015,6 @@ func (ueuo *UserEventUpdateOne) sqlSave(ctx context.Context) (_node *UserEvent, 
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := ueuo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: userevent.FieldUserId,
-		})
-	}
-	if value, ok := ueuo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: userevent.FieldUserId,
-		})
-	}
-	if ueuo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: userevent.FieldUserId,
-		})
 	}
 	if value, ok := ueuo.mutation.EventType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -1173,6 +1190,41 @@ func (ueuo *UserEventUpdateOne) sqlSave(ctx context.Context) (_node *UserEvent, 
 			Value:  value,
 			Column: userevent.FieldTenantId,
 		})
+	}
+	if ueuo.mutation.UserCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   userevent.UserTable,
+			Columns: []string{userevent.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ueuo.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   userevent.UserTable,
+			Columns: []string{userevent.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &UserEvent{config: ueuo.config}
 	_spec.Assign = _node.assignValues

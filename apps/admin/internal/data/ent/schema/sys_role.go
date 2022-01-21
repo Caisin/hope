@@ -48,5 +48,6 @@ func (SysRole) Fields() []ent.Field {
 func (SysRole) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("menus", SysMenu.Type).Comment("菜单"),
+		edge.To("users", SysUser.Type).Comment("用户列表"),
 	}
 }

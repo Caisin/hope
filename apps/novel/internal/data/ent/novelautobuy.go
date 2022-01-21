@@ -40,8 +40,7 @@ type NovelAutoBuy struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the NovelAutoBuyQuery when eager-loading is set.
-	Edges                       NovelAutoBuyEdges `json:"edges"`
-	social_user_auto_buy_novels *int64
+	Edges NovelAutoBuyEdges `json:"edges"`
 }
 
 // NovelAutoBuyEdges holds the relations/edges for other nodes in the graph.
@@ -76,8 +75,6 @@ func (*NovelAutoBuy) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullInt64)
 		case novelautobuy.FieldCreatedAt, novelautobuy.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case novelautobuy.ForeignKeys[0]: // social_user_auto_buy_novels
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type NovelAutoBuy", columns[i])
 		}
@@ -140,13 +137,6 @@ func (nab *NovelAutoBuy) assignValues(columns []string, values []interface{}) er
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				nab.TenantId = value.Int64
-			}
-		case novelautobuy.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_auto_buy_novels", value)
-			} else if value.Valid {
-				nab.social_user_auto_buy_novels = new(int64)
-				*nab.social_user_auto_buy_novels = int64(value.Int64)
 			}
 		}
 	}

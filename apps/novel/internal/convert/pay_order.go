@@ -18,6 +18,9 @@ func PayOrderUpdateReq2Data(v *v1.PayOrderUpdateReq) *ent.PayOrder {
 	return &ent.PayOrder{
 		ID:           v.Id,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -44,6 +47,9 @@ func PayOrderData2UpdateReq(v *ent.PayOrder) *v1.PayOrderUpdateReq {
 	return &v1.PayOrderUpdateReq{
 		Id:           v.ID,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -69,6 +75,9 @@ func PayOrderCreateReq2Data(v *v1.PayOrderCreateReq) *ent.PayOrder {
 	}
 	return &ent.PayOrder{
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -94,6 +103,9 @@ func PayOrderData2CreateReq(v *ent.PayOrder) *v1.PayOrderCreateReq {
 	}
 	return &v1.PayOrderCreateReq{
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -119,6 +131,9 @@ func PayOrderReq2Data(v *v1.PayOrderReq) *ent.PayOrder {
 	}
 	return &ent.PayOrder{
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -144,6 +159,9 @@ func PayOrderData2Req(v *ent.PayOrder) *v1.PayOrderReq {
 	}
 	return &v1.PayOrderReq{
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -170,6 +188,9 @@ func PayOrderReply2Data(v *v1.PayOrderReply) *ent.PayOrder {
 	return &ent.PayOrder{
 		ID:           v.Id,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -202,6 +223,9 @@ func PayOrderData2Reply(v *ent.PayOrder) *v1.PayOrderReply {
 	return &v1.PayOrderReply{
 		Id:           v.ID,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -234,6 +258,9 @@ func PayOrderUpdateReply2Data(v *v1.PayOrderUpdateReply) *ent.PayOrder {
 	return &ent.PayOrder{
 		ID:           v.Id,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -260,6 +287,9 @@ func PayOrderData2UpdateReply(v *ent.PayOrder) *v1.PayOrderUpdateReply {
 	return &v1.PayOrderUpdateReply{
 		Id:           v.ID,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -286,6 +316,9 @@ func PayOrderCreateReply2Data(v *v1.PayOrderCreateReply) *ent.PayOrder {
 	return &ent.PayOrder{
 		ID:           v.Id,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,
@@ -318,6 +351,9 @@ func PayOrderData2CreateReply(v *ent.PayOrder) *v1.PayOrderCreateReply {
 	return &v1.PayOrderCreateReply{
 		Id:           v.ID,
 		OrderId:      v.OrderId,
+		UserId:       v.UserId,
+		ChId:         v.ChId,
+		AgreementId:  v.AgreementId,
 		LastRead:     v.LastRead,
 		LastChapter:  v.LastChapter,
 		PaymentName:  v.PaymentName,

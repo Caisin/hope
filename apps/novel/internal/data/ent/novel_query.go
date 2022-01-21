@@ -32,7 +32,6 @@ type NovelQuery struct {
 	withChapters *NovelChapterQuery
 	withPkgs     *BookPackageQuery
 	withClassify *NovelClassifyQuery
-	withFKs      bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -422,7 +421,6 @@ func (nq *NovelQuery) prepareQuery(ctx context.Context) error {
 func (nq *NovelQuery) sqlAll(ctx context.Context) ([]*Novel, error) {
 	var (
 		nodes       = []*Novel{}
-		withFKs     = nq.withFKs
 		_spec       = nq.querySpec()
 		loadedTypes = [3]bool{
 			nq.withChapters != nil,
@@ -430,12 +428,6 @@ func (nq *NovelQuery) sqlAll(ctx context.Context) ([]*Novel, error) {
 			nq.withClassify != nil,
 		}
 	)
-	if nq.withClassify != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, novel.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &Novel{config: nq.config}
 		nodes = append(nodes, node)
@@ -473,13 +465,10 @@ func (nq *NovelQuery) sqlAll(ctx context.Context) ([]*Novel, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.novel_chapters
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "novel_chapters" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.NovelId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "novel_chapters" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "novelId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Chapters = append(node.Edges.Chapters, n)
 		}
@@ -554,10 +543,7 @@ func (nq *NovelQuery) sqlAll(ctx context.Context) ([]*Novel, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*Novel)
 		for i := range nodes {
-			if nodes[i].novel_classify_novels == nil {
-				continue
-			}
-			fk := *nodes[i].novel_classify_novels
+			fk := nodes[i].ClassifyId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -571,7 +557,7 @@ func (nq *NovelQuery) sqlAll(ctx context.Context) ([]*Novel, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "novel_classify_novels" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "classifyId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Classify = n

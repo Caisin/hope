@@ -569,14 +569,6 @@ func (solc *SysOperaLogCreate) createSpec() (*SysOperaLog, *sqlgraph.CreateSpec)
 			},
 		}
 	)
-	if value, ok := solc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysoperalog.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := solc.mutation.Title(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -810,7 +802,7 @@ func (solc *SysOperaLogCreate) createSpec() (*SysOperaLog, *sqlgraph.CreateSpec)
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.sys_user_opera_logs = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

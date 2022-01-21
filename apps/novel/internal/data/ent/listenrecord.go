@@ -55,8 +55,7 @@ type ListenRecord struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ListenRecordQuery when eager-loading is set.
-	Edges                      ListenRecordEdges `json:"edges"`
-	social_user_listen_records *int64
+	Edges ListenRecordEdges `json:"edges"`
 }
 
 // ListenRecordEdges holds the relations/edges for other nodes in the graph.
@@ -91,8 +90,6 @@ func (*ListenRecord) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullInt64)
 		case listenrecord.FieldCreatedAt, listenrecord.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case listenrecord.ForeignKeys[0]: // social_user_listen_records
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type ListenRecord", columns[i])
 		}
@@ -185,13 +182,6 @@ func (lr *ListenRecord) assignValues(columns []string, values []interface{}) err
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				lr.TenantId = value.Int64
-			}
-		case listenrecord.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_listen_records", value)
-			} else if value.Valid {
-				lr.social_user_listen_records = new(int64)
-				*lr.social_user_listen_records = int64(value.Int64)
 			}
 		}
 	}

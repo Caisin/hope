@@ -21,6 +21,7 @@ import (
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
 	"hope/apps/novel/internal/data/ent/tasklog"
+	"hope/apps/novel/internal/data/ent/userevent"
 	"hope/apps/novel/internal/data/ent/usermsg"
 	"hope/apps/novel/internal/data/ent/vipuser"
 	"math"
@@ -41,6 +42,7 @@ type SocialUserQuery struct {
 	predicates []predicate.SocialUser
 	// eager-loading edges.
 	withTasks             *TaskLogQuery
+	withEvents            *UserEventQuery
 	withListenRecords     *ListenRecordQuery
 	withAds               *AdChangeLogQuery
 	withBookshelves       *NovelBookshelfQuery
@@ -54,7 +56,6 @@ type SocialUserQuery struct {
 	withBuyChapterRecords *NovelBuyChapterRecordQuery
 	withBuyNovelRecords   *NovelBuyRecordQuery
 	withChannel           *AdChannelQuery
-	withFKs               bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -106,6 +107,28 @@ func (suq *SocialUserQuery) QueryTasks() *TaskLogQuery {
 			sqlgraph.From(socialuser.Table, socialuser.FieldID, selector),
 			sqlgraph.To(tasklog.Table, tasklog.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, socialuser.TasksTable, socialuser.TasksColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(suq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryEvents chains the current query on the "events" edge.
+func (suq *SocialUserQuery) QueryEvents() *UserEventQuery {
+	query := &UserEventQuery{config: suq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := suq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := suq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(socialuser.Table, socialuser.FieldID, selector),
+			sqlgraph.To(userevent.Table, userevent.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, socialuser.EventsTable, socialuser.EventsColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(suq.driver.Dialect(), step)
 		return fromU, nil
@@ -581,6 +604,7 @@ func (suq *SocialUserQuery) Clone() *SocialUserQuery {
 		order:                 append([]OrderFunc{}, suq.order...),
 		predicates:            append([]predicate.SocialUser{}, suq.predicates...),
 		withTasks:             suq.withTasks.Clone(),
+		withEvents:            suq.withEvents.Clone(),
 		withListenRecords:     suq.withListenRecords.Clone(),
 		withAds:               suq.withAds.Clone(),
 		withBookshelves:       suq.withBookshelves.Clone(),
@@ -608,6 +632,17 @@ func (suq *SocialUserQuery) WithTasks(opts ...func(*TaskLogQuery)) *SocialUserQu
 		opt(query)
 	}
 	suq.withTasks = query
+	return suq
+}
+
+// WithEvents tells the query-builder to eager-load the nodes that are connected to
+// the "events" edge. The optional arguments are used to configure the query builder of the edge.
+func (suq *SocialUserQuery) WithEvents(opts ...func(*UserEventQuery)) *SocialUserQuery {
+	query := &UserEventQuery{config: suq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	suq.withEvents = query
 	return suq
 }
 
@@ -760,12 +795,12 @@ func (suq *SocialUserQuery) WithChannel(opts ...func(*AdChannelQuery)) *SocialUs
 // Example:
 //
 //	var v []struct {
-//		UserId int64 `json:"userId,omitempty"`
+//		ChId int64 `json:"chId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SocialUser.Query().
-//		GroupBy(socialuser.FieldUserId).
+//		GroupBy(socialuser.FieldChId).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -787,11 +822,11 @@ func (suq *SocialUserQuery) GroupBy(field string, fields ...string) *SocialUserG
 // Example:
 //
 //	var v []struct {
-//		UserId int64 `json:"userId,omitempty"`
+//		ChId int64 `json:"chId,omitempty"`
 //	}
 //
 //	client.SocialUser.Query().
-//		Select(socialuser.FieldUserId).
+//		Select(socialuser.FieldChId).
 //		Scan(ctx, &v)
 //
 func (suq *SocialUserQuery) Select(fields ...string) *SocialUserSelect {
@@ -818,10 +853,10 @@ func (suq *SocialUserQuery) prepareQuery(ctx context.Context) error {
 func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 	var (
 		nodes       = []*SocialUser{}
-		withFKs     = suq.withFKs
 		_spec       = suq.querySpec()
-		loadedTypes = [14]bool{
+		loadedTypes = [15]bool{
 			suq.withTasks != nil,
+			suq.withEvents != nil,
 			suq.withListenRecords != nil,
 			suq.withAds != nil,
 			suq.withBookshelves != nil,
@@ -837,12 +872,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			suq.withChannel != nil,
 		}
 	)
-	if suq.withChannel != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, socialuser.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &SocialUser{config: suq.config}
 		nodes = append(nodes, node)
@@ -871,7 +900,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Tasks = []*TaskLog{}
 		}
-		query.withFKs = true
 		query.Where(predicate.TaskLog(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.TasksColumn, fks...))
 		}))
@@ -880,15 +908,37 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_tasks
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_tasks" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_tasks" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Tasks = append(node.Edges.Tasks, n)
+		}
+	}
+
+	if query := suq.withEvents; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int64]*SocialUser)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.Events = []*UserEvent{}
+		}
+		query.Where(predicate.UserEvent(func(s *sql.Selector) {
+			s.Where(sql.InValues(socialuser.EventsColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.UserId
+			node, ok := nodeids[fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
+			}
+			node.Edges.Events = append(node.Edges.Events, n)
 		}
 	}
 
@@ -900,7 +950,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.ListenRecords = []*ListenRecord{}
 		}
-		query.withFKs = true
 		query.Where(predicate.ListenRecord(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.ListenRecordsColumn, fks...))
 		}))
@@ -909,13 +958,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_listen_records
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_listen_records" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_listen_records" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.ListenRecords = append(node.Edges.ListenRecords, n)
 		}
@@ -929,7 +975,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Ads = []*AdChangeLog{}
 		}
-		query.withFKs = true
 		query.Where(predicate.AdChangeLog(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.AdsColumn, fks...))
 		}))
@@ -938,13 +983,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_ads
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_ads" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_ads" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Ads = append(node.Edges.Ads, n)
 		}
@@ -958,7 +1000,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Bookshelves = []*NovelBookshelf{}
 		}
-		query.withFKs = true
 		query.Where(predicate.NovelBookshelf(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.BookshelvesColumn, fks...))
 		}))
@@ -967,13 +1008,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_bookshelves
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_bookshelves" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_bookshelves" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Bookshelves = append(node.Edges.Bookshelves, n)
 		}
@@ -987,7 +1025,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.AutoBuyNovels = []*NovelAutoBuy{}
 		}
-		query.withFKs = true
 		query.Where(predicate.NovelAutoBuy(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.AutoBuyNovelsColumn, fks...))
 		}))
@@ -996,13 +1033,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_auto_buy_novels
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_auto_buy_novels" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_auto_buy_novels" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.AutoBuyNovels = append(node.Edges.AutoBuyNovels, n)
 		}
@@ -1025,13 +1059,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_comments
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_comments" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_comments" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Comments = append(node.Edges.Comments, n)
 		}
@@ -1070,7 +1101,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Orders = []*PayOrder{}
 		}
-		query.withFKs = true
 		query.Where(predicate.PayOrder(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.OrdersColumn, fks...))
 		}))
@@ -1079,13 +1109,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_orders
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_orders" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_orders" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Orders = append(node.Edges.Orders, n)
 		}
@@ -1099,7 +1126,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Vips = []*VipUser{}
 		}
-		query.withFKs = true
 		query.Where(predicate.VipUser(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.VipsColumn, fks...))
 		}))
@@ -1108,13 +1134,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_vips
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_vips" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_vips" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Vips = append(node.Edges.Vips, n)
 		}
@@ -1128,7 +1151,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Balances = []*AmBalance{}
 		}
-		query.withFKs = true
 		query.Where(predicate.AmBalance(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.BalancesColumn, fks...))
 		}))
@@ -1137,13 +1159,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_balances
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_balances" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_balances" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Balances = append(node.Edges.Balances, n)
 		}
@@ -1157,7 +1176,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.AssetLogs = []*AssetChangeLog{}
 		}
-		query.withFKs = true
 		query.Where(predicate.AssetChangeLog(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.AssetLogsColumn, fks...))
 		}))
@@ -1166,13 +1184,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_asset_logs
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_asset_logs" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_asset_logs" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.AssetLogs = append(node.Edges.AssetLogs, n)
 		}
@@ -1186,7 +1201,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.BuyChapterRecords = []*NovelBuyChapterRecord{}
 		}
-		query.withFKs = true
 		query.Where(predicate.NovelBuyChapterRecord(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.BuyChapterRecordsColumn, fks...))
 		}))
@@ -1195,13 +1209,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_buy_chapter_records
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_buy_chapter_records" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_buy_chapter_records" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.BuyChapterRecords = append(node.Edges.BuyChapterRecords, n)
 		}
@@ -1215,7 +1226,6 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.BuyNovelRecords = []*NovelBuyRecord{}
 		}
-		query.withFKs = true
 		query.Where(predicate.NovelBuyRecord(func(s *sql.Selector) {
 			s.Where(sql.InValues(socialuser.BuyNovelRecordsColumn, fks...))
 		}))
@@ -1224,13 +1234,10 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.social_user_buy_novel_records
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "social_user_buy_novel_records" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_buy_novel_records" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.BuyNovelRecords = append(node.Edges.BuyNovelRecords, n)
 		}
@@ -1240,10 +1247,7 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SocialUser)
 		for i := range nodes {
-			if nodes[i].ad_channel_users == nil {
-				continue
-			}
-			fk := *nodes[i].ad_channel_users
+			fk := nodes[i].ChId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -1257,7 +1261,7 @@ func (suq *SocialUserQuery) sqlAll(ctx context.Context) ([]*SocialUser, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "ad_channel_users" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "chId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Channel = n

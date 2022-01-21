@@ -27,7 +27,6 @@ type AdChangeLogQuery struct {
 	predicates []predicate.AdChangeLog
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -349,18 +348,11 @@ func (aclq *AdChangeLogQuery) prepareQuery(ctx context.Context) error {
 func (aclq *AdChangeLogQuery) sqlAll(ctx context.Context) ([]*AdChangeLog, error) {
 	var (
 		nodes       = []*AdChangeLog{}
-		withFKs     = aclq.withFKs
 		_spec       = aclq.querySpec()
 		loadedTypes = [1]bool{
 			aclq.withUser != nil,
 		}
 	)
-	if aclq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, adchangelog.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &AdChangeLog{config: aclq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (aclq *AdChangeLogQuery) sqlAll(ctx context.Context) ([]*AdChangeLog, error
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*AdChangeLog)
 		for i := range nodes {
-			if nodes[i].social_user_ads == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_ads
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (aclq *AdChangeLogQuery) sqlAll(ctx context.Context) ([]*AdChangeLog, error
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_ads" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

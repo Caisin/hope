@@ -114,8 +114,22 @@ func Phone(v string) predicate.SysUser {
 	})
 }
 
+// DeptId applies equality check predicate on the "deptId" field. It's identical to DeptIdEQ.
+func DeptId(v int64) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDeptId), v))
+	})
+}
+
+// PostId applies equality check predicate on the "postId" field. It's identical to PostIdEQ.
+func PostId(v int64) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPostId), v))
+	})
+}
+
 // RoleId applies equality check predicate on the "roleId" field. It's identical to RoleIdEQ.
-func RoleId(v int32) predicate.SysUser {
+func RoleId(v int64) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldRoleId), v))
 	})
@@ -573,22 +587,146 @@ func PhoneContainsFold(v string) predicate.SysUser {
 	})
 }
 
+// DeptIdEQ applies the EQ predicate on the "deptId" field.
+func DeptIdEQ(v int64) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDeptId), v))
+	})
+}
+
+// DeptIdNEQ applies the NEQ predicate on the "deptId" field.
+func DeptIdNEQ(v int64) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDeptId), v))
+	})
+}
+
+// DeptIdIn applies the In predicate on the "deptId" field.
+func DeptIdIn(vs ...int64) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldDeptId), v...))
+	})
+}
+
+// DeptIdNotIn applies the NotIn predicate on the "deptId" field.
+func DeptIdNotIn(vs ...int64) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldDeptId), v...))
+	})
+}
+
+// DeptIdIsNil applies the IsNil predicate on the "deptId" field.
+func DeptIdIsNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldDeptId)))
+	})
+}
+
+// DeptIdNotNil applies the NotNil predicate on the "deptId" field.
+func DeptIdNotNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldDeptId)))
+	})
+}
+
+// PostIdEQ applies the EQ predicate on the "postId" field.
+func PostIdEQ(v int64) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPostId), v))
+	})
+}
+
+// PostIdNEQ applies the NEQ predicate on the "postId" field.
+func PostIdNEQ(v int64) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPostId), v))
+	})
+}
+
+// PostIdIn applies the In predicate on the "postId" field.
+func PostIdIn(vs ...int64) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPostId), v...))
+	})
+}
+
+// PostIdNotIn applies the NotIn predicate on the "postId" field.
+func PostIdNotIn(vs ...int64) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPostId), v...))
+	})
+}
+
+// PostIdIsNil applies the IsNil predicate on the "postId" field.
+func PostIdIsNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldPostId)))
+	})
+}
+
+// PostIdNotNil applies the NotNil predicate on the "postId" field.
+func PostIdNotNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldPostId)))
+	})
+}
+
 // RoleIdEQ applies the EQ predicate on the "roleId" field.
-func RoleIdEQ(v int32) predicate.SysUser {
+func RoleIdEQ(v int64) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldRoleId), v))
 	})
 }
 
 // RoleIdNEQ applies the NEQ predicate on the "roleId" field.
-func RoleIdNEQ(v int32) predicate.SysUser {
+func RoleIdNEQ(v int64) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldRoleId), v))
 	})
 }
 
 // RoleIdIn applies the In predicate on the "roleId" field.
-func RoleIdIn(vs ...int32) predicate.SysUser {
+func RoleIdIn(vs ...int64) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -605,7 +743,7 @@ func RoleIdIn(vs ...int32) predicate.SysUser {
 }
 
 // RoleIdNotIn applies the NotIn predicate on the "roleId" field.
-func RoleIdNotIn(vs ...int32) predicate.SysUser {
+func RoleIdNotIn(vs ...int64) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -622,28 +760,28 @@ func RoleIdNotIn(vs ...int32) predicate.SysUser {
 }
 
 // RoleIdGT applies the GT predicate on the "roleId" field.
-func RoleIdGT(v int32) predicate.SysUser {
+func RoleIdGT(v int64) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldRoleId), v))
 	})
 }
 
 // RoleIdGTE applies the GTE predicate on the "roleId" field.
-func RoleIdGTE(v int32) predicate.SysUser {
+func RoleIdGTE(v int64) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldRoleId), v))
 	})
 }
 
 // RoleIdLT applies the LT predicate on the "roleId" field.
-func RoleIdLT(v int32) predicate.SysUser {
+func RoleIdLT(v int64) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldRoleId), v))
 	})
 }
 
 // RoleIdLTE applies the LTE predicate on the "roleId" field.
-func RoleIdLTE(v int32) predicate.SysUser {
+func RoleIdLTE(v int64) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldRoleId), v))
 	})
@@ -1805,6 +1943,34 @@ func HasPostWith(preds ...predicate.SysPost) predicate.SysUser {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(PostInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, PostTable, PostColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasRole applies the HasEdge predicate on the "role" edge.
+func HasRole() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(RoleTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, true, RoleTable, RolePrimaryKey...),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasRoleWith applies the HasEdge predicate on the "role" edge with a given conditions (other predicates).
+func HasRoleWith(preds ...predicate.SysRole) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(RoleInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, true, RoleTable, RolePrimaryKey...),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

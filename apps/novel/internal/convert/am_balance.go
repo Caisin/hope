@@ -15,6 +15,7 @@ func AmBalanceUpdateReq2Data(v *v1.AmBalanceUpdateReq) *ent.AmBalance {
 	}
 	return &ent.AmBalance{
 		ID:          v.Id,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -32,6 +33,7 @@ func AmBalanceData2UpdateReq(v *ent.AmBalance) *v1.AmBalanceUpdateReq {
 	}
 	return &v1.AmBalanceUpdateReq{
 		Id:          v.ID,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -48,6 +50,7 @@ func AmBalanceCreateReq2Data(v *v1.AmBalanceCreateReq) *ent.AmBalance {
 		return nil
 	}
 	return &ent.AmBalance{
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -64,6 +67,7 @@ func AmBalanceData2CreateReq(v *ent.AmBalance) *v1.AmBalanceCreateReq {
 		return nil
 	}
 	return &v1.AmBalanceCreateReq{
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -80,6 +84,7 @@ func AmBalanceReq2Data(v *v1.AmBalanceReq) *ent.AmBalance {
 		return nil
 	}
 	return &ent.AmBalance{
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -96,6 +101,7 @@ func AmBalanceData2Req(v *ent.AmBalance) *v1.AmBalanceReq {
 		return nil
 	}
 	return &v1.AmBalanceReq{
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -113,6 +119,7 @@ func AmBalanceReply2Data(v *v1.AmBalanceReply) *ent.AmBalance {
 	}
 	return &ent.AmBalance{
 		ID:          v.Id,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -136,6 +143,7 @@ func AmBalanceData2Reply(v *ent.AmBalance) *v1.AmBalanceReply {
 	}
 	return &v1.AmBalanceReply{
 		Id:          v.ID,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -159,6 +167,7 @@ func AmBalanceUpdateReply2Data(v *v1.AmBalanceUpdateReply) *ent.AmBalance {
 	}
 	return &ent.AmBalance{
 		ID:          v.Id,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -176,6 +185,7 @@ func AmBalanceData2UpdateReply(v *ent.AmBalance) *v1.AmBalanceUpdateReply {
 	}
 	return &v1.AmBalanceUpdateReply{
 		Id:          v.ID,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -193,6 +203,7 @@ func AmBalanceCreateReply2Data(v *v1.AmBalanceCreateReply) *ent.AmBalance {
 	}
 	return &ent.AmBalance{
 		ID:          v.Id,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,
@@ -216,6 +227,7 @@ func AmBalanceData2CreateReply(v *ent.AmBalance) *v1.AmBalanceCreateReply {
 	}
 	return &v1.AmBalanceCreateReply{
 		Id:          v.ID,
+		UserId:      v.UserId,
 		OrderId:     v.OrderId,
 		EventId:     v.EventId,
 		CashTag:     v.CashTag,

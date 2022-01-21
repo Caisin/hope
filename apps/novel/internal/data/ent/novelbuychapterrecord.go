@@ -70,8 +70,7 @@ type NovelBuyChapterRecord struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the NovelBuyChapterRecordQuery when eager-loading is set.
-	Edges                           NovelBuyChapterRecordEdges `json:"edges"`
-	social_user_buy_chapter_records *int64
+	Edges NovelBuyChapterRecordEdges `json:"edges"`
 }
 
 // NovelBuyChapterRecordEdges holds the relations/edges for other nodes in the graph.
@@ -110,8 +109,6 @@ func (*NovelBuyChapterRecord) scanValues(columns []string) ([]interface{}, error
 			values[i] = new(sql.NullString)
 		case novelbuychapterrecord.FieldCreatedAt, novelbuychapterrecord.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case novelbuychapterrecord.ForeignKeys[0]: // social_user_buy_chapter_records
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type NovelBuyChapterRecord", columns[i])
 		}
@@ -234,13 +231,6 @@ func (nbcr *NovelBuyChapterRecord) assignValues(columns []string, values []inter
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				nbcr.TenantId = value.Int64
-			}
-		case novelbuychapterrecord.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_buy_chapter_records", value)
-			} else if value.Valid {
-				nbcr.social_user_buy_chapter_records = new(int64)
-				*nbcr.social_user_buy_chapter_records = int64(value.Int64)
 			}
 		}
 	}

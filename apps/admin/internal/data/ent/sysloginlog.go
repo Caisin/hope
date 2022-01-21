@@ -17,6 +17,9 @@ type SysLoginLog struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
+	// UserId holds the value of the "userId" field.
+	// 用户ID
+	UserId int64 `json:"userId,omitempty"`
 	// Status holds the value of the "status" field.
 	// 状态
 	Status string `json:"status,omitempty"`
@@ -61,8 +64,7 @@ type SysLoginLog struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysLoginLogQuery when eager-loading is set.
-	Edges               SysLoginLogEdges `json:"edges"`
-	sys_user_login_logs *int64
+	Edges SysLoginLogEdges `json:"edges"`
 }
 
 // SysLoginLogEdges holds the relations/edges for other nodes in the graph.
@@ -93,14 +95,12 @@ func (*SysLoginLog) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysloginlog.FieldID, sysloginlog.FieldCreateBy, sysloginlog.FieldUpdateBy, sysloginlog.FieldTenantId:
+		case sysloginlog.FieldID, sysloginlog.FieldUserId, sysloginlog.FieldCreateBy, sysloginlog.FieldUpdateBy, sysloginlog.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case sysloginlog.FieldStatus, sysloginlog.FieldIpaddr, sysloginlog.FieldLoginLocation, sysloginlog.FieldBrowser, sysloginlog.FieldOs, sysloginlog.FieldPlatform, sysloginlog.FieldRemark, sysloginlog.FieldMsg:
 			values[i] = new(sql.NullString)
 		case sysloginlog.FieldLoginTime, sysloginlog.FieldCreatedAt, sysloginlog.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case sysloginlog.ForeignKeys[0]: // sys_user_login_logs
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysLoginLog", columns[i])
 		}
@@ -122,6 +122,12 @@ func (sll *SysLoginLog) assignValues(columns []string, values []interface{}) err
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			sll.ID = int64(value.Int64)
+		case sysloginlog.FieldUserId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field userId", values[i])
+			} else if value.Valid {
+				sll.UserId = value.Int64
+			}
 		case sysloginlog.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
@@ -206,13 +212,6 @@ func (sll *SysLoginLog) assignValues(columns []string, values []interface{}) err
 			} else if value.Valid {
 				sll.TenantId = value.Int64
 			}
-		case sysloginlog.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field sys_user_login_logs", value)
-			} else if value.Valid {
-				sll.sys_user_login_logs = new(int64)
-				*sll.sys_user_login_logs = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -246,6 +245,8 @@ func (sll *SysLoginLog) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysLoginLog(")
 	builder.WriteString(fmt.Sprintf("id=%v", sll.ID))
+	builder.WriteString(", userId=")
+	builder.WriteString(fmt.Sprintf("%v", sll.UserId))
 	builder.WriteString(", status=")
 	builder.WriteString(sll.Status)
 	builder.WriteString(", ipaddr=")

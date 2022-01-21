@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -6,10 +7,10 @@ import (
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
-	"hope/apps/novel/internal/data/ent/vipuser"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
+	"hope/apps/novel/internal/data/ent/vipuser"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,16 +31,17 @@ func NewVipUserRepo(data *Data, logger log.Logger) biz.VipUserRepo {
 func (r *vipUserRepo) CreateVipUser(ctx context.Context, req *v1.VipUserCreateReq) (*ent.VipUser, error) {
 	now := time.Now()
 	return r.data.db.VipUser.Create().
-    SetVipType(req.VipType).
-    SetSvipType(req.SvipType).
-    SetSvipEffectTime(req.SvipEffectTime.AsTime()).
-    SetSvipExpiredTime(req.SvipExpiredTime.AsTime()).
-    SetRemark(req.Remark).
-    SetEffectTime(req.EffectTime.AsTime()).
-    SetExpiredTime(req.ExpiredTime.AsTime()).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetUserId(req.UserId).
+		SetVipType(req.VipType).
+		SetSvipType(req.SvipType).
+		SetSvipEffectTime(req.SvipEffectTime.AsTime()).
+		SetSvipExpiredTime(req.SvipExpiredTime.AsTime()).
+		SetRemark(req.Remark).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -67,7 +69,7 @@ func (r *vipUserRepo) GetVipUser(ctx context.Context, req *v1.VipUserReq) (*ent.
 func (r *vipUserRepo) PageVipUser(ctx context.Context, req *v1.VipUserPageReq) ([]*ent.VipUser, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.VipUser.
 		Query().
@@ -103,6 +105,9 @@ func (r *vipUserRepo) genCondition(req *v1.VipUserReq) []predicate.VipUser {
 	list := make([]predicate.VipUser, 0)
 	if req.Id > 0 {
 		list = append(list, vipuser.ID(req.Id))
+	}
+	if req.UserId > 0 {
+		list = append(list, vipuser.UserId(req.UserId))
 	}
 	if req.VipType > 0 {
 		list = append(list, vipuser.VipType(req.VipType))
@@ -140,6 +145,6 @@ func (r *vipUserRepo) genCondition(req *v1.VipUserReq) []predicate.VipUser {
 	if req.TenantId > 0 {
 		list = append(list, vipuser.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

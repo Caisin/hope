@@ -35,17 +35,9 @@ func (sdtc *SysDictTypeCreate) SetNillableDictName(s *string) *SysDictTypeCreate
 	return sdtc
 }
 
-// SetDictType sets the "dictType" field.
-func (sdtc *SysDictTypeCreate) SetDictType(s string) *SysDictTypeCreate {
-	sdtc.mutation.SetDictType(s)
-	return sdtc
-}
-
-// SetNillableDictType sets the "dictType" field if the given value is not nil.
-func (sdtc *SysDictTypeCreate) SetNillableDictType(s *string) *SysDictTypeCreate {
-	if s != nil {
-		sdtc.SetDictType(*s)
-	}
+// SetTypeCode sets the "typeCode" field.
+func (sdtc *SysDictTypeCreate) SetTypeCode(s string) *SysDictTypeCreate {
+	sdtc.mutation.SetTypeCode(s)
 	return sdtc
 }
 
@@ -257,6 +249,9 @@ func (sdtc *SysDictTypeCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sdtc *SysDictTypeCreate) check() error {
+	if _, ok := sdtc.mutation.TypeCode(); !ok {
+		return &ValidationError{Name: "typeCode", err: errors.New(`ent: missing required field "typeCode"`)}
+	}
 	if _, ok := sdtc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -307,13 +302,13 @@ func (sdtc *SysDictTypeCreate) createSpec() (*SysDictType, *sqlgraph.CreateSpec)
 		})
 		_node.DictName = value
 	}
-	if value, ok := sdtc.mutation.DictType(); ok {
+	if value, ok := sdtc.mutation.TypeCode(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysdicttype.FieldDictType,
+			Column: sysdicttype.FieldTypeCode,
 		})
-		_node.DictType = value
+		_node.TypeCode = value
 	}
 	if value, ok := sdtc.mutation.Status(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

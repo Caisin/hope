@@ -89,7 +89,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "novelchapter" package.
 	ChaptersInverseTable = "novel_chapters"
 	// ChaptersColumn is the table column denoting the chapters relation/edge.
-	ChaptersColumn = "novel_chapters"
+	ChaptersColumn = "novel_id"
 	// PkgsTable is the table that holds the pkgs relation/edge. The primary key declared below.
 	PkgsTable = "novel_pkgs"
 	// PkgsInverseTable is the table name for the BookPackage entity.
@@ -101,7 +101,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "novelclassify" package.
 	ClassifyInverseTable = "novel_classifies"
 	// ClassifyColumn is the table column denoting the classify relation/edge.
-	ClassifyColumn = "novel_classify_novels"
+	ClassifyColumn = "classify_id"
 )
 
 // Columns holds all SQL columns for novel fields.
@@ -141,12 +141,6 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "novels"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"novel_classify_novels",
-}
-
 var (
 	// PkgsPrimaryKey and PkgsColumn2 are the table columns denoting the
 	// primary key for the pkgs relation (M2M).
@@ -157,11 +151,6 @@ var (
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

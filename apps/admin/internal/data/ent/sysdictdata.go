@@ -17,6 +17,12 @@ type SysDictData struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
+	// TypeId holds the value of the "typeId" field.
+	// 字典类型ID
+	TypeId int64 `json:"typeId,omitempty"`
+	// TypeCode holds the value of the "typeCode" field.
+	// 字典类型
+	TypeCode string `json:"typeCode,omitempty"`
 	// DictSort holds the value of the "dictSort" field.
 	// 字典排序
 	DictSort int32 `json:"dictSort,omitempty"`
@@ -55,8 +61,7 @@ type SysDictData struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysDictDataQuery when eager-loading is set.
-	Edges                   SysDictDataEdges `json:"edges"`
-	sys_dict_type_data_list *int64
+	Edges SysDictDataEdges `json:"edges"`
 }
 
 // SysDictDataEdges holds the relations/edges for other nodes in the graph.
@@ -87,14 +92,12 @@ func (*SysDictData) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysdictdata.FieldID, sysdictdata.FieldDictSort, sysdictdata.FieldStatus, sysdictdata.FieldCreateBy, sysdictdata.FieldUpdateBy, sysdictdata.FieldTenantId:
+		case sysdictdata.FieldID, sysdictdata.FieldTypeId, sysdictdata.FieldDictSort, sysdictdata.FieldStatus, sysdictdata.FieldCreateBy, sysdictdata.FieldUpdateBy, sysdictdata.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysdictdata.FieldDictLabel, sysdictdata.FieldDictValue, sysdictdata.FieldIsDefault, sysdictdata.FieldDefault, sysdictdata.FieldRemark:
+		case sysdictdata.FieldTypeCode, sysdictdata.FieldDictLabel, sysdictdata.FieldDictValue, sysdictdata.FieldIsDefault, sysdictdata.FieldDefault, sysdictdata.FieldRemark:
 			values[i] = new(sql.NullString)
 		case sysdictdata.FieldCreatedAt, sysdictdata.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case sysdictdata.ForeignKeys[0]: // sys_dict_type_data_list
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysDictData", columns[i])
 		}
@@ -116,6 +119,18 @@ func (sdd *SysDictData) assignValues(columns []string, values []interface{}) err
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			sdd.ID = int64(value.Int64)
+		case sysdictdata.FieldTypeId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field typeId", values[i])
+			} else if value.Valid {
+				sdd.TypeId = value.Int64
+			}
+		case sysdictdata.FieldTypeCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field typeCode", values[i])
+			} else if value.Valid {
+				sdd.TypeCode = value.String
+			}
 		case sysdictdata.FieldDictSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field dictSort", values[i])
@@ -188,13 +203,6 @@ func (sdd *SysDictData) assignValues(columns []string, values []interface{}) err
 			} else if value.Valid {
 				sdd.TenantId = value.Int64
 			}
-		case sysdictdata.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field sys_dict_type_data_list", value)
-			} else if value.Valid {
-				sdd.sys_dict_type_data_list = new(int64)
-				*sdd.sys_dict_type_data_list = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -228,6 +236,10 @@ func (sdd *SysDictData) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysDictData(")
 	builder.WriteString(fmt.Sprintf("id=%v", sdd.ID))
+	builder.WriteString(", typeId=")
+	builder.WriteString(fmt.Sprintf("%v", sdd.TypeId))
+	builder.WriteString(", typeCode=")
+	builder.WriteString(sdd.TypeCode)
 	builder.WriteString(", dictSort=")
 	builder.WriteString(fmt.Sprintf("%v", sdd.DictSort))
 	builder.WriteString(", dictLabel=")

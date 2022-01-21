@@ -16,7 +16,7 @@ func SysDictTypeUpdateReq2Data(v *v1.SysDictTypeUpdateReq) *ent.SysDictType {
 	return &ent.SysDictType{
 		ID:       v.Id,
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -28,7 +28,7 @@ func SysDictTypeData2UpdateReq(v *ent.SysDictType) *v1.SysDictTypeUpdateReq {
 	return &v1.SysDictTypeUpdateReq{
 		Id:       v.ID,
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -39,7 +39,7 @@ func SysDictTypeCreateReq2Data(v *v1.SysDictTypeCreateReq) *ent.SysDictType {
 	}
 	return &ent.SysDictType{
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -50,7 +50,7 @@ func SysDictTypeData2CreateReq(v *ent.SysDictType) *v1.SysDictTypeCreateReq {
 	}
 	return &v1.SysDictTypeCreateReq{
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -61,7 +61,7 @@ func SysDictTypeReq2Data(v *v1.SysDictTypeReq) *ent.SysDictType {
 	}
 	return &ent.SysDictType{
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -72,7 +72,7 @@ func SysDictTypeData2Req(v *ent.SysDictType) *v1.SysDictTypeReq {
 	}
 	return &v1.SysDictTypeReq{
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -84,7 +84,7 @@ func SysDictTypeReply2Data(v *v1.SysDictTypeReply) *ent.SysDictType {
 	return &ent.SysDictType{
 		ID:        v.Id,
 		DictName:  v.DictName,
-		DictType:  v.DictType,
+		TypeCode:  v.TypeCode,
 		Status:    v.Status,
 		Remark:    v.Remark,
 		CreatedAt: v.CreatedAt.AsTime(),
@@ -102,7 +102,7 @@ func SysDictTypeData2Reply(v *ent.SysDictType) *v1.SysDictTypeReply {
 	return &v1.SysDictTypeReply{
 		Id:        v.ID,
 		DictName:  v.DictName,
-		DictType:  v.DictType,
+		TypeCode:  v.TypeCode,
 		Status:    v.Status,
 		Remark:    v.Remark,
 		CreatedAt: timestamppb.New(v.CreatedAt),
@@ -120,7 +120,7 @@ func SysDictTypeUpdateReply2Data(v *v1.SysDictTypeUpdateReply) *ent.SysDictType 
 	return &ent.SysDictType{
 		ID:       v.Id,
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -132,7 +132,7 @@ func SysDictTypeData2UpdateReply(v *ent.SysDictType) *v1.SysDictTypeUpdateReply 
 	return &v1.SysDictTypeUpdateReply{
 		Id:       v.ID,
 		DictName: v.DictName,
-		DictType: v.DictType,
+		TypeCode: v.TypeCode,
 		Status:   v.Status,
 	}
 }
@@ -144,7 +144,7 @@ func SysDictTypeCreateReply2Data(v *v1.SysDictTypeCreateReply) *ent.SysDictType 
 	return &ent.SysDictType{
 		ID:        v.Id,
 		DictName:  v.DictName,
-		DictType:  v.DictType,
+		TypeCode:  v.TypeCode,
 		Status:    v.Status,
 		Remark:    v.Remark,
 		CreatedAt: v.CreatedAt.AsTime(),
@@ -162,7 +162,7 @@ func SysDictTypeData2CreateReply(v *ent.SysDictType) *v1.SysDictTypeCreateReply 
 	return &v1.SysDictTypeCreateReply{
 		Id:        v.ID,
 		DictName:  v.DictName,
-		DictType:  v.DictType,
+		TypeCode:  v.TypeCode,
 		Status:    v.Status,
 		Remark:    v.Remark,
 		CreatedAt: timestamppb.New(v.CreatedAt),

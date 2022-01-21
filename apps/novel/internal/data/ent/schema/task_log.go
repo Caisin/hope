@@ -15,7 +15,7 @@ type TaskLog struct {
 // Fields of the TaskLog.
 func (TaskLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.String("taskGroup").Optional().
 			Comment(`任务分组`),
@@ -56,6 +56,6 @@ func (TaskLog) Fields() []ent.Field {
 // Edges of the TaskLog.
 func (TaskLog) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("tasks").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("tasks").Unique(),
 	}
 }

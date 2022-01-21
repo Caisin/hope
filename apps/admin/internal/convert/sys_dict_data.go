@@ -15,6 +15,8 @@ func SysDictDataUpdateReq2Data(v *v1.SysDictDataUpdateReq) *ent.SysDictData {
 	}
 	return &ent.SysDictData{
 		ID:        v.Id,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -30,6 +32,8 @@ func SysDictDataData2UpdateReq(v *ent.SysDictData) *v1.SysDictDataUpdateReq {
 	}
 	return &v1.SysDictDataUpdateReq{
 		Id:        v.ID,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -44,6 +48,8 @@ func SysDictDataCreateReq2Data(v *v1.SysDictDataCreateReq) *ent.SysDictData {
 		return nil
 	}
 	return &ent.SysDictData{
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -58,6 +64,8 @@ func SysDictDataData2CreateReq(v *ent.SysDictData) *v1.SysDictDataCreateReq {
 		return nil
 	}
 	return &v1.SysDictDataCreateReq{
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -72,6 +80,8 @@ func SysDictDataReq2Data(v *v1.SysDictDataReq) *ent.SysDictData {
 		return nil
 	}
 	return &ent.SysDictData{
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -86,6 +96,8 @@ func SysDictDataData2Req(v *ent.SysDictData) *v1.SysDictDataReq {
 		return nil
 	}
 	return &v1.SysDictDataReq{
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -101,6 +113,8 @@ func SysDictDataReply2Data(v *v1.SysDictDataReply) *ent.SysDictData {
 	}
 	return &ent.SysDictData{
 		ID:        v.Id,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -122,6 +136,8 @@ func SysDictDataData2Reply(v *ent.SysDictData) *v1.SysDictDataReply {
 	}
 	return &v1.SysDictDataReply{
 		Id:        v.ID,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -143,6 +159,8 @@ func SysDictDataUpdateReply2Data(v *v1.SysDictDataUpdateReply) *ent.SysDictData 
 	}
 	return &ent.SysDictData{
 		ID:        v.Id,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -158,6 +176,8 @@ func SysDictDataData2UpdateReply(v *ent.SysDictData) *v1.SysDictDataUpdateReply 
 	}
 	return &v1.SysDictDataUpdateReply{
 		Id:        v.ID,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -173,6 +193,8 @@ func SysDictDataCreateReply2Data(v *v1.SysDictDataCreateReply) *ent.SysDictData 
 	}
 	return &ent.SysDictData{
 		ID:        v.Id,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,
@@ -194,6 +216,8 @@ func SysDictDataData2CreateReply(v *ent.SysDictData) *v1.SysDictDataCreateReply 
 	}
 	return &v1.SysDictDataCreateReply{
 		Id:        v.ID,
+		TypeId:    v.TypeId,
+		TypeCode:  v.TypeCode,
 		DictSort:  v.DictSort,
 		DictLabel: v.DictLabel,
 		DictValue: v.DictValue,

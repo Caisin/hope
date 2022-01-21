@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novelbuychapterrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -30,28 +31,7 @@ func (nbcru *NovelBuyChapterRecordUpdate) Where(ps ...predicate.NovelBuyChapterR
 
 // SetUserId sets the "userId" field.
 func (nbcru *NovelBuyChapterRecordUpdate) SetUserId(i int64) *NovelBuyChapterRecordUpdate {
-	nbcru.mutation.ResetUserId()
 	nbcru.mutation.SetUserId(i)
-	return nbcru
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbcru *NovelBuyChapterRecordUpdate) SetNillableUserId(i *int64) *NovelBuyChapterRecordUpdate {
-	if i != nil {
-		nbcru.SetUserId(*i)
-	}
-	return nbcru
-}
-
-// AddUserId adds i to the "userId" field.
-func (nbcru *NovelBuyChapterRecordUpdate) AddUserId(i int64) *NovelBuyChapterRecordUpdate {
-	nbcru.mutation.AddUserId(i)
-	return nbcru
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nbcru *NovelBuyChapterRecordUpdate) ClearUserId() *NovelBuyChapterRecordUpdate {
-	nbcru.mutation.ClearUserId()
 	return nbcru
 }
 
@@ -392,14 +372,6 @@ func (nbcru *NovelBuyChapterRecordUpdate) SetUserID(id int64) *NovelBuyChapterRe
 	return nbcru
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (nbcru *NovelBuyChapterRecordUpdate) SetNillableUserID(id *int64) *NovelBuyChapterRecordUpdate {
-	if id != nil {
-		nbcru = nbcru.SetUserID(*id)
-	}
-	return nbcru
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (nbcru *NovelBuyChapterRecordUpdate) SetUser(s *SocialUser) *NovelBuyChapterRecordUpdate {
 	return nbcru.SetUserID(s.ID)
@@ -424,12 +396,18 @@ func (nbcru *NovelBuyChapterRecordUpdate) Save(ctx context.Context) (int, error)
 	)
 	nbcru.defaults()
 	if len(nbcru.hooks) == 0 {
+		if err = nbcru.check(); err != nil {
+			return 0, err
+		}
 		affected, err = nbcru.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*NovelBuyChapterRecordMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = nbcru.check(); err != nil {
+				return 0, err
 			}
 			nbcru.mutation = mutation
 			affected, err = nbcru.sqlSave(ctx)
@@ -479,6 +457,14 @@ func (nbcru *NovelBuyChapterRecordUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (nbcru *NovelBuyChapterRecordUpdate) check() error {
+	if _, ok := nbcru.mutation.UserID(); nbcru.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (nbcru *NovelBuyChapterRecordUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -496,26 +482,6 @@ func (nbcru *NovelBuyChapterRecordUpdate) sqlSave(ctx context.Context) (n int, e
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := nbcru.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuychapterrecord.FieldUserId,
-		})
-	}
-	if value, ok := nbcru.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuychapterrecord.FieldUserId,
-		})
-	}
-	if nbcru.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelbuychapterrecord.FieldUserId,
-		})
 	}
 	if value, ok := nbcru.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -807,28 +773,7 @@ type NovelBuyChapterRecordUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (nbcruo *NovelBuyChapterRecordUpdateOne) SetUserId(i int64) *NovelBuyChapterRecordUpdateOne {
-	nbcruo.mutation.ResetUserId()
 	nbcruo.mutation.SetUserId(i)
-	return nbcruo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbcruo *NovelBuyChapterRecordUpdateOne) SetNillableUserId(i *int64) *NovelBuyChapterRecordUpdateOne {
-	if i != nil {
-		nbcruo.SetUserId(*i)
-	}
-	return nbcruo
-}
-
-// AddUserId adds i to the "userId" field.
-func (nbcruo *NovelBuyChapterRecordUpdateOne) AddUserId(i int64) *NovelBuyChapterRecordUpdateOne {
-	nbcruo.mutation.AddUserId(i)
-	return nbcruo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nbcruo *NovelBuyChapterRecordUpdateOne) ClearUserId() *NovelBuyChapterRecordUpdateOne {
-	nbcruo.mutation.ClearUserId()
 	return nbcruo
 }
 
@@ -1169,14 +1114,6 @@ func (nbcruo *NovelBuyChapterRecordUpdateOne) SetUserID(id int64) *NovelBuyChapt
 	return nbcruo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (nbcruo *NovelBuyChapterRecordUpdateOne) SetNillableUserID(id *int64) *NovelBuyChapterRecordUpdateOne {
-	if id != nil {
-		nbcruo = nbcruo.SetUserID(*id)
-	}
-	return nbcruo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (nbcruo *NovelBuyChapterRecordUpdateOne) SetUser(s *SocialUser) *NovelBuyChapterRecordUpdateOne {
 	return nbcruo.SetUserID(s.ID)
@@ -1208,12 +1145,18 @@ func (nbcruo *NovelBuyChapterRecordUpdateOne) Save(ctx context.Context) (*NovelB
 	)
 	nbcruo.defaults()
 	if len(nbcruo.hooks) == 0 {
+		if err = nbcruo.check(); err != nil {
+			return nil, err
+		}
 		node, err = nbcruo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*NovelBuyChapterRecordMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = nbcruo.check(); err != nil {
+				return nil, err
 			}
 			nbcruo.mutation = mutation
 			node, err = nbcruo.sqlSave(ctx)
@@ -1263,6 +1206,14 @@ func (nbcruo *NovelBuyChapterRecordUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (nbcruo *NovelBuyChapterRecordUpdateOne) check() error {
+	if _, ok := nbcruo.mutation.UserID(); nbcruo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (nbcruo *NovelBuyChapterRecordUpdateOne) sqlSave(ctx context.Context) (_node *NovelBuyChapterRecord, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -1297,26 +1248,6 @@ func (nbcruo *NovelBuyChapterRecordUpdateOne) sqlSave(ctx context.Context) (_nod
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := nbcruo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuychapterrecord.FieldUserId,
-		})
-	}
-	if value, ok := nbcruo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuychapterrecord.FieldUserId,
-		})
-	}
-	if nbcruo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelbuychapterrecord.FieldUserId,
-		})
 	}
 	if value, ok := nbcruo.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

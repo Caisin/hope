@@ -382,7 +382,6 @@ func (spq *SysPostQuery) sqlAll(ctx context.Context) ([]*SysPost, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Users = []*SysUser{}
 		}
-		query.withFKs = true
 		query.Where(predicate.SysUser(func(s *sql.Selector) {
 			s.Where(sql.InValues(syspost.UsersColumn, fks...))
 		}))
@@ -391,13 +390,10 @@ func (spq *SysPostQuery) sqlAll(ctx context.Context) ([]*SysPost, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.sys_post_users
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "sys_post_users" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.PostId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_post_users" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "postId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Users = append(node.Edges.Users, n)
 		}

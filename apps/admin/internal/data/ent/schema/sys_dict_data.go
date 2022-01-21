@@ -15,6 +15,10 @@ type SysDictData struct {
 // Fields of the SysDictData.
 func (SysDictData) Fields() []ent.Field {
 	fields := []ent.Field{
+		field.Int64("typeId").
+			Comment(`字典类型ID`),
+		field.String("typeCode").
+			Comment(`字典类型`),
 		field.Int32("dictSort").Optional().
 			Comment(`字典排序`),
 		field.String("dictLabel").Optional().
@@ -37,6 +41,6 @@ func (SysDictData) Fields() []ent.Field {
 // Edges of the SysDictData.
 func (SysDictData) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("dictType", SysDictType.Type).Ref("dataList").Unique(),
+		edge.From("dictType", SysDictType.Type).Field("typeId").Required().Ref("dataList").Unique(),
 	}
 }

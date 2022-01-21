@@ -419,7 +419,6 @@ func (acq *AdChannelQuery) sqlAll(ctx context.Context) ([]*AdChannel, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Users = []*SocialUser{}
 		}
-		query.withFKs = true
 		query.Where(predicate.SocialUser(func(s *sql.Selector) {
 			s.Where(sql.InValues(adchannel.UsersColumn, fks...))
 		}))
@@ -428,13 +427,10 @@ func (acq *AdChannelQuery) sqlAll(ctx context.Context) ([]*AdChannel, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.ad_channel_users
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "ad_channel_users" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ChId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "ad_channel_users" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "chId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Users = append(node.Edges.Users, n)
 		}
@@ -448,7 +444,6 @@ func (acq *AdChannelQuery) sqlAll(ctx context.Context) ([]*AdChannel, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Orders = []*PayOrder{}
 		}
-		query.withFKs = true
 		query.Where(predicate.PayOrder(func(s *sql.Selector) {
 			s.Where(sql.InValues(adchannel.OrdersColumn, fks...))
 		}))
@@ -457,13 +452,10 @@ func (acq *AdChannelQuery) sqlAll(ctx context.Context) ([]*AdChannel, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.ad_channel_orders
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "ad_channel_orders" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ChId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "ad_channel_orders" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "chId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Orders = append(node.Edges.Orders, n)
 		}

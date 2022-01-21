@@ -27,14 +27,6 @@ func (aclc *AdChangeLogCreate) SetUserId(i int64) *AdChangeLogCreate {
 	return aclc
 }
 
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (aclc *AdChangeLogCreate) SetNillableUserId(i *int64) *AdChangeLogCreate {
-	if i != nil {
-		aclc.SetUserId(*i)
-	}
-	return aclc
-}
-
 // SetAdId sets the "adId" field.
 func (aclc *AdChangeLogCreate) SetAdId(s string) *AdChangeLogCreate {
 	aclc.mutation.SetAdId(s)
@@ -167,14 +159,6 @@ func (aclc *AdChangeLogCreate) SetUserID(id int64) *AdChangeLogCreate {
 	return aclc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (aclc *AdChangeLogCreate) SetNillableUserID(id *int64) *AdChangeLogCreate {
-	if id != nil {
-		aclc = aclc.SetUserID(*id)
-	}
-	return aclc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (aclc *AdChangeLogCreate) SetUser(s *SocialUser) *AdChangeLogCreate {
 	return aclc.SetUserID(s.ID)
@@ -275,6 +259,9 @@ func (aclc *AdChangeLogCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (aclc *AdChangeLogCreate) check() error {
+	if _, ok := aclc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := aclc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -289,6 +276,9 @@ func (aclc *AdChangeLogCreate) check() error {
 	}
 	if _, ok := aclc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := aclc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -317,14 +307,6 @@ func (aclc *AdChangeLogCreate) createSpec() (*AdChangeLog, *sqlgraph.CreateSpec)
 			},
 		}
 	)
-	if value, ok := aclc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: adchangelog.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := aclc.mutation.AdId(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -414,7 +396,7 @@ func (aclc *AdChangeLogCreate) createSpec() (*AdChangeLog, *sqlgraph.CreateSpec)
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_ads = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

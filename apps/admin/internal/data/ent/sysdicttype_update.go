@@ -48,23 +48,9 @@ func (sdtu *SysDictTypeUpdate) ClearDictName() *SysDictTypeUpdate {
 	return sdtu
 }
 
-// SetDictType sets the "dictType" field.
-func (sdtu *SysDictTypeUpdate) SetDictType(s string) *SysDictTypeUpdate {
-	sdtu.mutation.SetDictType(s)
-	return sdtu
-}
-
-// SetNillableDictType sets the "dictType" field if the given value is not nil.
-func (sdtu *SysDictTypeUpdate) SetNillableDictType(s *string) *SysDictTypeUpdate {
-	if s != nil {
-		sdtu.SetDictType(*s)
-	}
-	return sdtu
-}
-
-// ClearDictType clears the value of the "dictType" field.
-func (sdtu *SysDictTypeUpdate) ClearDictType() *SysDictTypeUpdate {
-	sdtu.mutation.ClearDictType()
+// SetTypeCode sets the "typeCode" field.
+func (sdtu *SysDictTypeUpdate) SetTypeCode(s string) *SysDictTypeUpdate {
+	sdtu.mutation.SetTypeCode(s)
 	return sdtu
 }
 
@@ -319,17 +305,11 @@ func (sdtu *SysDictTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysdicttype.FieldDictName,
 		})
 	}
-	if value, ok := sdtu.mutation.DictType(); ok {
+	if value, ok := sdtu.mutation.TypeCode(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysdicttype.FieldDictType,
-		})
-	}
-	if sdtu.mutation.DictTypeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdicttype.FieldDictType,
+			Column: sysdicttype.FieldTypeCode,
 		})
 	}
 	if value, ok := sdtu.mutation.Status(); ok {
@@ -507,23 +487,9 @@ func (sdtuo *SysDictTypeUpdateOne) ClearDictName() *SysDictTypeUpdateOne {
 	return sdtuo
 }
 
-// SetDictType sets the "dictType" field.
-func (sdtuo *SysDictTypeUpdateOne) SetDictType(s string) *SysDictTypeUpdateOne {
-	sdtuo.mutation.SetDictType(s)
-	return sdtuo
-}
-
-// SetNillableDictType sets the "dictType" field if the given value is not nil.
-func (sdtuo *SysDictTypeUpdateOne) SetNillableDictType(s *string) *SysDictTypeUpdateOne {
-	if s != nil {
-		sdtuo.SetDictType(*s)
-	}
-	return sdtuo
-}
-
-// ClearDictType clears the value of the "dictType" field.
-func (sdtuo *SysDictTypeUpdateOne) ClearDictType() *SysDictTypeUpdateOne {
-	sdtuo.mutation.ClearDictType()
+// SetTypeCode sets the "typeCode" field.
+func (sdtuo *SysDictTypeUpdateOne) SetTypeCode(s string) *SysDictTypeUpdateOne {
+	sdtuo.mutation.SetTypeCode(s)
 	return sdtuo
 }
 
@@ -802,17 +768,11 @@ func (sdtuo *SysDictTypeUpdateOne) sqlSave(ctx context.Context) (_node *SysDictT
 			Column: sysdicttype.FieldDictName,
 		})
 	}
-	if value, ok := sdtuo.mutation.DictType(); ok {
+	if value, ok := sdtuo.mutation.TypeCode(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysdicttype.FieldDictType,
-		})
-	}
-	if sdtuo.mutation.DictTypeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdicttype.FieldDictType,
+			Column: sysdicttype.FieldTypeCode,
 		})
 	}
 	if value, ok := sdtuo.mutation.Status(); ok {

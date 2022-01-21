@@ -21,6 +21,20 @@ type SysLoginLogCreate struct {
 	hooks    []Hook
 }
 
+// SetUserId sets the "userId" field.
+func (sllc *SysLoginLogCreate) SetUserId(i int64) *SysLoginLogCreate {
+	sllc.mutation.SetUserId(i)
+	return sllc
+}
+
+// SetNillableUserId sets the "userId" field if the given value is not nil.
+func (sllc *SysLoginLogCreate) SetNillableUserId(i *int64) *SysLoginLogCreate {
+	if i != nil {
+		sllc.SetUserId(*i)
+	}
+	return sllc
+}
+
 // SetStatus sets the "status" field.
 func (sllc *SysLoginLogCreate) SetStatus(s string) *SysLoginLogCreate {
 	sllc.mutation.SetStatus(s)
@@ -502,7 +516,7 @@ func (sllc *SysLoginLogCreate) createSpec() (*SysLoginLog, *sqlgraph.CreateSpec)
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.sys_user_login_logs = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

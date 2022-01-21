@@ -190,7 +190,7 @@ func genCreateFields(fields []*load.Field) string {
 			break
 		}
 		//备注
-		bf.Append(tab).Append("//").Append(f.Comment).Append("\n")
+		bf.Append(tab).Append("//").Append(strings.ReplaceAll(f.Comment, "\n", " ")).Append("\n")
 		//字段
 		bf.Append(tab).Append(parseType(f)).Append(space).Append(name).
 			Append(space).Append("=").Append(space).Append(i + 1).Append(";\n")

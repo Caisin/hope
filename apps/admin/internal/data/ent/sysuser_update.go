@@ -10,6 +10,7 @@ import (
 	"hope/apps/admin/internal/data/ent/sysloginlog"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
 	"hope/apps/admin/internal/data/ent/syspost"
+	"hope/apps/admin/internal/data/ent/sysrole"
 	"hope/apps/admin/internal/data/ent/sysuser"
 	"time"
 
@@ -91,15 +92,55 @@ func (suu *SysUserUpdate) ClearPhone() *SysUserUpdate {
 	return suu
 }
 
+// SetDeptId sets the "deptId" field.
+func (suu *SysUserUpdate) SetDeptId(i int64) *SysUserUpdate {
+	suu.mutation.SetDeptId(i)
+	return suu
+}
+
+// SetNillableDeptId sets the "deptId" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillableDeptId(i *int64) *SysUserUpdate {
+	if i != nil {
+		suu.SetDeptId(*i)
+	}
+	return suu
+}
+
+// ClearDeptId clears the value of the "deptId" field.
+func (suu *SysUserUpdate) ClearDeptId() *SysUserUpdate {
+	suu.mutation.ClearDeptId()
+	return suu
+}
+
+// SetPostId sets the "postId" field.
+func (suu *SysUserUpdate) SetPostId(i int64) *SysUserUpdate {
+	suu.mutation.SetPostId(i)
+	return suu
+}
+
+// SetNillablePostId sets the "postId" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillablePostId(i *int64) *SysUserUpdate {
+	if i != nil {
+		suu.SetPostId(*i)
+	}
+	return suu
+}
+
+// ClearPostId clears the value of the "postId" field.
+func (suu *SysUserUpdate) ClearPostId() *SysUserUpdate {
+	suu.mutation.ClearPostId()
+	return suu
+}
+
 // SetRoleId sets the "roleId" field.
-func (suu *SysUserUpdate) SetRoleId(i int32) *SysUserUpdate {
+func (suu *SysUserUpdate) SetRoleId(i int64) *SysUserUpdate {
 	suu.mutation.ResetRoleId()
 	suu.mutation.SetRoleId(i)
 	return suu
 }
 
 // SetNillableRoleId sets the "roleId" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableRoleId(i *int32) *SysUserUpdate {
+func (suu *SysUserUpdate) SetNillableRoleId(i *int64) *SysUserUpdate {
 	if i != nil {
 		suu.SetRoleId(*i)
 	}
@@ -107,7 +148,7 @@ func (suu *SysUserUpdate) SetNillableRoleId(i *int32) *SysUserUpdate {
 }
 
 // AddRoleId adds i to the "roleId" field.
-func (suu *SysUserUpdate) AddRoleId(i int32) *SysUserUpdate {
+func (suu *SysUserUpdate) AddRoleId(i int64) *SysUserUpdate {
 	suu.mutation.AddRoleId(i)
 	return suu
 }
@@ -352,6 +393,21 @@ func (suu *SysUserUpdate) SetPost(s *SysPost) *SysUserUpdate {
 	return suu.SetPostID(s.ID)
 }
 
+// AddRoleIDs adds the "role" edge to the SysRole entity by IDs.
+func (suu *SysUserUpdate) AddRoleIDs(ids ...int64) *SysUserUpdate {
+	suu.mutation.AddRoleIDs(ids...)
+	return suu
+}
+
+// AddRole adds the "role" edges to the SysRole entity.
+func (suu *SysUserUpdate) AddRole(s ...*SysRole) *SysUserUpdate {
+	ids := make([]int64, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suu.AddRoleIDs(ids...)
+}
+
 // AddLoginLogIDs adds the "loginLogs" edge to the SysLoginLog entity by IDs.
 func (suu *SysUserUpdate) AddLoginLogIDs(ids ...int64) *SysUserUpdate {
 	suu.mutation.AddLoginLogIDs(ids...)
@@ -397,6 +453,27 @@ func (suu *SysUserUpdate) ClearDept() *SysUserUpdate {
 func (suu *SysUserUpdate) ClearPost() *SysUserUpdate {
 	suu.mutation.ClearPost()
 	return suu
+}
+
+// ClearRole clears all "role" edges to the SysRole entity.
+func (suu *SysUserUpdate) ClearRole() *SysUserUpdate {
+	suu.mutation.ClearRole()
+	return suu
+}
+
+// RemoveRoleIDs removes the "role" edge to SysRole entities by IDs.
+func (suu *SysUserUpdate) RemoveRoleIDs(ids ...int64) *SysUserUpdate {
+	suu.mutation.RemoveRoleIDs(ids...)
+	return suu
+}
+
+// RemoveRole removes "role" edges to SysRole entities.
+func (suu *SysUserUpdate) RemoveRole(s ...*SysRole) *SysUserUpdate {
+	ids := make([]int64, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suu.RemoveRoleIDs(ids...)
 }
 
 // ClearLoginLogs clears all "loginLogs" edges to the SysLoginLog entity.
@@ -563,21 +640,21 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := suu.mutation.RoleId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: sysuser.FieldRoleId,
 		})
 	}
 	if value, ok := suu.mutation.AddedRoleId(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: sysuser.FieldRoleId,
 		})
 	}
 	if suu.mutation.RoleIdCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeInt64,
 			Column: sysuser.FieldRoleId,
 		})
 	}
@@ -785,6 +862,60 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if suu.mutation.RoleCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.RoleTable,
+			Columns: sysuser.RolePrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysrole.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.RemovedRoleIDs(); len(nodes) > 0 && !suu.mutation.RoleCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.RoleTable,
+			Columns: sysuser.RolePrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysrole.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.RoleIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.RoleTable,
+			Columns: sysuser.RolePrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysrole.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if suu.mutation.LoginLogsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -972,15 +1103,55 @@ func (suuo *SysUserUpdateOne) ClearPhone() *SysUserUpdateOne {
 	return suuo
 }
 
+// SetDeptId sets the "deptId" field.
+func (suuo *SysUserUpdateOne) SetDeptId(i int64) *SysUserUpdateOne {
+	suuo.mutation.SetDeptId(i)
+	return suuo
+}
+
+// SetNillableDeptId sets the "deptId" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillableDeptId(i *int64) *SysUserUpdateOne {
+	if i != nil {
+		suuo.SetDeptId(*i)
+	}
+	return suuo
+}
+
+// ClearDeptId clears the value of the "deptId" field.
+func (suuo *SysUserUpdateOne) ClearDeptId() *SysUserUpdateOne {
+	suuo.mutation.ClearDeptId()
+	return suuo
+}
+
+// SetPostId sets the "postId" field.
+func (suuo *SysUserUpdateOne) SetPostId(i int64) *SysUserUpdateOne {
+	suuo.mutation.SetPostId(i)
+	return suuo
+}
+
+// SetNillablePostId sets the "postId" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillablePostId(i *int64) *SysUserUpdateOne {
+	if i != nil {
+		suuo.SetPostId(*i)
+	}
+	return suuo
+}
+
+// ClearPostId clears the value of the "postId" field.
+func (suuo *SysUserUpdateOne) ClearPostId() *SysUserUpdateOne {
+	suuo.mutation.ClearPostId()
+	return suuo
+}
+
 // SetRoleId sets the "roleId" field.
-func (suuo *SysUserUpdateOne) SetRoleId(i int32) *SysUserUpdateOne {
+func (suuo *SysUserUpdateOne) SetRoleId(i int64) *SysUserUpdateOne {
 	suuo.mutation.ResetRoleId()
 	suuo.mutation.SetRoleId(i)
 	return suuo
 }
 
 // SetNillableRoleId sets the "roleId" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableRoleId(i *int32) *SysUserUpdateOne {
+func (suuo *SysUserUpdateOne) SetNillableRoleId(i *int64) *SysUserUpdateOne {
 	if i != nil {
 		suuo.SetRoleId(*i)
 	}
@@ -988,7 +1159,7 @@ func (suuo *SysUserUpdateOne) SetNillableRoleId(i *int32) *SysUserUpdateOne {
 }
 
 // AddRoleId adds i to the "roleId" field.
-func (suuo *SysUserUpdateOne) AddRoleId(i int32) *SysUserUpdateOne {
+func (suuo *SysUserUpdateOne) AddRoleId(i int64) *SysUserUpdateOne {
 	suuo.mutation.AddRoleId(i)
 	return suuo
 }
@@ -1233,6 +1404,21 @@ func (suuo *SysUserUpdateOne) SetPost(s *SysPost) *SysUserUpdateOne {
 	return suuo.SetPostID(s.ID)
 }
 
+// AddRoleIDs adds the "role" edge to the SysRole entity by IDs.
+func (suuo *SysUserUpdateOne) AddRoleIDs(ids ...int64) *SysUserUpdateOne {
+	suuo.mutation.AddRoleIDs(ids...)
+	return suuo
+}
+
+// AddRole adds the "role" edges to the SysRole entity.
+func (suuo *SysUserUpdateOne) AddRole(s ...*SysRole) *SysUserUpdateOne {
+	ids := make([]int64, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suuo.AddRoleIDs(ids...)
+}
+
 // AddLoginLogIDs adds the "loginLogs" edge to the SysLoginLog entity by IDs.
 func (suuo *SysUserUpdateOne) AddLoginLogIDs(ids ...int64) *SysUserUpdateOne {
 	suuo.mutation.AddLoginLogIDs(ids...)
@@ -1278,6 +1464,27 @@ func (suuo *SysUserUpdateOne) ClearDept() *SysUserUpdateOne {
 func (suuo *SysUserUpdateOne) ClearPost() *SysUserUpdateOne {
 	suuo.mutation.ClearPost()
 	return suuo
+}
+
+// ClearRole clears all "role" edges to the SysRole entity.
+func (suuo *SysUserUpdateOne) ClearRole() *SysUserUpdateOne {
+	suuo.mutation.ClearRole()
+	return suuo
+}
+
+// RemoveRoleIDs removes the "role" edge to SysRole entities by IDs.
+func (suuo *SysUserUpdateOne) RemoveRoleIDs(ids ...int64) *SysUserUpdateOne {
+	suuo.mutation.RemoveRoleIDs(ids...)
+	return suuo
+}
+
+// RemoveRole removes "role" edges to SysRole entities.
+func (suuo *SysUserUpdateOne) RemoveRole(s ...*SysRole) *SysUserUpdateOne {
+	ids := make([]int64, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suuo.RemoveRoleIDs(ids...)
 }
 
 // ClearLoginLogs clears all "loginLogs" edges to the SysLoginLog entity.
@@ -1468,21 +1675,21 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 	}
 	if value, ok := suuo.mutation.RoleId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: sysuser.FieldRoleId,
 		})
 	}
 	if value, ok := suuo.mutation.AddedRoleId(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: sysuser.FieldRoleId,
 		})
 	}
 	if suuo.mutation.RoleIdCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeInt64,
 			Column: sysuser.FieldRoleId,
 		})
 	}
@@ -1682,6 +1889,60 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt64,
 					Column: syspost.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if suuo.mutation.RoleCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.RoleTable,
+			Columns: sysuser.RolePrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysrole.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.RemovedRoleIDs(); len(nodes) > 0 && !suuo.mutation.RoleCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.RoleTable,
+			Columns: sysuser.RolePrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysrole.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.RoleIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.RoleTable,
+			Columns: sysuser.RolePrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysrole.FieldID,
 				},
 			},
 		}

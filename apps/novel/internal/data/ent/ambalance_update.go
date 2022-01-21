@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/ambalance"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -25,6 +26,12 @@ type AmBalanceUpdate struct {
 // Where appends a list predicates to the AmBalanceUpdate builder.
 func (abu *AmBalanceUpdate) Where(ps ...predicate.AmBalance) *AmBalanceUpdate {
 	abu.mutation.Where(ps...)
+	return abu
+}
+
+// SetUserId sets the "userId" field.
+func (abu *AmBalanceUpdate) SetUserId(i int64) *AmBalanceUpdate {
+	abu.mutation.SetUserId(i)
 	return abu
 }
 
@@ -306,14 +313,6 @@ func (abu *AmBalanceUpdate) SetUserID(id int64) *AmBalanceUpdate {
 	return abu
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (abu *AmBalanceUpdate) SetNillableUserID(id *int64) *AmBalanceUpdate {
-	if id != nil {
-		abu = abu.SetUserID(*id)
-	}
-	return abu
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (abu *AmBalanceUpdate) SetUser(s *SocialUser) *AmBalanceUpdate {
 	return abu.SetUserID(s.ID)
@@ -338,12 +337,18 @@ func (abu *AmBalanceUpdate) Save(ctx context.Context) (int, error) {
 	)
 	abu.defaults()
 	if len(abu.hooks) == 0 {
+		if err = abu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = abu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*AmBalanceMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = abu.check(); err != nil {
+				return 0, err
 			}
 			abu.mutation = mutation
 			affected, err = abu.sqlSave(ctx)
@@ -391,6 +396,14 @@ func (abu *AmBalanceUpdate) defaults() {
 		v := ambalance.UpdateDefaultUpdatedAt()
 		abu.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (abu *AmBalanceUpdate) check() error {
+	if _, ok := abu.mutation.UserID(); abu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (abu *AmBalanceUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -652,6 +665,12 @@ type AmBalanceUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *AmBalanceMutation
+}
+
+// SetUserId sets the "userId" field.
+func (abuo *AmBalanceUpdateOne) SetUserId(i int64) *AmBalanceUpdateOne {
+	abuo.mutation.SetUserId(i)
+	return abuo
 }
 
 // SetOrderId sets the "orderId" field.
@@ -932,14 +951,6 @@ func (abuo *AmBalanceUpdateOne) SetUserID(id int64) *AmBalanceUpdateOne {
 	return abuo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (abuo *AmBalanceUpdateOne) SetNillableUserID(id *int64) *AmBalanceUpdateOne {
-	if id != nil {
-		abuo = abuo.SetUserID(*id)
-	}
-	return abuo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (abuo *AmBalanceUpdateOne) SetUser(s *SocialUser) *AmBalanceUpdateOne {
 	return abuo.SetUserID(s.ID)
@@ -971,12 +982,18 @@ func (abuo *AmBalanceUpdateOne) Save(ctx context.Context) (*AmBalance, error) {
 	)
 	abuo.defaults()
 	if len(abuo.hooks) == 0 {
+		if err = abuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = abuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*AmBalanceMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = abuo.check(); err != nil {
+				return nil, err
 			}
 			abuo.mutation = mutation
 			node, err = abuo.sqlSave(ctx)
@@ -1024,6 +1041,14 @@ func (abuo *AmBalanceUpdateOne) defaults() {
 		v := ambalance.UpdateDefaultUpdatedAt()
 		abuo.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (abuo *AmBalanceUpdateOne) check() error {
+	if _, ok := abuo.mutation.UserID(); abuo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (abuo *AmBalanceUpdateOne) sqlSave(ctx context.Context) (_node *AmBalance, err error) {

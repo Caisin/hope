@@ -67,7 +67,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "novel" package.
 	NovelInverseTable = "novels"
 	// NovelColumn is the table column denoting the novel relation/edge.
-	NovelColumn = "novel_chapters"
+	NovelColumn = "novel_id"
 )
 
 // Columns holds all SQL columns for novelchapter fields.
@@ -95,7 +95,6 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the "novel_chapters"
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
-	"novel_chapters",
 	"novel_chapter_next",
 }
 

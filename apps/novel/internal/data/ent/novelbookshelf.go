@@ -58,8 +58,7 @@ type NovelBookshelf struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the NovelBookshelfQuery when eager-loading is set.
-	Edges                   NovelBookshelfEdges `json:"edges"`
-	social_user_bookshelves *int64
+	Edges NovelBookshelfEdges `json:"edges"`
 }
 
 // NovelBookshelfEdges holds the relations/edges for other nodes in the graph.
@@ -96,8 +95,6 @@ func (*NovelBookshelf) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case novelbookshelf.FieldLastReadTime, novelbookshelf.FieldCreatedAt, novelbookshelf.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case novelbookshelf.ForeignKeys[0]: // social_user_bookshelves
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type NovelBookshelf", columns[i])
 		}
@@ -196,13 +193,6 @@ func (nb *NovelBookshelf) assignValues(columns []string, values []interface{}) e
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				nb.TenantId = value.Int64
-			}
-		case novelbookshelf.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_bookshelves", value)
-			} else if value.Valid {
-				nb.social_user_bookshelves = new(int64)
-				*nb.social_user_bookshelves = int64(value.Int64)
 			}
 		}
 	}

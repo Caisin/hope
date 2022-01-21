@@ -28,6 +28,26 @@ func (sllu *SysLoginLogUpdate) Where(ps ...predicate.SysLoginLog) *SysLoginLogUp
 	return sllu
 }
 
+// SetUserId sets the "userId" field.
+func (sllu *SysLoginLogUpdate) SetUserId(i int64) *SysLoginLogUpdate {
+	sllu.mutation.SetUserId(i)
+	return sllu
+}
+
+// SetNillableUserId sets the "userId" field if the given value is not nil.
+func (sllu *SysLoginLogUpdate) SetNillableUserId(i *int64) *SysLoginLogUpdate {
+	if i != nil {
+		sllu.SetUserId(*i)
+	}
+	return sllu
+}
+
+// ClearUserId clears the value of the "userId" field.
+func (sllu *SysLoginLogUpdate) ClearUserId() *SysLoginLogUpdate {
+	sllu.mutation.ClearUserId()
+	return sllu
+}
+
 // SetStatus sets the "status" field.
 func (sllu *SysLoginLogUpdate) SetStatus(s string) *SysLoginLogUpdate {
 	sllu.mutation.SetStatus(s)
@@ -606,6 +626,26 @@ type SysLoginLogUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *SysLoginLogMutation
+}
+
+// SetUserId sets the "userId" field.
+func (slluo *SysLoginLogUpdateOne) SetUserId(i int64) *SysLoginLogUpdateOne {
+	slluo.mutation.SetUserId(i)
+	return slluo
+}
+
+// SetNillableUserId sets the "userId" field if the given value is not nil.
+func (slluo *SysLoginLogUpdateOne) SetNillableUserId(i *int64) *SysLoginLogUpdateOne {
+	if i != nil {
+		slluo.SetUserId(*i)
+	}
+	return slluo
+}
+
+// ClearUserId clears the value of the "userId" field.
+func (slluo *SysLoginLogUpdateOne) ClearUserId() *SysLoginLogUpdateOne {
+	slluo.mutation.ClearUserId()
+	return slluo
 }
 
 // SetStatus sets the "status" field.

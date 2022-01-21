@@ -21,7 +21,11 @@ func (SysUser) Fields() []ent.Field {
 			Comment(`昵称`),
 		field.String("phone").Optional().
 			Comment(`手机号`),
-		field.Int32("roleId").Optional().
+		field.Int64("deptId").Optional().
+			Comment(`部门ID`),
+		field.Int64("postId").Optional().
+			Comment(`岗位ID`),
+		field.Int64("roleId").Optional().
 			Comment(`角色ID`),
 		field.String("avatar").Optional().
 			Comment(`头像`),
@@ -43,8 +47,9 @@ func (SysUser) Fields() []ent.Field {
 // Edges of the SysUser.
 func (SysUser) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("dept", SysDept.Type).Comment("部门").Ref("users").Unique(),
-		edge.From("post", SysPost.Type).Comment("岗位").Ref("users").Unique(),
+		edge.From("dept", SysDept.Type).Field("deptId").Comment("部门").Ref("users").Unique(),
+		edge.From("post", SysPost.Type).Field("postId").Comment("岗位").Ref("users").Unique(),
+		edge.From("role", SysRole.Type).Comment("角色").Ref("users"),
 		edge.To("loginLogs", SysLoginLog.Type).Comment("登陆日志"),
 		edge.To("operaLogs", SysOperaLog.Type).Comment("操作日志"),
 	}

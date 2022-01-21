@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"hope/apps/novel/internal/data/ent/userevent"
 	"time"
 
@@ -23,14 +24,6 @@ type UserEventCreate struct {
 // SetUserId sets the "userId" field.
 func (uec *UserEventCreate) SetUserId(i int64) *UserEventCreate {
 	uec.mutation.SetUserId(i)
-	return uec
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (uec *UserEventCreate) SetNillableUserId(i *int64) *UserEventCreate {
-	if i != nil {
-		uec.SetUserId(*i)
-	}
 	return uec
 }
 
@@ -202,6 +195,17 @@ func (uec *UserEventCreate) SetNillableTenantId(i *int64) *UserEventCreate {
 	return uec
 }
 
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (uec *UserEventCreate) SetUserID(id int64) *UserEventCreate {
+	uec.mutation.SetUserID(id)
+	return uec
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (uec *UserEventCreate) SetUser(s *SocialUser) *UserEventCreate {
+	return uec.SetUserID(s.ID)
+}
+
 // Mutation returns the UserEventMutation object of the builder.
 func (uec *UserEventCreate) Mutation() *UserEventMutation {
 	return uec.mutation
@@ -297,6 +301,9 @@ func (uec *UserEventCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (uec *UserEventCreate) check() error {
+	if _, ok := uec.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := uec.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -311,6 +318,9 @@ func (uec *UserEventCreate) check() error {
 	}
 	if _, ok := uec.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := uec.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -339,14 +349,6 @@ func (uec *UserEventCreate) createSpec() (*UserEvent, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := uec.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: userevent.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := uec.mutation.EventType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -442,6 +444,26 @@ func (uec *UserEventCreate) createSpec() (*UserEvent, *sqlgraph.CreateSpec) {
 			Column: userevent.FieldTenantId,
 		})
 		_node.TenantId = value
+	}
+	if nodes := uec.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   userevent.UserTable,
+			Columns: []string{userevent.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.UserId = nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

@@ -38,6 +38,6 @@ func (ListenRecord) Fields() []ent.Field {
 // Edges of the ListenRecord.
 func (ListenRecord) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("listenRecords").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("listenRecords").Unique(),
 	}
 }

@@ -69,14 +69,6 @@ func (aclc *AssetChangeLogCreate) SetUserId(i int64) *AssetChangeLogCreate {
 	return aclc
 }
 
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (aclc *AssetChangeLogCreate) SetNillableUserId(i *int64) *AssetChangeLogCreate {
-	if i != nil {
-		aclc.SetUserId(*i)
-	}
-	return aclc
-}
-
 // SetAssetItemId sets the "assetItemId" field.
 func (aclc *AssetChangeLogCreate) SetAssetItemId(i int32) *AssetChangeLogCreate {
 	aclc.mutation.SetAssetItemId(i)
@@ -223,14 +215,6 @@ func (aclc *AssetChangeLogCreate) SetUserID(id int64) *AssetChangeLogCreate {
 	return aclc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (aclc *AssetChangeLogCreate) SetNillableUserID(id *int64) *AssetChangeLogCreate {
-	if id != nil {
-		aclc = aclc.SetUserID(*id)
-	}
-	return aclc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (aclc *AssetChangeLogCreate) SetUser(s *SocialUser) *AssetChangeLogCreate {
 	return aclc.SetUserID(s.ID)
@@ -331,6 +315,9 @@ func (aclc *AssetChangeLogCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (aclc *AssetChangeLogCreate) check() error {
+	if _, ok := aclc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := aclc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -345,6 +332,9 @@ func (aclc *AssetChangeLogCreate) check() error {
 	}
 	if _, ok := aclc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := aclc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -396,14 +386,6 @@ func (aclc *AssetChangeLogCreate) createSpec() (*AssetChangeLog, *sqlgraph.Creat
 			Column: assetchangelog.FieldEventId,
 		})
 		_node.EventId = value
-	}
-	if value, ok := aclc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: assetchangelog.FieldUserId,
-		})
-		_node.UserId = value
 	}
 	if value, ok := aclc.mutation.AssetItemId(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -502,7 +484,7 @@ func (aclc *AssetChangeLogCreate) createSpec() (*AssetChangeLog, *sqlgraph.Creat
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_asset_logs = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

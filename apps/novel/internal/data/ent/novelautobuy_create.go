@@ -27,14 +27,6 @@ func (nabc *NovelAutoBuyCreate) SetUserId(i int64) *NovelAutoBuyCreate {
 	return nabc
 }
 
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nabc *NovelAutoBuyCreate) SetNillableUserId(i *int64) *NovelAutoBuyCreate {
-	if i != nil {
-		nabc.SetUserId(*i)
-	}
-	return nabc
-}
-
 // SetNovelId sets the "novelId" field.
 func (nabc *NovelAutoBuyCreate) SetNovelId(i int64) *NovelAutoBuyCreate {
 	nabc.mutation.SetNovelId(i)
@@ -225,6 +217,9 @@ func (nabc *NovelAutoBuyCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (nabc *NovelAutoBuyCreate) check() error {
+	if _, ok := nabc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := nabc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -270,14 +265,6 @@ func (nabc *NovelAutoBuyCreate) createSpec() (*NovelAutoBuy, *sqlgraph.CreateSpe
 			},
 		}
 	)
-	if value, ok := nabc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelautobuy.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := nabc.mutation.NovelId(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -343,7 +330,7 @@ func (nabc *NovelAutoBuyCreate) createSpec() (*NovelAutoBuy, *sqlgraph.CreateSpe
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_auto_buy_novels = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

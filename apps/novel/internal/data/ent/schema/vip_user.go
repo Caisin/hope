@@ -15,6 +15,8 @@ type VipUser struct {
 // Fields of the VipUser.
 func (VipUser) Fields() []ent.Field {
 	fields := []ent.Field{
+		field.Int64("userId").
+			Comment(`用户ID`),
 		field.Int64("vipType").Optional().
 			Comment(`vip类型`),
 		field.Int64("svipType").Optional().
@@ -34,6 +36,6 @@ func (VipUser) Fields() []ent.Field {
 // Edges of the VipUser.
 func (VipUser) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Unique().Comment("用户").Ref("vips"),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Unique().Comment("用户").Ref("vips"),
 	}
 }

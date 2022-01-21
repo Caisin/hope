@@ -21,6 +21,18 @@ type SysDictDataCreate struct {
 	hooks    []Hook
 }
 
+// SetTypeId sets the "typeId" field.
+func (sddc *SysDictDataCreate) SetTypeId(i int64) *SysDictDataCreate {
+	sddc.mutation.SetTypeId(i)
+	return sddc
+}
+
+// SetTypeCode sets the "typeCode" field.
+func (sddc *SysDictDataCreate) SetTypeCode(s string) *SysDictDataCreate {
+	sddc.mutation.SetTypeCode(s)
+	return sddc
+}
+
 // SetDictSort sets the "dictSort" field.
 func (sddc *SysDictDataCreate) SetDictSort(i int32) *SysDictDataCreate {
 	sddc.mutation.SetDictSort(i)
@@ -195,14 +207,6 @@ func (sddc *SysDictDataCreate) SetDictTypeID(id int64) *SysDictDataCreate {
 	return sddc
 }
 
-// SetNillableDictTypeID sets the "dictType" edge to the SysDictType entity by ID if the given value is not nil.
-func (sddc *SysDictDataCreate) SetNillableDictTypeID(id *int64) *SysDictDataCreate {
-	if id != nil {
-		sddc = sddc.SetDictTypeID(*id)
-	}
-	return sddc
-}
-
 // SetDictType sets the "dictType" edge to the SysDictType entity.
 func (sddc *SysDictDataCreate) SetDictType(s *SysDictType) *SysDictDataCreate {
 	return sddc.SetDictTypeID(s.ID)
@@ -303,6 +307,12 @@ func (sddc *SysDictDataCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sddc *SysDictDataCreate) check() error {
+	if _, ok := sddc.mutation.TypeId(); !ok {
+		return &ValidationError{Name: "typeId", err: errors.New(`ent: missing required field "typeId"`)}
+	}
+	if _, ok := sddc.mutation.TypeCode(); !ok {
+		return &ValidationError{Name: "typeCode", err: errors.New(`ent: missing required field "typeCode"`)}
+	}
 	if _, ok := sddc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -317,6 +327,9 @@ func (sddc *SysDictDataCreate) check() error {
 	}
 	if _, ok := sddc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := sddc.mutation.DictTypeID(); !ok {
+		return &ValidationError{Name: "dictType", err: errors.New("ent: missing required edge \"dictType\"")}
 	}
 	return nil
 }
@@ -345,6 +358,14 @@ func (sddc *SysDictDataCreate) createSpec() (*SysDictData, *sqlgraph.CreateSpec)
 			},
 		}
 	)
+	if value, ok := sddc.mutation.TypeCode(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysdictdata.FieldTypeCode,
+		})
+		_node.TypeCode = value
+	}
 	if value, ok := sddc.mutation.DictSort(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -458,7 +479,7 @@ func (sddc *SysDictDataCreate) createSpec() (*SysDictData, *sqlgraph.CreateSpec)
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.sys_dict_type_data_list = &nodes[0]
+		_node.TypeId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

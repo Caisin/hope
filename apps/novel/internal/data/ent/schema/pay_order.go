@@ -55,8 +55,14 @@ func (p OrderState) Validate() error {
 // Fields of the PayOrder.
 func (PayOrder) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.String("orderId").
+		field.String("orderId").Unique().
 			Comment("订单号"),
+		field.Int64("userId").
+			Comment(`用户ID`),
+		field.Int64("chId").
+			Comment(`渠道ID`),
+		field.Int64("agreementId").
+			Comment(`签约协议号`),
 		field.String("lastRead").
 			Comment("最后阅读书籍"),
 		field.String("lastChapter").
@@ -113,15 +119,15 @@ func (PayOrder) Fields() []ent.Field {
 func (PayOrder) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.
-			From("user", SocialUser.Type).Comment("所属用户").
+			From("user", SocialUser.Type).Field("userId").Required().Comment("所属用户").
 			Ref("orders").
 			Unique(),
 		edge.
-			From("channel", AdChannel.Type).Comment("进入渠道").
+			From("channel", AdChannel.Type).Field("chId").Required().Comment("进入渠道").
 			Ref("orders").
 			Unique(),
 		edge.
-			From("agreement", AgreementLog.Type).Comment("自动扣费协议").
+			From("agreement", AgreementLog.Type).Field("agreementId").Required().Comment("自动扣费协议").
 			Ref("orders").
 			Unique(),
 	}

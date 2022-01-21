@@ -93,6 +93,13 @@ func IDLTE(id int64) predicate.SysLoginLog {
 	})
 }
 
+// UserId applies equality check predicate on the "userId" field. It's identical to UserIdEQ.
+func UserId(v int64) predicate.SysLoginLog {
+	return predicate.SysLoginLog(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUserId), v))
+	})
+}
+
 // Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
 func Status(v string) predicate.SysLoginLog {
 	return predicate.SysLoginLog(func(s *sql.Selector) {
@@ -188,6 +195,68 @@ func UpdateBy(v int64) predicate.SysLoginLog {
 func TenantId(v int64) predicate.SysLoginLog {
 	return predicate.SysLoginLog(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTenantId), v))
+	})
+}
+
+// UserIdEQ applies the EQ predicate on the "userId" field.
+func UserIdEQ(v int64) predicate.SysLoginLog {
+	return predicate.SysLoginLog(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUserId), v))
+	})
+}
+
+// UserIdNEQ applies the NEQ predicate on the "userId" field.
+func UserIdNEQ(v int64) predicate.SysLoginLog {
+	return predicate.SysLoginLog(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUserId), v))
+	})
+}
+
+// UserIdIn applies the In predicate on the "userId" field.
+func UserIdIn(vs ...int64) predicate.SysLoginLog {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysLoginLog(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUserId), v...))
+	})
+}
+
+// UserIdNotIn applies the NotIn predicate on the "userId" field.
+func UserIdNotIn(vs ...int64) predicate.SysLoginLog {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysLoginLog(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUserId), v...))
+	})
+}
+
+// UserIdIsNil applies the IsNil predicate on the "userId" field.
+func UserIdIsNil() predicate.SysLoginLog {
+	return predicate.SysLoginLog(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldUserId)))
+	})
+}
+
+// UserIdNotNil applies the NotNil predicate on the "userId" field.
+func UserIdNotNil() predicate.SysLoginLog {
+	return predicate.SysLoginLog(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldUserId)))
 	})
 }
 

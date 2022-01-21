@@ -34,6 +34,8 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		SetUsername(req.Username).
 		SetNickName(req.NickName).
 		SetPhone(req.Phone).
+		SetDeptId(req.DeptId).
+		SetPostId(req.PostId).
 		SetRoleId(req.RoleId).
 		SetAvatar(req.Avatar).
 		SetSex(req.Sex).
@@ -116,6 +118,12 @@ func (r *sysUserRepo) genCondition(req *v1.SysUserReq) []predicate.SysUser {
 	}
 	if str.IsBlank(req.Phone) {
 		list = append(list, sysuser.PhoneContains(req.Phone))
+	}
+	if req.DeptId > 0 {
+		list = append(list, sysuser.DeptId(req.DeptId))
+	}
+	if req.PostId > 0 {
+		list = append(list, sysuser.PostId(req.PostId))
 	}
 	if req.RoleId > 0 {
 		list = append(list, sysuser.RoleId(req.RoleId))

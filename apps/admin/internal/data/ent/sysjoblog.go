@@ -19,7 +19,7 @@ type SysJobLog struct {
 	ID int64 `json:"id,omitempty"`
 	// JobId holds the value of the "jobId" field.
 	// 编码
-	JobId int32 `json:"jobId,omitempty"`
+	JobId int64 `json:"jobId,omitempty"`
 	// JobName holds the value of the "jobName" field.
 	// 名称
 	JobName string `json:"jobName,omitempty"`
@@ -52,8 +52,7 @@ type SysJobLog struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysJobLogQuery when eager-loading is set.
-	Edges        SysJobLogEdges `json:"edges"`
-	sys_job_logs *int64
+	Edges SysJobLogEdges `json:"edges"`
 }
 
 // SysJobLogEdges holds the relations/edges for other nodes in the graph.
@@ -92,8 +91,6 @@ func (*SysJobLog) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case sysjoblog.FieldCreatedAt, sysjoblog.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case sysjoblog.ForeignKeys[0]: // sys_job_logs
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysJobLog", columns[i])
 		}
@@ -119,7 +116,7 @@ func (sjl *SysJobLog) assignValues(columns []string, values []interface{}) error
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field jobId", values[i])
 			} else if value.Valid {
-				sjl.JobId = int32(value.Int64)
+				sjl.JobId = value.Int64
 			}
 		case sysjoblog.FieldJobName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -180,13 +177,6 @@ func (sjl *SysJobLog) assignValues(columns []string, values []interface{}) error
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				sjl.TenantId = value.Int64
-			}
-		case sysjoblog.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field sys_job_logs", value)
-			} else if value.Valid {
-				sjl.sys_job_logs = new(int64)
-				*sjl.sys_job_logs = int64(value.Int64)
 			}
 		}
 	}

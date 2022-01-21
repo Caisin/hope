@@ -15,7 +15,7 @@ type NovelBuyChapterRecord struct {
 // Fields of the NovelBuyChapterRecord.
 func (NovelBuyChapterRecord) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.String("userName").Optional().
 			Comment(`用户名称`),
@@ -47,6 +47,6 @@ func (NovelBuyChapterRecord) Fields() []ent.Field {
 // Edges of the NovelBuyChapterRecord.
 func (NovelBuyChapterRecord) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("buyChapterRecords").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("buyChapterRecords").Unique(),
 	}
 }

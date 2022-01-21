@@ -115,8 +115,7 @@ type Novel struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the NovelQuery when eager-loading is set.
-	Edges                 NovelEdges `json:"edges"`
-	novel_classify_novels *int64
+	Edges NovelEdges `json:"edges"`
 }
 
 // NovelEdges holds the relations/edges for other nodes in the graph.
@@ -175,8 +174,6 @@ func (*Novel) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case novel.FieldSignDate, novel.FieldCreatedAt, novel.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case novel.ForeignKeys[0]: // novel_classify_novels
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Novel", columns[i])
 		}
@@ -389,13 +386,6 @@ func (n *Novel) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				n.TenantId = value.Int64
-			}
-		case novel.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field novel_classify_novels", value)
-			} else if value.Valid {
-				n.novel_classify_novels = new(int64)
-				*n.novel_classify_novels = int64(value.Int64)
 			}
 		}
 	}

@@ -544,48 +544,6 @@ func UserIdNotIn(vs ...int64) predicate.AssetChangeLog {
 	})
 }
 
-// UserIdGT applies the GT predicate on the "userId" field.
-func UserIdGT(v int64) predicate.AssetChangeLog {
-	return predicate.AssetChangeLog(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdGTE applies the GTE predicate on the "userId" field.
-func UserIdGTE(v int64) predicate.AssetChangeLog {
-	return predicate.AssetChangeLog(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLT applies the LT predicate on the "userId" field.
-func UserIdLT(v int64) predicate.AssetChangeLog {
-	return predicate.AssetChangeLog(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLTE applies the LTE predicate on the "userId" field.
-func UserIdLTE(v int64) predicate.AssetChangeLog {
-	return predicate.AssetChangeLog(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdIsNil applies the IsNil predicate on the "userId" field.
-func UserIdIsNil() predicate.AssetChangeLog {
-	return predicate.AssetChangeLog(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldUserId)))
-	})
-}
-
-// UserIdNotNil applies the NotNil predicate on the "userId" field.
-func UserIdNotNil() predicate.AssetChangeLog {
-	return predicate.AssetChangeLog(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldUserId)))
-	})
-}
-
 // AssetItemIdEQ applies the EQ predicate on the "assetItemId" field.
 func AssetItemIdEQ(v int32) predicate.AssetChangeLog {
 	return predicate.AssetChangeLog(func(s *sql.Selector) {

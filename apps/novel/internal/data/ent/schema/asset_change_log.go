@@ -21,7 +21,7 @@ func (AssetChangeLog) Fields() []ent.Field {
 			Comment(`账本ID`),
 		field.Int64("eventId").Optional().
 			Comment(`关联用户事件Id`),
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.Int32("assetItemId").Optional().
 			Comment(`账本科目`),
@@ -41,6 +41,6 @@ func (AssetChangeLog) Fields() []ent.Field {
 // Edges of the AssetChangeLog.
 func (AssetChangeLog) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("assetLogs").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("assetLogs").Unique(),
 	}
 }

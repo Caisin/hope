@@ -93,6 +93,20 @@ func IDLTE(id int64) predicate.SysDictData {
 	})
 }
 
+// TypeId applies equality check predicate on the "typeId" field. It's identical to TypeIdEQ.
+func TypeId(v int64) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTypeId), v))
+	})
+}
+
+// TypeCode applies equality check predicate on the "typeCode" field. It's identical to TypeCodeEQ.
+func TypeCode(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTypeCode), v))
+	})
+}
+
 // DictSort applies equality check predicate on the "dictSort" field. It's identical to DictSortEQ.
 func DictSort(v int32) predicate.SysDictData {
 	return predicate.SysDictData(func(s *sql.Selector) {
@@ -174,6 +188,165 @@ func UpdateBy(v int64) predicate.SysDictData {
 func TenantId(v int64) predicate.SysDictData {
 	return predicate.SysDictData(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTenantId), v))
+	})
+}
+
+// TypeIdEQ applies the EQ predicate on the "typeId" field.
+func TypeIdEQ(v int64) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTypeId), v))
+	})
+}
+
+// TypeIdNEQ applies the NEQ predicate on the "typeId" field.
+func TypeIdNEQ(v int64) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTypeId), v))
+	})
+}
+
+// TypeIdIn applies the In predicate on the "typeId" field.
+func TypeIdIn(vs ...int64) predicate.SysDictData {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDictData(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTypeId), v...))
+	})
+}
+
+// TypeIdNotIn applies the NotIn predicate on the "typeId" field.
+func TypeIdNotIn(vs ...int64) predicate.SysDictData {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDictData(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTypeId), v...))
+	})
+}
+
+// TypeCodeEQ applies the EQ predicate on the "typeCode" field.
+func TypeCodeEQ(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeNEQ applies the NEQ predicate on the "typeCode" field.
+func TypeCodeNEQ(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeIn applies the In predicate on the "typeCode" field.
+func TypeCodeIn(vs ...string) predicate.SysDictData {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDictData(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTypeCode), v...))
+	})
+}
+
+// TypeCodeNotIn applies the NotIn predicate on the "typeCode" field.
+func TypeCodeNotIn(vs ...string) predicate.SysDictData {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDictData(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTypeCode), v...))
+	})
+}
+
+// TypeCodeGT applies the GT predicate on the "typeCode" field.
+func TypeCodeGT(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeGTE applies the GTE predicate on the "typeCode" field.
+func TypeCodeGTE(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeLT applies the LT predicate on the "typeCode" field.
+func TypeCodeLT(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeLTE applies the LTE predicate on the "typeCode" field.
+func TypeCodeLTE(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeContains applies the Contains predicate on the "typeCode" field.
+func TypeCodeContains(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeHasPrefix applies the HasPrefix predicate on the "typeCode" field.
+func TypeCodeHasPrefix(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeHasSuffix applies the HasSuffix predicate on the "typeCode" field.
+func TypeCodeHasSuffix(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeEqualFold applies the EqualFold predicate on the "typeCode" field.
+func TypeCodeEqualFold(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTypeCode), v))
+	})
+}
+
+// TypeCodeContainsFold applies the ContainsFold predicate on the "typeCode" field.
+func TypeCodeContainsFold(v string) predicate.SysDictData {
+	return predicate.SysDictData(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTypeCode), v))
 	})
 }
 

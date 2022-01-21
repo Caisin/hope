@@ -23,8 +23,6 @@ func (BookPackage) Fields() []ent.Field {
 			Comment(`活动打包价格`),
 		field.Int64("dailyPrice").Optional().
 			Comment(`日常价格,既所有书本正常购买的价格`),
-		field.String("novelIds").Optional().
-			Comment(`分组编码`),
 	}
 	fields = append(fields, mixin.EETimeFields()...)
 	fields = append(fields, mixin.Fields()...)

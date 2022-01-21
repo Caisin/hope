@@ -30,6 +30,24 @@ func (poc *PayOrderCreate) SetOrderId(s string) *PayOrderCreate {
 	return poc
 }
 
+// SetUserId sets the "userId" field.
+func (poc *PayOrderCreate) SetUserId(i int64) *PayOrderCreate {
+	poc.mutation.SetUserId(i)
+	return poc
+}
+
+// SetChId sets the "chId" field.
+func (poc *PayOrderCreate) SetChId(i int64) *PayOrderCreate {
+	poc.mutation.SetChId(i)
+	return poc
+}
+
+// SetAgreementId sets the "agreementId" field.
+func (poc *PayOrderCreate) SetAgreementId(i int64) *PayOrderCreate {
+	poc.mutation.SetAgreementId(i)
+	return poc
+}
+
 // SetLastRead sets the "lastRead" field.
 func (poc *PayOrderCreate) SetLastRead(s string) *PayOrderCreate {
 	poc.mutation.SetLastRead(s)
@@ -256,14 +274,6 @@ func (poc *PayOrderCreate) SetUserID(id int64) *PayOrderCreate {
 	return poc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (poc *PayOrderCreate) SetNillableUserID(id *int64) *PayOrderCreate {
-	if id != nil {
-		poc = poc.SetUserID(*id)
-	}
-	return poc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (poc *PayOrderCreate) SetUser(s *SocialUser) *PayOrderCreate {
 	return poc.SetUserID(s.ID)
@@ -275,14 +285,6 @@ func (poc *PayOrderCreate) SetChannelID(id int64) *PayOrderCreate {
 	return poc
 }
 
-// SetNillableChannelID sets the "channel" edge to the AdChannel entity by ID if the given value is not nil.
-func (poc *PayOrderCreate) SetNillableChannelID(id *int64) *PayOrderCreate {
-	if id != nil {
-		poc = poc.SetChannelID(*id)
-	}
-	return poc
-}
-
 // SetChannel sets the "channel" edge to the AdChannel entity.
 func (poc *PayOrderCreate) SetChannel(a *AdChannel) *PayOrderCreate {
 	return poc.SetChannelID(a.ID)
@@ -291,14 +293,6 @@ func (poc *PayOrderCreate) SetChannel(a *AdChannel) *PayOrderCreate {
 // SetAgreementID sets the "agreement" edge to the AgreementLog entity by ID.
 func (poc *PayOrderCreate) SetAgreementID(id int64) *PayOrderCreate {
 	poc.mutation.SetAgreementID(id)
-	return poc
-}
-
-// SetNillableAgreementID sets the "agreement" edge to the AgreementLog entity by ID if the given value is not nil.
-func (poc *PayOrderCreate) SetNillableAgreementID(id *int64) *PayOrderCreate {
-	if id != nil {
-		poc = poc.SetAgreementID(*id)
-	}
 	return poc
 }
 
@@ -409,6 +403,15 @@ func (poc *PayOrderCreate) check() error {
 	if _, ok := poc.mutation.OrderId(); !ok {
 		return &ValidationError{Name: "orderId", err: errors.New(`ent: missing required field "orderId"`)}
 	}
+	if _, ok := poc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
+	if _, ok := poc.mutation.ChId(); !ok {
+		return &ValidationError{Name: "chId", err: errors.New(`ent: missing required field "chId"`)}
+	}
+	if _, ok := poc.mutation.AgreementId(); !ok {
+		return &ValidationError{Name: "agreementId", err: errors.New(`ent: missing required field "agreementId"`)}
+	}
 	if _, ok := poc.mutation.LastRead(); !ok {
 		return &ValidationError{Name: "lastRead", err: errors.New(`ent: missing required field "lastRead"`)}
 	}
@@ -474,6 +477,15 @@ func (poc *PayOrderCreate) check() error {
 	}
 	if _, ok := poc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := poc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+	}
+	if _, ok := poc.mutation.ChannelID(); !ok {
+		return &ValidationError{Name: "channel", err: errors.New("ent: missing required edge \"channel\"")}
+	}
+	if _, ok := poc.mutation.AgreementID(); !ok {
+		return &ValidationError{Name: "agreement", err: errors.New("ent: missing required edge \"agreement\"")}
 	}
 	return nil
 }
@@ -703,7 +715,7 @@ func (poc *PayOrderCreate) createSpec() (*PayOrder, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_orders = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := poc.mutation.ChannelIDs(); len(nodes) > 0 {
@@ -723,7 +735,7 @@ func (poc *PayOrderCreate) createSpec() (*PayOrder, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.ad_channel_orders = &nodes[0]
+		_node.ChId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := poc.mutation.AgreementIDs(); len(nodes) > 0 {
@@ -743,7 +755,7 @@ func (poc *PayOrderCreate) createSpec() (*PayOrder, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.agreement_log_orders = &nodes[0]
+		_node.AgreementId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

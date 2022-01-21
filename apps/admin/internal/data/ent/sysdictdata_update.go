@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdictdata"
@@ -25,6 +26,18 @@ type SysDictDataUpdate struct {
 // Where appends a list predicates to the SysDictDataUpdate builder.
 func (sddu *SysDictDataUpdate) Where(ps ...predicate.SysDictData) *SysDictDataUpdate {
 	sddu.mutation.Where(ps...)
+	return sddu
+}
+
+// SetTypeId sets the "typeId" field.
+func (sddu *SysDictDataUpdate) SetTypeId(i int64) *SysDictDataUpdate {
+	sddu.mutation.SetTypeId(i)
+	return sddu
+}
+
+// SetTypeCode sets the "typeCode" field.
+func (sddu *SysDictDataUpdate) SetTypeCode(s string) *SysDictDataUpdate {
+	sddu.mutation.SetTypeCode(s)
 	return sddu
 }
 
@@ -257,14 +270,6 @@ func (sddu *SysDictDataUpdate) SetDictTypeID(id int64) *SysDictDataUpdate {
 	return sddu
 }
 
-// SetNillableDictTypeID sets the "dictType" edge to the SysDictType entity by ID if the given value is not nil.
-func (sddu *SysDictDataUpdate) SetNillableDictTypeID(id *int64) *SysDictDataUpdate {
-	if id != nil {
-		sddu = sddu.SetDictTypeID(*id)
-	}
-	return sddu
-}
-
 // SetDictType sets the "dictType" edge to the SysDictType entity.
 func (sddu *SysDictDataUpdate) SetDictType(s *SysDictType) *SysDictDataUpdate {
 	return sddu.SetDictTypeID(s.ID)
@@ -289,12 +294,18 @@ func (sddu *SysDictDataUpdate) Save(ctx context.Context) (int, error) {
 	)
 	sddu.defaults()
 	if len(sddu.hooks) == 0 {
+		if err = sddu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = sddu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SysDictDataMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = sddu.check(); err != nil {
+				return 0, err
 			}
 			sddu.mutation = mutation
 			affected, err = sddu.sqlSave(ctx)
@@ -344,6 +355,14 @@ func (sddu *SysDictDataUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (sddu *SysDictDataUpdate) check() error {
+	if _, ok := sddu.mutation.DictTypeID(); sddu.mutation.DictTypeCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"dictType\"")
+	}
+	return nil
+}
+
 func (sddu *SysDictDataUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -361,6 +380,13 @@ func (sddu *SysDictDataUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sddu.mutation.TypeCode(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysdictdata.FieldTypeCode,
+		})
 	}
 	if value, ok := sddu.mutation.DictSort(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -568,6 +594,18 @@ type SysDictDataUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *SysDictDataMutation
+}
+
+// SetTypeId sets the "typeId" field.
+func (sdduo *SysDictDataUpdateOne) SetTypeId(i int64) *SysDictDataUpdateOne {
+	sdduo.mutation.SetTypeId(i)
+	return sdduo
+}
+
+// SetTypeCode sets the "typeCode" field.
+func (sdduo *SysDictDataUpdateOne) SetTypeCode(s string) *SysDictDataUpdateOne {
+	sdduo.mutation.SetTypeCode(s)
+	return sdduo
 }
 
 // SetDictSort sets the "dictSort" field.
@@ -799,14 +837,6 @@ func (sdduo *SysDictDataUpdateOne) SetDictTypeID(id int64) *SysDictDataUpdateOne
 	return sdduo
 }
 
-// SetNillableDictTypeID sets the "dictType" edge to the SysDictType entity by ID if the given value is not nil.
-func (sdduo *SysDictDataUpdateOne) SetNillableDictTypeID(id *int64) *SysDictDataUpdateOne {
-	if id != nil {
-		sdduo = sdduo.SetDictTypeID(*id)
-	}
-	return sdduo
-}
-
 // SetDictType sets the "dictType" edge to the SysDictType entity.
 func (sdduo *SysDictDataUpdateOne) SetDictType(s *SysDictType) *SysDictDataUpdateOne {
 	return sdduo.SetDictTypeID(s.ID)
@@ -838,12 +868,18 @@ func (sdduo *SysDictDataUpdateOne) Save(ctx context.Context) (*SysDictData, erro
 	)
 	sdduo.defaults()
 	if len(sdduo.hooks) == 0 {
+		if err = sdduo.check(); err != nil {
+			return nil, err
+		}
 		node, err = sdduo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SysDictDataMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = sdduo.check(); err != nil {
+				return nil, err
 			}
 			sdduo.mutation = mutation
 			node, err = sdduo.sqlSave(ctx)
@@ -893,6 +929,14 @@ func (sdduo *SysDictDataUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (sdduo *SysDictDataUpdateOne) check() error {
+	if _, ok := sdduo.mutation.DictTypeID(); sdduo.mutation.DictTypeCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"dictType\"")
+	}
+	return nil
+}
+
 func (sdduo *SysDictDataUpdateOne) sqlSave(ctx context.Context) (_node *SysDictData, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -927,6 +971,13 @@ func (sdduo *SysDictDataUpdateOne) sqlSave(ctx context.Context) (_node *SysDictD
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sdduo.mutation.TypeCode(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysdictdata.FieldTypeCode,
+		})
 	}
 	if value, ok := sdduo.mutation.DictSort(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

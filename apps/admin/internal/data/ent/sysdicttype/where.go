@@ -100,10 +100,10 @@ func DictName(v string) predicate.SysDictType {
 	})
 }
 
-// DictType applies equality check predicate on the "dictType" field. It's identical to DictTypeEQ.
-func DictType(v string) predicate.SysDictType {
+// TypeCode applies equality check predicate on the "typeCode" field. It's identical to TypeCodeEQ.
+func TypeCode(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDictType), v))
+		s.Where(sql.EQ(s.C(FieldTypeCode), v))
 	})
 }
 
@@ -281,22 +281,22 @@ func DictNameContainsFold(v string) predicate.SysDictType {
 	})
 }
 
-// DictTypeEQ applies the EQ predicate on the "dictType" field.
-func DictTypeEQ(v string) predicate.SysDictType {
+// TypeCodeEQ applies the EQ predicate on the "typeCode" field.
+func TypeCodeEQ(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDictType), v))
+		s.Where(sql.EQ(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeNEQ applies the NEQ predicate on the "dictType" field.
-func DictTypeNEQ(v string) predicate.SysDictType {
+// TypeCodeNEQ applies the NEQ predicate on the "typeCode" field.
+func TypeCodeNEQ(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDictType), v))
+		s.Where(sql.NEQ(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeIn applies the In predicate on the "dictType" field.
-func DictTypeIn(vs ...string) predicate.SysDictType {
+// TypeCodeIn applies the In predicate on the "typeCode" field.
+func TypeCodeIn(vs ...string) predicate.SysDictType {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -308,12 +308,12 @@ func DictTypeIn(vs ...string) predicate.SysDictType {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldDictType), v...))
+		s.Where(sql.In(s.C(FieldTypeCode), v...))
 	})
 }
 
-// DictTypeNotIn applies the NotIn predicate on the "dictType" field.
-func DictTypeNotIn(vs ...string) predicate.SysDictType {
+// TypeCodeNotIn applies the NotIn predicate on the "typeCode" field.
+func TypeCodeNotIn(vs ...string) predicate.SysDictType {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -325,84 +325,70 @@ func DictTypeNotIn(vs ...string) predicate.SysDictType {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldDictType), v...))
+		s.Where(sql.NotIn(s.C(FieldTypeCode), v...))
 	})
 }
 
-// DictTypeGT applies the GT predicate on the "dictType" field.
-func DictTypeGT(v string) predicate.SysDictType {
+// TypeCodeGT applies the GT predicate on the "typeCode" field.
+func TypeCodeGT(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDictType), v))
+		s.Where(sql.GT(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeGTE applies the GTE predicate on the "dictType" field.
-func DictTypeGTE(v string) predicate.SysDictType {
+// TypeCodeGTE applies the GTE predicate on the "typeCode" field.
+func TypeCodeGTE(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDictType), v))
+		s.Where(sql.GTE(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeLT applies the LT predicate on the "dictType" field.
-func DictTypeLT(v string) predicate.SysDictType {
+// TypeCodeLT applies the LT predicate on the "typeCode" field.
+func TypeCodeLT(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDictType), v))
+		s.Where(sql.LT(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeLTE applies the LTE predicate on the "dictType" field.
-func DictTypeLTE(v string) predicate.SysDictType {
+// TypeCodeLTE applies the LTE predicate on the "typeCode" field.
+func TypeCodeLTE(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDictType), v))
+		s.Where(sql.LTE(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeContains applies the Contains predicate on the "dictType" field.
-func DictTypeContains(v string) predicate.SysDictType {
+// TypeCodeContains applies the Contains predicate on the "typeCode" field.
+func TypeCodeContains(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldDictType), v))
+		s.Where(sql.Contains(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeHasPrefix applies the HasPrefix predicate on the "dictType" field.
-func DictTypeHasPrefix(v string) predicate.SysDictType {
+// TypeCodeHasPrefix applies the HasPrefix predicate on the "typeCode" field.
+func TypeCodeHasPrefix(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldDictType), v))
+		s.Where(sql.HasPrefix(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeHasSuffix applies the HasSuffix predicate on the "dictType" field.
-func DictTypeHasSuffix(v string) predicate.SysDictType {
+// TypeCodeHasSuffix applies the HasSuffix predicate on the "typeCode" field.
+func TypeCodeHasSuffix(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldDictType), v))
+		s.Where(sql.HasSuffix(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeIsNil applies the IsNil predicate on the "dictType" field.
-func DictTypeIsNil() predicate.SysDictType {
+// TypeCodeEqualFold applies the EqualFold predicate on the "typeCode" field.
+func TypeCodeEqualFold(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldDictType)))
+		s.Where(sql.EqualFold(s.C(FieldTypeCode), v))
 	})
 }
 
-// DictTypeNotNil applies the NotNil predicate on the "dictType" field.
-func DictTypeNotNil() predicate.SysDictType {
+// TypeCodeContainsFold applies the ContainsFold predicate on the "typeCode" field.
+func TypeCodeContainsFold(v string) predicate.SysDictType {
 	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldDictType)))
-	})
-}
-
-// DictTypeEqualFold applies the EqualFold predicate on the "dictType" field.
-func DictTypeEqualFold(v string) predicate.SysDictType {
-	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldDictType), v))
-	})
-}
-
-// DictTypeContainsFold applies the ContainsFold predicate on the "dictType" field.
-func DictTypeContainsFold(v string) predicate.SysDictType {
-	return predicate.SysDictType(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldDictType), v))
+		s.Where(sql.ContainsFold(s.C(FieldTypeCode), v))
 	})
 }
 

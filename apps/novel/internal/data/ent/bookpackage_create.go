@@ -77,20 +77,6 @@ func (bpc *BookPackageCreate) SetNillableDailyPrice(i *int64) *BookPackageCreate
 	return bpc
 }
 
-// SetNovelIds sets the "novelIds" field.
-func (bpc *BookPackageCreate) SetNovelIds(s string) *BookPackageCreate {
-	bpc.mutation.SetNovelIds(s)
-	return bpc
-}
-
-// SetNillableNovelIds sets the "novelIds" field if the given value is not nil.
-func (bpc *BookPackageCreate) SetNillableNovelIds(s *string) *BookPackageCreate {
-	if s != nil {
-		bpc.SetNovelIds(*s)
-	}
-	return bpc
-}
-
 // SetEffectTime sets the "effectTime" field.
 func (bpc *BookPackageCreate) SetEffectTime(t time.Time) *BookPackageCreate {
 	bpc.mutation.SetEffectTime(t)
@@ -386,14 +372,6 @@ func (bpc *BookPackageCreate) createSpec() (*BookPackage, *sqlgraph.CreateSpec) 
 			Column: bookpackage.FieldDailyPrice,
 		})
 		_node.DailyPrice = value
-	}
-	if value, ok := bpc.mutation.NovelIds(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: bookpackage.FieldNovelIds,
-		})
-		_node.NovelIds = value
 	}
 	if value, ok := bpc.mutation.EffectTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

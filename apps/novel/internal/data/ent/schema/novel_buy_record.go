@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,7 +15,7 @@ type NovelBuyRecord struct {
 // Fields of the NovelBuyRecord.
 func (NovelBuyRecord) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.String("userName").Optional().
 			Comment(`用户名称`),
@@ -39,5 +40,7 @@ func (NovelBuyRecord) Fields() []ent.Field {
 
 // Edges of the NovelBuyRecord.
 func (NovelBuyRecord) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("buyNovelRecords").Unique(),
+	}
 }

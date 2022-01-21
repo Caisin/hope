@@ -66,7 +66,6 @@ var (
 	// AdChangeLogsColumns holds the columns for the "ad_change_logs" table.
 	AdChangeLogsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "ad_id", Type: field.TypeString, Nullable: true},
 		{Name: "ch_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "device_id", Type: field.TypeString, Nullable: true},
@@ -76,7 +75,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_ads", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// AdChangeLogsTable holds the schema information for the "ad_change_logs" table.
 	AdChangeLogsTable = &schema.Table{
@@ -86,7 +85,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "ad_change_logs_social_users_ads",
-				Columns:    []*schema.Column{AdChangeLogsColumns[11]},
+				Columns:    []*schema.Column{AdChangeLogsColumns[10]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -163,7 +162,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_balances", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// AmBalancesTable holds the schema information for the "am_balances" table.
 	AmBalancesTable = &schema.Table{
@@ -205,7 +204,6 @@ var (
 		{Name: "order_id", Type: field.TypeString, Nullable: true},
 		{Name: "balance_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "event_id", Type: field.TypeInt64, Nullable: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "asset_item_id", Type: field.TypeInt32, Nullable: true},
 		{Name: "amount", Type: field.TypeInt64, Nullable: true},
 		{Name: "old_balance", Type: field.TypeInt64, Nullable: true},
@@ -216,7 +214,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_asset_logs", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// AssetChangeLogsTable holds the schema information for the "asset_change_logs" table.
 	AssetChangeLogsTable = &schema.Table{
@@ -226,7 +224,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "asset_change_logs_social_users_assetLogs",
-				Columns:    []*schema.Column{AssetChangeLogsColumns[15]},
+				Columns:    []*schema.Column{AssetChangeLogsColumns[14]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -260,7 +258,6 @@ var (
 		{Name: "package_name", Type: field.TypeString, Nullable: true},
 		{Name: "price", Type: field.TypeInt64, Nullable: true},
 		{Name: "daily_price", Type: field.TypeInt64, Nullable: true},
-		{Name: "novel_ids", Type: field.TypeString, Nullable: true},
 		{Name: "effect_time", Type: field.TypeTime},
 		{Name: "expired_time", Type: field.TypeTime},
 		{Name: "created_at", Type: field.TypeTime},
@@ -375,7 +372,6 @@ var (
 	// ListenRecordsColumns holds the columns for the "listen_records" table.
 	ListenRecordsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64},
 		{Name: "chapter_id", Type: field.TypeInt64},
 		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "listen_times", Type: field.TypeInt64, Nullable: true},
@@ -387,7 +383,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_listen_records", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// ListenRecordsTable holds the schema information for the "listen_records" table.
 	ListenRecordsTable = &schema.Table{
@@ -397,7 +393,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "listen_records_social_users_listenRecords",
-				Columns:    []*schema.Column{ListenRecordsColumns[13]},
+				Columns:    []*schema.Column{ListenRecordsColumns[12]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -406,7 +402,6 @@ var (
 	// NovelsColumns holds the columns for the "novels" table.
 	NovelsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "classify_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "classify_name", Type: field.TypeString, Nullable: true},
 		{Name: "author_id", Type: field.TypeString, Nullable: true},
 		{Name: "title", Type: field.TypeString, Nullable: true},
@@ -438,7 +433,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "novel_classify_novels", Type: field.TypeInt64, Nullable: true},
+		{Name: "classify_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// NovelsTable holds the schema information for the "novels" table.
 	NovelsTable = &schema.Table{
@@ -448,7 +443,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "novels_novel_classifies_novels",
-				Columns:    []*schema.Column{NovelsColumns[33]},
+				Columns:    []*schema.Column{NovelsColumns[32]},
 				RefColumns: []*schema.Column{NovelClassifiesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -457,14 +452,13 @@ var (
 	// NovelAutoBuysColumns holds the columns for the "novel_auto_buys" table.
 	NovelAutoBuysColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_auto_buy_novels", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// NovelAutoBuysTable holds the schema information for the "novel_auto_buys" table.
 	NovelAutoBuysTable = &schema.Table{
@@ -474,7 +468,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "novel_auto_buys_social_users_autoBuyNovels",
-				Columns:    []*schema.Column{NovelAutoBuysColumns[8]},
+				Columns:    []*schema.Column{NovelAutoBuysColumns[7]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -483,7 +477,6 @@ var (
 	// NovelBookshelvesColumns holds the columns for the "novel_bookshelves" table.
 	NovelBookshelvesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "user_name", Type: field.TypeString, Nullable: true},
 		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "last_read_time", Type: field.TypeTime, Nullable: true},
@@ -496,7 +489,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_bookshelves", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// NovelBookshelvesTable holds the schema information for the "novel_bookshelves" table.
 	NovelBookshelvesTable = &schema.Table{
@@ -506,7 +499,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "novel_bookshelves_social_users_bookshelves",
-				Columns:    []*schema.Column{NovelBookshelvesColumns[14]},
+				Columns:    []*schema.Column{NovelBookshelvesColumns[13]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -515,7 +508,6 @@ var (
 	// NovelBuyChapterRecordsColumns holds the columns for the "novel_buy_chapter_records" table.
 	NovelBuyChapterRecordsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "user_name", Type: field.TypeString, Nullable: true},
 		{Name: "chapter_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "chapter_order_num", Type: field.TypeInt32, Nullable: true},
@@ -532,7 +524,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_buy_chapter_records", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// NovelBuyChapterRecordsTable holds the schema information for the "novel_buy_chapter_records" table.
 	NovelBuyChapterRecordsTable = &schema.Table{
@@ -542,7 +534,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "novel_buy_chapter_records_social_users_buyChapterRecords",
-				Columns:    []*schema.Column{NovelBuyChapterRecordsColumns[18]},
+				Columns:    []*schema.Column{NovelBuyChapterRecordsColumns[17]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -551,7 +543,6 @@ var (
 	// NovelBuyRecordsColumns holds the columns for the "novel_buy_records" table.
 	NovelBuyRecordsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "user_name", Type: field.TypeString, Nullable: true},
 		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "novel_name", Type: field.TypeString, Nullable: true},
@@ -565,7 +556,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_buy_novel_records", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// NovelBuyRecordsTable holds the schema information for the "novel_buy_records" table.
 	NovelBuyRecordsTable = &schema.Table{
@@ -575,7 +566,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "novel_buy_records_social_users_buyNovelRecords",
-				Columns:    []*schema.Column{NovelBuyRecordsColumns[15]},
+				Columns:    []*schema.Column{NovelBuyRecordsColumns[14]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -584,7 +575,6 @@ var (
 	// NovelChaptersColumns holds the columns for the "novel_chapters" table.
 	NovelChaptersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "order_num", Type: field.TypeInt32, Nullable: true},
 		{Name: "chapter_name", Type: field.TypeString, Nullable: true},
 		{Name: "content", Type: field.TypeString, Nullable: true},
@@ -601,7 +591,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "novel_chapters", Type: field.TypeInt64, Nullable: true},
+		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "novel_chapter_next", Type: field.TypeInt64, Unique: true, Nullable: true},
 	}
 	// NovelChaptersTable holds the schema information for the "novel_chapters" table.
@@ -612,13 +602,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "novel_chapters_novels_chapters",
-				Columns:    []*schema.Column{NovelChaptersColumns[18]},
+				Columns:    []*schema.Column{NovelChaptersColumns[17]},
 				RefColumns: []*schema.Column{NovelsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "novel_chapters_novel_chapters_next",
-				Columns:    []*schema.Column{NovelChaptersColumns[19]},
+				Columns:    []*schema.Column{NovelChaptersColumns[18]},
 				RefColumns: []*schema.Column{NovelChaptersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -648,7 +638,6 @@ var (
 	NovelCommentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
 		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "avatar", Type: field.TypeString, Nullable: true},
 		{Name: "user_name", Type: field.TypeString, Nullable: true},
 		{Name: "rep_user_id", Type: field.TypeInt64, Nullable: true},
@@ -667,7 +656,7 @@ var (
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
 		{Name: "novel_comment_childes", Type: field.TypeInt64, Nullable: true},
-		{Name: "social_user_comments", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// NovelCommentsTable holds the schema information for the "novel_comments" table.
 	NovelCommentsTable = &schema.Table{
@@ -677,13 +666,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "novel_comments_novel_comments_childes",
-				Columns:    []*schema.Column{NovelCommentsColumns[20]},
+				Columns:    []*schema.Column{NovelCommentsColumns[19]},
 				RefColumns: []*schema.Column{NovelCommentsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "novel_comments_social_users_comments",
-				Columns:    []*schema.Column{NovelCommentsColumns[21]},
+				Columns:    []*schema.Column{NovelCommentsColumns[20]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -731,7 +720,7 @@ var (
 	// PayOrdersColumns holds the columns for the "pay_orders" table.
 	PayOrdersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "order_id", Type: field.TypeString},
+		{Name: "order_id", Type: field.TypeString, Unique: true},
 		{Name: "last_read", Type: field.TypeString},
 		{Name: "last_chapter", Type: field.TypeString},
 		{Name: "payment_name", Type: field.TypeString},
@@ -754,9 +743,9 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "ad_channel_orders", Type: field.TypeInt64, Nullable: true},
-		{Name: "agreement_log_orders", Type: field.TypeInt64, Nullable: true},
-		{Name: "social_user_orders", Type: field.TypeInt64, Nullable: true},
+		{Name: "ch_id", Type: field.TypeInt64, Nullable: true},
+		{Name: "agreement_id", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// PayOrdersTable holds the schema information for the "pay_orders" table.
 	PayOrdersTable = &schema.Table{
@@ -787,7 +776,6 @@ var (
 	// SocialUsersColumns holds the columns for the "social_users" table.
 	SocialUsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64},
 		{Name: "unionid", Type: field.TypeString, Nullable: true},
 		{Name: "token", Type: field.TypeString, Nullable: true},
 		{Name: "openid", Type: field.TypeString, Nullable: true},
@@ -818,7 +806,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "ad_channel_users", Type: field.TypeInt64, Nullable: true},
+		{Name: "ch_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SocialUsersTable holds the schema information for the "social_users" table.
 	SocialUsersTable = &schema.Table{
@@ -828,7 +816,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "social_users_ad_channels_users",
-				Columns:    []*schema.Column{SocialUsersColumns[32]},
+				Columns:    []*schema.Column{SocialUsersColumns[31]},
 				RefColumns: []*schema.Column{AdChannelsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -837,7 +825,6 @@ var (
 	// TaskLogsColumns holds the columns for the "task_logs" table.
 	TaskLogsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "task_group", Type: field.TypeString, Nullable: true},
 		{Name: "task_code", Type: field.TypeString, Nullable: true},
 		{Name: "task_id", Type: field.TypeInt64, Nullable: true},
@@ -860,7 +847,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_tasks", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// TaskLogsTable holds the schema information for the "task_logs" table.
 	TaskLogsTable = &schema.Table{
@@ -870,7 +857,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "task_logs_social_users_tasks",
-				Columns:    []*schema.Column{TaskLogsColumns[24]},
+				Columns:    []*schema.Column{TaskLogsColumns[23]},
 				RefColumns: []*schema.Column{SocialUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -879,7 +866,6 @@ var (
 	// UserEventsColumns holds the columns for the "user_events" table.
 	UserEventsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "event_type", Type: field.TypeString, Nullable: true},
 		{Name: "novel_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "chapter_id", Type: field.TypeInt64, Nullable: true},
@@ -892,12 +878,21 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// UserEventsTable holds the schema information for the "user_events" table.
 	UserEventsTable = &schema.Table{
 		Name:       "user_events",
 		Columns:    UserEventsColumns,
 		PrimaryKey: []*schema.Column{UserEventsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "user_events_social_users_events",
+				Columns:    []*schema.Column{UserEventsColumns[13]},
+				RefColumns: []*schema.Column{SocialUsersColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 	}
 	// UserMsgsColumns holds the columns for the "user_msgs" table.
 	UserMsgsColumns = []*schema.Column{
@@ -940,7 +935,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "social_user_vips", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// VipUsersTable holds the schema information for the "vip_users" table.
 	VipUsersTable = &schema.Table{
@@ -1037,6 +1032,7 @@ func init() {
 	PayOrdersTable.ForeignKeys[2].RefTable = SocialUsersTable
 	SocialUsersTable.ForeignKeys[0].RefTable = AdChannelsTable
 	TaskLogsTable.ForeignKeys[0].RefTable = SocialUsersTable
+	UserEventsTable.ForeignKeys[0].RefTable = SocialUsersTable
 	UserMsgsTable.ForeignKeys[0].RefTable = SocialUsersTable
 	VipUsersTable.ForeignKeys[0].RefTable = SocialUsersTable
 	NovelPkgsTable.ForeignKeys[0].RefTable = NovelsTable

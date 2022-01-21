@@ -88,8 +88,7 @@ type TaskLog struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the TaskLogQuery when eager-loading is set.
-	Edges             TaskLogEdges `json:"edges"`
-	social_user_tasks *int64
+	Edges TaskLogEdges `json:"edges"`
 }
 
 // TaskLogEdges holds the relations/edges for other nodes in the graph.
@@ -126,8 +125,6 @@ func (*TaskLog) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case tasklog.FieldDoneAt, tasklog.FieldObtainAt, tasklog.FieldEffectTime, tasklog.FieldExpiredTime, tasklog.FieldCreatedAt, tasklog.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case tasklog.ForeignKeys[0]: // social_user_tasks
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type TaskLog", columns[i])
 		}
@@ -286,13 +283,6 @@ func (tl *TaskLog) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				tl.TenantId = value.Int64
-			}
-		case tasklog.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_tasks", value)
-			} else if value.Valid {
-				tl.social_user_tasks = new(int64)
-				*tl.social_user_tasks = int64(value.Int64)
 			}
 		}
 	}

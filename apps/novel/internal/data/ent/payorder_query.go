@@ -31,7 +31,6 @@ type PayOrderQuery struct {
 	withUser      *SocialUserQuery
 	withChannel   *AdChannelQuery
 	withAgreement *AgreementLogQuery
-	withFKs       bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -421,7 +420,6 @@ func (poq *PayOrderQuery) prepareQuery(ctx context.Context) error {
 func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 	var (
 		nodes       = []*PayOrder{}
-		withFKs     = poq.withFKs
 		_spec       = poq.querySpec()
 		loadedTypes = [3]bool{
 			poq.withUser != nil,
@@ -429,12 +427,6 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 			poq.withAgreement != nil,
 		}
 	)
-	if poq.withUser != nil || poq.withChannel != nil || poq.withAgreement != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, payorder.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &PayOrder{config: poq.config}
 		nodes = append(nodes, node)
@@ -459,10 +451,7 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*PayOrder)
 		for i := range nodes {
-			if nodes[i].social_user_orders == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_orders
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -476,7 +465,7 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_orders" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n
@@ -488,10 +477,7 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*PayOrder)
 		for i := range nodes {
-			if nodes[i].ad_channel_orders == nil {
-				continue
-			}
-			fk := *nodes[i].ad_channel_orders
+			fk := nodes[i].ChId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -505,7 +491,7 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "ad_channel_orders" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "chId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Channel = n
@@ -517,10 +503,7 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*PayOrder)
 		for i := range nodes {
-			if nodes[i].agreement_log_orders == nil {
-				continue
-			}
-			fk := *nodes[i].agreement_log_orders
+			fk := nodes[i].AgreementId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -534,7 +517,7 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "agreement_log_orders" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "agreementId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Agreement = n

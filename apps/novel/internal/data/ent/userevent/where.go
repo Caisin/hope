@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -228,48 +229,6 @@ func UserIdNotIn(vs ...int64) predicate.UserEvent {
 			return
 		}
 		s.Where(sql.NotIn(s.C(FieldUserId), v...))
-	})
-}
-
-// UserIdGT applies the GT predicate on the "userId" field.
-func UserIdGT(v int64) predicate.UserEvent {
-	return predicate.UserEvent(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdGTE applies the GTE predicate on the "userId" field.
-func UserIdGTE(v int64) predicate.UserEvent {
-	return predicate.UserEvent(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLT applies the LT predicate on the "userId" field.
-func UserIdLT(v int64) predicate.UserEvent {
-	return predicate.UserEvent(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLTE applies the LTE predicate on the "userId" field.
-func UserIdLTE(v int64) predicate.UserEvent {
-	return predicate.UserEvent(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdIsNil applies the IsNil predicate on the "userId" field.
-func UserIdIsNil() predicate.UserEvent {
-	return predicate.UserEvent(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldUserId)))
-	})
-}
-
-// UserIdNotNil applies the NotNil predicate on the "userId" field.
-func UserIdNotNil() predicate.UserEvent {
-	return predicate.UserEvent(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldUserId)))
 	})
 }
 
@@ -1350,6 +1309,34 @@ func TenantIdLT(v int64) predicate.UserEvent {
 func TenantIdLTE(v int64) predicate.UserEvent {
 	return predicate.UserEvent(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldTenantId), v))
+	})
+}
+
+// HasUser applies the HasEdge predicate on the "user" edge.
+func HasUser() predicate.UserEvent {
+	return predicate.UserEvent(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(UserTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, UserTable, UserColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasUserWith applies the HasEdge predicate on the "user" edge with a given conditions (other predicates).
+func HasUserWith(preds ...predicate.SocialUser) predicate.UserEvent {
+	return predicate.UserEvent(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(UserInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, UserTable, UserColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
 	})
 }
 

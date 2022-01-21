@@ -28,9 +28,6 @@ type BookPackage struct {
 	// DailyPrice holds the value of the "dailyPrice" field.
 	// 日常价格,既所有书本正常购买的价格
 	DailyPrice int64 `json:"dailyPrice,omitempty"`
-	// NovelIds holds the value of the "novelIds" field.
-	// 分组编码
-	NovelIds string `json:"novelIds,omitempty"`
 	// EffectTime holds the value of the "effectTime" field.
 	// 生效时间
 	EffectTime time.Time `json:"effectTime,omitempty"`
@@ -82,7 +79,7 @@ func (*BookPackage) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case bookpackage.FieldID, bookpackage.FieldPrice, bookpackage.FieldDailyPrice, bookpackage.FieldCreateBy, bookpackage.FieldUpdateBy, bookpackage.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case bookpackage.FieldActivityCode, bookpackage.FieldPackageName, bookpackage.FieldNovelIds:
+		case bookpackage.FieldActivityCode, bookpackage.FieldPackageName:
 			values[i] = new(sql.NullString)
 		case bookpackage.FieldEffectTime, bookpackage.FieldExpiredTime, bookpackage.FieldCreatedAt, bookpackage.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -130,12 +127,6 @@ func (bp *BookPackage) assignValues(columns []string, values []interface{}) erro
 				return fmt.Errorf("unexpected type %T for field dailyPrice", values[i])
 			} else if value.Valid {
 				bp.DailyPrice = value.Int64
-			}
-		case bookpackage.FieldNovelIds:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field novelIds", values[i])
-			} else if value.Valid {
-				bp.NovelIds = value.String
 			}
 		case bookpackage.FieldEffectTime:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -220,8 +211,6 @@ func (bp *BookPackage) String() string {
 	builder.WriteString(fmt.Sprintf("%v", bp.Price))
 	builder.WriteString(", dailyPrice=")
 	builder.WriteString(fmt.Sprintf("%v", bp.DailyPrice))
-	builder.WriteString(", novelIds=")
-	builder.WriteString(bp.NovelIds)
 	builder.WriteString(", effectTime=")
 	builder.WriteString(bp.EffectTime.Format(time.ANSIC))
 	builder.WriteString(", expiredTime=")

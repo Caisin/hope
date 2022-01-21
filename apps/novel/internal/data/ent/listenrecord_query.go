@@ -27,7 +27,6 @@ type ListenRecordQuery struct {
 	predicates []predicate.ListenRecord
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -349,18 +348,11 @@ func (lrq *ListenRecordQuery) prepareQuery(ctx context.Context) error {
 func (lrq *ListenRecordQuery) sqlAll(ctx context.Context) ([]*ListenRecord, error) {
 	var (
 		nodes       = []*ListenRecord{}
-		withFKs     = lrq.withFKs
 		_spec       = lrq.querySpec()
 		loadedTypes = [1]bool{
 			lrq.withUser != nil,
 		}
 	)
-	if lrq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, listenrecord.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &ListenRecord{config: lrq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (lrq *ListenRecordQuery) sqlAll(ctx context.Context) ([]*ListenRecord, erro
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*ListenRecord)
 		for i := range nodes {
-			if nodes[i].social_user_listen_records == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_listen_records
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (lrq *ListenRecordQuery) sqlAll(ctx context.Context) ([]*ListenRecord, erro
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_listen_records" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

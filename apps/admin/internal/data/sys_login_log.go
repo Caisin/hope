@@ -31,6 +31,7 @@ func NewSysLoginLogRepo(data *Data, logger log.Logger) biz.SysLoginLogRepo {
 func (r *sysLoginLogRepo) CreateSysLoginLog(ctx context.Context, req *v1.SysLoginLogCreateReq) (*ent.SysLoginLog, error) {
 	now := time.Now()
 	return r.data.db.SysLoginLog.Create().
+		SetUserId(req.UserId).
 		SetStatus(req.Status).
 		SetIpaddr(req.Ipaddr).
 		SetLoginLocation(req.LoginLocation).
@@ -106,6 +107,9 @@ func (r *sysLoginLogRepo) genCondition(req *v1.SysLoginLogReq) []predicate.SysLo
 	list := make([]predicate.SysLoginLog, 0)
 	if req.Id > 0 {
 		list = append(list, sysloginlog.ID(req.Id))
+	}
+	if req.UserId > 0 {
+		list = append(list, sysloginlog.UserId(req.UserId))
 	}
 	if str.IsBlank(req.Status) {
 		list = append(list, sysloginlog.StatusContains(req.Status))

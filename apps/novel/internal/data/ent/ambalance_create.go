@@ -21,6 +21,12 @@ type AmBalanceCreate struct {
 	hooks    []Hook
 }
 
+// SetUserId sets the "userId" field.
+func (abc *AmBalanceCreate) SetUserId(i int64) *AmBalanceCreate {
+	abc.mutation.SetUserId(i)
+	return abc
+}
+
 // SetOrderId sets the "orderId" field.
 func (abc *AmBalanceCreate) SetOrderId(s string) *AmBalanceCreate {
 	abc.mutation.SetOrderId(s)
@@ -223,14 +229,6 @@ func (abc *AmBalanceCreate) SetUserID(id int64) *AmBalanceCreate {
 	return abc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (abc *AmBalanceCreate) SetNillableUserID(id *int64) *AmBalanceCreate {
-	if id != nil {
-		abc = abc.SetUserID(*id)
-	}
-	return abc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (abc *AmBalanceCreate) SetUser(s *SocialUser) *AmBalanceCreate {
 	return abc.SetUserID(s.ID)
@@ -339,6 +337,9 @@ func (abc *AmBalanceCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (abc *AmBalanceCreate) check() error {
+	if _, ok := abc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := abc.mutation.EffectTime(); !ok {
 		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "effectTime"`)}
 	}
@@ -359,6 +360,9 @@ func (abc *AmBalanceCreate) check() error {
 	}
 	if _, ok := abc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := abc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -516,7 +520,7 @@ func (abc *AmBalanceCreate) createSpec() (*AmBalance, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_balances = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

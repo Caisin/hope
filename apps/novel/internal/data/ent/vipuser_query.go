@@ -27,7 +27,6 @@ type VipUserQuery struct {
 	predicates []predicate.VipUser
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -291,12 +290,12 @@ func (vuq *VipUserQuery) WithUser(opts ...func(*SocialUserQuery)) *VipUserQuery 
 // Example:
 //
 //	var v []struct {
-//		VipType int64 `json:"vipType,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.VipUser.Query().
-//		GroupBy(vipuser.FieldVipType).
+//		GroupBy(vipuser.FieldUserId).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -318,11 +317,11 @@ func (vuq *VipUserQuery) GroupBy(field string, fields ...string) *VipUserGroupBy
 // Example:
 //
 //	var v []struct {
-//		VipType int64 `json:"vipType,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //	}
 //
 //	client.VipUser.Query().
-//		Select(vipuser.FieldVipType).
+//		Select(vipuser.FieldUserId).
 //		Scan(ctx, &v)
 //
 func (vuq *VipUserQuery) Select(fields ...string) *VipUserSelect {
@@ -349,18 +348,11 @@ func (vuq *VipUserQuery) prepareQuery(ctx context.Context) error {
 func (vuq *VipUserQuery) sqlAll(ctx context.Context) ([]*VipUser, error) {
 	var (
 		nodes       = []*VipUser{}
-		withFKs     = vuq.withFKs
 		_spec       = vuq.querySpec()
 		loadedTypes = [1]bool{
 			vuq.withUser != nil,
 		}
 	)
-	if vuq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, vipuser.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &VipUser{config: vuq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (vuq *VipUserQuery) sqlAll(ctx context.Context) ([]*VipUser, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*VipUser)
 		for i := range nodes {
-			if nodes[i].social_user_vips == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_vips
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (vuq *VipUserQuery) sqlAll(ctx context.Context) ([]*VipUser, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_vips" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

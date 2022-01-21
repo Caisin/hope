@@ -260,48 +260,6 @@ func NovelIdNotIn(vs ...int64) predicate.NovelChapter {
 	})
 }
 
-// NovelIdGT applies the GT predicate on the "novelId" field.
-func NovelIdGT(v int64) predicate.NovelChapter {
-	return predicate.NovelChapter(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldNovelId), v))
-	})
-}
-
-// NovelIdGTE applies the GTE predicate on the "novelId" field.
-func NovelIdGTE(v int64) predicate.NovelChapter {
-	return predicate.NovelChapter(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldNovelId), v))
-	})
-}
-
-// NovelIdLT applies the LT predicate on the "novelId" field.
-func NovelIdLT(v int64) predicate.NovelChapter {
-	return predicate.NovelChapter(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldNovelId), v))
-	})
-}
-
-// NovelIdLTE applies the LTE predicate on the "novelId" field.
-func NovelIdLTE(v int64) predicate.NovelChapter {
-	return predicate.NovelChapter(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldNovelId), v))
-	})
-}
-
-// NovelIdIsNil applies the IsNil predicate on the "novelId" field.
-func NovelIdIsNil() predicate.NovelChapter {
-	return predicate.NovelChapter(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldNovelId)))
-	})
-}
-
-// NovelIdNotNil applies the NotNil predicate on the "novelId" field.
-func NovelIdNotNil() predicate.NovelChapter {
-	return predicate.NovelChapter(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldNovelId)))
-	})
-}
-
 // OrderNumEQ applies the EQ predicate on the "orderNum" field.
 func OrderNumEQ(v int32) predicate.NovelChapter {
 	return predicate.NovelChapter(func(s *sql.Selector) {

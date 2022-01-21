@@ -2351,6 +2351,22 @@ func (c *NovelBuyRecordClient) GetX(ctx context.Context, id int64) *NovelBuyReco
 	return obj
 }
 
+// QueryUser queries the user edge of a NovelBuyRecord.
+func (c *NovelBuyRecordClient) QueryUser(nbr *NovelBuyRecord) *SocialUserQuery {
+	query := &SocialUserQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := nbr.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(novelbuyrecord.Table, novelbuyrecord.FieldID, id),
+			sqlgraph.To(socialuser.Table, socialuser.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, novelbuyrecord.UserTable, novelbuyrecord.UserColumn),
+		)
+		fromV = sqlgraph.Neighbors(nbr.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *NovelBuyRecordClient) Hooks() []Hook {
 	return c.hooks.NovelBuyRecord
@@ -3157,6 +3173,22 @@ func (c *SocialUserClient) QueryTasks(su *SocialUser) *TaskLogQuery {
 	return query
 }
 
+// QueryEvents queries the events edge of a SocialUser.
+func (c *SocialUserClient) QueryEvents(su *SocialUser) *UserEventQuery {
+	query := &UserEventQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := su.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(socialuser.Table, socialuser.FieldID, id),
+			sqlgraph.To(userevent.Table, userevent.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, socialuser.EventsTable, socialuser.EventsColumn),
+		)
+		fromV = sqlgraph.Neighbors(su.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryListenRecords queries the listenRecords edge of a SocialUser.
 func (c *SocialUserClient) QueryListenRecords(su *SocialUser) *ListenRecordQuery {
 	query := &ListenRecordQuery{config: c.config}
@@ -3559,6 +3591,22 @@ func (c *UserEventClient) GetX(ctx context.Context, id int64) *UserEvent {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryUser queries the user edge of a UserEvent.
+func (c *UserEventClient) QueryUser(ue *UserEvent) *SocialUserQuery {
+	query := &SocialUserQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := ue.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(userevent.Table, userevent.FieldID, id),
+			sqlgraph.To(socialuser.Table, socialuser.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, userevent.UserTable, userevent.UserColumn),
+		)
+		fromV = sqlgraph.Neighbors(ue.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.

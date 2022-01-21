@@ -27,7 +27,6 @@ type TaskLogQuery struct {
 	predicates []predicate.TaskLog
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -349,18 +348,11 @@ func (tlq *TaskLogQuery) prepareQuery(ctx context.Context) error {
 func (tlq *TaskLogQuery) sqlAll(ctx context.Context) ([]*TaskLog, error) {
 	var (
 		nodes       = []*TaskLog{}
-		withFKs     = tlq.withFKs
 		_spec       = tlq.querySpec()
 		loadedTypes = [1]bool{
 			tlq.withUser != nil,
 		}
 	)
-	if tlq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, tasklog.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &TaskLog{config: tlq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (tlq *TaskLogQuery) sqlAll(ctx context.Context) ([]*TaskLog, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*TaskLog)
 		for i := range nodes {
-			if nodes[i].social_user_tasks == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_tasks
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (tlq *TaskLogQuery) sqlAll(ctx context.Context) ([]*TaskLog, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_tasks" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

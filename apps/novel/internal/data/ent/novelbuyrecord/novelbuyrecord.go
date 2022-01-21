@@ -39,8 +39,17 @@ const (
 	FieldUpdateBy = "update_by"
 	// FieldTenantId holds the string denoting the tenantid field in the database.
 	FieldTenantId = "tenant_id"
+	// EdgeUser holds the string denoting the user edge name in mutations.
+	EdgeUser = "user"
 	// Table holds the table name of the novelbuyrecord in the database.
 	Table = "novel_buy_records"
+	// UserTable is the table that holds the user relation/edge.
+	UserTable = "novel_buy_records"
+	// UserInverseTable is the table name for the SocialUser entity.
+	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
+	UserInverseTable = "social_users"
+	// UserColumn is the table column denoting the user relation/edge.
+	UserColumn = "user_id"
 )
 
 // Columns holds all SQL columns for novelbuyrecord fields.
@@ -62,21 +71,10 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "novel_buy_records"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"social_user_buy_novel_records",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

@@ -15,7 +15,7 @@ type NovelAutoBuy struct {
 // Fields of the NovelAutoBuy.
 func (NovelAutoBuy) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.Int64("novelId").Optional().
 			Comment(`小说编号`),
@@ -27,6 +27,6 @@ func (NovelAutoBuy) Fields() []ent.Field {
 // Edges of the NovelAutoBuy.
 func (NovelAutoBuy) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("autoBuyNovels").Required().Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("autoBuyNovels").Unique(),
 	}
 }

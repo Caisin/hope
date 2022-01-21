@@ -29,23 +29,16 @@ func (sjlu *SysJobLogUpdate) Where(ps ...predicate.SysJobLog) *SysJobLogUpdate {
 }
 
 // SetJobId sets the "jobId" field.
-func (sjlu *SysJobLogUpdate) SetJobId(i int32) *SysJobLogUpdate {
-	sjlu.mutation.ResetJobId()
+func (sjlu *SysJobLogUpdate) SetJobId(i int64) *SysJobLogUpdate {
 	sjlu.mutation.SetJobId(i)
 	return sjlu
 }
 
 // SetNillableJobId sets the "jobId" field if the given value is not nil.
-func (sjlu *SysJobLogUpdate) SetNillableJobId(i *int32) *SysJobLogUpdate {
+func (sjlu *SysJobLogUpdate) SetNillableJobId(i *int64) *SysJobLogUpdate {
 	if i != nil {
 		sjlu.SetJobId(*i)
 	}
-	return sjlu
-}
-
-// AddJobId adds i to the "jobId" field.
-func (sjlu *SysJobLogUpdate) AddJobId(i int32) *SysJobLogUpdate {
-	sjlu.mutation.AddJobId(i)
 	return sjlu
 }
 
@@ -349,26 +342,6 @@ func (sjlu *SysJobLogUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := sjlu.mutation.JobId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysjoblog.FieldJobId,
-		})
-	}
-	if value, ok := sjlu.mutation.AddedJobId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysjoblog.FieldJobId,
-		})
-	}
-	if sjlu.mutation.JobIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysjoblog.FieldJobId,
-		})
-	}
 	if value, ok := sjlu.mutation.JobName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -552,23 +525,16 @@ type SysJobLogUpdateOne struct {
 }
 
 // SetJobId sets the "jobId" field.
-func (sjluo *SysJobLogUpdateOne) SetJobId(i int32) *SysJobLogUpdateOne {
-	sjluo.mutation.ResetJobId()
+func (sjluo *SysJobLogUpdateOne) SetJobId(i int64) *SysJobLogUpdateOne {
 	sjluo.mutation.SetJobId(i)
 	return sjluo
 }
 
 // SetNillableJobId sets the "jobId" field if the given value is not nil.
-func (sjluo *SysJobLogUpdateOne) SetNillableJobId(i *int32) *SysJobLogUpdateOne {
+func (sjluo *SysJobLogUpdateOne) SetNillableJobId(i *int64) *SysJobLogUpdateOne {
 	if i != nil {
 		sjluo.SetJobId(*i)
 	}
-	return sjluo
-}
-
-// AddJobId adds i to the "jobId" field.
-func (sjluo *SysJobLogUpdateOne) AddJobId(i int32) *SysJobLogUpdateOne {
-	sjluo.mutation.AddJobId(i)
 	return sjluo
 }
 
@@ -895,26 +861,6 @@ func (sjluo *SysJobLogUpdateOne) sqlSave(ctx context.Context) (_node *SysJobLog,
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := sjluo.mutation.JobId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysjoblog.FieldJobId,
-		})
-	}
-	if value, ok := sjluo.mutation.AddedJobId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysjoblog.FieldJobId,
-		})
-	}
-	if sjluo.mutation.JobIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysjoblog.FieldJobId,
-		})
 	}
 	if value, ok := sjluo.mutation.JobName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

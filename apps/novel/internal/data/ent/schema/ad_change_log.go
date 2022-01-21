@@ -15,7 +15,7 @@ type AdChangeLog struct {
 // Fields of the AdChangeLog.
 func (AdChangeLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.String("adId").Optional().
 			Comment(`广告ID`),
@@ -33,6 +33,6 @@ func (AdChangeLog) Fields() []ent.Field {
 // Edges of the AdChangeLog.
 func (AdChangeLog) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("ads").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("ads").Unique(),
 	}
 }

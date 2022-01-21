@@ -27,7 +27,6 @@ type SysLoginLogQuery struct {
 	predicates []predicate.SysLoginLog
 	// eager-loading edges.
 	withUser *SysUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -291,12 +290,12 @@ func (sllq *SysLoginLogQuery) WithUser(opts ...func(*SysUserQuery)) *SysLoginLog
 // Example:
 //
 //	var v []struct {
-//		Status string `json:"status,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SysLoginLog.Query().
-//		GroupBy(sysloginlog.FieldStatus).
+//		GroupBy(sysloginlog.FieldUserId).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -318,11 +317,11 @@ func (sllq *SysLoginLogQuery) GroupBy(field string, fields ...string) *SysLoginL
 // Example:
 //
 //	var v []struct {
-//		Status string `json:"status,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //	}
 //
 //	client.SysLoginLog.Query().
-//		Select(sysloginlog.FieldStatus).
+//		Select(sysloginlog.FieldUserId).
 //		Scan(ctx, &v)
 //
 func (sllq *SysLoginLogQuery) Select(fields ...string) *SysLoginLogSelect {
@@ -349,18 +348,11 @@ func (sllq *SysLoginLogQuery) prepareQuery(ctx context.Context) error {
 func (sllq *SysLoginLogQuery) sqlAll(ctx context.Context) ([]*SysLoginLog, error) {
 	var (
 		nodes       = []*SysLoginLog{}
-		withFKs     = sllq.withFKs
 		_spec       = sllq.querySpec()
 		loadedTypes = [1]bool{
 			sllq.withUser != nil,
 		}
 	)
-	if sllq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, sysloginlog.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &SysLoginLog{config: sllq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (sllq *SysLoginLogQuery) sqlAll(ctx context.Context) ([]*SysLoginLog, error
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SysLoginLog)
 		for i := range nodes {
-			if nodes[i].sys_user_login_logs == nil {
-				continue
-			}
-			fk := *nodes[i].sys_user_login_logs
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (sllq *SysLoginLogQuery) sqlAll(ctx context.Context) ([]*SysLoginLog, error
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_user_login_logs" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

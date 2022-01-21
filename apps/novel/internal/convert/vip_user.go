@@ -15,6 +15,7 @@ func VipUserUpdateReq2Data(v *v1.VipUserUpdateReq) *ent.VipUser {
 	}
 	return &ent.VipUser{
 		ID:              v.Id,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  v.SvipEffectTime.AsTime(),
@@ -30,6 +31,7 @@ func VipUserData2UpdateReq(v *ent.VipUser) *v1.VipUserUpdateReq {
 	}
 	return &v1.VipUserUpdateReq{
 		Id:              v.ID,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),
@@ -44,6 +46,7 @@ func VipUserCreateReq2Data(v *v1.VipUserCreateReq) *ent.VipUser {
 		return nil
 	}
 	return &ent.VipUser{
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  v.SvipEffectTime.AsTime(),
@@ -58,6 +61,7 @@ func VipUserData2CreateReq(v *ent.VipUser) *v1.VipUserCreateReq {
 		return nil
 	}
 	return &v1.VipUserCreateReq{
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),
@@ -72,6 +76,7 @@ func VipUserReq2Data(v *v1.VipUserReq) *ent.VipUser {
 		return nil
 	}
 	return &ent.VipUser{
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  v.SvipEffectTime.AsTime(),
@@ -86,6 +91,7 @@ func VipUserData2Req(v *ent.VipUser) *v1.VipUserReq {
 		return nil
 	}
 	return &v1.VipUserReq{
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),
@@ -101,6 +107,7 @@ func VipUserReply2Data(v *v1.VipUserReply) *ent.VipUser {
 	}
 	return &ent.VipUser{
 		ID:              v.Id,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  v.SvipEffectTime.AsTime(),
@@ -122,6 +129,7 @@ func VipUserData2Reply(v *ent.VipUser) *v1.VipUserReply {
 	}
 	return &v1.VipUserReply{
 		Id:              v.ID,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),
@@ -143,6 +151,7 @@ func VipUserUpdateReply2Data(v *v1.VipUserUpdateReply) *ent.VipUser {
 	}
 	return &ent.VipUser{
 		ID:              v.Id,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  v.SvipEffectTime.AsTime(),
@@ -158,6 +167,7 @@ func VipUserData2UpdateReply(v *ent.VipUser) *v1.VipUserUpdateReply {
 	}
 	return &v1.VipUserUpdateReply{
 		Id:              v.ID,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),
@@ -173,6 +183,7 @@ func VipUserCreateReply2Data(v *v1.VipUserCreateReply) *ent.VipUser {
 	}
 	return &ent.VipUser{
 		ID:              v.Id,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  v.SvipEffectTime.AsTime(),
@@ -194,6 +205,7 @@ func VipUserData2CreateReply(v *ent.VipUser) *v1.VipUserCreateReply {
 	}
 	return &v1.VipUserCreateReply{
 		Id:              v.ID,
+		UserId:          v.UserId,
 		VipType:         v.VipType,
 		SvipType:        v.SvipType,
 		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),

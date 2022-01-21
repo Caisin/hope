@@ -101,6 +101,27 @@ func OrderId(v string) predicate.PayOrder {
 	})
 }
 
+// UserId applies equality check predicate on the "userId" field. It's identical to UserIdEQ.
+func UserId(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUserId), v))
+	})
+}
+
+// ChId applies equality check predicate on the "chId" field. It's identical to ChIdEQ.
+func ChId(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldChId), v))
+	})
+}
+
+// AgreementId applies equality check predicate on the "agreementId" field. It's identical to AgreementIdEQ.
+func AgreementId(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldAgreementId), v))
+	})
+}
+
 // LastRead applies equality check predicate on the "lastRead" field. It's identical to LastReadEQ.
 func LastRead(v string) predicate.PayOrder {
 	return predicate.PayOrder(func(s *sql.Selector) {
@@ -357,6 +378,150 @@ func OrderIdEqualFold(v string) predicate.PayOrder {
 func OrderIdContainsFold(v string) predicate.PayOrder {
 	return predicate.PayOrder(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldOrderId), v))
+	})
+}
+
+// UserIdEQ applies the EQ predicate on the "userId" field.
+func UserIdEQ(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUserId), v))
+	})
+}
+
+// UserIdNEQ applies the NEQ predicate on the "userId" field.
+func UserIdNEQ(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUserId), v))
+	})
+}
+
+// UserIdIn applies the In predicate on the "userId" field.
+func UserIdIn(vs ...int64) predicate.PayOrder {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.PayOrder(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUserId), v...))
+	})
+}
+
+// UserIdNotIn applies the NotIn predicate on the "userId" field.
+func UserIdNotIn(vs ...int64) predicate.PayOrder {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.PayOrder(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUserId), v...))
+	})
+}
+
+// ChIdEQ applies the EQ predicate on the "chId" field.
+func ChIdEQ(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldChId), v))
+	})
+}
+
+// ChIdNEQ applies the NEQ predicate on the "chId" field.
+func ChIdNEQ(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldChId), v))
+	})
+}
+
+// ChIdIn applies the In predicate on the "chId" field.
+func ChIdIn(vs ...int64) predicate.PayOrder {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.PayOrder(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldChId), v...))
+	})
+}
+
+// ChIdNotIn applies the NotIn predicate on the "chId" field.
+func ChIdNotIn(vs ...int64) predicate.PayOrder {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.PayOrder(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldChId), v...))
+	})
+}
+
+// AgreementIdEQ applies the EQ predicate on the "agreementId" field.
+func AgreementIdEQ(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldAgreementId), v))
+	})
+}
+
+// AgreementIdNEQ applies the NEQ predicate on the "agreementId" field.
+func AgreementIdNEQ(v int64) predicate.PayOrder {
+	return predicate.PayOrder(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldAgreementId), v))
+	})
+}
+
+// AgreementIdIn applies the In predicate on the "agreementId" field.
+func AgreementIdIn(vs ...int64) predicate.PayOrder {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.PayOrder(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldAgreementId), v...))
+	})
+}
+
+// AgreementIdNotIn applies the NotIn predicate on the "agreementId" field.
+func AgreementIdNotIn(vs ...int64) predicate.PayOrder {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.PayOrder(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldAgreementId), v...))
 	})
 }
 

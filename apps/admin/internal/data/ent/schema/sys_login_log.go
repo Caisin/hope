@@ -15,6 +15,8 @@ type SysLoginLog struct {
 // Fields of the SysLoginLog.
 func (SysLoginLog) Fields() []ent.Field {
 	fields := []ent.Field{
+		field.Int64("userId").Optional().
+			Comment(`用户ID`),
 		field.String("status").Optional().
 			Comment(`状态`),
 		field.String("ipaddr").Optional().
@@ -41,6 +43,6 @@ func (SysLoginLog) Fields() []ent.Field {
 // Edges of the SysLoginLog.
 func (SysLoginLog) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SysUser.Type).Ref("loginLogs").Unique(),
+		edge.From("user", SysUser.Type).Field("userId").Ref("loginLogs").Unique(),
 	}
 }

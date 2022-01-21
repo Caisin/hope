@@ -27,7 +27,6 @@ type NovelAutoBuyQuery struct {
 	predicates []predicate.NovelAutoBuy
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -349,18 +348,11 @@ func (nabq *NovelAutoBuyQuery) prepareQuery(ctx context.Context) error {
 func (nabq *NovelAutoBuyQuery) sqlAll(ctx context.Context) ([]*NovelAutoBuy, error) {
 	var (
 		nodes       = []*NovelAutoBuy{}
-		withFKs     = nabq.withFKs
 		_spec       = nabq.querySpec()
 		loadedTypes = [1]bool{
 			nabq.withUser != nil,
 		}
 	)
-	if nabq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, novelautobuy.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &NovelAutoBuy{config: nabq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (nabq *NovelAutoBuyQuery) sqlAll(ctx context.Context) ([]*NovelAutoBuy, err
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*NovelAutoBuy)
 		for i := range nodes {
-			if nodes[i].social_user_auto_buy_novels == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_auto_buy_novels
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (nabq *NovelAutoBuyQuery) sqlAll(ctx context.Context) ([]*NovelAutoBuy, err
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_auto_buy_novels" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

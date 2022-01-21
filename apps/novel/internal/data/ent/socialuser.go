@@ -17,9 +17,9 @@ type SocialUser struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
-	// UserId holds the value of the "userId" field.
-	// 用户ID
-	UserId int64 `json:"userId,omitempty"`
+	// ChId holds the value of the "chId" field.
+	// 注册渠道
+	ChId int64 `json:"chId,omitempty"`
 	// Unionid holds the value of the "unionid" field.
 	// 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
 	Unionid string `json:"unionid,omitempty"`
@@ -112,14 +112,15 @@ type SocialUser struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SocialUserQuery when eager-loading is set.
-	Edges            SocialUserEdges `json:"edges"`
-	ad_channel_users *int64
+	Edges SocialUserEdges `json:"edges"`
 }
 
 // SocialUserEdges holds the relations/edges for other nodes in the graph.
 type SocialUserEdges struct {
 	// Tasks holds the value of the tasks edge.
 	Tasks []*TaskLog `json:"tasks,omitempty"`
+	// Events holds the value of the events edge.
+	Events []*UserEvent `json:"events,omitempty"`
 	// ListenRecords holds the value of the listenRecords edge.
 	ListenRecords []*ListenRecord `json:"listenRecords,omitempty"`
 	// Ads holds the value of the ads edge.
@@ -148,7 +149,7 @@ type SocialUserEdges struct {
 	Channel *AdChannel `json:"channel,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [14]bool
+	loadedTypes [15]bool
 }
 
 // TasksOrErr returns the Tasks value or an error if the edge
@@ -160,10 +161,19 @@ func (e SocialUserEdges) TasksOrErr() ([]*TaskLog, error) {
 	return nil, &NotLoadedError{edge: "tasks"}
 }
 
+// EventsOrErr returns the Events value or an error if the edge
+// was not loaded in eager-loading.
+func (e SocialUserEdges) EventsOrErr() ([]*UserEvent, error) {
+	if e.loadedTypes[1] {
+		return e.Events, nil
+	}
+	return nil, &NotLoadedError{edge: "events"}
+}
+
 // ListenRecordsOrErr returns the ListenRecords value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) ListenRecordsOrErr() ([]*ListenRecord, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[2] {
 		return e.ListenRecords, nil
 	}
 	return nil, &NotLoadedError{edge: "listenRecords"}
@@ -172,7 +182,7 @@ func (e SocialUserEdges) ListenRecordsOrErr() ([]*ListenRecord, error) {
 // AdsOrErr returns the Ads value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) AdsOrErr() ([]*AdChangeLog, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[3] {
 		return e.Ads, nil
 	}
 	return nil, &NotLoadedError{edge: "ads"}
@@ -181,7 +191,7 @@ func (e SocialUserEdges) AdsOrErr() ([]*AdChangeLog, error) {
 // BookshelvesOrErr returns the Bookshelves value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) BookshelvesOrErr() ([]*NovelBookshelf, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[4] {
 		return e.Bookshelves, nil
 	}
 	return nil, &NotLoadedError{edge: "bookshelves"}
@@ -190,7 +200,7 @@ func (e SocialUserEdges) BookshelvesOrErr() ([]*NovelBookshelf, error) {
 // AutoBuyNovelsOrErr returns the AutoBuyNovels value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) AutoBuyNovelsOrErr() ([]*NovelAutoBuy, error) {
-	if e.loadedTypes[4] {
+	if e.loadedTypes[5] {
 		return e.AutoBuyNovels, nil
 	}
 	return nil, &NotLoadedError{edge: "autoBuyNovels"}
@@ -199,7 +209,7 @@ func (e SocialUserEdges) AutoBuyNovelsOrErr() ([]*NovelAutoBuy, error) {
 // CommentsOrErr returns the Comments value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) CommentsOrErr() ([]*NovelComment, error) {
-	if e.loadedTypes[5] {
+	if e.loadedTypes[6] {
 		return e.Comments, nil
 	}
 	return nil, &NotLoadedError{edge: "comments"}
@@ -208,7 +218,7 @@ func (e SocialUserEdges) CommentsOrErr() ([]*NovelComment, error) {
 // MsgsOrErr returns the Msgs value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) MsgsOrErr() ([]*UserMsg, error) {
-	if e.loadedTypes[6] {
+	if e.loadedTypes[7] {
 		return e.Msgs, nil
 	}
 	return nil, &NotLoadedError{edge: "msgs"}
@@ -217,7 +227,7 @@ func (e SocialUserEdges) MsgsOrErr() ([]*UserMsg, error) {
 // OrdersOrErr returns the Orders value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) OrdersOrErr() ([]*PayOrder, error) {
-	if e.loadedTypes[7] {
+	if e.loadedTypes[8] {
 		return e.Orders, nil
 	}
 	return nil, &NotLoadedError{edge: "orders"}
@@ -226,7 +236,7 @@ func (e SocialUserEdges) OrdersOrErr() ([]*PayOrder, error) {
 // VipsOrErr returns the Vips value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) VipsOrErr() ([]*VipUser, error) {
-	if e.loadedTypes[8] {
+	if e.loadedTypes[9] {
 		return e.Vips, nil
 	}
 	return nil, &NotLoadedError{edge: "vips"}
@@ -235,7 +245,7 @@ func (e SocialUserEdges) VipsOrErr() ([]*VipUser, error) {
 // BalancesOrErr returns the Balances value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) BalancesOrErr() ([]*AmBalance, error) {
-	if e.loadedTypes[9] {
+	if e.loadedTypes[10] {
 		return e.Balances, nil
 	}
 	return nil, &NotLoadedError{edge: "balances"}
@@ -244,7 +254,7 @@ func (e SocialUserEdges) BalancesOrErr() ([]*AmBalance, error) {
 // AssetLogsOrErr returns the AssetLogs value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) AssetLogsOrErr() ([]*AssetChangeLog, error) {
-	if e.loadedTypes[10] {
+	if e.loadedTypes[11] {
 		return e.AssetLogs, nil
 	}
 	return nil, &NotLoadedError{edge: "assetLogs"}
@@ -253,7 +263,7 @@ func (e SocialUserEdges) AssetLogsOrErr() ([]*AssetChangeLog, error) {
 // BuyChapterRecordsOrErr returns the BuyChapterRecords value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) BuyChapterRecordsOrErr() ([]*NovelBuyChapterRecord, error) {
-	if e.loadedTypes[11] {
+	if e.loadedTypes[12] {
 		return e.BuyChapterRecords, nil
 	}
 	return nil, &NotLoadedError{edge: "buyChapterRecords"}
@@ -262,7 +272,7 @@ func (e SocialUserEdges) BuyChapterRecordsOrErr() ([]*NovelBuyChapterRecord, err
 // BuyNovelRecordsOrErr returns the BuyNovelRecords value or an error if the edge
 // was not loaded in eager-loading.
 func (e SocialUserEdges) BuyNovelRecordsOrErr() ([]*NovelBuyRecord, error) {
-	if e.loadedTypes[12] {
+	if e.loadedTypes[13] {
 		return e.BuyNovelRecords, nil
 	}
 	return nil, &NotLoadedError{edge: "buyNovelRecords"}
@@ -271,7 +281,7 @@ func (e SocialUserEdges) BuyNovelRecordsOrErr() ([]*NovelBuyRecord, error) {
 // ChannelOrErr returns the Channel value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e SocialUserEdges) ChannelOrErr() (*AdChannel, error) {
-	if e.loadedTypes[13] {
+	if e.loadedTypes[14] {
 		if e.Channel == nil {
 			// The edge channel was loaded in eager-loading,
 			// but was not found.
@@ -287,14 +297,12 @@ func (*SocialUser) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case socialuser.FieldID, socialuser.FieldUserId, socialuser.FieldSex, socialuser.FieldGroupid, socialuser.FieldSubscribe, socialuser.FieldSubscribeTime, socialuser.FieldCreateBy, socialuser.FieldUpdateBy, socialuser.FieldTenantId:
+		case socialuser.FieldID, socialuser.FieldChId, socialuser.FieldSex, socialuser.FieldGroupid, socialuser.FieldSubscribe, socialuser.FieldSubscribeTime, socialuser.FieldCreateBy, socialuser.FieldUpdateBy, socialuser.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case socialuser.FieldUnionid, socialuser.FieldToken, socialuser.FieldOpenid, socialuser.FieldRoutineOpenid, socialuser.FieldUserName, socialuser.FieldNickName, socialuser.FieldPhone, socialuser.FieldEmail, socialuser.FieldPassword, socialuser.FieldAvatar, socialuser.FieldRegion, socialuser.FieldCity, socialuser.FieldLanguage, socialuser.FieldProvince, socialuser.FieldCountry, socialuser.FieldSignature, socialuser.FieldRemark, socialuser.FieldTagidList, socialuser.FieldSessionKey, socialuser.FieldUserType:
 			values[i] = new(sql.NullString)
 		case socialuser.FieldBirthday, socialuser.FieldCreatedAt, socialuser.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case socialuser.ForeignKeys[0]: // ad_channel_users
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SocialUser", columns[i])
 		}
@@ -316,11 +324,11 @@ func (su *SocialUser) assignValues(columns []string, values []interface{}) error
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			su.ID = int64(value.Int64)
-		case socialuser.FieldUserId:
+		case socialuser.FieldChId:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field userId", values[i])
+				return fmt.Errorf("unexpected type %T for field chId", values[i])
 			} else if value.Valid {
-				su.UserId = value.Int64
+				su.ChId = value.Int64
 			}
 		case socialuser.FieldUnionid:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -502,13 +510,6 @@ func (su *SocialUser) assignValues(columns []string, values []interface{}) error
 			} else if value.Valid {
 				su.TenantId = value.Int64
 			}
-		case socialuser.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field ad_channel_users", value)
-			} else if value.Valid {
-				su.ad_channel_users = new(int64)
-				*su.ad_channel_users = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -517,6 +518,11 @@ func (su *SocialUser) assignValues(columns []string, values []interface{}) error
 // QueryTasks queries the "tasks" edge of the SocialUser entity.
 func (su *SocialUser) QueryTasks() *TaskLogQuery {
 	return (&SocialUserClient{config: su.config}).QueryTasks(su)
+}
+
+// QueryEvents queries the "events" edge of the SocialUser entity.
+func (su *SocialUser) QueryEvents() *UserEventQuery {
+	return (&SocialUserClient{config: su.config}).QueryEvents(su)
 }
 
 // QueryListenRecords queries the "listenRecords" edge of the SocialUser entity.
@@ -607,8 +613,8 @@ func (su *SocialUser) String() string {
 	var builder strings.Builder
 	builder.WriteString("SocialUser(")
 	builder.WriteString(fmt.Sprintf("id=%v", su.ID))
-	builder.WriteString(", userId=")
-	builder.WriteString(fmt.Sprintf("%v", su.UserId))
+	builder.WriteString(", chId=")
+	builder.WriteString(fmt.Sprintf("%v", su.ChId))
 	builder.WriteString(", unionid=")
 	builder.WriteString(su.Unionid)
 	builder.WriteString(", token=")

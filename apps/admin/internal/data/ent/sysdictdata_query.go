@@ -27,7 +27,6 @@ type SysDictDataQuery struct {
 	predicates []predicate.SysDictData
 	// eager-loading edges.
 	withDictType *SysDictTypeQuery
-	withFKs      bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -291,12 +290,12 @@ func (sddq *SysDictDataQuery) WithDictType(opts ...func(*SysDictTypeQuery)) *Sys
 // Example:
 //
 //	var v []struct {
-//		DictSort int32 `json:"dictSort,omitempty"`
+//		TypeId int64 `json:"typeId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SysDictData.Query().
-//		GroupBy(sysdictdata.FieldDictSort).
+//		GroupBy(sysdictdata.FieldTypeId).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -318,11 +317,11 @@ func (sddq *SysDictDataQuery) GroupBy(field string, fields ...string) *SysDictDa
 // Example:
 //
 //	var v []struct {
-//		DictSort int32 `json:"dictSort,omitempty"`
+//		TypeId int64 `json:"typeId,omitempty"`
 //	}
 //
 //	client.SysDictData.Query().
-//		Select(sysdictdata.FieldDictSort).
+//		Select(sysdictdata.FieldTypeId).
 //		Scan(ctx, &v)
 //
 func (sddq *SysDictDataQuery) Select(fields ...string) *SysDictDataSelect {
@@ -349,18 +348,11 @@ func (sddq *SysDictDataQuery) prepareQuery(ctx context.Context) error {
 func (sddq *SysDictDataQuery) sqlAll(ctx context.Context) ([]*SysDictData, error) {
 	var (
 		nodes       = []*SysDictData{}
-		withFKs     = sddq.withFKs
 		_spec       = sddq.querySpec()
 		loadedTypes = [1]bool{
 			sddq.withDictType != nil,
 		}
 	)
-	if sddq.withDictType != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, sysdictdata.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &SysDictData{config: sddq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (sddq *SysDictDataQuery) sqlAll(ctx context.Context) ([]*SysDictData, error
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SysDictData)
 		for i := range nodes {
-			if nodes[i].sys_dict_type_data_list == nil {
-				continue
-			}
-			fk := *nodes[i].sys_dict_type_data_list
+			fk := nodes[i].TypeId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (sddq *SysDictDataQuery) sqlAll(ctx context.Context) ([]*SysDictData, error
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_dict_type_data_list" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "typeId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.DictType = n

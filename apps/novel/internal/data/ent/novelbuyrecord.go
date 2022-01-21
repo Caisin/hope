@@ -5,6 +5,7 @@ package ent
 import (
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novelbuyrecord"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"strings"
 	"time"
 
@@ -57,8 +58,33 @@ type NovelBuyRecord struct {
 	UpdateBy int64 `json:"updateBy,omitempty"`
 	// TenantId holds the value of the "tenantId" field.
 	// 租户
-	TenantId                      int64 `json:"tenantId,omitempty"`
-	social_user_buy_novel_records *int64
+	TenantId int64 `json:"tenantId,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the NovelBuyRecordQuery when eager-loading is set.
+	Edges NovelBuyRecordEdges `json:"edges"`
+}
+
+// NovelBuyRecordEdges holds the relations/edges for other nodes in the graph.
+type NovelBuyRecordEdges struct {
+	// User holds the value of the user edge.
+	User *SocialUser `json:"user,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// UserOrErr returns the User value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e NovelBuyRecordEdges) UserOrErr() (*SocialUser, error) {
+	if e.loadedTypes[0] {
+		if e.User == nil {
+			// The edge user was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: socialuser.Label}
+		}
+		return e.User, nil
+	}
+	return nil, &NotLoadedError{edge: "user"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -72,8 +98,6 @@ func (*NovelBuyRecord) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case novelbuyrecord.FieldCreatedAt, novelbuyrecord.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case novelbuyrecord.ForeignKeys[0]: // social_user_buy_novel_records
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type NovelBuyRecord", columns[i])
 		}
@@ -179,16 +203,14 @@ func (nbr *NovelBuyRecord) assignValues(columns []string, values []interface{}) 
 			} else if value.Valid {
 				nbr.TenantId = value.Int64
 			}
-		case novelbuyrecord.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_buy_novel_records", value)
-			} else if value.Valid {
-				nbr.social_user_buy_novel_records = new(int64)
-				*nbr.social_user_buy_novel_records = int64(value.Int64)
-			}
 		}
 	}
 	return nil
+}
+
+// QueryUser queries the "user" edge of the NovelBuyRecord entity.
+func (nbr *NovelBuyRecord) QueryUser() *SocialUserQuery {
+	return (&NovelBuyRecordClient{config: nbr.config}).QueryUser(nbr)
 }
 
 // Update returns a builder for updating this NovelBuyRecord.

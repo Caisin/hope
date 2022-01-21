@@ -15,7 +15,7 @@ func SocialUserUpdateReq2Data(v *v1.SocialUserUpdateReq) *ent.SocialUser {
 	}
 	return &ent.SocialUser{
 		ID:            v.Id,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -49,7 +49,7 @@ func SocialUserData2UpdateReq(v *ent.SocialUser) *v1.SocialUserUpdateReq {
 	}
 	return &v1.SocialUserUpdateReq{
 		Id:            v.ID,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -82,7 +82,7 @@ func SocialUserCreateReq2Data(v *v1.SocialUserCreateReq) *ent.SocialUser {
 		return nil
 	}
 	return &ent.SocialUser{
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -115,7 +115,7 @@ func SocialUserData2CreateReq(v *ent.SocialUser) *v1.SocialUserCreateReq {
 		return nil
 	}
 	return &v1.SocialUserCreateReq{
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -148,7 +148,7 @@ func SocialUserReq2Data(v *v1.SocialUserReq) *ent.SocialUser {
 		return nil
 	}
 	return &ent.SocialUser{
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -181,7 +181,7 @@ func SocialUserData2Req(v *ent.SocialUser) *v1.SocialUserReq {
 		return nil
 	}
 	return &v1.SocialUserReq{
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -215,7 +215,7 @@ func SocialUserReply2Data(v *v1.SocialUserReply) *ent.SocialUser {
 	}
 	return &ent.SocialUser{
 		ID:            v.Id,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -255,7 +255,7 @@ func SocialUserData2Reply(v *ent.SocialUser) *v1.SocialUserReply {
 	}
 	return &v1.SocialUserReply{
 		Id:            v.ID,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -295,7 +295,7 @@ func SocialUserUpdateReply2Data(v *v1.SocialUserUpdateReply) *ent.SocialUser {
 	}
 	return &ent.SocialUser{
 		ID:            v.Id,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -329,7 +329,7 @@ func SocialUserData2UpdateReply(v *ent.SocialUser) *v1.SocialUserUpdateReply {
 	}
 	return &v1.SocialUserUpdateReply{
 		Id:            v.ID,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -363,7 +363,7 @@ func SocialUserCreateReply2Data(v *v1.SocialUserCreateReply) *ent.SocialUser {
 	}
 	return &ent.SocialUser{
 		ID:            v.Id,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,
@@ -403,7 +403,7 @@ func SocialUserData2CreateReply(v *ent.SocialUser) *v1.SocialUserCreateReply {
 	}
 	return &v1.SocialUserCreateReply{
 		Id:            v.ID,
-		UserId:        v.UserId,
+		ChId:          v.ChId,
 		Unionid:       v.Unionid,
 		Token:         v.Token,
 		Openid:        v.Openid,

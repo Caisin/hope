@@ -71,7 +71,6 @@ type NovelChapter struct {
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the NovelChapterQuery when eager-loading is set.
 	Edges              NovelChapterEdges `json:"edges"`
-	novel_chapters     *int64
 	novel_chapter_next *int64
 }
 
@@ -143,9 +142,7 @@ func (*NovelChapter) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case novelchapter.FieldPublishTime, novelchapter.FieldCreatedAt, novelchapter.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case novelchapter.ForeignKeys[0]: // novel_chapters
-			values[i] = new(sql.NullInt64)
-		case novelchapter.ForeignKeys[1]: // novel_chapter_next
+		case novelchapter.ForeignKeys[0]: // novel_chapter_next
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type NovelChapter", columns[i])
@@ -271,13 +268,6 @@ func (nc *NovelChapter) assignValues(columns []string, values []interface{}) err
 				nc.TenantId = value.Int64
 			}
 		case novelchapter.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field novel_chapters", value)
-			} else if value.Valid {
-				nc.novel_chapters = new(int64)
-				*nc.novel_chapters = int64(value.Int64)
-			}
-		case novelchapter.ForeignKeys[1]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field novel_chapter_next", value)
 			} else if value.Valid {

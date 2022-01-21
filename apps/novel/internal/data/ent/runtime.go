@@ -165,33 +165,33 @@ func init() {
 	ambalanceFields := schema.AmBalance{}.Fields()
 	_ = ambalanceFields
 	// ambalanceDescEffectTime is the schema descriptor for effectTime field.
-	ambalanceDescEffectTime := ambalanceFields[7].Descriptor()
+	ambalanceDescEffectTime := ambalanceFields[8].Descriptor()
 	// ambalance.DefaultEffectTime holds the default value on creation for the effectTime field.
 	ambalance.DefaultEffectTime = ambalanceDescEffectTime.Default.(func() time.Time)
 	// ambalanceDescExpiredTime is the schema descriptor for expiredTime field.
-	ambalanceDescExpiredTime := ambalanceFields[8].Descriptor()
+	ambalanceDescExpiredTime := ambalanceFields[9].Descriptor()
 	// ambalance.DefaultExpiredTime holds the default value on creation for the expiredTime field.
 	ambalance.DefaultExpiredTime = ambalanceDescExpiredTime.Default.(func() time.Time)
 	// ambalanceDescCreatedAt is the schema descriptor for createdAt field.
-	ambalanceDescCreatedAt := ambalanceFields[9].Descriptor()
+	ambalanceDescCreatedAt := ambalanceFields[10].Descriptor()
 	// ambalance.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	ambalance.DefaultCreatedAt = ambalanceDescCreatedAt.Default.(func() time.Time)
 	// ambalanceDescUpdatedAt is the schema descriptor for updatedAt field.
-	ambalanceDescUpdatedAt := ambalanceFields[10].Descriptor()
+	ambalanceDescUpdatedAt := ambalanceFields[11].Descriptor()
 	// ambalance.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	ambalance.DefaultUpdatedAt = ambalanceDescUpdatedAt.Default.(func() time.Time)
 	// ambalance.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	ambalance.UpdateDefaultUpdatedAt = ambalanceDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// ambalanceDescCreateBy is the schema descriptor for createBy field.
-	ambalanceDescCreateBy := ambalanceFields[11].Descriptor()
+	ambalanceDescCreateBy := ambalanceFields[12].Descriptor()
 	// ambalance.DefaultCreateBy holds the default value on creation for the createBy field.
 	ambalance.DefaultCreateBy = ambalanceDescCreateBy.Default.(int64)
 	// ambalanceDescUpdateBy is the schema descriptor for updateBy field.
-	ambalanceDescUpdateBy := ambalanceFields[12].Descriptor()
+	ambalanceDescUpdateBy := ambalanceFields[13].Descriptor()
 	// ambalance.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	ambalance.DefaultUpdateBy = ambalanceDescUpdateBy.Default.(int64)
 	// ambalanceDescTenantId is the schema descriptor for tenantId field.
-	ambalanceDescTenantId := ambalanceFields[13].Descriptor()
+	ambalanceDescTenantId := ambalanceFields[14].Descriptor()
 	// ambalance.DefaultTenantId holds the default value on creation for the tenantId field.
 	ambalance.DefaultTenantId = ambalanceDescTenantId.Default.(int64)
 	appversionFields := schema.AppVersion{}.Fields()
@@ -277,33 +277,33 @@ func init() {
 	bookpackageFields := schema.BookPackage{}.Fields()
 	_ = bookpackageFields
 	// bookpackageDescEffectTime is the schema descriptor for effectTime field.
-	bookpackageDescEffectTime := bookpackageFields[5].Descriptor()
+	bookpackageDescEffectTime := bookpackageFields[4].Descriptor()
 	// bookpackage.DefaultEffectTime holds the default value on creation for the effectTime field.
 	bookpackage.DefaultEffectTime = bookpackageDescEffectTime.Default.(func() time.Time)
 	// bookpackageDescExpiredTime is the schema descriptor for expiredTime field.
-	bookpackageDescExpiredTime := bookpackageFields[6].Descriptor()
+	bookpackageDescExpiredTime := bookpackageFields[5].Descriptor()
 	// bookpackage.DefaultExpiredTime holds the default value on creation for the expiredTime field.
 	bookpackage.DefaultExpiredTime = bookpackageDescExpiredTime.Default.(func() time.Time)
 	// bookpackageDescCreatedAt is the schema descriptor for createdAt field.
-	bookpackageDescCreatedAt := bookpackageFields[7].Descriptor()
+	bookpackageDescCreatedAt := bookpackageFields[6].Descriptor()
 	// bookpackage.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	bookpackage.DefaultCreatedAt = bookpackageDescCreatedAt.Default.(func() time.Time)
 	// bookpackageDescUpdatedAt is the schema descriptor for updatedAt field.
-	bookpackageDescUpdatedAt := bookpackageFields[8].Descriptor()
+	bookpackageDescUpdatedAt := bookpackageFields[7].Descriptor()
 	// bookpackage.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	bookpackage.DefaultUpdatedAt = bookpackageDescUpdatedAt.Default.(func() time.Time)
 	// bookpackage.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	bookpackage.UpdateDefaultUpdatedAt = bookpackageDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// bookpackageDescCreateBy is the schema descriptor for createBy field.
-	bookpackageDescCreateBy := bookpackageFields[9].Descriptor()
+	bookpackageDescCreateBy := bookpackageFields[8].Descriptor()
 	// bookpackage.DefaultCreateBy holds the default value on creation for the createBy field.
 	bookpackage.DefaultCreateBy = bookpackageDescCreateBy.Default.(int64)
 	// bookpackageDescUpdateBy is the schema descriptor for updateBy field.
-	bookpackageDescUpdateBy := bookpackageFields[10].Descriptor()
+	bookpackageDescUpdateBy := bookpackageFields[9].Descriptor()
 	// bookpackage.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	bookpackage.DefaultUpdateBy = bookpackageDescUpdateBy.Default.(int64)
 	// bookpackageDescTenantId is the schema descriptor for tenantId field.
-	bookpackageDescTenantId := bookpackageFields[11].Descriptor()
+	bookpackageDescTenantId := bookpackageFields[10].Descriptor()
 	// bookpackage.DefaultTenantId holds the default value on creation for the tenantId field.
 	bookpackage.DefaultTenantId = bookpackageDescTenantId.Default.(int64)
 	clienterrorFields := schema.ClientError{}.Fields()
@@ -677,35 +677,35 @@ func init() {
 	payorderFields := schema.PayOrder{}.Fields()
 	_ = payorderFields
 	// payorderDescState is the schema descriptor for state field.
-	payorderDescState := payorderFields[5].Descriptor()
+	payorderDescState := payorderFields[8].Descriptor()
 	// payorder.DefaultState holds the default value on creation for the state field.
 	payorder.DefaultState = schema.OrderState(payorderDescState.Default.(int32))
 	// payorder.StateValidator is a validator for the "state" field. It is called by the builders before save.
 	payorder.StateValidator = payorderDescState.Validators[0].(func(int32) error)
 	// payorderDescPayment is the schema descriptor for payment field.
-	payorderDescPayment := payorderFields[6].Descriptor()
+	payorderDescPayment := payorderFields[9].Descriptor()
 	// payorder.PaymentValidator is a validator for the "payment" field. It is called by the builders before save.
 	payorder.PaymentValidator = payorderDescPayment.Validators[0].(func(int64) error)
 	// payorderDescCreatedAt is the schema descriptor for createdAt field.
-	payorderDescCreatedAt := payorderFields[18].Descriptor()
+	payorderDescCreatedAt := payorderFields[21].Descriptor()
 	// payorder.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	payorder.DefaultCreatedAt = payorderDescCreatedAt.Default.(func() time.Time)
 	// payorderDescUpdatedAt is the schema descriptor for updatedAt field.
-	payorderDescUpdatedAt := payorderFields[19].Descriptor()
+	payorderDescUpdatedAt := payorderFields[22].Descriptor()
 	// payorder.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	payorder.DefaultUpdatedAt = payorderDescUpdatedAt.Default.(func() time.Time)
 	// payorder.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	payorder.UpdateDefaultUpdatedAt = payorderDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// payorderDescCreateBy is the schema descriptor for createBy field.
-	payorderDescCreateBy := payorderFields[20].Descriptor()
+	payorderDescCreateBy := payorderFields[23].Descriptor()
 	// payorder.DefaultCreateBy holds the default value on creation for the createBy field.
 	payorder.DefaultCreateBy = payorderDescCreateBy.Default.(int64)
 	// payorderDescUpdateBy is the schema descriptor for updateBy field.
-	payorderDescUpdateBy := payorderFields[21].Descriptor()
+	payorderDescUpdateBy := payorderFields[24].Descriptor()
 	// payorder.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	payorder.DefaultUpdateBy = payorderDescUpdateBy.Default.(int64)
 	// payorderDescTenantId is the schema descriptor for tenantId field.
-	payorderDescTenantId := payorderFields[22].Descriptor()
+	payorderDescTenantId := payorderFields[25].Descriptor()
 	// payorder.DefaultTenantId holds the default value on creation for the tenantId field.
 	payorder.DefaultTenantId = payorderDescTenantId.Default.(int64)
 	socialuserFields := schema.SocialUser{}.Fields()
@@ -815,33 +815,33 @@ func init() {
 	vipuserFields := schema.VipUser{}.Fields()
 	_ = vipuserFields
 	// vipuserDescEffectTime is the schema descriptor for effectTime field.
-	vipuserDescEffectTime := vipuserFields[5].Descriptor()
+	vipuserDescEffectTime := vipuserFields[6].Descriptor()
 	// vipuser.DefaultEffectTime holds the default value on creation for the effectTime field.
 	vipuser.DefaultEffectTime = vipuserDescEffectTime.Default.(func() time.Time)
 	// vipuserDescExpiredTime is the schema descriptor for expiredTime field.
-	vipuserDescExpiredTime := vipuserFields[6].Descriptor()
+	vipuserDescExpiredTime := vipuserFields[7].Descriptor()
 	// vipuser.DefaultExpiredTime holds the default value on creation for the expiredTime field.
 	vipuser.DefaultExpiredTime = vipuserDescExpiredTime.Default.(func() time.Time)
 	// vipuserDescCreatedAt is the schema descriptor for createdAt field.
-	vipuserDescCreatedAt := vipuserFields[7].Descriptor()
+	vipuserDescCreatedAt := vipuserFields[8].Descriptor()
 	// vipuser.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	vipuser.DefaultCreatedAt = vipuserDescCreatedAt.Default.(func() time.Time)
 	// vipuserDescUpdatedAt is the schema descriptor for updatedAt field.
-	vipuserDescUpdatedAt := vipuserFields[8].Descriptor()
+	vipuserDescUpdatedAt := vipuserFields[9].Descriptor()
 	// vipuser.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	vipuser.DefaultUpdatedAt = vipuserDescUpdatedAt.Default.(func() time.Time)
 	// vipuser.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	vipuser.UpdateDefaultUpdatedAt = vipuserDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// vipuserDescCreateBy is the schema descriptor for createBy field.
-	vipuserDescCreateBy := vipuserFields[9].Descriptor()
+	vipuserDescCreateBy := vipuserFields[10].Descriptor()
 	// vipuser.DefaultCreateBy holds the default value on creation for the createBy field.
 	vipuser.DefaultCreateBy = vipuserDescCreateBy.Default.(int64)
 	// vipuserDescUpdateBy is the schema descriptor for updateBy field.
-	vipuserDescUpdateBy := vipuserFields[10].Descriptor()
+	vipuserDescUpdateBy := vipuserFields[11].Descriptor()
 	// vipuser.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	vipuser.DefaultUpdateBy = vipuserDescUpdateBy.Default.(int64)
 	// vipuserDescTenantId is the schema descriptor for tenantId field.
-	vipuserDescTenantId := vipuserFields[11].Descriptor()
+	vipuserDescTenantId := vipuserFields[12].Descriptor()
 	// vipuser.DefaultTenantId holds the default value on creation for the tenantId field.
 	vipuser.DefaultTenantId = vipuserDescTenantId.Default.(int64)
 }

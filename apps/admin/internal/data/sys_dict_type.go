@@ -32,7 +32,7 @@ func (r *sysDictTypeRepo) CreateSysDictType(ctx context.Context, req *v1.SysDict
 	now := time.Now()
 	return r.data.db.SysDictType.Create().
 		SetDictName(req.DictName).
-		SetDictType(req.DictType).
+		SetTypeCode(req.TypeCode).
 		SetStatus(req.Status).
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
@@ -105,8 +105,8 @@ func (r *sysDictTypeRepo) genCondition(req *v1.SysDictTypeReq) []predicate.SysDi
 	if str.IsBlank(req.DictName) {
 		list = append(list, sysdicttype.DictNameContains(req.DictName))
 	}
-	if str.IsBlank(req.DictType) {
-		list = append(list, sysdicttype.DictTypeContains(req.DictType))
+	if str.IsBlank(req.TypeCode) {
+		list = append(list, sysdicttype.TypeCodeContains(req.TypeCode))
 	}
 	if req.Status > 0 {
 		list = append(list, sysdicttype.Status(req.Status))

@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"hope/pkg/ent/mixin"
 )
@@ -14,7 +15,7 @@ type UserEvent struct {
 // Fields of the UserEvent.
 func (UserEvent) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.String("eventType").Optional().
 			Comment(`事件类型,read`),
@@ -37,5 +38,7 @@ func (UserEvent) Fields() []ent.Field {
 
 // Edges of the UserEvent.
 func (UserEvent) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("events").Unique(),
+	}
 }

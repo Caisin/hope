@@ -16,7 +16,7 @@ type SysJobLog struct {
 // Fields of the SysJobLog.
 func (SysJobLog) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int32("jobId").Optional().
+		field.Int64("jobId").Optional().
 			Comment(`编码`),
 		field.String("jobName").Optional().
 			Comment(`名称`),
@@ -36,6 +36,6 @@ func (SysJobLog) Fields() []ent.Field {
 // Edges of the SysJobLog.
 func (SysJobLog) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("job", SysJob.Type).Ref("logs").Unique(),
+		edge.From("job", SysJob.Type).Field("jobId").Ref("logs").Unique(),
 	}
 }

@@ -94,7 +94,7 @@ func IDLTE(id int64) predicate.SysJobLog {
 }
 
 // JobId applies equality check predicate on the "jobId" field. It's identical to JobIdEQ.
-func JobId(v int32) predicate.SysJobLog {
+func JobId(v int64) predicate.SysJobLog {
 	return predicate.SysJobLog(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldJobId), v))
 	})
@@ -172,21 +172,21 @@ func TenantId(v int64) predicate.SysJobLog {
 }
 
 // JobIdEQ applies the EQ predicate on the "jobId" field.
-func JobIdEQ(v int32) predicate.SysJobLog {
+func JobIdEQ(v int64) predicate.SysJobLog {
 	return predicate.SysJobLog(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldJobId), v))
 	})
 }
 
 // JobIdNEQ applies the NEQ predicate on the "jobId" field.
-func JobIdNEQ(v int32) predicate.SysJobLog {
+func JobIdNEQ(v int64) predicate.SysJobLog {
 	return predicate.SysJobLog(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldJobId), v))
 	})
 }
 
 // JobIdIn applies the In predicate on the "jobId" field.
-func JobIdIn(vs ...int32) predicate.SysJobLog {
+func JobIdIn(vs ...int64) predicate.SysJobLog {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -203,7 +203,7 @@ func JobIdIn(vs ...int32) predicate.SysJobLog {
 }
 
 // JobIdNotIn applies the NotIn predicate on the "jobId" field.
-func JobIdNotIn(vs ...int32) predicate.SysJobLog {
+func JobIdNotIn(vs ...int64) predicate.SysJobLog {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -216,34 +216,6 @@ func JobIdNotIn(vs ...int32) predicate.SysJobLog {
 			return
 		}
 		s.Where(sql.NotIn(s.C(FieldJobId), v...))
-	})
-}
-
-// JobIdGT applies the GT predicate on the "jobId" field.
-func JobIdGT(v int32) predicate.SysJobLog {
-	return predicate.SysJobLog(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldJobId), v))
-	})
-}
-
-// JobIdGTE applies the GTE predicate on the "jobId" field.
-func JobIdGTE(v int32) predicate.SysJobLog {
-	return predicate.SysJobLog(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldJobId), v))
-	})
-}
-
-// JobIdLT applies the LT predicate on the "jobId" field.
-func JobIdLT(v int32) predicate.SysJobLog {
-	return predicate.SysJobLog(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldJobId), v))
-	})
-}
-
-// JobIdLTE applies the LTE predicate on the "jobId" field.
-func JobIdLTE(v int32) predicate.SysJobLog {
-	return predicate.SysJobLog(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldJobId), v))
 	})
 }
 

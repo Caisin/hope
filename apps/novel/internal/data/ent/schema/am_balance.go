@@ -15,6 +15,8 @@ type AmBalance struct {
 // Fields of the AmBalance.
 func (AmBalance) Fields() []ent.Field {
 	fields := []ent.Field{
+		field.Int64("userId").
+			Comment(`用户ID`),
 		field.String("orderId").Optional().
 			Comment(`订单号`),
 		field.Int64("eventId").Optional().
@@ -38,6 +40,6 @@ func (AmBalance) Fields() []ent.Field {
 // Edges of the AmBalance.
 func (AmBalance) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("balances").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("balances").Unique(),
 	}
 }

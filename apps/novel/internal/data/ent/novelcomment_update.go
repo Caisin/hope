@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novelcomment"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -57,28 +58,7 @@ func (ncu *NovelCommentUpdate) ClearNovelId() *NovelCommentUpdate {
 
 // SetUserId sets the "userId" field.
 func (ncu *NovelCommentUpdate) SetUserId(i int64) *NovelCommentUpdate {
-	ncu.mutation.ResetUserId()
 	ncu.mutation.SetUserId(i)
-	return ncu
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (ncu *NovelCommentUpdate) SetNillableUserId(i *int64) *NovelCommentUpdate {
-	if i != nil {
-		ncu.SetUserId(*i)
-	}
-	return ncu
-}
-
-// AddUserId adds i to the "userId" field.
-func (ncu *NovelCommentUpdate) AddUserId(i int64) *NovelCommentUpdate {
-	ncu.mutation.AddUserId(i)
-	return ncu
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (ncu *NovelCommentUpdate) ClearUserId() *NovelCommentUpdate {
-	ncu.mutation.ClearUserId()
 	return ncu
 }
 
@@ -452,14 +432,6 @@ func (ncu *NovelCommentUpdate) SetUserID(id int64) *NovelCommentUpdate {
 	return ncu
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (ncu *NovelCommentUpdate) SetNillableUserID(id *int64) *NovelCommentUpdate {
-	if id != nil {
-		ncu = ncu.SetUserID(*id)
-	}
-	return ncu
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (ncu *NovelCommentUpdate) SetUser(s *SocialUser) *NovelCommentUpdate {
 	return ncu.SetUserID(s.ID)
@@ -579,6 +551,9 @@ func (ncu *NovelCommentUpdate) check() error {
 			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
 		}
 	}
+	if _, ok := ncu.mutation.UserID(); ncu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
 	return nil
 }
 
@@ -618,26 +593,6 @@ func (ncu *NovelCommentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Column: novelcomment.FieldNovelId,
-		})
-	}
-	if value, ok := ncu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelcomment.FieldUserId,
-		})
-	}
-	if value, ok := ncu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelcomment.FieldUserId,
-		})
-	}
-	if ncu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelcomment.FieldUserId,
 		})
 	}
 	if value, ok := ncu.mutation.Avatar(); ok {
@@ -1038,28 +993,7 @@ func (ncuo *NovelCommentUpdateOne) ClearNovelId() *NovelCommentUpdateOne {
 
 // SetUserId sets the "userId" field.
 func (ncuo *NovelCommentUpdateOne) SetUserId(i int64) *NovelCommentUpdateOne {
-	ncuo.mutation.ResetUserId()
 	ncuo.mutation.SetUserId(i)
-	return ncuo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (ncuo *NovelCommentUpdateOne) SetNillableUserId(i *int64) *NovelCommentUpdateOne {
-	if i != nil {
-		ncuo.SetUserId(*i)
-	}
-	return ncuo
-}
-
-// AddUserId adds i to the "userId" field.
-func (ncuo *NovelCommentUpdateOne) AddUserId(i int64) *NovelCommentUpdateOne {
-	ncuo.mutation.AddUserId(i)
-	return ncuo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (ncuo *NovelCommentUpdateOne) ClearUserId() *NovelCommentUpdateOne {
-	ncuo.mutation.ClearUserId()
 	return ncuo
 }
 
@@ -1433,14 +1367,6 @@ func (ncuo *NovelCommentUpdateOne) SetUserID(id int64) *NovelCommentUpdateOne {
 	return ncuo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (ncuo *NovelCommentUpdateOne) SetNillableUserID(id *int64) *NovelCommentUpdateOne {
-	if id != nil {
-		ncuo = ncuo.SetUserID(*id)
-	}
-	return ncuo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (ncuo *NovelCommentUpdateOne) SetUser(s *SocialUser) *NovelCommentUpdateOne {
 	return ncuo.SetUserID(s.ID)
@@ -1567,6 +1493,9 @@ func (ncuo *NovelCommentUpdateOne) check() error {
 			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
 		}
 	}
+	if _, ok := ncuo.mutation.UserID(); ncuo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
 	return nil
 }
 
@@ -1623,26 +1552,6 @@ func (ncuo *NovelCommentUpdateOne) sqlSave(ctx context.Context) (_node *NovelCom
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Column: novelcomment.FieldNovelId,
-		})
-	}
-	if value, ok := ncuo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelcomment.FieldUserId,
-		})
-	}
-	if value, ok := ncuo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelcomment.FieldUserId,
-		})
-	}
-	if ncuo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelcomment.FieldUserId,
 		})
 	}
 	if value, ok := ncuo.mutation.Avatar(); ok {

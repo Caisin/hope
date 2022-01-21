@@ -19,8 +19,6 @@ const (
 	FieldPrice = "price"
 	// FieldDailyPrice holds the string denoting the dailyprice field in the database.
 	FieldDailyPrice = "daily_price"
-	// FieldNovelIds holds the string denoting the novelids field in the database.
-	FieldNovelIds = "novel_ids"
 	// FieldEffectTime holds the string denoting the effecttime field in the database.
 	FieldEffectTime = "effect_time"
 	// FieldExpiredTime holds the string denoting the expiredtime field in the database.
@@ -53,7 +51,6 @@ var Columns = []string{
 	FieldPackageName,
 	FieldPrice,
 	FieldDailyPrice,
-	FieldNovelIds,
 	FieldEffectTime,
 	FieldExpiredTime,
 	FieldCreatedAt,

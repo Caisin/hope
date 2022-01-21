@@ -365,34 +365,6 @@ func ClassifyIdNotIn(vs ...int64) predicate.Novel {
 	})
 }
 
-// ClassifyIdGT applies the GT predicate on the "classifyId" field.
-func ClassifyIdGT(v int64) predicate.Novel {
-	return predicate.Novel(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldClassifyId), v))
-	})
-}
-
-// ClassifyIdGTE applies the GTE predicate on the "classifyId" field.
-func ClassifyIdGTE(v int64) predicate.Novel {
-	return predicate.Novel(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldClassifyId), v))
-	})
-}
-
-// ClassifyIdLT applies the LT predicate on the "classifyId" field.
-func ClassifyIdLT(v int64) predicate.Novel {
-	return predicate.Novel(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldClassifyId), v))
-	})
-}
-
-// ClassifyIdLTE applies the LTE predicate on the "classifyId" field.
-func ClassifyIdLTE(v int64) predicate.Novel {
-	return predicate.Novel(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldClassifyId), v))
-	})
-}
-
 // ClassifyIdIsNil applies the IsNil predicate on the "classifyId" field.
 func ClassifyIdIsNil() predicate.Novel {
 	return predicate.Novel(func(s *sql.Selector) {

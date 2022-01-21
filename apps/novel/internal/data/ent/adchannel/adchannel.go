@@ -51,14 +51,14 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
 	UsersInverseTable = "social_users"
 	// UsersColumn is the table column denoting the users relation/edge.
-	UsersColumn = "ad_channel_users"
+	UsersColumn = "ch_id"
 	// OrdersTable is the table that holds the orders relation/edge.
 	OrdersTable = "pay_orders"
 	// OrdersInverseTable is the table name for the PayOrder entity.
 	// It exists in this package in order to avoid circular dependency with the "payorder" package.
 	OrdersInverseTable = "pay_orders"
 	// OrdersColumn is the table column denoting the orders relation/edge.
-	OrdersColumn = "ad_channel_orders"
+	OrdersColumn = "ch_id"
 )
 
 // Columns holds all SQL columns for adchannel fields.

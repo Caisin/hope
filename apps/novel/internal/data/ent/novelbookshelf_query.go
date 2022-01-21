@@ -27,7 +27,6 @@ type NovelBookshelfQuery struct {
 	predicates []predicate.NovelBookshelf
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -349,18 +348,11 @@ func (nbq *NovelBookshelfQuery) prepareQuery(ctx context.Context) error {
 func (nbq *NovelBookshelfQuery) sqlAll(ctx context.Context) ([]*NovelBookshelf, error) {
 	var (
 		nodes       = []*NovelBookshelf{}
-		withFKs     = nbq.withFKs
 		_spec       = nbq.querySpec()
 		loadedTypes = [1]bool{
 			nbq.withUser != nil,
 		}
 	)
-	if nbq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, novelbookshelf.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &NovelBookshelf{config: nbq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (nbq *NovelBookshelfQuery) sqlAll(ctx context.Context) ([]*NovelBookshelf, 
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*NovelBookshelf)
 		for i := range nodes {
-			if nodes[i].social_user_bookshelves == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_bookshelves
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (nbq *NovelBookshelfQuery) sqlAll(ctx context.Context) ([]*NovelBookshelf, 
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_bookshelves" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

@@ -17,6 +17,10 @@ const (
 	FieldNickName = "nick_name"
 	// FieldPhone holds the string denoting the phone field in the database.
 	FieldPhone = "phone"
+	// FieldDeptId holds the string denoting the deptid field in the database.
+	FieldDeptId = "dept_id"
+	// FieldPostId holds the string denoting the postid field in the database.
+	FieldPostId = "post_id"
 	// FieldRoleId holds the string denoting the roleid field in the database.
 	FieldRoleId = "role_id"
 	// FieldAvatar holds the string denoting the avatar field in the database.
@@ -45,6 +49,8 @@ const (
 	EdgeDept = "dept"
 	// EdgePost holds the string denoting the post edge name in mutations.
 	EdgePost = "post"
+	// EdgeRole holds the string denoting the role edge name in mutations.
+	EdgeRole = "role"
 	// EdgeLoginLogs holds the string denoting the loginlogs edge name in mutations.
 	EdgeLoginLogs = "loginLogs"
 	// EdgeOperaLogs holds the string denoting the operalogs edge name in mutations.
@@ -57,28 +63,33 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "sysdept" package.
 	DeptInverseTable = "sys_depts"
 	// DeptColumn is the table column denoting the dept relation/edge.
-	DeptColumn = "sys_dept_users"
+	DeptColumn = "dept_id"
 	// PostTable is the table that holds the post relation/edge.
 	PostTable = "sys_users"
 	// PostInverseTable is the table name for the SysPost entity.
 	// It exists in this package in order to avoid circular dependency with the "syspost" package.
 	PostInverseTable = "sys_posts"
 	// PostColumn is the table column denoting the post relation/edge.
-	PostColumn = "sys_post_users"
+	PostColumn = "post_id"
+	// RoleTable is the table that holds the role relation/edge. The primary key declared below.
+	RoleTable = "sys_role_users"
+	// RoleInverseTable is the table name for the SysRole entity.
+	// It exists in this package in order to avoid circular dependency with the "sysrole" package.
+	RoleInverseTable = "sys_roles"
 	// LoginLogsTable is the table that holds the loginLogs relation/edge.
 	LoginLogsTable = "sys_login_logs"
 	// LoginLogsInverseTable is the table name for the SysLoginLog entity.
 	// It exists in this package in order to avoid circular dependency with the "sysloginlog" package.
 	LoginLogsInverseTable = "sys_login_logs"
 	// LoginLogsColumn is the table column denoting the loginLogs relation/edge.
-	LoginLogsColumn = "sys_user_login_logs"
+	LoginLogsColumn = "user_id"
 	// OperaLogsTable is the table that holds the operaLogs relation/edge.
 	OperaLogsTable = "sys_opera_logs"
 	// OperaLogsInverseTable is the table name for the SysOperaLog entity.
 	// It exists in this package in order to avoid circular dependency with the "sysoperalog" package.
 	OperaLogsInverseTable = "sys_opera_logs"
 	// OperaLogsColumn is the table column denoting the operaLogs relation/edge.
-	OperaLogsColumn = "sys_user_opera_logs"
+	OperaLogsColumn = "user_id"
 )
 
 // Columns holds all SQL columns for sysuser fields.
@@ -87,6 +98,8 @@ var Columns = []string{
 	FieldUsername,
 	FieldNickName,
 	FieldPhone,
+	FieldDeptId,
+	FieldPostId,
 	FieldRoleId,
 	FieldAvatar,
 	FieldSex,
@@ -101,22 +114,16 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "sys_users"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"sys_dept_users",
-	"sys_post_users",
-}
+var (
+	// RolePrimaryKey and RoleColumn2 are the table columns denoting the
+	// primary key for the role relation (M2M).
+	RolePrimaryKey = []string{"sys_role_id", "sys_user_id"}
+)
 
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

@@ -69,6 +69,6 @@ func (SysOperaLog) Fields() []ent.Field {
 // Edges of the SysOperaLog.
 func (SysOperaLog) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SysUser.Type).Ref("operaLogs").Unique(),
+		edge.From("user", SysUser.Type).Field("userId").Ref("operaLogs").Unique(),
 	}
 }

@@ -27,14 +27,6 @@ func (nbc *NovelBookshelfCreate) SetUserId(i int64) *NovelBookshelfCreate {
 	return nbc
 }
 
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbc *NovelBookshelfCreate) SetNillableUserId(i *int64) *NovelBookshelfCreate {
-	if i != nil {
-		nbc.SetUserId(*i)
-	}
-	return nbc
-}
-
 // SetUserName sets the "userName" field.
 func (nbc *NovelBookshelfCreate) SetUserName(s string) *NovelBookshelfCreate {
 	nbc.mutation.SetUserName(s)
@@ -309,6 +301,9 @@ func (nbc *NovelBookshelfCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (nbc *NovelBookshelfCreate) check() error {
+	if _, ok := nbc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := nbc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -354,14 +349,6 @@ func (nbc *NovelBookshelfCreate) createSpec() (*NovelBookshelf, *sqlgraph.Create
 			},
 		}
 	)
-	if value, ok := nbc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbookshelf.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := nbc.mutation.UserName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -475,7 +462,7 @@ func (nbc *NovelBookshelfCreate) createSpec() (*NovelBookshelf, *sqlgraph.Create
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_bookshelves = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

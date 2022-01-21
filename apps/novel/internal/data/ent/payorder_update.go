@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/adchannel"
 	"hope/apps/novel/internal/data/ent/agreementlog"
@@ -34,6 +35,24 @@ func (pou *PayOrderUpdate) Where(ps ...predicate.PayOrder) *PayOrderUpdate {
 // SetOrderId sets the "orderId" field.
 func (pou *PayOrderUpdate) SetOrderId(s string) *PayOrderUpdate {
 	pou.mutation.SetOrderId(s)
+	return pou
+}
+
+// SetUserId sets the "userId" field.
+func (pou *PayOrderUpdate) SetUserId(i int64) *PayOrderUpdate {
+	pou.mutation.SetUserId(i)
+	return pou
+}
+
+// SetChId sets the "chId" field.
+func (pou *PayOrderUpdate) SetChId(i int64) *PayOrderUpdate {
+	pou.mutation.SetChId(i)
+	return pou
+}
+
+// SetAgreementId sets the "agreementId" field.
+func (pou *PayOrderUpdate) SetAgreementId(i int64) *PayOrderUpdate {
+	pou.mutation.SetAgreementId(i)
 	return pou
 }
 
@@ -334,14 +353,6 @@ func (pou *PayOrderUpdate) SetUserID(id int64) *PayOrderUpdate {
 	return pou
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (pou *PayOrderUpdate) SetNillableUserID(id *int64) *PayOrderUpdate {
-	if id != nil {
-		pou = pou.SetUserID(*id)
-	}
-	return pou
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (pou *PayOrderUpdate) SetUser(s *SocialUser) *PayOrderUpdate {
 	return pou.SetUserID(s.ID)
@@ -353,14 +364,6 @@ func (pou *PayOrderUpdate) SetChannelID(id int64) *PayOrderUpdate {
 	return pou
 }
 
-// SetNillableChannelID sets the "channel" edge to the AdChannel entity by ID if the given value is not nil.
-func (pou *PayOrderUpdate) SetNillableChannelID(id *int64) *PayOrderUpdate {
-	if id != nil {
-		pou = pou.SetChannelID(*id)
-	}
-	return pou
-}
-
 // SetChannel sets the "channel" edge to the AdChannel entity.
 func (pou *PayOrderUpdate) SetChannel(a *AdChannel) *PayOrderUpdate {
 	return pou.SetChannelID(a.ID)
@@ -369,14 +372,6 @@ func (pou *PayOrderUpdate) SetChannel(a *AdChannel) *PayOrderUpdate {
 // SetAgreementID sets the "agreement" edge to the AgreementLog entity by ID.
 func (pou *PayOrderUpdate) SetAgreementID(id int64) *PayOrderUpdate {
 	pou.mutation.SetAgreementID(id)
-	return pou
-}
-
-// SetNillableAgreementID sets the "agreement" edge to the AgreementLog entity by ID if the given value is not nil.
-func (pou *PayOrderUpdate) SetNillableAgreementID(id *int64) *PayOrderUpdate {
-	if id != nil {
-		pou = pou.SetAgreementID(*id)
-	}
 	return pou
 }
 
@@ -493,6 +488,15 @@ func (pou *PayOrderUpdate) check() error {
 		if err := payorder.PayTypeValidator(v); err != nil {
 			return &ValidationError{Name: "payType", err: fmt.Errorf("ent: validator failed for field \"payType\": %w", err)}
 		}
+	}
+	if _, ok := pou.mutation.UserID(); pou.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	if _, ok := pou.mutation.ChannelID(); pou.mutation.ChannelCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"channel\"")
+	}
+	if _, ok := pou.mutation.AgreementID(); pou.mutation.AgreementCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"agreement\"")
 	}
 	return nil
 }
@@ -892,6 +896,24 @@ func (pouo *PayOrderUpdateOne) SetOrderId(s string) *PayOrderUpdateOne {
 	return pouo
 }
 
+// SetUserId sets the "userId" field.
+func (pouo *PayOrderUpdateOne) SetUserId(i int64) *PayOrderUpdateOne {
+	pouo.mutation.SetUserId(i)
+	return pouo
+}
+
+// SetChId sets the "chId" field.
+func (pouo *PayOrderUpdateOne) SetChId(i int64) *PayOrderUpdateOne {
+	pouo.mutation.SetChId(i)
+	return pouo
+}
+
+// SetAgreementId sets the "agreementId" field.
+func (pouo *PayOrderUpdateOne) SetAgreementId(i int64) *PayOrderUpdateOne {
+	pouo.mutation.SetAgreementId(i)
+	return pouo
+}
+
 // SetLastRead sets the "lastRead" field.
 func (pouo *PayOrderUpdateOne) SetLastRead(s string) *PayOrderUpdateOne {
 	pouo.mutation.SetLastRead(s)
@@ -1189,14 +1211,6 @@ func (pouo *PayOrderUpdateOne) SetUserID(id int64) *PayOrderUpdateOne {
 	return pouo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (pouo *PayOrderUpdateOne) SetNillableUserID(id *int64) *PayOrderUpdateOne {
-	if id != nil {
-		pouo = pouo.SetUserID(*id)
-	}
-	return pouo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (pouo *PayOrderUpdateOne) SetUser(s *SocialUser) *PayOrderUpdateOne {
 	return pouo.SetUserID(s.ID)
@@ -1208,14 +1222,6 @@ func (pouo *PayOrderUpdateOne) SetChannelID(id int64) *PayOrderUpdateOne {
 	return pouo
 }
 
-// SetNillableChannelID sets the "channel" edge to the AdChannel entity by ID if the given value is not nil.
-func (pouo *PayOrderUpdateOne) SetNillableChannelID(id *int64) *PayOrderUpdateOne {
-	if id != nil {
-		pouo = pouo.SetChannelID(*id)
-	}
-	return pouo
-}
-
 // SetChannel sets the "channel" edge to the AdChannel entity.
 func (pouo *PayOrderUpdateOne) SetChannel(a *AdChannel) *PayOrderUpdateOne {
 	return pouo.SetChannelID(a.ID)
@@ -1224,14 +1230,6 @@ func (pouo *PayOrderUpdateOne) SetChannel(a *AdChannel) *PayOrderUpdateOne {
 // SetAgreementID sets the "agreement" edge to the AgreementLog entity by ID.
 func (pouo *PayOrderUpdateOne) SetAgreementID(id int64) *PayOrderUpdateOne {
 	pouo.mutation.SetAgreementID(id)
-	return pouo
-}
-
-// SetNillableAgreementID sets the "agreement" edge to the AgreementLog entity by ID if the given value is not nil.
-func (pouo *PayOrderUpdateOne) SetNillableAgreementID(id *int64) *PayOrderUpdateOne {
-	if id != nil {
-		pouo = pouo.SetAgreementID(*id)
-	}
 	return pouo
 }
 
@@ -1355,6 +1353,15 @@ func (pouo *PayOrderUpdateOne) check() error {
 		if err := payorder.PayTypeValidator(v); err != nil {
 			return &ValidationError{Name: "payType", err: fmt.Errorf("ent: validator failed for field \"payType\": %w", err)}
 		}
+	}
+	if _, ok := pouo.mutation.UserID(); pouo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	if _, ok := pouo.mutation.ChannelID(); pouo.mutation.ChannelCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"channel\"")
+	}
+	if _, ok := pouo.mutation.AgreementID(); pouo.mutation.AgreementCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"agreement\"")
 	}
 	return nil
 }

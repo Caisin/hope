@@ -61,8 +61,7 @@ type AssetChangeLog struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the AssetChangeLogQuery when eager-loading is set.
-	Edges                  AssetChangeLogEdges `json:"edges"`
-	social_user_asset_logs *int64
+	Edges AssetChangeLogEdges `json:"edges"`
 }
 
 // AssetChangeLogEdges holds the relations/edges for other nodes in the graph.
@@ -99,8 +98,6 @@ func (*AssetChangeLog) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case assetchangelog.FieldCreatedAt, assetchangelog.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case assetchangelog.ForeignKeys[0]: // social_user_asset_logs
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type AssetChangeLog", columns[i])
 		}
@@ -205,13 +202,6 @@ func (acl *AssetChangeLog) assignValues(columns []string, values []interface{}) 
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				acl.TenantId = value.Int64
-			}
-		case assetchangelog.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_asset_logs", value)
-			} else if value.Valid {
-				acl.social_user_asset_logs = new(int64)
-				*acl.social_user_asset_logs = int64(value.Int64)
 			}
 		}
 	}

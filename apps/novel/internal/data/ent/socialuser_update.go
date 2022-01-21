@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/adchangelog"
 	"hope/apps/novel/internal/data/ent/adchannel"
@@ -19,6 +20,7 @@ import (
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
 	"hope/apps/novel/internal/data/ent/tasklog"
+	"hope/apps/novel/internal/data/ent/userevent"
 	"hope/apps/novel/internal/data/ent/usermsg"
 	"hope/apps/novel/internal/data/ent/vipuser"
 	"time"
@@ -41,16 +43,9 @@ func (suu *SocialUserUpdate) Where(ps ...predicate.SocialUser) *SocialUserUpdate
 	return suu
 }
 
-// SetUserId sets the "userId" field.
-func (suu *SocialUserUpdate) SetUserId(i int64) *SocialUserUpdate {
-	suu.mutation.ResetUserId()
-	suu.mutation.SetUserId(i)
-	return suu
-}
-
-// AddUserId adds i to the "userId" field.
-func (suu *SocialUserUpdate) AddUserId(i int64) *SocialUserUpdate {
-	suu.mutation.AddUserId(i)
+// SetChId sets the "chId" field.
+func (suu *SocialUserUpdate) SetChId(i int64) *SocialUserUpdate {
+	suu.mutation.SetChId(i)
 	return suu
 }
 
@@ -666,6 +661,21 @@ func (suu *SocialUserUpdate) AddTasks(t ...*TaskLog) *SocialUserUpdate {
 	return suu.AddTaskIDs(ids...)
 }
 
+// AddEventIDs adds the "events" edge to the UserEvent entity by IDs.
+func (suu *SocialUserUpdate) AddEventIDs(ids ...int64) *SocialUserUpdate {
+	suu.mutation.AddEventIDs(ids...)
+	return suu
+}
+
+// AddEvents adds the "events" edges to the UserEvent entity.
+func (suu *SocialUserUpdate) AddEvents(u ...*UserEvent) *SocialUserUpdate {
+	ids := make([]int64, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return suu.AddEventIDs(ids...)
+}
+
 // AddListenRecordIDs adds the "listenRecords" edge to the ListenRecord entity by IDs.
 func (suu *SocialUserUpdate) AddListenRecordIDs(ids ...int64) *SocialUserUpdate {
 	suu.mutation.AddListenRecordIDs(ids...)
@@ -852,14 +862,6 @@ func (suu *SocialUserUpdate) SetChannelID(id int64) *SocialUserUpdate {
 	return suu
 }
 
-// SetNillableChannelID sets the "channel" edge to the AdChannel entity by ID if the given value is not nil.
-func (suu *SocialUserUpdate) SetNillableChannelID(id *int64) *SocialUserUpdate {
-	if id != nil {
-		suu = suu.SetChannelID(*id)
-	}
-	return suu
-}
-
 // SetChannel sets the "channel" edge to the AdChannel entity.
 func (suu *SocialUserUpdate) SetChannel(a *AdChannel) *SocialUserUpdate {
 	return suu.SetChannelID(a.ID)
@@ -889,6 +891,27 @@ func (suu *SocialUserUpdate) RemoveTasks(t ...*TaskLog) *SocialUserUpdate {
 		ids[i] = t[i].ID
 	}
 	return suu.RemoveTaskIDs(ids...)
+}
+
+// ClearEvents clears all "events" edges to the UserEvent entity.
+func (suu *SocialUserUpdate) ClearEvents() *SocialUserUpdate {
+	suu.mutation.ClearEvents()
+	return suu
+}
+
+// RemoveEventIDs removes the "events" edge to UserEvent entities by IDs.
+func (suu *SocialUserUpdate) RemoveEventIDs(ids ...int64) *SocialUserUpdate {
+	suu.mutation.RemoveEventIDs(ids...)
+	return suu
+}
+
+// RemoveEvents removes "events" edges to UserEvent entities.
+func (suu *SocialUserUpdate) RemoveEvents(u ...*UserEvent) *SocialUserUpdate {
+	ids := make([]int64, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return suu.RemoveEventIDs(ids...)
 }
 
 // ClearListenRecords clears all "listenRecords" edges to the ListenRecord entity.
@@ -1157,12 +1180,18 @@ func (suu *SocialUserUpdate) Save(ctx context.Context) (int, error) {
 	)
 	suu.defaults()
 	if len(suu.hooks) == 0 {
+		if err = suu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = suu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SocialUserMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = suu.check(); err != nil {
+				return 0, err
 			}
 			suu.mutation = mutation
 			affected, err = suu.sqlSave(ctx)
@@ -1212,6 +1241,14 @@ func (suu *SocialUserUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (suu *SocialUserUpdate) check() error {
+	if _, ok := suu.mutation.ChannelID(); suu.mutation.ChannelCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"channel\"")
+	}
+	return nil
+}
+
 func (suu *SocialUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -1229,20 +1266,6 @@ func (suu *SocialUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := suu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: socialuser.FieldUserId,
-		})
-	}
-	if value, ok := suu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: socialuser.FieldUserId,
-		})
 	}
 	if value, ok := suu.mutation.Unionid(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -1692,6 +1715,60 @@ func (suu *SocialUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt64,
 					Column: tasklog.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if suu.mutation.EventsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   socialuser.EventsTable,
+			Columns: []string{socialuser.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: userevent.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.RemovedEventsIDs(); len(nodes) > 0 && !suu.mutation.EventsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   socialuser.EventsTable,
+			Columns: []string{socialuser.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: userevent.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.EventsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   socialuser.EventsTable,
+			Columns: []string{socialuser.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: userevent.FieldID,
 				},
 			},
 		}
@@ -2402,16 +2479,9 @@ type SocialUserUpdateOne struct {
 	mutation *SocialUserMutation
 }
 
-// SetUserId sets the "userId" field.
-func (suuo *SocialUserUpdateOne) SetUserId(i int64) *SocialUserUpdateOne {
-	suuo.mutation.ResetUserId()
-	suuo.mutation.SetUserId(i)
-	return suuo
-}
-
-// AddUserId adds i to the "userId" field.
-func (suuo *SocialUserUpdateOne) AddUserId(i int64) *SocialUserUpdateOne {
-	suuo.mutation.AddUserId(i)
+// SetChId sets the "chId" field.
+func (suuo *SocialUserUpdateOne) SetChId(i int64) *SocialUserUpdateOne {
+	suuo.mutation.SetChId(i)
 	return suuo
 }
 
@@ -3027,6 +3097,21 @@ func (suuo *SocialUserUpdateOne) AddTasks(t ...*TaskLog) *SocialUserUpdateOne {
 	return suuo.AddTaskIDs(ids...)
 }
 
+// AddEventIDs adds the "events" edge to the UserEvent entity by IDs.
+func (suuo *SocialUserUpdateOne) AddEventIDs(ids ...int64) *SocialUserUpdateOne {
+	suuo.mutation.AddEventIDs(ids...)
+	return suuo
+}
+
+// AddEvents adds the "events" edges to the UserEvent entity.
+func (suuo *SocialUserUpdateOne) AddEvents(u ...*UserEvent) *SocialUserUpdateOne {
+	ids := make([]int64, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return suuo.AddEventIDs(ids...)
+}
+
 // AddListenRecordIDs adds the "listenRecords" edge to the ListenRecord entity by IDs.
 func (suuo *SocialUserUpdateOne) AddListenRecordIDs(ids ...int64) *SocialUserUpdateOne {
 	suuo.mutation.AddListenRecordIDs(ids...)
@@ -3213,14 +3298,6 @@ func (suuo *SocialUserUpdateOne) SetChannelID(id int64) *SocialUserUpdateOne {
 	return suuo
 }
 
-// SetNillableChannelID sets the "channel" edge to the AdChannel entity by ID if the given value is not nil.
-func (suuo *SocialUserUpdateOne) SetNillableChannelID(id *int64) *SocialUserUpdateOne {
-	if id != nil {
-		suuo = suuo.SetChannelID(*id)
-	}
-	return suuo
-}
-
 // SetChannel sets the "channel" edge to the AdChannel entity.
 func (suuo *SocialUserUpdateOne) SetChannel(a *AdChannel) *SocialUserUpdateOne {
 	return suuo.SetChannelID(a.ID)
@@ -3250,6 +3327,27 @@ func (suuo *SocialUserUpdateOne) RemoveTasks(t ...*TaskLog) *SocialUserUpdateOne
 		ids[i] = t[i].ID
 	}
 	return suuo.RemoveTaskIDs(ids...)
+}
+
+// ClearEvents clears all "events" edges to the UserEvent entity.
+func (suuo *SocialUserUpdateOne) ClearEvents() *SocialUserUpdateOne {
+	suuo.mutation.ClearEvents()
+	return suuo
+}
+
+// RemoveEventIDs removes the "events" edge to UserEvent entities by IDs.
+func (suuo *SocialUserUpdateOne) RemoveEventIDs(ids ...int64) *SocialUserUpdateOne {
+	suuo.mutation.RemoveEventIDs(ids...)
+	return suuo
+}
+
+// RemoveEvents removes "events" edges to UserEvent entities.
+func (suuo *SocialUserUpdateOne) RemoveEvents(u ...*UserEvent) *SocialUserUpdateOne {
+	ids := make([]int64, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return suuo.RemoveEventIDs(ids...)
 }
 
 // ClearListenRecords clears all "listenRecords" edges to the ListenRecord entity.
@@ -3525,12 +3623,18 @@ func (suuo *SocialUserUpdateOne) Save(ctx context.Context) (*SocialUser, error) 
 	)
 	suuo.defaults()
 	if len(suuo.hooks) == 0 {
+		if err = suuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = suuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SocialUserMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = suuo.check(); err != nil {
+				return nil, err
 			}
 			suuo.mutation = mutation
 			node, err = suuo.sqlSave(ctx)
@@ -3580,6 +3684,14 @@ func (suuo *SocialUserUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (suuo *SocialUserUpdateOne) check() error {
+	if _, ok := suuo.mutation.ChannelID(); suuo.mutation.ChannelCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"channel\"")
+	}
+	return nil
+}
+
 func (suuo *SocialUserUpdateOne) sqlSave(ctx context.Context) (_node *SocialUser, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -3614,20 +3726,6 @@ func (suuo *SocialUserUpdateOne) sqlSave(ctx context.Context) (_node *SocialUser
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := suuo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: socialuser.FieldUserId,
-		})
-	}
-	if value, ok := suuo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: socialuser.FieldUserId,
-		})
 	}
 	if value, ok := suuo.mutation.Unionid(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -4077,6 +4175,60 @@ func (suuo *SocialUserUpdateOne) sqlSave(ctx context.Context) (_node *SocialUser
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt64,
 					Column: tasklog.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if suuo.mutation.EventsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   socialuser.EventsTable,
+			Columns: []string{socialuser.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: userevent.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.RemovedEventsIDs(); len(nodes) > 0 && !suuo.mutation.EventsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   socialuser.EventsTable,
+			Columns: []string{socialuser.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: userevent.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.EventsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   socialuser.EventsTable,
+			Columns: []string{socialuser.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: userevent.FieldID,
 				},
 			},
 		}

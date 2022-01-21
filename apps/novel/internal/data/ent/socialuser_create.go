@@ -19,6 +19,7 @@ import (
 	"hope/apps/novel/internal/data/ent/payorder"
 	"hope/apps/novel/internal/data/ent/socialuser"
 	"hope/apps/novel/internal/data/ent/tasklog"
+	"hope/apps/novel/internal/data/ent/userevent"
 	"hope/apps/novel/internal/data/ent/usermsg"
 	"hope/apps/novel/internal/data/ent/vipuser"
 	"time"
@@ -34,9 +35,9 @@ type SocialUserCreate struct {
 	hooks    []Hook
 }
 
-// SetUserId sets the "userId" field.
-func (suc *SocialUserCreate) SetUserId(i int64) *SocialUserCreate {
-	suc.mutation.SetUserId(i)
+// SetChId sets the "chId" field.
+func (suc *SocialUserCreate) SetChId(i int64) *SocialUserCreate {
+	suc.mutation.SetChId(i)
 	return suc
 }
 
@@ -475,6 +476,21 @@ func (suc *SocialUserCreate) AddTasks(t ...*TaskLog) *SocialUserCreate {
 	return suc.AddTaskIDs(ids...)
 }
 
+// AddEventIDs adds the "events" edge to the UserEvent entity by IDs.
+func (suc *SocialUserCreate) AddEventIDs(ids ...int64) *SocialUserCreate {
+	suc.mutation.AddEventIDs(ids...)
+	return suc
+}
+
+// AddEvents adds the "events" edges to the UserEvent entity.
+func (suc *SocialUserCreate) AddEvents(u ...*UserEvent) *SocialUserCreate {
+	ids := make([]int64, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return suc.AddEventIDs(ids...)
+}
+
 // AddListenRecordIDs adds the "listenRecords" edge to the ListenRecord entity by IDs.
 func (suc *SocialUserCreate) AddListenRecordIDs(ids ...int64) *SocialUserCreate {
 	suc.mutation.AddListenRecordIDs(ids...)
@@ -661,14 +677,6 @@ func (suc *SocialUserCreate) SetChannelID(id int64) *SocialUserCreate {
 	return suc
 }
 
-// SetNillableChannelID sets the "channel" edge to the AdChannel entity by ID if the given value is not nil.
-func (suc *SocialUserCreate) SetNillableChannelID(id *int64) *SocialUserCreate {
-	if id != nil {
-		suc = suc.SetChannelID(*id)
-	}
-	return suc
-}
-
 // SetChannel sets the "channel" edge to the AdChannel entity.
 func (suc *SocialUserCreate) SetChannel(a *AdChannel) *SocialUserCreate {
 	return suc.SetChannelID(a.ID)
@@ -769,8 +777,8 @@ func (suc *SocialUserCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (suc *SocialUserCreate) check() error {
-	if _, ok := suc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	if _, ok := suc.mutation.ChId(); !ok {
+		return &ValidationError{Name: "chId", err: errors.New(`ent: missing required field "chId"`)}
 	}
 	if _, ok := suc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
@@ -786,6 +794,9 @@ func (suc *SocialUserCreate) check() error {
 	}
 	if _, ok := suc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := suc.mutation.ChannelID(); !ok {
+		return &ValidationError{Name: "channel", err: errors.New("ent: missing required edge \"channel\"")}
 	}
 	return nil
 }
@@ -814,14 +825,6 @@ func (suc *SocialUserCreate) createSpec() (*SocialUser, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := suc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: socialuser.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := suc.mutation.Unionid(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -1081,6 +1084,25 @@ func (suc *SocialUserCreate) createSpec() (*SocialUser, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := suc.mutation.EventsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   socialuser.EventsTable,
+			Columns: []string{socialuser.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: userevent.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	if nodes := suc.mutation.ListenRecordsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -1326,7 +1348,7 @@ func (suc *SocialUserCreate) createSpec() (*SocialUser, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.ad_channel_users = &nodes[0]
+		_node.ChId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

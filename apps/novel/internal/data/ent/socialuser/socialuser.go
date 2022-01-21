@@ -11,8 +11,8 @@ const (
 	Label = "social_user"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldUserId holds the string denoting the userid field in the database.
-	FieldUserId = "user_id"
+	// FieldChId holds the string denoting the chid field in the database.
+	FieldChId = "ch_id"
 	// FieldUnionid holds the string denoting the unionid field in the database.
 	FieldUnionid = "unionid"
 	// FieldToken holds the string denoting the token field in the database.
@@ -75,6 +75,8 @@ const (
 	FieldTenantId = "tenant_id"
 	// EdgeTasks holds the string denoting the tasks edge name in mutations.
 	EdgeTasks = "tasks"
+	// EdgeEvents holds the string denoting the events edge name in mutations.
+	EdgeEvents = "events"
 	// EdgeListenRecords holds the string denoting the listenrecords edge name in mutations.
 	EdgeListenRecords = "listenRecords"
 	// EdgeAds holds the string denoting the ads edge name in mutations.
@@ -109,42 +111,49 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "tasklog" package.
 	TasksInverseTable = "task_logs"
 	// TasksColumn is the table column denoting the tasks relation/edge.
-	TasksColumn = "social_user_tasks"
+	TasksColumn = "user_id"
+	// EventsTable is the table that holds the events relation/edge.
+	EventsTable = "user_events"
+	// EventsInverseTable is the table name for the UserEvent entity.
+	// It exists in this package in order to avoid circular dependency with the "userevent" package.
+	EventsInverseTable = "user_events"
+	// EventsColumn is the table column denoting the events relation/edge.
+	EventsColumn = "user_id"
 	// ListenRecordsTable is the table that holds the listenRecords relation/edge.
 	ListenRecordsTable = "listen_records"
 	// ListenRecordsInverseTable is the table name for the ListenRecord entity.
 	// It exists in this package in order to avoid circular dependency with the "listenrecord" package.
 	ListenRecordsInverseTable = "listen_records"
 	// ListenRecordsColumn is the table column denoting the listenRecords relation/edge.
-	ListenRecordsColumn = "social_user_listen_records"
+	ListenRecordsColumn = "user_id"
 	// AdsTable is the table that holds the ads relation/edge.
 	AdsTable = "ad_change_logs"
 	// AdsInverseTable is the table name for the AdChangeLog entity.
 	// It exists in this package in order to avoid circular dependency with the "adchangelog" package.
 	AdsInverseTable = "ad_change_logs"
 	// AdsColumn is the table column denoting the ads relation/edge.
-	AdsColumn = "social_user_ads"
+	AdsColumn = "user_id"
 	// BookshelvesTable is the table that holds the bookshelves relation/edge.
 	BookshelvesTable = "novel_bookshelves"
 	// BookshelvesInverseTable is the table name for the NovelBookshelf entity.
 	// It exists in this package in order to avoid circular dependency with the "novelbookshelf" package.
 	BookshelvesInverseTable = "novel_bookshelves"
 	// BookshelvesColumn is the table column denoting the bookshelves relation/edge.
-	BookshelvesColumn = "social_user_bookshelves"
+	BookshelvesColumn = "user_id"
 	// AutoBuyNovelsTable is the table that holds the autoBuyNovels relation/edge.
 	AutoBuyNovelsTable = "novel_auto_buys"
 	// AutoBuyNovelsInverseTable is the table name for the NovelAutoBuy entity.
 	// It exists in this package in order to avoid circular dependency with the "novelautobuy" package.
 	AutoBuyNovelsInverseTable = "novel_auto_buys"
 	// AutoBuyNovelsColumn is the table column denoting the autoBuyNovels relation/edge.
-	AutoBuyNovelsColumn = "social_user_auto_buy_novels"
+	AutoBuyNovelsColumn = "user_id"
 	// CommentsTable is the table that holds the comments relation/edge.
 	CommentsTable = "novel_comments"
 	// CommentsInverseTable is the table name for the NovelComment entity.
 	// It exists in this package in order to avoid circular dependency with the "novelcomment" package.
 	CommentsInverseTable = "novel_comments"
 	// CommentsColumn is the table column denoting the comments relation/edge.
-	CommentsColumn = "social_user_comments"
+	CommentsColumn = "user_id"
 	// MsgsTable is the table that holds the msgs relation/edge.
 	MsgsTable = "user_msgs"
 	// MsgsInverseTable is the table name for the UserMsg entity.
@@ -158,55 +167,55 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "payorder" package.
 	OrdersInverseTable = "pay_orders"
 	// OrdersColumn is the table column denoting the orders relation/edge.
-	OrdersColumn = "social_user_orders"
+	OrdersColumn = "user_id"
 	// VipsTable is the table that holds the vips relation/edge.
 	VipsTable = "vip_users"
 	// VipsInverseTable is the table name for the VipUser entity.
 	// It exists in this package in order to avoid circular dependency with the "vipuser" package.
 	VipsInverseTable = "vip_users"
 	// VipsColumn is the table column denoting the vips relation/edge.
-	VipsColumn = "social_user_vips"
+	VipsColumn = "user_id"
 	// BalancesTable is the table that holds the balances relation/edge.
 	BalancesTable = "am_balances"
 	// BalancesInverseTable is the table name for the AmBalance entity.
 	// It exists in this package in order to avoid circular dependency with the "ambalance" package.
 	BalancesInverseTable = "am_balances"
 	// BalancesColumn is the table column denoting the balances relation/edge.
-	BalancesColumn = "social_user_balances"
+	BalancesColumn = "user_id"
 	// AssetLogsTable is the table that holds the assetLogs relation/edge.
 	AssetLogsTable = "asset_change_logs"
 	// AssetLogsInverseTable is the table name for the AssetChangeLog entity.
 	// It exists in this package in order to avoid circular dependency with the "assetchangelog" package.
 	AssetLogsInverseTable = "asset_change_logs"
 	// AssetLogsColumn is the table column denoting the assetLogs relation/edge.
-	AssetLogsColumn = "social_user_asset_logs"
+	AssetLogsColumn = "user_id"
 	// BuyChapterRecordsTable is the table that holds the buyChapterRecords relation/edge.
 	BuyChapterRecordsTable = "novel_buy_chapter_records"
 	// BuyChapterRecordsInverseTable is the table name for the NovelBuyChapterRecord entity.
 	// It exists in this package in order to avoid circular dependency with the "novelbuychapterrecord" package.
 	BuyChapterRecordsInverseTable = "novel_buy_chapter_records"
 	// BuyChapterRecordsColumn is the table column denoting the buyChapterRecords relation/edge.
-	BuyChapterRecordsColumn = "social_user_buy_chapter_records"
+	BuyChapterRecordsColumn = "user_id"
 	// BuyNovelRecordsTable is the table that holds the buyNovelRecords relation/edge.
 	BuyNovelRecordsTable = "novel_buy_records"
 	// BuyNovelRecordsInverseTable is the table name for the NovelBuyRecord entity.
 	// It exists in this package in order to avoid circular dependency with the "novelbuyrecord" package.
 	BuyNovelRecordsInverseTable = "novel_buy_records"
 	// BuyNovelRecordsColumn is the table column denoting the buyNovelRecords relation/edge.
-	BuyNovelRecordsColumn = "social_user_buy_novel_records"
+	BuyNovelRecordsColumn = "user_id"
 	// ChannelTable is the table that holds the channel relation/edge.
 	ChannelTable = "social_users"
 	// ChannelInverseTable is the table name for the AdChannel entity.
 	// It exists in this package in order to avoid circular dependency with the "adchannel" package.
 	ChannelInverseTable = "ad_channels"
 	// ChannelColumn is the table column denoting the channel relation/edge.
-	ChannelColumn = "ad_channel_users"
+	ChannelColumn = "ch_id"
 )
 
 // Columns holds all SQL columns for socialuser fields.
 var Columns = []string{
 	FieldID,
-	FieldUserId,
+	FieldChId,
 	FieldUnionid,
 	FieldToken,
 	FieldOpenid,
@@ -239,21 +248,10 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "social_users"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"ad_channel_users",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

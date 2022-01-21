@@ -27,14 +27,6 @@ func (ncc *NovelChapterCreate) SetNovelId(i int64) *NovelChapterCreate {
 	return ncc
 }
 
-// SetNillableNovelId sets the "novelId" field if the given value is not nil.
-func (ncc *NovelChapterCreate) SetNillableNovelId(i *int64) *NovelChapterCreate {
-	if i != nil {
-		ncc.SetNovelId(*i)
-	}
-	return ncc
-}
-
 // SetOrderNum sets the "orderNum" field.
 func (ncc *NovelChapterCreate) SetOrderNum(i int32) *NovelChapterCreate {
 	ncc.mutation.SetOrderNum(i)
@@ -303,14 +295,6 @@ func (ncc *NovelChapterCreate) SetNovelID(id int64) *NovelChapterCreate {
 	return ncc
 }
 
-// SetNillableNovelID sets the "novel" edge to the Novel entity by ID if the given value is not nil.
-func (ncc *NovelChapterCreate) SetNillableNovelID(id *int64) *NovelChapterCreate {
-	if id != nil {
-		ncc = ncc.SetNovelID(*id)
-	}
-	return ncc
-}
-
 // SetNovel sets the "novel" edge to the Novel entity.
 func (ncc *NovelChapterCreate) SetNovel(n *Novel) *NovelChapterCreate {
 	return ncc.SetNovelID(n.ID)
@@ -411,6 +395,9 @@ func (ncc *NovelChapterCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (ncc *NovelChapterCreate) check() error {
+	if _, ok := ncc.mutation.NovelId(); !ok {
+		return &ValidationError{Name: "novelId", err: errors.New(`ent: missing required field "novelId"`)}
+	}
 	if _, ok := ncc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -425,6 +412,9 @@ func (ncc *NovelChapterCreate) check() error {
 	}
 	if _, ok := ncc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := ncc.mutation.NovelID(); !ok {
+		return &ValidationError{Name: "novel", err: errors.New("ent: missing required edge \"novel\"")}
 	}
 	return nil
 }
@@ -453,14 +443,6 @@ func (ncc *NovelChapterCreate) createSpec() (*NovelChapter, *sqlgraph.CreateSpec
 			},
 		}
 	)
-	if value, ok := ncc.mutation.NovelId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelchapter.FieldNovelId,
-		})
-		_node.NovelId = value
-	}
 	if value, ok := ncc.mutation.OrderNum(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -645,7 +627,7 @@ func (ncc *NovelChapterCreate) createSpec() (*NovelChapter, *sqlgraph.CreateSpec
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.novel_chapters = &nodes[0]
+		_node.NovelId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

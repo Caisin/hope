@@ -31,28 +31,7 @@ func (nbu *NovelBookshelfUpdate) Where(ps ...predicate.NovelBookshelf) *NovelBoo
 
 // SetUserId sets the "userId" field.
 func (nbu *NovelBookshelfUpdate) SetUserId(i int64) *NovelBookshelfUpdate {
-	nbu.mutation.ResetUserId()
 	nbu.mutation.SetUserId(i)
-	return nbu
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbu *NovelBookshelfUpdate) SetNillableUserId(i *int64) *NovelBookshelfUpdate {
-	if i != nil {
-		nbu.SetUserId(*i)
-	}
-	return nbu
-}
-
-// AddUserId adds i to the "userId" field.
-func (nbu *NovelBookshelfUpdate) AddUserId(i int64) *NovelBookshelfUpdate {
-	nbu.mutation.AddUserId(i)
-	return nbu
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nbu *NovelBookshelfUpdate) ClearUserId() *NovelBookshelfUpdate {
-	nbu.mutation.ClearUserId()
 	return nbu
 }
 
@@ -403,26 +382,6 @@ func (nbu *NovelBookshelfUpdate) sqlSave(ctx context.Context) (n int, err error)
 			}
 		}
 	}
-	if value, ok := nbu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbookshelf.FieldUserId,
-		})
-	}
-	if value, ok := nbu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbookshelf.FieldUserId,
-		})
-	}
-	if nbu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelbookshelf.FieldUserId,
-		})
-	}
 	if value, ok := nbu.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -640,28 +599,7 @@ type NovelBookshelfUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (nbuo *NovelBookshelfUpdateOne) SetUserId(i int64) *NovelBookshelfUpdateOne {
-	nbuo.mutation.ResetUserId()
 	nbuo.mutation.SetUserId(i)
-	return nbuo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbuo *NovelBookshelfUpdateOne) SetNillableUserId(i *int64) *NovelBookshelfUpdateOne {
-	if i != nil {
-		nbuo.SetUserId(*i)
-	}
-	return nbuo
-}
-
-// AddUserId adds i to the "userId" field.
-func (nbuo *NovelBookshelfUpdateOne) AddUserId(i int64) *NovelBookshelfUpdateOne {
-	nbuo.mutation.AddUserId(i)
-	return nbuo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nbuo *NovelBookshelfUpdateOne) ClearUserId() *NovelBookshelfUpdateOne {
-	nbuo.mutation.ClearUserId()
 	return nbuo
 }
 
@@ -1035,26 +973,6 @@ func (nbuo *NovelBookshelfUpdateOne) sqlSave(ctx context.Context) (_node *NovelB
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := nbuo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbookshelf.FieldUserId,
-		})
-	}
-	if value, ok := nbuo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbookshelf.FieldUserId,
-		})
-	}
-	if nbuo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelbookshelf.FieldUserId,
-		})
 	}
 	if value, ok := nbuo.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

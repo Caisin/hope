@@ -27,14 +27,6 @@ func (nbcrc *NovelBuyChapterRecordCreate) SetUserId(i int64) *NovelBuyChapterRec
 	return nbcrc
 }
 
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbcrc *NovelBuyChapterRecordCreate) SetNillableUserId(i *int64) *NovelBuyChapterRecordCreate {
-	if i != nil {
-		nbcrc.SetUserId(*i)
-	}
-	return nbcrc
-}
-
 // SetUserName sets the "userName" field.
 func (nbcrc *NovelBuyChapterRecordCreate) SetUserName(s string) *NovelBuyChapterRecordCreate {
 	nbcrc.mutation.SetUserName(s)
@@ -265,14 +257,6 @@ func (nbcrc *NovelBuyChapterRecordCreate) SetUserID(id int64) *NovelBuyChapterRe
 	return nbcrc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (nbcrc *NovelBuyChapterRecordCreate) SetNillableUserID(id *int64) *NovelBuyChapterRecordCreate {
-	if id != nil {
-		nbcrc = nbcrc.SetUserID(*id)
-	}
-	return nbcrc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (nbcrc *NovelBuyChapterRecordCreate) SetUser(s *SocialUser) *NovelBuyChapterRecordCreate {
 	return nbcrc.SetUserID(s.ID)
@@ -373,6 +357,9 @@ func (nbcrc *NovelBuyChapterRecordCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (nbcrc *NovelBuyChapterRecordCreate) check() error {
+	if _, ok := nbcrc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := nbcrc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -387,6 +374,9 @@ func (nbcrc *NovelBuyChapterRecordCreate) check() error {
 	}
 	if _, ok := nbcrc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := nbcrc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -415,14 +405,6 @@ func (nbcrc *NovelBuyChapterRecordCreate) createSpec() (*NovelBuyChapterRecord, 
 			},
 		}
 	)
-	if value, ok := nbcrc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuychapterrecord.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := nbcrc.mutation.UserName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -568,7 +550,7 @@ func (nbcrc *NovelBuyChapterRecordCreate) createSpec() (*NovelBuyChapterRecord, 
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_buy_chapter_records = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

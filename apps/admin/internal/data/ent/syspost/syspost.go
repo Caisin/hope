@@ -41,7 +41,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "sysuser" package.
 	UsersInverseTable = "sys_users"
 	// UsersColumn is the table column denoting the users relation/edge.
-	UsersColumn = "sys_post_users"
+	UsersColumn = "post_id"
 )
 
 // Columns holds all SQL columns for syspost fields.

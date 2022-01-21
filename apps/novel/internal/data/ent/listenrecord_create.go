@@ -179,14 +179,6 @@ func (lrc *ListenRecordCreate) SetUserID(id int64) *ListenRecordCreate {
 	return lrc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (lrc *ListenRecordCreate) SetNillableUserID(id *int64) *ListenRecordCreate {
-	if id != nil {
-		lrc = lrc.SetUserID(*id)
-	}
-	return lrc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (lrc *ListenRecordCreate) SetUser(s *SocialUser) *ListenRecordCreate {
 	return lrc.SetUserID(s.ID)
@@ -308,6 +300,9 @@ func (lrc *ListenRecordCreate) check() error {
 	if _, ok := lrc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
 	}
+	if _, ok := lrc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+	}
 	return nil
 }
 
@@ -335,14 +330,6 @@ func (lrc *ListenRecordCreate) createSpec() (*ListenRecord, *sqlgraph.CreateSpec
 			},
 		}
 	)
-	if value, ok := lrc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: listenrecord.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := lrc.mutation.ChapterId(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -448,7 +435,7 @@ func (lrc *ListenRecordCreate) createSpec() (*ListenRecord, *sqlgraph.CreateSpec
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_listen_records = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

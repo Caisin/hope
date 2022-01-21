@@ -15,6 +15,12 @@ const (
 	FieldID = "id"
 	// FieldOrderId holds the string denoting the orderid field in the database.
 	FieldOrderId = "order_id"
+	// FieldUserId holds the string denoting the userid field in the database.
+	FieldUserId = "user_id"
+	// FieldChId holds the string denoting the chid field in the database.
+	FieldChId = "ch_id"
+	// FieldAgreementId holds the string denoting the agreementid field in the database.
+	FieldAgreementId = "agreement_id"
 	// FieldLastRead holds the string denoting the lastread field in the database.
 	FieldLastRead = "last_read"
 	// FieldLastChapter holds the string denoting the lastchapter field in the database.
@@ -73,27 +79,30 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
 	UserInverseTable = "social_users"
 	// UserColumn is the table column denoting the user relation/edge.
-	UserColumn = "social_user_orders"
+	UserColumn = "user_id"
 	// ChannelTable is the table that holds the channel relation/edge.
 	ChannelTable = "pay_orders"
 	// ChannelInverseTable is the table name for the AdChannel entity.
 	// It exists in this package in order to avoid circular dependency with the "adchannel" package.
 	ChannelInverseTable = "ad_channels"
 	// ChannelColumn is the table column denoting the channel relation/edge.
-	ChannelColumn = "ad_channel_orders"
+	ChannelColumn = "ch_id"
 	// AgreementTable is the table that holds the agreement relation/edge.
 	AgreementTable = "pay_orders"
 	// AgreementInverseTable is the table name for the AgreementLog entity.
 	// It exists in this package in order to avoid circular dependency with the "agreementlog" package.
 	AgreementInverseTable = "agreement_logs"
 	// AgreementColumn is the table column denoting the agreement relation/edge.
-	AgreementColumn = "agreement_log_orders"
+	AgreementColumn = "agreement_id"
 )
 
 // Columns holds all SQL columns for payorder fields.
 var Columns = []string{
 	FieldID,
 	FieldOrderId,
+	FieldUserId,
+	FieldChId,
+	FieldAgreementId,
 	FieldLastRead,
 	FieldLastChapter,
 	FieldPaymentName,
@@ -118,23 +127,10 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "pay_orders"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"ad_channel_orders",
-	"agreement_log_orders",
-	"social_user_orders",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

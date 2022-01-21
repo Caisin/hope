@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
@@ -30,28 +31,7 @@ func (tlu *TaskLogUpdate) Where(ps ...predicate.TaskLog) *TaskLogUpdate {
 
 // SetUserId sets the "userId" field.
 func (tlu *TaskLogUpdate) SetUserId(i int64) *TaskLogUpdate {
-	tlu.mutation.ResetUserId()
 	tlu.mutation.SetUserId(i)
-	return tlu
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (tlu *TaskLogUpdate) SetNillableUserId(i *int64) *TaskLogUpdate {
-	if i != nil {
-		tlu.SetUserId(*i)
-	}
-	return tlu
-}
-
-// AddUserId adds i to the "userId" field.
-func (tlu *TaskLogUpdate) AddUserId(i int64) *TaskLogUpdate {
-	tlu.mutation.AddUserId(i)
-	return tlu
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (tlu *TaskLogUpdate) ClearUserId() *TaskLogUpdate {
-	tlu.mutation.ClearUserId()
 	return tlu
 }
 
@@ -528,14 +508,6 @@ func (tlu *TaskLogUpdate) SetUserID(id int64) *TaskLogUpdate {
 	return tlu
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (tlu *TaskLogUpdate) SetNillableUserID(id *int64) *TaskLogUpdate {
-	if id != nil {
-		tlu = tlu.SetUserID(*id)
-	}
-	return tlu
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (tlu *TaskLogUpdate) SetUser(s *SocialUser) *TaskLogUpdate {
 	return tlu.SetUserID(s.ID)
@@ -560,12 +532,18 @@ func (tlu *TaskLogUpdate) Save(ctx context.Context) (int, error) {
 	)
 	tlu.defaults()
 	if len(tlu.hooks) == 0 {
+		if err = tlu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = tlu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*TaskLogMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = tlu.check(); err != nil {
+				return 0, err
 			}
 			tlu.mutation = mutation
 			affected, err = tlu.sqlSave(ctx)
@@ -615,6 +593,14 @@ func (tlu *TaskLogUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (tlu *TaskLogUpdate) check() error {
+	if _, ok := tlu.mutation.UserID(); tlu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (tlu *TaskLogUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -632,26 +618,6 @@ func (tlu *TaskLogUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := tlu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tasklog.FieldUserId,
-		})
-	}
-	if value, ok := tlu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tasklog.FieldUserId,
-		})
-	}
-	if tlu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tasklog.FieldUserId,
-		})
 	}
 	if value, ok := tlu.mutation.TaskGroup(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -1037,28 +1003,7 @@ type TaskLogUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (tluo *TaskLogUpdateOne) SetUserId(i int64) *TaskLogUpdateOne {
-	tluo.mutation.ResetUserId()
 	tluo.mutation.SetUserId(i)
-	return tluo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (tluo *TaskLogUpdateOne) SetNillableUserId(i *int64) *TaskLogUpdateOne {
-	if i != nil {
-		tluo.SetUserId(*i)
-	}
-	return tluo
-}
-
-// AddUserId adds i to the "userId" field.
-func (tluo *TaskLogUpdateOne) AddUserId(i int64) *TaskLogUpdateOne {
-	tluo.mutation.AddUserId(i)
-	return tluo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (tluo *TaskLogUpdateOne) ClearUserId() *TaskLogUpdateOne {
-	tluo.mutation.ClearUserId()
 	return tluo
 }
 
@@ -1535,14 +1480,6 @@ func (tluo *TaskLogUpdateOne) SetUserID(id int64) *TaskLogUpdateOne {
 	return tluo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (tluo *TaskLogUpdateOne) SetNillableUserID(id *int64) *TaskLogUpdateOne {
-	if id != nil {
-		tluo = tluo.SetUserID(*id)
-	}
-	return tluo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (tluo *TaskLogUpdateOne) SetUser(s *SocialUser) *TaskLogUpdateOne {
 	return tluo.SetUserID(s.ID)
@@ -1574,12 +1511,18 @@ func (tluo *TaskLogUpdateOne) Save(ctx context.Context) (*TaskLog, error) {
 	)
 	tluo.defaults()
 	if len(tluo.hooks) == 0 {
+		if err = tluo.check(); err != nil {
+			return nil, err
+		}
 		node, err = tluo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*TaskLogMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = tluo.check(); err != nil {
+				return nil, err
 			}
 			tluo.mutation = mutation
 			node, err = tluo.sqlSave(ctx)
@@ -1629,6 +1572,14 @@ func (tluo *TaskLogUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (tluo *TaskLogUpdateOne) check() error {
+	if _, ok := tluo.mutation.UserID(); tluo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (tluo *TaskLogUpdateOne) sqlSave(ctx context.Context) (_node *TaskLog, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -1663,26 +1614,6 @@ func (tluo *TaskLogUpdateOne) sqlSave(ctx context.Context) (_node *TaskLog, err 
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := tluo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tasklog.FieldUserId,
-		})
-	}
-	if value, ok := tluo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tasklog.FieldUserId,
-		})
-	}
-	if tluo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tasklog.FieldUserId,
-		})
 	}
 	if value, ok := tluo.mutation.TaskGroup(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

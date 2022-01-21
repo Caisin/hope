@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/assetchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -104,28 +105,7 @@ func (aclu *AssetChangeLogUpdate) ClearEventId() *AssetChangeLogUpdate {
 
 // SetUserId sets the "userId" field.
 func (aclu *AssetChangeLogUpdate) SetUserId(i int64) *AssetChangeLogUpdate {
-	aclu.mutation.ResetUserId()
 	aclu.mutation.SetUserId(i)
-	return aclu
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (aclu *AssetChangeLogUpdate) SetNillableUserId(i *int64) *AssetChangeLogUpdate {
-	if i != nil {
-		aclu.SetUserId(*i)
-	}
-	return aclu
-}
-
-// AddUserId adds i to the "userId" field.
-func (aclu *AssetChangeLogUpdate) AddUserId(i int64) *AssetChangeLogUpdate {
-	aclu.mutation.AddUserId(i)
-	return aclu
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (aclu *AssetChangeLogUpdate) ClearUserId() *AssetChangeLogUpdate {
-	aclu.mutation.ClearUserId()
 	return aclu
 }
 
@@ -332,14 +312,6 @@ func (aclu *AssetChangeLogUpdate) SetUserID(id int64) *AssetChangeLogUpdate {
 	return aclu
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (aclu *AssetChangeLogUpdate) SetNillableUserID(id *int64) *AssetChangeLogUpdate {
-	if id != nil {
-		aclu = aclu.SetUserID(*id)
-	}
-	return aclu
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (aclu *AssetChangeLogUpdate) SetUser(s *SocialUser) *AssetChangeLogUpdate {
 	return aclu.SetUserID(s.ID)
@@ -364,12 +336,18 @@ func (aclu *AssetChangeLogUpdate) Save(ctx context.Context) (int, error) {
 	)
 	aclu.defaults()
 	if len(aclu.hooks) == 0 {
+		if err = aclu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = aclu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*AssetChangeLogMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = aclu.check(); err != nil {
+				return 0, err
 			}
 			aclu.mutation = mutation
 			affected, err = aclu.sqlSave(ctx)
@@ -417,6 +395,14 @@ func (aclu *AssetChangeLogUpdate) defaults() {
 		v := assetchangelog.UpdateDefaultUpdatedAt()
 		aclu.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (aclu *AssetChangeLogUpdate) check() error {
+	if _, ok := aclu.mutation.UserID(); aclu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (aclu *AssetChangeLogUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -488,26 +474,6 @@ func (aclu *AssetChangeLogUpdate) sqlSave(ctx context.Context) (n int, err error
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Column: assetchangelog.FieldEventId,
-		})
-	}
-	if value, ok := aclu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: assetchangelog.FieldUserId,
-		})
-	}
-	if value, ok := aclu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: assetchangelog.FieldUserId,
-		})
-	}
-	if aclu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: assetchangelog.FieldUserId,
 		})
 	}
 	if value, ok := aclu.mutation.AssetItemId(); ok {
@@ -782,28 +748,7 @@ func (acluo *AssetChangeLogUpdateOne) ClearEventId() *AssetChangeLogUpdateOne {
 
 // SetUserId sets the "userId" field.
 func (acluo *AssetChangeLogUpdateOne) SetUserId(i int64) *AssetChangeLogUpdateOne {
-	acluo.mutation.ResetUserId()
 	acluo.mutation.SetUserId(i)
-	return acluo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (acluo *AssetChangeLogUpdateOne) SetNillableUserId(i *int64) *AssetChangeLogUpdateOne {
-	if i != nil {
-		acluo.SetUserId(*i)
-	}
-	return acluo
-}
-
-// AddUserId adds i to the "userId" field.
-func (acluo *AssetChangeLogUpdateOne) AddUserId(i int64) *AssetChangeLogUpdateOne {
-	acluo.mutation.AddUserId(i)
-	return acluo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (acluo *AssetChangeLogUpdateOne) ClearUserId() *AssetChangeLogUpdateOne {
-	acluo.mutation.ClearUserId()
 	return acluo
 }
 
@@ -1010,14 +955,6 @@ func (acluo *AssetChangeLogUpdateOne) SetUserID(id int64) *AssetChangeLogUpdateO
 	return acluo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (acluo *AssetChangeLogUpdateOne) SetNillableUserID(id *int64) *AssetChangeLogUpdateOne {
-	if id != nil {
-		acluo = acluo.SetUserID(*id)
-	}
-	return acluo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (acluo *AssetChangeLogUpdateOne) SetUser(s *SocialUser) *AssetChangeLogUpdateOne {
 	return acluo.SetUserID(s.ID)
@@ -1049,12 +986,18 @@ func (acluo *AssetChangeLogUpdateOne) Save(ctx context.Context) (*AssetChangeLog
 	)
 	acluo.defaults()
 	if len(acluo.hooks) == 0 {
+		if err = acluo.check(); err != nil {
+			return nil, err
+		}
 		node, err = acluo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*AssetChangeLogMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = acluo.check(); err != nil {
+				return nil, err
 			}
 			acluo.mutation = mutation
 			node, err = acluo.sqlSave(ctx)
@@ -1102,6 +1045,14 @@ func (acluo *AssetChangeLogUpdateOne) defaults() {
 		v := assetchangelog.UpdateDefaultUpdatedAt()
 		acluo.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (acluo *AssetChangeLogUpdateOne) check() error {
+	if _, ok := acluo.mutation.UserID(); acluo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
 }
 
 func (acluo *AssetChangeLogUpdateOne) sqlSave(ctx context.Context) (_node *AssetChangeLog, err error) {
@@ -1190,26 +1141,6 @@ func (acluo *AssetChangeLogUpdateOne) sqlSave(ctx context.Context) (_node *Asset
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Column: assetchangelog.FieldEventId,
-		})
-	}
-	if value, ok := acluo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: assetchangelog.FieldUserId,
-		})
-	}
-	if value, ok := acluo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: assetchangelog.FieldUserId,
-		})
-	}
-	if acluo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: assetchangelog.FieldUserId,
 		})
 	}
 	if value, ok := acluo.mutation.AssetItemId(); ok {

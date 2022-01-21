@@ -35,7 +35,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
 	UserInverseTable = "social_users"
 	// UserColumn is the table column denoting the user relation/edge.
-	UserColumn = "social_user_auto_buy_novels"
+	UserColumn = "user_id"
 )
 
 // Columns holds all SQL columns for novelautobuy fields.
@@ -50,21 +50,10 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "novel_auto_buys"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"social_user_auto_buy_novels",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

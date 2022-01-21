@@ -13,8 +13,8 @@ const (
 	FieldID = "id"
 	// FieldDictName holds the string denoting the dictname field in the database.
 	FieldDictName = "dict_name"
-	// FieldDictType holds the string denoting the dicttype field in the database.
-	FieldDictType = "dict_type"
+	// FieldTypeCode holds the string denoting the typecode field in the database.
+	FieldTypeCode = "type_code"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldRemark holds the string denoting the remark field in the database.
@@ -39,14 +39,14 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "sysdictdata" package.
 	DataListInverseTable = "sys_dict_data"
 	// DataListColumn is the table column denoting the dataList relation/edge.
-	DataListColumn = "sys_dict_type_data_list"
+	DataListColumn = "type_id"
 )
 
 // Columns holds all SQL columns for sysdicttype fields.
 var Columns = []string{
 	FieldID,
 	FieldDictName,
-	FieldDictType,
+	FieldTypeCode,
 	FieldStatus,
 	FieldRemark,
 	FieldCreatedAt,

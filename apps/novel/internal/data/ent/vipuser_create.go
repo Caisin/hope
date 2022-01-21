@@ -21,6 +21,12 @@ type VipUserCreate struct {
 	hooks    []Hook
 }
 
+// SetUserId sets the "userId" field.
+func (vuc *VipUserCreate) SetUserId(i int64) *VipUserCreate {
+	vuc.mutation.SetUserId(i)
+	return vuc
+}
+
 // SetVipType sets the "vipType" field.
 func (vuc *VipUserCreate) SetVipType(i int64) *VipUserCreate {
 	vuc.mutation.SetVipType(i)
@@ -195,14 +201,6 @@ func (vuc *VipUserCreate) SetUserID(id int64) *VipUserCreate {
 	return vuc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (vuc *VipUserCreate) SetNillableUserID(id *int64) *VipUserCreate {
-	if id != nil {
-		vuc = vuc.SetUserID(*id)
-	}
-	return vuc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (vuc *VipUserCreate) SetUser(s *SocialUser) *VipUserCreate {
 	return vuc.SetUserID(s.ID)
@@ -311,6 +309,9 @@ func (vuc *VipUserCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (vuc *VipUserCreate) check() error {
+	if _, ok := vuc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := vuc.mutation.EffectTime(); !ok {
 		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "effectTime"`)}
 	}
@@ -331,6 +332,9 @@ func (vuc *VipUserCreate) check() error {
 	}
 	if _, ok := vuc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := vuc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -472,7 +476,7 @@ func (vuc *VipUserCreate) createSpec() (*VipUser, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_vips = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

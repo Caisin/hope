@@ -27,7 +27,6 @@ type SysOperaLogQuery struct {
 	predicates []predicate.SysOperaLog
 	// eager-loading edges.
 	withUser *SysUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -349,18 +348,11 @@ func (solq *SysOperaLogQuery) prepareQuery(ctx context.Context) error {
 func (solq *SysOperaLogQuery) sqlAll(ctx context.Context) ([]*SysOperaLog, error) {
 	var (
 		nodes       = []*SysOperaLog{}
-		withFKs     = solq.withFKs
 		_spec       = solq.querySpec()
 		loadedTypes = [1]bool{
 			solq.withUser != nil,
 		}
 	)
-	if solq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, sysoperalog.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &SysOperaLog{config: solq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (solq *SysOperaLogQuery) sqlAll(ctx context.Context) ([]*SysOperaLog, error
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SysOperaLog)
 		for i := range nodes {
-			if nodes[i].sys_user_opera_logs == nil {
-				continue
-			}
-			fk := *nodes[i].sys_user_opera_logs
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (solq *SysOperaLogQuery) sqlAll(ctx context.Context) ([]*SysOperaLog, error
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_user_opera_logs" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

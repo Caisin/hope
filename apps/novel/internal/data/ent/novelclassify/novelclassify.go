@@ -41,7 +41,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "novel" package.
 	NovelsInverseTable = "novels"
 	// NovelsColumn is the table column denoting the novels relation/edge.
-	NovelsColumn = "novel_classify_novels"
+	NovelsColumn = "classify_id"
 )
 
 // Columns holds all SQL columns for novelclassify fields.

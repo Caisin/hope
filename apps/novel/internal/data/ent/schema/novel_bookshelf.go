@@ -15,7 +15,7 @@ type NovelBookshelf struct {
 // Fields of the NovelBookshelf.
 func (NovelBookshelf) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户ID`),
 		field.String("userName").Optional().
 			Comment(`用户名`),
@@ -39,6 +39,6 @@ func (NovelBookshelf) Fields() []ent.Field {
 // Edges of the NovelBookshelf.
 func (NovelBookshelf) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("user", SocialUser.Type).Ref("bookshelves").Required().Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("bookshelves").Unique(),
 	}
 }

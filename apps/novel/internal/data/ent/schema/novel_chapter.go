@@ -15,7 +15,7 @@ type NovelChapter struct {
 // Fields of the NovelChapter.
 func (NovelChapter) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("novelId").Optional().
+		field.Int64("novelId").
 			Comment(`小说编号`),
 		field.Int32("orderNum").Optional().
 			Comment(`章节序号`),
@@ -53,7 +53,7 @@ func (NovelChapter) Edges() []ent.Edge {
 			From("prev").Comment("下一章").
 			Unique(),
 		edge.
-			From("novel", Novel.Type).Comment("所属小说").
+			From("novel", Novel.Type).Field("novelId").Required().Comment("所属小说").
 			Ref("chapters").
 			Unique(),
 	}

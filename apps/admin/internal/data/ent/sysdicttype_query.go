@@ -382,7 +382,6 @@ func (sdtq *SysDictTypeQuery) sqlAll(ctx context.Context) ([]*SysDictType, error
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.DataList = []*SysDictData{}
 		}
-		query.withFKs = true
 		query.Where(predicate.SysDictData(func(s *sql.Selector) {
 			s.Where(sql.InValues(sysdicttype.DataListColumn, fks...))
 		}))
@@ -391,13 +390,10 @@ func (sdtq *SysDictTypeQuery) sqlAll(ctx context.Context) ([]*SysDictType, error
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.sys_dict_type_data_list
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "sys_dict_type_data_list" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.TypeId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_dict_type_data_list" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "typeId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.DataList = append(node.Edges.DataList, n)
 		}

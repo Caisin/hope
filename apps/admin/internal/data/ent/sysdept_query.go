@@ -520,7 +520,6 @@ func (sdq *SysDeptQuery) sqlAll(ctx context.Context) ([]*SysDept, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Users = []*SysUser{}
 		}
-		query.withFKs = true
 		query.Where(predicate.SysUser(func(s *sql.Selector) {
 			s.Where(sql.InValues(sysdept.UsersColumn, fks...))
 		}))
@@ -529,13 +528,10 @@ func (sdq *SysDeptQuery) sqlAll(ctx context.Context) ([]*SysDept, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.sys_dept_users
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "sys_dept_users" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.DeptId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_dept_users" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "deptId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Users = append(node.Edges.Users, n)
 		}

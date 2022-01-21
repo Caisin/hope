@@ -17,7 +17,7 @@ func (NovelComment) Fields() []ent.Field {
 	fields := []ent.Field{
 		field.Int64("novelId").Optional().
 			Comment(`小说编号`),
-		field.Int64("userId").Optional().
+		field.Int64("userId").
 			Comment(`用户Id`),
 		field.String("avatar").Optional().
 			Comment(`评论用户头像`),
@@ -52,6 +52,6 @@ func (NovelComment) Fields() []ent.Field {
 func (NovelComment) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("childes", NovelComment.Type).Comment("子评论").From("parent").Comment("父评论").Unique(),
-		edge.From("user", SocialUser.Type).Ref("comments").Unique(),
+		edge.From("user", SocialUser.Type).Field("userId").Required().Ref("comments").Unique(),
 	}
 }

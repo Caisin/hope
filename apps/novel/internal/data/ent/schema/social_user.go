@@ -15,8 +15,8 @@ type SocialUser struct {
 // Fields of the SocialUser.
 func (SocialUser) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.Int64("userId").
-			Comment(`用户ID`),
+		field.Int64("chId").
+			Comment(`注册渠道`),
 		field.String("unionid").Optional().
 			Comment(`只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段`),
 		field.String("token").Optional().
@@ -76,6 +76,7 @@ func (SocialUser) Fields() []ent.Field {
 func (SocialUser) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("tasks", TaskLog.Type).Comment("任务日志"),
+		edge.To("events", UserEvent.Type).Comment("用户事件"),
 		edge.To("listenRecords", ListenRecord.Type).Comment("收听阅读记录"),
 		edge.To("ads", AdChangeLog.Type).Comment("广告变化列表"),
 		edge.To("bookshelves", NovelBookshelf.Type).Comment("我的书架"),
@@ -88,6 +89,6 @@ func (SocialUser) Edges() []ent.Edge {
 		edge.To("assetLogs", AssetChangeLog.Type).Comment("资金变化列表"),
 		edge.To("buyChapterRecords", NovelBuyChapterRecord.Type).Comment("章节购买记录"),
 		edge.To("buyNovelRecords", NovelBuyRecord.Type).Comment("整本购买记录"),
-		edge.From("channel", AdChannel.Type).Ref("users").Comment("注册渠道").Unique(),
+		edge.From("channel", AdChannel.Type).Field("chId").Required().Comment("注册渠道").Ref("users").Unique(),
 	}
 }

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"hope/apps/admin/internal/data/ent/sysmenu"
 	"hope/apps/admin/internal/data/ent/sysrole"
+	"hope/apps/admin/internal/data/ent/sysuser"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -244,6 +245,21 @@ func (src *SysRoleCreate) AddMenus(s ...*SysMenu) *SysRoleCreate {
 		ids[i] = s[i].ID
 	}
 	return src.AddMenuIDs(ids...)
+}
+
+// AddUserIDs adds the "users" edge to the SysUser entity by IDs.
+func (src *SysRoleCreate) AddUserIDs(ids ...int64) *SysRoleCreate {
+	src.mutation.AddUserIDs(ids...)
+	return src
+}
+
+// AddUsers adds the "users" edges to the SysUser entity.
+func (src *SysRoleCreate) AddUsers(s ...*SysUser) *SysRoleCreate {
+	ids := make([]int64, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return src.AddUserIDs(ids...)
 }
 
 // Mutation returns the SysRoleMutation object of the builder.
@@ -514,6 +530,25 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt64,
 					Column: sysmenu.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := src.mutation.UsersIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   sysrole.UsersTable,
+			Columns: sysrole.UsersPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysuser.FieldID,
 				},
 			},
 		}

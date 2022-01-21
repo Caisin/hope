@@ -78,7 +78,6 @@ type NovelComment struct {
 	// The values are being populated by the NovelCommentQuery when eager-loading is set.
 	Edges                 NovelCommentEdges `json:"edges"`
 	novel_comment_childes *int64
-	social_user_comments  *int64
 }
 
 // NovelCommentEdges holds the relations/edges for other nodes in the graph.
@@ -145,8 +144,6 @@ func (*NovelComment) scanValues(columns []string) ([]interface{}, error) {
 		case novelcomment.FieldCreatedAt, novelcomment.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		case novelcomment.ForeignKeys[0]: // novel_comment_childes
-			values[i] = new(sql.NullInt64)
-		case novelcomment.ForeignKeys[1]: // social_user_comments
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type NovelComment", columns[i])
@@ -289,13 +286,6 @@ func (nc *NovelComment) assignValues(columns []string, values []interface{}) err
 			} else if value.Valid {
 				nc.novel_comment_childes = new(int64)
 				*nc.novel_comment_childes = int64(value.Int64)
-			}
-		case novelcomment.ForeignKeys[1]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_comments", value)
-			} else if value.Valid {
-				nc.social_user_comments = new(int64)
-				*nc.social_user_comments = int64(value.Int64)
 			}
 		}
 	}

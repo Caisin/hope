@@ -32,7 +32,6 @@ func (nu *NovelUpdate) Where(ps ...predicate.Novel) *NovelUpdate {
 
 // SetClassifyId sets the "classifyId" field.
 func (nu *NovelUpdate) SetClassifyId(i int64) *NovelUpdate {
-	nu.mutation.ResetClassifyId()
 	nu.mutation.SetClassifyId(i)
 	return nu
 }
@@ -42,12 +41,6 @@ func (nu *NovelUpdate) SetNillableClassifyId(i *int64) *NovelUpdate {
 	if i != nil {
 		nu.SetClassifyId(*i)
 	}
-	return nu
-}
-
-// AddClassifyId adds i to the "classifyId" field.
-func (nu *NovelUpdate) AddClassifyId(i int64) *NovelUpdate {
-	nu.mutation.AddClassifyId(i)
 	return nu
 }
 
@@ -906,26 +899,6 @@ func (nu *NovelUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := nu.mutation.ClassifyId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novel.FieldClassifyId,
-		})
-	}
-	if value, ok := nu.mutation.AddedClassifyId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novel.FieldClassifyId,
-		})
-	}
-	if nu.mutation.ClassifyIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novel.FieldClassifyId,
-		})
-	}
 	if value, ok := nu.mutation.ClassifyName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -1554,7 +1527,6 @@ type NovelUpdateOne struct {
 
 // SetClassifyId sets the "classifyId" field.
 func (nuo *NovelUpdateOne) SetClassifyId(i int64) *NovelUpdateOne {
-	nuo.mutation.ResetClassifyId()
 	nuo.mutation.SetClassifyId(i)
 	return nuo
 }
@@ -1564,12 +1536,6 @@ func (nuo *NovelUpdateOne) SetNillableClassifyId(i *int64) *NovelUpdateOne {
 	if i != nil {
 		nuo.SetClassifyId(*i)
 	}
-	return nuo
-}
-
-// AddClassifyId adds i to the "classifyId" field.
-func (nuo *NovelUpdateOne) AddClassifyId(i int64) *NovelUpdateOne {
-	nuo.mutation.AddClassifyId(i)
 	return nuo
 }
 
@@ -2451,26 +2417,6 @@ func (nuo *NovelUpdateOne) sqlSave(ctx context.Context) (_node *Novel, err error
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := nuo.mutation.ClassifyId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novel.FieldClassifyId,
-		})
-	}
-	if value, ok := nuo.mutation.AddedClassifyId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novel.FieldClassifyId,
-		})
-	}
-	if nuo.mutation.ClassifyIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novel.FieldClassifyId,
-		})
 	}
 	if value, ok := nuo.mutation.ClassifyName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

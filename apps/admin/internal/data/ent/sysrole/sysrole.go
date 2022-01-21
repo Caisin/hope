@@ -43,6 +43,8 @@ const (
 	FieldTenantId = "tenant_id"
 	// EdgeMenus holds the string denoting the menus edge name in mutations.
 	EdgeMenus = "menus"
+	// EdgeUsers holds the string denoting the users edge name in mutations.
+	EdgeUsers = "users"
 	// Table holds the table name of the sysrole in the database.
 	Table = "sys_roles"
 	// MenusTable is the table that holds the menus relation/edge. The primary key declared below.
@@ -50,6 +52,11 @@ const (
 	// MenusInverseTable is the table name for the SysMenu entity.
 	// It exists in this package in order to avoid circular dependency with the "sysmenu" package.
 	MenusInverseTable = "sys_menus"
+	// UsersTable is the table that holds the users relation/edge. The primary key declared below.
+	UsersTable = "sys_role_users"
+	// UsersInverseTable is the table name for the SysUser entity.
+	// It exists in this package in order to avoid circular dependency with the "sysuser" package.
+	UsersInverseTable = "sys_users"
 )
 
 // Columns holds all SQL columns for sysrole fields.
@@ -76,6 +83,9 @@ var (
 	// MenusPrimaryKey and MenusColumn2 are the table columns denoting the
 	// primary key for the menus relation (M2M).
 	MenusPrimaryKey = []string{"sys_role_id", "sys_menu_id"}
+	// UsersPrimaryKey and UsersColumn2 are the table columns denoting the
+	// primary key for the users relation (M2M).
+	UsersPrimaryKey = []string{"sys_role_id", "sys_user_id"}
 )
 
 // ValidColumn reports if the column name is valid (part of the table columns).

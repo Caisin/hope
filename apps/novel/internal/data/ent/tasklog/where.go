@@ -302,48 +302,6 @@ func UserIdNotIn(vs ...int64) predicate.TaskLog {
 	})
 }
 
-// UserIdGT applies the GT predicate on the "userId" field.
-func UserIdGT(v int64) predicate.TaskLog {
-	return predicate.TaskLog(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdGTE applies the GTE predicate on the "userId" field.
-func UserIdGTE(v int64) predicate.TaskLog {
-	return predicate.TaskLog(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLT applies the LT predicate on the "userId" field.
-func UserIdLT(v int64) predicate.TaskLog {
-	return predicate.TaskLog(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLTE applies the LTE predicate on the "userId" field.
-func UserIdLTE(v int64) predicate.TaskLog {
-	return predicate.TaskLog(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdIsNil applies the IsNil predicate on the "userId" field.
-func UserIdIsNil() predicate.TaskLog {
-	return predicate.TaskLog(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldUserId)))
-	})
-}
-
-// UserIdNotNil applies the NotNil predicate on the "userId" field.
-func UserIdNotNil() predicate.TaskLog {
-	return predicate.TaskLog(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldUserId)))
-	})
-}
-
 // TaskGroupEQ applies the EQ predicate on the "taskGroup" field.
 func TaskGroupEQ(v string) predicate.TaskLog {
 	return predicate.TaskLog(func(s *sql.Selector) {

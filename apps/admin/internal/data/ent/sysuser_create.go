@@ -10,6 +10,7 @@ import (
 	"hope/apps/admin/internal/data/ent/sysloginlog"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
 	"hope/apps/admin/internal/data/ent/syspost"
+	"hope/apps/admin/internal/data/ent/sysrole"
 	"hope/apps/admin/internal/data/ent/sysuser"
 	"time"
 
@@ -66,14 +67,42 @@ func (suc *SysUserCreate) SetNillablePhone(s *string) *SysUserCreate {
 	return suc
 }
 
+// SetDeptId sets the "deptId" field.
+func (suc *SysUserCreate) SetDeptId(i int64) *SysUserCreate {
+	suc.mutation.SetDeptId(i)
+	return suc
+}
+
+// SetNillableDeptId sets the "deptId" field if the given value is not nil.
+func (suc *SysUserCreate) SetNillableDeptId(i *int64) *SysUserCreate {
+	if i != nil {
+		suc.SetDeptId(*i)
+	}
+	return suc
+}
+
+// SetPostId sets the "postId" field.
+func (suc *SysUserCreate) SetPostId(i int64) *SysUserCreate {
+	suc.mutation.SetPostId(i)
+	return suc
+}
+
+// SetNillablePostId sets the "postId" field if the given value is not nil.
+func (suc *SysUserCreate) SetNillablePostId(i *int64) *SysUserCreate {
+	if i != nil {
+		suc.SetPostId(*i)
+	}
+	return suc
+}
+
 // SetRoleId sets the "roleId" field.
-func (suc *SysUserCreate) SetRoleId(i int32) *SysUserCreate {
+func (suc *SysUserCreate) SetRoleId(i int64) *SysUserCreate {
 	suc.mutation.SetRoleId(i)
 	return suc
 }
 
 // SetNillableRoleId sets the "roleId" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableRoleId(i *int32) *SysUserCreate {
+func (suc *SysUserCreate) SetNillableRoleId(i *int64) *SysUserCreate {
 	if i != nil {
 		suc.SetRoleId(*i)
 	}
@@ -272,6 +301,21 @@ func (suc *SysUserCreate) SetPost(s *SysPost) *SysUserCreate {
 	return suc.SetPostID(s.ID)
 }
 
+// AddRoleIDs adds the "role" edge to the SysRole entity by IDs.
+func (suc *SysUserCreate) AddRoleIDs(ids ...int64) *SysUserCreate {
+	suc.mutation.AddRoleIDs(ids...)
+	return suc
+}
+
+// AddRole adds the "role" edges to the SysRole entity.
+func (suc *SysUserCreate) AddRole(s ...*SysRole) *SysUserCreate {
+	ids := make([]int64, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suc.AddRoleIDs(ids...)
+}
+
 // AddLoginLogIDs adds the "loginLogs" edge to the SysLoginLog entity by IDs.
 func (suc *SysUserCreate) AddLoginLogIDs(ids ...int64) *SysUserCreate {
 	suc.mutation.AddLoginLogIDs(ids...)
@@ -465,7 +509,7 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := suc.mutation.RoleId(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: sysuser.FieldRoleId,
 		})
@@ -576,7 +620,7 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.sys_dept_users = &nodes[0]
+		_node.DeptId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := suc.mutation.PostIDs(); len(nodes) > 0 {
@@ -596,7 +640,26 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.sys_post_users = &nodes[0]
+		_node.PostId = nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := suc.mutation.RoleIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.RoleTable,
+			Columns: sysuser.RolePrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: sysrole.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := suc.mutation.LoginLogsIDs(); len(nodes) > 0 {

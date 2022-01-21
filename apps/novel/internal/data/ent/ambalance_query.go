@@ -27,7 +27,6 @@ type AmBalanceQuery struct {
 	predicates []predicate.AmBalance
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -291,12 +290,12 @@ func (abq *AmBalanceQuery) WithUser(opts ...func(*SocialUserQuery)) *AmBalanceQu
 // Example:
 //
 //	var v []struct {
-//		OrderId string `json:"orderId,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.AmBalance.Query().
-//		GroupBy(ambalance.FieldOrderId).
+//		GroupBy(ambalance.FieldUserId).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -318,11 +317,11 @@ func (abq *AmBalanceQuery) GroupBy(field string, fields ...string) *AmBalanceGro
 // Example:
 //
 //	var v []struct {
-//		OrderId string `json:"orderId,omitempty"`
+//		UserId int64 `json:"userId,omitempty"`
 //	}
 //
 //	client.AmBalance.Query().
-//		Select(ambalance.FieldOrderId).
+//		Select(ambalance.FieldUserId).
 //		Scan(ctx, &v)
 //
 func (abq *AmBalanceQuery) Select(fields ...string) *AmBalanceSelect {
@@ -349,18 +348,11 @@ func (abq *AmBalanceQuery) prepareQuery(ctx context.Context) error {
 func (abq *AmBalanceQuery) sqlAll(ctx context.Context) ([]*AmBalance, error) {
 	var (
 		nodes       = []*AmBalance{}
-		withFKs     = abq.withFKs
 		_spec       = abq.querySpec()
 		loadedTypes = [1]bool{
 			abq.withUser != nil,
 		}
 	)
-	if abq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, ambalance.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &AmBalance{config: abq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (abq *AmBalanceQuery) sqlAll(ctx context.Context) ([]*AmBalance, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*AmBalance)
 		for i := range nodes {
-			if nodes[i].social_user_balances == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_balances
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (abq *AmBalanceQuery) sqlAll(ctx context.Context) ([]*AmBalance, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_balances" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

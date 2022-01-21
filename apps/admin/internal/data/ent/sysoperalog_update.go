@@ -30,7 +30,6 @@ func (solu *SysOperaLogUpdate) Where(ps ...predicate.SysOperaLog) *SysOperaLogUp
 
 // SetUserId sets the "userId" field.
 func (solu *SysOperaLogUpdate) SetUserId(i int64) *SysOperaLogUpdate {
-	solu.mutation.ResetUserId()
 	solu.mutation.SetUserId(i)
 	return solu
 }
@@ -40,12 +39,6 @@ func (solu *SysOperaLogUpdate) SetNillableUserId(i *int64) *SysOperaLogUpdate {
 	if i != nil {
 		solu.SetUserId(*i)
 	}
-	return solu
-}
-
-// AddUserId adds i to the "userId" field.
-func (solu *SysOperaLogUpdate) AddUserId(i int64) *SysOperaLogUpdate {
-	solu.mutation.AddUserId(i)
 	return solu
 }
 
@@ -675,26 +668,6 @@ func (solu *SysOperaLogUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := solu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysoperalog.FieldUserId,
-		})
-	}
-	if value, ok := solu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysoperalog.FieldUserId,
-		})
-	}
-	if solu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysoperalog.FieldUserId,
-		})
-	}
 	if value, ok := solu.mutation.Title(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -1086,7 +1059,6 @@ type SysOperaLogUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (soluo *SysOperaLogUpdateOne) SetUserId(i int64) *SysOperaLogUpdateOne {
-	soluo.mutation.ResetUserId()
 	soluo.mutation.SetUserId(i)
 	return soluo
 }
@@ -1096,12 +1068,6 @@ func (soluo *SysOperaLogUpdateOne) SetNillableUserId(i *int64) *SysOperaLogUpdat
 	if i != nil {
 		soluo.SetUserId(*i)
 	}
-	return soluo
-}
-
-// AddUserId adds i to the "userId" field.
-func (soluo *SysOperaLogUpdateOne) AddUserId(i int64) *SysOperaLogUpdateOne {
-	soluo.mutation.AddUserId(i)
 	return soluo
 }
 
@@ -1754,26 +1720,6 @@ func (soluo *SysOperaLogUpdateOne) sqlSave(ctx context.Context) (_node *SysOpera
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := soluo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysoperalog.FieldUserId,
-		})
-	}
-	if value, ok := soluo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysoperalog.FieldUserId,
-		})
-	}
-	if soluo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysoperalog.FieldUserId,
-		})
 	}
 	if value, ok := soluo.mutation.Title(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

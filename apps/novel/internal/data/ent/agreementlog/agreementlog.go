@@ -62,7 +62,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "payorder" package.
 	OrdersInverseTable = "pay_orders"
 	// OrdersColumn is the table column denoting the orders relation/edge.
-	OrdersColumn = "agreement_log_orders"
+	OrdersColumn = "agreement_id"
 )
 
 // Columns holds all SQL columns for agreementlog fields.

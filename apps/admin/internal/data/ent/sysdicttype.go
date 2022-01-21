@@ -19,9 +19,9 @@ type SysDictType struct {
 	// DictName holds the value of the "dictName" field.
 	// 字典名称
 	DictName string `json:"dictName,omitempty"`
-	// DictType holds the value of the "dictType" field.
+	// TypeCode holds the value of the "typeCode" field.
 	// 字典类型
-	DictType string `json:"dictType,omitempty"`
+	TypeCode string `json:"typeCode,omitempty"`
 	// Status holds the value of the "status" field.
 	// 状态
 	Status int32 `json:"status,omitempty"`
@@ -73,7 +73,7 @@ func (*SysDictType) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case sysdicttype.FieldID, sysdicttype.FieldStatus, sysdicttype.FieldCreateBy, sysdicttype.FieldUpdateBy, sysdicttype.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysdicttype.FieldDictName, sysdicttype.FieldDictType, sysdicttype.FieldRemark:
+		case sysdicttype.FieldDictName, sysdicttype.FieldTypeCode, sysdicttype.FieldRemark:
 			values[i] = new(sql.NullString)
 		case sysdicttype.FieldCreatedAt, sysdicttype.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -104,11 +104,11 @@ func (sdt *SysDictType) assignValues(columns []string, values []interface{}) err
 			} else if value.Valid {
 				sdt.DictName = value.String
 			}
-		case sysdicttype.FieldDictType:
+		case sysdicttype.FieldTypeCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field dictType", values[i])
+				return fmt.Errorf("unexpected type %T for field typeCode", values[i])
 			} else if value.Valid {
-				sdt.DictType = value.String
+				sdt.TypeCode = value.String
 			}
 		case sysdicttype.FieldStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -187,8 +187,8 @@ func (sdt *SysDictType) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", sdt.ID))
 	builder.WriteString(", dictName=")
 	builder.WriteString(sdt.DictName)
-	builder.WriteString(", dictType=")
-	builder.WriteString(sdt.DictType)
+	builder.WriteString(", typeCode=")
+	builder.WriteString(sdt.TypeCode)
 	builder.WriteString(", status=")
 	builder.WriteString(fmt.Sprintf("%v", sdt.Status))
 	builder.WriteString(", remark=")

@@ -27,7 +27,6 @@ type SysJobLogQuery struct {
 	predicates []predicate.SysJobLog
 	// eager-loading edges.
 	withJob *SysJobQuery
-	withFKs bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -291,7 +290,7 @@ func (sjlq *SysJobLogQuery) WithJob(opts ...func(*SysJobQuery)) *SysJobLogQuery 
 // Example:
 //
 //	var v []struct {
-//		JobId int32 `json:"jobId,omitempty"`
+//		JobId int64 `json:"jobId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -318,7 +317,7 @@ func (sjlq *SysJobLogQuery) GroupBy(field string, fields ...string) *SysJobLogGr
 // Example:
 //
 //	var v []struct {
-//		JobId int32 `json:"jobId,omitempty"`
+//		JobId int64 `json:"jobId,omitempty"`
 //	}
 //
 //	client.SysJobLog.Query().
@@ -349,18 +348,11 @@ func (sjlq *SysJobLogQuery) prepareQuery(ctx context.Context) error {
 func (sjlq *SysJobLogQuery) sqlAll(ctx context.Context) ([]*SysJobLog, error) {
 	var (
 		nodes       = []*SysJobLog{}
-		withFKs     = sjlq.withFKs
 		_spec       = sjlq.querySpec()
 		loadedTypes = [1]bool{
 			sjlq.withJob != nil,
 		}
 	)
-	if sjlq.withJob != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, sysjoblog.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &SysJobLog{config: sjlq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (sjlq *SysJobLogQuery) sqlAll(ctx context.Context) ([]*SysJobLog, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SysJobLog)
 		for i := range nodes {
-			if nodes[i].sys_job_logs == nil {
-				continue
-			}
-			fk := *nodes[i].sys_job_logs
+			fk := nodes[i].JobId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (sjlq *SysJobLogQuery) sqlAll(ctx context.Context) ([]*SysJobLog, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_job_logs" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "jobId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Job = n

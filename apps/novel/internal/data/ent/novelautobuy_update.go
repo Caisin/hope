@@ -31,28 +31,7 @@ func (nabu *NovelAutoBuyUpdate) Where(ps ...predicate.NovelAutoBuy) *NovelAutoBu
 
 // SetUserId sets the "userId" field.
 func (nabu *NovelAutoBuyUpdate) SetUserId(i int64) *NovelAutoBuyUpdate {
-	nabu.mutation.ResetUserId()
 	nabu.mutation.SetUserId(i)
-	return nabu
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nabu *NovelAutoBuyUpdate) SetNillableUserId(i *int64) *NovelAutoBuyUpdate {
-	if i != nil {
-		nabu.SetUserId(*i)
-	}
-	return nabu
-}
-
-// AddUserId adds i to the "userId" field.
-func (nabu *NovelAutoBuyUpdate) AddUserId(i int64) *NovelAutoBuyUpdate {
-	nabu.mutation.AddUserId(i)
-	return nabu
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nabu *NovelAutoBuyUpdate) ClearUserId() *NovelAutoBuyUpdate {
-	nabu.mutation.ClearUserId()
 	return nabu
 }
 
@@ -269,26 +248,6 @@ func (nabu *NovelAutoBuyUpdate) sqlSave(ctx context.Context) (n int, err error) 
 			}
 		}
 	}
-	if value, ok := nabu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelautobuy.FieldUserId,
-		})
-	}
-	if value, ok := nabu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelautobuy.FieldUserId,
-		})
-	}
-	if nabu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelautobuy.FieldUserId,
-		})
-	}
 	if value, ok := nabu.mutation.NovelId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -414,28 +373,7 @@ type NovelAutoBuyUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (nabuo *NovelAutoBuyUpdateOne) SetUserId(i int64) *NovelAutoBuyUpdateOne {
-	nabuo.mutation.ResetUserId()
 	nabuo.mutation.SetUserId(i)
-	return nabuo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nabuo *NovelAutoBuyUpdateOne) SetNillableUserId(i *int64) *NovelAutoBuyUpdateOne {
-	if i != nil {
-		nabuo.SetUserId(*i)
-	}
-	return nabuo
-}
-
-// AddUserId adds i to the "userId" field.
-func (nabuo *NovelAutoBuyUpdateOne) AddUserId(i int64) *NovelAutoBuyUpdateOne {
-	nabuo.mutation.AddUserId(i)
-	return nabuo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nabuo *NovelAutoBuyUpdateOne) ClearUserId() *NovelAutoBuyUpdateOne {
-	nabuo.mutation.ClearUserId()
 	return nabuo
 }
 
@@ -675,26 +613,6 @@ func (nabuo *NovelAutoBuyUpdateOne) sqlSave(ctx context.Context) (_node *NovelAu
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := nabuo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelautobuy.FieldUserId,
-		})
-	}
-	if value, ok := nabuo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelautobuy.FieldUserId,
-		})
-	}
-	if nabuo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelautobuy.FieldUserId,
-		})
 	}
 	if value, ok := nabuo.mutation.NovelId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

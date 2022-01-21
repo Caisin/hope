@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/listenrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -30,14 +31,7 @@ func (lru *ListenRecordUpdate) Where(ps ...predicate.ListenRecord) *ListenRecord
 
 // SetUserId sets the "userId" field.
 func (lru *ListenRecordUpdate) SetUserId(i int64) *ListenRecordUpdate {
-	lru.mutation.ResetUserId()
 	lru.mutation.SetUserId(i)
-	return lru
-}
-
-// AddUserId adds i to the "userId" field.
-func (lru *ListenRecordUpdate) AddUserId(i int64) *ListenRecordUpdate {
-	lru.mutation.AddUserId(i)
 	return lru
 }
 
@@ -264,14 +258,6 @@ func (lru *ListenRecordUpdate) SetUserID(id int64) *ListenRecordUpdate {
 	return lru
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (lru *ListenRecordUpdate) SetNillableUserID(id *int64) *ListenRecordUpdate {
-	if id != nil {
-		lru = lru.SetUserID(*id)
-	}
-	return lru
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (lru *ListenRecordUpdate) SetUser(s *SocialUser) *ListenRecordUpdate {
 	return lru.SetUserID(s.ID)
@@ -296,12 +282,18 @@ func (lru *ListenRecordUpdate) Save(ctx context.Context) (int, error) {
 	)
 	lru.defaults()
 	if len(lru.hooks) == 0 {
+		if err = lru.check(); err != nil {
+			return 0, err
+		}
 		affected, err = lru.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*ListenRecordMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = lru.check(); err != nil {
+				return 0, err
 			}
 			lru.mutation = mutation
 			affected, err = lru.sqlSave(ctx)
@@ -351,6 +343,14 @@ func (lru *ListenRecordUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (lru *ListenRecordUpdate) check() error {
+	if _, ok := lru.mutation.UserID(); lru.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (lru *ListenRecordUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -368,20 +368,6 @@ func (lru *ListenRecordUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := lru.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: listenrecord.FieldUserId,
-		})
-	}
-	if value, ok := lru.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: listenrecord.FieldUserId,
-		})
 	}
 	if value, ok := lru.mutation.ChapterId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -602,14 +588,7 @@ type ListenRecordUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (lruo *ListenRecordUpdateOne) SetUserId(i int64) *ListenRecordUpdateOne {
-	lruo.mutation.ResetUserId()
 	lruo.mutation.SetUserId(i)
-	return lruo
-}
-
-// AddUserId adds i to the "userId" field.
-func (lruo *ListenRecordUpdateOne) AddUserId(i int64) *ListenRecordUpdateOne {
-	lruo.mutation.AddUserId(i)
 	return lruo
 }
 
@@ -836,14 +815,6 @@ func (lruo *ListenRecordUpdateOne) SetUserID(id int64) *ListenRecordUpdateOne {
 	return lruo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (lruo *ListenRecordUpdateOne) SetNillableUserID(id *int64) *ListenRecordUpdateOne {
-	if id != nil {
-		lruo = lruo.SetUserID(*id)
-	}
-	return lruo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (lruo *ListenRecordUpdateOne) SetUser(s *SocialUser) *ListenRecordUpdateOne {
 	return lruo.SetUserID(s.ID)
@@ -875,12 +846,18 @@ func (lruo *ListenRecordUpdateOne) Save(ctx context.Context) (*ListenRecord, err
 	)
 	lruo.defaults()
 	if len(lruo.hooks) == 0 {
+		if err = lruo.check(); err != nil {
+			return nil, err
+		}
 		node, err = lruo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*ListenRecordMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = lruo.check(); err != nil {
+				return nil, err
 			}
 			lruo.mutation = mutation
 			node, err = lruo.sqlSave(ctx)
@@ -930,6 +907,14 @@ func (lruo *ListenRecordUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (lruo *ListenRecordUpdateOne) check() error {
+	if _, ok := lruo.mutation.UserID(); lruo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (lruo *ListenRecordUpdateOne) sqlSave(ctx context.Context) (_node *ListenRecord, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -964,20 +949,6 @@ func (lruo *ListenRecordUpdateOne) sqlSave(ctx context.Context) (_node *ListenRe
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := lruo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: listenrecord.FieldUserId,
-		})
-	}
-	if value, ok := lruo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: listenrecord.FieldUserId,
-		})
 	}
 	if value, ok := lruo.mutation.ChapterId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

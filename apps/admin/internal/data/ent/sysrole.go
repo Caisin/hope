@@ -72,9 +72,11 @@ type SysRole struct {
 type SysRoleEdges struct {
 	// Menus holds the value of the menus edge.
 	Menus []*SysMenu `json:"menus,omitempty"`
+	// Users holds the value of the users edge.
+	Users []*SysUser `json:"users,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [2]bool
 }
 
 // MenusOrErr returns the Menus value or an error if the edge
@@ -84,6 +86,15 @@ func (e SysRoleEdges) MenusOrErr() ([]*SysMenu, error) {
 		return e.Menus, nil
 	}
 	return nil, &NotLoadedError{edge: "menus"}
+}
+
+// UsersOrErr returns the Users value or an error if the edge
+// was not loaded in eager-loading.
+func (e SysRoleEdges) UsersOrErr() ([]*SysUser, error) {
+	if e.loadedTypes[1] {
+		return e.Users, nil
+	}
+	return nil, &NotLoadedError{edge: "users"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -218,6 +229,11 @@ func (sr *SysRole) assignValues(columns []string, values []interface{}) error {
 // QueryMenus queries the "menus" edge of the SysRole entity.
 func (sr *SysRole) QueryMenus() *SysMenuQuery {
 	return (&SysRoleClient{config: sr.config}).QueryMenus(sr)
+}
+
+// QueryUsers queries the "users" edge of the SysRole entity.
+func (sr *SysRole) QueryUsers() *SysUserQuery {
+	return (&SysRoleClient{config: sr.config}).QueryUsers(sr)
 }
 
 // Update returns a builder for updating this SysRole.

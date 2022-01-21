@@ -27,14 +27,6 @@ func (tlc *TaskLogCreate) SetUserId(i int64) *TaskLogCreate {
 	return tlc
 }
 
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (tlc *TaskLogCreate) SetNillableUserId(i *int64) *TaskLogCreate {
-	if i != nil {
-		tlc.SetUserId(*i)
-	}
-	return tlc
-}
-
 // SetTaskGroup sets the "taskGroup" field.
 func (tlc *TaskLogCreate) SetTaskGroup(s string) *TaskLogCreate {
 	tlc.mutation.SetTaskGroup(s)
@@ -349,14 +341,6 @@ func (tlc *TaskLogCreate) SetUserID(id int64) *TaskLogCreate {
 	return tlc
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (tlc *TaskLogCreate) SetNillableUserID(id *int64) *TaskLogCreate {
-	if id != nil {
-		tlc = tlc.SetUserID(*id)
-	}
-	return tlc
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (tlc *TaskLogCreate) SetUser(s *SocialUser) *TaskLogCreate {
 	return tlc.SetUserID(s.ID)
@@ -465,6 +449,9 @@ func (tlc *TaskLogCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (tlc *TaskLogCreate) check() error {
+	if _, ok := tlc.mutation.UserId(); !ok {
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+	}
 	if _, ok := tlc.mutation.EffectTime(); !ok {
 		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "effectTime"`)}
 	}
@@ -485,6 +472,9 @@ func (tlc *TaskLogCreate) check() error {
 	}
 	if _, ok := tlc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := tlc.mutation.UserID(); !ok {
+		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
 	}
 	return nil
 }
@@ -513,14 +503,6 @@ func (tlc *TaskLogCreate) createSpec() (*TaskLog, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := tlc.mutation.UserId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tasklog.FieldUserId,
-		})
-		_node.UserId = value
-	}
 	if value, ok := tlc.mutation.TaskGroup(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -714,7 +696,7 @@ func (tlc *TaskLogCreate) createSpec() (*TaskLog, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.social_user_tasks = &nodes[0]
+		_node.UserId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

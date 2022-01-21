@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"hope/apps/novel/internal/data/ent/userevent"
 	"math"
 
@@ -24,6 +25,8 @@ type UserEventQuery struct {
 	order      []OrderFunc
 	fields     []string
 	predicates []predicate.UserEvent
+	// eager-loading edges.
+	withUser *SocialUserQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -58,6 +61,28 @@ func (ueq *UserEventQuery) Unique(unique bool) *UserEventQuery {
 func (ueq *UserEventQuery) Order(o ...OrderFunc) *UserEventQuery {
 	ueq.order = append(ueq.order, o...)
 	return ueq
+}
+
+// QueryUser chains the current query on the "user" edge.
+func (ueq *UserEventQuery) QueryUser() *SocialUserQuery {
+	query := &SocialUserQuery{config: ueq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := ueq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := ueq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(userevent.Table, userevent.FieldID, selector),
+			sqlgraph.To(socialuser.Table, socialuser.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, userevent.UserTable, userevent.UserColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(ueq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first UserEvent entity from the query.
@@ -241,10 +266,22 @@ func (ueq *UserEventQuery) Clone() *UserEventQuery {
 		offset:     ueq.offset,
 		order:      append([]OrderFunc{}, ueq.order...),
 		predicates: append([]predicate.UserEvent{}, ueq.predicates...),
+		withUser:   ueq.withUser.Clone(),
 		// clone intermediate query.
 		sql:  ueq.sql.Clone(),
 		path: ueq.path,
 	}
+}
+
+// WithUser tells the query-builder to eager-load the nodes that are connected to
+// the "user" edge. The optional arguments are used to configure the query builder of the edge.
+func (ueq *UserEventQuery) WithUser(opts ...func(*SocialUserQuery)) *UserEventQuery {
+	query := &SocialUserQuery{config: ueq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	ueq.withUser = query
+	return ueq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -310,8 +347,11 @@ func (ueq *UserEventQuery) prepareQuery(ctx context.Context) error {
 
 func (ueq *UserEventQuery) sqlAll(ctx context.Context) ([]*UserEvent, error) {
 	var (
-		nodes = []*UserEvent{}
-		_spec = ueq.querySpec()
+		nodes       = []*UserEvent{}
+		_spec       = ueq.querySpec()
+		loadedTypes = [1]bool{
+			ueq.withUser != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &UserEvent{config: ueq.config}
@@ -323,6 +363,7 @@ func (ueq *UserEventQuery) sqlAll(ctx context.Context) ([]*UserEvent, error) {
 			return fmt.Errorf("ent: Assign called without calling ScanValues")
 		}
 		node := nodes[len(nodes)-1]
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	if err := sqlgraph.QueryNodes(ctx, ueq.driver, _spec); err != nil {
@@ -331,6 +372,33 @@ func (ueq *UserEventQuery) sqlAll(ctx context.Context) ([]*UserEvent, error) {
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+
+	if query := ueq.withUser; query != nil {
+		ids := make([]int64, 0, len(nodes))
+		nodeids := make(map[int64][]*UserEvent)
+		for i := range nodes {
+			fk := nodes[i].UserId
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(socialuser.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.User = n
+			}
+		}
+	}
+
 	return nodes, nil
 }
 

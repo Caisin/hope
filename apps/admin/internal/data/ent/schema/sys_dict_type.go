@@ -17,7 +17,7 @@ func (SysDictType) Fields() []ent.Field {
 	fields := []ent.Field{
 		field.String("dictName").Optional().
 			Comment(`字典名称`),
-		field.String("dictType").Optional().
+		field.String("typeCode").Unique().
 			Comment(`字典类型`),
 		field.Int32("status").Optional().
 			Comment(`状态`),
@@ -31,6 +31,6 @@ func (SysDictType) Fields() []ent.Field {
 // Edges of the SysDictType.
 func (SysDictType) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("dataList", SysDictData.Type).Comment("字典值"),
+		edge.To("dataList", SysDictData.Type).Comment("字典值列表"),
 	}
 }

@@ -52,7 +52,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "sysjoblog" package.
 	LogsInverseTable = "sys_job_logs"
 	// LogsColumn is the table column denoting the logs relation/edge.
-	LogsColumn = "sys_job_logs"
+	LogsColumn = "job_id"
 )
 
 // Columns holds all SQL columns for sysjob fields.

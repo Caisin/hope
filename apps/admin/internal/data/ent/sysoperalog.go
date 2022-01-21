@@ -103,8 +103,7 @@ type SysOperaLog struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysOperaLogQuery when eager-loading is set.
-	Edges               SysOperaLogEdges `json:"edges"`
-	sys_user_opera_logs *int64
+	Edges SysOperaLogEdges `json:"edges"`
 }
 
 // SysOperaLogEdges holds the relations/edges for other nodes in the graph.
@@ -141,8 +140,6 @@ func (*SysOperaLog) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullString)
 		case sysoperalog.FieldOperTime, sysoperalog.FieldCreatedAt, sysoperalog.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case sysoperalog.ForeignKeys[0]: // sys_user_opera_logs
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysOperaLog", columns[i])
 		}
@@ -331,13 +328,6 @@ func (sol *SysOperaLog) assignValues(columns []string, values []interface{}) err
 				return fmt.Errorf("unexpected type %T for field tenantId", values[i])
 			} else if value.Valid {
 				sol.TenantId = value.Int64
-			}
-		case sysoperalog.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field sys_user_opera_logs", value)
-			} else if value.Valid {
-				sol.sys_user_opera_logs = new(int64)
-				*sol.sys_user_opera_logs = int64(value.Int64)
 			}
 		}
 	}

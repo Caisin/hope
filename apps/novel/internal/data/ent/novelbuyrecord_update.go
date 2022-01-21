@@ -4,9 +4,11 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novelbuyrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -29,28 +31,7 @@ func (nbru *NovelBuyRecordUpdate) Where(ps ...predicate.NovelBuyRecord) *NovelBu
 
 // SetUserId sets the "userId" field.
 func (nbru *NovelBuyRecordUpdate) SetUserId(i int64) *NovelBuyRecordUpdate {
-	nbru.mutation.ResetUserId()
 	nbru.mutation.SetUserId(i)
-	return nbru
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbru *NovelBuyRecordUpdate) SetNillableUserId(i *int64) *NovelBuyRecordUpdate {
-	if i != nil {
-		nbru.SetUserId(*i)
-	}
-	return nbru
-}
-
-// AddUserId adds i to the "userId" field.
-func (nbru *NovelBuyRecordUpdate) AddUserId(i int64) *NovelBuyRecordUpdate {
-	nbru.mutation.AddUserId(i)
-	return nbru
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nbru *NovelBuyRecordUpdate) ClearUserId() *NovelBuyRecordUpdate {
-	nbru.mutation.ClearUserId()
 	return nbru
 }
 
@@ -311,9 +292,26 @@ func (nbru *NovelBuyRecordUpdate) AddTenantId(i int64) *NovelBuyRecordUpdate {
 	return nbru
 }
 
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (nbru *NovelBuyRecordUpdate) SetUserID(id int64) *NovelBuyRecordUpdate {
+	nbru.mutation.SetUserID(id)
+	return nbru
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (nbru *NovelBuyRecordUpdate) SetUser(s *SocialUser) *NovelBuyRecordUpdate {
+	return nbru.SetUserID(s.ID)
+}
+
 // Mutation returns the NovelBuyRecordMutation object of the builder.
 func (nbru *NovelBuyRecordUpdate) Mutation() *NovelBuyRecordMutation {
 	return nbru.mutation
+}
+
+// ClearUser clears the "user" edge to the SocialUser entity.
+func (nbru *NovelBuyRecordUpdate) ClearUser() *NovelBuyRecordUpdate {
+	nbru.mutation.ClearUser()
+	return nbru
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -324,12 +322,18 @@ func (nbru *NovelBuyRecordUpdate) Save(ctx context.Context) (int, error) {
 	)
 	nbru.defaults()
 	if len(nbru.hooks) == 0 {
+		if err = nbru.check(); err != nil {
+			return 0, err
+		}
 		affected, err = nbru.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*NovelBuyRecordMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = nbru.check(); err != nil {
+				return 0, err
 			}
 			nbru.mutation = mutation
 			affected, err = nbru.sqlSave(ctx)
@@ -379,6 +383,14 @@ func (nbru *NovelBuyRecordUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (nbru *NovelBuyRecordUpdate) check() error {
+	if _, ok := nbru.mutation.UserID(); nbru.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (nbru *NovelBuyRecordUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -396,26 +408,6 @@ func (nbru *NovelBuyRecordUpdate) sqlSave(ctx context.Context) (n int, err error
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := nbru.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuyrecord.FieldUserId,
-		})
-	}
-	if value, ok := nbru.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuyrecord.FieldUserId,
-		})
-	}
-	if nbru.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelbuyrecord.FieldUserId,
-		})
 	}
 	if value, ok := nbru.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -598,6 +590,41 @@ func (nbru *NovelBuyRecordUpdate) sqlSave(ctx context.Context) (n int, err error
 			Column: novelbuyrecord.FieldTenantId,
 		})
 	}
+	if nbru.mutation.UserCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   novelbuyrecord.UserTable,
+			Columns: []string{novelbuyrecord.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := nbru.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   novelbuyrecord.UserTable,
+			Columns: []string{novelbuyrecord.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, nbru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{novelbuyrecord.Label}
@@ -619,28 +646,7 @@ type NovelBuyRecordUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (nbruo *NovelBuyRecordUpdateOne) SetUserId(i int64) *NovelBuyRecordUpdateOne {
-	nbruo.mutation.ResetUserId()
 	nbruo.mutation.SetUserId(i)
-	return nbruo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (nbruo *NovelBuyRecordUpdateOne) SetNillableUserId(i *int64) *NovelBuyRecordUpdateOne {
-	if i != nil {
-		nbruo.SetUserId(*i)
-	}
-	return nbruo
-}
-
-// AddUserId adds i to the "userId" field.
-func (nbruo *NovelBuyRecordUpdateOne) AddUserId(i int64) *NovelBuyRecordUpdateOne {
-	nbruo.mutation.AddUserId(i)
-	return nbruo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (nbruo *NovelBuyRecordUpdateOne) ClearUserId() *NovelBuyRecordUpdateOne {
-	nbruo.mutation.ClearUserId()
 	return nbruo
 }
 
@@ -901,9 +907,26 @@ func (nbruo *NovelBuyRecordUpdateOne) AddTenantId(i int64) *NovelBuyRecordUpdate
 	return nbruo
 }
 
+// SetUserID sets the "user" edge to the SocialUser entity by ID.
+func (nbruo *NovelBuyRecordUpdateOne) SetUserID(id int64) *NovelBuyRecordUpdateOne {
+	nbruo.mutation.SetUserID(id)
+	return nbruo
+}
+
+// SetUser sets the "user" edge to the SocialUser entity.
+func (nbruo *NovelBuyRecordUpdateOne) SetUser(s *SocialUser) *NovelBuyRecordUpdateOne {
+	return nbruo.SetUserID(s.ID)
+}
+
 // Mutation returns the NovelBuyRecordMutation object of the builder.
 func (nbruo *NovelBuyRecordUpdateOne) Mutation() *NovelBuyRecordMutation {
 	return nbruo.mutation
+}
+
+// ClearUser clears the "user" edge to the SocialUser entity.
+func (nbruo *NovelBuyRecordUpdateOne) ClearUser() *NovelBuyRecordUpdateOne {
+	nbruo.mutation.ClearUser()
+	return nbruo
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -921,12 +944,18 @@ func (nbruo *NovelBuyRecordUpdateOne) Save(ctx context.Context) (*NovelBuyRecord
 	)
 	nbruo.defaults()
 	if len(nbruo.hooks) == 0 {
+		if err = nbruo.check(); err != nil {
+			return nil, err
+		}
 		node, err = nbruo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*NovelBuyRecordMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = nbruo.check(); err != nil {
+				return nil, err
 			}
 			nbruo.mutation = mutation
 			node, err = nbruo.sqlSave(ctx)
@@ -976,6 +1005,14 @@ func (nbruo *NovelBuyRecordUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (nbruo *NovelBuyRecordUpdateOne) check() error {
+	if _, ok := nbruo.mutation.UserID(); nbruo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (nbruo *NovelBuyRecordUpdateOne) sqlSave(ctx context.Context) (_node *NovelBuyRecord, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -1010,26 +1047,6 @@ func (nbruo *NovelBuyRecordUpdateOne) sqlSave(ctx context.Context) (_node *Novel
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := nbruo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuyrecord.FieldUserId,
-		})
-	}
-	if value, ok := nbruo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelbuyrecord.FieldUserId,
-		})
-	}
-	if nbruo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelbuyrecord.FieldUserId,
-		})
 	}
 	if value, ok := nbruo.mutation.UserName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -1211,6 +1228,41 @@ func (nbruo *NovelBuyRecordUpdateOne) sqlSave(ctx context.Context) (_node *Novel
 			Value:  value,
 			Column: novelbuyrecord.FieldTenantId,
 		})
+	}
+	if nbruo.mutation.UserCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   novelbuyrecord.UserTable,
+			Columns: []string{novelbuyrecord.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := nbruo.mutation.UserIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   novelbuyrecord.UserTable,
+			Columns: []string{novelbuyrecord.UserColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt64,
+					Column: socialuser.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &NovelBuyRecord{config: nbruo.config}
 	_spec.Assign = _node.assignValues

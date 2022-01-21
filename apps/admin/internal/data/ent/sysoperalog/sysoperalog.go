@@ -77,7 +77,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "sysuser" package.
 	UserInverseTable = "sys_users"
 	// UserColumn is the table column denoting the user relation/edge.
-	UserColumn = "sys_user_opera_logs"
+	UserColumn = "user_id"
 )
 
 // Columns holds all SQL columns for sysoperalog fields.
@@ -113,21 +113,10 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "sys_opera_logs"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"sys_user_opera_logs",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

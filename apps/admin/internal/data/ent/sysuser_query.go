@@ -12,6 +12,7 @@ import (
 	"hope/apps/admin/internal/data/ent/sysloginlog"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
 	"hope/apps/admin/internal/data/ent/syspost"
+	"hope/apps/admin/internal/data/ent/sysrole"
 	"hope/apps/admin/internal/data/ent/sysuser"
 	"math"
 
@@ -32,9 +33,9 @@ type SysUserQuery struct {
 	// eager-loading edges.
 	withDept      *SysDeptQuery
 	withPost      *SysPostQuery
+	withRole      *SysRoleQuery
 	withLoginLogs *SysLoginLogQuery
 	withOperaLogs *SysOperaLogQuery
-	withFKs       bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -108,6 +109,28 @@ func (suq *SysUserQuery) QueryPost() *SysPostQuery {
 			sqlgraph.From(sysuser.Table, sysuser.FieldID, selector),
 			sqlgraph.To(syspost.Table, syspost.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysuser.PostTable, sysuser.PostColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(suq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryRole chains the current query on the "role" edge.
+func (suq *SysUserQuery) QueryRole() *SysRoleQuery {
+	query := &SysRoleQuery{config: suq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := suq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := suq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysuser.Table, sysuser.FieldID, selector),
+			sqlgraph.To(sysrole.Table, sysrole.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, true, sysuser.RoleTable, sysuser.RolePrimaryKey...),
 		)
 		fromU = sqlgraph.SetNeighbors(suq.driver.Dialect(), step)
 		return fromU, nil
@@ -342,6 +365,7 @@ func (suq *SysUserQuery) Clone() *SysUserQuery {
 		predicates:    append([]predicate.SysUser{}, suq.predicates...),
 		withDept:      suq.withDept.Clone(),
 		withPost:      suq.withPost.Clone(),
+		withRole:      suq.withRole.Clone(),
 		withLoginLogs: suq.withLoginLogs.Clone(),
 		withOperaLogs: suq.withOperaLogs.Clone(),
 		// clone intermediate query.
@@ -369,6 +393,17 @@ func (suq *SysUserQuery) WithPost(opts ...func(*SysPostQuery)) *SysUserQuery {
 		opt(query)
 	}
 	suq.withPost = query
+	return suq
+}
+
+// WithRole tells the query-builder to eager-load the nodes that are connected to
+// the "role" edge. The optional arguments are used to configure the query builder of the edge.
+func (suq *SysUserQuery) WithRole(opts ...func(*SysRoleQuery)) *SysUserQuery {
+	query := &SysRoleQuery{config: suq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	suq.withRole = query
 	return suq
 }
 
@@ -458,21 +493,15 @@ func (suq *SysUserQuery) prepareQuery(ctx context.Context) error {
 func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 	var (
 		nodes       = []*SysUser{}
-		withFKs     = suq.withFKs
 		_spec       = suq.querySpec()
-		loadedTypes = [4]bool{
+		loadedTypes = [5]bool{
 			suq.withDept != nil,
 			suq.withPost != nil,
+			suq.withRole != nil,
 			suq.withLoginLogs != nil,
 			suq.withOperaLogs != nil,
 		}
 	)
-	if suq.withDept != nil || suq.withPost != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, sysuser.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &SysUser{config: suq.config}
 		nodes = append(nodes, node)
@@ -497,10 +526,7 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SysUser)
 		for i := range nodes {
-			if nodes[i].sys_dept_users == nil {
-				continue
-			}
-			fk := *nodes[i].sys_dept_users
+			fk := nodes[i].DeptId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -514,7 +540,7 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_dept_users" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "deptId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Dept = n
@@ -526,10 +552,7 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SysUser)
 		for i := range nodes {
-			if nodes[i].sys_post_users == nil {
-				continue
-			}
-			fk := *nodes[i].sys_post_users
+			fk := nodes[i].PostId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -543,10 +566,75 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_post_users" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "postId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Post = n
+			}
+		}
+	}
+
+	if query := suq.withRole; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		ids := make(map[int64]*SysUser, len(nodes))
+		for _, node := range nodes {
+			ids[node.ID] = node
+			fks = append(fks, node.ID)
+			node.Edges.Role = []*SysRole{}
+		}
+		var (
+			edgeids []int64
+			edges   = make(map[int64][]*SysUser)
+		)
+		_spec := &sqlgraph.EdgeQuerySpec{
+			Edge: &sqlgraph.EdgeSpec{
+				Inverse: true,
+				Table:   sysuser.RoleTable,
+				Columns: sysuser.RolePrimaryKey,
+			},
+			Predicate: func(s *sql.Selector) {
+				s.Where(sql.InValues(sysuser.RolePrimaryKey[1], fks...))
+			},
+			ScanValues: func() [2]interface{} {
+				return [2]interface{}{new(sql.NullInt64), new(sql.NullInt64)}
+			},
+			Assign: func(out, in interface{}) error {
+				eout, ok := out.(*sql.NullInt64)
+				if !ok || eout == nil {
+					return fmt.Errorf("unexpected id value for edge-out")
+				}
+				ein, ok := in.(*sql.NullInt64)
+				if !ok || ein == nil {
+					return fmt.Errorf("unexpected id value for edge-in")
+				}
+				outValue := eout.Int64
+				inValue := ein.Int64
+				node, ok := ids[outValue]
+				if !ok {
+					return fmt.Errorf("unexpected node id in edges: %v", outValue)
+				}
+				if _, ok := edges[inValue]; !ok {
+					edgeids = append(edgeids, inValue)
+				}
+				edges[inValue] = append(edges[inValue], node)
+				return nil
+			},
+		}
+		if err := sqlgraph.QueryEdges(ctx, suq.driver, _spec); err != nil {
+			return nil, fmt.Errorf(`query edges "role": %w`, err)
+		}
+		query.Where(sysrole.IDIn(edgeids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := edges[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected "role" node returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.Role = append(nodes[i].Edges.Role, n)
 			}
 		}
 	}
@@ -559,7 +647,6 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.LoginLogs = []*SysLoginLog{}
 		}
-		query.withFKs = true
 		query.Where(predicate.SysLoginLog(func(s *sql.Selector) {
 			s.Where(sql.InValues(sysuser.LoginLogsColumn, fks...))
 		}))
@@ -568,13 +655,10 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.sys_user_login_logs
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "sys_user_login_logs" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_user_login_logs" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.LoginLogs = append(node.Edges.LoginLogs, n)
 		}
@@ -588,7 +672,6 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.OperaLogs = []*SysOperaLog{}
 		}
-		query.withFKs = true
 		query.Where(predicate.SysOperaLog(func(s *sql.Selector) {
 			s.Where(sql.InValues(sysuser.OperaLogsColumn, fks...))
 		}))
@@ -597,13 +680,10 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.sys_user_opera_logs
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "sys_user_opera_logs" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.UserId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_user_opera_logs" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.OperaLogs = append(node.Edges.OperaLogs, n)
 		}

@@ -72,7 +72,7 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
 	UserInverseTable = "social_users"
 	// UserColumn is the table column denoting the user relation/edge.
-	UserColumn = "social_user_comments"
+	UserColumn = "user_id"
 )
 
 // Columns holds all SQL columns for novelcomment fields.
@@ -103,7 +103,6 @@ var Columns = []string{
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
 	"novel_comment_childes",
-	"social_user_comments",
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).

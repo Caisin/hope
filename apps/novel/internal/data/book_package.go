@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/bookpackage"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,16 +31,15 @@ func NewBookPackageRepo(data *Data, logger log.Logger) biz.BookPackageRepo {
 func (r *bookPackageRepo) CreateBookPackage(ctx context.Context, req *v1.BookPackageCreateReq) (*ent.BookPackage, error) {
 	now := time.Now()
 	return r.data.db.BookPackage.Create().
-    SetActivityCode(req.ActivityCode).
-    SetPackageName(req.PackageName).
-    SetPrice(req.Price).
-    SetDailyPrice(req.DailyPrice).
-    SetNovelIds(req.NovelIds).
-    SetEffectTime(req.EffectTime.AsTime()).
-    SetExpiredTime(req.ExpiredTime.AsTime()).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetActivityCode(req.ActivityCode).
+		SetPackageName(req.PackageName).
+		SetPrice(req.Price).
+		SetDailyPrice(req.DailyPrice).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -67,7 +67,7 @@ func (r *bookPackageRepo) GetBookPackage(ctx context.Context, req *v1.BookPackag
 func (r *bookPackageRepo) PageBookPackage(ctx context.Context, req *v1.BookPackagePageReq) ([]*ent.BookPackage, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.BookPackage.
 		Query().
@@ -116,9 +116,6 @@ func (r *bookPackageRepo) genCondition(req *v1.BookPackageReq) []predicate.BookP
 	if req.DailyPrice > 0 {
 		list = append(list, bookpackage.DailyPrice(req.DailyPrice))
 	}
-	if str.IsBlank(req.NovelIds) {
-		list = append(list, bookpackage.NovelIdsContains(req.NovelIds))
-	}
 	if req.EffectTime.IsValid() && !req.EffectTime.AsTime().IsZero() {
 		list = append(list, bookpackage.EffectTimeGTE(req.EffectTime.AsTime()))
 	}
@@ -140,6 +137,6 @@ func (r *bookPackageRepo) genCondition(req *v1.BookPackageReq) []predicate.BookP
 	if req.TenantId > 0 {
 		list = append(list, bookpackage.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

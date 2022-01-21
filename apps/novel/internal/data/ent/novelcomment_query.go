@@ -516,10 +516,7 @@ func (ncq *NovelCommentQuery) sqlAll(ctx context.Context) ([]*NovelComment, erro
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*NovelComment)
 		for i := range nodes {
-			if nodes[i].social_user_comments == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_comments
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -533,7 +530,7 @@ func (ncq *NovelCommentQuery) sqlAll(ctx context.Context) ([]*NovelComment, erro
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_comments" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

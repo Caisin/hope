@@ -37,8 +37,17 @@ const (
 	FieldUpdateBy = "update_by"
 	// FieldTenantId holds the string denoting the tenantid field in the database.
 	FieldTenantId = "tenant_id"
+	// EdgeUser holds the string denoting the user edge name in mutations.
+	EdgeUser = "user"
 	// Table holds the table name of the userevent in the database.
 	Table = "user_events"
+	// UserTable is the table that holds the user relation/edge.
+	UserTable = "user_events"
+	// UserInverseTable is the table name for the SocialUser entity.
+	// It exists in this package in order to avoid circular dependency with the "socialuser" package.
+	UserInverseTable = "social_users"
+	// UserColumn is the table column denoting the user relation/edge.
+	UserColumn = "user_id"
 )
 
 // Columns holds all SQL columns for userevent fields.

@@ -15,6 +15,7 @@ func SysLoginLogUpdateReq2Data(v *v1.SysLoginLogUpdateReq) *ent.SysLoginLog {
 	}
 	return &ent.SysLoginLog{
 		ID:            v.Id,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -32,6 +33,7 @@ func SysLoginLogData2UpdateReq(v *ent.SysLoginLog) *v1.SysLoginLogUpdateReq {
 	}
 	return &v1.SysLoginLogUpdateReq{
 		Id:            v.ID,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -48,6 +50,7 @@ func SysLoginLogCreateReq2Data(v *v1.SysLoginLogCreateReq) *ent.SysLoginLog {
 		return nil
 	}
 	return &ent.SysLoginLog{
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -64,6 +67,7 @@ func SysLoginLogData2CreateReq(v *ent.SysLoginLog) *v1.SysLoginLogCreateReq {
 		return nil
 	}
 	return &v1.SysLoginLogCreateReq{
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -80,6 +84,7 @@ func SysLoginLogReq2Data(v *v1.SysLoginLogReq) *ent.SysLoginLog {
 		return nil
 	}
 	return &ent.SysLoginLog{
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -96,6 +101,7 @@ func SysLoginLogData2Req(v *ent.SysLoginLog) *v1.SysLoginLogReq {
 		return nil
 	}
 	return &v1.SysLoginLogReq{
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -113,6 +119,7 @@ func SysLoginLogReply2Data(v *v1.SysLoginLogReply) *ent.SysLoginLog {
 	}
 	return &ent.SysLoginLog{
 		ID:            v.Id,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -136,6 +143,7 @@ func SysLoginLogData2Reply(v *ent.SysLoginLog) *v1.SysLoginLogReply {
 	}
 	return &v1.SysLoginLogReply{
 		Id:            v.ID,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -159,6 +167,7 @@ func SysLoginLogUpdateReply2Data(v *v1.SysLoginLogUpdateReply) *ent.SysLoginLog 
 	}
 	return &ent.SysLoginLog{
 		ID:            v.Id,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -176,6 +185,7 @@ func SysLoginLogData2UpdateReply(v *ent.SysLoginLog) *v1.SysLoginLogUpdateReply 
 	}
 	return &v1.SysLoginLogUpdateReply{
 		Id:            v.ID,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -193,6 +203,7 @@ func SysLoginLogCreateReply2Data(v *v1.SysLoginLogCreateReply) *ent.SysLoginLog 
 	}
 	return &ent.SysLoginLog{
 		ID:            v.Id,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,
@@ -216,6 +227,7 @@ func SysLoginLogData2CreateReply(v *ent.SysLoginLog) *v1.SysLoginLogCreateReply 
 	}
 	return &v1.SysLoginLogCreateReply{
 		Id:            v.ID,
+		UserId:        v.UserId,
 		Status:        v.Status,
 		Ipaddr:        v.Ipaddr,
 		LoginLocation: v.LoginLocation,

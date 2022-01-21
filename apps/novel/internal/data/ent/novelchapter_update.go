@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novel"
 	"hope/apps/novel/internal/data/ent/novelchapter"
@@ -30,28 +31,7 @@ func (ncu *NovelChapterUpdate) Where(ps ...predicate.NovelChapter) *NovelChapter
 
 // SetNovelId sets the "novelId" field.
 func (ncu *NovelChapterUpdate) SetNovelId(i int64) *NovelChapterUpdate {
-	ncu.mutation.ResetNovelId()
 	ncu.mutation.SetNovelId(i)
-	return ncu
-}
-
-// SetNillableNovelId sets the "novelId" field if the given value is not nil.
-func (ncu *NovelChapterUpdate) SetNillableNovelId(i *int64) *NovelChapterUpdate {
-	if i != nil {
-		ncu.SetNovelId(*i)
-	}
-	return ncu
-}
-
-// AddNovelId adds i to the "novelId" field.
-func (ncu *NovelChapterUpdate) AddNovelId(i int64) *NovelChapterUpdate {
-	ncu.mutation.AddNovelId(i)
-	return ncu
-}
-
-// ClearNovelId clears the value of the "novelId" field.
-func (ncu *NovelChapterUpdate) ClearNovelId() *NovelChapterUpdate {
-	ncu.mutation.ClearNovelId()
 	return ncu
 }
 
@@ -416,14 +396,6 @@ func (ncu *NovelChapterUpdate) SetNovelID(id int64) *NovelChapterUpdate {
 	return ncu
 }
 
-// SetNillableNovelID sets the "novel" edge to the Novel entity by ID if the given value is not nil.
-func (ncu *NovelChapterUpdate) SetNillableNovelID(id *int64) *NovelChapterUpdate {
-	if id != nil {
-		ncu = ncu.SetNovelID(*id)
-	}
-	return ncu
-}
-
 // SetNovel sets the "novel" edge to the Novel entity.
 func (ncu *NovelChapterUpdate) SetNovel(n *Novel) *NovelChapterUpdate {
 	return ncu.SetNovelID(n.ID)
@@ -460,12 +432,18 @@ func (ncu *NovelChapterUpdate) Save(ctx context.Context) (int, error) {
 	)
 	ncu.defaults()
 	if len(ncu.hooks) == 0 {
+		if err = ncu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = ncu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*NovelChapterMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = ncu.check(); err != nil {
+				return 0, err
 			}
 			ncu.mutation = mutation
 			affected, err = ncu.sqlSave(ctx)
@@ -515,6 +493,14 @@ func (ncu *NovelChapterUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (ncu *NovelChapterUpdate) check() error {
+	if _, ok := ncu.mutation.NovelID(); ncu.mutation.NovelCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"novel\"")
+	}
+	return nil
+}
+
 func (ncu *NovelChapterUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -532,26 +518,6 @@ func (ncu *NovelChapterUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := ncu.mutation.NovelId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelchapter.FieldNovelId,
-		})
-	}
-	if value, ok := ncu.mutation.AddedNovelId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelchapter.FieldNovelId,
-		})
-	}
-	if ncu.mutation.NovelIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelchapter.FieldNovelId,
-		})
 	}
 	if value, ok := ncu.mutation.OrderNum(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -899,28 +865,7 @@ type NovelChapterUpdateOne struct {
 
 // SetNovelId sets the "novelId" field.
 func (ncuo *NovelChapterUpdateOne) SetNovelId(i int64) *NovelChapterUpdateOne {
-	ncuo.mutation.ResetNovelId()
 	ncuo.mutation.SetNovelId(i)
-	return ncuo
-}
-
-// SetNillableNovelId sets the "novelId" field if the given value is not nil.
-func (ncuo *NovelChapterUpdateOne) SetNillableNovelId(i *int64) *NovelChapterUpdateOne {
-	if i != nil {
-		ncuo.SetNovelId(*i)
-	}
-	return ncuo
-}
-
-// AddNovelId adds i to the "novelId" field.
-func (ncuo *NovelChapterUpdateOne) AddNovelId(i int64) *NovelChapterUpdateOne {
-	ncuo.mutation.AddNovelId(i)
-	return ncuo
-}
-
-// ClearNovelId clears the value of the "novelId" field.
-func (ncuo *NovelChapterUpdateOne) ClearNovelId() *NovelChapterUpdateOne {
-	ncuo.mutation.ClearNovelId()
 	return ncuo
 }
 
@@ -1285,14 +1230,6 @@ func (ncuo *NovelChapterUpdateOne) SetNovelID(id int64) *NovelChapterUpdateOne {
 	return ncuo
 }
 
-// SetNillableNovelID sets the "novel" edge to the Novel entity by ID if the given value is not nil.
-func (ncuo *NovelChapterUpdateOne) SetNillableNovelID(id *int64) *NovelChapterUpdateOne {
-	if id != nil {
-		ncuo = ncuo.SetNovelID(*id)
-	}
-	return ncuo
-}
-
 // SetNovel sets the "novel" edge to the Novel entity.
 func (ncuo *NovelChapterUpdateOne) SetNovel(n *Novel) *NovelChapterUpdateOne {
 	return ncuo.SetNovelID(n.ID)
@@ -1336,12 +1273,18 @@ func (ncuo *NovelChapterUpdateOne) Save(ctx context.Context) (*NovelChapter, err
 	)
 	ncuo.defaults()
 	if len(ncuo.hooks) == 0 {
+		if err = ncuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = ncuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*NovelChapterMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = ncuo.check(); err != nil {
+				return nil, err
 			}
 			ncuo.mutation = mutation
 			node, err = ncuo.sqlSave(ctx)
@@ -1391,6 +1334,14 @@ func (ncuo *NovelChapterUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (ncuo *NovelChapterUpdateOne) check() error {
+	if _, ok := ncuo.mutation.NovelID(); ncuo.mutation.NovelCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"novel\"")
+	}
+	return nil
+}
+
 func (ncuo *NovelChapterUpdateOne) sqlSave(ctx context.Context) (_node *NovelChapter, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -1425,26 +1376,6 @@ func (ncuo *NovelChapterUpdateOne) sqlSave(ctx context.Context) (_node *NovelCha
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := ncuo.mutation.NovelId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelchapter.FieldNovelId,
-		})
-	}
-	if value, ok := ncuo.mutation.AddedNovelId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novelchapter.FieldNovelId,
-		})
-	}
-	if ncuo.mutation.NovelIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: novelchapter.FieldNovelId,
-		})
 	}
 	if value, ok := ncuo.mutation.OrderNum(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

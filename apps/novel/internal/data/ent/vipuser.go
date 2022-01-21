@@ -17,6 +17,9 @@ type VipUser struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
+	// UserId holds the value of the "userId" field.
+	// 用户ID
+	UserId int64 `json:"userId,omitempty"`
 	// VipType holds the value of the "vipType" field.
 	// vip类型
 	VipType int64 `json:"vipType,omitempty"`
@@ -55,8 +58,7 @@ type VipUser struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the VipUserQuery when eager-loading is set.
-	Edges            VipUserEdges `json:"edges"`
-	social_user_vips *int64
+	Edges VipUserEdges `json:"edges"`
 }
 
 // VipUserEdges holds the relations/edges for other nodes in the graph.
@@ -87,14 +89,12 @@ func (*VipUser) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case vipuser.FieldID, vipuser.FieldVipType, vipuser.FieldSvipType, vipuser.FieldCreateBy, vipuser.FieldUpdateBy, vipuser.FieldTenantId:
+		case vipuser.FieldID, vipuser.FieldUserId, vipuser.FieldVipType, vipuser.FieldSvipType, vipuser.FieldCreateBy, vipuser.FieldUpdateBy, vipuser.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case vipuser.FieldRemark:
 			values[i] = new(sql.NullString)
 		case vipuser.FieldSvipEffectTime, vipuser.FieldSvipExpiredTime, vipuser.FieldEffectTime, vipuser.FieldExpiredTime, vipuser.FieldCreatedAt, vipuser.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case vipuser.ForeignKeys[0]: // social_user_vips
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type VipUser", columns[i])
 		}
@@ -116,6 +116,12 @@ func (vu *VipUser) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			vu.ID = int64(value.Int64)
+		case vipuser.FieldUserId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field userId", values[i])
+			} else if value.Valid {
+				vu.UserId = value.Int64
+			}
 		case vipuser.FieldVipType:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field vipType", values[i])
@@ -188,13 +194,6 @@ func (vu *VipUser) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				vu.TenantId = value.Int64
 			}
-		case vipuser.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_vips", value)
-			} else if value.Valid {
-				vu.social_user_vips = new(int64)
-				*vu.social_user_vips = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -228,6 +227,8 @@ func (vu *VipUser) String() string {
 	var builder strings.Builder
 	builder.WriteString("VipUser(")
 	builder.WriteString(fmt.Sprintf("id=%v", vu.ID))
+	builder.WriteString(", userId=")
+	builder.WriteString(fmt.Sprintf("%v", vu.UserId))
 	builder.WriteString(", vipType=")
 	builder.WriteString(fmt.Sprintf("%v", vu.VipType))
 	builder.WriteString(", svipType=")

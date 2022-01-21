@@ -31,6 +31,8 @@ func NewSysDictDataRepo(data *Data, logger log.Logger) biz.SysDictDataRepo {
 func (r *sysDictDataRepo) CreateSysDictData(ctx context.Context, req *v1.SysDictDataCreateReq) (*ent.SysDictData, error) {
 	now := time.Now()
 	return r.data.db.SysDictData.Create().
+		SetTypeId(req.TypeId).
+		SetTypeCode(req.TypeCode).
 		SetDictSort(req.DictSort).
 		SetDictLabel(req.DictLabel).
 		SetDictValue(req.DictValue).
@@ -104,6 +106,12 @@ func (r *sysDictDataRepo) genCondition(req *v1.SysDictDataReq) []predicate.SysDi
 	list := make([]predicate.SysDictData, 0)
 	if req.Id > 0 {
 		list = append(list, sysdictdata.ID(req.Id))
+	}
+	if req.TypeId > 0 {
+		list = append(list, sysdictdata.TypeId(req.TypeId))
+	}
+	if str.IsBlank(req.TypeCode) {
+		list = append(list, sysdictdata.TypeCodeContains(req.TypeCode))
 	}
 	if req.DictSort > 0 {
 		list = append(list, sysdictdata.DictSort(req.DictSort))

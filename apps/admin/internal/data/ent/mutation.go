@@ -7507,6 +7507,7 @@ type SysDictDataMutation struct {
 	op              Op
 	typ             string
 	id              *int64
+	typeCode        *string
 	dictSort        *int32
 	adddictSort     *int32
 	dictLabel       *string
@@ -7609,6 +7610,78 @@ func (m *SysDictDataMutation) ID() (id int64, exists bool) {
 		return
 	}
 	return *m.id, true
+}
+
+// SetTypeId sets the "typeId" field.
+func (m *SysDictDataMutation) SetTypeId(i int64) {
+	m.dictType = &i
+}
+
+// TypeId returns the value of the "typeId" field in the mutation.
+func (m *SysDictDataMutation) TypeId() (r int64, exists bool) {
+	v := m.dictType
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTypeId returns the old "typeId" field's value of the SysDictData entity.
+// If the SysDictData object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDictDataMutation) OldTypeId(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldTypeId is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldTypeId requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTypeId: %w", err)
+	}
+	return oldValue.TypeId, nil
+}
+
+// ResetTypeId resets all changes to the "typeId" field.
+func (m *SysDictDataMutation) ResetTypeId() {
+	m.dictType = nil
+}
+
+// SetTypeCode sets the "typeCode" field.
+func (m *SysDictDataMutation) SetTypeCode(s string) {
+	m.typeCode = &s
+}
+
+// TypeCode returns the value of the "typeCode" field in the mutation.
+func (m *SysDictDataMutation) TypeCode() (r string, exists bool) {
+	v := m.typeCode
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTypeCode returns the old "typeCode" field's value of the SysDictData entity.
+// If the SysDictData object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDictDataMutation) OldTypeCode(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldTypeCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldTypeCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTypeCode: %w", err)
+	}
+	return oldValue.TypeCode, nil
+}
+
+// ResetTypeCode resets all changes to the "typeCode" field.
+func (m *SysDictDataMutation) ResetTypeCode() {
+	m.typeCode = nil
 }
 
 // SetDictSort sets the "dictSort" field.
@@ -8294,7 +8367,13 @@ func (m *SysDictDataMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysDictDataMutation) Fields() []string {
-	fields := make([]string, 0, 12)
+	fields := make([]string, 0, 14)
+	if m.dictType != nil {
+		fields = append(fields, sysdictdata.FieldTypeId)
+	}
+	if m.typeCode != nil {
+		fields = append(fields, sysdictdata.FieldTypeCode)
+	}
 	if m.dictSort != nil {
 		fields = append(fields, sysdictdata.FieldDictSort)
 	}
@@ -8339,6 +8418,10 @@ func (m *SysDictDataMutation) Fields() []string {
 // schema.
 func (m *SysDictDataMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case sysdictdata.FieldTypeId:
+		return m.TypeId()
+	case sysdictdata.FieldTypeCode:
+		return m.TypeCode()
 	case sysdictdata.FieldDictSort:
 		return m.DictSort()
 	case sysdictdata.FieldDictLabel:
@@ -8372,6 +8455,10 @@ func (m *SysDictDataMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *SysDictDataMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case sysdictdata.FieldTypeId:
+		return m.OldTypeId(ctx)
+	case sysdictdata.FieldTypeCode:
+		return m.OldTypeCode(ctx)
 	case sysdictdata.FieldDictSort:
 		return m.OldDictSort(ctx)
 	case sysdictdata.FieldDictLabel:
@@ -8405,6 +8492,20 @@ func (m *SysDictDataMutation) OldField(ctx context.Context, name string) (ent.Va
 // type.
 func (m *SysDictDataMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case sysdictdata.FieldTypeId:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTypeId(v)
+		return nil
+	case sysdictdata.FieldTypeCode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTypeCode(v)
+		return nil
 	case sysdictdata.FieldDictSort:
 		v, ok := value.(int32)
 		if !ok {
@@ -8646,6 +8747,12 @@ func (m *SysDictDataMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *SysDictDataMutation) ResetField(name string) error {
 	switch name {
+	case sysdictdata.FieldTypeId:
+		m.ResetTypeId()
+		return nil
+	case sysdictdata.FieldTypeCode:
+		m.ResetTypeCode()
+		return nil
 	case sysdictdata.FieldDictSort:
 		m.ResetDictSort()
 		return nil
@@ -8769,7 +8876,7 @@ type SysDictTypeMutation struct {
 	typ             string
 	id              *int64
 	dictName        *string
-	dictType        *string
+	typeCode        *string
 	status          *int32
 	addstatus       *int32
 	remark          *string
@@ -8918,53 +9025,40 @@ func (m *SysDictTypeMutation) ResetDictName() {
 	delete(m.clearedFields, sysdicttype.FieldDictName)
 }
 
-// SetDictType sets the "dictType" field.
-func (m *SysDictTypeMutation) SetDictType(s string) {
-	m.dictType = &s
+// SetTypeCode sets the "typeCode" field.
+func (m *SysDictTypeMutation) SetTypeCode(s string) {
+	m.typeCode = &s
 }
 
-// DictType returns the value of the "dictType" field in the mutation.
-func (m *SysDictTypeMutation) DictType() (r string, exists bool) {
-	v := m.dictType
+// TypeCode returns the value of the "typeCode" field in the mutation.
+func (m *SysDictTypeMutation) TypeCode() (r string, exists bool) {
+	v := m.typeCode
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDictType returns the old "dictType" field's value of the SysDictType entity.
+// OldTypeCode returns the old "typeCode" field's value of the SysDictType entity.
 // If the SysDictType object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysDictTypeMutation) OldDictType(ctx context.Context) (v string, err error) {
+func (m *SysDictTypeMutation) OldTypeCode(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldDictType is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldTypeCode is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldDictType requires an ID field in the mutation")
+		return v, fmt.Errorf("OldTypeCode requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDictType: %w", err)
+		return v, fmt.Errorf("querying old value for OldTypeCode: %w", err)
 	}
-	return oldValue.DictType, nil
+	return oldValue.TypeCode, nil
 }
 
-// ClearDictType clears the value of the "dictType" field.
-func (m *SysDictTypeMutation) ClearDictType() {
-	m.dictType = nil
-	m.clearedFields[sysdicttype.FieldDictType] = struct{}{}
-}
-
-// DictTypeCleared returns if the "dictType" field was cleared in this mutation.
-func (m *SysDictTypeMutation) DictTypeCleared() bool {
-	_, ok := m.clearedFields[sysdicttype.FieldDictType]
-	return ok
-}
-
-// ResetDictType resets all changes to the "dictType" field.
-func (m *SysDictTypeMutation) ResetDictType() {
-	m.dictType = nil
-	delete(m.clearedFields, sysdicttype.FieldDictType)
+// ResetTypeCode resets all changes to the "typeCode" field.
+func (m *SysDictTypeMutation) ResetTypeCode() {
+	m.typeCode = nil
 }
 
 // SetStatus sets the "status" field.
@@ -9403,8 +9497,8 @@ func (m *SysDictTypeMutation) Fields() []string {
 	if m.dictName != nil {
 		fields = append(fields, sysdicttype.FieldDictName)
 	}
-	if m.dictType != nil {
-		fields = append(fields, sysdicttype.FieldDictType)
+	if m.typeCode != nil {
+		fields = append(fields, sysdicttype.FieldTypeCode)
 	}
 	if m.status != nil {
 		fields = append(fields, sysdicttype.FieldStatus)
@@ -9437,8 +9531,8 @@ func (m *SysDictTypeMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case sysdicttype.FieldDictName:
 		return m.DictName()
-	case sysdicttype.FieldDictType:
-		return m.DictType()
+	case sysdicttype.FieldTypeCode:
+		return m.TypeCode()
 	case sysdicttype.FieldStatus:
 		return m.Status()
 	case sysdicttype.FieldRemark:
@@ -9464,8 +9558,8 @@ func (m *SysDictTypeMutation) OldField(ctx context.Context, name string) (ent.Va
 	switch name {
 	case sysdicttype.FieldDictName:
 		return m.OldDictName(ctx)
-	case sysdicttype.FieldDictType:
-		return m.OldDictType(ctx)
+	case sysdicttype.FieldTypeCode:
+		return m.OldTypeCode(ctx)
 	case sysdicttype.FieldStatus:
 		return m.OldStatus(ctx)
 	case sysdicttype.FieldRemark:
@@ -9496,12 +9590,12 @@ func (m *SysDictTypeMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDictName(v)
 		return nil
-	case sysdicttype.FieldDictType:
+	case sysdicttype.FieldTypeCode:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDictType(v)
+		m.SetTypeCode(v)
 		return nil
 	case sysdicttype.FieldStatus:
 		v, ok := value.(int32)
@@ -9636,9 +9730,6 @@ func (m *SysDictTypeMutation) ClearedFields() []string {
 	if m.FieldCleared(sysdicttype.FieldDictName) {
 		fields = append(fields, sysdicttype.FieldDictName)
 	}
-	if m.FieldCleared(sysdicttype.FieldDictType) {
-		fields = append(fields, sysdicttype.FieldDictType)
-	}
 	if m.FieldCleared(sysdicttype.FieldStatus) {
 		fields = append(fields, sysdicttype.FieldStatus)
 	}
@@ -9662,9 +9753,6 @@ func (m *SysDictTypeMutation) ClearField(name string) error {
 	case sysdicttype.FieldDictName:
 		m.ClearDictName()
 		return nil
-	case sysdicttype.FieldDictType:
-		m.ClearDictType()
-		return nil
 	case sysdicttype.FieldStatus:
 		m.ClearStatus()
 		return nil
@@ -9682,8 +9770,8 @@ func (m *SysDictTypeMutation) ResetField(name string) error {
 	case sysdicttype.FieldDictName:
 		m.ResetDictName()
 		return nil
-	case sysdicttype.FieldDictType:
-		m.ResetDictType()
+	case sysdicttype.FieldTypeCode:
+		m.ResetTypeCode()
 		return nil
 	case sysdicttype.FieldStatus:
 		m.ResetStatus()
@@ -11353,8 +11441,6 @@ type SysJobLogMutation struct {
 	op            Op
 	typ           string
 	id            *int64
-	jobId         *int32
-	addjobId      *int32
 	jobName       *string
 	entryId       *int32
 	addentryId    *int32
@@ -11458,14 +11544,13 @@ func (m *SysJobLogMutation) ID() (id int64, exists bool) {
 }
 
 // SetJobId sets the "jobId" field.
-func (m *SysJobLogMutation) SetJobId(i int32) {
-	m.jobId = &i
-	m.addjobId = nil
+func (m *SysJobLogMutation) SetJobId(i int64) {
+	m.job = &i
 }
 
 // JobId returns the value of the "jobId" field in the mutation.
-func (m *SysJobLogMutation) JobId() (r int32, exists bool) {
-	v := m.jobId
+func (m *SysJobLogMutation) JobId() (r int64, exists bool) {
+	v := m.job
 	if v == nil {
 		return
 	}
@@ -11475,7 +11560,7 @@ func (m *SysJobLogMutation) JobId() (r int32, exists bool) {
 // OldJobId returns the old "jobId" field's value of the SysJobLog entity.
 // If the SysJobLog object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysJobLogMutation) OldJobId(ctx context.Context) (v int32, err error) {
+func (m *SysJobLogMutation) OldJobId(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldJobId is only allowed on UpdateOne operations")
 	}
@@ -11489,28 +11574,9 @@ func (m *SysJobLogMutation) OldJobId(ctx context.Context) (v int32, err error) {
 	return oldValue.JobId, nil
 }
 
-// AddJobId adds i to the "jobId" field.
-func (m *SysJobLogMutation) AddJobId(i int32) {
-	if m.addjobId != nil {
-		*m.addjobId += i
-	} else {
-		m.addjobId = &i
-	}
-}
-
-// AddedJobId returns the value that was added to the "jobId" field in this mutation.
-func (m *SysJobLogMutation) AddedJobId() (r int32, exists bool) {
-	v := m.addjobId
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
 // ClearJobId clears the value of the "jobId" field.
 func (m *SysJobLogMutation) ClearJobId() {
-	m.jobId = nil
-	m.addjobId = nil
+	m.job = nil
 	m.clearedFields[sysjoblog.FieldJobId] = struct{}{}
 }
 
@@ -11522,8 +11588,7 @@ func (m *SysJobLogMutation) JobIdCleared() bool {
 
 // ResetJobId resets all changes to the "jobId" field.
 func (m *SysJobLogMutation) ResetJobId() {
-	m.jobId = nil
-	m.addjobId = nil
+	m.job = nil
 	delete(m.clearedFields, sysjoblog.FieldJobId)
 }
 
@@ -12066,7 +12131,7 @@ func (m *SysJobLogMutation) ClearJob() {
 
 // JobCleared reports if the "job" edge to the SysJob entity was cleared.
 func (m *SysJobLogMutation) JobCleared() bool {
-	return m.clearedjob
+	return m.JobIdCleared() || m.clearedjob
 }
 
 // JobID returns the "job" edge ID in the mutation.
@@ -12113,7 +12178,7 @@ func (m *SysJobLogMutation) Type() string {
 // AddedFields().
 func (m *SysJobLogMutation) Fields() []string {
 	fields := make([]string, 0, 11)
-	if m.jobId != nil {
+	if m.job != nil {
 		fields = append(fields, sysjoblog.FieldJobId)
 	}
 	if m.jobName != nil {
@@ -12217,7 +12282,7 @@ func (m *SysJobLogMutation) OldField(ctx context.Context, name string) (ent.Valu
 func (m *SysJobLogMutation) SetField(name string, value ent.Value) error {
 	switch name {
 	case sysjoblog.FieldJobId:
-		v, ok := value.(int32)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -12301,9 +12366,6 @@ func (m *SysJobLogMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *SysJobLogMutation) AddedFields() []string {
 	var fields []string
-	if m.addjobId != nil {
-		fields = append(fields, sysjoblog.FieldJobId)
-	}
 	if m.addentryId != nil {
 		fields = append(fields, sysjoblog.FieldEntryId)
 	}
@@ -12327,8 +12389,6 @@ func (m *SysJobLogMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *SysJobLogMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case sysjoblog.FieldJobId:
-		return m.AddedJobId()
 	case sysjoblog.FieldEntryId:
 		return m.AddedEntryId()
 	case sysjoblog.FieldDuration:
@@ -12348,13 +12408,6 @@ func (m *SysJobLogMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *SysJobLogMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case sysjoblog.FieldJobId:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddJobId(v)
-		return nil
 	case sysjoblog.FieldEntryId:
 		v, ok := value.(int32)
 		if !ok {
@@ -12677,6 +12730,55 @@ func (m *SysLoginLogMutation) ID() (id int64, exists bool) {
 		return
 	}
 	return *m.id, true
+}
+
+// SetUserId sets the "userId" field.
+func (m *SysLoginLogMutation) SetUserId(i int64) {
+	m.user = &i
+}
+
+// UserId returns the value of the "userId" field in the mutation.
+func (m *SysLoginLogMutation) UserId() (r int64, exists bool) {
+	v := m.user
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUserId returns the old "userId" field's value of the SysLoginLog entity.
+// If the SysLoginLog object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoginLogMutation) OldUserId(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUserId is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUserId requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUserId: %w", err)
+	}
+	return oldValue.UserId, nil
+}
+
+// ClearUserId clears the value of the "userId" field.
+func (m *SysLoginLogMutation) ClearUserId() {
+	m.user = nil
+	m.clearedFields[sysloginlog.FieldUserId] = struct{}{}
+}
+
+// UserIdCleared returns if the "userId" field was cleared in this mutation.
+func (m *SysLoginLogMutation) UserIdCleared() bool {
+	_, ok := m.clearedFields[sysloginlog.FieldUserId]
+	return ok
+}
+
+// ResetUserId resets all changes to the "userId" field.
+func (m *SysLoginLogMutation) ResetUserId() {
+	m.user = nil
+	delete(m.clearedFields, sysloginlog.FieldUserId)
 }
 
 // SetStatus sets the "status" field.
@@ -13372,7 +13474,7 @@ func (m *SysLoginLogMutation) ClearUser() {
 
 // UserCleared reports if the "user" edge to the SysUser entity was cleared.
 func (m *SysLoginLogMutation) UserCleared() bool {
-	return m.cleareduser
+	return m.UserIdCleared() || m.cleareduser
 }
 
 // UserID returns the "user" edge ID in the mutation.
@@ -13418,7 +13520,10 @@ func (m *SysLoginLogMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysLoginLogMutation) Fields() []string {
-	fields := make([]string, 0, 14)
+	fields := make([]string, 0, 15)
+	if m.user != nil {
+		fields = append(fields, sysloginlog.FieldUserId)
+	}
 	if m.status != nil {
 		fields = append(fields, sysloginlog.FieldStatus)
 	}
@@ -13469,6 +13574,8 @@ func (m *SysLoginLogMutation) Fields() []string {
 // schema.
 func (m *SysLoginLogMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case sysloginlog.FieldUserId:
+		return m.UserId()
 	case sysloginlog.FieldStatus:
 		return m.Status()
 	case sysloginlog.FieldIpaddr:
@@ -13506,6 +13613,8 @@ func (m *SysLoginLogMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *SysLoginLogMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case sysloginlog.FieldUserId:
+		return m.OldUserId(ctx)
 	case sysloginlog.FieldStatus:
 		return m.OldStatus(ctx)
 	case sysloginlog.FieldIpaddr:
@@ -13543,6 +13652,13 @@ func (m *SysLoginLogMutation) OldField(ctx context.Context, name string) (ent.Va
 // type.
 func (m *SysLoginLogMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case sysloginlog.FieldUserId:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUserId(v)
+		return nil
 	case sysloginlog.FieldStatus:
 		v, ok := value.(string)
 		if !ok {
@@ -13710,6 +13826,9 @@ func (m *SysLoginLogMutation) AddField(name string, value ent.Value) error {
 // mutation.
 func (m *SysLoginLogMutation) ClearedFields() []string {
 	var fields []string
+	if m.FieldCleared(sysloginlog.FieldUserId) {
+		fields = append(fields, sysloginlog.FieldUserId)
+	}
 	if m.FieldCleared(sysloginlog.FieldStatus) {
 		fields = append(fields, sysloginlog.FieldStatus)
 	}
@@ -13751,6 +13870,9 @@ func (m *SysLoginLogMutation) FieldCleared(name string) bool {
 // error if the field is not defined in the schema.
 func (m *SysLoginLogMutation) ClearField(name string) error {
 	switch name {
+	case sysloginlog.FieldUserId:
+		m.ClearUserId()
+		return nil
 	case sysloginlog.FieldStatus:
 		m.ClearStatus()
 		return nil
@@ -13786,6 +13908,9 @@ func (m *SysLoginLogMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *SysLoginLogMutation) ResetField(name string) error {
 	switch name {
+	case sysloginlog.FieldUserId:
+		m.ResetUserId()
+		return nil
 	case sysloginlog.FieldStatus:
 		m.ResetStatus()
 		return nil
@@ -15891,8 +16016,6 @@ type SysOperaLogMutation struct {
 	op            Op
 	typ           string
 	id            *int64
-	userId        *int64
-	adduserId     *int64
 	title         *string
 	requestId     *string
 	businessType  *string
@@ -16012,13 +16135,12 @@ func (m *SysOperaLogMutation) ID() (id int64, exists bool) {
 
 // SetUserId sets the "userId" field.
 func (m *SysOperaLogMutation) SetUserId(i int64) {
-	m.userId = &i
-	m.adduserId = nil
+	m.user = &i
 }
 
 // UserId returns the value of the "userId" field in the mutation.
 func (m *SysOperaLogMutation) UserId() (r int64, exists bool) {
-	v := m.userId
+	v := m.user
 	if v == nil {
 		return
 	}
@@ -16042,28 +16164,9 @@ func (m *SysOperaLogMutation) OldUserId(ctx context.Context) (v int64, err error
 	return oldValue.UserId, nil
 }
 
-// AddUserId adds i to the "userId" field.
-func (m *SysOperaLogMutation) AddUserId(i int64) {
-	if m.adduserId != nil {
-		*m.adduserId += i
-	} else {
-		m.adduserId = &i
-	}
-}
-
-// AddedUserId returns the value that was added to the "userId" field in this mutation.
-func (m *SysOperaLogMutation) AddedUserId() (r int64, exists bool) {
-	v := m.adduserId
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
 // ClearUserId clears the value of the "userId" field.
 func (m *SysOperaLogMutation) ClearUserId() {
-	m.userId = nil
-	m.adduserId = nil
+	m.user = nil
 	m.clearedFields[sysoperalog.FieldUserId] = struct{}{}
 }
 
@@ -16075,8 +16178,7 @@ func (m *SysOperaLogMutation) UserIdCleared() bool {
 
 // ResetUserId resets all changes to the "userId" field.
 func (m *SysOperaLogMutation) ResetUserId() {
-	m.userId = nil
-	m.adduserId = nil
+	m.user = nil
 	delete(m.clearedFields, sysoperalog.FieldUserId)
 }
 
@@ -17410,7 +17512,7 @@ func (m *SysOperaLogMutation) ClearUser() {
 
 // UserCleared reports if the "user" edge to the SysUser entity was cleared.
 func (m *SysOperaLogMutation) UserCleared() bool {
-	return m.cleareduser
+	return m.UserIdCleared() || m.cleareduser
 }
 
 // UserID returns the "user" edge ID in the mutation.
@@ -17457,7 +17559,7 @@ func (m *SysOperaLogMutation) Type() string {
 // AddedFields().
 func (m *SysOperaLogMutation) Fields() []string {
 	fields := make([]string, 0, 28)
-	if m.userId != nil {
+	if m.user != nil {
 		fields = append(fields, sysoperalog.FieldUserId)
 	}
 	if m.title != nil {
@@ -17883,9 +17985,6 @@ func (m *SysOperaLogMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *SysOperaLogMutation) AddedFields() []string {
 	var fields []string
-	if m.adduserId != nil {
-		fields = append(fields, sysoperalog.FieldUserId)
-	}
 	if m.addcreateBy != nil {
 		fields = append(fields, sysoperalog.FieldCreateBy)
 	}
@@ -17903,8 +18002,6 @@ func (m *SysOperaLogMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *SysOperaLogMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case sysoperalog.FieldUserId:
-		return m.AddedUserId()
 	case sysoperalog.FieldCreateBy:
 		return m.AddedCreateBy()
 	case sysoperalog.FieldUpdateBy:
@@ -17920,13 +18017,6 @@ func (m *SysOperaLogMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *SysOperaLogMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case sysoperalog.FieldUserId:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddUserId(v)
-		return nil
 	case sysoperalog.FieldCreateBy:
 		v, ok := value.(int64)
 		if !ok {
@@ -19448,6 +19538,9 @@ type SysRoleMutation struct {
 	menus         map[int64]struct{}
 	removedmenus  map[int64]struct{}
 	clearedmenus  bool
+	users         map[int64]struct{}
+	removedusers  map[int64]struct{}
+	clearedusers  bool
 	done          bool
 	oldValue      func(context.Context) (*SysRole, error)
 	predicates    []predicate.SysRole
@@ -20337,6 +20430,60 @@ func (m *SysRoleMutation) ResetMenus() {
 	m.removedmenus = nil
 }
 
+// AddUserIDs adds the "users" edge to the SysUser entity by ids.
+func (m *SysRoleMutation) AddUserIDs(ids ...int64) {
+	if m.users == nil {
+		m.users = make(map[int64]struct{})
+	}
+	for i := range ids {
+		m.users[ids[i]] = struct{}{}
+	}
+}
+
+// ClearUsers clears the "users" edge to the SysUser entity.
+func (m *SysRoleMutation) ClearUsers() {
+	m.clearedusers = true
+}
+
+// UsersCleared reports if the "users" edge to the SysUser entity was cleared.
+func (m *SysRoleMutation) UsersCleared() bool {
+	return m.clearedusers
+}
+
+// RemoveUserIDs removes the "users" edge to the SysUser entity by IDs.
+func (m *SysRoleMutation) RemoveUserIDs(ids ...int64) {
+	if m.removedusers == nil {
+		m.removedusers = make(map[int64]struct{})
+	}
+	for i := range ids {
+		delete(m.users, ids[i])
+		m.removedusers[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedUsers returns the removed IDs of the "users" edge to the SysUser entity.
+func (m *SysRoleMutation) RemovedUsersIDs() (ids []int64) {
+	for id := range m.removedusers {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// UsersIDs returns the "users" edge IDs in the mutation.
+func (m *SysRoleMutation) UsersIDs() (ids []int64) {
+	for id := range m.users {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetUsers resets all changes to the "users" edge.
+func (m *SysRoleMutation) ResetUsers() {
+	m.users = nil
+	m.clearedusers = false
+	m.removedusers = nil
+}
+
 // Where appends a list predicates to the SysRoleMutation builder.
 func (m *SysRoleMutation) Where(ps ...predicate.SysRole) {
 	m.predicates = append(m.predicates, ps...)
@@ -20807,9 +20954,12 @@ func (m *SysRoleMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *SysRoleMutation) AddedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 2)
 	if m.menus != nil {
 		edges = append(edges, sysrole.EdgeMenus)
+	}
+	if m.users != nil {
+		edges = append(edges, sysrole.EdgeUsers)
 	}
 	return edges
 }
@@ -20824,15 +20974,24 @@ func (m *SysRoleMutation) AddedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case sysrole.EdgeUsers:
+		ids := make([]ent.Value, 0, len(m.users))
+		for id := range m.users {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *SysRoleMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 2)
 	if m.removedmenus != nil {
 		edges = append(edges, sysrole.EdgeMenus)
+	}
+	if m.removedusers != nil {
+		edges = append(edges, sysrole.EdgeUsers)
 	}
 	return edges
 }
@@ -20847,15 +21006,24 @@ func (m *SysRoleMutation) RemovedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case sysrole.EdgeUsers:
+		ids := make([]ent.Value, 0, len(m.removedusers))
+		for id := range m.removedusers {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *SysRoleMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 2)
 	if m.clearedmenus {
 		edges = append(edges, sysrole.EdgeMenus)
+	}
+	if m.clearedusers {
+		edges = append(edges, sysrole.EdgeUsers)
 	}
 	return edges
 }
@@ -20866,6 +21034,8 @@ func (m *SysRoleMutation) EdgeCleared(name string) bool {
 	switch name {
 	case sysrole.EdgeMenus:
 		return m.clearedmenus
+	case sysrole.EdgeUsers:
+		return m.clearedusers
 	}
 	return false
 }
@@ -20884,6 +21054,9 @@ func (m *SysRoleMutation) ResetEdge(name string) error {
 	switch name {
 	case sysrole.EdgeMenus:
 		m.ResetMenus()
+		return nil
+	case sysrole.EdgeUsers:
+		m.ResetUsers()
 		return nil
 	}
 	return fmt.Errorf("unknown SysRole edge %s", name)
@@ -23511,8 +23684,8 @@ type SysUserMutation struct {
 	username         *string
 	nickName         *string
 	phone            *string
-	roleId           *int32
-	addroleId        *int32
+	roleId           *int64
+	addroleId        *int64
 	avatar           *string
 	sex              *int32
 	addsex           *int32
@@ -23533,6 +23706,9 @@ type SysUserMutation struct {
 	cleareddept      bool
 	post             *int64
 	clearedpost      bool
+	role             map[int64]struct{}
+	removedrole      map[int64]struct{}
+	clearedrole      bool
 	loginLogs        map[int64]struct{}
 	removedloginLogs map[int64]struct{}
 	clearedloginLogs bool
@@ -23770,14 +23946,112 @@ func (m *SysUserMutation) ResetPhone() {
 	delete(m.clearedFields, sysuser.FieldPhone)
 }
 
+// SetDeptId sets the "deptId" field.
+func (m *SysUserMutation) SetDeptId(i int64) {
+	m.dept = &i
+}
+
+// DeptId returns the value of the "deptId" field in the mutation.
+func (m *SysUserMutation) DeptId() (r int64, exists bool) {
+	v := m.dept
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeptId returns the old "deptId" field's value of the SysUser entity.
+// If the SysUser object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysUserMutation) OldDeptId(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeptId is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeptId requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeptId: %w", err)
+	}
+	return oldValue.DeptId, nil
+}
+
+// ClearDeptId clears the value of the "deptId" field.
+func (m *SysUserMutation) ClearDeptId() {
+	m.dept = nil
+	m.clearedFields[sysuser.FieldDeptId] = struct{}{}
+}
+
+// DeptIdCleared returns if the "deptId" field was cleared in this mutation.
+func (m *SysUserMutation) DeptIdCleared() bool {
+	_, ok := m.clearedFields[sysuser.FieldDeptId]
+	return ok
+}
+
+// ResetDeptId resets all changes to the "deptId" field.
+func (m *SysUserMutation) ResetDeptId() {
+	m.dept = nil
+	delete(m.clearedFields, sysuser.FieldDeptId)
+}
+
+// SetPostId sets the "postId" field.
+func (m *SysUserMutation) SetPostId(i int64) {
+	m.post = &i
+}
+
+// PostId returns the value of the "postId" field in the mutation.
+func (m *SysUserMutation) PostId() (r int64, exists bool) {
+	v := m.post
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPostId returns the old "postId" field's value of the SysUser entity.
+// If the SysUser object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysUserMutation) OldPostId(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPostId is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPostId requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPostId: %w", err)
+	}
+	return oldValue.PostId, nil
+}
+
+// ClearPostId clears the value of the "postId" field.
+func (m *SysUserMutation) ClearPostId() {
+	m.post = nil
+	m.clearedFields[sysuser.FieldPostId] = struct{}{}
+}
+
+// PostIdCleared returns if the "postId" field was cleared in this mutation.
+func (m *SysUserMutation) PostIdCleared() bool {
+	_, ok := m.clearedFields[sysuser.FieldPostId]
+	return ok
+}
+
+// ResetPostId resets all changes to the "postId" field.
+func (m *SysUserMutation) ResetPostId() {
+	m.post = nil
+	delete(m.clearedFields, sysuser.FieldPostId)
+}
+
 // SetRoleId sets the "roleId" field.
-func (m *SysUserMutation) SetRoleId(i int32) {
+func (m *SysUserMutation) SetRoleId(i int64) {
 	m.roleId = &i
 	m.addroleId = nil
 }
 
 // RoleId returns the value of the "roleId" field in the mutation.
-func (m *SysUserMutation) RoleId() (r int32, exists bool) {
+func (m *SysUserMutation) RoleId() (r int64, exists bool) {
 	v := m.roleId
 	if v == nil {
 		return
@@ -23788,7 +24062,7 @@ func (m *SysUserMutation) RoleId() (r int32, exists bool) {
 // OldRoleId returns the old "roleId" field's value of the SysUser entity.
 // If the SysUser object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysUserMutation) OldRoleId(ctx context.Context) (v int32, err error) {
+func (m *SysUserMutation) OldRoleId(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldRoleId is only allowed on UpdateOne operations")
 	}
@@ -23803,7 +24077,7 @@ func (m *SysUserMutation) OldRoleId(ctx context.Context) (v int32, err error) {
 }
 
 // AddRoleId adds i to the "roleId" field.
-func (m *SysUserMutation) AddRoleId(i int32) {
+func (m *SysUserMutation) AddRoleId(i int64) {
 	if m.addroleId != nil {
 		*m.addroleId += i
 	} else {
@@ -23812,7 +24086,7 @@ func (m *SysUserMutation) AddRoleId(i int32) {
 }
 
 // AddedRoleId returns the value that was added to the "roleId" field in this mutation.
-func (m *SysUserMutation) AddedRoleId() (r int32, exists bool) {
+func (m *SysUserMutation) AddedRoleId() (r int64, exists bool) {
 	v := m.addroleId
 	if v == nil {
 		return
@@ -24407,7 +24681,7 @@ func (m *SysUserMutation) ClearDept() {
 
 // DeptCleared reports if the "dept" edge to the SysDept entity was cleared.
 func (m *SysUserMutation) DeptCleared() bool {
-	return m.cleareddept
+	return m.DeptIdCleared() || m.cleareddept
 }
 
 // DeptID returns the "dept" edge ID in the mutation.
@@ -24446,7 +24720,7 @@ func (m *SysUserMutation) ClearPost() {
 
 // PostCleared reports if the "post" edge to the SysPost entity was cleared.
 func (m *SysUserMutation) PostCleared() bool {
-	return m.clearedpost
+	return m.PostIdCleared() || m.clearedpost
 }
 
 // PostID returns the "post" edge ID in the mutation.
@@ -24471,6 +24745,60 @@ func (m *SysUserMutation) PostIDs() (ids []int64) {
 func (m *SysUserMutation) ResetPost() {
 	m.post = nil
 	m.clearedpost = false
+}
+
+// AddRoleIDs adds the "role" edge to the SysRole entity by ids.
+func (m *SysUserMutation) AddRoleIDs(ids ...int64) {
+	if m.role == nil {
+		m.role = make(map[int64]struct{})
+	}
+	for i := range ids {
+		m.role[ids[i]] = struct{}{}
+	}
+}
+
+// ClearRole clears the "role" edge to the SysRole entity.
+func (m *SysUserMutation) ClearRole() {
+	m.clearedrole = true
+}
+
+// RoleCleared reports if the "role" edge to the SysRole entity was cleared.
+func (m *SysUserMutation) RoleCleared() bool {
+	return m.clearedrole
+}
+
+// RemoveRoleIDs removes the "role" edge to the SysRole entity by IDs.
+func (m *SysUserMutation) RemoveRoleIDs(ids ...int64) {
+	if m.removedrole == nil {
+		m.removedrole = make(map[int64]struct{})
+	}
+	for i := range ids {
+		delete(m.role, ids[i])
+		m.removedrole[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedRole returns the removed IDs of the "role" edge to the SysRole entity.
+func (m *SysUserMutation) RemovedRoleIDs() (ids []int64) {
+	for id := range m.removedrole {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// RoleIDs returns the "role" edge IDs in the mutation.
+func (m *SysUserMutation) RoleIDs() (ids []int64) {
+	for id := range m.role {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetRole resets all changes to the "role" edge.
+func (m *SysUserMutation) ResetRole() {
+	m.role = nil
+	m.clearedrole = false
+	m.removedrole = nil
 }
 
 // AddLoginLogIDs adds the "loginLogs" edge to the SysLoginLog entity by ids.
@@ -24600,7 +24928,7 @@ func (m *SysUserMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysUserMutation) Fields() []string {
-	fields := make([]string, 0, 15)
+	fields := make([]string, 0, 17)
 	if m.username != nil {
 		fields = append(fields, sysuser.FieldUsername)
 	}
@@ -24609,6 +24937,12 @@ func (m *SysUserMutation) Fields() []string {
 	}
 	if m.phone != nil {
 		fields = append(fields, sysuser.FieldPhone)
+	}
+	if m.dept != nil {
+		fields = append(fields, sysuser.FieldDeptId)
+	}
+	if m.post != nil {
+		fields = append(fields, sysuser.FieldPostId)
 	}
 	if m.roleId != nil {
 		fields = append(fields, sysuser.FieldRoleId)
@@ -24660,6 +24994,10 @@ func (m *SysUserMutation) Field(name string) (ent.Value, bool) {
 		return m.NickName()
 	case sysuser.FieldPhone:
 		return m.Phone()
+	case sysuser.FieldDeptId:
+		return m.DeptId()
+	case sysuser.FieldPostId:
+		return m.PostId()
 	case sysuser.FieldRoleId:
 		return m.RoleId()
 	case sysuser.FieldAvatar:
@@ -24699,6 +25037,10 @@ func (m *SysUserMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldNickName(ctx)
 	case sysuser.FieldPhone:
 		return m.OldPhone(ctx)
+	case sysuser.FieldDeptId:
+		return m.OldDeptId(ctx)
+	case sysuser.FieldPostId:
+		return m.OldPostId(ctx)
 	case sysuser.FieldRoleId:
 		return m.OldRoleId(ctx)
 	case sysuser.FieldAvatar:
@@ -24753,8 +25095,22 @@ func (m *SysUserMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPhone(v)
 		return nil
+	case sysuser.FieldDeptId:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeptId(v)
+		return nil
+	case sysuser.FieldPostId:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPostId(v)
+		return nil
 	case sysuser.FieldRoleId:
-		v, ok := value.(int32)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -24888,7 +25244,7 @@ func (m *SysUserMutation) AddedField(name string) (ent.Value, bool) {
 func (m *SysUserMutation) AddField(name string, value ent.Value) error {
 	switch name {
 	case sysuser.FieldRoleId:
-		v, ok := value.(int32)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -24939,6 +25295,12 @@ func (m *SysUserMutation) ClearedFields() []string {
 	if m.FieldCleared(sysuser.FieldPhone) {
 		fields = append(fields, sysuser.FieldPhone)
 	}
+	if m.FieldCleared(sysuser.FieldDeptId) {
+		fields = append(fields, sysuser.FieldDeptId)
+	}
+	if m.FieldCleared(sysuser.FieldPostId) {
+		fields = append(fields, sysuser.FieldPostId)
+	}
 	if m.FieldCleared(sysuser.FieldRoleId) {
 		fields = append(fields, sysuser.FieldRoleId)
 	}
@@ -24983,6 +25345,12 @@ func (m *SysUserMutation) ClearField(name string) error {
 	case sysuser.FieldPhone:
 		m.ClearPhone()
 		return nil
+	case sysuser.FieldDeptId:
+		m.ClearDeptId()
+		return nil
+	case sysuser.FieldPostId:
+		m.ClearPostId()
+		return nil
 	case sysuser.FieldRoleId:
 		m.ClearRoleId()
 		return nil
@@ -25020,6 +25388,12 @@ func (m *SysUserMutation) ResetField(name string) error {
 		return nil
 	case sysuser.FieldPhone:
 		m.ResetPhone()
+		return nil
+	case sysuser.FieldDeptId:
+		m.ResetDeptId()
+		return nil
+	case sysuser.FieldPostId:
+		m.ResetPostId()
 		return nil
 	case sysuser.FieldRoleId:
 		m.ResetRoleId()
@@ -25063,12 +25437,15 @@ func (m *SysUserMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *SysUserMutation) AddedEdges() []string {
-	edges := make([]string, 0, 4)
+	edges := make([]string, 0, 5)
 	if m.dept != nil {
 		edges = append(edges, sysuser.EdgeDept)
 	}
 	if m.post != nil {
 		edges = append(edges, sysuser.EdgePost)
+	}
+	if m.role != nil {
+		edges = append(edges, sysuser.EdgeRole)
 	}
 	if m.loginLogs != nil {
 		edges = append(edges, sysuser.EdgeLoginLogs)
@@ -25091,6 +25468,12 @@ func (m *SysUserMutation) AddedIDs(name string) []ent.Value {
 		if id := m.post; id != nil {
 			return []ent.Value{*id}
 		}
+	case sysuser.EdgeRole:
+		ids := make([]ent.Value, 0, len(m.role))
+		for id := range m.role {
+			ids = append(ids, id)
+		}
+		return ids
 	case sysuser.EdgeLoginLogs:
 		ids := make([]ent.Value, 0, len(m.loginLogs))
 		for id := range m.loginLogs {
@@ -25109,7 +25492,10 @@ func (m *SysUserMutation) AddedIDs(name string) []ent.Value {
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *SysUserMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 4)
+	edges := make([]string, 0, 5)
+	if m.removedrole != nil {
+		edges = append(edges, sysuser.EdgeRole)
+	}
 	if m.removedloginLogs != nil {
 		edges = append(edges, sysuser.EdgeLoginLogs)
 	}
@@ -25123,6 +25509,12 @@ func (m *SysUserMutation) RemovedEdges() []string {
 // the given name in this mutation.
 func (m *SysUserMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
+	case sysuser.EdgeRole:
+		ids := make([]ent.Value, 0, len(m.removedrole))
+		for id := range m.removedrole {
+			ids = append(ids, id)
+		}
+		return ids
 	case sysuser.EdgeLoginLogs:
 		ids := make([]ent.Value, 0, len(m.removedloginLogs))
 		for id := range m.removedloginLogs {
@@ -25141,12 +25533,15 @@ func (m *SysUserMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *SysUserMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 4)
+	edges := make([]string, 0, 5)
 	if m.cleareddept {
 		edges = append(edges, sysuser.EdgeDept)
 	}
 	if m.clearedpost {
 		edges = append(edges, sysuser.EdgePost)
+	}
+	if m.clearedrole {
+		edges = append(edges, sysuser.EdgeRole)
 	}
 	if m.clearedloginLogs {
 		edges = append(edges, sysuser.EdgeLoginLogs)
@@ -25165,6 +25560,8 @@ func (m *SysUserMutation) EdgeCleared(name string) bool {
 		return m.cleareddept
 	case sysuser.EdgePost:
 		return m.clearedpost
+	case sysuser.EdgeRole:
+		return m.clearedrole
 	case sysuser.EdgeLoginLogs:
 		return m.clearedloginLogs
 	case sysuser.EdgeOperaLogs:
@@ -25196,6 +25593,9 @@ func (m *SysUserMutation) ResetEdge(name string) error {
 		return nil
 	case sysuser.EdgePost:
 		m.ResetPost()
+		return nil
+	case sysuser.EdgeRole:
+		m.ResetRole()
 		return nil
 	case sysuser.EdgeLoginLogs:
 		m.ResetLoginLogs()

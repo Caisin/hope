@@ -657,14 +657,6 @@ func (nc *NovelCreate) createSpec() (*Novel, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := nc.mutation.ClassifyId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: novel.FieldClassifyId,
-		})
-		_node.ClassifyId = value
-	}
 	if value, ok := nc.mutation.ClassifyName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -968,7 +960,7 @@ func (nc *NovelCreate) createSpec() (*Novel, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.novel_classify_novels = &nodes[0]
+		_node.ClassifyId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

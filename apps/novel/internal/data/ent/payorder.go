@@ -23,6 +23,15 @@ type PayOrder struct {
 	// OrderId holds the value of the "orderId" field.
 	// 订单号
 	OrderId string `json:"orderId,omitempty"`
+	// UserId holds the value of the "userId" field.
+	// 用户ID
+	UserId int64 `json:"userId,omitempty"`
+	// ChId holds the value of the "chId" field.
+	// 渠道ID
+	ChId int64 `json:"chId,omitempty"`
+	// AgreementId holds the value of the "agreementId" field.
+	// 签约协议号
+	AgreementId int64 `json:"agreementId,omitempty"`
 	// LastRead holds the value of the "lastRead" field.
 	// 最后阅读书籍
 	LastRead string `json:"lastRead,omitempty"`
@@ -91,10 +100,7 @@ type PayOrder struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PayOrderQuery when eager-loading is set.
-	Edges                PayOrderEdges `json:"edges"`
-	ad_channel_orders    *int64
-	agreement_log_orders *int64
-	social_user_orders   *int64
+	Edges PayOrderEdges `json:"edges"`
 }
 
 // PayOrderEdges holds the relations/edges for other nodes in the graph.
@@ -157,18 +163,12 @@ func (*PayOrder) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case payorder.FieldID, payorder.FieldState, payorder.FieldPayment, payorder.FieldCoin, payorder.FieldCoupon, payorder.FieldVipType, payorder.FieldTimes, payorder.FieldCreateBy, payorder.FieldUpdateBy, payorder.FieldTenantId:
+		case payorder.FieldID, payorder.FieldUserId, payorder.FieldChId, payorder.FieldAgreementId, payorder.FieldState, payorder.FieldPayment, payorder.FieldCoin, payorder.FieldCoupon, payorder.FieldVipType, payorder.FieldTimes, payorder.FieldCreateBy, payorder.FieldUpdateBy, payorder.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case payorder.FieldOrderId, payorder.FieldLastRead, payorder.FieldLastChapter, payorder.FieldPaymentName, payorder.FieldPaymentId, payorder.FieldPayType, payorder.FieldVipDays, payorder.FieldVipName, payorder.FieldOtherOrderId, payorder.FieldRemark:
 			values[i] = new(sql.NullString)
 		case payorder.FieldPaymentTime, payorder.FieldCloseTime, payorder.FieldCreatedAt, payorder.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case payorder.ForeignKeys[0]: // ad_channel_orders
-			values[i] = new(sql.NullInt64)
-		case payorder.ForeignKeys[1]: // agreement_log_orders
-			values[i] = new(sql.NullInt64)
-		case payorder.ForeignKeys[2]: // social_user_orders
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type PayOrder", columns[i])
 		}
@@ -195,6 +195,24 @@ func (po *PayOrder) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field orderId", values[i])
 			} else if value.Valid {
 				po.OrderId = value.String
+			}
+		case payorder.FieldUserId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field userId", values[i])
+			} else if value.Valid {
+				po.UserId = value.Int64
+			}
+		case payorder.FieldChId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field chId", values[i])
+			} else if value.Valid {
+				po.ChId = value.Int64
+			}
+		case payorder.FieldAgreementId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field agreementId", values[i])
+			} else if value.Valid {
+				po.AgreementId = value.Int64
 			}
 		case payorder.FieldLastRead:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -328,27 +346,6 @@ func (po *PayOrder) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				po.TenantId = value.Int64
 			}
-		case payorder.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field ad_channel_orders", value)
-			} else if value.Valid {
-				po.ad_channel_orders = new(int64)
-				*po.ad_channel_orders = int64(value.Int64)
-			}
-		case payorder.ForeignKeys[1]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field agreement_log_orders", value)
-			} else if value.Valid {
-				po.agreement_log_orders = new(int64)
-				*po.agreement_log_orders = int64(value.Int64)
-			}
-		case payorder.ForeignKeys[2]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_orders", value)
-			} else if value.Valid {
-				po.social_user_orders = new(int64)
-				*po.social_user_orders = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -394,6 +391,12 @@ func (po *PayOrder) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", po.ID))
 	builder.WriteString(", orderId=")
 	builder.WriteString(po.OrderId)
+	builder.WriteString(", userId=")
+	builder.WriteString(fmt.Sprintf("%v", po.UserId))
+	builder.WriteString(", chId=")
+	builder.WriteString(fmt.Sprintf("%v", po.ChId))
+	builder.WriteString(", agreementId=")
+	builder.WriteString(fmt.Sprintf("%v", po.AgreementId))
 	builder.WriteString(", lastRead=")
 	builder.WriteString(po.LastRead)
 	builder.WriteString(", lastChapter=")

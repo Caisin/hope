@@ -93,10 +93,10 @@ func IDLTE(id int64) predicate.SocialUser {
 	})
 }
 
-// UserId applies equality check predicate on the "userId" field. It's identical to UserIdEQ.
-func UserId(v int64) predicate.SocialUser {
+// ChId applies equality check predicate on the "chId" field. It's identical to ChIdEQ.
+func ChId(v int64) predicate.SocialUser {
 	return predicate.SocialUser(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUserId), v))
+		s.Where(sql.EQ(s.C(FieldChId), v))
 	})
 }
 
@@ -310,22 +310,22 @@ func TenantId(v int64) predicate.SocialUser {
 	})
 }
 
-// UserIdEQ applies the EQ predicate on the "userId" field.
-func UserIdEQ(v int64) predicate.SocialUser {
+// ChIdEQ applies the EQ predicate on the "chId" field.
+func ChIdEQ(v int64) predicate.SocialUser {
 	return predicate.SocialUser(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUserId), v))
+		s.Where(sql.EQ(s.C(FieldChId), v))
 	})
 }
 
-// UserIdNEQ applies the NEQ predicate on the "userId" field.
-func UserIdNEQ(v int64) predicate.SocialUser {
+// ChIdNEQ applies the NEQ predicate on the "chId" field.
+func ChIdNEQ(v int64) predicate.SocialUser {
 	return predicate.SocialUser(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldUserId), v))
+		s.Where(sql.NEQ(s.C(FieldChId), v))
 	})
 }
 
-// UserIdIn applies the In predicate on the "userId" field.
-func UserIdIn(vs ...int64) predicate.SocialUser {
+// ChIdIn applies the In predicate on the "chId" field.
+func ChIdIn(vs ...int64) predicate.SocialUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -337,12 +337,12 @@ func UserIdIn(vs ...int64) predicate.SocialUser {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldUserId), v...))
+		s.Where(sql.In(s.C(FieldChId), v...))
 	})
 }
 
-// UserIdNotIn applies the NotIn predicate on the "userId" field.
-func UserIdNotIn(vs ...int64) predicate.SocialUser {
+// ChIdNotIn applies the NotIn predicate on the "chId" field.
+func ChIdNotIn(vs ...int64) predicate.SocialUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -354,35 +354,7 @@ func UserIdNotIn(vs ...int64) predicate.SocialUser {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldUserId), v...))
-	})
-}
-
-// UserIdGT applies the GT predicate on the "userId" field.
-func UserIdGT(v int64) predicate.SocialUser {
-	return predicate.SocialUser(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdGTE applies the GTE predicate on the "userId" field.
-func UserIdGTE(v int64) predicate.SocialUser {
-	return predicate.SocialUser(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLT applies the LT predicate on the "userId" field.
-func UserIdLT(v int64) predicate.SocialUser {
-	return predicate.SocialUser(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUserId), v))
-	})
-}
-
-// UserIdLTE applies the LTE predicate on the "userId" field.
-func UserIdLTE(v int64) predicate.SocialUser {
-	return predicate.SocialUser(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUserId), v))
+		s.Where(sql.NotIn(s.C(FieldChId), v...))
 	})
 }
 
@@ -3735,6 +3707,34 @@ func HasTasksWith(preds ...predicate.TaskLog) predicate.SocialUser {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(TasksInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, TasksTable, TasksColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasEvents applies the HasEdge predicate on the "events" edge.
+func HasEvents() predicate.SocialUser {
+	return predicate.SocialUser(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(EventsTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, EventsTable, EventsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasEventsWith applies the HasEdge predicate on the "events" edge with a given conditions (other predicates).
+func HasEventsWith(preds ...predicate.UserEvent) predicate.SocialUser {
+	return predicate.SocialUser(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(EventsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, EventsTable, EventsColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

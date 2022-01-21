@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/adchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -30,28 +31,7 @@ func (aclu *AdChangeLogUpdate) Where(ps ...predicate.AdChangeLog) *AdChangeLogUp
 
 // SetUserId sets the "userId" field.
 func (aclu *AdChangeLogUpdate) SetUserId(i int64) *AdChangeLogUpdate {
-	aclu.mutation.ResetUserId()
 	aclu.mutation.SetUserId(i)
-	return aclu
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (aclu *AdChangeLogUpdate) SetNillableUserId(i *int64) *AdChangeLogUpdate {
-	if i != nil {
-		aclu.SetUserId(*i)
-	}
-	return aclu
-}
-
-// AddUserId adds i to the "userId" field.
-func (aclu *AdChangeLogUpdate) AddUserId(i int64) *AdChangeLogUpdate {
-	aclu.mutation.AddUserId(i)
-	return aclu
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (aclu *AdChangeLogUpdate) ClearUserId() *AdChangeLogUpdate {
-	aclu.mutation.ClearUserId()
 	return aclu
 }
 
@@ -217,14 +197,6 @@ func (aclu *AdChangeLogUpdate) SetUserID(id int64) *AdChangeLogUpdate {
 	return aclu
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (aclu *AdChangeLogUpdate) SetNillableUserID(id *int64) *AdChangeLogUpdate {
-	if id != nil {
-		aclu = aclu.SetUserID(*id)
-	}
-	return aclu
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (aclu *AdChangeLogUpdate) SetUser(s *SocialUser) *AdChangeLogUpdate {
 	return aclu.SetUserID(s.ID)
@@ -249,12 +221,18 @@ func (aclu *AdChangeLogUpdate) Save(ctx context.Context) (int, error) {
 	)
 	aclu.defaults()
 	if len(aclu.hooks) == 0 {
+		if err = aclu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = aclu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*AdChangeLogMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = aclu.check(); err != nil {
+				return 0, err
 			}
 			aclu.mutation = mutation
 			affected, err = aclu.sqlSave(ctx)
@@ -304,6 +282,14 @@ func (aclu *AdChangeLogUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (aclu *AdChangeLogUpdate) check() error {
+	if _, ok := aclu.mutation.UserID(); aclu.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (aclu *AdChangeLogUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -321,26 +307,6 @@ func (aclu *AdChangeLogUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := aclu.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: adchangelog.FieldUserId,
-		})
-	}
-	if value, ok := aclu.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: adchangelog.FieldUserId,
-		})
-	}
-	if aclu.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: adchangelog.FieldUserId,
-		})
 	}
 	if value, ok := aclu.mutation.AdId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -506,28 +472,7 @@ type AdChangeLogUpdateOne struct {
 
 // SetUserId sets the "userId" field.
 func (acluo *AdChangeLogUpdateOne) SetUserId(i int64) *AdChangeLogUpdateOne {
-	acluo.mutation.ResetUserId()
 	acluo.mutation.SetUserId(i)
-	return acluo
-}
-
-// SetNillableUserId sets the "userId" field if the given value is not nil.
-func (acluo *AdChangeLogUpdateOne) SetNillableUserId(i *int64) *AdChangeLogUpdateOne {
-	if i != nil {
-		acluo.SetUserId(*i)
-	}
-	return acluo
-}
-
-// AddUserId adds i to the "userId" field.
-func (acluo *AdChangeLogUpdateOne) AddUserId(i int64) *AdChangeLogUpdateOne {
-	acluo.mutation.AddUserId(i)
-	return acluo
-}
-
-// ClearUserId clears the value of the "userId" field.
-func (acluo *AdChangeLogUpdateOne) ClearUserId() *AdChangeLogUpdateOne {
-	acluo.mutation.ClearUserId()
 	return acluo
 }
 
@@ -693,14 +638,6 @@ func (acluo *AdChangeLogUpdateOne) SetUserID(id int64) *AdChangeLogUpdateOne {
 	return acluo
 }
 
-// SetNillableUserID sets the "user" edge to the SocialUser entity by ID if the given value is not nil.
-func (acluo *AdChangeLogUpdateOne) SetNillableUserID(id *int64) *AdChangeLogUpdateOne {
-	if id != nil {
-		acluo = acluo.SetUserID(*id)
-	}
-	return acluo
-}
-
 // SetUser sets the "user" edge to the SocialUser entity.
 func (acluo *AdChangeLogUpdateOne) SetUser(s *SocialUser) *AdChangeLogUpdateOne {
 	return acluo.SetUserID(s.ID)
@@ -732,12 +669,18 @@ func (acluo *AdChangeLogUpdateOne) Save(ctx context.Context) (*AdChangeLog, erro
 	)
 	acluo.defaults()
 	if len(acluo.hooks) == 0 {
+		if err = acluo.check(); err != nil {
+			return nil, err
+		}
 		node, err = acluo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*AdChangeLogMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = acluo.check(); err != nil {
+				return nil, err
 			}
 			acluo.mutation = mutation
 			node, err = acluo.sqlSave(ctx)
@@ -787,6 +730,14 @@ func (acluo *AdChangeLogUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (acluo *AdChangeLogUpdateOne) check() error {
+	if _, ok := acluo.mutation.UserID(); acluo.mutation.UserCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"user\"")
+	}
+	return nil
+}
+
 func (acluo *AdChangeLogUpdateOne) sqlSave(ctx context.Context) (_node *AdChangeLog, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -821,26 +772,6 @@ func (acluo *AdChangeLogUpdateOne) sqlSave(ctx context.Context) (_node *AdChange
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := acluo.mutation.UserId(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: adchangelog.FieldUserId,
-		})
-	}
-	if value, ok := acluo.mutation.AddedUserId(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: adchangelog.FieldUserId,
-		})
-	}
-	if acluo.mutation.UserIdCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: adchangelog.FieldUserId,
-		})
 	}
 	if value, ok := acluo.mutation.AdId(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

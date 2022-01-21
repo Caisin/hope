@@ -150,6 +150,7 @@ var (
 	// SysDictDataColumns holds the columns for the "sys_dict_data" table.
 	SysDictDataColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
+		{Name: "type_code", Type: field.TypeString},
 		{Name: "dict_sort", Type: field.TypeInt32, Nullable: true},
 		{Name: "dict_label", Type: field.TypeString, Nullable: true},
 		{Name: "dict_value", Type: field.TypeString, Nullable: true},
@@ -162,7 +163,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "sys_dict_type_data_list", Type: field.TypeInt64, Nullable: true},
+		{Name: "type_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SysDictDataTable holds the schema information for the "sys_dict_data" table.
 	SysDictDataTable = &schema.Table{
@@ -172,7 +173,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_dict_data_sys_dict_types_dataList",
-				Columns:    []*schema.Column{SysDictDataColumns[13]},
+				Columns:    []*schema.Column{SysDictDataColumns[14]},
 				RefColumns: []*schema.Column{SysDictTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -182,7 +183,7 @@ var (
 	SysDictTypesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
 		{Name: "dict_name", Type: field.TypeString, Nullable: true},
-		{Name: "dict_type", Type: field.TypeString, Nullable: true},
+		{Name: "type_code", Type: field.TypeString, Unique: true},
 		{Name: "status", Type: field.TypeInt32, Nullable: true},
 		{Name: "remark", Type: field.TypeString, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
@@ -225,7 +226,6 @@ var (
 	// SysJobLogsColumns holds the columns for the "sys_job_logs" table.
 	SysJobLogsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "job_id", Type: field.TypeInt32, Nullable: true},
 		{Name: "job_name", Type: field.TypeString, Nullable: true},
 		{Name: "entry_id", Type: field.TypeInt32, Nullable: true},
 		{Name: "status", Type: field.TypeBool, Nullable: true},
@@ -236,7 +236,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "sys_job_logs", Type: field.TypeInt64, Nullable: true},
+		{Name: "job_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SysJobLogsTable holds the schema information for the "sys_job_logs" table.
 	SysJobLogsTable = &schema.Table{
@@ -246,7 +246,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_job_logs_sys_jobs_logs",
-				Columns:    []*schema.Column{SysJobLogsColumns[12]},
+				Columns:    []*schema.Column{SysJobLogsColumns[11]},
 				RefColumns: []*schema.Column{SysJobsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -269,7 +269,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "sys_user_login_logs", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SysLoginLogsTable holds the schema information for the "sys_login_logs" table.
 	SysLoginLogsTable = &schema.Table{
@@ -327,7 +327,6 @@ var (
 	// SysOperaLogsColumns holds the columns for the "sys_opera_logs" table.
 	SysOperaLogsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "title", Type: field.TypeString, Nullable: true},
 		{Name: "request_id", Type: field.TypeString, Nullable: true},
 		{Name: "business_type", Type: field.TypeString, Nullable: true},
@@ -355,7 +354,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "sys_user_opera_logs", Type: field.TypeInt64, Nullable: true},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SysOperaLogsTable holds the schema information for the "sys_opera_logs" table.
 	SysOperaLogsTable = &schema.Table{
@@ -365,7 +364,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_opera_logs_sys_users_operaLogs",
-				Columns:    []*schema.Column{SysOperaLogsColumns[29]},
+				Columns:    []*schema.Column{SysOperaLogsColumns[28]},
 				RefColumns: []*schema.Column{SysUsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -463,7 +462,7 @@ var (
 		{Name: "username", Type: field.TypeString, Nullable: true},
 		{Name: "nick_name", Type: field.TypeString, Nullable: true},
 		{Name: "phone", Type: field.TypeString, Nullable: true},
-		{Name: "role_id", Type: field.TypeInt32, Nullable: true},
+		{Name: "role_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "avatar", Type: field.TypeString, Nullable: true},
 		{Name: "sex", Type: field.TypeInt32, Nullable: true},
 		{Name: "email", Type: field.TypeString, Nullable: true},
@@ -475,8 +474,8 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "sys_dept_users", Type: field.TypeInt64, Nullable: true},
-		{Name: "sys_post_users", Type: field.TypeInt64, Nullable: true},
+		{Name: "dept_id", Type: field.TypeInt64, Nullable: true},
+		{Name: "post_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SysUsersTable holds the schema information for the "sys_users" table.
 	SysUsersTable = &schema.Table{
@@ -523,6 +522,31 @@ var (
 			},
 		},
 	}
+	// SysRoleUsersColumns holds the columns for the "sys_role_users" table.
+	SysRoleUsersColumns = []*schema.Column{
+		{Name: "sys_role_id", Type: field.TypeInt},
+		{Name: "sys_user_id", Type: field.TypeInt},
+	}
+	// SysRoleUsersTable holds the schema information for the "sys_role_users" table.
+	SysRoleUsersTable = &schema.Table{
+		Name:       "sys_role_users",
+		Columns:    SysRoleUsersColumns,
+		PrimaryKey: []*schema.Column{SysRoleUsersColumns[0], SysRoleUsersColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "sys_role_users_sys_role_id",
+				Columns:    []*schema.Column{SysRoleUsersColumns[0]},
+				RefColumns: []*schema.Column{SysRolesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "sys_role_users_sys_user_id",
+				Columns:    []*schema.Column{SysRoleUsersColumns[1]},
+				RefColumns: []*schema.Column{SysUsersColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		CasbinRulesTable,
@@ -542,6 +566,7 @@ var (
 		SysTablesTable,
 		SysUsersTable,
 		SysRoleMenusTable,
+		SysRoleUsersTable,
 	}
 )
 
@@ -556,4 +581,6 @@ func init() {
 	SysUsersTable.ForeignKeys[1].RefTable = SysPostsTable
 	SysRoleMenusTable.ForeignKeys[0].RefTable = SysRolesTable
 	SysRoleMenusTable.ForeignKeys[1].RefTable = SysMenusTable
+	SysRoleUsersTable.ForeignKeys[0].RefTable = SysRolesTable
+	SysRoleUsersTable.ForeignKeys[1].RefTable = SysUsersTable
 }

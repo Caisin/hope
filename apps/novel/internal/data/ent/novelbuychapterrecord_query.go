@@ -27,7 +27,6 @@ type NovelBuyChapterRecordQuery struct {
 	predicates []predicate.NovelBuyChapterRecord
 	// eager-loading edges.
 	withUser *SocialUserQuery
-	withFKs  bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -349,18 +348,11 @@ func (nbcrq *NovelBuyChapterRecordQuery) prepareQuery(ctx context.Context) error
 func (nbcrq *NovelBuyChapterRecordQuery) sqlAll(ctx context.Context) ([]*NovelBuyChapterRecord, error) {
 	var (
 		nodes       = []*NovelBuyChapterRecord{}
-		withFKs     = nbcrq.withFKs
 		_spec       = nbcrq.querySpec()
 		loadedTypes = [1]bool{
 			nbcrq.withUser != nil,
 		}
 	)
-	if nbcrq.withUser != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, novelbuychapterrecord.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &NovelBuyChapterRecord{config: nbcrq.config}
 		nodes = append(nodes, node)
@@ -385,10 +377,7 @@ func (nbcrq *NovelBuyChapterRecordQuery) sqlAll(ctx context.Context) ([]*NovelBu
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*NovelBuyChapterRecord)
 		for i := range nodes {
-			if nodes[i].social_user_buy_chapter_records == nil {
-				continue
-			}
-			fk := *nodes[i].social_user_buy_chapter_records
+			fk := nodes[i].UserId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -402,7 +391,7 @@ func (nbcrq *NovelBuyChapterRecordQuery) sqlAll(ctx context.Context) ([]*NovelBu
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "social_user_buy_chapter_records" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.User = n

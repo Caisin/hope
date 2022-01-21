@@ -11,6 +11,10 @@ const (
 	Label = "sys_dict_data"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldTypeId holds the string denoting the typeid field in the database.
+	FieldTypeId = "type_id"
+	// FieldTypeCode holds the string denoting the typecode field in the database.
+	FieldTypeCode = "type_code"
 	// FieldDictSort holds the string denoting the dictsort field in the database.
 	FieldDictSort = "dict_sort"
 	// FieldDictLabel holds the string denoting the dictlabel field in the database.
@@ -45,12 +49,14 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "sysdicttype" package.
 	DictTypeInverseTable = "sys_dict_types"
 	// DictTypeColumn is the table column denoting the dictType relation/edge.
-	DictTypeColumn = "sys_dict_type_data_list"
+	DictTypeColumn = "type_id"
 )
 
 // Columns holds all SQL columns for sysdictdata fields.
 var Columns = []string{
 	FieldID,
+	FieldTypeId,
+	FieldTypeCode,
 	FieldDictSort,
 	FieldDictLabel,
 	FieldDictValue,
@@ -65,21 +71,10 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "sys_dict_data"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"sys_dict_type_data_list",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novelbuyrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/apps/novel/internal/data/ent/socialuser"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
@@ -24,7 +25,8 @@ type NovelBuyRecordQuery struct {
 	order      []OrderFunc
 	fields     []string
 	predicates []predicate.NovelBuyRecord
-	withFKs    bool
+	// eager-loading edges.
+	withUser *SocialUserQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -59,6 +61,28 @@ func (nbrq *NovelBuyRecordQuery) Unique(unique bool) *NovelBuyRecordQuery {
 func (nbrq *NovelBuyRecordQuery) Order(o ...OrderFunc) *NovelBuyRecordQuery {
 	nbrq.order = append(nbrq.order, o...)
 	return nbrq
+}
+
+// QueryUser chains the current query on the "user" edge.
+func (nbrq *NovelBuyRecordQuery) QueryUser() *SocialUserQuery {
+	query := &SocialUserQuery{config: nbrq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := nbrq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := nbrq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(novelbuyrecord.Table, novelbuyrecord.FieldID, selector),
+			sqlgraph.To(socialuser.Table, socialuser.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, novelbuyrecord.UserTable, novelbuyrecord.UserColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(nbrq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first NovelBuyRecord entity from the query.
@@ -242,10 +266,22 @@ func (nbrq *NovelBuyRecordQuery) Clone() *NovelBuyRecordQuery {
 		offset:     nbrq.offset,
 		order:      append([]OrderFunc{}, nbrq.order...),
 		predicates: append([]predicate.NovelBuyRecord{}, nbrq.predicates...),
+		withUser:   nbrq.withUser.Clone(),
 		// clone intermediate query.
 		sql:  nbrq.sql.Clone(),
 		path: nbrq.path,
 	}
+}
+
+// WithUser tells the query-builder to eager-load the nodes that are connected to
+// the "user" edge. The optional arguments are used to configure the query builder of the edge.
+func (nbrq *NovelBuyRecordQuery) WithUser(opts ...func(*SocialUserQuery)) *NovelBuyRecordQuery {
+	query := &SocialUserQuery{config: nbrq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	nbrq.withUser = query
+	return nbrq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -311,13 +347,12 @@ func (nbrq *NovelBuyRecordQuery) prepareQuery(ctx context.Context) error {
 
 func (nbrq *NovelBuyRecordQuery) sqlAll(ctx context.Context) ([]*NovelBuyRecord, error) {
 	var (
-		nodes   = []*NovelBuyRecord{}
-		withFKs = nbrq.withFKs
-		_spec   = nbrq.querySpec()
+		nodes       = []*NovelBuyRecord{}
+		_spec       = nbrq.querySpec()
+		loadedTypes = [1]bool{
+			nbrq.withUser != nil,
+		}
 	)
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, novelbuyrecord.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &NovelBuyRecord{config: nbrq.config}
 		nodes = append(nodes, node)
@@ -328,6 +363,7 @@ func (nbrq *NovelBuyRecordQuery) sqlAll(ctx context.Context) ([]*NovelBuyRecord,
 			return fmt.Errorf("ent: Assign called without calling ScanValues")
 		}
 		node := nodes[len(nodes)-1]
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	if err := sqlgraph.QueryNodes(ctx, nbrq.driver, _spec); err != nil {
@@ -336,6 +372,33 @@ func (nbrq *NovelBuyRecordQuery) sqlAll(ctx context.Context) ([]*NovelBuyRecord,
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+
+	if query := nbrq.withUser; query != nil {
+		ids := make([]int64, 0, len(nodes))
+		nodeids := make(map[int64][]*NovelBuyRecord)
+		for i := range nodes {
+			fk := nodes[i].UserId
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(socialuser.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "userId" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.User = n
+			}
+		}
+	}
+
 	return nodes, nil
 }
 

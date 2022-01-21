@@ -515,10 +515,7 @@ func (ncq *NovelChapterQuery) sqlAll(ctx context.Context) ([]*NovelChapter, erro
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*NovelChapter)
 		for i := range nodes {
-			if nodes[i].novel_chapters == nil {
-				continue
-			}
-			fk := *nodes[i].novel_chapters
+			fk := nodes[i].NovelId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -532,7 +529,7 @@ func (ncq *NovelChapterQuery) sqlAll(ctx context.Context) ([]*NovelChapter, erro
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "novel_chapters" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "novelId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Novel = n

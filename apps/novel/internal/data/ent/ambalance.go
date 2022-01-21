@@ -17,6 +17,9 @@ type AmBalance struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
+	// UserId holds the value of the "userId" field.
+	// 用户ID
+	UserId int64 `json:"userId,omitempty"`
 	// OrderId holds the value of the "orderId" field.
 	// 订单号
 	OrderId string `json:"orderId,omitempty"`
@@ -61,8 +64,7 @@ type AmBalance struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the AmBalanceQuery when eager-loading is set.
-	Edges                AmBalanceEdges `json:"edges"`
-	social_user_balances *int64
+	Edges AmBalanceEdges `json:"edges"`
 }
 
 // AmBalanceEdges holds the relations/edges for other nodes in the graph.
@@ -93,14 +95,12 @@ func (*AmBalance) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case ambalance.FieldID, ambalance.FieldEventId, ambalance.FieldCashTag, ambalance.FieldAssetItemId, ambalance.FieldAmount, ambalance.FieldBalance, ambalance.FieldCreateBy, ambalance.FieldUpdateBy, ambalance.FieldTenantId:
+		case ambalance.FieldID, ambalance.FieldUserId, ambalance.FieldEventId, ambalance.FieldCashTag, ambalance.FieldAssetItemId, ambalance.FieldAmount, ambalance.FieldBalance, ambalance.FieldCreateBy, ambalance.FieldUpdateBy, ambalance.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case ambalance.FieldOrderId, ambalance.FieldRemark:
 			values[i] = new(sql.NullString)
 		case ambalance.FieldEffectTime, ambalance.FieldExpiredTime, ambalance.FieldCreatedAt, ambalance.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case ambalance.ForeignKeys[0]: // social_user_balances
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type AmBalance", columns[i])
 		}
@@ -122,6 +122,12 @@ func (ab *AmBalance) assignValues(columns []string, values []interface{}) error 
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			ab.ID = int64(value.Int64)
+		case ambalance.FieldUserId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field userId", values[i])
+			} else if value.Valid {
+				ab.UserId = value.Int64
+			}
 		case ambalance.FieldOrderId:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field orderId", values[i])
@@ -206,13 +212,6 @@ func (ab *AmBalance) assignValues(columns []string, values []interface{}) error 
 			} else if value.Valid {
 				ab.TenantId = value.Int64
 			}
-		case ambalance.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field social_user_balances", value)
-			} else if value.Valid {
-				ab.social_user_balances = new(int64)
-				*ab.social_user_balances = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -246,6 +245,8 @@ func (ab *AmBalance) String() string {
 	var builder strings.Builder
 	builder.WriteString("AmBalance(")
 	builder.WriteString(fmt.Sprintf("id=%v", ab.ID))
+	builder.WriteString(", userId=")
+	builder.WriteString(fmt.Sprintf("%v", ab.UserId))
 	builder.WriteString(", orderId=")
 	builder.WriteString(ab.OrderId)
 	builder.WriteString(", eventId=")

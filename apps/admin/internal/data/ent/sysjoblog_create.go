@@ -22,13 +22,13 @@ type SysJobLogCreate struct {
 }
 
 // SetJobId sets the "jobId" field.
-func (sjlc *SysJobLogCreate) SetJobId(i int32) *SysJobLogCreate {
+func (sjlc *SysJobLogCreate) SetJobId(i int64) *SysJobLogCreate {
 	sjlc.mutation.SetJobId(i)
 	return sjlc
 }
 
 // SetNillableJobId sets the "jobId" field if the given value is not nil.
-func (sjlc *SysJobLogCreate) SetNillableJobId(i *int32) *SysJobLogCreate {
+func (sjlc *SysJobLogCreate) SetNillableJobId(i *int64) *SysJobLogCreate {
 	if i != nil {
 		sjlc.SetJobId(*i)
 	}
@@ -331,14 +331,6 @@ func (sjlc *SysJobLogCreate) createSpec() (*SysJobLog, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := sjlc.mutation.JobId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysjoblog.FieldJobId,
-		})
-		_node.JobId = value
-	}
 	if value, ok := sjlc.mutation.JobName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -436,7 +428,7 @@ func (sjlc *SysJobLogCreate) createSpec() (*SysJobLog, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.sys_job_logs = &nodes[0]
+		_node.JobId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

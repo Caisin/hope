@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelchapter"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,21 +31,21 @@ func NewNovelChapterRepo(data *Data, logger log.Logger) biz.NovelChapterRepo {
 func (r *novelChapterRepo) CreateNovelChapter(ctx context.Context, req *v1.NovelChapterCreateReq) (*ent.NovelChapter, error) {
 	now := time.Now()
 	return r.data.db.NovelChapter.Create().
-    SetNovelId(req.NovelId).
-    SetOrderNum(req.OrderNum).
-    SetChapterName(req.ChapterName).
-    SetContent(req.Content).
-    SetMediaKey(req.MediaKey).
-    SetDuration(req.Duration).
-    SetPublishTime(req.PublishTime.AsTime()).
-    SetStatus(req.Status).
-    SetIsFree(req.IsFree).
-    SetPrice(req.Price).
-    SetWordNum(req.WordNum).
-    SetRemark(req.Remark).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetNovelId(req.NovelId).
+		SetOrderNum(req.OrderNum).
+		SetChapterName(req.ChapterName).
+		SetContent(req.Content).
+		SetMediaKey(req.MediaKey).
+		SetDuration(req.Duration).
+		SetPublishTime(req.PublishTime.AsTime()).
+		SetStatus(req.Status).
+		SetIsFree(req.IsFree).
+		SetPrice(req.Price).
+		SetWordNum(req.WordNum).
+		SetRemark(req.Remark).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -72,7 +73,7 @@ func (r *novelChapterRepo) GetNovelChapter(ctx context.Context, req *v1.NovelCha
 func (r *novelChapterRepo) PageNovelChapter(ctx context.Context, req *v1.NovelChapterPageReq) ([]*ent.NovelChapter, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.NovelChapter.
 		Query().
@@ -88,7 +89,7 @@ func (r *novelChapterRepo) PageNovelChapter(ctx context.Context, req *v1.NovelCh
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -157,6 +158,6 @@ func (r *novelChapterRepo) genCondition(req *v1.NovelChapterReq) []predicate.Nov
 	if req.TenantId > 0 {
 		list = append(list, novelchapter.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

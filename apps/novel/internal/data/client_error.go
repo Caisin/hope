@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/clienterror"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,14 +31,14 @@ func NewClientErrorRepo(data *Data, logger log.Logger) biz.ClientErrorRepo {
 func (r *clientErrorRepo) CreateClientError(ctx context.Context, req *v1.ClientErrorCreateReq) (*ent.ClientError, error) {
 	now := time.Now()
 	return r.data.db.ClientError.Create().
-    SetAppVersion(req.AppVersion).
-    SetDeviceName(req.DeviceName).
-    SetOsName(req.OsName).
-    SetErrorInfo(req.ErrorInfo).
-    SetUserId(req.UserId).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetAppVersion(req.AppVersion).
+		SetDeviceName(req.DeviceName).
+		SetOsName(req.OsName).
+		SetErrorInfo(req.ErrorInfo).
+		SetUserId(req.UserId).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -65,7 +66,7 @@ func (r *clientErrorRepo) GetClientError(ctx context.Context, req *v1.ClientErro
 func (r *clientErrorRepo) PageClientError(ctx context.Context, req *v1.ClientErrorPageReq) ([]*ent.ClientError, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.ClientError.
 		Query().
@@ -81,7 +82,7 @@ func (r *clientErrorRepo) PageClientError(ctx context.Context, req *v1.ClientErr
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -132,6 +133,6 @@ func (r *clientErrorRepo) genCondition(req *v1.ClientErrorReq) []predicate.Clien
 	if req.TenantId > 0 {
 		list = append(list, clienterror.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

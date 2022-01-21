@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novel"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,36 +31,36 @@ func NewNovelRepo(data *Data, logger log.Logger) biz.NovelRepo {
 func (r *novelRepo) CreateNovel(ctx context.Context, req *v1.NovelCreateReq) (*ent.Novel, error) {
 	now := time.Now()
 	return r.data.db.Novel.Create().
-    SetClassifyId(req.ClassifyId).
-    SetClassifyName(req.ClassifyName).
-    SetAuthorId(req.AuthorId).
-    SetTitle(req.Title).
-    SetSummary(req.Summary).
-    SetAuthor(req.Author).
-    SetAnchor(req.Anchor).
-    SetHits(req.Hits).
-    SetKeywords(req.Keywords).
-    SetSource(req.Source).
-    SetScore(req.Score).
-    SetCover(req.Cover).
-    SetTagIds(req.TagIds).
-    SetWordNum(req.WordNum).
-    SetFreeNum(req.FreeNum).
-    SetOnlineState(req.OnlineState).
-    SetPrice(req.Price).
-    SetPublish(req.Publish).
-    SetOriginalPrice(req.OriginalPrice).
-    SetChapterPrice(req.ChapterPrice).
-    SetChapterCount(req.ChapterCount).
-    SetSignType(req.SignType).
-    SetSignDate(req.SignDate.AsTime()).
-    SetLeadingMan(req.LeadingMan).
-    SetLeadingLady(req.LeadingLady).
-    SetRemark(req.Remark).
-    SetMediaKey(req.MediaKey).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetClassifyId(req.ClassifyId).
+		SetClassifyName(req.ClassifyName).
+		SetAuthorId(req.AuthorId).
+		SetTitle(req.Title).
+		SetSummary(req.Summary).
+		SetAuthor(req.Author).
+		SetAnchor(req.Anchor).
+		SetHits(req.Hits).
+		SetKeywords(req.Keywords).
+		SetSource(req.Source).
+		SetScore(req.Score).
+		SetCover(req.Cover).
+		SetTagIds(req.TagIds).
+		SetWordNum(req.WordNum).
+		SetFreeNum(req.FreeNum).
+		SetOnlineState(req.OnlineState).
+		SetPrice(req.Price).
+		SetPublish(req.Publish).
+		SetOriginalPrice(req.OriginalPrice).
+		SetChapterPrice(req.ChapterPrice).
+		SetChapterCount(req.ChapterCount).
+		SetSignType(req.SignType).
+		SetSignDate(req.SignDate.AsTime()).
+		SetLeadingMan(req.LeadingMan).
+		SetLeadingLady(req.LeadingLady).
+		SetRemark(req.Remark).
+		SetMediaKey(req.MediaKey).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -87,7 +88,7 @@ func (r *novelRepo) GetNovel(ctx context.Context, req *v1.NovelReq) (*ent.Novel,
 func (r *novelRepo) PageNovel(ctx context.Context, req *v1.NovelPageReq) ([]*ent.Novel, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.Novel.
 		Query().
@@ -103,7 +104,7 @@ func (r *novelRepo) PageNovel(ctx context.Context, req *v1.NovelPageReq) ([]*ent
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -220,6 +221,6 @@ func (r *novelRepo) genCondition(req *v1.NovelReq) []predicate.Novel {
 	if req.TenantId > 0 {
 		list = append(list, novel.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

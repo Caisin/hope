@@ -87,7 +87,7 @@ func (r *sysRoleRepo) PageSysRole(ctx context.Context, req *v1.SysRolePageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {

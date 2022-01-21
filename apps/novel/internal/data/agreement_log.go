@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/agreementlog"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,24 +31,24 @@ func NewAgreementLogRepo(data *Data, logger log.Logger) biz.AgreementLogRepo {
 func (r *agreementLogRepo) CreateAgreementLog(ctx context.Context, req *v1.AgreementLogCreateReq) (*ent.AgreementLog, error) {
 	now := time.Now()
 	return r.data.db.AgreementLog.Create().
-    SetOuterAgreementNo(req.OuterAgreementNo).
-    SetOrderId(req.OrderId).
-    SetUserId(req.UserId).
-    SetChId(req.ChId).
-    SetUserName(req.UserName).
-    SetPaymentName(req.PaymentName).
-    SetPaymentId(req.PaymentId).
-    SetState(req.State).
-    SetPayment(req.Payment).
-    SetAgreementType(agreementlog.AgreementType(req.AgreementType)).
-    SetVipType(req.VipType).
-    SetTimes(req.Times).
-    SetCycleDays(req.CycleDays).
-    SetNextExecTime(req.NextExecTime.AsTime()).
-    SetRemark(req.Remark).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetOuterAgreementNo(req.OuterAgreementNo).
+		SetOrderId(req.OrderId).
+		SetUserId(req.UserId).
+		SetChId(req.ChId).
+		SetUserName(req.UserName).
+		SetPaymentName(req.PaymentName).
+		SetPaymentId(req.PaymentId).
+		SetState(req.State).
+		SetPayment(req.Payment).
+		SetAgreementType(agreementlog.AgreementType(req.AgreementType)).
+		SetVipType(req.VipType).
+		SetTimes(req.Times).
+		SetCycleDays(req.CycleDays).
+		SetNextExecTime(req.NextExecTime.AsTime()).
+		SetRemark(req.Remark).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -75,7 +76,7 @@ func (r *agreementLogRepo) GetAgreementLog(ctx context.Context, req *v1.Agreemen
 func (r *agreementLogRepo) PageAgreementLog(ctx context.Context, req *v1.AgreementLogPageReq) ([]*ent.AgreementLog, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.AgreementLog.
 		Query().
@@ -91,7 +92,7 @@ func (r *agreementLogRepo) PageAgreementLog(ctx context.Context, req *v1.Agreeme
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -140,10 +141,10 @@ func (r *agreementLogRepo) genCondition(req *v1.AgreementLogReq) []predicate.Agr
 		list = append(list, agreementlog.Payment(req.Payment))
 	}
 	agreementType := agreementlog.AgreementType(req.AgreementType)
-	if agreementlog.AgreementTypeValidator(agreementType)==nil {
+	if agreementlog.AgreementTypeValidator(agreementType) == nil {
 		list = append(list, agreementlog.AgreementTypeEQ(agreementType))
 	}
-if req.VipType > 0 {
+	if req.VipType > 0 {
 		list = append(list, agreementlog.VipType(req.VipType))
 	}
 	if req.Times > 0 {
@@ -173,6 +174,6 @@ if req.VipType > 0 {
 	if req.TenantId > 0 {
 		list = append(list, agreementlog.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

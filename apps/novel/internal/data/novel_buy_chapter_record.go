@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelbuychapterrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,21 +31,21 @@ func NewNovelBuyChapterRecordRepo(data *Data, logger log.Logger) biz.NovelBuyCha
 func (r *novelBuyChapterRecordRepo) CreateNovelBuyChapterRecord(ctx context.Context, req *v1.NovelBuyChapterRecordCreateReq) (*ent.NovelBuyChapterRecord, error) {
 	now := time.Now()
 	return r.data.db.NovelBuyChapterRecord.Create().
-    SetUserId(req.UserId).
-    SetUserName(req.UserName).
-    SetChapterId(req.ChapterId).
-    SetChapterOrderNum(req.ChapterOrderNum).
-    SetNovelId(req.NovelId).
-    SetNovelName(req.NovelName).
-    SetChapterName(req.ChapterName).
-    SetIsSvip(req.IsSvip).
-    SetCoin(req.Coin).
-    SetCoupon(req.Coupon).
-    SetDiscount(req.Discount).
-    SetRemark(req.Remark).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetUserId(req.UserId).
+		SetUserName(req.UserName).
+		SetChapterId(req.ChapterId).
+		SetChapterOrderNum(req.ChapterOrderNum).
+		SetNovelId(req.NovelId).
+		SetNovelName(req.NovelName).
+		SetChapterName(req.ChapterName).
+		SetIsSvip(req.IsSvip).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetDiscount(req.Discount).
+		SetRemark(req.Remark).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -72,7 +73,7 @@ func (r *novelBuyChapterRecordRepo) GetNovelBuyChapterRecord(ctx context.Context
 func (r *novelBuyChapterRecordRepo) PageNovelBuyChapterRecord(ctx context.Context, req *v1.NovelBuyChapterRecordPageReq) ([]*ent.NovelBuyChapterRecord, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.NovelBuyChapterRecord.
 		Query().
@@ -88,7 +89,7 @@ func (r *novelBuyChapterRecordRepo) PageNovelBuyChapterRecord(ctx context.Contex
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -157,6 +158,6 @@ func (r *novelBuyChapterRecordRepo) genCondition(req *v1.NovelBuyChapterRecordRe
 	if req.TenantId > 0 {
 		list = append(list, novelbuychapterrecord.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

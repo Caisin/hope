@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -6,10 +7,10 @@ import (
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
-	"hope/apps/novel/internal/data/ent/tasklog"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
+	"hope/apps/novel/internal/data/ent/tasklog"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,27 +31,27 @@ func NewTaskLogRepo(data *Data, logger log.Logger) biz.TaskLogRepo {
 func (r *taskLogRepo) CreateTaskLog(ctx context.Context, req *v1.TaskLogCreateReq) (*ent.TaskLog, error) {
 	now := time.Now()
 	return r.data.db.TaskLog.Create().
-    SetUserId(req.UserId).
-    SetTaskGroup(req.TaskGroup).
-    SetTaskCode(req.TaskCode).
-    SetTaskId(req.TaskId).
-    SetTaskName(req.TaskName).
-    SetAmount(req.Amount).
-    SetReward(req.Reward).
-    SetAmountItem(req.AmountItem).
-    SetRewardItem(req.RewardItem).
-    SetTargetAmount(req.TargetAmount).
-    SetDoneAmount(req.DoneAmount).
-    SetState(req.State).
-    SetDoneAt(req.DoneAt.AsTime()).
-    SetObtainAt(req.ObtainAt.AsTime()).
-    SetDoneTimes(req.DoneTimes).
-    SetAllTimes(req.AllTimes).
-    SetEffectTime(req.EffectTime.AsTime()).
-    SetExpiredTime(req.ExpiredTime.AsTime()).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetUserId(req.UserId).
+		SetTaskGroup(req.TaskGroup).
+		SetTaskCode(req.TaskCode).
+		SetTaskId(req.TaskId).
+		SetTaskName(req.TaskName).
+		SetAmount(req.Amount).
+		SetReward(req.Reward).
+		SetAmountItem(req.AmountItem).
+		SetRewardItem(req.RewardItem).
+		SetTargetAmount(req.TargetAmount).
+		SetDoneAmount(req.DoneAmount).
+		SetState(req.State).
+		SetDoneAt(req.DoneAt.AsTime()).
+		SetObtainAt(req.ObtainAt.AsTime()).
+		SetDoneTimes(req.DoneTimes).
+		SetAllTimes(req.AllTimes).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -78,7 +79,7 @@ func (r *taskLogRepo) GetTaskLog(ctx context.Context, req *v1.TaskLogReq) (*ent.
 func (r *taskLogRepo) PageTaskLog(ctx context.Context, req *v1.TaskLogPageReq) ([]*ent.TaskLog, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.TaskLog.
 		Query().
@@ -94,7 +95,7 @@ func (r *taskLogRepo) PageTaskLog(ctx context.Context, req *v1.TaskLogPageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -184,6 +185,6 @@ func (r *taskLogRepo) genCondition(req *v1.TaskLogReq) []predicate.TaskLog {
 	if req.TenantId > 0 {
 		list = append(list, tasklog.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

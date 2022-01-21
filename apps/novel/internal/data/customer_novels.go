@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/customernovels"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,19 +31,19 @@ func NewCustomerNovelsRepo(data *Data, logger log.Logger) biz.CustomerNovelsRepo
 func (r *customerNovelsRepo) CreateCustomerNovels(ctx context.Context, req *v1.CustomerNovelsCreateReq) (*ent.CustomerNovels, error) {
 	now := time.Now()
 	return r.data.db.CustomerNovels.Create().
-    SetNovelId(req.NovelId).
-    SetTypeId(req.TypeId).
-    SetTypeCode(req.TypeCode).
-    SetGroupCode(req.GroupCode).
-    SetFieldName(req.FieldName).
-    SetCover(req.Cover).
-    SetOrderNum(req.OrderNum).
-    SetRemark(req.Remark).
-    SetEffectTime(req.EffectTime.AsTime()).
-    SetExpiredTime(req.ExpiredTime.AsTime()).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetNovelId(req.NovelId).
+		SetTypeId(req.TypeId).
+		SetTypeCode(req.TypeCode).
+		SetGroupCode(req.GroupCode).
+		SetFieldName(req.FieldName).
+		SetCover(req.Cover).
+		SetOrderNum(req.OrderNum).
+		SetRemark(req.Remark).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -70,7 +71,7 @@ func (r *customerNovelsRepo) GetCustomerNovels(ctx context.Context, req *v1.Cust
 func (r *customerNovelsRepo) PageCustomerNovels(ctx context.Context, req *v1.CustomerNovelsPageReq) ([]*ent.CustomerNovels, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.CustomerNovels.
 		Query().
@@ -86,7 +87,7 @@ func (r *customerNovelsRepo) PageCustomerNovels(ctx context.Context, req *v1.Cus
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -152,6 +153,6 @@ func (r *customerNovelsRepo) genCondition(req *v1.CustomerNovelsReq) []predicate
 	if req.TenantId > 0 {
 		list = append(list, customernovels.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

@@ -63,7 +63,10 @@ func (r *userMsgRepo) GetUserMsg(ctx context.Context, req *v1.UserMsgReq) (*ent.
 func (r *userMsgRepo) PageUserMsg(ctx context.Context, req *v1.UserMsgPageReq) ([]*ent.UserMsg, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.UserMsg.
 		Query().
@@ -79,7 +82,7 @@ func (r *userMsgRepo) PageUserMsg(ctx context.Context, req *v1.UserMsgPageReq) (
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {

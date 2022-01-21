@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -6,10 +7,10 @@ import (
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
-	"hope/apps/novel/internal/data/ent/userevent"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
+	"hope/apps/novel/internal/data/ent/userevent"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,17 +31,17 @@ func NewUserEventRepo(data *Data, logger log.Logger) biz.UserEventRepo {
 func (r *userEventRepo) CreateUserEvent(ctx context.Context, req *v1.UserEventCreateReq) (*ent.UserEvent, error) {
 	now := time.Now()
 	return r.data.db.UserEvent.Create().
-    SetUserId(req.UserId).
-    SetEventType(req.EventType).
-    SetNovelId(req.NovelId).
-    SetChapterId(req.ChapterId).
-    SetCoin(req.Coin).
-    SetCoupon(req.Coupon).
-    SetMoney(req.Money).
-    SetKeyword(req.Keyword).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetUserId(req.UserId).
+		SetEventType(req.EventType).
+		SetNovelId(req.NovelId).
+		SetChapterId(req.ChapterId).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetMoney(req.Money).
+		SetKeyword(req.Keyword).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -68,7 +69,7 @@ func (r *userEventRepo) GetUserEvent(ctx context.Context, req *v1.UserEventReq) 
 func (r *userEventRepo) PageUserEvent(ctx context.Context, req *v1.UserEventPageReq) ([]*ent.UserEvent, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.UserEvent.
 		Query().
@@ -84,7 +85,7 @@ func (r *userEventRepo) PageUserEvent(ctx context.Context, req *v1.UserEventPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -144,6 +145,6 @@ func (r *userEventRepo) genCondition(req *v1.UserEventReq) []predicate.UserEvent
 	if req.TenantId > 0 {
 		list = append(list, userevent.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

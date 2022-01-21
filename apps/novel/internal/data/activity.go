@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activity"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,19 +31,19 @@ func NewActivityRepo(data *Data, logger log.Logger) biz.ActivityRepo {
 func (r *activityRepo) CreateActivity(ctx context.Context, req *v1.ActivityCreateReq) (*ent.Activity, error) {
 	now := time.Now()
 	return r.data.db.Activity.Create().
-    SetActivityCode(req.ActivityCode).
-    SetActivityName(req.ActivityName).
-    SetSummary(req.Summary).
-    SetRuleImgSc(req.RuleImgSc).
-    SetRuleImgTc(req.RuleImgTc).
-    SetPopupImg(req.PopupImg).
-    SetRegDays(req.RegDays).
-    SetCycleType(req.CycleType).
-    SetEffectTime(req.EffectTime.AsTime()).
-    SetExpiredTime(req.ExpiredTime.AsTime()).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetActivityCode(req.ActivityCode).
+		SetActivityName(req.ActivityName).
+		SetSummary(req.Summary).
+		SetRuleImgSc(req.RuleImgSc).
+		SetRuleImgTc(req.RuleImgTc).
+		SetPopupImg(req.PopupImg).
+		SetRegDays(req.RegDays).
+		SetCycleType(req.CycleType).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -70,7 +71,7 @@ func (r *activityRepo) GetActivity(ctx context.Context, req *v1.ActivityReq) (*e
 func (r *activityRepo) PageActivity(ctx context.Context, req *v1.ActivityPageReq) ([]*ent.Activity, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.Activity.
 		Query().
@@ -86,7 +87,7 @@ func (r *activityRepo) PageActivity(ctx context.Context, req *v1.ActivityPageReq
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -152,6 +153,6 @@ func (r *activityRepo) genCondition(req *v1.ActivityReq) []predicate.Activity {
 	if req.TenantId > 0 {
 		list = append(list, activity.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

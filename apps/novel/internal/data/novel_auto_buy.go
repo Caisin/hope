@@ -62,7 +62,10 @@ func (r *novelAutoBuyRepo) GetNovelAutoBuy(ctx context.Context, req *v1.NovelAut
 func (r *novelAutoBuyRepo) PageNovelAutoBuy(ctx context.Context, req *v1.NovelAutoBuyPageReq) ([]*ent.NovelAutoBuy, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.NovelAutoBuy.
 		Query().
@@ -78,7 +81,7 @@ func (r *novelAutoBuyRepo) PageNovelAutoBuy(ctx context.Context, req *v1.NovelAu
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {

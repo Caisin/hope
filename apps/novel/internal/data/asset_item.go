@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetitem"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,15 +31,15 @@ func NewAssetItemRepo(data *Data, logger log.Logger) biz.AssetItemRepo {
 func (r *assetItemRepo) CreateAssetItem(ctx context.Context, req *v1.AssetItemCreateReq) (*ent.AssetItem, error) {
 	now := time.Now()
 	return r.data.db.AssetItem.Create().
-    SetAssetItemId(req.AssetItemId).
-    SetAssetName(req.AssetName).
-    SetCashTag(req.CashTag).
-    SetValidDays(req.ValidDays).
-    SetEffectTime(req.EffectTime.AsTime()).
-    SetExpiredTime(req.ExpiredTime.AsTime()).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetAssetItemId(req.AssetItemId).
+		SetAssetName(req.AssetName).
+		SetCashTag(req.CashTag).
+		SetValidDays(req.ValidDays).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -66,7 +67,7 @@ func (r *assetItemRepo) GetAssetItem(ctx context.Context, req *v1.AssetItemReq) 
 func (r *assetItemRepo) PageAssetItem(ctx context.Context, req *v1.AssetItemPageReq) ([]*ent.AssetItem, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.AssetItem.
 		Query().
@@ -82,7 +83,7 @@ func (r *assetItemRepo) PageAssetItem(ctx context.Context, req *v1.AssetItemPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -136,6 +137,6 @@ func (r *assetItemRepo) genCondition(req *v1.AssetItemReq) []predicate.AssetItem
 	if req.TenantId > 0 {
 		list = append(list, assetitem.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

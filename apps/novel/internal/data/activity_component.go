@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activitycomponent"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,24 +31,24 @@ func NewActivityComponentRepo(data *Data, logger log.Logger) biz.ActivityCompone
 func (r *activityComponentRepo) CreateActivityComponent(ctx context.Context, req *v1.ActivityComponentCreateReq) (*ent.ActivityComponent, error) {
 	now := time.Now()
 	return r.data.db.ActivityComponent.Create().
-    SetActivityCode(req.ActivityCode).
-    SetComponentType(req.ComponentType).
-    SetPolicy(req.Policy).
-    SetVipDays(req.VipDays).
-    SetMinConsume(req.MinConsume).
-    SetMaxConsume(req.MaxConsume).
-    SetMinPayNum(req.MinPayNum).
-    SetPayTimes(req.PayTimes).
-    SetPayAmount(req.PayAmount).
-    SetRegDays(req.RegDays).
-    SetSummary(req.Summary).
-    SetAssetItemId(req.AssetItemId).
-    SetAmount(req.Amount).
-    SetResId(req.ResId).
-    SetResDays(req.ResDays).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetActivityCode(req.ActivityCode).
+		SetComponentType(req.ComponentType).
+		SetPolicy(req.Policy).
+		SetVipDays(req.VipDays).
+		SetMinConsume(req.MinConsume).
+		SetMaxConsume(req.MaxConsume).
+		SetMinPayNum(req.MinPayNum).
+		SetPayTimes(req.PayTimes).
+		SetPayAmount(req.PayAmount).
+		SetRegDays(req.RegDays).
+		SetSummary(req.Summary).
+		SetAssetItemId(req.AssetItemId).
+		SetAmount(req.Amount).
+		SetResId(req.ResId).
+		SetResDays(req.ResDays).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -75,7 +76,7 @@ func (r *activityComponentRepo) GetActivityComponent(ctx context.Context, req *v
 func (r *activityComponentRepo) PageActivityComponent(ctx context.Context, req *v1.ActivityComponentPageReq) ([]*ent.ActivityComponent, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.ActivityComponent.
 		Query().
@@ -91,7 +92,7 @@ func (r *activityComponentRepo) PageActivityComponent(ctx context.Context, req *
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -169,6 +170,6 @@ func (r *activityComponentRepo) genCondition(req *v1.ActivityComponentReq) []pre
 	if req.TenantId > 0 {
 		list = append(list, activitycomponent.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

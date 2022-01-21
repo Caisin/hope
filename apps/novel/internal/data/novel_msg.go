@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelmsg"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,13 +31,13 @@ func NewNovelMsgRepo(data *Data, logger log.Logger) biz.NovelMsgRepo {
 func (r *novelMsgRepo) CreateNovelMsg(ctx context.Context, req *v1.NovelMsgCreateReq) (*ent.NovelMsg, error) {
 	now := time.Now()
 	return r.data.db.NovelMsg.Create().
-    SetTitle(req.Title).
-    SetMsg(req.Msg).
-    SetMsgType(req.MsgType).
-    SetStatus(req.Status).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetTitle(req.Title).
+		SetMsg(req.Msg).
+		SetMsgType(req.MsgType).
+		SetStatus(req.Status).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -64,7 +65,7 @@ func (r *novelMsgRepo) GetNovelMsg(ctx context.Context, req *v1.NovelMsgReq) (*e
 func (r *novelMsgRepo) PageNovelMsg(ctx context.Context, req *v1.NovelMsgPageReq) ([]*ent.NovelMsg, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.NovelMsg.
 		Query().
@@ -80,7 +81,7 @@ func (r *novelMsgRepo) PageNovelMsg(ctx context.Context, req *v1.NovelMsgPageReq
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -125,6 +126,6 @@ func (r *novelMsgRepo) genCondition(req *v1.NovelMsgReq) []predicate.NovelMsg {
 	if req.TenantId > 0 {
 		list = append(list, novelmsg.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/appversion"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,14 +31,14 @@ func NewAppVersionRepo(data *Data, logger log.Logger) biz.AppVersionRepo {
 func (r *appVersionRepo) CreateAppVersion(ctx context.Context, req *v1.AppVersionCreateReq) (*ent.AppVersion, error) {
 	now := time.Now()
 	return r.data.db.AppVersion.Create().
-    SetTitle(req.Title).
-    SetVersion(req.Version).
-    SetUpdateInfo(req.UpdateInfo).
-    SetDownloadUrl(req.DownloadUrl).
-    SetPlatform(req.Platform).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetTitle(req.Title).
+		SetVersion(req.Version).
+		SetUpdateInfo(req.UpdateInfo).
+		SetDownloadUrl(req.DownloadUrl).
+		SetPlatform(req.Platform).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -65,7 +66,7 @@ func (r *appVersionRepo) GetAppVersion(ctx context.Context, req *v1.AppVersionRe
 func (r *appVersionRepo) PageAppVersion(ctx context.Context, req *v1.AppVersionPageReq) ([]*ent.AppVersion, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.AppVersion.
 		Query().
@@ -81,7 +82,7 @@ func (r *appVersionRepo) PageAppVersion(ctx context.Context, req *v1.AppVersionP
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -132,6 +133,6 @@ func (r *appVersionRepo) genCondition(req *v1.AppVersionReq) []predicate.AppVers
 	if req.TenantId > 0 {
 		list = append(list, appversion.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,18 +31,18 @@ func NewAssetChangeLogRepo(data *Data, logger log.Logger) biz.AssetChangeLogRepo
 func (r *assetChangeLogRepo) CreateAssetChangeLog(ctx context.Context, req *v1.AssetChangeLogCreateReq) (*ent.AssetChangeLog, error) {
 	now := time.Now()
 	return r.data.db.AssetChangeLog.Create().
-    SetOrderId(req.OrderId).
-    SetBalanceId(req.BalanceId).
-    SetEventId(req.EventId).
-    SetUserId(req.UserId).
-    SetAssetItemId(req.AssetItemId).
-    SetAmount(req.Amount).
-    SetOldBalance(req.OldBalance).
-    SetNewBalance(req.NewBalance).
-    SetRemark(req.Remark).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetOrderId(req.OrderId).
+		SetBalanceId(req.BalanceId).
+		SetEventId(req.EventId).
+		SetUserId(req.UserId).
+		SetAssetItemId(req.AssetItemId).
+		SetAmount(req.Amount).
+		SetOldBalance(req.OldBalance).
+		SetNewBalance(req.NewBalance).
+		SetRemark(req.Remark).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -69,7 +70,7 @@ func (r *assetChangeLogRepo) GetAssetChangeLog(ctx context.Context, req *v1.Asse
 func (r *assetChangeLogRepo) PageAssetChangeLog(ctx context.Context, req *v1.AssetChangeLogPageReq) ([]*ent.AssetChangeLog, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.AssetChangeLog.
 		Query().
@@ -85,7 +86,7 @@ func (r *assetChangeLogRepo) PageAssetChangeLog(ctx context.Context, req *v1.Ass
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -148,6 +149,6 @@ func (r *assetChangeLogRepo) genCondition(req *v1.AssetChangeLogReq) []predicate
 	if req.TenantId > 0 {
 		list = append(list, assetchangelog.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

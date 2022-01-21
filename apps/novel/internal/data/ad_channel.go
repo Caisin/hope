@@ -1,4 +1,5 @@
-package data
+package data
+
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
@@ -8,8 +9,8 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/adchannel"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/util/str"
 	"hope/pkg/pagin"
+	"hope/pkg/util/str"
 	"time"
 )
 
@@ -30,18 +31,18 @@ func NewAdChannelRepo(data *Data, logger log.Logger) biz.AdChannelRepo {
 func (r *adChannelRepo) CreateAdChannel(ctx context.Context, req *v1.AdChannelCreateReq) (*ent.AdChannel, error) {
 	now := time.Now()
 	return r.data.db.AdChannel.Create().
-    SetChannelName(req.ChannelName).
-    SetNovelId(req.NovelId).
-    SetReg(req.Reg).
-    SetPay(req.Pay).
-    SetNovelName(req.NovelName).
-    SetChapterId(req.ChapterId).
-    SetChapterNum(req.ChapterNum).
-    SetAdType(req.AdType).
-    SetImg(req.Img).
-	SetCreatedAt(now).
-	SetUpdatedAt(now).
-	Save(ctx)
+		SetChannelName(req.ChannelName).
+		SetNovelId(req.NovelId).
+		SetReg(req.Reg).
+		SetPay(req.Pay).
+		SetNovelName(req.NovelName).
+		SetChapterId(req.ChapterId).
+		SetChapterNum(req.ChapterNum).
+		SetAdType(req.AdType).
+		SetImg(req.Img).
+		SetCreatedAt(now).
+		SetUpdatedAt(now).
+		Save(ctx)
 
 }
 
@@ -69,7 +70,7 @@ func (r *adChannelRepo) GetAdChannel(ctx context.Context, req *v1.AdChannelReq) 
 func (r *adChannelRepo) PageAdChannel(ctx context.Context, req *v1.AdChannelPageReq) ([]*ent.AdChannel, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{}
 	}
 	query := r.data.db.AdChannel.
 		Query().
@@ -85,7 +86,7 @@ func (r *adChannelRepo) PageAdChannel(ctx context.Context, req *v1.AdChannelPage
 	if count == 0 {
 		return nil, nil
 	}
-	query.Limit(int(p.GetPage())).
+	query.Limit(int(p.GetPageSize())).
 		Offset(int(p.GetOffSet()))
 	if p.NeedOrder() {
 		if p.IsDesc() {
@@ -148,6 +149,6 @@ func (r *adChannelRepo) genCondition(req *v1.AdChannelReq) []predicate.AdChannel
 	if req.TenantId > 0 {
 		list = append(list, adchannel.TenantId(req.TenantId))
 	}
-	
+
 	return list
 }

@@ -9,8 +9,9 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userresourcerecord"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -71,7 +72,10 @@ func (r *userResourceRecordRepo) GetUserResourceRecord(ctx context.Context, req 
 func (r *userResourceRecordRepo) PageUserResourceRecord(ctx context.Context, req *v1.UserResourceRecordPageReq) ([]*ent.UserResourceRecord, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.UserResourceRecord.
 		Query().
@@ -114,6 +118,7 @@ func (r *userResourceRecordRepo) genCondition(req *v1.UserResourceRecordReq) []p
 	if req.ResId > 0 {
 		list = append(list, userresourcerecord.ResId(req.ResId))
 	}
+	list = append(list, userresourcerecord.Def(req.Def))
 	if str.IsBlank(req.Name) {
 		list = append(list, userresourcerecord.NameContains(req.Name))
 	}

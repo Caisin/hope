@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysjoblog"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -67,7 +68,10 @@ func (r *sysJobLogRepo) GetSysJobLog(ctx context.Context, req *v1.SysJobLogReq) 
 func (r *sysJobLogRepo) PageSysJobLog(ctx context.Context, req *v1.SysJobLogPageReq) ([]*ent.SysJobLog, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysJobLog.
 		Query().
@@ -113,6 +117,7 @@ func (r *sysJobLogRepo) genCondition(req *v1.SysJobLogReq) []predicate.SysJobLog
 	if req.EntryId > 0 {
 		list = append(list, sysjoblog.EntryId(req.EntryId))
 	}
+	list = append(list, sysjoblog.Status(req.Status))
 	if req.Duration.AsDuration() > 0 {
 		list = append(list, sysjoblog.Duration(req.Duration.AsDuration()))
 	}

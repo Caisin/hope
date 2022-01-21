@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/syscolumns"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -90,7 +91,10 @@ func (r *sysColumnsRepo) GetSysColumns(ctx context.Context, req *v1.SysColumnsRe
 func (r *sysColumnsRepo) PageSysColumns(ctx context.Context, req *v1.SysColumnsPageReq) ([]*ent.SysColumns, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysColumns.
 		Query().
@@ -184,6 +188,14 @@ func (r *sysColumnsRepo) genCondition(req *v1.SysColumnsReq) []predicate.SysColu
 	if str.IsBlank(req.List) {
 		list = append(list, syscolumns.ListContains(req.List))
 	}
+	list = append(list, syscolumns.Pk(req.Pk))
+	list = append(list, syscolumns.Required(req.Required))
+	list = append(list, syscolumns.SuperColumn(req.SuperColumn))
+	list = append(list, syscolumns.UsableColumn(req.UsableColumn))
+	list = append(list, syscolumns.Increment(req.Increment))
+	list = append(list, syscolumns.Insert(req.Insert))
+	list = append(list, syscolumns.Edit(req.Edit))
+	list = append(list, syscolumns.Query(req.Query))
 	if str.IsBlank(req.Remark) {
 		list = append(list, syscolumns.RemarkContains(req.Remark))
 	}

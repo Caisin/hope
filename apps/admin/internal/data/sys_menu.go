@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysmenu"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -76,7 +77,10 @@ func (r *sysMenuRepo) GetSysMenu(ctx context.Context, req *v1.SysMenuReq) (*ent.
 func (r *sysMenuRepo) PageSysMenu(ctx context.Context, req *v1.SysMenuPageReq) ([]*ent.SysMenu, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysMenu.
 		Query().
@@ -137,6 +141,7 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 	if str.IsBlank(req.Permission) {
 		list = append(list, sysmenu.PermissionContains(req.Permission))
 	}
+	list = append(list, sysmenu.NoCache(req.NoCache))
 	if str.IsBlank(req.Breadcrumb) {
 		list = append(list, sysmenu.BreadcrumbContains(req.Breadcrumb))
 	}
@@ -146,6 +151,8 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 	if req.Sort > 0 {
 		list = append(list, sysmenu.Sort(req.Sort))
 	}
+	list = append(list, sysmenu.Visible(req.Visible))
+	list = append(list, sysmenu.IsFrame(req.IsFrame))
 	if str.IsBlank(req.SysApi) {
 		list = append(list, sysmenu.SysApiContains(req.SysApi))
 	}

@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activity"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -71,7 +72,10 @@ func (r *activityRepo) GetActivity(ctx context.Context, req *v1.ActivityReq) (*e
 func (r *activityRepo) PageActivity(ctx context.Context, req *v1.ActivityPageReq) ([]*ent.Activity, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.Activity.
 		Query().

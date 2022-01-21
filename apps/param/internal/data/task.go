@@ -9,8 +9,9 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/task"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -82,7 +83,10 @@ func (r *taskRepo) GetTask(ctx context.Context, req *v1.TaskReq) (*ent.Task, err
 func (r *taskRepo) PageTask(ctx context.Context, req *v1.TaskPageReq) ([]*ent.Task, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.Task.
 		Query().
@@ -167,6 +171,7 @@ func (r *taskRepo) genCondition(req *v1.TaskReq) []predicate.Task {
 	if str.IsBlank(req.TargetAmounts) {
 		list = append(list, task.TargetAmountsContains(req.TargetAmounts))
 	}
+	list = append(list, task.Status(req.Status))
 	if req.SortNum > 0 {
 		list = append(list, task.SortNum(req.SortNum))
 	}

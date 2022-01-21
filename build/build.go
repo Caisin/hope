@@ -24,6 +24,8 @@ func main() {
 	projectPath := "D:/work/code/go/hope"
 	prods := []string{"admin", "param", "novel"}
 	funcMap := template.FuncMap{
+		"hasSchema":          hasSchema,
+		"hasStr":             hasStr,
 		"genCondition":       genCondition,
 		"genCreateSetFields": genCreateSetFields,
 		"genCreateFields":    genCreateFields,
@@ -248,14 +250,34 @@ func GetEntNameAndProtoName(f *load.Field) (entName, protoName string) {
 }
 
 //生成查询条件
+func hasStr(fields []*load.Field) bool {
+	for _, f := range fields {
+		if f.Info.Type == field.TypeString {
+			return true
+		}
+	}
+	return false
+}
+
+//生成查询条件
+func hasSchema(fields []*load.Field) bool {
+	for _, f := range fields {
+		if strings.Contains(f.Info.Ident, "schema") {
+			return true
+		}
+	}
+	return false
+}
+
+//生成查询条件
 func genCondition(pkg string, fields []*load.Field) string {
 	bf := str.NewBuffer()
 	strTmp := `if str.IsBlank(req.%s) {
 		list = append(list, %s.%sContains(req.%s))
 	}
 	`
-	numTmp := `if req.%s > 0 {
-		list = append(list, %s.%s(req.%s))
+	numTmp := `if %s > 0 {
+		list = append(list, %s.%s(%s))
 	}
 	`
 	timeTmp := `if req.%s.IsValid() && !req.%s.AsTime().IsZero() {
@@ -285,8 +307,14 @@ func genCondition(pkg string, fields []*load.Field) string {
 			t == field.TypeFloat32,
 			t == field.TypeFloat64,
 			t == field.TypeInt64:
-			if f.Info.Ident == "time.Duration" {
-				protoName += ".AsDuration()"
+			switch {
+			case f.Info.Ident == "time.Duration":
+				protoName = "req." + protoName + ".AsDuration()"
+			case str.IsNotBlank(f.Info.Ident):
+				ident := f.Info.Ident
+				protoName = fmt.Sprintf("%s(req.%s)", ident, protoName)
+			default:
+				protoName = "req." + protoName
 			}
 			bf.Append(fmt.Sprintf(numTmp, protoName, pkg, entName, protoName))
 		case t == field.TypeTime:
@@ -297,6 +325,8 @@ func genCondition(pkg string, fields []*load.Field) string {
 			name := f.Name
 			ident := f.Info.Ident
 			bf.Append(fmt.Sprintf(enumTmp, name, ident, protoName, ident, name, ident, name))
+		case t == field.TypeBool:
+			bf.Append(fmt.Sprintf("list = append(list, %s.%s(req.%s))\n\t", pkg, entName, protoName))
 		case str.IsNotBlank(f.Info.Ident):
 			name := f.Name
 			ident := f.Info.Ident
@@ -397,12 +427,16 @@ func %s(v *%s) *%s {
 	}
 	lower := strings.ToLower(name)
 	if duflag {
-		importTemp = strings.ReplaceAll(importTemp, "\"google.golang.org/protobuf/types/known/timestamppb\"",
-			"\"google.golang.org/protobuf/types/known/timestamppb\"\n\t\"google.golang.org/protobuf/types/known/durationpb\"")
+		importTemp = strings.ReplaceAll(importTemp, "import (\n\t",
+			"import (\n\t\"google.golang.org/protobuf/types/known/durationpb\"\n\t")
 	}
 	if emflag {
-		importTemp = strings.ReplaceAll(importTemp, "\"google.golang.org/protobuf/types/known/timestamppb\"",
-			fmt.Sprintf("\"google.golang.org/protobuf/types/known/timestamppb\"\n\t\"hope/apps/%s/internal/data/ent/%s\"", model, lower))
+		importTemp = strings.ReplaceAll(importTemp, "import (\n\t",
+			fmt.Sprintf("import (\n\t\"hope/apps/%s/internal/data/ent/%s\"\n\t", model, lower))
+	}
+	if hasSchema(fields) {
+		importTemp = strings.ReplaceAll(importTemp, "import (\n\t",
+			fmt.Sprintf("import (\n\t\"hope/apps/%s/internal/data/ent/schema\"\n\t", model))
 	}
 	bf.Append(fmt.Sprintf(importTemp, model, lower, model))
 	appendFun(bf, update2Data, data2Update, funTmp, name, "Update", "Req")

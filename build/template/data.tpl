@@ -9,7 +9,8 @@ import (
 	"hope/apps/{{.model}}/internal/data/ent"
 	"hope/apps/{{.model}}/internal/data/ent/{{.pkg}}"
 	"hope/apps/{{.model}}/internal/data/ent/predicate"
-	"hope/pkg/util/str"
+	{{if hasStr .fields}}"hope/pkg/util/str"{{end }}
+	{{if hasSchema .fields}}"hope/apps/{{.model}}/internal/data/ent/schema"{{end }}
 	"hope/pkg/pagin"
 	"time"
 )

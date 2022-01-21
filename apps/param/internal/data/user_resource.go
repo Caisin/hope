@@ -9,8 +9,9 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userresource"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -65,7 +66,10 @@ func (r *userResourceRepo) GetUserResource(ctx context.Context, req *v1.UserReso
 func (r *userResourceRepo) PageUserResource(ctx context.Context, req *v1.UserResourcePageReq) ([]*ent.UserResource, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.UserResource.
 		Query().

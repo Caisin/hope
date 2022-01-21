@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/systables"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -87,7 +88,10 @@ func (r *sysTablesRepo) GetSysTables(ctx context.Context, req *v1.SysTablesReq) 
 func (r *sysTablesRepo) PageSysTables(ctx context.Context, req *v1.SysTablesPageReq) ([]*ent.SysTables, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysTables.
 		Query().
@@ -175,6 +179,8 @@ func (r *sysTablesRepo) genCondition(req *v1.SysTablesReq) []predicate.SysTables
 	if str.IsBlank(req.TreeName) {
 		list = append(list, systables.TreeNameContains(req.TreeName))
 	}
+	list = append(list, systables.Tree(req.Tree))
+	list = append(list, systables.Crud(req.Crud))
 	if str.IsBlank(req.Remark) {
 		list = append(list, systables.RemarkContains(req.Remark))
 	}
@@ -190,6 +196,7 @@ func (r *sysTablesRepo) genCondition(req *v1.SysTablesReq) []predicate.SysTables
 	if str.IsBlank(req.IsLogicalDelete) {
 		list = append(list, systables.IsLogicalDeleteContains(req.IsLogicalDelete))
 	}
+	list = append(list, systables.LogicalDelete(req.LogicalDelete))
 	if str.IsBlank(req.LogicalDeleteColumn) {
 		list = append(list, systables.LogicalDeleteColumnContains(req.LogicalDeleteColumn))
 	}

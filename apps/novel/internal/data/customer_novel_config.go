@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/customernovelconfig"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -70,7 +71,10 @@ func (r *customerNovelConfigRepo) GetCustomerNovelConfig(ctx context.Context, re
 func (r *customerNovelConfigRepo) PageCustomerNovelConfig(ctx context.Context, req *v1.CustomerNovelConfigPageReq) ([]*ent.CustomerNovelConfig, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.CustomerNovelConfig.
 		Query().
@@ -131,6 +135,7 @@ func (r *customerNovelConfigRepo) genCondition(req *v1.CustomerNovelConfigReq) [
 	if req.DefaultNum > 0 {
 		list = append(list, customernovelconfig.DefaultNum(req.DefaultNum))
 	}
+	list = append(list, customernovelconfig.State(req.State))
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, customernovelconfig.CreatedAtGTE(req.CreatedAt.AsTime()))
 	}

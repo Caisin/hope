@@ -9,8 +9,9 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/novelpayconfig"
 	"hope/apps/param/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -83,7 +84,10 @@ func (r *novelPayConfigRepo) GetNovelPayConfig(ctx context.Context, req *v1.Nove
 func (r *novelPayConfigRepo) PageNovelPayConfig(ctx context.Context, req *v1.NovelPayConfigPageReq) ([]*ent.NovelPayConfig, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.NovelPayConfig.
 		Query().
@@ -156,6 +160,7 @@ func (r *novelPayConfigRepo) genCondition(req *v1.NovelPayConfigReq) []predicate
 	if req.Sort > 0 {
 		list = append(list, novelpayconfig.Sort(req.Sort))
 	}
+	list = append(list, novelpayconfig.State(req.State))
 	if req.IsSend > 0 {
 		list = append(list, novelpayconfig.IsSend(req.IsSend))
 	}
@@ -165,6 +170,7 @@ func (r *novelPayConfigRepo) genCondition(req *v1.NovelPayConfigReq) []predicate
 	if req.VipType > 0 {
 		list = append(list, novelpayconfig.VipType(req.VipType))
 	}
+	list = append(list, novelpayconfig.IsHot(req.IsHot))
 	if req.CycleDay > 0 {
 		list = append(list, novelpayconfig.CycleDay(req.CycleDay))
 	}

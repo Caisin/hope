@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/vipuser"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -69,7 +70,10 @@ func (r *vipUserRepo) GetVipUser(ctx context.Context, req *v1.VipUserReq) (*ent.
 func (r *vipUserRepo) PageVipUser(ctx context.Context, req *v1.VipUserPageReq) ([]*ent.VipUser, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.VipUser.
 		Query().

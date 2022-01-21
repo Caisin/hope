@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -87,7 +88,10 @@ func (r *socialUserRepo) GetSocialUser(ctx context.Context, req *v1.SocialUserRe
 func (r *socialUserRepo) PageSocialUser(ctx context.Context, req *v1.SocialUserPageReq) ([]*ent.SocialUser, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SocialUser.
 		Query().

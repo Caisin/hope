@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -84,7 +85,10 @@ func (r *sysOperaLogRepo) GetSysOperaLog(ctx context.Context, req *v1.SysOperaLo
 func (r *sysOperaLogRepo) PageSysOperaLog(ctx context.Context, req *v1.SysOperaLogPageReq) ([]*ent.SysOperaLog, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysOperaLog.
 		Query().

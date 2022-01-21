@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelmsg"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -65,7 +66,10 @@ func (r *novelMsgRepo) GetNovelMsg(ctx context.Context, req *v1.NovelMsgReq) (*e
 func (r *novelMsgRepo) PageNovelMsg(ctx context.Context, req *v1.NovelMsgPageReq) ([]*ent.NovelMsg, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.NovelMsg.
 		Query().
@@ -111,6 +115,7 @@ func (r *novelMsgRepo) genCondition(req *v1.NovelMsgReq) []predicate.NovelMsg {
 	if str.IsBlank(req.MsgType) {
 		list = append(list, novelmsg.MsgTypeContains(req.MsgType))
 	}
+	list = append(list, novelmsg.Status(req.Status))
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, novelmsg.CreatedAtGTE(req.CreatedAt.AsTime()))
 	}

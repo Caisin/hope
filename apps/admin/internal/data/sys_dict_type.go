@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdicttype"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -65,7 +66,10 @@ func (r *sysDictTypeRepo) GetSysDictType(ctx context.Context, req *v1.SysDictTyp
 func (r *sysDictTypeRepo) PageSysDictType(ctx context.Context, req *v1.SysDictTypePageReq) ([]*ent.SysDictType, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysDictType.
 		Query().

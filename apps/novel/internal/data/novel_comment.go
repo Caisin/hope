@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelcomment"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -75,7 +76,10 @@ func (r *novelCommentRepo) GetNovelComment(ctx context.Context, req *v1.NovelCom
 func (r *novelCommentRepo) PageNovelComment(ctx context.Context, req *v1.NovelCommentPageReq) ([]*ent.NovelComment, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.NovelComment.
 		Query().
@@ -139,10 +143,13 @@ func (r *novelCommentRepo) genCondition(req *v1.NovelCommentReq) []predicate.Nov
 	if req.PId > 0 {
 		list = append(list, novelcomment.PId(req.PId))
 	}
+	list = append(list, novelcomment.IsTop(req.IsTop))
 	state := novelcomment.State(req.State)
 	if novelcomment.StateValidator(state) == nil {
 		list = append(list, novelcomment.StateEQ(state))
 	}
+	list = append(list, novelcomment.IsHighlight(req.IsHighlight))
+	list = append(list, novelcomment.IsHot(req.IsHot))
 	if str.IsBlank(req.Remark) {
 		list = append(list, novelcomment.RemarkContains(req.Remark))
 	}

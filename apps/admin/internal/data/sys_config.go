@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysconfig"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -68,7 +69,10 @@ func (r *sysConfigRepo) GetSysConfig(ctx context.Context, req *v1.SysConfigReq) 
 func (r *sysConfigRepo) PageSysConfig(ctx context.Context, req *v1.SysConfigPageReq) ([]*ent.SysConfig, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysConfig.
 		Query().

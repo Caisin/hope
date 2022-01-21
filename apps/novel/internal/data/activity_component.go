@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activitycomponent"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -76,7 +77,10 @@ func (r *activityComponentRepo) GetActivityComponent(ctx context.Context, req *v
 func (r *activityComponentRepo) PageActivityComponent(ctx context.Context, req *v1.ActivityComponentPageReq) ([]*ent.ActivityComponent, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.ActivityComponent.
 		Query().
@@ -122,6 +126,7 @@ func (r *activityComponentRepo) genCondition(req *v1.ActivityComponentReq) []pre
 	if str.IsBlank(req.Policy) {
 		list = append(list, activitycomponent.PolicyContains(req.Policy))
 	}
+	list = append(list, activitycomponent.VipDays(req.VipDays))
 	if req.MinConsume > 0 {
 		list = append(list, activitycomponent.MinConsume(req.MinConsume))
 	}

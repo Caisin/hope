@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -68,7 +69,10 @@ func (r *casbinRuleRepo) GetCasbinRule(ctx context.Context, req *v1.CasbinRuleRe
 func (r *casbinRuleRepo) PageCasbinRule(ctx context.Context, req *v1.CasbinRulePageReq) ([]*ent.CasbinRule, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.CasbinRule.
 		Query().

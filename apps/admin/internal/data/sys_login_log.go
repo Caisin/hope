@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysloginlog"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -71,7 +72,10 @@ func (r *sysLoginLogRepo) GetSysLoginLog(ctx context.Context, req *v1.SysLoginLo
 func (r *sysLoginLogRepo) PageSysLoginLog(ctx context.Context, req *v1.SysLoginLogPageReq) ([]*ent.SysLoginLog, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysLoginLog.
 		Query().

@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/userevent"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -69,7 +70,10 @@ func (r *userEventRepo) GetUserEvent(ctx context.Context, req *v1.UserEventReq) 
 func (r *userEventRepo) PageUserEvent(ctx context.Context, req *v1.UserEventPageReq) ([]*ent.UserEvent, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.UserEvent.
 		Query().

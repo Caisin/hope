@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetitem"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -67,7 +68,10 @@ func (r *assetItemRepo) GetAssetItem(ctx context.Context, req *v1.AssetItemReq) 
 func (r *assetItemRepo) PageAssetItem(ctx context.Context, req *v1.AssetItemPageReq) ([]*ent.AssetItem, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.AssetItem.
 		Query().

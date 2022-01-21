@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysrole"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -71,7 +72,10 @@ func (r *sysRoleRepo) GetSysRole(ctx context.Context, req *v1.SysRoleReq) (*ent.
 func (r *sysRoleRepo) PageSysRole(ctx context.Context, req *v1.SysRolePageReq) ([]*ent.SysRole, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysRole.
 		Query().
@@ -126,6 +130,7 @@ func (r *sysRoleRepo) genCondition(req *v1.SysRoleReq) []predicate.SysRole {
 	if str.IsBlank(req.Remark) {
 		list = append(list, sysrole.RemarkContains(req.Remark))
 	}
+	list = append(list, sysrole.Admin(req.Admin))
 	if str.IsBlank(req.DataScope) {
 		list = append(list, sysrole.DataScopeContains(req.DataScope))
 	}

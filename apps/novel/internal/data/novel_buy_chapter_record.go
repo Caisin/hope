@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelbuychapterrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -73,7 +74,10 @@ func (r *novelBuyChapterRecordRepo) GetNovelBuyChapterRecord(ctx context.Context
 func (r *novelBuyChapterRecordRepo) PageNovelBuyChapterRecord(ctx context.Context, req *v1.NovelBuyChapterRecordPageReq) ([]*ent.NovelBuyChapterRecord, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.NovelBuyChapterRecord.
 		Query().
@@ -131,6 +135,7 @@ func (r *novelBuyChapterRecordRepo) genCondition(req *v1.NovelBuyChapterRecordRe
 	if str.IsBlank(req.ChapterName) {
 		list = append(list, novelbuychapterrecord.ChapterNameContains(req.ChapterName))
 	}
+	list = append(list, novelbuychapterrecord.IsSvip(req.IsSvip))
 	if req.Coin > 0 {
 		list = append(list, novelbuychapterrecord.Coin(req.Coin))
 	}

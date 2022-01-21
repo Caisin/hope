@@ -9,8 +9,9 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/noveltag"
 	"hope/apps/param/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -64,7 +65,10 @@ func (r *novelTagRepo) GetNovelTag(ctx context.Context, req *v1.NovelTagReq) (*e
 func (r *novelTagRepo) PageNovelTag(ctx context.Context, req *v1.NovelTagPageReq) ([]*ent.NovelTag, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.NovelTag.
 		Query().

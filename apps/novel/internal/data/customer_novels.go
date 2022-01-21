@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/customernovels"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -71,7 +72,10 @@ func (r *customerNovelsRepo) GetCustomerNovels(ctx context.Context, req *v1.Cust
 func (r *customerNovelsRepo) PageCustomerNovels(ctx context.Context, req *v1.CustomerNovelsPageReq) ([]*ent.CustomerNovels, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.CustomerNovels.
 		Query().

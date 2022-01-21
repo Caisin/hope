@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/usermsg"
+
 	"hope/pkg/pagin"
 	"time"
 )
@@ -109,6 +110,7 @@ func (r *userMsgRepo) genCondition(req *v1.UserMsgReq) []predicate.UserMsg {
 	if req.MsgId > 0 {
 		list = append(list, usermsg.MsgId(req.MsgId))
 	}
+	list = append(list, usermsg.IsRead(req.IsRead))
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, usermsg.CreatedAtGTE(req.CreatedAt.AsTime()))
 	}

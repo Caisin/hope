@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/clienterror"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -66,7 +67,10 @@ func (r *clientErrorRepo) GetClientError(ctx context.Context, req *v1.ClientErro
 func (r *clientErrorRepo) PageClientError(ctx context.Context, req *v1.ClientErrorPageReq) ([]*ent.ClientError, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.ClientError.
 		Query().

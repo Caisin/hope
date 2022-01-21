@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -70,7 +71,10 @@ func (r *assetChangeLogRepo) GetAssetChangeLog(ctx context.Context, req *v1.Asse
 func (r *assetChangeLogRepo) PageAssetChangeLog(ctx context.Context, req *v1.AssetChangeLogPageReq) ([]*ent.AssetChangeLog, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.AssetChangeLog.
 		Query().

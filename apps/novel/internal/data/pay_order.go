@@ -147,7 +147,7 @@ func (r *payOrderRepo) genCondition(req *v1.PayOrderReq) []predicate.PayOrder {
 	if str.IsBlank(req.PaymentId) {
 		list = append(list, payorder.PaymentIdContains(req.PaymentId))
 	}
-	if req.State > 0 {
+	if schema.OrderState(req.State) > 0 {
 		list = append(list, payorder.State(schema.OrderState(req.State)))
 	}
 	if req.Payment > 0 {

@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/datasource"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -74,7 +75,10 @@ func (r *dataSourceRepo) GetDataSource(ctx context.Context, req *v1.DataSourceRe
 func (r *dataSourceRepo) PageDataSource(ctx context.Context, req *v1.DataSourcePageReq) ([]*ent.DataSource, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.DataSource.
 		Query().
@@ -129,6 +133,7 @@ func (r *dataSourceRepo) genCondition(req *v1.DataSourceReq) []predicate.DataSou
 	if str.IsBlank(req.Pwd) {
 		list = append(list, datasource.PwdContains(req.Pwd))
 	}
+	list = append(list, datasource.Status(req.Status))
 	dbType := datasource.DbType(req.DbType)
 	if datasource.DbTypeValidator(dbType) == nil {
 		list = append(list, datasource.DbTypeEQ(dbType))

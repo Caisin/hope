@@ -9,8 +9,9 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/viptype"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -67,7 +68,10 @@ func (r *vipTypeRepo) GetVipType(ctx context.Context, req *v1.VipTypeReq) (*ent.
 func (r *vipTypeRepo) PageVipType(ctx context.Context, req *v1.VipTypePageReq) ([]*ent.VipType, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.VipType.
 		Query().
@@ -107,6 +111,7 @@ func (r *vipTypeRepo) genCondition(req *v1.VipTypeReq) []predicate.VipType {
 	if str.IsBlank(req.VipName) {
 		list = append(list, viptype.VipNameContains(req.VipName))
 	}
+	list = append(list, viptype.IsSuper(req.IsSuper))
 	if req.ValidDays > 0 {
 		list = append(list, viptype.ValidDays(req.ValidDays))
 	}

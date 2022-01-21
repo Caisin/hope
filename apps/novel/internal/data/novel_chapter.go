@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelchapter"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -73,7 +74,10 @@ func (r *novelChapterRepo) GetNovelChapter(ctx context.Context, req *v1.NovelCha
 func (r *novelChapterRepo) PageNovelChapter(ctx context.Context, req *v1.NovelChapterPageReq) ([]*ent.NovelChapter, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.NovelChapter.
 		Query().
@@ -134,6 +138,7 @@ func (r *novelChapterRepo) genCondition(req *v1.NovelChapterReq) []predicate.Nov
 	if req.Status > 0 {
 		list = append(list, novelchapter.Status(req.Status))
 	}
+	list = append(list, novelchapter.IsFree(req.IsFree))
 	if req.Price > 0 {
 		list = append(list, novelchapter.Price(req.Price))
 	}

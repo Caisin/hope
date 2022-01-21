@@ -9,8 +9,9 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/syspost"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -66,7 +67,10 @@ func (r *sysPostRepo) GetSysPost(ctx context.Context, req *v1.SysPostReq) (*ent.
 func (r *sysPostRepo) PageSysPost(ctx context.Context, req *v1.SysPostPageReq) ([]*ent.SysPost, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.SysPost.
 		Query().

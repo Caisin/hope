@@ -9,8 +9,9 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/bookpackage"
 	"hope/apps/novel/internal/data/ent/predicate"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -67,7 +68,10 @@ func (r *bookPackageRepo) GetBookPackage(ctx context.Context, req *v1.BookPackag
 func (r *bookPackageRepo) PageBookPackage(ctx context.Context, req *v1.BookPackagePageReq) ([]*ent.BookPackage, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.BookPackage.
 		Query().

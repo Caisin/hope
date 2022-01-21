@@ -9,8 +9,9 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/resourcestorage"
-	"hope/pkg/pagin"
 	"hope/pkg/util/str"
+
+	"hope/pkg/pagin"
 	"time"
 )
 
@@ -79,7 +80,10 @@ func (r *resourceStorageRepo) GetResourceStorage(ctx context.Context, req *v1.Re
 func (r *resourceStorageRepo) PageResourceStorage(ctx context.Context, req *v1.ResourceStoragePageReq) ([]*ent.ResourceStorage, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin = &pagin.Pagination{}
+		req.Pagin = &pagin.Pagination{
+			Page:     1,
+			PageSize: 10,
+		}
 	}
 	query := r.data.db.ResourceStorage.
 		Query().

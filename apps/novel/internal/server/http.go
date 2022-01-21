@@ -1,18 +1,22 @@
 package server
 
 import (
+	prom "github.com/go-kratos/kratos/contrib/metrics/prometheus/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
+	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/ratelimit"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"hope/apps/novel/internal/conf"
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), logger log.Logger, hv *prometheus.HistogramVec, cv *prometheus.CounterVec) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			//限流
@@ -23,6 +27,11 @@ func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), logger log.Logge
 			logging.Server(logger),
 			//链路追踪
 			tracing.Server(),
+			//服务监控
+			metrics.Server(
+				metrics.WithSeconds(prom.NewHistogram(hv)),
+				metrics.WithRequests(prom.NewCounter(cv)),
+			),
 		),
 	}
 	if c.Http.Network != "" {
@@ -41,5 +50,7 @@ func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), logger log.Logge
 	//注册swagger-ui
 	h := openapiv2.NewHandler()
 	srv.HandlePrefix("/q/", h)
+	//注册服务监控
+	srv.Handle("/metrics", promhttp.Handler())
 	return srv
 }

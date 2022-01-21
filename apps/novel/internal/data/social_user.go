@@ -113,6 +113,9 @@ func (r *socialUserRepo) PageSocialUser(ctx context.Context, req *v1.SocialUserP
 
 // genCondition 构造查询条件
 func (r *socialUserRepo) genCondition(req *v1.SocialUserReq) []predicate.SocialUser {
+	if req == nil {
+		return nil
+	}
 	list := make([]predicate.SocialUser, 0)
 	if req.Id > 0 {
 		list = append(list, socialuser.ID(req.Id))

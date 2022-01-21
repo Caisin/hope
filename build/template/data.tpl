@@ -58,6 +58,9 @@ func (r *{{.llName}}Repo) Get{{.name}}(ctx context.Context, req *v1.{{.name}}Req
 
 // Page{{.name}} 分页查询
 func (r *{{.llName}}Repo) Page{{.name}}(ctx context.Context, req *v1.{{.name}}PageReq) ([]*ent.{{.name}}, error) {
+	if req == nil {
+		return nil
+	}
 	pagin := req.Pagin
 	query := r.data.db.{{.name}}.
 		Query().

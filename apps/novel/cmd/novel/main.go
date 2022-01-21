@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
@@ -75,17 +77,10 @@ func main() {
 		panic(err)
 	}
 
-	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(bc.Trace.Endpoint)))
-	if err != nil {
+	if err := setTracerProvider(bc.Trace.Endpoint); err != nil {
 		panic(err)
 	}
-	tp := tracesdk.NewTracerProvider(
-		tracesdk.WithBatcher(exp),
-		tracesdk.WithResource(resource.NewSchemaless(
-			semconv.ServiceNameKey.String(Name),
-		)),
-	)
-	app, cleanup, err := initApp(bc.Server, bc.Data, logger, tp)
+	app, cleanup, err := initApp(bc.Server, bc.Data, logger)
 	if err != nil {
 		panic(err)
 	}
@@ -95,4 +90,26 @@ func main() {
 	if err := app.Run(); err != nil {
 		panic(err)
 	}
+}
+
+// Set global trace provider
+func setTracerProvider(url string) error {
+	// Create the Jaeger exporter
+	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+	if err != nil {
+		return err
+	}
+	tp := tracesdk.NewTracerProvider(
+		// Set the sampling rate based on the parent span to 100%
+		tracesdk.WithSampler(tracesdk.ParentBased(tracesdk.TraceIDRatioBased(1.0))),
+		// Always be sure to batch in production.
+		tracesdk.WithBatcher(exp),
+		// Record information about this application in an Resource.
+		tracesdk.WithResource(resource.NewSchemaless(
+			semconv.ServiceNameKey.String(Name),
+			attribute.String("env", "dev"),
+		)),
+	)
+	otel.SetTracerProvider(tp)
+	return nil
 }

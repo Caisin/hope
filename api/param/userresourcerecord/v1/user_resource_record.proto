@@ -15,21 +15,21 @@ service UserResourceRecord {
   // 分页查询UserResourceRecord
   rpc GetPageUserResourceRecord (UserResourceRecordPageReq) returns (UserResourceRecordPageReply)  {
     option (google.api.http) = {
-      get: "/v1/userresourcerecord/page"
+      get: "/v1/user/resource/record/page"
     };
   }
 
   // 获取UserResourceRecord
   rpc GetUserResourceRecord (UserResourceRecordReq) returns (UserResourceRecordReply)  {
     option (google.api.http) = {
-      get: "/v1/userresourcerecord/{id}"
+      get: "/v1/user/resource/record/{id}"
     };
   }
 
   // 更新UserResourceRecord
   rpc UpdateUserResourceRecord (UserResourceRecordUpdateReq) returns (UserResourceRecordUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/userresourcerecord/{id}"
+      put: "/v1/user/resource/record/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service UserResourceRecord {
   // 创建UserResourceRecord
   rpc CreateUserResourceRecord (UserResourceRecordCreateReq) returns (UserResourceRecordCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/userresourcerecord"
+      post: "/v1/user/resource/record"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service UserResourceRecord {
   // 删除UserResourceRecord
   rpc DeleteUserResourceRecord (UserResourceRecordDeleteReq) returns (UserResourceRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/userresourcerecord/{id}"
+      delete: "/v1/user/resource/record/{id}"
     };
   }
 
   // 批量删除UserResourceRecord
   rpc BatchDeleteUserResourceRecord (UserResourceRecordBatchDeleteReq) returns (UserResourceRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/userresourcerecord"
+      delete: "/v1/user/resource/record"
     };
   }
 

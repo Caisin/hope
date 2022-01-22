@@ -15,21 +15,21 @@ service NovelBuyRecord {
   // 分页查询NovelBuyRecord
   rpc GetPageNovelBuyRecord (NovelBuyRecordPageReq) returns (NovelBuyRecordPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelbuyrecord/page"
+      get: "/v1/novel/buy/record/page"
     };
   }
 
   // 获取NovelBuyRecord
   rpc GetNovelBuyRecord (NovelBuyRecordReq) returns (NovelBuyRecordReply)  {
     option (google.api.http) = {
-      get: "/v1/novelbuyrecord/{id}"
+      get: "/v1/novel/buy/record/{id}"
     };
   }
 
   // 更新NovelBuyRecord
   rpc UpdateNovelBuyRecord (NovelBuyRecordUpdateReq) returns (NovelBuyRecordUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelbuyrecord/{id}"
+      put: "/v1/novel/buy/record/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelBuyRecord {
   // 创建NovelBuyRecord
   rpc CreateNovelBuyRecord (NovelBuyRecordCreateReq) returns (NovelBuyRecordCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelbuyrecord"
+      post: "/v1/novel/buy/record"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelBuyRecord {
   // 删除NovelBuyRecord
   rpc DeleteNovelBuyRecord (NovelBuyRecordDeleteReq) returns (NovelBuyRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelbuyrecord/{id}"
+      delete: "/v1/novel/buy/record/{id}"
     };
   }
 
   // 批量删除NovelBuyRecord
   rpc BatchDeleteNovelBuyRecord (NovelBuyRecordBatchDeleteReq) returns (NovelBuyRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelbuyrecord"
+      delete: "/v1/novel/buy/record"
     };
   }
 

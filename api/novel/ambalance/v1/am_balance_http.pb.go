@@ -28,12 +28,12 @@ type AmBalanceHTTPServer interface {
 
 func RegisterAmBalanceHTTPServer(s *http.Server, srv AmBalanceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/ambalance/page", _AmBalance_GetPageAmBalance0_HTTP_Handler(srv))
-	r.GET("/v1/ambalance/{id}", _AmBalance_GetAmBalance0_HTTP_Handler(srv))
-	r.PUT("/v1/ambalance/{id}", _AmBalance_UpdateAmBalance0_HTTP_Handler(srv))
-	r.POST("/v1/ambalance", _AmBalance_CreateAmBalance0_HTTP_Handler(srv))
-	r.DELETE("/v1/ambalance/{id}", _AmBalance_DeleteAmBalance0_HTTP_Handler(srv))
-	r.DELETE("/v1/ambalance", _AmBalance_BatchDeleteAmBalance0_HTTP_Handler(srv))
+	r.GET("/v1/am/balance/page", _AmBalance_GetPageAmBalance0_HTTP_Handler(srv))
+	r.GET("/v1/am/balance/{id}", _AmBalance_GetAmBalance0_HTTP_Handler(srv))
+	r.PUT("/v1/am/balance/{id}", _AmBalance_UpdateAmBalance0_HTTP_Handler(srv))
+	r.POST("/v1/am/balance", _AmBalance_CreateAmBalance0_HTTP_Handler(srv))
+	r.DELETE("/v1/am/balance/{id}", _AmBalance_DeleteAmBalance0_HTTP_Handler(srv))
+	r.DELETE("/v1/am/balance", _AmBalance_BatchDeleteAmBalance0_HTTP_Handler(srv))
 }
 
 func _AmBalance_GetPageAmBalance0_HTTP_Handler(srv AmBalanceHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewAmBalanceHTTPClient(client *http.Client) AmBalanceHTTPClient {
 
 func (c *AmBalanceHTTPClientImpl) BatchDeleteAmBalance(ctx context.Context, in *AmBalanceBatchDeleteReq, opts ...http.CallOption) (*AmBalanceDeleteReply, error) {
 	var out AmBalanceDeleteReply
-	pattern := "/v1/ambalance"
+	pattern := "/v1/am/balance"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/BatchDeleteAmBalance"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *AmBalanceHTTPClientImpl) BatchDeleteAmBalance(ctx context.Context, in *
 
 func (c *AmBalanceHTTPClientImpl) CreateAmBalance(ctx context.Context, in *AmBalanceCreateReq, opts ...http.CallOption) (*AmBalanceCreateReply, error) {
 	var out AmBalanceCreateReply
-	pattern := "/v1/ambalance"
+	pattern := "/v1/am/balance"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/CreateAmBalance"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *AmBalanceHTTPClientImpl) CreateAmBalance(ctx context.Context, in *AmBal
 
 func (c *AmBalanceHTTPClientImpl) DeleteAmBalance(ctx context.Context, in *AmBalanceDeleteReq, opts ...http.CallOption) (*AmBalanceDeleteReply, error) {
 	var out AmBalanceDeleteReply
-	pattern := "/v1/ambalance/{id}"
+	pattern := "/v1/am/balance/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/DeleteAmBalance"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *AmBalanceHTTPClientImpl) DeleteAmBalance(ctx context.Context, in *AmBal
 
 func (c *AmBalanceHTTPClientImpl) GetAmBalance(ctx context.Context, in *AmBalanceReq, opts ...http.CallOption) (*AmBalanceReply, error) {
 	var out AmBalanceReply
-	pattern := "/v1/ambalance/{id}"
+	pattern := "/v1/am/balance/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/GetAmBalance"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *AmBalanceHTTPClientImpl) GetAmBalance(ctx context.Context, in *AmBalanc
 
 func (c *AmBalanceHTTPClientImpl) GetPageAmBalance(ctx context.Context, in *AmBalancePageReq, opts ...http.CallOption) (*AmBalancePageReply, error) {
 	var out AmBalancePageReply
-	pattern := "/v1/ambalance/page"
+	pattern := "/v1/am/balance/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/GetPageAmBalance"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *AmBalanceHTTPClientImpl) GetPageAmBalance(ctx context.Context, in *AmBa
 
 func (c *AmBalanceHTTPClientImpl) UpdateAmBalance(ctx context.Context, in *AmBalanceUpdateReq, opts ...http.CallOption) (*AmBalanceUpdateReply, error) {
 	var out AmBalanceUpdateReply
-	pattern := "/v1/ambalance/{id}"
+	pattern := "/v1/am/balance/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/UpdateAmBalance"))
 	opts = append(opts, http.PathTemplate(pattern))

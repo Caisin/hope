@@ -15,21 +15,21 @@ service UserConsume {
   // 分页查询UserConsume
   rpc GetPageUserConsume (UserConsumePageReq) returns (UserConsumePageReply)  {
     option (google.api.http) = {
-      get: "/v1/userconsume/page"
+      get: "/v1/user/consume/page"
     };
   }
 
   // 获取UserConsume
   rpc GetUserConsume (UserConsumeReq) returns (UserConsumeReply)  {
     option (google.api.http) = {
-      get: "/v1/userconsume/{id}"
+      get: "/v1/user/consume/{id}"
     };
   }
 
   // 更新UserConsume
   rpc UpdateUserConsume (UserConsumeUpdateReq) returns (UserConsumeUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/userconsume/{id}"
+      put: "/v1/user/consume/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service UserConsume {
   // 创建UserConsume
   rpc CreateUserConsume (UserConsumeCreateReq) returns (UserConsumeCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/userconsume"
+      post: "/v1/user/consume"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service UserConsume {
   // 删除UserConsume
   rpc DeleteUserConsume (UserConsumeDeleteReq) returns (UserConsumeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/userconsume/{id}"
+      delete: "/v1/user/consume/{id}"
     };
   }
 
   // 批量删除UserConsume
   rpc BatchDeleteUserConsume (UserConsumeBatchDeleteReq) returns (UserConsumeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/userconsume"
+      delete: "/v1/user/consume"
     };
   }
 

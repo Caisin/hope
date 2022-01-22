@@ -28,12 +28,12 @@ type PageConfigHTTPServer interface {
 
 func RegisterPageConfigHTTPServer(s *http.Server, srv PageConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/pageconfig/page", _PageConfig_GetPagePageConfig0_HTTP_Handler(srv))
-	r.GET("/v1/pageconfig/{id}", _PageConfig_GetPageConfig0_HTTP_Handler(srv))
-	r.PUT("/v1/pageconfig/{id}", _PageConfig_UpdatePageConfig0_HTTP_Handler(srv))
-	r.POST("/v1/pageconfig", _PageConfig_CreatePageConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/pageconfig/{id}", _PageConfig_DeletePageConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/pageconfig", _PageConfig_BatchDeletePageConfig0_HTTP_Handler(srv))
+	r.GET("/v1/page/config/page", _PageConfig_GetPagePageConfig0_HTTP_Handler(srv))
+	r.GET("/v1/page/config/{id}", _PageConfig_GetPageConfig0_HTTP_Handler(srv))
+	r.PUT("/v1/page/config/{id}", _PageConfig_UpdatePageConfig0_HTTP_Handler(srv))
+	r.POST("/v1/page/config", _PageConfig_CreatePageConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/page/config/{id}", _PageConfig_DeletePageConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/page/config", _PageConfig_BatchDeletePageConfig0_HTTP_Handler(srv))
 }
 
 func _PageConfig_GetPagePageConfig0_HTTP_Handler(srv PageConfigHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewPageConfigHTTPClient(client *http.Client) PageConfigHTTPClient {
 
 func (c *PageConfigHTTPClientImpl) BatchDeletePageConfig(ctx context.Context, in *PageConfigBatchDeleteReq, opts ...http.CallOption) (*PageConfigDeleteReply, error) {
 	var out PageConfigDeleteReply
-	pattern := "/v1/pageconfig"
+	pattern := "/v1/page/config"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/BatchDeletePageConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *PageConfigHTTPClientImpl) BatchDeletePageConfig(ctx context.Context, in
 
 func (c *PageConfigHTTPClientImpl) CreatePageConfig(ctx context.Context, in *PageConfigCreateReq, opts ...http.CallOption) (*PageConfigCreateReply, error) {
 	var out PageConfigCreateReply
-	pattern := "/v1/pageconfig"
+	pattern := "/v1/page/config"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/CreatePageConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *PageConfigHTTPClientImpl) CreatePageConfig(ctx context.Context, in *Pag
 
 func (c *PageConfigHTTPClientImpl) DeletePageConfig(ctx context.Context, in *PageConfigDeleteReq, opts ...http.CallOption) (*PageConfigDeleteReply, error) {
 	var out PageConfigDeleteReply
-	pattern := "/v1/pageconfig/{id}"
+	pattern := "/v1/page/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/DeletePageConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *PageConfigHTTPClientImpl) DeletePageConfig(ctx context.Context, in *Pag
 
 func (c *PageConfigHTTPClientImpl) GetPageConfig(ctx context.Context, in *PageConfigReq, opts ...http.CallOption) (*PageConfigReply, error) {
 	var out PageConfigReply
-	pattern := "/v1/pageconfig/{id}"
+	pattern := "/v1/page/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/GetPageConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *PageConfigHTTPClientImpl) GetPageConfig(ctx context.Context, in *PageCo
 
 func (c *PageConfigHTTPClientImpl) GetPagePageConfig(ctx context.Context, in *PageConfigPageReq, opts ...http.CallOption) (*PageConfigPageReply, error) {
 	var out PageConfigPageReply
-	pattern := "/v1/pageconfig/page"
+	pattern := "/v1/page/config/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/GetPagePageConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *PageConfigHTTPClientImpl) GetPagePageConfig(ctx context.Context, in *Pa
 
 func (c *PageConfigHTTPClientImpl) UpdatePageConfig(ctx context.Context, in *PageConfigUpdateReq, opts ...http.CallOption) (*PageConfigUpdateReply, error) {
 	var out PageConfigUpdateReply
-	pattern := "/v1/pageconfig/{id}"
+	pattern := "/v1/page/config/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/UpdatePageConfig"))
 	opts = append(opts, http.PathTemplate(pattern))

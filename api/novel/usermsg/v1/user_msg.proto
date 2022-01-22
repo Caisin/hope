@@ -15,21 +15,21 @@ service UserMsg {
   // 分页查询UserMsg
   rpc GetPageUserMsg (UserMsgPageReq) returns (UserMsgPageReply)  {
     option (google.api.http) = {
-      get: "/v1/usermsg/page"
+      get: "/v1/user/msg/page"
     };
   }
 
   // 获取UserMsg
   rpc GetUserMsg (UserMsgReq) returns (UserMsgReply)  {
     option (google.api.http) = {
-      get: "/v1/usermsg/{id}"
+      get: "/v1/user/msg/{id}"
     };
   }
 
   // 更新UserMsg
   rpc UpdateUserMsg (UserMsgUpdateReq) returns (UserMsgUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/usermsg/{id}"
+      put: "/v1/user/msg/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service UserMsg {
   // 创建UserMsg
   rpc CreateUserMsg (UserMsgCreateReq) returns (UserMsgCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/usermsg"
+      post: "/v1/user/msg"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service UserMsg {
   // 删除UserMsg
   rpc DeleteUserMsg (UserMsgDeleteReq) returns (UserMsgDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/usermsg/{id}"
+      delete: "/v1/user/msg/{id}"
     };
   }
 
   // 批量删除UserMsg
   rpc BatchDeleteUserMsg (UserMsgBatchDeleteReq) returns (UserMsgDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/usermsg"
+      delete: "/v1/user/msg"
     };
   }
 

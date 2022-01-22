@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/payorder": {
+    "/v1/pay/order": {
       "delete": {
         "summary": "批量删除PayOrder",
         "operationId": "PayOrder_BatchDeletePayOrder",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/payorder/page": {
+    "/v1/pay/order/page": {
       "get": {
         "summary": "分页查询PayOrder",
         "operationId": "PayOrder_GetPagePayOrder",
@@ -351,7 +351,7 @@
         ]
       }
     },
-    "/v1/payorder/{id}": {
+    "/v1/pay/order/{id}": {
       "get": {
         "summary": "获取PayOrder",
         "operationId": "PayOrder_GetPayOrder",

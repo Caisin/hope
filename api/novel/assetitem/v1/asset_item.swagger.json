@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/assetitem": {
+    "/v1/asset/item": {
       "delete": {
         "summary": "批量删除AssetItem",
         "operationId": "AssetItem_BatchDeleteAssetItem",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/assetitem/page": {
+    "/v1/asset/item/page": {
       "get": {
         "summary": "分页查询AssetItem",
         "operationId": "AssetItem_GetPageAssetItem",
@@ -240,7 +240,7 @@
         ]
       }
     },
-    "/v1/assetitem/{id}": {
+    "/v1/asset/item/{id}": {
       "get": {
         "summary": "获取AssetItem",
         "operationId": "AssetItem_GetAssetItem",

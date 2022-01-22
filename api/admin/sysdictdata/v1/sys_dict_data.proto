@@ -15,21 +15,21 @@ service SysDictData {
   // 分页查询SysDictData
   rpc GetPageSysDictData (SysDictDataPageReq) returns (SysDictDataPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysdictdata/page"
+      get: "/v1/sys/dict/data/page"
     };
   }
 
   // 获取SysDictData
   rpc GetSysDictData (SysDictDataReq) returns (SysDictDataReply)  {
     option (google.api.http) = {
-      get: "/v1/sysdictdata/{id}"
+      get: "/v1/sys/dict/data/{id}"
     };
   }
 
   // 更新SysDictData
   rpc UpdateSysDictData (SysDictDataUpdateReq) returns (SysDictDataUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysdictdata/{id}"
+      put: "/v1/sys/dict/data/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysDictData {
   // 创建SysDictData
   rpc CreateSysDictData (SysDictDataCreateReq) returns (SysDictDataCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysdictdata"
+      post: "/v1/sys/dict/data"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysDictData {
   // 删除SysDictData
   rpc DeleteSysDictData (SysDictDataDeleteReq) returns (SysDictDataDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysdictdata/{id}"
+      delete: "/v1/sys/dict/data/{id}"
     };
   }
 
   // 批量删除SysDictData
   rpc BatchDeleteSysDictData (SysDictDataBatchDeleteReq) returns (SysDictDataDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysdictdata"
+      delete: "/v1/sys/dict/data"
     };
   }
 

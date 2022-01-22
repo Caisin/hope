@@ -1,8 +1,9 @@
-package service
+package service
+
 import (
 	"context"
-	"go.opentelemetry.io/otel"
 	"github.com/go-kratos/kratos/v2/log"
+	"go.opentelemetry.io/otel"
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/convert"
 

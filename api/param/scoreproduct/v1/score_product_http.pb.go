@@ -28,12 +28,12 @@ type ScoreProductHTTPServer interface {
 
 func RegisterScoreProductHTTPServer(s *http.Server, srv ScoreProductHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/scoreproduct/page", _ScoreProduct_GetPageScoreProduct0_HTTP_Handler(srv))
-	r.GET("/v1/scoreproduct/{id}", _ScoreProduct_GetScoreProduct0_HTTP_Handler(srv))
-	r.PUT("/v1/scoreproduct/{id}", _ScoreProduct_UpdateScoreProduct0_HTTP_Handler(srv))
-	r.POST("/v1/scoreproduct", _ScoreProduct_CreateScoreProduct0_HTTP_Handler(srv))
-	r.DELETE("/v1/scoreproduct/{id}", _ScoreProduct_DeleteScoreProduct0_HTTP_Handler(srv))
-	r.DELETE("/v1/scoreproduct", _ScoreProduct_BatchDeleteScoreProduct0_HTTP_Handler(srv))
+	r.GET("/v1/score/product/page", _ScoreProduct_GetPageScoreProduct0_HTTP_Handler(srv))
+	r.GET("/v1/score/product/{id}", _ScoreProduct_GetScoreProduct0_HTTP_Handler(srv))
+	r.PUT("/v1/score/product/{id}", _ScoreProduct_UpdateScoreProduct0_HTTP_Handler(srv))
+	r.POST("/v1/score/product", _ScoreProduct_CreateScoreProduct0_HTTP_Handler(srv))
+	r.DELETE("/v1/score/product/{id}", _ScoreProduct_DeleteScoreProduct0_HTTP_Handler(srv))
+	r.DELETE("/v1/score/product", _ScoreProduct_BatchDeleteScoreProduct0_HTTP_Handler(srv))
 }
 
 func _ScoreProduct_GetPageScoreProduct0_HTTP_Handler(srv ScoreProductHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewScoreProductHTTPClient(client *http.Client) ScoreProductHTTPClient {
 
 func (c *ScoreProductHTTPClientImpl) BatchDeleteScoreProduct(ctx context.Context, in *ScoreProductBatchDeleteReq, opts ...http.CallOption) (*ScoreProductDeleteReply, error) {
 	var out ScoreProductDeleteReply
-	pattern := "/v1/scoreproduct"
+	pattern := "/v1/score/product"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/scoreproduct.v1.ScoreProduct/BatchDeleteScoreProduct"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *ScoreProductHTTPClientImpl) BatchDeleteScoreProduct(ctx context.Context
 
 func (c *ScoreProductHTTPClientImpl) CreateScoreProduct(ctx context.Context, in *ScoreProductCreateReq, opts ...http.CallOption) (*ScoreProductCreateReply, error) {
 	var out ScoreProductCreateReply
-	pattern := "/v1/scoreproduct"
+	pattern := "/v1/score/product"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/scoreproduct.v1.ScoreProduct/CreateScoreProduct"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *ScoreProductHTTPClientImpl) CreateScoreProduct(ctx context.Context, in 
 
 func (c *ScoreProductHTTPClientImpl) DeleteScoreProduct(ctx context.Context, in *ScoreProductDeleteReq, opts ...http.CallOption) (*ScoreProductDeleteReply, error) {
 	var out ScoreProductDeleteReply
-	pattern := "/v1/scoreproduct/{id}"
+	pattern := "/v1/score/product/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/scoreproduct.v1.ScoreProduct/DeleteScoreProduct"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *ScoreProductHTTPClientImpl) DeleteScoreProduct(ctx context.Context, in 
 
 func (c *ScoreProductHTTPClientImpl) GetPageScoreProduct(ctx context.Context, in *ScoreProductPageReq, opts ...http.CallOption) (*ScoreProductPageReply, error) {
 	var out ScoreProductPageReply
-	pattern := "/v1/scoreproduct/page"
+	pattern := "/v1/score/product/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/scoreproduct.v1.ScoreProduct/GetPageScoreProduct"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *ScoreProductHTTPClientImpl) GetPageScoreProduct(ctx context.Context, in
 
 func (c *ScoreProductHTTPClientImpl) GetScoreProduct(ctx context.Context, in *ScoreProductReq, opts ...http.CallOption) (*ScoreProductReply, error) {
 	var out ScoreProductReply
-	pattern := "/v1/scoreproduct/{id}"
+	pattern := "/v1/score/product/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/scoreproduct.v1.ScoreProduct/GetScoreProduct"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *ScoreProductHTTPClientImpl) GetScoreProduct(ctx context.Context, in *Sc
 
 func (c *ScoreProductHTTPClientImpl) UpdateScoreProduct(ctx context.Context, in *ScoreProductUpdateReq, opts ...http.CallOption) (*ScoreProductUpdateReply, error) {
 	var out ScoreProductUpdateReply
-	pattern := "/v1/scoreproduct/{id}"
+	pattern := "/v1/score/product/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/scoreproduct.v1.ScoreProduct/UpdateScoreProduct"))
 	opts = append(opts, http.PathTemplate(pattern))

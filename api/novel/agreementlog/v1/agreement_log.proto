@@ -15,21 +15,21 @@ service AgreementLog {
   // 分页查询AgreementLog
   rpc GetPageAgreementLog (AgreementLogPageReq) returns (AgreementLogPageReply)  {
     option (google.api.http) = {
-      get: "/v1/agreementlog/page"
+      get: "/v1/agreement/log/page"
     };
   }
 
   // 获取AgreementLog
   rpc GetAgreementLog (AgreementLogReq) returns (AgreementLogReply)  {
     option (google.api.http) = {
-      get: "/v1/agreementlog/{id}"
+      get: "/v1/agreement/log/{id}"
     };
   }
 
   // 更新AgreementLog
   rpc UpdateAgreementLog (AgreementLogUpdateReq) returns (AgreementLogUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/agreementlog/{id}"
+      put: "/v1/agreement/log/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service AgreementLog {
   // 创建AgreementLog
   rpc CreateAgreementLog (AgreementLogCreateReq) returns (AgreementLogCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/agreementlog"
+      post: "/v1/agreement/log"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service AgreementLog {
   // 删除AgreementLog
   rpc DeleteAgreementLog (AgreementLogDeleteReq) returns (AgreementLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/agreementlog/{id}"
+      delete: "/v1/agreement/log/{id}"
     };
   }
 
   // 批量删除AgreementLog
   rpc BatchDeleteAgreementLog (AgreementLogBatchDeleteReq) returns (AgreementLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/agreementlog"
+      delete: "/v1/agreement/log"
     };
   }
 

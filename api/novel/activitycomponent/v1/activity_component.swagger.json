@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/activitycomponent": {
+    "/v1/activity/component": {
       "delete": {
         "summary": "批量删除ActivityComponent",
         "operationId": "ActivityComponent_BatchDeleteActivityComponent",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/activitycomponent/page": {
+    "/v1/activity/component/page": {
       "get": {
         "summary": "分页查询ActivityComponent",
         "operationId": "ActivityComponent_GetPageActivityComponent",
@@ -308,7 +308,7 @@
         ]
       }
     },
-    "/v1/activitycomponent/{id}": {
+    "/v1/activity/component/{id}": {
       "get": {
         "summary": "获取ActivityComponent",
         "operationId": "ActivityComponent_GetActivityComponent",

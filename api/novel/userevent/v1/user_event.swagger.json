@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/userevent": {
+    "/v1/user/event": {
       "delete": {
         "summary": "批量删除UserEvent",
         "operationId": "UserEvent_BatchDeleteUserEvent",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/userevent/page": {
+    "/v1/user/event/page": {
       "get": {
         "summary": "分页查询UserEvent",
         "operationId": "UserEvent_GetPageUserEvent",
@@ -255,7 +255,7 @@
         ]
       }
     },
-    "/v1/userevent/{id}": {
+    "/v1/user/event/{id}": {
       "get": {
         "summary": "获取UserEvent",
         "operationId": "UserEvent_GetUserEvent",

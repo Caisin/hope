@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/novelautobuy": {
+    "/v1/novel/auto/buy": {
       "delete": {
         "summary": "批量删除NovelAutoBuy",
         "operationId": "NovelAutoBuy_BatchDeleteNovelAutoBuy",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/novelautobuy/page": {
+    "/v1/novel/auto/buy/page": {
       "get": {
         "summary": "分页查询NovelAutoBuy",
         "operationId": "NovelAutoBuy_GetPageNovelAutoBuy",
@@ -209,7 +209,7 @@
         ]
       }
     },
-    "/v1/novelautobuy/{id}": {
+    "/v1/novel/auto/buy/{id}": {
       "get": {
         "summary": "获取NovelAutoBuy",
         "operationId": "NovelAutoBuy_GetNovelAutoBuy",

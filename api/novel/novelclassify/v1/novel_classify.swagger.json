@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/novelclassify": {
+    "/v1/novel/classify": {
       "delete": {
         "summary": "批量删除NovelClassify",
         "operationId": "NovelClassify_BatchDeleteNovelClassify",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/novelclassify/page": {
+    "/v1/novel/classify/page": {
       "get": {
         "summary": "分页查询NovelClassify",
         "operationId": "NovelClassify_GetPageNovelClassify",
@@ -231,7 +231,7 @@
         ]
       }
     },
-    "/v1/novelclassify/{id}": {
+    "/v1/novel/classify/{id}": {
       "get": {
         "summary": "获取NovelClassify",
         "operationId": "NovelClassify_GetNovelClassify",

@@ -28,12 +28,12 @@ type SysConfigHTTPServer interface {
 
 func RegisterSysConfigHTTPServer(s *http.Server, srv SysConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysconfig/page", _SysConfig_GetPageSysConfig0_HTTP_Handler(srv))
-	r.GET("/v1/sysconfig/{id}", _SysConfig_GetSysConfig0_HTTP_Handler(srv))
-	r.PUT("/v1/sysconfig/{id}", _SysConfig_UpdateSysConfig0_HTTP_Handler(srv))
-	r.POST("/v1/sysconfig", _SysConfig_CreateSysConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysconfig/{id}", _SysConfig_DeleteSysConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysconfig", _SysConfig_BatchDeleteSysConfig0_HTTP_Handler(srv))
+	r.GET("/v1/sys/config/page", _SysConfig_GetPageSysConfig0_HTTP_Handler(srv))
+	r.GET("/v1/sys/config/{id}", _SysConfig_GetSysConfig0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/config/{id}", _SysConfig_UpdateSysConfig0_HTTP_Handler(srv))
+	r.POST("/v1/sys/config", _SysConfig_CreateSysConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/config/{id}", _SysConfig_DeleteSysConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/config", _SysConfig_BatchDeleteSysConfig0_HTTP_Handler(srv))
 }
 
 func _SysConfig_GetPageSysConfig0_HTTP_Handler(srv SysConfigHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysConfigHTTPClient(client *http.Client) SysConfigHTTPClient {
 
 func (c *SysConfigHTTPClientImpl) BatchDeleteSysConfig(ctx context.Context, in *SysConfigBatchDeleteReq, opts ...http.CallOption) (*SysConfigDeleteReply, error) {
 	var out SysConfigDeleteReply
-	pattern := "/v1/sysconfig"
+	pattern := "/v1/sys/config"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/BatchDeleteSysConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysConfigHTTPClientImpl) BatchDeleteSysConfig(ctx context.Context, in *
 
 func (c *SysConfigHTTPClientImpl) CreateSysConfig(ctx context.Context, in *SysConfigCreateReq, opts ...http.CallOption) (*SysConfigCreateReply, error) {
 	var out SysConfigCreateReply
-	pattern := "/v1/sysconfig"
+	pattern := "/v1/sys/config"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/CreateSysConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysConfigHTTPClientImpl) CreateSysConfig(ctx context.Context, in *SysCo
 
 func (c *SysConfigHTTPClientImpl) DeleteSysConfig(ctx context.Context, in *SysConfigDeleteReq, opts ...http.CallOption) (*SysConfigDeleteReply, error) {
 	var out SysConfigDeleteReply
-	pattern := "/v1/sysconfig/{id}"
+	pattern := "/v1/sys/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/DeleteSysConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysConfigHTTPClientImpl) DeleteSysConfig(ctx context.Context, in *SysCo
 
 func (c *SysConfigHTTPClientImpl) GetPageSysConfig(ctx context.Context, in *SysConfigPageReq, opts ...http.CallOption) (*SysConfigPageReply, error) {
 	var out SysConfigPageReply
-	pattern := "/v1/sysconfig/page"
+	pattern := "/v1/sys/config/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/GetPageSysConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysConfigHTTPClientImpl) GetPageSysConfig(ctx context.Context, in *SysC
 
 func (c *SysConfigHTTPClientImpl) GetSysConfig(ctx context.Context, in *SysConfigReq, opts ...http.CallOption) (*SysConfigReply, error) {
 	var out SysConfigReply
-	pattern := "/v1/sysconfig/{id}"
+	pattern := "/v1/sys/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/GetSysConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysConfigHTTPClientImpl) GetSysConfig(ctx context.Context, in *SysConfi
 
 func (c *SysConfigHTTPClientImpl) UpdateSysConfig(ctx context.Context, in *SysConfigUpdateReq, opts ...http.CallOption) (*SysConfigUpdateReply, error) {
 	var out SysConfigUpdateReply
-	pattern := "/v1/sysconfig/{id}"
+	pattern := "/v1/sys/config/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/UpdateSysConfig"))
 	opts = append(opts, http.PathTemplate(pattern))

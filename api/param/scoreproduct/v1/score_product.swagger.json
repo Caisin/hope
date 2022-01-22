@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/scoreproduct": {
+    "/v1/score/product": {
       "delete": {
         "summary": "批量删除ScoreProduct",
         "operationId": "ScoreProduct_BatchDeleteScoreProduct",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/scoreproduct/page": {
+    "/v1/score/product/page": {
       "get": {
         "summary": "分页查询ScoreProduct",
         "operationId": "ScoreProduct_GetPageScoreProduct",
@@ -246,7 +246,7 @@
         ]
       }
     },
-    "/v1/scoreproduct/{id}": {
+    "/v1/score/product/{id}": {
       "get": {
         "summary": "获取ScoreProduct",
         "operationId": "ScoreProduct_GetScoreProduct",

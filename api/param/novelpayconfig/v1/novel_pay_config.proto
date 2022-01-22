@@ -15,21 +15,21 @@ service NovelPayConfig {
   // 分页查询NovelPayConfig
   rpc GetPageNovelPayConfig (NovelPayConfigPageReq) returns (NovelPayConfigPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelpayconfig/page"
+      get: "/v1/novel/pay/config/page"
     };
   }
 
   // 获取NovelPayConfig
   rpc GetNovelPayConfig (NovelPayConfigReq) returns (NovelPayConfigReply)  {
     option (google.api.http) = {
-      get: "/v1/novelpayconfig/{id}"
+      get: "/v1/novel/pay/config/{id}"
     };
   }
 
   // 更新NovelPayConfig
   rpc UpdateNovelPayConfig (NovelPayConfigUpdateReq) returns (NovelPayConfigUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelpayconfig/{id}"
+      put: "/v1/novel/pay/config/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelPayConfig {
   // 创建NovelPayConfig
   rpc CreateNovelPayConfig (NovelPayConfigCreateReq) returns (NovelPayConfigCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelpayconfig"
+      post: "/v1/novel/pay/config"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelPayConfig {
   // 删除NovelPayConfig
   rpc DeleteNovelPayConfig (NovelPayConfigDeleteReq) returns (NovelPayConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelpayconfig/{id}"
+      delete: "/v1/novel/pay/config/{id}"
     };
   }
 
   // 批量删除NovelPayConfig
   rpc BatchDeleteNovelPayConfig (NovelPayConfigBatchDeleteReq) returns (NovelPayConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelpayconfig"
+      delete: "/v1/novel/pay/config"
     };
   }
 

@@ -28,12 +28,12 @@ type AssetChangeLogHTTPServer interface {
 
 func RegisterAssetChangeLogHTTPServer(s *http.Server, srv AssetChangeLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/assetchangelog/page", _AssetChangeLog_GetPageAssetChangeLog0_HTTP_Handler(srv))
-	r.GET("/v1/assetchangelog/{id}", _AssetChangeLog_GetAssetChangeLog0_HTTP_Handler(srv))
-	r.PUT("/v1/assetchangelog/{id}", _AssetChangeLog_UpdateAssetChangeLog0_HTTP_Handler(srv))
-	r.POST("/v1/assetchangelog", _AssetChangeLog_CreateAssetChangeLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/assetchangelog/{id}", _AssetChangeLog_DeleteAssetChangeLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/assetchangelog", _AssetChangeLog_BatchDeleteAssetChangeLog0_HTTP_Handler(srv))
+	r.GET("/v1/asset/change/log/page", _AssetChangeLog_GetPageAssetChangeLog0_HTTP_Handler(srv))
+	r.GET("/v1/asset/change/log/{id}", _AssetChangeLog_GetAssetChangeLog0_HTTP_Handler(srv))
+	r.PUT("/v1/asset/change/log/{id}", _AssetChangeLog_UpdateAssetChangeLog0_HTTP_Handler(srv))
+	r.POST("/v1/asset/change/log", _AssetChangeLog_CreateAssetChangeLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/asset/change/log/{id}", _AssetChangeLog_DeleteAssetChangeLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/asset/change/log", _AssetChangeLog_BatchDeleteAssetChangeLog0_HTTP_Handler(srv))
 }
 
 func _AssetChangeLog_GetPageAssetChangeLog0_HTTP_Handler(srv AssetChangeLogHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewAssetChangeLogHTTPClient(client *http.Client) AssetChangeLogHTTPClient {
 
 func (c *AssetChangeLogHTTPClientImpl) BatchDeleteAssetChangeLog(ctx context.Context, in *AssetChangeLogBatchDeleteReq, opts ...http.CallOption) (*AssetChangeLogDeleteReply, error) {
 	var out AssetChangeLogDeleteReply
-	pattern := "/v1/assetchangelog"
+	pattern := "/v1/asset/change/log"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/BatchDeleteAssetChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *AssetChangeLogHTTPClientImpl) BatchDeleteAssetChangeLog(ctx context.Con
 
 func (c *AssetChangeLogHTTPClientImpl) CreateAssetChangeLog(ctx context.Context, in *AssetChangeLogCreateReq, opts ...http.CallOption) (*AssetChangeLogCreateReply, error) {
 	var out AssetChangeLogCreateReply
-	pattern := "/v1/assetchangelog"
+	pattern := "/v1/asset/change/log"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/CreateAssetChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *AssetChangeLogHTTPClientImpl) CreateAssetChangeLog(ctx context.Context,
 
 func (c *AssetChangeLogHTTPClientImpl) DeleteAssetChangeLog(ctx context.Context, in *AssetChangeLogDeleteReq, opts ...http.CallOption) (*AssetChangeLogDeleteReply, error) {
 	var out AssetChangeLogDeleteReply
-	pattern := "/v1/assetchangelog/{id}"
+	pattern := "/v1/asset/change/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/DeleteAssetChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *AssetChangeLogHTTPClientImpl) DeleteAssetChangeLog(ctx context.Context,
 
 func (c *AssetChangeLogHTTPClientImpl) GetAssetChangeLog(ctx context.Context, in *AssetChangeLogReq, opts ...http.CallOption) (*AssetChangeLogReply, error) {
 	var out AssetChangeLogReply
-	pattern := "/v1/assetchangelog/{id}"
+	pattern := "/v1/asset/change/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/GetAssetChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *AssetChangeLogHTTPClientImpl) GetAssetChangeLog(ctx context.Context, in
 
 func (c *AssetChangeLogHTTPClientImpl) GetPageAssetChangeLog(ctx context.Context, in *AssetChangeLogPageReq, opts ...http.CallOption) (*AssetChangeLogPageReply, error) {
 	var out AssetChangeLogPageReply
-	pattern := "/v1/assetchangelog/page"
+	pattern := "/v1/asset/change/log/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/GetPageAssetChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *AssetChangeLogHTTPClientImpl) GetPageAssetChangeLog(ctx context.Context
 
 func (c *AssetChangeLogHTTPClientImpl) UpdateAssetChangeLog(ctx context.Context, in *AssetChangeLogUpdateReq, opts ...http.CallOption) (*AssetChangeLogUpdateReply, error) {
 	var out AssetChangeLogUpdateReply
-	pattern := "/v1/assetchangelog/{id}"
+	pattern := "/v1/asset/change/log/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/UpdateAssetChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/novelconsume": {
+    "/v1/novel/consume": {
       "delete": {
         "summary": "批量删除NovelConsume",
         "operationId": "NovelConsume_BatchDeleteNovelConsume",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/novelconsume/page": {
+    "/v1/novel/consume/page": {
       "get": {
         "summary": "分页查询NovelConsume",
         "operationId": "NovelConsume_GetPageNovelConsume",
@@ -233,7 +233,7 @@
         ]
       }
     },
-    "/v1/novelconsume/{id}": {
+    "/v1/novel/consume/{id}": {
       "get": {
         "summary": "获取NovelConsume",
         "operationId": "NovelConsume_GetNovelConsume",

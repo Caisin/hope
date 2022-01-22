@@ -15,21 +15,21 @@ service SysDictType {
   // 分页查询SysDictType
   rpc GetPageSysDictType (SysDictTypePageReq) returns (SysDictTypePageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysdicttype/page"
+      get: "/v1/sys/dict/type/page"
     };
   }
 
   // 获取SysDictType
   rpc GetSysDictType (SysDictTypeReq) returns (SysDictTypeReply)  {
     option (google.api.http) = {
-      get: "/v1/sysdicttype/{id}"
+      get: "/v1/sys/dict/type/{id}"
     };
   }
 
   // 更新SysDictType
   rpc UpdateSysDictType (SysDictTypeUpdateReq) returns (SysDictTypeUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysdicttype/{id}"
+      put: "/v1/sys/dict/type/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysDictType {
   // 创建SysDictType
   rpc CreateSysDictType (SysDictTypeCreateReq) returns (SysDictTypeCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysdicttype"
+      post: "/v1/sys/dict/type"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysDictType {
   // 删除SysDictType
   rpc DeleteSysDictType (SysDictTypeDeleteReq) returns (SysDictTypeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysdicttype/{id}"
+      delete: "/v1/sys/dict/type/{id}"
     };
   }
 
   // 批量删除SysDictType
   rpc BatchDeleteSysDictType (SysDictTypeBatchDeleteReq) returns (SysDictTypeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysdicttype"
+      delete: "/v1/sys/dict/type"
     };
   }
 

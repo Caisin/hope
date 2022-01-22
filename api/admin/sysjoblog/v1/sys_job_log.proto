@@ -15,21 +15,21 @@ service SysJobLog {
   // 分页查询SysJobLog
   rpc GetPageSysJobLog (SysJobLogPageReq) returns (SysJobLogPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysjoblog/page"
+      get: "/v1/sys/job/log/page"
     };
   }
 
   // 获取SysJobLog
   rpc GetSysJobLog (SysJobLogReq) returns (SysJobLogReply)  {
     option (google.api.http) = {
-      get: "/v1/sysjoblog/{id}"
+      get: "/v1/sys/job/log/{id}"
     };
   }
 
   // 更新SysJobLog
   rpc UpdateSysJobLog (SysJobLogUpdateReq) returns (SysJobLogUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysjoblog/{id}"
+      put: "/v1/sys/job/log/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysJobLog {
   // 创建SysJobLog
   rpc CreateSysJobLog (SysJobLogCreateReq) returns (SysJobLogCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysjoblog"
+      post: "/v1/sys/job/log"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysJobLog {
   // 删除SysJobLog
   rpc DeleteSysJobLog (SysJobLogDeleteReq) returns (SysJobLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysjoblog/{id}"
+      delete: "/v1/sys/job/log/{id}"
     };
   }
 
   // 批量删除SysJobLog
   rpc BatchDeleteSysJobLog (SysJobLogBatchDeleteReq) returns (SysJobLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysjoblog"
+      delete: "/v1/sys/job/log"
     };
   }
 

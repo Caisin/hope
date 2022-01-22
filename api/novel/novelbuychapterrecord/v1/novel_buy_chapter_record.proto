@@ -15,21 +15,21 @@ service NovelBuyChapterRecord {
   // 分页查询NovelBuyChapterRecord
   rpc GetPageNovelBuyChapterRecord (NovelBuyChapterRecordPageReq) returns (NovelBuyChapterRecordPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelbuychapterrecord/page"
+      get: "/v1/novel/buy/chapter/record/page"
     };
   }
 
   // 获取NovelBuyChapterRecord
   rpc GetNovelBuyChapterRecord (NovelBuyChapterRecordReq) returns (NovelBuyChapterRecordReply)  {
     option (google.api.http) = {
-      get: "/v1/novelbuychapterrecord/{id}"
+      get: "/v1/novel/buy/chapter/record/{id}"
     };
   }
 
   // 更新NovelBuyChapterRecord
   rpc UpdateNovelBuyChapterRecord (NovelBuyChapterRecordUpdateReq) returns (NovelBuyChapterRecordUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelbuychapterrecord/{id}"
+      put: "/v1/novel/buy/chapter/record/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelBuyChapterRecord {
   // 创建NovelBuyChapterRecord
   rpc CreateNovelBuyChapterRecord (NovelBuyChapterRecordCreateReq) returns (NovelBuyChapterRecordCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelbuychapterrecord"
+      post: "/v1/novel/buy/chapter/record"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelBuyChapterRecord {
   // 删除NovelBuyChapterRecord
   rpc DeleteNovelBuyChapterRecord (NovelBuyChapterRecordDeleteReq) returns (NovelBuyChapterRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelbuychapterrecord/{id}"
+      delete: "/v1/novel/buy/chapter/record/{id}"
     };
   }
 
   // 批量删除NovelBuyChapterRecord
   rpc BatchDeleteNovelBuyChapterRecord (NovelBuyChapterRecordBatchDeleteReq) returns (NovelBuyChapterRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelbuychapterrecord"
+      delete: "/v1/novel/buy/chapter/record"
     };
   }
 

@@ -15,21 +15,21 @@ service AdChangeLog {
   // 分页查询AdChangeLog
   rpc GetPageAdChangeLog (AdChangeLogPageReq) returns (AdChangeLogPageReply)  {
     option (google.api.http) = {
-      get: "/v1/adchangelog/page"
+      get: "/v1/ad/change/log/page"
     };
   }
 
   // 获取AdChangeLog
   rpc GetAdChangeLog (AdChangeLogReq) returns (AdChangeLogReply)  {
     option (google.api.http) = {
-      get: "/v1/adchangelog/{id}"
+      get: "/v1/ad/change/log/{id}"
     };
   }
 
   // 更新AdChangeLog
   rpc UpdateAdChangeLog (AdChangeLogUpdateReq) returns (AdChangeLogUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/adchangelog/{id}"
+      put: "/v1/ad/change/log/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service AdChangeLog {
   // 创建AdChangeLog
   rpc CreateAdChangeLog (AdChangeLogCreateReq) returns (AdChangeLogCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/adchangelog"
+      post: "/v1/ad/change/log"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service AdChangeLog {
   // 删除AdChangeLog
   rpc DeleteAdChangeLog (AdChangeLogDeleteReq) returns (AdChangeLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/adchangelog/{id}"
+      delete: "/v1/ad/change/log/{id}"
     };
   }
 
   // 批量删除AdChangeLog
   rpc BatchDeleteAdChangeLog (AdChangeLogBatchDeleteReq) returns (AdChangeLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/adchangelog"
+      delete: "/v1/ad/change/log"
     };
   }
 

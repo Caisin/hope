@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/userresourcerecord": {
+    "/v1/user/resource/record": {
       "delete": {
         "summary": "批量删除UserResourceRecord",
         "operationId": "UserResourceRecord_BatchDeleteUserResourceRecord",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/userresourcerecord/page": {
+    "/v1/user/resource/record/page": {
       "get": {
         "summary": "分页查询UserResourceRecord",
         "operationId": "UserResourceRecord_GetPageUserResourceRecord",
@@ -268,7 +268,7 @@
         ]
       }
     },
-    "/v1/userresourcerecord/{id}": {
+    "/v1/user/resource/record/{id}": {
       "get": {
         "summary": "获取UserResourceRecord",
         "operationId": "UserResourceRecord_GetUserResourceRecord",

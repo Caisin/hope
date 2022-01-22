@@ -28,12 +28,12 @@ type AdChangeLogHTTPServer interface {
 
 func RegisterAdChangeLogHTTPServer(s *http.Server, srv AdChangeLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/adchangelog/page", _AdChangeLog_GetPageAdChangeLog0_HTTP_Handler(srv))
-	r.GET("/v1/adchangelog/{id}", _AdChangeLog_GetAdChangeLog0_HTTP_Handler(srv))
-	r.PUT("/v1/adchangelog/{id}", _AdChangeLog_UpdateAdChangeLog0_HTTP_Handler(srv))
-	r.POST("/v1/adchangelog", _AdChangeLog_CreateAdChangeLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/adchangelog/{id}", _AdChangeLog_DeleteAdChangeLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/adchangelog", _AdChangeLog_BatchDeleteAdChangeLog0_HTTP_Handler(srv))
+	r.GET("/v1/ad/change/log/page", _AdChangeLog_GetPageAdChangeLog0_HTTP_Handler(srv))
+	r.GET("/v1/ad/change/log/{id}", _AdChangeLog_GetAdChangeLog0_HTTP_Handler(srv))
+	r.PUT("/v1/ad/change/log/{id}", _AdChangeLog_UpdateAdChangeLog0_HTTP_Handler(srv))
+	r.POST("/v1/ad/change/log", _AdChangeLog_CreateAdChangeLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/ad/change/log/{id}", _AdChangeLog_DeleteAdChangeLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/ad/change/log", _AdChangeLog_BatchDeleteAdChangeLog0_HTTP_Handler(srv))
 }
 
 func _AdChangeLog_GetPageAdChangeLog0_HTTP_Handler(srv AdChangeLogHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewAdChangeLogHTTPClient(client *http.Client) AdChangeLogHTTPClient {
 
 func (c *AdChangeLogHTTPClientImpl) BatchDeleteAdChangeLog(ctx context.Context, in *AdChangeLogBatchDeleteReq, opts ...http.CallOption) (*AdChangeLogDeleteReply, error) {
 	var out AdChangeLogDeleteReply
-	pattern := "/v1/adchangelog"
+	pattern := "/v1/ad/change/log"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchangelog.v1.AdChangeLog/BatchDeleteAdChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *AdChangeLogHTTPClientImpl) BatchDeleteAdChangeLog(ctx context.Context, 
 
 func (c *AdChangeLogHTTPClientImpl) CreateAdChangeLog(ctx context.Context, in *AdChangeLogCreateReq, opts ...http.CallOption) (*AdChangeLogCreateReply, error) {
 	var out AdChangeLogCreateReply
-	pattern := "/v1/adchangelog"
+	pattern := "/v1/ad/change/log"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/adchangelog.v1.AdChangeLog/CreateAdChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *AdChangeLogHTTPClientImpl) CreateAdChangeLog(ctx context.Context, in *A
 
 func (c *AdChangeLogHTTPClientImpl) DeleteAdChangeLog(ctx context.Context, in *AdChangeLogDeleteReq, opts ...http.CallOption) (*AdChangeLogDeleteReply, error) {
 	var out AdChangeLogDeleteReply
-	pattern := "/v1/adchangelog/{id}"
+	pattern := "/v1/ad/change/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchangelog.v1.AdChangeLog/DeleteAdChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *AdChangeLogHTTPClientImpl) DeleteAdChangeLog(ctx context.Context, in *A
 
 func (c *AdChangeLogHTTPClientImpl) GetAdChangeLog(ctx context.Context, in *AdChangeLogReq, opts ...http.CallOption) (*AdChangeLogReply, error) {
 	var out AdChangeLogReply
-	pattern := "/v1/adchangelog/{id}"
+	pattern := "/v1/ad/change/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchangelog.v1.AdChangeLog/GetAdChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *AdChangeLogHTTPClientImpl) GetAdChangeLog(ctx context.Context, in *AdCh
 
 func (c *AdChangeLogHTTPClientImpl) GetPageAdChangeLog(ctx context.Context, in *AdChangeLogPageReq, opts ...http.CallOption) (*AdChangeLogPageReply, error) {
 	var out AdChangeLogPageReply
-	pattern := "/v1/adchangelog/page"
+	pattern := "/v1/ad/change/log/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchangelog.v1.AdChangeLog/GetPageAdChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *AdChangeLogHTTPClientImpl) GetPageAdChangeLog(ctx context.Context, in *
 
 func (c *AdChangeLogHTTPClientImpl) UpdateAdChangeLog(ctx context.Context, in *AdChangeLogUpdateReq, opts ...http.CallOption) (*AdChangeLogUpdateReply, error) {
 	var out AdChangeLogUpdateReply
-	pattern := "/v1/adchangelog/{id}"
+	pattern := "/v1/ad/change/log/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/adchangelog.v1.AdChangeLog/UpdateAdChangeLog"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -28,12 +28,12 @@ type AppVersionHTTPServer interface {
 
 func RegisterAppVersionHTTPServer(s *http.Server, srv AppVersionHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/appversion/page", _AppVersion_GetPageAppVersion0_HTTP_Handler(srv))
-	r.GET("/v1/appversion/{id}", _AppVersion_GetAppVersion0_HTTP_Handler(srv))
-	r.PUT("/v1/appversion/{id}", _AppVersion_UpdateAppVersion0_HTTP_Handler(srv))
-	r.POST("/v1/appversion", _AppVersion_CreateAppVersion0_HTTP_Handler(srv))
-	r.DELETE("/v1/appversion/{id}", _AppVersion_DeleteAppVersion0_HTTP_Handler(srv))
-	r.DELETE("/v1/appversion", _AppVersion_BatchDeleteAppVersion0_HTTP_Handler(srv))
+	r.GET("/v1/app/version/page", _AppVersion_GetPageAppVersion0_HTTP_Handler(srv))
+	r.GET("/v1/app/version/{id}", _AppVersion_GetAppVersion0_HTTP_Handler(srv))
+	r.PUT("/v1/app/version/{id}", _AppVersion_UpdateAppVersion0_HTTP_Handler(srv))
+	r.POST("/v1/app/version", _AppVersion_CreateAppVersion0_HTTP_Handler(srv))
+	r.DELETE("/v1/app/version/{id}", _AppVersion_DeleteAppVersion0_HTTP_Handler(srv))
+	r.DELETE("/v1/app/version", _AppVersion_BatchDeleteAppVersion0_HTTP_Handler(srv))
 }
 
 func _AppVersion_GetPageAppVersion0_HTTP_Handler(srv AppVersionHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewAppVersionHTTPClient(client *http.Client) AppVersionHTTPClient {
 
 func (c *AppVersionHTTPClientImpl) BatchDeleteAppVersion(ctx context.Context, in *AppVersionBatchDeleteReq, opts ...http.CallOption) (*AppVersionDeleteReply, error) {
 	var out AppVersionDeleteReply
-	pattern := "/v1/appversion"
+	pattern := "/v1/app/version"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/appversion.v1.AppVersion/BatchDeleteAppVersion"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *AppVersionHTTPClientImpl) BatchDeleteAppVersion(ctx context.Context, in
 
 func (c *AppVersionHTTPClientImpl) CreateAppVersion(ctx context.Context, in *AppVersionCreateReq, opts ...http.CallOption) (*AppVersionCreateReply, error) {
 	var out AppVersionCreateReply
-	pattern := "/v1/appversion"
+	pattern := "/v1/app/version"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/appversion.v1.AppVersion/CreateAppVersion"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *AppVersionHTTPClientImpl) CreateAppVersion(ctx context.Context, in *App
 
 func (c *AppVersionHTTPClientImpl) DeleteAppVersion(ctx context.Context, in *AppVersionDeleteReq, opts ...http.CallOption) (*AppVersionDeleteReply, error) {
 	var out AppVersionDeleteReply
-	pattern := "/v1/appversion/{id}"
+	pattern := "/v1/app/version/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/appversion.v1.AppVersion/DeleteAppVersion"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *AppVersionHTTPClientImpl) DeleteAppVersion(ctx context.Context, in *App
 
 func (c *AppVersionHTTPClientImpl) GetAppVersion(ctx context.Context, in *AppVersionReq, opts ...http.CallOption) (*AppVersionReply, error) {
 	var out AppVersionReply
-	pattern := "/v1/appversion/{id}"
+	pattern := "/v1/app/version/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/appversion.v1.AppVersion/GetAppVersion"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *AppVersionHTTPClientImpl) GetAppVersion(ctx context.Context, in *AppVer
 
 func (c *AppVersionHTTPClientImpl) GetPageAppVersion(ctx context.Context, in *AppVersionPageReq, opts ...http.CallOption) (*AppVersionPageReply, error) {
 	var out AppVersionPageReply
-	pattern := "/v1/appversion/page"
+	pattern := "/v1/app/version/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/appversion.v1.AppVersion/GetPageAppVersion"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *AppVersionHTTPClientImpl) GetPageAppVersion(ctx context.Context, in *Ap
 
 func (c *AppVersionHTTPClientImpl) UpdateAppVersion(ctx context.Context, in *AppVersionUpdateReq, opts ...http.CallOption) (*AppVersionUpdateReply, error) {
 	var out AppVersionUpdateReply
-	pattern := "/v1/appversion/{id}"
+	pattern := "/v1/app/version/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/appversion.v1.AppVersion/UpdateAppVersion"))
 	opts = append(opts, http.PathTemplate(pattern))

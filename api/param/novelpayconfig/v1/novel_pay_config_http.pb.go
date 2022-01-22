@@ -28,12 +28,12 @@ type NovelPayConfigHTTPServer interface {
 
 func RegisterNovelPayConfigHTTPServer(s *http.Server, srv NovelPayConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelpayconfig/page", _NovelPayConfig_GetPageNovelPayConfig0_HTTP_Handler(srv))
-	r.GET("/v1/novelpayconfig/{id}", _NovelPayConfig_GetNovelPayConfig0_HTTP_Handler(srv))
-	r.PUT("/v1/novelpayconfig/{id}", _NovelPayConfig_UpdateNovelPayConfig0_HTTP_Handler(srv))
-	r.POST("/v1/novelpayconfig", _NovelPayConfig_CreateNovelPayConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelpayconfig/{id}", _NovelPayConfig_DeleteNovelPayConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelpayconfig", _NovelPayConfig_BatchDeleteNovelPayConfig0_HTTP_Handler(srv))
+	r.GET("/v1/novel/pay/config/page", _NovelPayConfig_GetPageNovelPayConfig0_HTTP_Handler(srv))
+	r.GET("/v1/novel/pay/config/{id}", _NovelPayConfig_GetNovelPayConfig0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/pay/config/{id}", _NovelPayConfig_UpdateNovelPayConfig0_HTTP_Handler(srv))
+	r.POST("/v1/novel/pay/config", _NovelPayConfig_CreateNovelPayConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/pay/config/{id}", _NovelPayConfig_DeleteNovelPayConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/pay/config", _NovelPayConfig_BatchDeleteNovelPayConfig0_HTTP_Handler(srv))
 }
 
 func _NovelPayConfig_GetPageNovelPayConfig0_HTTP_Handler(srv NovelPayConfigHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelPayConfigHTTPClient(client *http.Client) NovelPayConfigHTTPClient {
 
 func (c *NovelPayConfigHTTPClientImpl) BatchDeleteNovelPayConfig(ctx context.Context, in *NovelPayConfigBatchDeleteReq, opts ...http.CallOption) (*NovelPayConfigDeleteReply, error) {
 	var out NovelPayConfigDeleteReply
-	pattern := "/v1/novelpayconfig"
+	pattern := "/v1/novel/pay/config"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/BatchDeleteNovelPayConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelPayConfigHTTPClientImpl) BatchDeleteNovelPayConfig(ctx context.Con
 
 func (c *NovelPayConfigHTTPClientImpl) CreateNovelPayConfig(ctx context.Context, in *NovelPayConfigCreateReq, opts ...http.CallOption) (*NovelPayConfigCreateReply, error) {
 	var out NovelPayConfigCreateReply
-	pattern := "/v1/novelpayconfig"
+	pattern := "/v1/novel/pay/config"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/CreateNovelPayConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelPayConfigHTTPClientImpl) CreateNovelPayConfig(ctx context.Context,
 
 func (c *NovelPayConfigHTTPClientImpl) DeleteNovelPayConfig(ctx context.Context, in *NovelPayConfigDeleteReq, opts ...http.CallOption) (*NovelPayConfigDeleteReply, error) {
 	var out NovelPayConfigDeleteReply
-	pattern := "/v1/novelpayconfig/{id}"
+	pattern := "/v1/novel/pay/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/DeleteNovelPayConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelPayConfigHTTPClientImpl) DeleteNovelPayConfig(ctx context.Context,
 
 func (c *NovelPayConfigHTTPClientImpl) GetNovelPayConfig(ctx context.Context, in *NovelPayConfigReq, opts ...http.CallOption) (*NovelPayConfigReply, error) {
 	var out NovelPayConfigReply
-	pattern := "/v1/novelpayconfig/{id}"
+	pattern := "/v1/novel/pay/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/GetNovelPayConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelPayConfigHTTPClientImpl) GetNovelPayConfig(ctx context.Context, in
 
 func (c *NovelPayConfigHTTPClientImpl) GetPageNovelPayConfig(ctx context.Context, in *NovelPayConfigPageReq, opts ...http.CallOption) (*NovelPayConfigPageReply, error) {
 	var out NovelPayConfigPageReply
-	pattern := "/v1/novelpayconfig/page"
+	pattern := "/v1/novel/pay/config/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/GetPageNovelPayConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelPayConfigHTTPClientImpl) GetPageNovelPayConfig(ctx context.Context
 
 func (c *NovelPayConfigHTTPClientImpl) UpdateNovelPayConfig(ctx context.Context, in *NovelPayConfigUpdateReq, opts ...http.CallOption) (*NovelPayConfigUpdateReply, error) {
 	var out NovelPayConfigUpdateReply
-	pattern := "/v1/novelpayconfig/{id}"
+	pattern := "/v1/novel/pay/config/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/UpdateNovelPayConfig"))
 	opts = append(opts, http.PathTemplate(pattern))

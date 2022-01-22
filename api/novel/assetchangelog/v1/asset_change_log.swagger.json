@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/assetchangelog": {
+    "/v1/asset/change/log": {
       "delete": {
         "summary": "批量删除AssetChangeLog",
         "operationId": "AssetChangeLog_BatchDeleteAssetChangeLog",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/assetchangelog/page": {
+    "/v1/asset/change/log/page": {
       "get": {
         "summary": "分页查询AssetChangeLog",
         "operationId": "AssetChangeLog_GetPageAssetChangeLog",
@@ -263,7 +263,7 @@
         ]
       }
     },
-    "/v1/assetchangelog/{id}": {
+    "/v1/asset/change/log/{id}": {
       "get": {
         "summary": "获取AssetChangeLog",
         "operationId": "AssetChangeLog_GetAssetChangeLog",

@@ -15,21 +15,21 @@ service AssetChangeLog {
   // 分页查询AssetChangeLog
   rpc GetPageAssetChangeLog (AssetChangeLogPageReq) returns (AssetChangeLogPageReply)  {
     option (google.api.http) = {
-      get: "/v1/assetchangelog/page"
+      get: "/v1/asset/change/log/page"
     };
   }
 
   // 获取AssetChangeLog
   rpc GetAssetChangeLog (AssetChangeLogReq) returns (AssetChangeLogReply)  {
     option (google.api.http) = {
-      get: "/v1/assetchangelog/{id}"
+      get: "/v1/asset/change/log/{id}"
     };
   }
 
   // 更新AssetChangeLog
   rpc UpdateAssetChangeLog (AssetChangeLogUpdateReq) returns (AssetChangeLogUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/assetchangelog/{id}"
+      put: "/v1/asset/change/log/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service AssetChangeLog {
   // 创建AssetChangeLog
   rpc CreateAssetChangeLog (AssetChangeLogCreateReq) returns (AssetChangeLogCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/assetchangelog"
+      post: "/v1/asset/change/log"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service AssetChangeLog {
   // 删除AssetChangeLog
   rpc DeleteAssetChangeLog (AssetChangeLogDeleteReq) returns (AssetChangeLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/assetchangelog/{id}"
+      delete: "/v1/asset/change/log/{id}"
     };
   }
 
   // 批量删除AssetChangeLog
   rpc BatchDeleteAssetChangeLog (AssetChangeLogBatchDeleteReq) returns (AssetChangeLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/assetchangelog"
+      delete: "/v1/asset/change/log"
     };
   }
 

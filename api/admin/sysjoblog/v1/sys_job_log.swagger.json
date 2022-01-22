@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysjoblog": {
+    "/v1/sys/job/log": {
       "delete": {
         "summary": "批量删除SysJobLog",
         "operationId": "SysJobLog_BatchDeleteSysJobLog",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysjoblog/page": {
+    "/v1/sys/job/log/page": {
       "get": {
         "summary": "分页查询SysJobLog",
         "operationId": "SysJobLog_GetPageSysJobLog",
@@ -237,7 +237,7 @@
         ]
       }
     },
-    "/v1/sysjoblog/{id}": {
+    "/v1/sys/job/log/{id}": {
       "get": {
         "summary": "获取SysJobLog",
         "operationId": "SysJobLog_GetSysJobLog",

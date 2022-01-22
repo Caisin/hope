@@ -15,21 +15,21 @@ service SysMenu {
   // 分页查询SysMenu
   rpc GetPageSysMenu (SysMenuPageReq) returns (SysMenuPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysmenu/page"
+      get: "/v1/sys/menu/page"
     };
   }
 
   // 获取SysMenu
   rpc GetSysMenu (SysMenuReq) returns (SysMenuReply)  {
     option (google.api.http) = {
-      get: "/v1/sysmenu/{id}"
+      get: "/v1/sys/menu/{id}"
     };
   }
 
   // 更新SysMenu
   rpc UpdateSysMenu (SysMenuUpdateReq) returns (SysMenuUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysmenu/{id}"
+      put: "/v1/sys/menu/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysMenu {
   // 创建SysMenu
   rpc CreateSysMenu (SysMenuCreateReq) returns (SysMenuCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysmenu"
+      post: "/v1/sys/menu"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysMenu {
   // 删除SysMenu
   rpc DeleteSysMenu (SysMenuDeleteReq) returns (SysMenuDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysmenu/{id}"
+      delete: "/v1/sys/menu/{id}"
     };
   }
 
   // 批量删除SysMenu
   rpc BatchDeleteSysMenu (SysMenuBatchDeleteReq) returns (SysMenuDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysmenu"
+      delete: "/v1/sys/menu"
     };
   }
 

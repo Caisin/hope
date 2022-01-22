@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysapi": {
+    "/v1/sys/api": {
       "delete": {
         "summary": "批量删除SysApi",
         "operationId": "SysApi_BatchDeleteSysApi",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysapi/page": {
+    "/v1/sys/api/page": {
       "get": {
         "summary": "分页查询SysApi",
         "operationId": "SysApi_GetPageSysApi",
@@ -228,7 +228,7 @@
         ]
       }
     },
-    "/v1/sysapi/{id}": {
+    "/v1/sys/api/{id}": {
       "get": {
         "summary": "获取SysApi",
         "operationId": "SysApi_GetSysApi",

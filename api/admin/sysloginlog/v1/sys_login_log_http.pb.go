@@ -28,12 +28,12 @@ type SysLoginLogHTTPServer interface {
 
 func RegisterSysLoginLogHTTPServer(s *http.Server, srv SysLoginLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysloginlog/page", _SysLoginLog_GetPageSysLoginLog0_HTTP_Handler(srv))
-	r.GET("/v1/sysloginlog/{id}", _SysLoginLog_GetSysLoginLog0_HTTP_Handler(srv))
-	r.PUT("/v1/sysloginlog/{id}", _SysLoginLog_UpdateSysLoginLog0_HTTP_Handler(srv))
-	r.POST("/v1/sysloginlog", _SysLoginLog_CreateSysLoginLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysloginlog/{id}", _SysLoginLog_DeleteSysLoginLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysloginlog", _SysLoginLog_BatchDeleteSysLoginLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/login/log/page", _SysLoginLog_GetPageSysLoginLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/login/log/{id}", _SysLoginLog_GetSysLoginLog0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/login/log/{id}", _SysLoginLog_UpdateSysLoginLog0_HTTP_Handler(srv))
+	r.POST("/v1/sys/login/log", _SysLoginLog_CreateSysLoginLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/login/log/{id}", _SysLoginLog_DeleteSysLoginLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/login/log", _SysLoginLog_BatchDeleteSysLoginLog0_HTTP_Handler(srv))
 }
 
 func _SysLoginLog_GetPageSysLoginLog0_HTTP_Handler(srv SysLoginLogHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysLoginLogHTTPClient(client *http.Client) SysLoginLogHTTPClient {
 
 func (c *SysLoginLogHTTPClientImpl) BatchDeleteSysLoginLog(ctx context.Context, in *SysLoginLogBatchDeleteReq, opts ...http.CallOption) (*SysLoginLogDeleteReply, error) {
 	var out SysLoginLogDeleteReply
-	pattern := "/v1/sysloginlog"
+	pattern := "/v1/sys/login/log"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/BatchDeleteSysLoginLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysLoginLogHTTPClientImpl) BatchDeleteSysLoginLog(ctx context.Context, 
 
 func (c *SysLoginLogHTTPClientImpl) CreateSysLoginLog(ctx context.Context, in *SysLoginLogCreateReq, opts ...http.CallOption) (*SysLoginLogCreateReply, error) {
 	var out SysLoginLogCreateReply
-	pattern := "/v1/sysloginlog"
+	pattern := "/v1/sys/login/log"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/CreateSysLoginLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysLoginLogHTTPClientImpl) CreateSysLoginLog(ctx context.Context, in *S
 
 func (c *SysLoginLogHTTPClientImpl) DeleteSysLoginLog(ctx context.Context, in *SysLoginLogDeleteReq, opts ...http.CallOption) (*SysLoginLogDeleteReply, error) {
 	var out SysLoginLogDeleteReply
-	pattern := "/v1/sysloginlog/{id}"
+	pattern := "/v1/sys/login/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/DeleteSysLoginLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysLoginLogHTTPClientImpl) DeleteSysLoginLog(ctx context.Context, in *S
 
 func (c *SysLoginLogHTTPClientImpl) GetPageSysLoginLog(ctx context.Context, in *SysLoginLogPageReq, opts ...http.CallOption) (*SysLoginLogPageReply, error) {
 	var out SysLoginLogPageReply
-	pattern := "/v1/sysloginlog/page"
+	pattern := "/v1/sys/login/log/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/GetPageSysLoginLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysLoginLogHTTPClientImpl) GetPageSysLoginLog(ctx context.Context, in *
 
 func (c *SysLoginLogHTTPClientImpl) GetSysLoginLog(ctx context.Context, in *SysLoginLogReq, opts ...http.CallOption) (*SysLoginLogReply, error) {
 	var out SysLoginLogReply
-	pattern := "/v1/sysloginlog/{id}"
+	pattern := "/v1/sys/login/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/GetSysLoginLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysLoginLogHTTPClientImpl) GetSysLoginLog(ctx context.Context, in *SysL
 
 func (c *SysLoginLogHTTPClientImpl) UpdateSysLoginLog(ctx context.Context, in *SysLoginLogUpdateReq, opts ...http.CallOption) (*SysLoginLogUpdateReply, error) {
 	var out SysLoginLogUpdateReply
-	pattern := "/v1/sysloginlog/{id}"
+	pattern := "/v1/sys/login/log/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/UpdateSysLoginLog"))
 	opts = append(opts, http.PathTemplate(pattern))

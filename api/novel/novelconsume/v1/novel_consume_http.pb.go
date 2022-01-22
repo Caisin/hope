@@ -28,12 +28,12 @@ type NovelConsumeHTTPServer interface {
 
 func RegisterNovelConsumeHTTPServer(s *http.Server, srv NovelConsumeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelconsume/page", _NovelConsume_GetPageNovelConsume0_HTTP_Handler(srv))
-	r.GET("/v1/novelconsume/{id}", _NovelConsume_GetNovelConsume0_HTTP_Handler(srv))
-	r.PUT("/v1/novelconsume/{id}", _NovelConsume_UpdateNovelConsume0_HTTP_Handler(srv))
-	r.POST("/v1/novelconsume", _NovelConsume_CreateNovelConsume0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelconsume/{id}", _NovelConsume_DeleteNovelConsume0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelconsume", _NovelConsume_BatchDeleteNovelConsume0_HTTP_Handler(srv))
+	r.GET("/v1/novel/consume/page", _NovelConsume_GetPageNovelConsume0_HTTP_Handler(srv))
+	r.GET("/v1/novel/consume/{id}", _NovelConsume_GetNovelConsume0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/consume/{id}", _NovelConsume_UpdateNovelConsume0_HTTP_Handler(srv))
+	r.POST("/v1/novel/consume", _NovelConsume_CreateNovelConsume0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/consume/{id}", _NovelConsume_DeleteNovelConsume0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/consume", _NovelConsume_BatchDeleteNovelConsume0_HTTP_Handler(srv))
 }
 
 func _NovelConsume_GetPageNovelConsume0_HTTP_Handler(srv NovelConsumeHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelConsumeHTTPClient(client *http.Client) NovelConsumeHTTPClient {
 
 func (c *NovelConsumeHTTPClientImpl) BatchDeleteNovelConsume(ctx context.Context, in *NovelConsumeBatchDeleteReq, opts ...http.CallOption) (*NovelConsumeDeleteReply, error) {
 	var out NovelConsumeDeleteReply
-	pattern := "/v1/novelconsume"
+	pattern := "/v1/novel/consume"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/BatchDeleteNovelConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelConsumeHTTPClientImpl) BatchDeleteNovelConsume(ctx context.Context
 
 func (c *NovelConsumeHTTPClientImpl) CreateNovelConsume(ctx context.Context, in *NovelConsumeCreateReq, opts ...http.CallOption) (*NovelConsumeCreateReply, error) {
 	var out NovelConsumeCreateReply
-	pattern := "/v1/novelconsume"
+	pattern := "/v1/novel/consume"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/CreateNovelConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelConsumeHTTPClientImpl) CreateNovelConsume(ctx context.Context, in 
 
 func (c *NovelConsumeHTTPClientImpl) DeleteNovelConsume(ctx context.Context, in *NovelConsumeDeleteReq, opts ...http.CallOption) (*NovelConsumeDeleteReply, error) {
 	var out NovelConsumeDeleteReply
-	pattern := "/v1/novelconsume/{id}"
+	pattern := "/v1/novel/consume/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/DeleteNovelConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelConsumeHTTPClientImpl) DeleteNovelConsume(ctx context.Context, in 
 
 func (c *NovelConsumeHTTPClientImpl) GetNovelConsume(ctx context.Context, in *NovelConsumeReq, opts ...http.CallOption) (*NovelConsumeReply, error) {
 	var out NovelConsumeReply
-	pattern := "/v1/novelconsume/{id}"
+	pattern := "/v1/novel/consume/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/GetNovelConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelConsumeHTTPClientImpl) GetNovelConsume(ctx context.Context, in *No
 
 func (c *NovelConsumeHTTPClientImpl) GetPageNovelConsume(ctx context.Context, in *NovelConsumePageReq, opts ...http.CallOption) (*NovelConsumePageReply, error) {
 	var out NovelConsumePageReply
-	pattern := "/v1/novelconsume/page"
+	pattern := "/v1/novel/consume/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/GetPageNovelConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelConsumeHTTPClientImpl) GetPageNovelConsume(ctx context.Context, in
 
 func (c *NovelConsumeHTTPClientImpl) UpdateNovelConsume(ctx context.Context, in *NovelConsumeUpdateReq, opts ...http.CallOption) (*NovelConsumeUpdateReply, error) {
 	var out NovelConsumeUpdateReply
-	pattern := "/v1/novelconsume/{id}"
+	pattern := "/v1/novel/consume/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/UpdateNovelConsume"))
 	opts = append(opts, http.PathTemplate(pattern))

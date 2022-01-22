@@ -15,21 +15,21 @@ service UserEvent {
   // 分页查询UserEvent
   rpc GetPageUserEvent (UserEventPageReq) returns (UserEventPageReply)  {
     option (google.api.http) = {
-      get: "/v1/userevent/page"
+      get: "/v1/user/event/page"
     };
   }
 
   // 获取UserEvent
   rpc GetUserEvent (UserEventReq) returns (UserEventReply)  {
     option (google.api.http) = {
-      get: "/v1/userevent/{id}"
+      get: "/v1/user/event/{id}"
     };
   }
 
   // 更新UserEvent
   rpc UpdateUserEvent (UserEventUpdateReq) returns (UserEventUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/userevent/{id}"
+      put: "/v1/user/event/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service UserEvent {
   // 创建UserEvent
   rpc CreateUserEvent (UserEventCreateReq) returns (UserEventCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/userevent"
+      post: "/v1/user/event"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service UserEvent {
   // 删除UserEvent
   rpc DeleteUserEvent (UserEventDeleteReq) returns (UserEventDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/userevent/{id}"
+      delete: "/v1/user/event/{id}"
     };
   }
 
   // 批量删除UserEvent
   rpc BatchDeleteUserEvent (UserEventBatchDeleteReq) returns (UserEventDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/userevent"
+      delete: "/v1/user/event"
     };
   }
 

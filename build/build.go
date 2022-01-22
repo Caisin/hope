@@ -108,6 +108,7 @@ func main() {
 			m["llName"] = str.LeftLower(name)
 			lower := strings.ToLower(name)
 			m["pkg"] = lower
+			m["apiPath"] = str.Camel2Split(name, "/")
 			m["fields"] = fields
 
 			//生成api

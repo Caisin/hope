@@ -54,25 +54,27 @@ services:
       
   prometheus:
     image: prom/prometheus
-    network_mode: "host"
-    container_name: prometheus-compose
+#    network_mode: "host"
+    container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
-      - D:/work/data/prometheus/etc:/etc/prometheus   #prometheus主配置文件
+      - D:/work/data/prometheus/etc/prometheus.yml:/etc/prometheus/prometheus.yml   #prometheus主配置文件
       - D:/work/data/prometheus/prometheus-data:/prometheus  #数据存储映射
-      #- D:/work/data/prometheus/conf:/etc/prometheus/conf   #prometheus子配置文件路径
+      - D:/work/data/prometheus/conf:/etc/prometheus/conf   #prometheus子配置文件路径
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'    #加载主配置文件
       - '--storage.tsdb.path=/prometheus'    #启动数据持久存储
     restart: always
 
   grafana:
-    image: grafana/grafana
-    network_mode: "host"
-    container_name: grafana-compose
+    image: grafana/grafana-enterprise
+#    network_mode: "host"
+    container_name: grafana-enterprise
     ports:
       - "4000:3000"
+    depends_on:
+      - prometheus
     volumes:
       - D:/work/data/grafana/etc:/etc/grafana #grafana配置文件
       - D:/work/data/grafana/grafana_data:/var/lib/grafana   #数据存储映射

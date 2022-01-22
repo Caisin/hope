@@ -28,12 +28,12 @@ type SysJobLogHTTPServer interface {
 
 func RegisterSysJobLogHTTPServer(s *http.Server, srv SysJobLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysjoblog/page", _SysJobLog_GetPageSysJobLog0_HTTP_Handler(srv))
-	r.GET("/v1/sysjoblog/{id}", _SysJobLog_GetSysJobLog0_HTTP_Handler(srv))
-	r.PUT("/v1/sysjoblog/{id}", _SysJobLog_UpdateSysJobLog0_HTTP_Handler(srv))
-	r.POST("/v1/sysjoblog", _SysJobLog_CreateSysJobLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysjoblog/{id}", _SysJobLog_DeleteSysJobLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysjoblog", _SysJobLog_BatchDeleteSysJobLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/job/log/page", _SysJobLog_GetPageSysJobLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/job/log/{id}", _SysJobLog_GetSysJobLog0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/job/log/{id}", _SysJobLog_UpdateSysJobLog0_HTTP_Handler(srv))
+	r.POST("/v1/sys/job/log", _SysJobLog_CreateSysJobLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/job/log/{id}", _SysJobLog_DeleteSysJobLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/job/log", _SysJobLog_BatchDeleteSysJobLog0_HTTP_Handler(srv))
 }
 
 func _SysJobLog_GetPageSysJobLog0_HTTP_Handler(srv SysJobLogHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysJobLogHTTPClient(client *http.Client) SysJobLogHTTPClient {
 
 func (c *SysJobLogHTTPClientImpl) BatchDeleteSysJobLog(ctx context.Context, in *SysJobLogBatchDeleteReq, opts ...http.CallOption) (*SysJobLogDeleteReply, error) {
 	var out SysJobLogDeleteReply
-	pattern := "/v1/sysjoblog"
+	pattern := "/v1/sys/job/log"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/BatchDeleteSysJobLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysJobLogHTTPClientImpl) BatchDeleteSysJobLog(ctx context.Context, in *
 
 func (c *SysJobLogHTTPClientImpl) CreateSysJobLog(ctx context.Context, in *SysJobLogCreateReq, opts ...http.CallOption) (*SysJobLogCreateReply, error) {
 	var out SysJobLogCreateReply
-	pattern := "/v1/sysjoblog"
+	pattern := "/v1/sys/job/log"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/CreateSysJobLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysJobLogHTTPClientImpl) CreateSysJobLog(ctx context.Context, in *SysJo
 
 func (c *SysJobLogHTTPClientImpl) DeleteSysJobLog(ctx context.Context, in *SysJobLogDeleteReq, opts ...http.CallOption) (*SysJobLogDeleteReply, error) {
 	var out SysJobLogDeleteReply
-	pattern := "/v1/sysjoblog/{id}"
+	pattern := "/v1/sys/job/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/DeleteSysJobLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysJobLogHTTPClientImpl) DeleteSysJobLog(ctx context.Context, in *SysJo
 
 func (c *SysJobLogHTTPClientImpl) GetPageSysJobLog(ctx context.Context, in *SysJobLogPageReq, opts ...http.CallOption) (*SysJobLogPageReply, error) {
 	var out SysJobLogPageReply
-	pattern := "/v1/sysjoblog/page"
+	pattern := "/v1/sys/job/log/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/GetPageSysJobLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysJobLogHTTPClientImpl) GetPageSysJobLog(ctx context.Context, in *SysJ
 
 func (c *SysJobLogHTTPClientImpl) GetSysJobLog(ctx context.Context, in *SysJobLogReq, opts ...http.CallOption) (*SysJobLogReply, error) {
 	var out SysJobLogReply
-	pattern := "/v1/sysjoblog/{id}"
+	pattern := "/v1/sys/job/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/GetSysJobLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysJobLogHTTPClientImpl) GetSysJobLog(ctx context.Context, in *SysJobLo
 
 func (c *SysJobLogHTTPClientImpl) UpdateSysJobLog(ctx context.Context, in *SysJobLogUpdateReq, opts ...http.CallOption) (*SysJobLogUpdateReply, error) {
 	var out SysJobLogUpdateReply
-	pattern := "/v1/sysjoblog/{id}"
+	pattern := "/v1/sys/job/log/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/UpdateSysJobLog"))
 	opts = append(opts, http.PathTemplate(pattern))

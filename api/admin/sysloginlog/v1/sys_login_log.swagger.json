@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysloginlog": {
+    "/v1/sys/login/log": {
       "delete": {
         "summary": "批量删除SysLoginLog",
         "operationId": "SysLoginLog_BatchDeleteSysLoginLog",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysloginlog/page": {
+    "/v1/sys/login/log/page": {
       "get": {
         "summary": "分页查询SysLoginLog",
         "operationId": "SysLoginLog_GetPageSysLoginLog",
@@ -265,7 +265,7 @@
         ]
       }
     },
-    "/v1/sysloginlog/{id}": {
+    "/v1/sys/login/log/{id}": {
       "get": {
         "summary": "获取SysLoginLog",
         "operationId": "SysLoginLog_GetSysLoginLog",

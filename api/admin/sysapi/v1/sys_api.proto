@@ -15,21 +15,21 @@ service SysApi {
   // 分页查询SysApi
   rpc GetPageSysApi (SysApiPageReq) returns (SysApiPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysapi/page"
+      get: "/v1/sys/api/page"
     };
   }
 
   // 获取SysApi
   rpc GetSysApi (SysApiReq) returns (SysApiReply)  {
     option (google.api.http) = {
-      get: "/v1/sysapi/{id}"
+      get: "/v1/sys/api/{id}"
     };
   }
 
   // 更新SysApi
   rpc UpdateSysApi (SysApiUpdateReq) returns (SysApiUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysapi/{id}"
+      put: "/v1/sys/api/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysApi {
   // 创建SysApi
   rpc CreateSysApi (SysApiCreateReq) returns (SysApiCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysapi"
+      post: "/v1/sys/api"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysApi {
   // 删除SysApi
   rpc DeleteSysApi (SysApiDeleteReq) returns (SysApiDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysapi/{id}"
+      delete: "/v1/sys/api/{id}"
     };
   }
 
   // 批量删除SysApi
   rpc BatchDeleteSysApi (SysApiBatchDeleteReq) returns (SysApiDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysapi"
+      delete: "/v1/sys/api"
     };
   }
 

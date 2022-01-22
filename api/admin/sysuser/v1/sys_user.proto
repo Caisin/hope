@@ -15,21 +15,21 @@ service SysUser {
   // 分页查询SysUser
   rpc GetPageSysUser (SysUserPageReq) returns (SysUserPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysuser/page"
+      get: "/v1/sys/user/page"
     };
   }
 
   // 获取SysUser
   rpc GetSysUser (SysUserReq) returns (SysUserReply)  {
     option (google.api.http) = {
-      get: "/v1/sysuser/{id}"
+      get: "/v1/sys/user/{id}"
     };
   }
 
   // 更新SysUser
   rpc UpdateSysUser (SysUserUpdateReq) returns (SysUserUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysuser/{id}"
+      put: "/v1/sys/user/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysUser {
   // 创建SysUser
   rpc CreateSysUser (SysUserCreateReq) returns (SysUserCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysuser"
+      post: "/v1/sys/user"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysUser {
   // 删除SysUser
   rpc DeleteSysUser (SysUserDeleteReq) returns (SysUserDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysuser/{id}"
+      delete: "/v1/sys/user/{id}"
     };
   }
 
   // 批量删除SysUser
   rpc BatchDeleteSysUser (SysUserBatchDeleteReq) returns (SysUserDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysuser"
+      delete: "/v1/sys/user"
     };
   }
 

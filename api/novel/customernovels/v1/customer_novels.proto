@@ -15,21 +15,21 @@ service CustomerNovels {
   // 分页查询CustomerNovels
   rpc GetPageCustomerNovels (CustomerNovelsPageReq) returns (CustomerNovelsPageReply)  {
     option (google.api.http) = {
-      get: "/v1/customernovels/page"
+      get: "/v1/customer/novels/page"
     };
   }
 
   // 获取CustomerNovels
   rpc GetCustomerNovels (CustomerNovelsReq) returns (CustomerNovelsReply)  {
     option (google.api.http) = {
-      get: "/v1/customernovels/{id}"
+      get: "/v1/customer/novels/{id}"
     };
   }
 
   // 更新CustomerNovels
   rpc UpdateCustomerNovels (CustomerNovelsUpdateReq) returns (CustomerNovelsUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/customernovels/{id}"
+      put: "/v1/customer/novels/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service CustomerNovels {
   // 创建CustomerNovels
   rpc CreateCustomerNovels (CustomerNovelsCreateReq) returns (CustomerNovelsCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/customernovels"
+      post: "/v1/customer/novels"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service CustomerNovels {
   // 删除CustomerNovels
   rpc DeleteCustomerNovels (CustomerNovelsDeleteReq) returns (CustomerNovelsDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/customernovels/{id}"
+      delete: "/v1/customer/novels/{id}"
     };
   }
 
   // 批量删除CustomerNovels
   rpc BatchDeleteCustomerNovels (CustomerNovelsBatchDeleteReq) returns (CustomerNovelsDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/customernovels"
+      delete: "/v1/customer/novels"
     };
   }
 

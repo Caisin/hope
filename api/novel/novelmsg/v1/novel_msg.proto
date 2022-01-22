@@ -15,21 +15,21 @@ service NovelMsg {
   // 分页查询NovelMsg
   rpc GetPageNovelMsg (NovelMsgPageReq) returns (NovelMsgPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelmsg/page"
+      get: "/v1/novel/msg/page"
     };
   }
 
   // 获取NovelMsg
   rpc GetNovelMsg (NovelMsgReq) returns (NovelMsgReply)  {
     option (google.api.http) = {
-      get: "/v1/novelmsg/{id}"
+      get: "/v1/novel/msg/{id}"
     };
   }
 
   // 更新NovelMsg
   rpc UpdateNovelMsg (NovelMsgUpdateReq) returns (NovelMsgUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelmsg/{id}"
+      put: "/v1/novel/msg/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelMsg {
   // 创建NovelMsg
   rpc CreateNovelMsg (NovelMsgCreateReq) returns (NovelMsgCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelmsg"
+      post: "/v1/novel/msg"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelMsg {
   // 删除NovelMsg
   rpc DeleteNovelMsg (NovelMsgDeleteReq) returns (NovelMsgDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelmsg/{id}"
+      delete: "/v1/novel/msg/{id}"
     };
   }
 
   // 批量删除NovelMsg
   rpc BatchDeleteNovelMsg (NovelMsgBatchDeleteReq) returns (NovelMsgDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelmsg"
+      delete: "/v1/novel/msg"
     };
   }
 

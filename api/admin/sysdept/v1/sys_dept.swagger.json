@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysdept": {
+    "/v1/sys/dept": {
       "delete": {
         "summary": "批量删除SysDept",
         "operationId": "SysDept_BatchDeleteSysDept",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysdept/page": {
+    "/v1/sys/dept/page": {
       "get": {
         "summary": "分页查询SysDept",
         "operationId": "SysDept_GetPageSysDept",
@@ -244,7 +244,7 @@
         ]
       }
     },
-    "/v1/sysdept/{id}": {
+    "/v1/sys/dept/{id}": {
       "get": {
         "summary": "获取SysDept",
         "operationId": "SysDept_GetSysDept",

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysoperalog": {
+    "/v1/sys/opera/log": {
       "delete": {
         "summary": "批量删除SysOperaLog",
         "operationId": "SysOperaLog_BatchDeleteSysOperaLog",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysoperalog/page": {
+    "/v1/sys/opera/log/page": {
       "get": {
         "summary": "分页查询SysOperaLog",
         "operationId": "SysOperaLog_GetPageSysOperaLog",
@@ -356,7 +356,7 @@
         ]
       }
     },
-    "/v1/sysoperalog/{id}": {
+    "/v1/sys/opera/log/{id}": {
       "get": {
         "summary": "获取SysOperaLog",
         "operationId": "SysOperaLog_GetSysOperaLog",

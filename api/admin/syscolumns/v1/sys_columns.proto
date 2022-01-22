@@ -15,21 +15,21 @@ service SysColumns {
   // 分页查询SysColumns
   rpc GetPageSysColumns (SysColumnsPageReq) returns (SysColumnsPageReply)  {
     option (google.api.http) = {
-      get: "/v1/syscolumns/page"
+      get: "/v1/sys/columns/page"
     };
   }
 
   // 获取SysColumns
   rpc GetSysColumns (SysColumnsReq) returns (SysColumnsReply)  {
     option (google.api.http) = {
-      get: "/v1/syscolumns/{id}"
+      get: "/v1/sys/columns/{id}"
     };
   }
 
   // 更新SysColumns
   rpc UpdateSysColumns (SysColumnsUpdateReq) returns (SysColumnsUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/syscolumns/{id}"
+      put: "/v1/sys/columns/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysColumns {
   // 创建SysColumns
   rpc CreateSysColumns (SysColumnsCreateReq) returns (SysColumnsCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/syscolumns"
+      post: "/v1/sys/columns"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysColumns {
   // 删除SysColumns
   rpc DeleteSysColumns (SysColumnsDeleteReq) returns (SysColumnsDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/syscolumns/{id}"
+      delete: "/v1/sys/columns/{id}"
     };
   }
 
   // 批量删除SysColumns
   rpc BatchDeleteSysColumns (SysColumnsBatchDeleteReq) returns (SysColumnsDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/syscolumns"
+      delete: "/v1/sys/columns"
     };
   }
 

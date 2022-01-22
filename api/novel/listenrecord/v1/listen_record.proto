@@ -15,21 +15,21 @@ service ListenRecord {
   // 分页查询ListenRecord
   rpc GetPageListenRecord (ListenRecordPageReq) returns (ListenRecordPageReply)  {
     option (google.api.http) = {
-      get: "/v1/listenrecord/page"
+      get: "/v1/listen/record/page"
     };
   }
 
   // 获取ListenRecord
   rpc GetListenRecord (ListenRecordReq) returns (ListenRecordReply)  {
     option (google.api.http) = {
-      get: "/v1/listenrecord/{id}"
+      get: "/v1/listen/record/{id}"
     };
   }
 
   // 更新ListenRecord
   rpc UpdateListenRecord (ListenRecordUpdateReq) returns (ListenRecordUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/listenrecord/{id}"
+      put: "/v1/listen/record/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service ListenRecord {
   // 创建ListenRecord
   rpc CreateListenRecord (ListenRecordCreateReq) returns (ListenRecordCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/listenrecord"
+      post: "/v1/listen/record"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service ListenRecord {
   // 删除ListenRecord
   rpc DeleteListenRecord (ListenRecordDeleteReq) returns (ListenRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/listenrecord/{id}"
+      delete: "/v1/listen/record/{id}"
     };
   }
 
   // 批量删除ListenRecord
   rpc BatchDeleteListenRecord (ListenRecordBatchDeleteReq) returns (ListenRecordDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/listenrecord"
+      delete: "/v1/listen/record"
     };
   }
 

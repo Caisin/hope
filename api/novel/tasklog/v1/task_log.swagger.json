@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/tasklog": {
+    "/v1/task/log": {
       "delete": {
         "summary": "批量删除TaskLog",
         "operationId": "TaskLog_BatchDeleteTaskLog",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/tasklog/page": {
+    "/v1/task/log/page": {
       "get": {
         "summary": "分页查询TaskLog",
         "operationId": "TaskLog_GetPageTaskLog",
@@ -334,7 +334,7 @@
         ]
       }
     },
-    "/v1/tasklog/{id}": {
+    "/v1/task/log/{id}": {
       "get": {
         "summary": "获取TaskLog",
         "operationId": "TaskLog_GetTaskLog",

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/appversion": {
+    "/v1/app/version": {
       "delete": {
         "summary": "批量删除AppVersion",
         "operationId": "AppVersion_BatchDeleteAppVersion",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/appversion/page": {
+    "/v1/app/version/page": {
       "get": {
         "summary": "分页查询AppVersion",
         "operationId": "AppVersion_GetPageAppVersion",
@@ -229,7 +229,7 @@
         ]
       }
     },
-    "/v1/appversion/{id}": {
+    "/v1/app/version/{id}": {
       "get": {
         "summary": "获取AppVersion",
         "operationId": "AppVersion_GetAppVersion",

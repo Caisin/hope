@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/resourcestorage": {
+    "/v1/resource/storage": {
       "delete": {
         "summary": "批量删除ResourceStorage",
         "operationId": "ResourceStorage_BatchDeleteResourceStorage",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/resourcestorage/page": {
+    "/v1/resource/storage/page": {
       "get": {
         "summary": "分页查询ResourceStorage",
         "operationId": "ResourceStorage_GetPageResourceStorage",
@@ -321,7 +321,7 @@
         ]
       }
     },
-    "/v1/resourcestorage/{id}": {
+    "/v1/resource/storage/{id}": {
       "get": {
         "summary": "获取ResourceStorage",
         "operationId": "ResourceStorage_GetResourceStorage",

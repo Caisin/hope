@@ -28,12 +28,12 @@ type UserMsgHTTPServer interface {
 
 func RegisterUserMsgHTTPServer(s *http.Server, srv UserMsgHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/usermsg/page", _UserMsg_GetPageUserMsg0_HTTP_Handler(srv))
-	r.GET("/v1/usermsg/{id}", _UserMsg_GetUserMsg0_HTTP_Handler(srv))
-	r.PUT("/v1/usermsg/{id}", _UserMsg_UpdateUserMsg0_HTTP_Handler(srv))
-	r.POST("/v1/usermsg", _UserMsg_CreateUserMsg0_HTTP_Handler(srv))
-	r.DELETE("/v1/usermsg/{id}", _UserMsg_DeleteUserMsg0_HTTP_Handler(srv))
-	r.DELETE("/v1/usermsg", _UserMsg_BatchDeleteUserMsg0_HTTP_Handler(srv))
+	r.GET("/v1/user/msg/page", _UserMsg_GetPageUserMsg0_HTTP_Handler(srv))
+	r.GET("/v1/user/msg/{id}", _UserMsg_GetUserMsg0_HTTP_Handler(srv))
+	r.PUT("/v1/user/msg/{id}", _UserMsg_UpdateUserMsg0_HTTP_Handler(srv))
+	r.POST("/v1/user/msg", _UserMsg_CreateUserMsg0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/msg/{id}", _UserMsg_DeleteUserMsg0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/msg", _UserMsg_BatchDeleteUserMsg0_HTTP_Handler(srv))
 }
 
 func _UserMsg_GetPageUserMsg0_HTTP_Handler(srv UserMsgHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewUserMsgHTTPClient(client *http.Client) UserMsgHTTPClient {
 
 func (c *UserMsgHTTPClientImpl) BatchDeleteUserMsg(ctx context.Context, in *UserMsgBatchDeleteReq, opts ...http.CallOption) (*UserMsgDeleteReply, error) {
 	var out UserMsgDeleteReply
-	pattern := "/v1/usermsg"
+	pattern := "/v1/user/msg"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/BatchDeleteUserMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *UserMsgHTTPClientImpl) BatchDeleteUserMsg(ctx context.Context, in *User
 
 func (c *UserMsgHTTPClientImpl) CreateUserMsg(ctx context.Context, in *UserMsgCreateReq, opts ...http.CallOption) (*UserMsgCreateReply, error) {
 	var out UserMsgCreateReply
-	pattern := "/v1/usermsg"
+	pattern := "/v1/user/msg"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/CreateUserMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *UserMsgHTTPClientImpl) CreateUserMsg(ctx context.Context, in *UserMsgCr
 
 func (c *UserMsgHTTPClientImpl) DeleteUserMsg(ctx context.Context, in *UserMsgDeleteReq, opts ...http.CallOption) (*UserMsgDeleteReply, error) {
 	var out UserMsgDeleteReply
-	pattern := "/v1/usermsg/{id}"
+	pattern := "/v1/user/msg/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/DeleteUserMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *UserMsgHTTPClientImpl) DeleteUserMsg(ctx context.Context, in *UserMsgDe
 
 func (c *UserMsgHTTPClientImpl) GetPageUserMsg(ctx context.Context, in *UserMsgPageReq, opts ...http.CallOption) (*UserMsgPageReply, error) {
 	var out UserMsgPageReply
-	pattern := "/v1/usermsg/page"
+	pattern := "/v1/user/msg/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/GetPageUserMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *UserMsgHTTPClientImpl) GetPageUserMsg(ctx context.Context, in *UserMsgP
 
 func (c *UserMsgHTTPClientImpl) GetUserMsg(ctx context.Context, in *UserMsgReq, opts ...http.CallOption) (*UserMsgReply, error) {
 	var out UserMsgReply
-	pattern := "/v1/usermsg/{id}"
+	pattern := "/v1/user/msg/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/GetUserMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *UserMsgHTTPClientImpl) GetUserMsg(ctx context.Context, in *UserMsgReq, 
 
 func (c *UserMsgHTTPClientImpl) UpdateUserMsg(ctx context.Context, in *UserMsgUpdateReq, opts ...http.CallOption) (*UserMsgUpdateReply, error) {
 	var out UserMsgUpdateReply
-	pattern := "/v1/usermsg/{id}"
+	pattern := "/v1/user/msg/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/UpdateUserMsg"))
 	opts = append(opts, http.PathTemplate(pattern))

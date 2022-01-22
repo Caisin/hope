@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/novelcomment": {
+    "/v1/novel/comment": {
       "delete": {
         "summary": "批量删除NovelComment",
         "operationId": "NovelComment_BatchDeleteNovelComment",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/novelcomment/page": {
+    "/v1/novel/comment/page": {
       "get": {
         "summary": "分页查询NovelComment",
         "operationId": "NovelComment_GetPageNovelComment",
@@ -296,7 +296,7 @@
         ]
       }
     },
-    "/v1/novelcomment/{id}": {
+    "/v1/novel/comment/{id}": {
       "get": {
         "summary": "获取NovelComment",
         "operationId": "NovelComment_GetNovelComment",

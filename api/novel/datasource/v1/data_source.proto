@@ -15,21 +15,21 @@ service DataSource {
   // 分页查询DataSource
   rpc GetPageDataSource (DataSourcePageReq) returns (DataSourcePageReply)  {
     option (google.api.http) = {
-      get: "/v1/datasource/page"
+      get: "/v1/data/source/page"
     };
   }
 
   // 获取DataSource
   rpc GetDataSource (DataSourceReq) returns (DataSourceReply)  {
     option (google.api.http) = {
-      get: "/v1/datasource/{id}"
+      get: "/v1/data/source/{id}"
     };
   }
 
   // 更新DataSource
   rpc UpdateDataSource (DataSourceUpdateReq) returns (DataSourceUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/datasource/{id}"
+      put: "/v1/data/source/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service DataSource {
   // 创建DataSource
   rpc CreateDataSource (DataSourceCreateReq) returns (DataSourceCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/datasource"
+      post: "/v1/data/source"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service DataSource {
   // 删除DataSource
   rpc DeleteDataSource (DataSourceDeleteReq) returns (DataSourceDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/datasource/{id}"
+      delete: "/v1/data/source/{id}"
     };
   }
 
   // 批量删除DataSource
   rpc BatchDeleteDataSource (DataSourceBatchDeleteReq) returns (DataSourceDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/datasource"
+      delete: "/v1/data/source"
     };
   }
 

@@ -15,21 +15,21 @@ service AmBalance {
   // 分页查询AmBalance
   rpc GetPageAmBalance (AmBalancePageReq) returns (AmBalancePageReply)  {
     option (google.api.http) = {
-      get: "/v1/ambalance/page"
+      get: "/v1/am/balance/page"
     };
   }
 
   // 获取AmBalance
   rpc GetAmBalance (AmBalanceReq) returns (AmBalanceReply)  {
     option (google.api.http) = {
-      get: "/v1/ambalance/{id}"
+      get: "/v1/am/balance/{id}"
     };
   }
 
   // 更新AmBalance
   rpc UpdateAmBalance (AmBalanceUpdateReq) returns (AmBalanceUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/ambalance/{id}"
+      put: "/v1/am/balance/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service AmBalance {
   // 创建AmBalance
   rpc CreateAmBalance (AmBalanceCreateReq) returns (AmBalanceCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/ambalance"
+      post: "/v1/am/balance"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service AmBalance {
   // 删除AmBalance
   rpc DeleteAmBalance (AmBalanceDeleteReq) returns (AmBalanceDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/ambalance/{id}"
+      delete: "/v1/am/balance/{id}"
     };
   }
 
   // 批量删除AmBalance
   rpc BatchDeleteAmBalance (AmBalanceBatchDeleteReq) returns (AmBalanceDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/ambalance"
+      delete: "/v1/am/balance"
     };
   }
 

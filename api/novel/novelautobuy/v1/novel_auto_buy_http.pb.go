@@ -28,12 +28,12 @@ type NovelAutoBuyHTTPServer interface {
 
 func RegisterNovelAutoBuyHTTPServer(s *http.Server, srv NovelAutoBuyHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelautobuy/page", _NovelAutoBuy_GetPageNovelAutoBuy0_HTTP_Handler(srv))
-	r.GET("/v1/novelautobuy/{id}", _NovelAutoBuy_GetNovelAutoBuy0_HTTP_Handler(srv))
-	r.PUT("/v1/novelautobuy/{id}", _NovelAutoBuy_UpdateNovelAutoBuy0_HTTP_Handler(srv))
-	r.POST("/v1/novelautobuy", _NovelAutoBuy_CreateNovelAutoBuy0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelautobuy/{id}", _NovelAutoBuy_DeleteNovelAutoBuy0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelautobuy", _NovelAutoBuy_BatchDeleteNovelAutoBuy0_HTTP_Handler(srv))
+	r.GET("/v1/novel/auto/buy/page", _NovelAutoBuy_GetPageNovelAutoBuy0_HTTP_Handler(srv))
+	r.GET("/v1/novel/auto/buy/{id}", _NovelAutoBuy_GetNovelAutoBuy0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/auto/buy/{id}", _NovelAutoBuy_UpdateNovelAutoBuy0_HTTP_Handler(srv))
+	r.POST("/v1/novel/auto/buy", _NovelAutoBuy_CreateNovelAutoBuy0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/auto/buy/{id}", _NovelAutoBuy_DeleteNovelAutoBuy0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/auto/buy", _NovelAutoBuy_BatchDeleteNovelAutoBuy0_HTTP_Handler(srv))
 }
 
 func _NovelAutoBuy_GetPageNovelAutoBuy0_HTTP_Handler(srv NovelAutoBuyHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelAutoBuyHTTPClient(client *http.Client) NovelAutoBuyHTTPClient {
 
 func (c *NovelAutoBuyHTTPClientImpl) BatchDeleteNovelAutoBuy(ctx context.Context, in *NovelAutoBuyBatchDeleteReq, opts ...http.CallOption) (*NovelAutoBuyDeleteReply, error) {
 	var out NovelAutoBuyDeleteReply
-	pattern := "/v1/novelautobuy"
+	pattern := "/v1/novel/auto/buy"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/BatchDeleteNovelAutoBuy"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelAutoBuyHTTPClientImpl) BatchDeleteNovelAutoBuy(ctx context.Context
 
 func (c *NovelAutoBuyHTTPClientImpl) CreateNovelAutoBuy(ctx context.Context, in *NovelAutoBuyCreateReq, opts ...http.CallOption) (*NovelAutoBuyCreateReply, error) {
 	var out NovelAutoBuyCreateReply
-	pattern := "/v1/novelautobuy"
+	pattern := "/v1/novel/auto/buy"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/CreateNovelAutoBuy"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelAutoBuyHTTPClientImpl) CreateNovelAutoBuy(ctx context.Context, in 
 
 func (c *NovelAutoBuyHTTPClientImpl) DeleteNovelAutoBuy(ctx context.Context, in *NovelAutoBuyDeleteReq, opts ...http.CallOption) (*NovelAutoBuyDeleteReply, error) {
 	var out NovelAutoBuyDeleteReply
-	pattern := "/v1/novelautobuy/{id}"
+	pattern := "/v1/novel/auto/buy/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/DeleteNovelAutoBuy"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelAutoBuyHTTPClientImpl) DeleteNovelAutoBuy(ctx context.Context, in 
 
 func (c *NovelAutoBuyHTTPClientImpl) GetNovelAutoBuy(ctx context.Context, in *NovelAutoBuyReq, opts ...http.CallOption) (*NovelAutoBuyReply, error) {
 	var out NovelAutoBuyReply
-	pattern := "/v1/novelautobuy/{id}"
+	pattern := "/v1/novel/auto/buy/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/GetNovelAutoBuy"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelAutoBuyHTTPClientImpl) GetNovelAutoBuy(ctx context.Context, in *No
 
 func (c *NovelAutoBuyHTTPClientImpl) GetPageNovelAutoBuy(ctx context.Context, in *NovelAutoBuyPageReq, opts ...http.CallOption) (*NovelAutoBuyPageReply, error) {
 	var out NovelAutoBuyPageReply
-	pattern := "/v1/novelautobuy/page"
+	pattern := "/v1/novel/auto/buy/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/GetPageNovelAutoBuy"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelAutoBuyHTTPClientImpl) GetPageNovelAutoBuy(ctx context.Context, in
 
 func (c *NovelAutoBuyHTTPClientImpl) UpdateNovelAutoBuy(ctx context.Context, in *NovelAutoBuyUpdateReq, opts ...http.CallOption) (*NovelAutoBuyUpdateReply, error) {
 	var out NovelAutoBuyUpdateReply
-	pattern := "/v1/novelautobuy/{id}"
+	pattern := "/v1/novel/auto/buy/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/UpdateNovelAutoBuy"))
 	opts = append(opts, http.PathTemplate(pattern))

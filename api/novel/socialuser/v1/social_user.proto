@@ -15,21 +15,21 @@ service SocialUser {
   // 分页查询SocialUser
   rpc GetPageSocialUser (SocialUserPageReq) returns (SocialUserPageReply)  {
     option (google.api.http) = {
-      get: "/v1/socialuser/page"
+      get: "/v1/social/user/page"
     };
   }
 
   // 获取SocialUser
   rpc GetSocialUser (SocialUserReq) returns (SocialUserReply)  {
     option (google.api.http) = {
-      get: "/v1/socialuser/{id}"
+      get: "/v1/social/user/{id}"
     };
   }
 
   // 更新SocialUser
   rpc UpdateSocialUser (SocialUserUpdateReq) returns (SocialUserUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/socialuser/{id}"
+      put: "/v1/social/user/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SocialUser {
   // 创建SocialUser
   rpc CreateSocialUser (SocialUserCreateReq) returns (SocialUserCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/socialuser"
+      post: "/v1/social/user"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SocialUser {
   // 删除SocialUser
   rpc DeleteSocialUser (SocialUserDeleteReq) returns (SocialUserDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/socialuser/{id}"
+      delete: "/v1/social/user/{id}"
     };
   }
 
   // 批量删除SocialUser
   rpc BatchDeleteSocialUser (SocialUserBatchDeleteReq) returns (SocialUserDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/socialuser"
+      delete: "/v1/social/user"
     };
   }
 

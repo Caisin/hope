@@ -15,21 +15,21 @@ service CasbinRule {
   // 分页查询CasbinRule
   rpc GetPageCasbinRule (CasbinRulePageReq) returns (CasbinRulePageReply)  {
     option (google.api.http) = {
-      get: "/v1/casbinrule/page"
+      get: "/v1/casbin/rule/page"
     };
   }
 
   // 获取CasbinRule
   rpc GetCasbinRule (CasbinRuleReq) returns (CasbinRuleReply)  {
     option (google.api.http) = {
-      get: "/v1/casbinrule/{id}"
+      get: "/v1/casbin/rule/{id}"
     };
   }
 
   // 更新CasbinRule
   rpc UpdateCasbinRule (CasbinRuleUpdateReq) returns (CasbinRuleUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/casbinrule/{id}"
+      put: "/v1/casbin/rule/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service CasbinRule {
   // 创建CasbinRule
   rpc CreateCasbinRule (CasbinRuleCreateReq) returns (CasbinRuleCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/casbinrule"
+      post: "/v1/casbin/rule"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service CasbinRule {
   // 删除CasbinRule
   rpc DeleteCasbinRule (CasbinRuleDeleteReq) returns (CasbinRuleDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/casbinrule/{id}"
+      delete: "/v1/casbin/rule/{id}"
     };
   }
 
   // 批量删除CasbinRule
   rpc BatchDeleteCasbinRule (CasbinRuleBatchDeleteReq) returns (CasbinRuleDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/casbinrule"
+      delete: "/v1/casbin/rule"
     };
   }
 

@@ -28,12 +28,12 @@ type SysDeptHTTPServer interface {
 
 func RegisterSysDeptHTTPServer(s *http.Server, srv SysDeptHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysdept/page", _SysDept_GetPageSysDept0_HTTP_Handler(srv))
-	r.GET("/v1/sysdept/{id}", _SysDept_GetSysDept0_HTTP_Handler(srv))
-	r.PUT("/v1/sysdept/{id}", _SysDept_UpdateSysDept0_HTTP_Handler(srv))
-	r.POST("/v1/sysdept", _SysDept_CreateSysDept0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysdept/{id}", _SysDept_DeleteSysDept0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysdept", _SysDept_BatchDeleteSysDept0_HTTP_Handler(srv))
+	r.GET("/v1/sys/dept/page", _SysDept_GetPageSysDept0_HTTP_Handler(srv))
+	r.GET("/v1/sys/dept/{id}", _SysDept_GetSysDept0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/dept/{id}", _SysDept_UpdateSysDept0_HTTP_Handler(srv))
+	r.POST("/v1/sys/dept", _SysDept_CreateSysDept0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/dept/{id}", _SysDept_DeleteSysDept0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/dept", _SysDept_BatchDeleteSysDept0_HTTP_Handler(srv))
 }
 
 func _SysDept_GetPageSysDept0_HTTP_Handler(srv SysDeptHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysDeptHTTPClient(client *http.Client) SysDeptHTTPClient {
 
 func (c *SysDeptHTTPClientImpl) BatchDeleteSysDept(ctx context.Context, in *SysDeptBatchDeleteReq, opts ...http.CallOption) (*SysDeptDeleteReply, error) {
 	var out SysDeptDeleteReply
-	pattern := "/v1/sysdept"
+	pattern := "/v1/sys/dept"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysdept.v1.SysDept/BatchDeleteSysDept"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysDeptHTTPClientImpl) BatchDeleteSysDept(ctx context.Context, in *SysD
 
 func (c *SysDeptHTTPClientImpl) CreateSysDept(ctx context.Context, in *SysDeptCreateReq, opts ...http.CallOption) (*SysDeptCreateReply, error) {
 	var out SysDeptCreateReply
-	pattern := "/v1/sysdept"
+	pattern := "/v1/sys/dept"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysdept.v1.SysDept/CreateSysDept"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysDeptHTTPClientImpl) CreateSysDept(ctx context.Context, in *SysDeptCr
 
 func (c *SysDeptHTTPClientImpl) DeleteSysDept(ctx context.Context, in *SysDeptDeleteReq, opts ...http.CallOption) (*SysDeptDeleteReply, error) {
 	var out SysDeptDeleteReply
-	pattern := "/v1/sysdept/{id}"
+	pattern := "/v1/sys/dept/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysdept.v1.SysDept/DeleteSysDept"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysDeptHTTPClientImpl) DeleteSysDept(ctx context.Context, in *SysDeptDe
 
 func (c *SysDeptHTTPClientImpl) GetPageSysDept(ctx context.Context, in *SysDeptPageReq, opts ...http.CallOption) (*SysDeptPageReply, error) {
 	var out SysDeptPageReply
-	pattern := "/v1/sysdept/page"
+	pattern := "/v1/sys/dept/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysdept.v1.SysDept/GetPageSysDept"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysDeptHTTPClientImpl) GetPageSysDept(ctx context.Context, in *SysDeptP
 
 func (c *SysDeptHTTPClientImpl) GetSysDept(ctx context.Context, in *SysDeptReq, opts ...http.CallOption) (*SysDeptReply, error) {
 	var out SysDeptReply
-	pattern := "/v1/sysdept/{id}"
+	pattern := "/v1/sys/dept/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysdept.v1.SysDept/GetSysDept"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysDeptHTTPClientImpl) GetSysDept(ctx context.Context, in *SysDeptReq, 
 
 func (c *SysDeptHTTPClientImpl) UpdateSysDept(ctx context.Context, in *SysDeptUpdateReq, opts ...http.CallOption) (*SysDeptUpdateReply, error) {
 	var out SysDeptUpdateReply
-	pattern := "/v1/sysdept/{id}"
+	pattern := "/v1/sys/dept/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysdept.v1.SysDept/UpdateSysDept"))
 	opts = append(opts, http.PathTemplate(pattern))

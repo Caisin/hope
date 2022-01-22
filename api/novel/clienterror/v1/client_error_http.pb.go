@@ -28,12 +28,12 @@ type ClientErrorHTTPServer interface {
 
 func RegisterClientErrorHTTPServer(s *http.Server, srv ClientErrorHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/clienterror/page", _ClientError_GetPageClientError0_HTTP_Handler(srv))
-	r.GET("/v1/clienterror/{id}", _ClientError_GetClientError0_HTTP_Handler(srv))
-	r.PUT("/v1/clienterror/{id}", _ClientError_UpdateClientError0_HTTP_Handler(srv))
-	r.POST("/v1/clienterror", _ClientError_CreateClientError0_HTTP_Handler(srv))
-	r.DELETE("/v1/clienterror/{id}", _ClientError_DeleteClientError0_HTTP_Handler(srv))
-	r.DELETE("/v1/clienterror", _ClientError_BatchDeleteClientError0_HTTP_Handler(srv))
+	r.GET("/v1/client/error/page", _ClientError_GetPageClientError0_HTTP_Handler(srv))
+	r.GET("/v1/client/error/{id}", _ClientError_GetClientError0_HTTP_Handler(srv))
+	r.PUT("/v1/client/error/{id}", _ClientError_UpdateClientError0_HTTP_Handler(srv))
+	r.POST("/v1/client/error", _ClientError_CreateClientError0_HTTP_Handler(srv))
+	r.DELETE("/v1/client/error/{id}", _ClientError_DeleteClientError0_HTTP_Handler(srv))
+	r.DELETE("/v1/client/error", _ClientError_BatchDeleteClientError0_HTTP_Handler(srv))
 }
 
 func _ClientError_GetPageClientError0_HTTP_Handler(srv ClientErrorHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewClientErrorHTTPClient(client *http.Client) ClientErrorHTTPClient {
 
 func (c *ClientErrorHTTPClientImpl) BatchDeleteClientError(ctx context.Context, in *ClientErrorBatchDeleteReq, opts ...http.CallOption) (*ClientErrorDeleteReply, error) {
 	var out ClientErrorDeleteReply
-	pattern := "/v1/clienterror"
+	pattern := "/v1/client/error"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/clienterror.v1.ClientError/BatchDeleteClientError"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *ClientErrorHTTPClientImpl) BatchDeleteClientError(ctx context.Context, 
 
 func (c *ClientErrorHTTPClientImpl) CreateClientError(ctx context.Context, in *ClientErrorCreateReq, opts ...http.CallOption) (*ClientErrorCreateReply, error) {
 	var out ClientErrorCreateReply
-	pattern := "/v1/clienterror"
+	pattern := "/v1/client/error"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/clienterror.v1.ClientError/CreateClientError"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *ClientErrorHTTPClientImpl) CreateClientError(ctx context.Context, in *C
 
 func (c *ClientErrorHTTPClientImpl) DeleteClientError(ctx context.Context, in *ClientErrorDeleteReq, opts ...http.CallOption) (*ClientErrorDeleteReply, error) {
 	var out ClientErrorDeleteReply
-	pattern := "/v1/clienterror/{id}"
+	pattern := "/v1/client/error/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/clienterror.v1.ClientError/DeleteClientError"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *ClientErrorHTTPClientImpl) DeleteClientError(ctx context.Context, in *C
 
 func (c *ClientErrorHTTPClientImpl) GetClientError(ctx context.Context, in *ClientErrorReq, opts ...http.CallOption) (*ClientErrorReply, error) {
 	var out ClientErrorReply
-	pattern := "/v1/clienterror/{id}"
+	pattern := "/v1/client/error/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/clienterror.v1.ClientError/GetClientError"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *ClientErrorHTTPClientImpl) GetClientError(ctx context.Context, in *Clie
 
 func (c *ClientErrorHTTPClientImpl) GetPageClientError(ctx context.Context, in *ClientErrorPageReq, opts ...http.CallOption) (*ClientErrorPageReply, error) {
 	var out ClientErrorPageReply
-	pattern := "/v1/clienterror/page"
+	pattern := "/v1/client/error/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/clienterror.v1.ClientError/GetPageClientError"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *ClientErrorHTTPClientImpl) GetPageClientError(ctx context.Context, in *
 
 func (c *ClientErrorHTTPClientImpl) UpdateClientError(ctx context.Context, in *ClientErrorUpdateReq, opts ...http.CallOption) (*ClientErrorUpdateReply, error) {
 	var out ClientErrorUpdateReply
-	pattern := "/v1/clienterror/{id}"
+	pattern := "/v1/client/error/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/clienterror.v1.ClientError/UpdateClientError"))
 	opts = append(opts, http.PathTemplate(pattern))

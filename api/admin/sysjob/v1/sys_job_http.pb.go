@@ -28,12 +28,12 @@ type SysJobHTTPServer interface {
 
 func RegisterSysJobHTTPServer(s *http.Server, srv SysJobHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysjob/page", _SysJob_GetPageSysJob0_HTTP_Handler(srv))
-	r.GET("/v1/sysjob/{id}", _SysJob_GetSysJob0_HTTP_Handler(srv))
-	r.PUT("/v1/sysjob/{id}", _SysJob_UpdateSysJob0_HTTP_Handler(srv))
-	r.POST("/v1/sysjob", _SysJob_CreateSysJob0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysjob/{id}", _SysJob_DeleteSysJob0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysjob", _SysJob_BatchDeleteSysJob0_HTTP_Handler(srv))
+	r.GET("/v1/sys/job/page", _SysJob_GetPageSysJob0_HTTP_Handler(srv))
+	r.GET("/v1/sys/job/{id}", _SysJob_GetSysJob0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/job/{id}", _SysJob_UpdateSysJob0_HTTP_Handler(srv))
+	r.POST("/v1/sys/job", _SysJob_CreateSysJob0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/job/{id}", _SysJob_DeleteSysJob0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/job", _SysJob_BatchDeleteSysJob0_HTTP_Handler(srv))
 }
 
 func _SysJob_GetPageSysJob0_HTTP_Handler(srv SysJobHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysJobHTTPClient(client *http.Client) SysJobHTTPClient {
 
 func (c *SysJobHTTPClientImpl) BatchDeleteSysJob(ctx context.Context, in *SysJobBatchDeleteReq, opts ...http.CallOption) (*SysJobDeleteReply, error) {
 	var out SysJobDeleteReply
-	pattern := "/v1/sysjob"
+	pattern := "/v1/sys/job"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjob.v1.SysJob/BatchDeleteSysJob"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysJobHTTPClientImpl) BatchDeleteSysJob(ctx context.Context, in *SysJob
 
 func (c *SysJobHTTPClientImpl) CreateSysJob(ctx context.Context, in *SysJobCreateReq, opts ...http.CallOption) (*SysJobCreateReply, error) {
 	var out SysJobCreateReply
-	pattern := "/v1/sysjob"
+	pattern := "/v1/sys/job"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysjob.v1.SysJob/CreateSysJob"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysJobHTTPClientImpl) CreateSysJob(ctx context.Context, in *SysJobCreat
 
 func (c *SysJobHTTPClientImpl) DeleteSysJob(ctx context.Context, in *SysJobDeleteReq, opts ...http.CallOption) (*SysJobDeleteReply, error) {
 	var out SysJobDeleteReply
-	pattern := "/v1/sysjob/{id}"
+	pattern := "/v1/sys/job/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjob.v1.SysJob/DeleteSysJob"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysJobHTTPClientImpl) DeleteSysJob(ctx context.Context, in *SysJobDelet
 
 func (c *SysJobHTTPClientImpl) GetPageSysJob(ctx context.Context, in *SysJobPageReq, opts ...http.CallOption) (*SysJobPageReply, error) {
 	var out SysJobPageReply
-	pattern := "/v1/sysjob/page"
+	pattern := "/v1/sys/job/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjob.v1.SysJob/GetPageSysJob"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysJobHTTPClientImpl) GetPageSysJob(ctx context.Context, in *SysJobPage
 
 func (c *SysJobHTTPClientImpl) GetSysJob(ctx context.Context, in *SysJobReq, opts ...http.CallOption) (*SysJobReply, error) {
 	var out SysJobReply
-	pattern := "/v1/sysjob/{id}"
+	pattern := "/v1/sys/job/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysjob.v1.SysJob/GetSysJob"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysJobHTTPClientImpl) GetSysJob(ctx context.Context, in *SysJobReq, opt
 
 func (c *SysJobHTTPClientImpl) UpdateSysJob(ctx context.Context, in *SysJobUpdateReq, opts ...http.CallOption) (*SysJobUpdateReply, error) {
 	var out SysJobUpdateReply
-	pattern := "/v1/sysjob/{id}"
+	pattern := "/v1/sys/job/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysjob.v1.SysJob/UpdateSysJob"))
 	opts = append(opts, http.PathTemplate(pattern))

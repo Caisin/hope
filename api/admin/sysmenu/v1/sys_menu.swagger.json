@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysmenu": {
+    "/v1/sys/menu": {
       "delete": {
         "summary": "批量删除SysMenu",
         "operationId": "SysMenu_BatchDeleteSysMenu",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysmenu/page": {
+    "/v1/sys/menu/page": {
       "get": {
         "summary": "分页查询SysMenu",
         "operationId": "SysMenu_GetPageSysMenu",
@@ -297,7 +297,7 @@
         ]
       }
     },
-    "/v1/sysmenu/{id}": {
+    "/v1/sys/menu/{id}": {
       "get": {
         "summary": "获取SysMenu",
         "operationId": "SysMenu_GetSysMenu",

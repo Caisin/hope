@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysdicttype": {
+    "/v1/sys/dict/type": {
       "delete": {
         "summary": "批量删除SysDictType",
         "operationId": "SysDictType_BatchDeleteSysDictType",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysdicttype/page": {
+    "/v1/sys/dict/type/page": {
       "get": {
         "summary": "分页查询SysDictType",
         "operationId": "SysDictType_GetPageSysDictType",
@@ -222,7 +222,7 @@
         ]
       }
     },
-    "/v1/sysdicttype/{id}": {
+    "/v1/sys/dict/type/{id}": {
       "get": {
         "summary": "获取SysDictType",
         "operationId": "SysDictType_GetSysDictType",

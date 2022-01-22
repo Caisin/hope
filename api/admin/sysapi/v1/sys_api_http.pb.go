@@ -28,12 +28,12 @@ type SysApiHTTPServer interface {
 
 func RegisterSysApiHTTPServer(s *http.Server, srv SysApiHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysapi/page", _SysApi_GetPageSysApi0_HTTP_Handler(srv))
-	r.GET("/v1/sysapi/{id}", _SysApi_GetSysApi0_HTTP_Handler(srv))
-	r.PUT("/v1/sysapi/{id}", _SysApi_UpdateSysApi0_HTTP_Handler(srv))
-	r.POST("/v1/sysapi", _SysApi_CreateSysApi0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysapi/{id}", _SysApi_DeleteSysApi0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysapi", _SysApi_BatchDeleteSysApi0_HTTP_Handler(srv))
+	r.GET("/v1/sys/api/page", _SysApi_GetPageSysApi0_HTTP_Handler(srv))
+	r.GET("/v1/sys/api/{id}", _SysApi_GetSysApi0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/api/{id}", _SysApi_UpdateSysApi0_HTTP_Handler(srv))
+	r.POST("/v1/sys/api", _SysApi_CreateSysApi0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/api/{id}", _SysApi_DeleteSysApi0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/api", _SysApi_BatchDeleteSysApi0_HTTP_Handler(srv))
 }
 
 func _SysApi_GetPageSysApi0_HTTP_Handler(srv SysApiHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysApiHTTPClient(client *http.Client) SysApiHTTPClient {
 
 func (c *SysApiHTTPClientImpl) BatchDeleteSysApi(ctx context.Context, in *SysApiBatchDeleteReq, opts ...http.CallOption) (*SysApiDeleteReply, error) {
 	var out SysApiDeleteReply
-	pattern := "/v1/sysapi"
+	pattern := "/v1/sys/api"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysapi.v1.SysApi/BatchDeleteSysApi"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysApiHTTPClientImpl) BatchDeleteSysApi(ctx context.Context, in *SysApi
 
 func (c *SysApiHTTPClientImpl) CreateSysApi(ctx context.Context, in *SysApiCreateReq, opts ...http.CallOption) (*SysApiCreateReply, error) {
 	var out SysApiCreateReply
-	pattern := "/v1/sysapi"
+	pattern := "/v1/sys/api"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysapi.v1.SysApi/CreateSysApi"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysApiHTTPClientImpl) CreateSysApi(ctx context.Context, in *SysApiCreat
 
 func (c *SysApiHTTPClientImpl) DeleteSysApi(ctx context.Context, in *SysApiDeleteReq, opts ...http.CallOption) (*SysApiDeleteReply, error) {
 	var out SysApiDeleteReply
-	pattern := "/v1/sysapi/{id}"
+	pattern := "/v1/sys/api/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysapi.v1.SysApi/DeleteSysApi"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysApiHTTPClientImpl) DeleteSysApi(ctx context.Context, in *SysApiDelet
 
 func (c *SysApiHTTPClientImpl) GetPageSysApi(ctx context.Context, in *SysApiPageReq, opts ...http.CallOption) (*SysApiPageReply, error) {
 	var out SysApiPageReply
-	pattern := "/v1/sysapi/page"
+	pattern := "/v1/sys/api/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysapi.v1.SysApi/GetPageSysApi"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysApiHTTPClientImpl) GetPageSysApi(ctx context.Context, in *SysApiPage
 
 func (c *SysApiHTTPClientImpl) GetSysApi(ctx context.Context, in *SysApiReq, opts ...http.CallOption) (*SysApiReply, error) {
 	var out SysApiReply
-	pattern := "/v1/sysapi/{id}"
+	pattern := "/v1/sys/api/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysapi.v1.SysApi/GetSysApi"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysApiHTTPClientImpl) GetSysApi(ctx context.Context, in *SysApiReq, opt
 
 func (c *SysApiHTTPClientImpl) UpdateSysApi(ctx context.Context, in *SysApiUpdateReq, opts ...http.CallOption) (*SysApiUpdateReply, error) {
 	var out SysApiUpdateReply
-	pattern := "/v1/sysapi/{id}"
+	pattern := "/v1/sys/api/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysapi.v1.SysApi/UpdateSysApi"))
 	opts = append(opts, http.PathTemplate(pattern))

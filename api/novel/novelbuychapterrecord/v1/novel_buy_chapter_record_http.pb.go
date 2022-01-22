@@ -28,12 +28,12 @@ type NovelBuyChapterRecordHTTPServer interface {
 
 func RegisterNovelBuyChapterRecordHTTPServer(s *http.Server, srv NovelBuyChapterRecordHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelbuychapterrecord/page", _NovelBuyChapterRecord_GetPageNovelBuyChapterRecord0_HTTP_Handler(srv))
-	r.GET("/v1/novelbuychapterrecord/{id}", _NovelBuyChapterRecord_GetNovelBuyChapterRecord0_HTTP_Handler(srv))
-	r.PUT("/v1/novelbuychapterrecord/{id}", _NovelBuyChapterRecord_UpdateNovelBuyChapterRecord0_HTTP_Handler(srv))
-	r.POST("/v1/novelbuychapterrecord", _NovelBuyChapterRecord_CreateNovelBuyChapterRecord0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelbuychapterrecord/{id}", _NovelBuyChapterRecord_DeleteNovelBuyChapterRecord0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelbuychapterrecord", _NovelBuyChapterRecord_BatchDeleteNovelBuyChapterRecord0_HTTP_Handler(srv))
+	r.GET("/v1/novel/buy/chapter/record/page", _NovelBuyChapterRecord_GetPageNovelBuyChapterRecord0_HTTP_Handler(srv))
+	r.GET("/v1/novel/buy/chapter/record/{id}", _NovelBuyChapterRecord_GetNovelBuyChapterRecord0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/buy/chapter/record/{id}", _NovelBuyChapterRecord_UpdateNovelBuyChapterRecord0_HTTP_Handler(srv))
+	r.POST("/v1/novel/buy/chapter/record", _NovelBuyChapterRecord_CreateNovelBuyChapterRecord0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/buy/chapter/record/{id}", _NovelBuyChapterRecord_DeleteNovelBuyChapterRecord0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/buy/chapter/record", _NovelBuyChapterRecord_BatchDeleteNovelBuyChapterRecord0_HTTP_Handler(srv))
 }
 
 func _NovelBuyChapterRecord_GetPageNovelBuyChapterRecord0_HTTP_Handler(srv NovelBuyChapterRecordHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelBuyChapterRecordHTTPClient(client *http.Client) NovelBuyChapterReco
 
 func (c *NovelBuyChapterRecordHTTPClientImpl) BatchDeleteNovelBuyChapterRecord(ctx context.Context, in *NovelBuyChapterRecordBatchDeleteReq, opts ...http.CallOption) (*NovelBuyChapterRecordDeleteReply, error) {
 	var out NovelBuyChapterRecordDeleteReply
-	pattern := "/v1/novelbuychapterrecord"
+	pattern := "/v1/novel/buy/chapter/record"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/BatchDeleteNovelBuyChapterRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelBuyChapterRecordHTTPClientImpl) BatchDeleteNovelBuyChapterRecord(c
 
 func (c *NovelBuyChapterRecordHTTPClientImpl) CreateNovelBuyChapterRecord(ctx context.Context, in *NovelBuyChapterRecordCreateReq, opts ...http.CallOption) (*NovelBuyChapterRecordCreateReply, error) {
 	var out NovelBuyChapterRecordCreateReply
-	pattern := "/v1/novelbuychapterrecord"
+	pattern := "/v1/novel/buy/chapter/record"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/CreateNovelBuyChapterRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelBuyChapterRecordHTTPClientImpl) CreateNovelBuyChapterRecord(ctx co
 
 func (c *NovelBuyChapterRecordHTTPClientImpl) DeleteNovelBuyChapterRecord(ctx context.Context, in *NovelBuyChapterRecordDeleteReq, opts ...http.CallOption) (*NovelBuyChapterRecordDeleteReply, error) {
 	var out NovelBuyChapterRecordDeleteReply
-	pattern := "/v1/novelbuychapterrecord/{id}"
+	pattern := "/v1/novel/buy/chapter/record/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/DeleteNovelBuyChapterRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelBuyChapterRecordHTTPClientImpl) DeleteNovelBuyChapterRecord(ctx co
 
 func (c *NovelBuyChapterRecordHTTPClientImpl) GetNovelBuyChapterRecord(ctx context.Context, in *NovelBuyChapterRecordReq, opts ...http.CallOption) (*NovelBuyChapterRecordReply, error) {
 	var out NovelBuyChapterRecordReply
-	pattern := "/v1/novelbuychapterrecord/{id}"
+	pattern := "/v1/novel/buy/chapter/record/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/GetNovelBuyChapterRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelBuyChapterRecordHTTPClientImpl) GetNovelBuyChapterRecord(ctx conte
 
 func (c *NovelBuyChapterRecordHTTPClientImpl) GetPageNovelBuyChapterRecord(ctx context.Context, in *NovelBuyChapterRecordPageReq, opts ...http.CallOption) (*NovelBuyChapterRecordPageReply, error) {
 	var out NovelBuyChapterRecordPageReply
-	pattern := "/v1/novelbuychapterrecord/page"
+	pattern := "/v1/novel/buy/chapter/record/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/GetPageNovelBuyChapterRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelBuyChapterRecordHTTPClientImpl) GetPageNovelBuyChapterRecord(ctx c
 
 func (c *NovelBuyChapterRecordHTTPClientImpl) UpdateNovelBuyChapterRecord(ctx context.Context, in *NovelBuyChapterRecordUpdateReq, opts ...http.CallOption) (*NovelBuyChapterRecordUpdateReply, error) {
 	var out NovelBuyChapterRecordUpdateReply
-	pattern := "/v1/novelbuychapterrecord/{id}"
+	pattern := "/v1/novel/buy/chapter/record/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/UpdateNovelBuyChapterRecord"))
 	opts = append(opts, http.PathTemplate(pattern))

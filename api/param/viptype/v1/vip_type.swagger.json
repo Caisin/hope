@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/viptype": {
+    "/v1/vip/type": {
       "delete": {
         "summary": "批量删除VipType",
         "operationId": "VipType_BatchDeleteVipType",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/viptype/page": {
+    "/v1/vip/type/page": {
       "get": {
         "summary": "分页查询VipType",
         "operationId": "VipType_GetPageVipType",
@@ -238,7 +238,7 @@
         ]
       }
     },
-    "/v1/viptype/{id}": {
+    "/v1/vip/type/{id}": {
       "get": {
         "summary": "获取VipType",
         "operationId": "VipType_GetVipType",

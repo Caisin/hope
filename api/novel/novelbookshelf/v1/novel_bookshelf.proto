@@ -15,21 +15,21 @@ service NovelBookshelf {
   // 分页查询NovelBookshelf
   rpc GetPageNovelBookshelf (NovelBookshelfPageReq) returns (NovelBookshelfPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelbookshelf/page"
+      get: "/v1/novel/bookshelf/page"
     };
   }
 
   // 获取NovelBookshelf
   rpc GetNovelBookshelf (NovelBookshelfReq) returns (NovelBookshelfReply)  {
     option (google.api.http) = {
-      get: "/v1/novelbookshelf/{id}"
+      get: "/v1/novel/bookshelf/{id}"
     };
   }
 
   // 更新NovelBookshelf
   rpc UpdateNovelBookshelf (NovelBookshelfUpdateReq) returns (NovelBookshelfUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelbookshelf/{id}"
+      put: "/v1/novel/bookshelf/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelBookshelf {
   // 创建NovelBookshelf
   rpc CreateNovelBookshelf (NovelBookshelfCreateReq) returns (NovelBookshelfCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelbookshelf"
+      post: "/v1/novel/bookshelf"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelBookshelf {
   // 删除NovelBookshelf
   rpc DeleteNovelBookshelf (NovelBookshelfDeleteReq) returns (NovelBookshelfDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelbookshelf/{id}"
+      delete: "/v1/novel/bookshelf/{id}"
     };
   }
 
   // 批量删除NovelBookshelf
   rpc BatchDeleteNovelBookshelf (NovelBookshelfBatchDeleteReq) returns (NovelBookshelfDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelbookshelf"
+      delete: "/v1/novel/bookshelf"
     };
   }
 

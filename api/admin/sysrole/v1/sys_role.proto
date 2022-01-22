@@ -15,21 +15,21 @@ service SysRole {
   // 分页查询SysRole
   rpc GetPageSysRole (SysRolePageReq) returns (SysRolePageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysrole/page"
+      get: "/v1/sys/role/page"
     };
   }
 
   // 获取SysRole
   rpc GetSysRole (SysRoleReq) returns (SysRoleReply)  {
     option (google.api.http) = {
-      get: "/v1/sysrole/{id}"
+      get: "/v1/sys/role/{id}"
     };
   }
 
   // 更新SysRole
   rpc UpdateSysRole (SysRoleUpdateReq) returns (SysRoleUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysrole/{id}"
+      put: "/v1/sys/role/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysRole {
   // 创建SysRole
   rpc CreateSysRole (SysRoleCreateReq) returns (SysRoleCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysrole"
+      post: "/v1/sys/role"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysRole {
   // 删除SysRole
   rpc DeleteSysRole (SysRoleDeleteReq) returns (SysRoleDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysrole/{id}"
+      delete: "/v1/sys/role/{id}"
     };
   }
 
   // 批量删除SysRole
   rpc BatchDeleteSysRole (SysRoleBatchDeleteReq) returns (SysRoleDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysrole"
+      delete: "/v1/sys/role"
     };
   }
 

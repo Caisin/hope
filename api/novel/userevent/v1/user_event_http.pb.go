@@ -28,12 +28,12 @@ type UserEventHTTPServer interface {
 
 func RegisterUserEventHTTPServer(s *http.Server, srv UserEventHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/userevent/page", _UserEvent_GetPageUserEvent0_HTTP_Handler(srv))
-	r.GET("/v1/userevent/{id}", _UserEvent_GetUserEvent0_HTTP_Handler(srv))
-	r.PUT("/v1/userevent/{id}", _UserEvent_UpdateUserEvent0_HTTP_Handler(srv))
-	r.POST("/v1/userevent", _UserEvent_CreateUserEvent0_HTTP_Handler(srv))
-	r.DELETE("/v1/userevent/{id}", _UserEvent_DeleteUserEvent0_HTTP_Handler(srv))
-	r.DELETE("/v1/userevent", _UserEvent_BatchDeleteUserEvent0_HTTP_Handler(srv))
+	r.GET("/v1/user/event/page", _UserEvent_GetPageUserEvent0_HTTP_Handler(srv))
+	r.GET("/v1/user/event/{id}", _UserEvent_GetUserEvent0_HTTP_Handler(srv))
+	r.PUT("/v1/user/event/{id}", _UserEvent_UpdateUserEvent0_HTTP_Handler(srv))
+	r.POST("/v1/user/event", _UserEvent_CreateUserEvent0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/event/{id}", _UserEvent_DeleteUserEvent0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/event", _UserEvent_BatchDeleteUserEvent0_HTTP_Handler(srv))
 }
 
 func _UserEvent_GetPageUserEvent0_HTTP_Handler(srv UserEventHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewUserEventHTTPClient(client *http.Client) UserEventHTTPClient {
 
 func (c *UserEventHTTPClientImpl) BatchDeleteUserEvent(ctx context.Context, in *UserEventBatchDeleteReq, opts ...http.CallOption) (*UserEventDeleteReply, error) {
 	var out UserEventDeleteReply
-	pattern := "/v1/userevent"
+	pattern := "/v1/user/event"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userevent.v1.UserEvent/BatchDeleteUserEvent"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *UserEventHTTPClientImpl) BatchDeleteUserEvent(ctx context.Context, in *
 
 func (c *UserEventHTTPClientImpl) CreateUserEvent(ctx context.Context, in *UserEventCreateReq, opts ...http.CallOption) (*UserEventCreateReply, error) {
 	var out UserEventCreateReply
-	pattern := "/v1/userevent"
+	pattern := "/v1/user/event"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/userevent.v1.UserEvent/CreateUserEvent"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *UserEventHTTPClientImpl) CreateUserEvent(ctx context.Context, in *UserE
 
 func (c *UserEventHTTPClientImpl) DeleteUserEvent(ctx context.Context, in *UserEventDeleteReq, opts ...http.CallOption) (*UserEventDeleteReply, error) {
 	var out UserEventDeleteReply
-	pattern := "/v1/userevent/{id}"
+	pattern := "/v1/user/event/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userevent.v1.UserEvent/DeleteUserEvent"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *UserEventHTTPClientImpl) DeleteUserEvent(ctx context.Context, in *UserE
 
 func (c *UserEventHTTPClientImpl) GetPageUserEvent(ctx context.Context, in *UserEventPageReq, opts ...http.CallOption) (*UserEventPageReply, error) {
 	var out UserEventPageReply
-	pattern := "/v1/userevent/page"
+	pattern := "/v1/user/event/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userevent.v1.UserEvent/GetPageUserEvent"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *UserEventHTTPClientImpl) GetPageUserEvent(ctx context.Context, in *User
 
 func (c *UserEventHTTPClientImpl) GetUserEvent(ctx context.Context, in *UserEventReq, opts ...http.CallOption) (*UserEventReply, error) {
 	var out UserEventReply
-	pattern := "/v1/userevent/{id}"
+	pattern := "/v1/user/event/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userevent.v1.UserEvent/GetUserEvent"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *UserEventHTTPClientImpl) GetUserEvent(ctx context.Context, in *UserEven
 
 func (c *UserEventHTTPClientImpl) UpdateUserEvent(ctx context.Context, in *UserEventUpdateReq, opts ...http.CallOption) (*UserEventUpdateReply, error) {
 	var out UserEventUpdateReply
-	pattern := "/v1/userevent/{id}"
+	pattern := "/v1/user/event/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/userevent.v1.UserEvent/UpdateUserEvent"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -28,12 +28,12 @@ type SysMenuHTTPServer interface {
 
 func RegisterSysMenuHTTPServer(s *http.Server, srv SysMenuHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysmenu/page", _SysMenu_GetPageSysMenu0_HTTP_Handler(srv))
-	r.GET("/v1/sysmenu/{id}", _SysMenu_GetSysMenu0_HTTP_Handler(srv))
-	r.PUT("/v1/sysmenu/{id}", _SysMenu_UpdateSysMenu0_HTTP_Handler(srv))
-	r.POST("/v1/sysmenu", _SysMenu_CreateSysMenu0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysmenu/{id}", _SysMenu_DeleteSysMenu0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysmenu", _SysMenu_BatchDeleteSysMenu0_HTTP_Handler(srv))
+	r.GET("/v1/sys/menu/page", _SysMenu_GetPageSysMenu0_HTTP_Handler(srv))
+	r.GET("/v1/sys/menu/{id}", _SysMenu_GetSysMenu0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/menu/{id}", _SysMenu_UpdateSysMenu0_HTTP_Handler(srv))
+	r.POST("/v1/sys/menu", _SysMenu_CreateSysMenu0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/menu/{id}", _SysMenu_DeleteSysMenu0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/menu", _SysMenu_BatchDeleteSysMenu0_HTTP_Handler(srv))
 }
 
 func _SysMenu_GetPageSysMenu0_HTTP_Handler(srv SysMenuHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysMenuHTTPClient(client *http.Client) SysMenuHTTPClient {
 
 func (c *SysMenuHTTPClientImpl) BatchDeleteSysMenu(ctx context.Context, in *SysMenuBatchDeleteReq, opts ...http.CallOption) (*SysMenuDeleteReply, error) {
 	var out SysMenuDeleteReply
-	pattern := "/v1/sysmenu"
+	pattern := "/v1/sys/menu"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/BatchDeleteSysMenu"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysMenuHTTPClientImpl) BatchDeleteSysMenu(ctx context.Context, in *SysM
 
 func (c *SysMenuHTTPClientImpl) CreateSysMenu(ctx context.Context, in *SysMenuCreateReq, opts ...http.CallOption) (*SysMenuCreateReply, error) {
 	var out SysMenuCreateReply
-	pattern := "/v1/sysmenu"
+	pattern := "/v1/sys/menu"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/CreateSysMenu"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysMenuHTTPClientImpl) CreateSysMenu(ctx context.Context, in *SysMenuCr
 
 func (c *SysMenuHTTPClientImpl) DeleteSysMenu(ctx context.Context, in *SysMenuDeleteReq, opts ...http.CallOption) (*SysMenuDeleteReply, error) {
 	var out SysMenuDeleteReply
-	pattern := "/v1/sysmenu/{id}"
+	pattern := "/v1/sys/menu/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/DeleteSysMenu"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysMenuHTTPClientImpl) DeleteSysMenu(ctx context.Context, in *SysMenuDe
 
 func (c *SysMenuHTTPClientImpl) GetPageSysMenu(ctx context.Context, in *SysMenuPageReq, opts ...http.CallOption) (*SysMenuPageReply, error) {
 	var out SysMenuPageReply
-	pattern := "/v1/sysmenu/page"
+	pattern := "/v1/sys/menu/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/GetPageSysMenu"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysMenuHTTPClientImpl) GetPageSysMenu(ctx context.Context, in *SysMenuP
 
 func (c *SysMenuHTTPClientImpl) GetSysMenu(ctx context.Context, in *SysMenuReq, opts ...http.CallOption) (*SysMenuReply, error) {
 	var out SysMenuReply
-	pattern := "/v1/sysmenu/{id}"
+	pattern := "/v1/sys/menu/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/GetSysMenu"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysMenuHTTPClientImpl) GetSysMenu(ctx context.Context, in *SysMenuReq, 
 
 func (c *SysMenuHTTPClientImpl) UpdateSysMenu(ctx context.Context, in *SysMenuUpdateReq, opts ...http.CallOption) (*SysMenuUpdateReply, error) {
 	var out SysMenuUpdateReply
-	pattern := "/v1/sysmenu/{id}"
+	pattern := "/v1/sys/menu/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/UpdateSysMenu"))
 	opts = append(opts, http.PathTemplate(pattern))

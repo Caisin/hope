@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/usermsg": {
+    "/v1/user/msg": {
       "delete": {
         "summary": "批量删除UserMsg",
         "operationId": "UserMsg_BatchDeleteUserMsg",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/usermsg/page": {
+    "/v1/user/msg/page": {
       "get": {
         "summary": "分页查询UserMsg",
         "operationId": "UserMsg_GetPageUserMsg",
@@ -216,7 +216,7 @@
         ]
       }
     },
-    "/v1/usermsg/{id}": {
+    "/v1/user/msg/{id}": {
       "get": {
         "summary": "获取UserMsg",
         "operationId": "UserMsg_GetUserMsg",

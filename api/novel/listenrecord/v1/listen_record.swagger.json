@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/listenrecord": {
+    "/v1/listen/record": {
       "delete": {
         "summary": "批量删除ListenRecord",
         "operationId": "ListenRecord_BatchDeleteListenRecord",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/listenrecord/page": {
+    "/v1/listen/record/page": {
       "get": {
         "summary": "分页查询ListenRecord",
         "operationId": "ListenRecord_GetPageListenRecord",
@@ -246,7 +246,7 @@
         ]
       }
     },
-    "/v1/listenrecord/{id}": {
+    "/v1/listen/record/{id}": {
       "get": {
         "summary": "获取ListenRecord",
         "operationId": "ListenRecord_GetListenRecord",

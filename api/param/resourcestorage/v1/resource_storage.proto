@@ -15,21 +15,21 @@ service ResourceStorage {
   // 分页查询ResourceStorage
   rpc GetPageResourceStorage (ResourceStoragePageReq) returns (ResourceStoragePageReply)  {
     option (google.api.http) = {
-      get: "/v1/resourcestorage/page"
+      get: "/v1/resource/storage/page"
     };
   }
 
   // 获取ResourceStorage
   rpc GetResourceStorage (ResourceStorageReq) returns (ResourceStorageReply)  {
     option (google.api.http) = {
-      get: "/v1/resourcestorage/{id}"
+      get: "/v1/resource/storage/{id}"
     };
   }
 
   // 更新ResourceStorage
   rpc UpdateResourceStorage (ResourceStorageUpdateReq) returns (ResourceStorageUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/resourcestorage/{id}"
+      put: "/v1/resource/storage/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service ResourceStorage {
   // 创建ResourceStorage
   rpc CreateResourceStorage (ResourceStorageCreateReq) returns (ResourceStorageCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/resourcestorage"
+      post: "/v1/resource/storage"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service ResourceStorage {
   // 删除ResourceStorage
   rpc DeleteResourceStorage (ResourceStorageDeleteReq) returns (ResourceStorageDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/resourcestorage/{id}"
+      delete: "/v1/resource/storage/{id}"
     };
   }
 
   // 批量删除ResourceStorage
   rpc BatchDeleteResourceStorage (ResourceStorageBatchDeleteReq) returns (ResourceStorageDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/resourcestorage"
+      delete: "/v1/resource/storage"
     };
   }
 

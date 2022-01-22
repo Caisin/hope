@@ -28,12 +28,12 @@ type UserAnalysisStatisticsHTTPServer interface {
 
 func RegisterUserAnalysisStatisticsHTTPServer(s *http.Server, srv UserAnalysisStatisticsHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/useranalysisstatistics/page", _UserAnalysisStatistics_GetPageUserAnalysisStatistics0_HTTP_Handler(srv))
-	r.GET("/v1/useranalysisstatistics/{id}", _UserAnalysisStatistics_GetUserAnalysisStatistics0_HTTP_Handler(srv))
-	r.PUT("/v1/useranalysisstatistics/{id}", _UserAnalysisStatistics_UpdateUserAnalysisStatistics0_HTTP_Handler(srv))
-	r.POST("/v1/useranalysisstatistics", _UserAnalysisStatistics_CreateUserAnalysisStatistics0_HTTP_Handler(srv))
-	r.DELETE("/v1/useranalysisstatistics/{id}", _UserAnalysisStatistics_DeleteUserAnalysisStatistics0_HTTP_Handler(srv))
-	r.DELETE("/v1/useranalysisstatistics", _UserAnalysisStatistics_BatchDeleteUserAnalysisStatistics0_HTTP_Handler(srv))
+	r.GET("/v1/user/analysis/statistics/page", _UserAnalysisStatistics_GetPageUserAnalysisStatistics0_HTTP_Handler(srv))
+	r.GET("/v1/user/analysis/statistics/{id}", _UserAnalysisStatistics_GetUserAnalysisStatistics0_HTTP_Handler(srv))
+	r.PUT("/v1/user/analysis/statistics/{id}", _UserAnalysisStatistics_UpdateUserAnalysisStatistics0_HTTP_Handler(srv))
+	r.POST("/v1/user/analysis/statistics", _UserAnalysisStatistics_CreateUserAnalysisStatistics0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/analysis/statistics/{id}", _UserAnalysisStatistics_DeleteUserAnalysisStatistics0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/analysis/statistics", _UserAnalysisStatistics_BatchDeleteUserAnalysisStatistics0_HTTP_Handler(srv))
 }
 
 func _UserAnalysisStatistics_GetPageUserAnalysisStatistics0_HTTP_Handler(srv UserAnalysisStatisticsHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewUserAnalysisStatisticsHTTPClient(client *http.Client) UserAnalysisStatis
 
 func (c *UserAnalysisStatisticsHTTPClientImpl) BatchDeleteUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsBatchDeleteReq, opts ...http.CallOption) (*UserAnalysisStatisticsDeleteReply, error) {
 	var out UserAnalysisStatisticsDeleteReply
-	pattern := "/v1/useranalysisstatistics"
+	pattern := "/v1/user/analysis/statistics"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/BatchDeleteUserAnalysisStatistics"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *UserAnalysisStatisticsHTTPClientImpl) BatchDeleteUserAnalysisStatistics
 
 func (c *UserAnalysisStatisticsHTTPClientImpl) CreateUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsCreateReq, opts ...http.CallOption) (*UserAnalysisStatisticsCreateReply, error) {
 	var out UserAnalysisStatisticsCreateReply
-	pattern := "/v1/useranalysisstatistics"
+	pattern := "/v1/user/analysis/statistics"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/CreateUserAnalysisStatistics"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *UserAnalysisStatisticsHTTPClientImpl) CreateUserAnalysisStatistics(ctx 
 
 func (c *UserAnalysisStatisticsHTTPClientImpl) DeleteUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsDeleteReq, opts ...http.CallOption) (*UserAnalysisStatisticsDeleteReply, error) {
 	var out UserAnalysisStatisticsDeleteReply
-	pattern := "/v1/useranalysisstatistics/{id}"
+	pattern := "/v1/user/analysis/statistics/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/DeleteUserAnalysisStatistics"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *UserAnalysisStatisticsHTTPClientImpl) DeleteUserAnalysisStatistics(ctx 
 
 func (c *UserAnalysisStatisticsHTTPClientImpl) GetPageUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsPageReq, opts ...http.CallOption) (*UserAnalysisStatisticsPageReply, error) {
 	var out UserAnalysisStatisticsPageReply
-	pattern := "/v1/useranalysisstatistics/page"
+	pattern := "/v1/user/analysis/statistics/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/GetPageUserAnalysisStatistics"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *UserAnalysisStatisticsHTTPClientImpl) GetPageUserAnalysisStatistics(ctx
 
 func (c *UserAnalysisStatisticsHTTPClientImpl) GetUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsReq, opts ...http.CallOption) (*UserAnalysisStatisticsReply, error) {
 	var out UserAnalysisStatisticsReply
-	pattern := "/v1/useranalysisstatistics/{id}"
+	pattern := "/v1/user/analysis/statistics/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/GetUserAnalysisStatistics"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *UserAnalysisStatisticsHTTPClientImpl) GetUserAnalysisStatistics(ctx con
 
 func (c *UserAnalysisStatisticsHTTPClientImpl) UpdateUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsUpdateReq, opts ...http.CallOption) (*UserAnalysisStatisticsUpdateReply, error) {
 	var out UserAnalysisStatisticsUpdateReply
-	pattern := "/v1/useranalysisstatistics/{id}"
+	pattern := "/v1/user/analysis/statistics/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/UpdateUserAnalysisStatistics"))
 	opts = append(opts, http.PathTemplate(pattern))

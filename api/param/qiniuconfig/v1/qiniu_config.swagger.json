@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/qiniuconfig": {
+    "/v1/qiniu/config": {
       "delete": {
         "summary": "批量删除QiniuConfig",
         "operationId": "QiniuConfig_BatchDeleteQiniuConfig",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/qiniuconfig/page": {
+    "/v1/qiniu/config/page": {
       "get": {
         "summary": "分页查询QiniuConfig",
         "operationId": "QiniuConfig_GetPageQiniuConfig",
@@ -235,7 +235,7 @@
         ]
       }
     },
-    "/v1/qiniuconfig/{id}": {
+    "/v1/qiniu/config/{id}": {
       "get": {
         "summary": "获取QiniuConfig",
         "operationId": "QiniuConfig_GetQiniuConfig",

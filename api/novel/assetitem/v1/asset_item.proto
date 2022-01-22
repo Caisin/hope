@@ -15,21 +15,21 @@ service AssetItem {
   // 分页查询AssetItem
   rpc GetPageAssetItem (AssetItemPageReq) returns (AssetItemPageReply)  {
     option (google.api.http) = {
-      get: "/v1/assetitem/page"
+      get: "/v1/asset/item/page"
     };
   }
 
   // 获取AssetItem
   rpc GetAssetItem (AssetItemReq) returns (AssetItemReply)  {
     option (google.api.http) = {
-      get: "/v1/assetitem/{id}"
+      get: "/v1/asset/item/{id}"
     };
   }
 
   // 更新AssetItem
   rpc UpdateAssetItem (AssetItemUpdateReq) returns (AssetItemUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/assetitem/{id}"
+      put: "/v1/asset/item/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service AssetItem {
   // 创建AssetItem
   rpc CreateAssetItem (AssetItemCreateReq) returns (AssetItemCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/assetitem"
+      post: "/v1/asset/item"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service AssetItem {
   // 删除AssetItem
   rpc DeleteAssetItem (AssetItemDeleteReq) returns (AssetItemDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/assetitem/{id}"
+      delete: "/v1/asset/item/{id}"
     };
   }
 
   // 批量删除AssetItem
   rpc BatchDeleteAssetItem (AssetItemBatchDeleteReq) returns (AssetItemDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/assetitem"
+      delete: "/v1/asset/item"
     };
   }
 

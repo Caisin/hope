@@ -28,12 +28,12 @@ type VipTypeHTTPServer interface {
 
 func RegisterVipTypeHTTPServer(s *http.Server, srv VipTypeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/viptype/page", _VipType_GetPageVipType0_HTTP_Handler(srv))
-	r.GET("/v1/viptype/{id}", _VipType_GetVipType0_HTTP_Handler(srv))
-	r.PUT("/v1/viptype/{id}", _VipType_UpdateVipType0_HTTP_Handler(srv))
-	r.POST("/v1/viptype", _VipType_CreateVipType0_HTTP_Handler(srv))
-	r.DELETE("/v1/viptype/{id}", _VipType_DeleteVipType0_HTTP_Handler(srv))
-	r.DELETE("/v1/viptype", _VipType_BatchDeleteVipType0_HTTP_Handler(srv))
+	r.GET("/v1/vip/type/page", _VipType_GetPageVipType0_HTTP_Handler(srv))
+	r.GET("/v1/vip/type/{id}", _VipType_GetVipType0_HTTP_Handler(srv))
+	r.PUT("/v1/vip/type/{id}", _VipType_UpdateVipType0_HTTP_Handler(srv))
+	r.POST("/v1/vip/type", _VipType_CreateVipType0_HTTP_Handler(srv))
+	r.DELETE("/v1/vip/type/{id}", _VipType_DeleteVipType0_HTTP_Handler(srv))
+	r.DELETE("/v1/vip/type", _VipType_BatchDeleteVipType0_HTTP_Handler(srv))
 }
 
 func _VipType_GetPageVipType0_HTTP_Handler(srv VipTypeHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewVipTypeHTTPClient(client *http.Client) VipTypeHTTPClient {
 
 func (c *VipTypeHTTPClientImpl) BatchDeleteVipType(ctx context.Context, in *VipTypeBatchDeleteReq, opts ...http.CallOption) (*VipTypeDeleteReply, error) {
 	var out VipTypeDeleteReply
-	pattern := "/v1/viptype"
+	pattern := "/v1/vip/type"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/viptype.v1.VipType/BatchDeleteVipType"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *VipTypeHTTPClientImpl) BatchDeleteVipType(ctx context.Context, in *VipT
 
 func (c *VipTypeHTTPClientImpl) CreateVipType(ctx context.Context, in *VipTypeCreateReq, opts ...http.CallOption) (*VipTypeCreateReply, error) {
 	var out VipTypeCreateReply
-	pattern := "/v1/viptype"
+	pattern := "/v1/vip/type"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/viptype.v1.VipType/CreateVipType"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *VipTypeHTTPClientImpl) CreateVipType(ctx context.Context, in *VipTypeCr
 
 func (c *VipTypeHTTPClientImpl) DeleteVipType(ctx context.Context, in *VipTypeDeleteReq, opts ...http.CallOption) (*VipTypeDeleteReply, error) {
 	var out VipTypeDeleteReply
-	pattern := "/v1/viptype/{id}"
+	pattern := "/v1/vip/type/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/viptype.v1.VipType/DeleteVipType"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *VipTypeHTTPClientImpl) DeleteVipType(ctx context.Context, in *VipTypeDe
 
 func (c *VipTypeHTTPClientImpl) GetPageVipType(ctx context.Context, in *VipTypePageReq, opts ...http.CallOption) (*VipTypePageReply, error) {
 	var out VipTypePageReply
-	pattern := "/v1/viptype/page"
+	pattern := "/v1/vip/type/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/viptype.v1.VipType/GetPageVipType"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *VipTypeHTTPClientImpl) GetPageVipType(ctx context.Context, in *VipTypeP
 
 func (c *VipTypeHTTPClientImpl) GetVipType(ctx context.Context, in *VipTypeReq, opts ...http.CallOption) (*VipTypeReply, error) {
 	var out VipTypeReply
-	pattern := "/v1/viptype/{id}"
+	pattern := "/v1/vip/type/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/viptype.v1.VipType/GetVipType"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *VipTypeHTTPClientImpl) GetVipType(ctx context.Context, in *VipTypeReq, 
 
 func (c *VipTypeHTTPClientImpl) UpdateVipType(ctx context.Context, in *VipTypeUpdateReq, opts ...http.CallOption) (*VipTypeUpdateReply, error) {
 	var out VipTypeUpdateReply
-	pattern := "/v1/viptype/{id}"
+	pattern := "/v1/vip/type/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/viptype.v1.VipType/UpdateVipType"))
 	opts = append(opts, http.PathTemplate(pattern))

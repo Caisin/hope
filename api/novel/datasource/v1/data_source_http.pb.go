@@ -28,12 +28,12 @@ type DataSourceHTTPServer interface {
 
 func RegisterDataSourceHTTPServer(s *http.Server, srv DataSourceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/datasource/page", _DataSource_GetPageDataSource0_HTTP_Handler(srv))
-	r.GET("/v1/datasource/{id}", _DataSource_GetDataSource0_HTTP_Handler(srv))
-	r.PUT("/v1/datasource/{id}", _DataSource_UpdateDataSource0_HTTP_Handler(srv))
-	r.POST("/v1/datasource", _DataSource_CreateDataSource0_HTTP_Handler(srv))
-	r.DELETE("/v1/datasource/{id}", _DataSource_DeleteDataSource0_HTTP_Handler(srv))
-	r.DELETE("/v1/datasource", _DataSource_BatchDeleteDataSource0_HTTP_Handler(srv))
+	r.GET("/v1/data/source/page", _DataSource_GetPageDataSource0_HTTP_Handler(srv))
+	r.GET("/v1/data/source/{id}", _DataSource_GetDataSource0_HTTP_Handler(srv))
+	r.PUT("/v1/data/source/{id}", _DataSource_UpdateDataSource0_HTTP_Handler(srv))
+	r.POST("/v1/data/source", _DataSource_CreateDataSource0_HTTP_Handler(srv))
+	r.DELETE("/v1/data/source/{id}", _DataSource_DeleteDataSource0_HTTP_Handler(srv))
+	r.DELETE("/v1/data/source", _DataSource_BatchDeleteDataSource0_HTTP_Handler(srv))
 }
 
 func _DataSource_GetPageDataSource0_HTTP_Handler(srv DataSourceHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewDataSourceHTTPClient(client *http.Client) DataSourceHTTPClient {
 
 func (c *DataSourceHTTPClientImpl) BatchDeleteDataSource(ctx context.Context, in *DataSourceBatchDeleteReq, opts ...http.CallOption) (*DataSourceDeleteReply, error) {
 	var out DataSourceDeleteReply
-	pattern := "/v1/datasource"
+	pattern := "/v1/data/source"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/datasource.v1.DataSource/BatchDeleteDataSource"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *DataSourceHTTPClientImpl) BatchDeleteDataSource(ctx context.Context, in
 
 func (c *DataSourceHTTPClientImpl) CreateDataSource(ctx context.Context, in *DataSourceCreateReq, opts ...http.CallOption) (*DataSourceCreateReply, error) {
 	var out DataSourceCreateReply
-	pattern := "/v1/datasource"
+	pattern := "/v1/data/source"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/datasource.v1.DataSource/CreateDataSource"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *DataSourceHTTPClientImpl) CreateDataSource(ctx context.Context, in *Dat
 
 func (c *DataSourceHTTPClientImpl) DeleteDataSource(ctx context.Context, in *DataSourceDeleteReq, opts ...http.CallOption) (*DataSourceDeleteReply, error) {
 	var out DataSourceDeleteReply
-	pattern := "/v1/datasource/{id}"
+	pattern := "/v1/data/source/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/datasource.v1.DataSource/DeleteDataSource"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *DataSourceHTTPClientImpl) DeleteDataSource(ctx context.Context, in *Dat
 
 func (c *DataSourceHTTPClientImpl) GetDataSource(ctx context.Context, in *DataSourceReq, opts ...http.CallOption) (*DataSourceReply, error) {
 	var out DataSourceReply
-	pattern := "/v1/datasource/{id}"
+	pattern := "/v1/data/source/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/datasource.v1.DataSource/GetDataSource"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *DataSourceHTTPClientImpl) GetDataSource(ctx context.Context, in *DataSo
 
 func (c *DataSourceHTTPClientImpl) GetPageDataSource(ctx context.Context, in *DataSourcePageReq, opts ...http.CallOption) (*DataSourcePageReply, error) {
 	var out DataSourcePageReply
-	pattern := "/v1/datasource/page"
+	pattern := "/v1/data/source/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/datasource.v1.DataSource/GetPageDataSource"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *DataSourceHTTPClientImpl) GetPageDataSource(ctx context.Context, in *Da
 
 func (c *DataSourceHTTPClientImpl) UpdateDataSource(ctx context.Context, in *DataSourceUpdateReq, opts ...http.CallOption) (*DataSourceUpdateReply, error) {
 	var out DataSourceUpdateReply
-	pattern := "/v1/datasource/{id}"
+	pattern := "/v1/data/source/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/datasource.v1.DataSource/UpdateDataSource"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -38,5 +38,4 @@ var ProviderSet = wire.NewSet(
 	NewUserEventRepo,
 	NewUserMsgRepo,
 	NewVipUserRepo,
-
 )

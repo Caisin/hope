@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/adchannel": {
+    "/v1/ad/channel": {
       "delete": {
         "summary": "批量删除AdChannel",
         "operationId": "AdChannel_BatchDeleteAdChannel",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/adchannel/page": {
+    "/v1/ad/channel/page": {
       "get": {
         "summary": "分页查询AdChannel",
         "operationId": "AdChannel_GetPageAdChannel",
@@ -261,7 +261,7 @@
         ]
       }
     },
-    "/v1/adchannel/{id}": {
+    "/v1/ad/channel/{id}": {
       "get": {
         "summary": "获取AdChannel",
         "operationId": "AdChannel_GetAdChannel",

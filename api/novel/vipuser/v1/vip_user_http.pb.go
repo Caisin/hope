@@ -28,12 +28,12 @@ type VipUserHTTPServer interface {
 
 func RegisterVipUserHTTPServer(s *http.Server, srv VipUserHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/vipuser/page", _VipUser_GetPageVipUser0_HTTP_Handler(srv))
-	r.GET("/v1/vipuser/{id}", _VipUser_GetVipUser0_HTTP_Handler(srv))
-	r.PUT("/v1/vipuser/{id}", _VipUser_UpdateVipUser0_HTTP_Handler(srv))
-	r.POST("/v1/vipuser", _VipUser_CreateVipUser0_HTTP_Handler(srv))
-	r.DELETE("/v1/vipuser/{id}", _VipUser_DeleteVipUser0_HTTP_Handler(srv))
-	r.DELETE("/v1/vipuser", _VipUser_BatchDeleteVipUser0_HTTP_Handler(srv))
+	r.GET("/v1/vip/user/page", _VipUser_GetPageVipUser0_HTTP_Handler(srv))
+	r.GET("/v1/vip/user/{id}", _VipUser_GetVipUser0_HTTP_Handler(srv))
+	r.PUT("/v1/vip/user/{id}", _VipUser_UpdateVipUser0_HTTP_Handler(srv))
+	r.POST("/v1/vip/user", _VipUser_CreateVipUser0_HTTP_Handler(srv))
+	r.DELETE("/v1/vip/user/{id}", _VipUser_DeleteVipUser0_HTTP_Handler(srv))
+	r.DELETE("/v1/vip/user", _VipUser_BatchDeleteVipUser0_HTTP_Handler(srv))
 }
 
 func _VipUser_GetPageVipUser0_HTTP_Handler(srv VipUserHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewVipUserHTTPClient(client *http.Client) VipUserHTTPClient {
 
 func (c *VipUserHTTPClientImpl) BatchDeleteVipUser(ctx context.Context, in *VipUserBatchDeleteReq, opts ...http.CallOption) (*VipUserDeleteReply, error) {
 	var out VipUserDeleteReply
-	pattern := "/v1/vipuser"
+	pattern := "/v1/vip/user"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/vipuser.v1.VipUser/BatchDeleteVipUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *VipUserHTTPClientImpl) BatchDeleteVipUser(ctx context.Context, in *VipU
 
 func (c *VipUserHTTPClientImpl) CreateVipUser(ctx context.Context, in *VipUserCreateReq, opts ...http.CallOption) (*VipUserCreateReply, error) {
 	var out VipUserCreateReply
-	pattern := "/v1/vipuser"
+	pattern := "/v1/vip/user"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/vipuser.v1.VipUser/CreateVipUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *VipUserHTTPClientImpl) CreateVipUser(ctx context.Context, in *VipUserCr
 
 func (c *VipUserHTTPClientImpl) DeleteVipUser(ctx context.Context, in *VipUserDeleteReq, opts ...http.CallOption) (*VipUserDeleteReply, error) {
 	var out VipUserDeleteReply
-	pattern := "/v1/vipuser/{id}"
+	pattern := "/v1/vip/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/vipuser.v1.VipUser/DeleteVipUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *VipUserHTTPClientImpl) DeleteVipUser(ctx context.Context, in *VipUserDe
 
 func (c *VipUserHTTPClientImpl) GetPageVipUser(ctx context.Context, in *VipUserPageReq, opts ...http.CallOption) (*VipUserPageReply, error) {
 	var out VipUserPageReply
-	pattern := "/v1/vipuser/page"
+	pattern := "/v1/vip/user/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/vipuser.v1.VipUser/GetPageVipUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *VipUserHTTPClientImpl) GetPageVipUser(ctx context.Context, in *VipUserP
 
 func (c *VipUserHTTPClientImpl) GetVipUser(ctx context.Context, in *VipUserReq, opts ...http.CallOption) (*VipUserReply, error) {
 	var out VipUserReply
-	pattern := "/v1/vipuser/{id}"
+	pattern := "/v1/vip/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/vipuser.v1.VipUser/GetVipUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *VipUserHTTPClientImpl) GetVipUser(ctx context.Context, in *VipUserReq, 
 
 func (c *VipUserHTTPClientImpl) UpdateVipUser(ctx context.Context, in *VipUserUpdateReq, opts ...http.CallOption) (*VipUserUpdateReply, error) {
 	var out VipUserUpdateReply
-	pattern := "/v1/vipuser/{id}"
+	pattern := "/v1/vip/user/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/vipuser.v1.VipUser/UpdateVipUser"))
 	opts = append(opts, http.PathTemplate(pattern))

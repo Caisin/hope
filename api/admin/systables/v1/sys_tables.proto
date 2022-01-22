@@ -15,21 +15,21 @@ service SysTables {
   // 分页查询SysTables
   rpc GetPageSysTables (SysTablesPageReq) returns (SysTablesPageReply)  {
     option (google.api.http) = {
-      get: "/v1/systables/page"
+      get: "/v1/sys/tables/page"
     };
   }
 
   // 获取SysTables
   rpc GetSysTables (SysTablesReq) returns (SysTablesReply)  {
     option (google.api.http) = {
-      get: "/v1/systables/{id}"
+      get: "/v1/sys/tables/{id}"
     };
   }
 
   // 更新SysTables
   rpc UpdateSysTables (SysTablesUpdateReq) returns (SysTablesUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/systables/{id}"
+      put: "/v1/sys/tables/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysTables {
   // 创建SysTables
   rpc CreateSysTables (SysTablesCreateReq) returns (SysTablesCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/systables"
+      post: "/v1/sys/tables"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysTables {
   // 删除SysTables
   rpc DeleteSysTables (SysTablesDeleteReq) returns (SysTablesDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/systables/{id}"
+      delete: "/v1/sys/tables/{id}"
     };
   }
 
   // 批量删除SysTables
   rpc BatchDeleteSysTables (SysTablesBatchDeleteReq) returns (SysTablesDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/systables"
+      delete: "/v1/sys/tables"
     };
   }
 

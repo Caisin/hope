@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/userresource": {
+    "/v1/user/resource": {
       "delete": {
         "summary": "批量删除UserResource",
         "operationId": "UserResource_BatchDeleteUserResource",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/userresource/page": {
+    "/v1/user/resource/page": {
       "get": {
         "summary": "分页查询UserResource",
         "operationId": "UserResource_GetPageUserResource",
@@ -221,7 +221,7 @@
         ]
       }
     },
-    "/v1/userresource/{id}": {
+    "/v1/user/resource/{id}": {
       "get": {
         "summary": "获取UserResource",
         "operationId": "UserResource_GetUserResource",

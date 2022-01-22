@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/bookpackage": {
+    "/v1/book/package": {
       "delete": {
         "summary": "批量删除BookPackage",
         "operationId": "BookPackage_BatchDeleteBookPackage",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/bookpackage/page": {
+    "/v1/book/package/page": {
       "get": {
         "summary": "分页查询BookPackage",
         "operationId": "BookPackage_GetPageBookPackage",
@@ -239,7 +239,7 @@
         ]
       }
     },
-    "/v1/bookpackage/{id}": {
+    "/v1/book/package/{id}": {
       "get": {
         "summary": "获取BookPackage",
         "operationId": "BookPackage_GetBookPackage",

@@ -15,21 +15,21 @@ service UserAnalysisStatistics {
   // 分页查询UserAnalysisStatistics
   rpc GetPageUserAnalysisStatistics (UserAnalysisStatisticsPageReq) returns (UserAnalysisStatisticsPageReply)  {
     option (google.api.http) = {
-      get: "/v1/useranalysisstatistics/page"
+      get: "/v1/user/analysis/statistics/page"
     };
   }
 
   // 获取UserAnalysisStatistics
   rpc GetUserAnalysisStatistics (UserAnalysisStatisticsReq) returns (UserAnalysisStatisticsReply)  {
     option (google.api.http) = {
-      get: "/v1/useranalysisstatistics/{id}"
+      get: "/v1/user/analysis/statistics/{id}"
     };
   }
 
   // 更新UserAnalysisStatistics
   rpc UpdateUserAnalysisStatistics (UserAnalysisStatisticsUpdateReq) returns (UserAnalysisStatisticsUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/useranalysisstatistics/{id}"
+      put: "/v1/user/analysis/statistics/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service UserAnalysisStatistics {
   // 创建UserAnalysisStatistics
   rpc CreateUserAnalysisStatistics (UserAnalysisStatisticsCreateReq) returns (UserAnalysisStatisticsCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/useranalysisstatistics"
+      post: "/v1/user/analysis/statistics"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service UserAnalysisStatistics {
   // 删除UserAnalysisStatistics
   rpc DeleteUserAnalysisStatistics (UserAnalysisStatisticsDeleteReq) returns (UserAnalysisStatisticsDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/useranalysisstatistics/{id}"
+      delete: "/v1/user/analysis/statistics/{id}"
     };
   }
 
   // 批量删除UserAnalysisStatistics
   rpc BatchDeleteUserAnalysisStatistics (UserAnalysisStatisticsBatchDeleteReq) returns (UserAnalysisStatisticsDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/useranalysisstatistics"
+      delete: "/v1/user/analysis/statistics"
     };
   }
 

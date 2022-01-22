@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysjob": {
+    "/v1/sys/job": {
       "delete": {
         "summary": "批量删除SysJob",
         "operationId": "SysJob_BatchDeleteSysJob",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysjob/page": {
+    "/v1/sys/job/page": {
       "get": {
         "summary": "分页查询SysJob",
         "operationId": "SysJob_GetPageSysJob",
@@ -267,7 +267,7 @@
         ]
       }
     },
-    "/v1/sysjob/{id}": {
+    "/v1/sys/job/{id}": {
       "get": {
         "summary": "获取SysJob",
         "operationId": "SysJob_GetSysJob",

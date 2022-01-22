@@ -15,21 +15,21 @@ service SysLoginLog {
   // 分页查询SysLoginLog
   rpc GetPageSysLoginLog (SysLoginLogPageReq) returns (SysLoginLogPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysloginlog/page"
+      get: "/v1/sys/login/log/page"
     };
   }
 
   // 获取SysLoginLog
   rpc GetSysLoginLog (SysLoginLogReq) returns (SysLoginLogReply)  {
     option (google.api.http) = {
-      get: "/v1/sysloginlog/{id}"
+      get: "/v1/sys/login/log/{id}"
     };
   }
 
   // 更新SysLoginLog
   rpc UpdateSysLoginLog (SysLoginLogUpdateReq) returns (SysLoginLogUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysloginlog/{id}"
+      put: "/v1/sys/login/log/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysLoginLog {
   // 创建SysLoginLog
   rpc CreateSysLoginLog (SysLoginLogCreateReq) returns (SysLoginLogCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysloginlog"
+      post: "/v1/sys/login/log"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysLoginLog {
   // 删除SysLoginLog
   rpc DeleteSysLoginLog (SysLoginLogDeleteReq) returns (SysLoginLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysloginlog/{id}"
+      delete: "/v1/sys/login/log/{id}"
     };
   }
 
   // 批量删除SysLoginLog
   rpc BatchDeleteSysLoginLog (SysLoginLogBatchDeleteReq) returns (SysLoginLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysloginlog"
+      delete: "/v1/sys/login/log"
     };
   }
 

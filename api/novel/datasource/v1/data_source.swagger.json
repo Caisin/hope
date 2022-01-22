@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/datasource": {
+    "/v1/data/source": {
       "delete": {
         "summary": "批量删除DataSource",
         "operationId": "DataSource_BatchDeleteDataSource",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/datasource/page": {
+    "/v1/data/source/page": {
       "get": {
         "summary": "分页查询DataSource",
         "operationId": "DataSource_GetPageDataSource",
@@ -289,7 +289,7 @@
         ]
       }
     },
-    "/v1/datasource/{id}": {
+    "/v1/data/source/{id}": {
       "get": {
         "summary": "获取DataSource",
         "operationId": "DataSource_GetDataSource",

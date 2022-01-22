@@ -28,12 +28,12 @@ type CustomerNovelsHTTPServer interface {
 
 func RegisterCustomerNovelsHTTPServer(s *http.Server, srv CustomerNovelsHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/customernovels/page", _CustomerNovels_GetPageCustomerNovels0_HTTP_Handler(srv))
-	r.GET("/v1/customernovels/{id}", _CustomerNovels_GetCustomerNovels0_HTTP_Handler(srv))
-	r.PUT("/v1/customernovels/{id}", _CustomerNovels_UpdateCustomerNovels0_HTTP_Handler(srv))
-	r.POST("/v1/customernovels", _CustomerNovels_CreateCustomerNovels0_HTTP_Handler(srv))
-	r.DELETE("/v1/customernovels/{id}", _CustomerNovels_DeleteCustomerNovels0_HTTP_Handler(srv))
-	r.DELETE("/v1/customernovels", _CustomerNovels_BatchDeleteCustomerNovels0_HTTP_Handler(srv))
+	r.GET("/v1/customer/novels/page", _CustomerNovels_GetPageCustomerNovels0_HTTP_Handler(srv))
+	r.GET("/v1/customer/novels/{id}", _CustomerNovels_GetCustomerNovels0_HTTP_Handler(srv))
+	r.PUT("/v1/customer/novels/{id}", _CustomerNovels_UpdateCustomerNovels0_HTTP_Handler(srv))
+	r.POST("/v1/customer/novels", _CustomerNovels_CreateCustomerNovels0_HTTP_Handler(srv))
+	r.DELETE("/v1/customer/novels/{id}", _CustomerNovels_DeleteCustomerNovels0_HTTP_Handler(srv))
+	r.DELETE("/v1/customer/novels", _CustomerNovels_BatchDeleteCustomerNovels0_HTTP_Handler(srv))
 }
 
 func _CustomerNovels_GetPageCustomerNovels0_HTTP_Handler(srv CustomerNovelsHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewCustomerNovelsHTTPClient(client *http.Client) CustomerNovelsHTTPClient {
 
 func (c *CustomerNovelsHTTPClientImpl) BatchDeleteCustomerNovels(ctx context.Context, in *CustomerNovelsBatchDeleteReq, opts ...http.CallOption) (*CustomerNovelsDeleteReply, error) {
 	var out CustomerNovelsDeleteReply
-	pattern := "/v1/customernovels"
+	pattern := "/v1/customer/novels"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/BatchDeleteCustomerNovels"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *CustomerNovelsHTTPClientImpl) BatchDeleteCustomerNovels(ctx context.Con
 
 func (c *CustomerNovelsHTTPClientImpl) CreateCustomerNovels(ctx context.Context, in *CustomerNovelsCreateReq, opts ...http.CallOption) (*CustomerNovelsCreateReply, error) {
 	var out CustomerNovelsCreateReply
-	pattern := "/v1/customernovels"
+	pattern := "/v1/customer/novels"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/CreateCustomerNovels"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *CustomerNovelsHTTPClientImpl) CreateCustomerNovels(ctx context.Context,
 
 func (c *CustomerNovelsHTTPClientImpl) DeleteCustomerNovels(ctx context.Context, in *CustomerNovelsDeleteReq, opts ...http.CallOption) (*CustomerNovelsDeleteReply, error) {
 	var out CustomerNovelsDeleteReply
-	pattern := "/v1/customernovels/{id}"
+	pattern := "/v1/customer/novels/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/DeleteCustomerNovels"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *CustomerNovelsHTTPClientImpl) DeleteCustomerNovels(ctx context.Context,
 
 func (c *CustomerNovelsHTTPClientImpl) GetCustomerNovels(ctx context.Context, in *CustomerNovelsReq, opts ...http.CallOption) (*CustomerNovelsReply, error) {
 	var out CustomerNovelsReply
-	pattern := "/v1/customernovels/{id}"
+	pattern := "/v1/customer/novels/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/GetCustomerNovels"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *CustomerNovelsHTTPClientImpl) GetCustomerNovels(ctx context.Context, in
 
 func (c *CustomerNovelsHTTPClientImpl) GetPageCustomerNovels(ctx context.Context, in *CustomerNovelsPageReq, opts ...http.CallOption) (*CustomerNovelsPageReply, error) {
 	var out CustomerNovelsPageReply
-	pattern := "/v1/customernovels/page"
+	pattern := "/v1/customer/novels/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/GetPageCustomerNovels"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *CustomerNovelsHTTPClientImpl) GetPageCustomerNovels(ctx context.Context
 
 func (c *CustomerNovelsHTTPClientImpl) UpdateCustomerNovels(ctx context.Context, in *CustomerNovelsUpdateReq, opts ...http.CallOption) (*CustomerNovelsUpdateReply, error) {
 	var out CustomerNovelsUpdateReply
-	pattern := "/v1/customernovels/{id}"
+	pattern := "/v1/customer/novels/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/UpdateCustomerNovels"))
 	opts = append(opts, http.PathTemplate(pattern))

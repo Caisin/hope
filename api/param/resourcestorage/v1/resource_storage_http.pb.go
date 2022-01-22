@@ -28,12 +28,12 @@ type ResourceStorageHTTPServer interface {
 
 func RegisterResourceStorageHTTPServer(s *http.Server, srv ResourceStorageHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/resourcestorage/page", _ResourceStorage_GetPageResourceStorage0_HTTP_Handler(srv))
-	r.GET("/v1/resourcestorage/{id}", _ResourceStorage_GetResourceStorage0_HTTP_Handler(srv))
-	r.PUT("/v1/resourcestorage/{id}", _ResourceStorage_UpdateResourceStorage0_HTTP_Handler(srv))
-	r.POST("/v1/resourcestorage", _ResourceStorage_CreateResourceStorage0_HTTP_Handler(srv))
-	r.DELETE("/v1/resourcestorage/{id}", _ResourceStorage_DeleteResourceStorage0_HTTP_Handler(srv))
-	r.DELETE("/v1/resourcestorage", _ResourceStorage_BatchDeleteResourceStorage0_HTTP_Handler(srv))
+	r.GET("/v1/resource/storage/page", _ResourceStorage_GetPageResourceStorage0_HTTP_Handler(srv))
+	r.GET("/v1/resource/storage/{id}", _ResourceStorage_GetResourceStorage0_HTTP_Handler(srv))
+	r.PUT("/v1/resource/storage/{id}", _ResourceStorage_UpdateResourceStorage0_HTTP_Handler(srv))
+	r.POST("/v1/resource/storage", _ResourceStorage_CreateResourceStorage0_HTTP_Handler(srv))
+	r.DELETE("/v1/resource/storage/{id}", _ResourceStorage_DeleteResourceStorage0_HTTP_Handler(srv))
+	r.DELETE("/v1/resource/storage", _ResourceStorage_BatchDeleteResourceStorage0_HTTP_Handler(srv))
 }
 
 func _ResourceStorage_GetPageResourceStorage0_HTTP_Handler(srv ResourceStorageHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewResourceStorageHTTPClient(client *http.Client) ResourceStorageHTTPClient
 
 func (c *ResourceStorageHTTPClientImpl) BatchDeleteResourceStorage(ctx context.Context, in *ResourceStorageBatchDeleteReq, opts ...http.CallOption) (*ResourceStorageDeleteReply, error) {
 	var out ResourceStorageDeleteReply
-	pattern := "/v1/resourcestorage"
+	pattern := "/v1/resource/storage"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/resourcestorage.v1.ResourceStorage/BatchDeleteResourceStorage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *ResourceStorageHTTPClientImpl) BatchDeleteResourceStorage(ctx context.C
 
 func (c *ResourceStorageHTTPClientImpl) CreateResourceStorage(ctx context.Context, in *ResourceStorageCreateReq, opts ...http.CallOption) (*ResourceStorageCreateReply, error) {
 	var out ResourceStorageCreateReply
-	pattern := "/v1/resourcestorage"
+	pattern := "/v1/resource/storage"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/resourcestorage.v1.ResourceStorage/CreateResourceStorage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *ResourceStorageHTTPClientImpl) CreateResourceStorage(ctx context.Contex
 
 func (c *ResourceStorageHTTPClientImpl) DeleteResourceStorage(ctx context.Context, in *ResourceStorageDeleteReq, opts ...http.CallOption) (*ResourceStorageDeleteReply, error) {
 	var out ResourceStorageDeleteReply
-	pattern := "/v1/resourcestorage/{id}"
+	pattern := "/v1/resource/storage/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/resourcestorage.v1.ResourceStorage/DeleteResourceStorage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *ResourceStorageHTTPClientImpl) DeleteResourceStorage(ctx context.Contex
 
 func (c *ResourceStorageHTTPClientImpl) GetPageResourceStorage(ctx context.Context, in *ResourceStoragePageReq, opts ...http.CallOption) (*ResourceStoragePageReply, error) {
 	var out ResourceStoragePageReply
-	pattern := "/v1/resourcestorage/page"
+	pattern := "/v1/resource/storage/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/resourcestorage.v1.ResourceStorage/GetPageResourceStorage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *ResourceStorageHTTPClientImpl) GetPageResourceStorage(ctx context.Conte
 
 func (c *ResourceStorageHTTPClientImpl) GetResourceStorage(ctx context.Context, in *ResourceStorageReq, opts ...http.CallOption) (*ResourceStorageReply, error) {
 	var out ResourceStorageReply
-	pattern := "/v1/resourcestorage/{id}"
+	pattern := "/v1/resource/storage/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/resourcestorage.v1.ResourceStorage/GetResourceStorage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *ResourceStorageHTTPClientImpl) GetResourceStorage(ctx context.Context, 
 
 func (c *ResourceStorageHTTPClientImpl) UpdateResourceStorage(ctx context.Context, in *ResourceStorageUpdateReq, opts ...http.CallOption) (*ResourceStorageUpdateReply, error) {
 	var out ResourceStorageUpdateReply
-	pattern := "/v1/resourcestorage/{id}"
+	pattern := "/v1/resource/storage/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/resourcestorage.v1.ResourceStorage/UpdateResourceStorage"))
 	opts = append(opts, http.PathTemplate(pattern))

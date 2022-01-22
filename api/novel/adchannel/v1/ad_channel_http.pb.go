@@ -28,12 +28,12 @@ type AdChannelHTTPServer interface {
 
 func RegisterAdChannelHTTPServer(s *http.Server, srv AdChannelHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/adchannel/page", _AdChannel_GetPageAdChannel0_HTTP_Handler(srv))
-	r.GET("/v1/adchannel/{id}", _AdChannel_GetAdChannel0_HTTP_Handler(srv))
-	r.PUT("/v1/adchannel/{id}", _AdChannel_UpdateAdChannel0_HTTP_Handler(srv))
-	r.POST("/v1/adchannel", _AdChannel_CreateAdChannel0_HTTP_Handler(srv))
-	r.DELETE("/v1/adchannel/{id}", _AdChannel_DeleteAdChannel0_HTTP_Handler(srv))
-	r.DELETE("/v1/adchannel", _AdChannel_BatchDeleteAdChannel0_HTTP_Handler(srv))
+	r.GET("/v1/ad/channel/page", _AdChannel_GetPageAdChannel0_HTTP_Handler(srv))
+	r.GET("/v1/ad/channel/{id}", _AdChannel_GetAdChannel0_HTTP_Handler(srv))
+	r.PUT("/v1/ad/channel/{id}", _AdChannel_UpdateAdChannel0_HTTP_Handler(srv))
+	r.POST("/v1/ad/channel", _AdChannel_CreateAdChannel0_HTTP_Handler(srv))
+	r.DELETE("/v1/ad/channel/{id}", _AdChannel_DeleteAdChannel0_HTTP_Handler(srv))
+	r.DELETE("/v1/ad/channel", _AdChannel_BatchDeleteAdChannel0_HTTP_Handler(srv))
 }
 
 func _AdChannel_GetPageAdChannel0_HTTP_Handler(srv AdChannelHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewAdChannelHTTPClient(client *http.Client) AdChannelHTTPClient {
 
 func (c *AdChannelHTTPClientImpl) BatchDeleteAdChannel(ctx context.Context, in *AdChannelBatchDeleteReq, opts ...http.CallOption) (*AdChannelDeleteReply, error) {
 	var out AdChannelDeleteReply
-	pattern := "/v1/adchannel"
+	pattern := "/v1/ad/channel"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/BatchDeleteAdChannel"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *AdChannelHTTPClientImpl) BatchDeleteAdChannel(ctx context.Context, in *
 
 func (c *AdChannelHTTPClientImpl) CreateAdChannel(ctx context.Context, in *AdChannelCreateReq, opts ...http.CallOption) (*AdChannelCreateReply, error) {
 	var out AdChannelCreateReply
-	pattern := "/v1/adchannel"
+	pattern := "/v1/ad/channel"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/CreateAdChannel"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *AdChannelHTTPClientImpl) CreateAdChannel(ctx context.Context, in *AdCha
 
 func (c *AdChannelHTTPClientImpl) DeleteAdChannel(ctx context.Context, in *AdChannelDeleteReq, opts ...http.CallOption) (*AdChannelDeleteReply, error) {
 	var out AdChannelDeleteReply
-	pattern := "/v1/adchannel/{id}"
+	pattern := "/v1/ad/channel/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/DeleteAdChannel"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *AdChannelHTTPClientImpl) DeleteAdChannel(ctx context.Context, in *AdCha
 
 func (c *AdChannelHTTPClientImpl) GetAdChannel(ctx context.Context, in *AdChannelReq, opts ...http.CallOption) (*AdChannelReply, error) {
 	var out AdChannelReply
-	pattern := "/v1/adchannel/{id}"
+	pattern := "/v1/ad/channel/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/GetAdChannel"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *AdChannelHTTPClientImpl) GetAdChannel(ctx context.Context, in *AdChanne
 
 func (c *AdChannelHTTPClientImpl) GetPageAdChannel(ctx context.Context, in *AdChannelPageReq, opts ...http.CallOption) (*AdChannelPageReply, error) {
 	var out AdChannelPageReply
-	pattern := "/v1/adchannel/page"
+	pattern := "/v1/ad/channel/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/GetPageAdChannel"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *AdChannelHTTPClientImpl) GetPageAdChannel(ctx context.Context, in *AdCh
 
 func (c *AdChannelHTTPClientImpl) UpdateAdChannel(ctx context.Context, in *AdChannelUpdateReq, opts ...http.CallOption) (*AdChannelUpdateReply, error) {
 	var out AdChannelUpdateReply
-	pattern := "/v1/adchannel/{id}"
+	pattern := "/v1/ad/channel/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/UpdateAdChannel"))
 	opts = append(opts, http.PathTemplate(pattern))

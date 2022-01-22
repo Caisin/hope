@@ -28,12 +28,12 @@ type UserResourceRecordHTTPServer interface {
 
 func RegisterUserResourceRecordHTTPServer(s *http.Server, srv UserResourceRecordHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/userresourcerecord/page", _UserResourceRecord_GetPageUserResourceRecord0_HTTP_Handler(srv))
-	r.GET("/v1/userresourcerecord/{id}", _UserResourceRecord_GetUserResourceRecord0_HTTP_Handler(srv))
-	r.PUT("/v1/userresourcerecord/{id}", _UserResourceRecord_UpdateUserResourceRecord0_HTTP_Handler(srv))
-	r.POST("/v1/userresourcerecord", _UserResourceRecord_CreateUserResourceRecord0_HTTP_Handler(srv))
-	r.DELETE("/v1/userresourcerecord/{id}", _UserResourceRecord_DeleteUserResourceRecord0_HTTP_Handler(srv))
-	r.DELETE("/v1/userresourcerecord", _UserResourceRecord_BatchDeleteUserResourceRecord0_HTTP_Handler(srv))
+	r.GET("/v1/user/resource/record/page", _UserResourceRecord_GetPageUserResourceRecord0_HTTP_Handler(srv))
+	r.GET("/v1/user/resource/record/{id}", _UserResourceRecord_GetUserResourceRecord0_HTTP_Handler(srv))
+	r.PUT("/v1/user/resource/record/{id}", _UserResourceRecord_UpdateUserResourceRecord0_HTTP_Handler(srv))
+	r.POST("/v1/user/resource/record", _UserResourceRecord_CreateUserResourceRecord0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/resource/record/{id}", _UserResourceRecord_DeleteUserResourceRecord0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/resource/record", _UserResourceRecord_BatchDeleteUserResourceRecord0_HTTP_Handler(srv))
 }
 
 func _UserResourceRecord_GetPageUserResourceRecord0_HTTP_Handler(srv UserResourceRecordHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewUserResourceRecordHTTPClient(client *http.Client) UserResourceRecordHTTP
 
 func (c *UserResourceRecordHTTPClientImpl) BatchDeleteUserResourceRecord(ctx context.Context, in *UserResourceRecordBatchDeleteReq, opts ...http.CallOption) (*UserResourceRecordDeleteReply, error) {
 	var out UserResourceRecordDeleteReply
-	pattern := "/v1/userresourcerecord"
+	pattern := "/v1/user/resource/record"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userresourcerecord.v1.UserResourceRecord/BatchDeleteUserResourceRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *UserResourceRecordHTTPClientImpl) BatchDeleteUserResourceRecord(ctx con
 
 func (c *UserResourceRecordHTTPClientImpl) CreateUserResourceRecord(ctx context.Context, in *UserResourceRecordCreateReq, opts ...http.CallOption) (*UserResourceRecordCreateReply, error) {
 	var out UserResourceRecordCreateReply
-	pattern := "/v1/userresourcerecord"
+	pattern := "/v1/user/resource/record"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/userresourcerecord.v1.UserResourceRecord/CreateUserResourceRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *UserResourceRecordHTTPClientImpl) CreateUserResourceRecord(ctx context.
 
 func (c *UserResourceRecordHTTPClientImpl) DeleteUserResourceRecord(ctx context.Context, in *UserResourceRecordDeleteReq, opts ...http.CallOption) (*UserResourceRecordDeleteReply, error) {
 	var out UserResourceRecordDeleteReply
-	pattern := "/v1/userresourcerecord/{id}"
+	pattern := "/v1/user/resource/record/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userresourcerecord.v1.UserResourceRecord/DeleteUserResourceRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *UserResourceRecordHTTPClientImpl) DeleteUserResourceRecord(ctx context.
 
 func (c *UserResourceRecordHTTPClientImpl) GetPageUserResourceRecord(ctx context.Context, in *UserResourceRecordPageReq, opts ...http.CallOption) (*UserResourceRecordPageReply, error) {
 	var out UserResourceRecordPageReply
-	pattern := "/v1/userresourcerecord/page"
+	pattern := "/v1/user/resource/record/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userresourcerecord.v1.UserResourceRecord/GetPageUserResourceRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *UserResourceRecordHTTPClientImpl) GetPageUserResourceRecord(ctx context
 
 func (c *UserResourceRecordHTTPClientImpl) GetUserResourceRecord(ctx context.Context, in *UserResourceRecordReq, opts ...http.CallOption) (*UserResourceRecordReply, error) {
 	var out UserResourceRecordReply
-	pattern := "/v1/userresourcerecord/{id}"
+	pattern := "/v1/user/resource/record/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userresourcerecord.v1.UserResourceRecord/GetUserResourceRecord"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *UserResourceRecordHTTPClientImpl) GetUserResourceRecord(ctx context.Con
 
 func (c *UserResourceRecordHTTPClientImpl) UpdateUserResourceRecord(ctx context.Context, in *UserResourceRecordUpdateReq, opts ...http.CallOption) (*UserResourceRecordUpdateReply, error) {
 	var out UserResourceRecordUpdateReply
-	pattern := "/v1/userresourcerecord/{id}"
+	pattern := "/v1/user/resource/record/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/userresourcerecord.v1.UserResourceRecord/UpdateUserResourceRecord"))
 	opts = append(opts, http.PathTemplate(pattern))

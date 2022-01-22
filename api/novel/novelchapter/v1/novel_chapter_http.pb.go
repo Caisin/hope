@@ -28,12 +28,12 @@ type NovelChapterHTTPServer interface {
 
 func RegisterNovelChapterHTTPServer(s *http.Server, srv NovelChapterHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelchapter/page", _NovelChapter_GetPageNovelChapter0_HTTP_Handler(srv))
-	r.GET("/v1/novelchapter/{id}", _NovelChapter_GetNovelChapter0_HTTP_Handler(srv))
-	r.PUT("/v1/novelchapter/{id}", _NovelChapter_UpdateNovelChapter0_HTTP_Handler(srv))
-	r.POST("/v1/novelchapter", _NovelChapter_CreateNovelChapter0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelchapter/{id}", _NovelChapter_DeleteNovelChapter0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelchapter", _NovelChapter_BatchDeleteNovelChapter0_HTTP_Handler(srv))
+	r.GET("/v1/novel/chapter/page", _NovelChapter_GetPageNovelChapter0_HTTP_Handler(srv))
+	r.GET("/v1/novel/chapter/{id}", _NovelChapter_GetNovelChapter0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/chapter/{id}", _NovelChapter_UpdateNovelChapter0_HTTP_Handler(srv))
+	r.POST("/v1/novel/chapter", _NovelChapter_CreateNovelChapter0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/chapter/{id}", _NovelChapter_DeleteNovelChapter0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/chapter", _NovelChapter_BatchDeleteNovelChapter0_HTTP_Handler(srv))
 }
 
 func _NovelChapter_GetPageNovelChapter0_HTTP_Handler(srv NovelChapterHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelChapterHTTPClient(client *http.Client) NovelChapterHTTPClient {
 
 func (c *NovelChapterHTTPClientImpl) BatchDeleteNovelChapter(ctx context.Context, in *NovelChapterBatchDeleteReq, opts ...http.CallOption) (*NovelChapterDeleteReply, error) {
 	var out NovelChapterDeleteReply
-	pattern := "/v1/novelchapter"
+	pattern := "/v1/novel/chapter"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/BatchDeleteNovelChapter"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelChapterHTTPClientImpl) BatchDeleteNovelChapter(ctx context.Context
 
 func (c *NovelChapterHTTPClientImpl) CreateNovelChapter(ctx context.Context, in *NovelChapterCreateReq, opts ...http.CallOption) (*NovelChapterCreateReply, error) {
 	var out NovelChapterCreateReply
-	pattern := "/v1/novelchapter"
+	pattern := "/v1/novel/chapter"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/CreateNovelChapter"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelChapterHTTPClientImpl) CreateNovelChapter(ctx context.Context, in 
 
 func (c *NovelChapterHTTPClientImpl) DeleteNovelChapter(ctx context.Context, in *NovelChapterDeleteReq, opts ...http.CallOption) (*NovelChapterDeleteReply, error) {
 	var out NovelChapterDeleteReply
-	pattern := "/v1/novelchapter/{id}"
+	pattern := "/v1/novel/chapter/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/DeleteNovelChapter"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelChapterHTTPClientImpl) DeleteNovelChapter(ctx context.Context, in 
 
 func (c *NovelChapterHTTPClientImpl) GetNovelChapter(ctx context.Context, in *NovelChapterReq, opts ...http.CallOption) (*NovelChapterReply, error) {
 	var out NovelChapterReply
-	pattern := "/v1/novelchapter/{id}"
+	pattern := "/v1/novel/chapter/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/GetNovelChapter"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelChapterHTTPClientImpl) GetNovelChapter(ctx context.Context, in *No
 
 func (c *NovelChapterHTTPClientImpl) GetPageNovelChapter(ctx context.Context, in *NovelChapterPageReq, opts ...http.CallOption) (*NovelChapterPageReply, error) {
 	var out NovelChapterPageReply
-	pattern := "/v1/novelchapter/page"
+	pattern := "/v1/novel/chapter/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/GetPageNovelChapter"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelChapterHTTPClientImpl) GetPageNovelChapter(ctx context.Context, in
 
 func (c *NovelChapterHTTPClientImpl) UpdateNovelChapter(ctx context.Context, in *NovelChapterUpdateReq, opts ...http.CallOption) (*NovelChapterUpdateReply, error) {
 	var out NovelChapterUpdateReply
-	pattern := "/v1/novelchapter/{id}"
+	pattern := "/v1/novel/chapter/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/UpdateNovelChapter"))
 	opts = append(opts, http.PathTemplate(pattern))

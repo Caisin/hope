@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/syspost": {
+    "/v1/sys/post": {
       "delete": {
         "summary": "批量删除SysPost",
         "operationId": "SysPost_BatchDeleteSysPost",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/syspost/page": {
+    "/v1/sys/post/page": {
       "get": {
         "summary": "分页查询SysPost",
         "operationId": "SysPost_GetPageSysPost",
@@ -230,7 +230,7 @@
         ]
       }
     },
-    "/v1/syspost/{id}": {
+    "/v1/sys/post/{id}": {
       "get": {
         "summary": "获取SysPost",
         "operationId": "SysPost_GetSysPost",

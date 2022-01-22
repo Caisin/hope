@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/adchangelog": {
+    "/v1/ad/change/log": {
       "delete": {
         "summary": "批量删除AdChangeLog",
         "operationId": "AdChangeLog_BatchDeleteAdChangeLog",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/adchangelog/page": {
+    "/v1/ad/change/log/page": {
       "get": {
         "summary": "分页查询AdChangeLog",
         "operationId": "AdChangeLog_GetPageAdChangeLog",
@@ -230,7 +230,7 @@
         ]
       }
     },
-    "/v1/adchangelog/{id}": {
+    "/v1/ad/change/log/{id}": {
       "get": {
         "summary": "获取AdChangeLog",
         "operationId": "AdChangeLog_GetAdChangeLog",

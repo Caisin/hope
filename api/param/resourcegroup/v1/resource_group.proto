@@ -15,21 +15,21 @@ service ResourceGroup {
   // 分页查询ResourceGroup
   rpc GetPageResourceGroup (ResourceGroupPageReq) returns (ResourceGroupPageReply)  {
     option (google.api.http) = {
-      get: "/v1/resourcegroup/page"
+      get: "/v1/resource/group/page"
     };
   }
 
   // 获取ResourceGroup
   rpc GetResourceGroup (ResourceGroupReq) returns (ResourceGroupReply)  {
     option (google.api.http) = {
-      get: "/v1/resourcegroup/{id}"
+      get: "/v1/resource/group/{id}"
     };
   }
 
   // 更新ResourceGroup
   rpc UpdateResourceGroup (ResourceGroupUpdateReq) returns (ResourceGroupUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/resourcegroup/{id}"
+      put: "/v1/resource/group/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service ResourceGroup {
   // 创建ResourceGroup
   rpc CreateResourceGroup (ResourceGroupCreateReq) returns (ResourceGroupCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/resourcegroup"
+      post: "/v1/resource/group"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service ResourceGroup {
   // 删除ResourceGroup
   rpc DeleteResourceGroup (ResourceGroupDeleteReq) returns (ResourceGroupDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/resourcegroup/{id}"
+      delete: "/v1/resource/group/{id}"
     };
   }
 
   // 批量删除ResourceGroup
   rpc BatchDeleteResourceGroup (ResourceGroupBatchDeleteReq) returns (ResourceGroupDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/resourcegroup"
+      delete: "/v1/resource/group"
     };
   }
 

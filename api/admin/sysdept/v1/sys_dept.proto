@@ -15,21 +15,21 @@ service SysDept {
   // 分页查询SysDept
   rpc GetPageSysDept (SysDeptPageReq) returns (SysDeptPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysdept/page"
+      get: "/v1/sys/dept/page"
     };
   }
 
   // 获取SysDept
   rpc GetSysDept (SysDeptReq) returns (SysDeptReply)  {
     option (google.api.http) = {
-      get: "/v1/sysdept/{id}"
+      get: "/v1/sys/dept/{id}"
     };
   }
 
   // 更新SysDept
   rpc UpdateSysDept (SysDeptUpdateReq) returns (SysDeptUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysdept/{id}"
+      put: "/v1/sys/dept/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysDept {
   // 创建SysDept
   rpc CreateSysDept (SysDeptCreateReq) returns (SysDeptCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysdept"
+      post: "/v1/sys/dept"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysDept {
   // 删除SysDept
   rpc DeleteSysDept (SysDeptDeleteReq) returns (SysDeptDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysdept/{id}"
+      delete: "/v1/sys/dept/{id}"
     };
   }
 
   // 批量删除SysDept
   rpc BatchDeleteSysDept (SysDeptBatchDeleteReq) returns (SysDeptDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysdept"
+      delete: "/v1/sys/dept"
     };
   }
 

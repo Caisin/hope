@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/clienterror": {
+    "/v1/client/error": {
       "delete": {
         "summary": "批量删除ClientError",
         "operationId": "ClientError_BatchDeleteClientError",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/clienterror/page": {
+    "/v1/client/error/page": {
       "get": {
         "summary": "分页查询ClientError",
         "operationId": "ClientError_GetPageClientError",
@@ -229,7 +229,7 @@
         ]
       }
     },
-    "/v1/clienterror/{id}": {
+    "/v1/client/error/{id}": {
       "get": {
         "summary": "获取ClientError",
         "operationId": "ClientError_GetClientError",

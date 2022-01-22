@@ -15,21 +15,21 @@ service ActivityComponent {
   // 分页查询ActivityComponent
   rpc GetPageActivityComponent (ActivityComponentPageReq) returns (ActivityComponentPageReply)  {
     option (google.api.http) = {
-      get: "/v1/activitycomponent/page"
+      get: "/v1/activity/component/page"
     };
   }
 
   // 获取ActivityComponent
   rpc GetActivityComponent (ActivityComponentReq) returns (ActivityComponentReply)  {
     option (google.api.http) = {
-      get: "/v1/activitycomponent/{id}"
+      get: "/v1/activity/component/{id}"
     };
   }
 
   // 更新ActivityComponent
   rpc UpdateActivityComponent (ActivityComponentUpdateReq) returns (ActivityComponentUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/activitycomponent/{id}"
+      put: "/v1/activity/component/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service ActivityComponent {
   // 创建ActivityComponent
   rpc CreateActivityComponent (ActivityComponentCreateReq) returns (ActivityComponentCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/activitycomponent"
+      post: "/v1/activity/component"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service ActivityComponent {
   // 删除ActivityComponent
   rpc DeleteActivityComponent (ActivityComponentDeleteReq) returns (ActivityComponentDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/activitycomponent/{id}"
+      delete: "/v1/activity/component/{id}"
     };
   }
 
   // 批量删除ActivityComponent
   rpc BatchDeleteActivityComponent (ActivityComponentBatchDeleteReq) returns (ActivityComponentDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/activitycomponent"
+      delete: "/v1/activity/component"
     };
   }
 

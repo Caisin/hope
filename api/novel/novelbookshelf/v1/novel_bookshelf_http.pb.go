@@ -28,12 +28,12 @@ type NovelBookshelfHTTPServer interface {
 
 func RegisterNovelBookshelfHTTPServer(s *http.Server, srv NovelBookshelfHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelbookshelf/page", _NovelBookshelf_GetPageNovelBookshelf0_HTTP_Handler(srv))
-	r.GET("/v1/novelbookshelf/{id}", _NovelBookshelf_GetNovelBookshelf0_HTTP_Handler(srv))
-	r.PUT("/v1/novelbookshelf/{id}", _NovelBookshelf_UpdateNovelBookshelf0_HTTP_Handler(srv))
-	r.POST("/v1/novelbookshelf", _NovelBookshelf_CreateNovelBookshelf0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelbookshelf/{id}", _NovelBookshelf_DeleteNovelBookshelf0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelbookshelf", _NovelBookshelf_BatchDeleteNovelBookshelf0_HTTP_Handler(srv))
+	r.GET("/v1/novel/bookshelf/page", _NovelBookshelf_GetPageNovelBookshelf0_HTTP_Handler(srv))
+	r.GET("/v1/novel/bookshelf/{id}", _NovelBookshelf_GetNovelBookshelf0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/bookshelf/{id}", _NovelBookshelf_UpdateNovelBookshelf0_HTTP_Handler(srv))
+	r.POST("/v1/novel/bookshelf", _NovelBookshelf_CreateNovelBookshelf0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/bookshelf/{id}", _NovelBookshelf_DeleteNovelBookshelf0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/bookshelf", _NovelBookshelf_BatchDeleteNovelBookshelf0_HTTP_Handler(srv))
 }
 
 func _NovelBookshelf_GetPageNovelBookshelf0_HTTP_Handler(srv NovelBookshelfHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelBookshelfHTTPClient(client *http.Client) NovelBookshelfHTTPClient {
 
 func (c *NovelBookshelfHTTPClientImpl) BatchDeleteNovelBookshelf(ctx context.Context, in *NovelBookshelfBatchDeleteReq, opts ...http.CallOption) (*NovelBookshelfDeleteReply, error) {
 	var out NovelBookshelfDeleteReply
-	pattern := "/v1/novelbookshelf"
+	pattern := "/v1/novel/bookshelf"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/BatchDeleteNovelBookshelf"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelBookshelfHTTPClientImpl) BatchDeleteNovelBookshelf(ctx context.Con
 
 func (c *NovelBookshelfHTTPClientImpl) CreateNovelBookshelf(ctx context.Context, in *NovelBookshelfCreateReq, opts ...http.CallOption) (*NovelBookshelfCreateReply, error) {
 	var out NovelBookshelfCreateReply
-	pattern := "/v1/novelbookshelf"
+	pattern := "/v1/novel/bookshelf"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/CreateNovelBookshelf"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelBookshelfHTTPClientImpl) CreateNovelBookshelf(ctx context.Context,
 
 func (c *NovelBookshelfHTTPClientImpl) DeleteNovelBookshelf(ctx context.Context, in *NovelBookshelfDeleteReq, opts ...http.CallOption) (*NovelBookshelfDeleteReply, error) {
 	var out NovelBookshelfDeleteReply
-	pattern := "/v1/novelbookshelf/{id}"
+	pattern := "/v1/novel/bookshelf/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/DeleteNovelBookshelf"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelBookshelfHTTPClientImpl) DeleteNovelBookshelf(ctx context.Context,
 
 func (c *NovelBookshelfHTTPClientImpl) GetNovelBookshelf(ctx context.Context, in *NovelBookshelfReq, opts ...http.CallOption) (*NovelBookshelfReply, error) {
 	var out NovelBookshelfReply
-	pattern := "/v1/novelbookshelf/{id}"
+	pattern := "/v1/novel/bookshelf/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/GetNovelBookshelf"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelBookshelfHTTPClientImpl) GetNovelBookshelf(ctx context.Context, in
 
 func (c *NovelBookshelfHTTPClientImpl) GetPageNovelBookshelf(ctx context.Context, in *NovelBookshelfPageReq, opts ...http.CallOption) (*NovelBookshelfPageReply, error) {
 	var out NovelBookshelfPageReply
-	pattern := "/v1/novelbookshelf/page"
+	pattern := "/v1/novel/bookshelf/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/GetPageNovelBookshelf"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelBookshelfHTTPClientImpl) GetPageNovelBookshelf(ctx context.Context
 
 func (c *NovelBookshelfHTTPClientImpl) UpdateNovelBookshelf(ctx context.Context, in *NovelBookshelfUpdateReq, opts ...http.CallOption) (*NovelBookshelfUpdateReply, error) {
 	var out NovelBookshelfUpdateReply
-	pattern := "/v1/novelbookshelf/{id}"
+	pattern := "/v1/novel/bookshelf/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/UpdateNovelBookshelf"))
 	opts = append(opts, http.PathTemplate(pattern))

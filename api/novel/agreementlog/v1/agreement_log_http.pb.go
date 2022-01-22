@@ -28,12 +28,12 @@ type AgreementLogHTTPServer interface {
 
 func RegisterAgreementLogHTTPServer(s *http.Server, srv AgreementLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/agreementlog/page", _AgreementLog_GetPageAgreementLog0_HTTP_Handler(srv))
-	r.GET("/v1/agreementlog/{id}", _AgreementLog_GetAgreementLog0_HTTP_Handler(srv))
-	r.PUT("/v1/agreementlog/{id}", _AgreementLog_UpdateAgreementLog0_HTTP_Handler(srv))
-	r.POST("/v1/agreementlog", _AgreementLog_CreateAgreementLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/agreementlog/{id}", _AgreementLog_DeleteAgreementLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/agreementlog", _AgreementLog_BatchDeleteAgreementLog0_HTTP_Handler(srv))
+	r.GET("/v1/agreement/log/page", _AgreementLog_GetPageAgreementLog0_HTTP_Handler(srv))
+	r.GET("/v1/agreement/log/{id}", _AgreementLog_GetAgreementLog0_HTTP_Handler(srv))
+	r.PUT("/v1/agreement/log/{id}", _AgreementLog_UpdateAgreementLog0_HTTP_Handler(srv))
+	r.POST("/v1/agreement/log", _AgreementLog_CreateAgreementLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/agreement/log/{id}", _AgreementLog_DeleteAgreementLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/agreement/log", _AgreementLog_BatchDeleteAgreementLog0_HTTP_Handler(srv))
 }
 
 func _AgreementLog_GetPageAgreementLog0_HTTP_Handler(srv AgreementLogHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewAgreementLogHTTPClient(client *http.Client) AgreementLogHTTPClient {
 
 func (c *AgreementLogHTTPClientImpl) BatchDeleteAgreementLog(ctx context.Context, in *AgreementLogBatchDeleteReq, opts ...http.CallOption) (*AgreementLogDeleteReply, error) {
 	var out AgreementLogDeleteReply
-	pattern := "/v1/agreementlog"
+	pattern := "/v1/agreement/log"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/BatchDeleteAgreementLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *AgreementLogHTTPClientImpl) BatchDeleteAgreementLog(ctx context.Context
 
 func (c *AgreementLogHTTPClientImpl) CreateAgreementLog(ctx context.Context, in *AgreementLogCreateReq, opts ...http.CallOption) (*AgreementLogCreateReply, error) {
 	var out AgreementLogCreateReply
-	pattern := "/v1/agreementlog"
+	pattern := "/v1/agreement/log"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/CreateAgreementLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *AgreementLogHTTPClientImpl) CreateAgreementLog(ctx context.Context, in 
 
 func (c *AgreementLogHTTPClientImpl) DeleteAgreementLog(ctx context.Context, in *AgreementLogDeleteReq, opts ...http.CallOption) (*AgreementLogDeleteReply, error) {
 	var out AgreementLogDeleteReply
-	pattern := "/v1/agreementlog/{id}"
+	pattern := "/v1/agreement/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/DeleteAgreementLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *AgreementLogHTTPClientImpl) DeleteAgreementLog(ctx context.Context, in 
 
 func (c *AgreementLogHTTPClientImpl) GetAgreementLog(ctx context.Context, in *AgreementLogReq, opts ...http.CallOption) (*AgreementLogReply, error) {
 	var out AgreementLogReply
-	pattern := "/v1/agreementlog/{id}"
+	pattern := "/v1/agreement/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/GetAgreementLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *AgreementLogHTTPClientImpl) GetAgreementLog(ctx context.Context, in *Ag
 
 func (c *AgreementLogHTTPClientImpl) GetPageAgreementLog(ctx context.Context, in *AgreementLogPageReq, opts ...http.CallOption) (*AgreementLogPageReply, error) {
 	var out AgreementLogPageReply
-	pattern := "/v1/agreementlog/page"
+	pattern := "/v1/agreement/log/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/GetPageAgreementLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *AgreementLogHTTPClientImpl) GetPageAgreementLog(ctx context.Context, in
 
 func (c *AgreementLogHTTPClientImpl) UpdateAgreementLog(ctx context.Context, in *AgreementLogUpdateReq, opts ...http.CallOption) (*AgreementLogUpdateReply, error) {
 	var out AgreementLogUpdateReply
-	pattern := "/v1/agreementlog/{id}"
+	pattern := "/v1/agreement/log/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/UpdateAgreementLog"))
 	opts = append(opts, http.PathTemplate(pattern))

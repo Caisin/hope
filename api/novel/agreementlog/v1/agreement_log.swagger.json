@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/agreementlog": {
+    "/v1/agreement/log": {
       "delete": {
         "summary": "批量删除AgreementLog",
         "operationId": "AgreementLog_BatchDeleteAgreementLog",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/agreementlog/page": {
+    "/v1/agreement/log/page": {
       "get": {
         "summary": "分页查询AgreementLog",
         "operationId": "AgreementLog_GetPageAgreementLog",
@@ -307,7 +307,7 @@
         ]
       }
     },
-    "/v1/agreementlog/{id}": {
+    "/v1/agreement/log/{id}": {
       "get": {
         "summary": "获取AgreementLog",
         "operationId": "AgreementLog_GetAgreementLog",

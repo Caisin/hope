@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/novelpayconfig": {
+    "/v1/novel/pay/config": {
       "delete": {
         "summary": "批量删除NovelPayConfig",
         "operationId": "NovelPayConfig_BatchDeleteNovelPayConfig",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/novelpayconfig/page": {
+    "/v1/novel/pay/config/page": {
       "get": {
         "summary": "分页查询NovelPayConfig",
         "operationId": "NovelPayConfig_GetPageNovelPayConfig",
@@ -361,7 +361,7 @@
         ]
       }
     },
-    "/v1/novelpayconfig/{id}": {
+    "/v1/novel/pay/config/{id}": {
       "get": {
         "summary": "获取NovelPayConfig",
         "operationId": "NovelPayConfig_GetNovelPayConfig",

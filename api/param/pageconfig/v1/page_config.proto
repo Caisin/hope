@@ -15,21 +15,21 @@ service PageConfig {
   // 分页查询PageConfig
   rpc GetPagePageConfig (PageConfigPageReq) returns (PageConfigPageReply)  {
     option (google.api.http) = {
-      get: "/v1/pageconfig/page"
+      get: "/v1/page/config/page"
     };
   }
 
   // 获取PageConfig
   rpc GetPageConfig (PageConfigReq) returns (PageConfigReply)  {
     option (google.api.http) = {
-      get: "/v1/pageconfig/{id}"
+      get: "/v1/page/config/{id}"
     };
   }
 
   // 更新PageConfig
   rpc UpdatePageConfig (PageConfigUpdateReq) returns (PageConfigUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/pageconfig/{id}"
+      put: "/v1/page/config/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service PageConfig {
   // 创建PageConfig
   rpc CreatePageConfig (PageConfigCreateReq) returns (PageConfigCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/pageconfig"
+      post: "/v1/page/config"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service PageConfig {
   // 删除PageConfig
   rpc DeletePageConfig (PageConfigDeleteReq) returns (PageConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/pageconfig/{id}"
+      delete: "/v1/page/config/{id}"
     };
   }
 
   // 批量删除PageConfig
   rpc BatchDeletePageConfig (PageConfigBatchDeleteReq) returns (PageConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/pageconfig"
+      delete: "/v1/page/config"
     };
   }
 

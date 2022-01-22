@@ -28,12 +28,12 @@ type UserConsumeHTTPServer interface {
 
 func RegisterUserConsumeHTTPServer(s *http.Server, srv UserConsumeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/userconsume/page", _UserConsume_GetPageUserConsume0_HTTP_Handler(srv))
-	r.GET("/v1/userconsume/{id}", _UserConsume_GetUserConsume0_HTTP_Handler(srv))
-	r.PUT("/v1/userconsume/{id}", _UserConsume_UpdateUserConsume0_HTTP_Handler(srv))
-	r.POST("/v1/userconsume", _UserConsume_CreateUserConsume0_HTTP_Handler(srv))
-	r.DELETE("/v1/userconsume/{id}", _UserConsume_DeleteUserConsume0_HTTP_Handler(srv))
-	r.DELETE("/v1/userconsume", _UserConsume_BatchDeleteUserConsume0_HTTP_Handler(srv))
+	r.GET("/v1/user/consume/page", _UserConsume_GetPageUserConsume0_HTTP_Handler(srv))
+	r.GET("/v1/user/consume/{id}", _UserConsume_GetUserConsume0_HTTP_Handler(srv))
+	r.PUT("/v1/user/consume/{id}", _UserConsume_UpdateUserConsume0_HTTP_Handler(srv))
+	r.POST("/v1/user/consume", _UserConsume_CreateUserConsume0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/consume/{id}", _UserConsume_DeleteUserConsume0_HTTP_Handler(srv))
+	r.DELETE("/v1/user/consume", _UserConsume_BatchDeleteUserConsume0_HTTP_Handler(srv))
 }
 
 func _UserConsume_GetPageUserConsume0_HTTP_Handler(srv UserConsumeHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewUserConsumeHTTPClient(client *http.Client) UserConsumeHTTPClient {
 
 func (c *UserConsumeHTTPClientImpl) BatchDeleteUserConsume(ctx context.Context, in *UserConsumeBatchDeleteReq, opts ...http.CallOption) (*UserConsumeDeleteReply, error) {
 	var out UserConsumeDeleteReply
-	pattern := "/v1/userconsume"
+	pattern := "/v1/user/consume"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/BatchDeleteUserConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *UserConsumeHTTPClientImpl) BatchDeleteUserConsume(ctx context.Context, 
 
 func (c *UserConsumeHTTPClientImpl) CreateUserConsume(ctx context.Context, in *UserConsumeCreateReq, opts ...http.CallOption) (*UserConsumeCreateReply, error) {
 	var out UserConsumeCreateReply
-	pattern := "/v1/userconsume"
+	pattern := "/v1/user/consume"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/CreateUserConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *UserConsumeHTTPClientImpl) CreateUserConsume(ctx context.Context, in *U
 
 func (c *UserConsumeHTTPClientImpl) DeleteUserConsume(ctx context.Context, in *UserConsumeDeleteReq, opts ...http.CallOption) (*UserConsumeDeleteReply, error) {
 	var out UserConsumeDeleteReply
-	pattern := "/v1/userconsume/{id}"
+	pattern := "/v1/user/consume/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/DeleteUserConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *UserConsumeHTTPClientImpl) DeleteUserConsume(ctx context.Context, in *U
 
 func (c *UserConsumeHTTPClientImpl) GetPageUserConsume(ctx context.Context, in *UserConsumePageReq, opts ...http.CallOption) (*UserConsumePageReply, error) {
 	var out UserConsumePageReply
-	pattern := "/v1/userconsume/page"
+	pattern := "/v1/user/consume/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/GetPageUserConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *UserConsumeHTTPClientImpl) GetPageUserConsume(ctx context.Context, in *
 
 func (c *UserConsumeHTTPClientImpl) GetUserConsume(ctx context.Context, in *UserConsumeReq, opts ...http.CallOption) (*UserConsumeReply, error) {
 	var out UserConsumeReply
-	pattern := "/v1/userconsume/{id}"
+	pattern := "/v1/user/consume/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/GetUserConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *UserConsumeHTTPClientImpl) GetUserConsume(ctx context.Context, in *User
 
 func (c *UserConsumeHTTPClientImpl) UpdateUserConsume(ctx context.Context, in *UserConsumeUpdateReq, opts ...http.CallOption) (*UserConsumeUpdateReply, error) {
 	var out UserConsumeUpdateReply
-	pattern := "/v1/userconsume/{id}"
+	pattern := "/v1/user/consume/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/UpdateUserConsume"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -15,21 +15,21 @@ service PayOrder {
   // 分页查询PayOrder
   rpc GetPagePayOrder (PayOrderPageReq) returns (PayOrderPageReply)  {
     option (google.api.http) = {
-      get: "/v1/payorder/page"
+      get: "/v1/pay/order/page"
     };
   }
 
   // 获取PayOrder
   rpc GetPayOrder (PayOrderReq) returns (PayOrderReply)  {
     option (google.api.http) = {
-      get: "/v1/payorder/{id}"
+      get: "/v1/pay/order/{id}"
     };
   }
 
   // 更新PayOrder
   rpc UpdatePayOrder (PayOrderUpdateReq) returns (PayOrderUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/payorder/{id}"
+      put: "/v1/pay/order/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service PayOrder {
   // 创建PayOrder
   rpc CreatePayOrder (PayOrderCreateReq) returns (PayOrderCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/payorder"
+      post: "/v1/pay/order"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service PayOrder {
   // 删除PayOrder
   rpc DeletePayOrder (PayOrderDeleteReq) returns (PayOrderDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/payorder/{id}"
+      delete: "/v1/pay/order/{id}"
     };
   }
 
   // 批量删除PayOrder
   rpc BatchDeletePayOrder (PayOrderBatchDeleteReq) returns (PayOrderDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/payorder"
+      delete: "/v1/pay/order"
     };
   }
 

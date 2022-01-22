@@ -28,12 +28,12 @@ type NovelMsgHTTPServer interface {
 
 func RegisterNovelMsgHTTPServer(s *http.Server, srv NovelMsgHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelmsg/page", _NovelMsg_GetPageNovelMsg0_HTTP_Handler(srv))
-	r.GET("/v1/novelmsg/{id}", _NovelMsg_GetNovelMsg0_HTTP_Handler(srv))
-	r.PUT("/v1/novelmsg/{id}", _NovelMsg_UpdateNovelMsg0_HTTP_Handler(srv))
-	r.POST("/v1/novelmsg", _NovelMsg_CreateNovelMsg0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelmsg/{id}", _NovelMsg_DeleteNovelMsg0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelmsg", _NovelMsg_BatchDeleteNovelMsg0_HTTP_Handler(srv))
+	r.GET("/v1/novel/msg/page", _NovelMsg_GetPageNovelMsg0_HTTP_Handler(srv))
+	r.GET("/v1/novel/msg/{id}", _NovelMsg_GetNovelMsg0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/msg/{id}", _NovelMsg_UpdateNovelMsg0_HTTP_Handler(srv))
+	r.POST("/v1/novel/msg", _NovelMsg_CreateNovelMsg0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/msg/{id}", _NovelMsg_DeleteNovelMsg0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/msg", _NovelMsg_BatchDeleteNovelMsg0_HTTP_Handler(srv))
 }
 
 func _NovelMsg_GetPageNovelMsg0_HTTP_Handler(srv NovelMsgHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelMsgHTTPClient(client *http.Client) NovelMsgHTTPClient {
 
 func (c *NovelMsgHTTPClientImpl) BatchDeleteNovelMsg(ctx context.Context, in *NovelMsgBatchDeleteReq, opts ...http.CallOption) (*NovelMsgDeleteReply, error) {
 	var out NovelMsgDeleteReply
-	pattern := "/v1/novelmsg"
+	pattern := "/v1/novel/msg"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/BatchDeleteNovelMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelMsgHTTPClientImpl) BatchDeleteNovelMsg(ctx context.Context, in *No
 
 func (c *NovelMsgHTTPClientImpl) CreateNovelMsg(ctx context.Context, in *NovelMsgCreateReq, opts ...http.CallOption) (*NovelMsgCreateReply, error) {
 	var out NovelMsgCreateReply
-	pattern := "/v1/novelmsg"
+	pattern := "/v1/novel/msg"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/CreateNovelMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelMsgHTTPClientImpl) CreateNovelMsg(ctx context.Context, in *NovelMs
 
 func (c *NovelMsgHTTPClientImpl) DeleteNovelMsg(ctx context.Context, in *NovelMsgDeleteReq, opts ...http.CallOption) (*NovelMsgDeleteReply, error) {
 	var out NovelMsgDeleteReply
-	pattern := "/v1/novelmsg/{id}"
+	pattern := "/v1/novel/msg/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/DeleteNovelMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelMsgHTTPClientImpl) DeleteNovelMsg(ctx context.Context, in *NovelMs
 
 func (c *NovelMsgHTTPClientImpl) GetNovelMsg(ctx context.Context, in *NovelMsgReq, opts ...http.CallOption) (*NovelMsgReply, error) {
 	var out NovelMsgReply
-	pattern := "/v1/novelmsg/{id}"
+	pattern := "/v1/novel/msg/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/GetNovelMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelMsgHTTPClientImpl) GetNovelMsg(ctx context.Context, in *NovelMsgRe
 
 func (c *NovelMsgHTTPClientImpl) GetPageNovelMsg(ctx context.Context, in *NovelMsgPageReq, opts ...http.CallOption) (*NovelMsgPageReply, error) {
 	var out NovelMsgPageReply
-	pattern := "/v1/novelmsg/page"
+	pattern := "/v1/novel/msg/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/GetPageNovelMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelMsgHTTPClientImpl) GetPageNovelMsg(ctx context.Context, in *NovelM
 
 func (c *NovelMsgHTTPClientImpl) UpdateNovelMsg(ctx context.Context, in *NovelMsgUpdateReq, opts ...http.CallOption) (*NovelMsgUpdateReply, error) {
 	var out NovelMsgUpdateReply
-	pattern := "/v1/novelmsg/{id}"
+	pattern := "/v1/novel/msg/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/UpdateNovelMsg"))
 	opts = append(opts, http.PathTemplate(pattern))

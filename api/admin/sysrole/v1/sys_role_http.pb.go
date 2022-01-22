@@ -28,12 +28,12 @@ type SysRoleHTTPServer interface {
 
 func RegisterSysRoleHTTPServer(s *http.Server, srv SysRoleHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysrole/page", _SysRole_GetPageSysRole0_HTTP_Handler(srv))
-	r.GET("/v1/sysrole/{id}", _SysRole_GetSysRole0_HTTP_Handler(srv))
-	r.PUT("/v1/sysrole/{id}", _SysRole_UpdateSysRole0_HTTP_Handler(srv))
-	r.POST("/v1/sysrole", _SysRole_CreateSysRole0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysrole/{id}", _SysRole_DeleteSysRole0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysrole", _SysRole_BatchDeleteSysRole0_HTTP_Handler(srv))
+	r.GET("/v1/sys/role/page", _SysRole_GetPageSysRole0_HTTP_Handler(srv))
+	r.GET("/v1/sys/role/{id}", _SysRole_GetSysRole0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/role/{id}", _SysRole_UpdateSysRole0_HTTP_Handler(srv))
+	r.POST("/v1/sys/role", _SysRole_CreateSysRole0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/role/{id}", _SysRole_DeleteSysRole0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/role", _SysRole_BatchDeleteSysRole0_HTTP_Handler(srv))
 }
 
 func _SysRole_GetPageSysRole0_HTTP_Handler(srv SysRoleHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysRoleHTTPClient(client *http.Client) SysRoleHTTPClient {
 
 func (c *SysRoleHTTPClientImpl) BatchDeleteSysRole(ctx context.Context, in *SysRoleBatchDeleteReq, opts ...http.CallOption) (*SysRoleDeleteReply, error) {
 	var out SysRoleDeleteReply
-	pattern := "/v1/sysrole"
+	pattern := "/v1/sys/role"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysrole.v1.SysRole/BatchDeleteSysRole"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysRoleHTTPClientImpl) BatchDeleteSysRole(ctx context.Context, in *SysR
 
 func (c *SysRoleHTTPClientImpl) CreateSysRole(ctx context.Context, in *SysRoleCreateReq, opts ...http.CallOption) (*SysRoleCreateReply, error) {
 	var out SysRoleCreateReply
-	pattern := "/v1/sysrole"
+	pattern := "/v1/sys/role"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysrole.v1.SysRole/CreateSysRole"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysRoleHTTPClientImpl) CreateSysRole(ctx context.Context, in *SysRoleCr
 
 func (c *SysRoleHTTPClientImpl) DeleteSysRole(ctx context.Context, in *SysRoleDeleteReq, opts ...http.CallOption) (*SysRoleDeleteReply, error) {
 	var out SysRoleDeleteReply
-	pattern := "/v1/sysrole/{id}"
+	pattern := "/v1/sys/role/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysrole.v1.SysRole/DeleteSysRole"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysRoleHTTPClientImpl) DeleteSysRole(ctx context.Context, in *SysRoleDe
 
 func (c *SysRoleHTTPClientImpl) GetPageSysRole(ctx context.Context, in *SysRolePageReq, opts ...http.CallOption) (*SysRolePageReply, error) {
 	var out SysRolePageReply
-	pattern := "/v1/sysrole/page"
+	pattern := "/v1/sys/role/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysrole.v1.SysRole/GetPageSysRole"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysRoleHTTPClientImpl) GetPageSysRole(ctx context.Context, in *SysRoleP
 
 func (c *SysRoleHTTPClientImpl) GetSysRole(ctx context.Context, in *SysRoleReq, opts ...http.CallOption) (*SysRoleReply, error) {
 	var out SysRoleReply
-	pattern := "/v1/sysrole/{id}"
+	pattern := "/v1/sys/role/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysrole.v1.SysRole/GetSysRole"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysRoleHTTPClientImpl) GetSysRole(ctx context.Context, in *SysRoleReq, 
 
 func (c *SysRoleHTTPClientImpl) UpdateSysRole(ctx context.Context, in *SysRoleUpdateReq, opts ...http.CallOption) (*SysRoleUpdateReply, error) {
 	var out SysRoleUpdateReply
-	pattern := "/v1/sysrole/{id}"
+	pattern := "/v1/sys/role/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysrole.v1.SysRole/UpdateSysRole"))
 	opts = append(opts, http.PathTemplate(pattern))

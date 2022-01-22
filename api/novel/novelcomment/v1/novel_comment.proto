@@ -15,21 +15,21 @@ service NovelComment {
   // 分页查询NovelComment
   rpc GetPageNovelComment (NovelCommentPageReq) returns (NovelCommentPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelcomment/page"
+      get: "/v1/novel/comment/page"
     };
   }
 
   // 获取NovelComment
   rpc GetNovelComment (NovelCommentReq) returns (NovelCommentReply)  {
     option (google.api.http) = {
-      get: "/v1/novelcomment/{id}"
+      get: "/v1/novel/comment/{id}"
     };
   }
 
   // 更新NovelComment
   rpc UpdateNovelComment (NovelCommentUpdateReq) returns (NovelCommentUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelcomment/{id}"
+      put: "/v1/novel/comment/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelComment {
   // 创建NovelComment
   rpc CreateNovelComment (NovelCommentCreateReq) returns (NovelCommentCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelcomment"
+      post: "/v1/novel/comment"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelComment {
   // 删除NovelComment
   rpc DeleteNovelComment (NovelCommentDeleteReq) returns (NovelCommentDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelcomment/{id}"
+      delete: "/v1/novel/comment/{id}"
     };
   }
 
   // 批量删除NovelComment
   rpc BatchDeleteNovelComment (NovelCommentBatchDeleteReq) returns (NovelCommentDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelcomment"
+      delete: "/v1/novel/comment"
     };
   }
 

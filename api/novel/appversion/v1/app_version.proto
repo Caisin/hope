@@ -15,21 +15,21 @@ service AppVersion {
   // 分页查询AppVersion
   rpc GetPageAppVersion (AppVersionPageReq) returns (AppVersionPageReply)  {
     option (google.api.http) = {
-      get: "/v1/appversion/page"
+      get: "/v1/app/version/page"
     };
   }
 
   // 获取AppVersion
   rpc GetAppVersion (AppVersionReq) returns (AppVersionReply)  {
     option (google.api.http) = {
-      get: "/v1/appversion/{id}"
+      get: "/v1/app/version/{id}"
     };
   }
 
   // 更新AppVersion
   rpc UpdateAppVersion (AppVersionUpdateReq) returns (AppVersionUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/appversion/{id}"
+      put: "/v1/app/version/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service AppVersion {
   // 创建AppVersion
   rpc CreateAppVersion (AppVersionCreateReq) returns (AppVersionCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/appversion"
+      post: "/v1/app/version"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service AppVersion {
   // 删除AppVersion
   rpc DeleteAppVersion (AppVersionDeleteReq) returns (AppVersionDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/appversion/{id}"
+      delete: "/v1/app/version/{id}"
     };
   }
 
   // 批量删除AppVersion
   rpc BatchDeleteAppVersion (AppVersionBatchDeleteReq) returns (AppVersionDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/appversion"
+      delete: "/v1/app/version"
     };
   }
 

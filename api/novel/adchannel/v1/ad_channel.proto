@@ -15,21 +15,21 @@ service AdChannel {
   // 分页查询AdChannel
   rpc GetPageAdChannel (AdChannelPageReq) returns (AdChannelPageReply)  {
     option (google.api.http) = {
-      get: "/v1/adchannel/page"
+      get: "/v1/ad/channel/page"
     };
   }
 
   // 获取AdChannel
   rpc GetAdChannel (AdChannelReq) returns (AdChannelReply)  {
     option (google.api.http) = {
-      get: "/v1/adchannel/{id}"
+      get: "/v1/ad/channel/{id}"
     };
   }
 
   // 更新AdChannel
   rpc UpdateAdChannel (AdChannelUpdateReq) returns (AdChannelUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/adchannel/{id}"
+      put: "/v1/ad/channel/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service AdChannel {
   // 创建AdChannel
   rpc CreateAdChannel (AdChannelCreateReq) returns (AdChannelCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/adchannel"
+      post: "/v1/ad/channel"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service AdChannel {
   // 删除AdChannel
   rpc DeleteAdChannel (AdChannelDeleteReq) returns (AdChannelDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/adchannel/{id}"
+      delete: "/v1/ad/channel/{id}"
     };
   }
 
   // 批量删除AdChannel
   rpc BatchDeleteAdChannel (AdChannelBatchDeleteReq) returns (AdChannelDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/adchannel"
+      delete: "/v1/ad/channel"
     };
   }
 

@@ -15,21 +15,21 @@ service SysPost {
   // 分页查询SysPost
   rpc GetPageSysPost (SysPostPageReq) returns (SysPostPageReply)  {
     option (google.api.http) = {
-      get: "/v1/syspost/page"
+      get: "/v1/sys/post/page"
     };
   }
 
   // 获取SysPost
   rpc GetSysPost (SysPostReq) returns (SysPostReply)  {
     option (google.api.http) = {
-      get: "/v1/syspost/{id}"
+      get: "/v1/sys/post/{id}"
     };
   }
 
   // 更新SysPost
   rpc UpdateSysPost (SysPostUpdateReq) returns (SysPostUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/syspost/{id}"
+      put: "/v1/sys/post/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysPost {
   // 创建SysPost
   rpc CreateSysPost (SysPostCreateReq) returns (SysPostCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/syspost"
+      post: "/v1/sys/post"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysPost {
   // 删除SysPost
   rpc DeleteSysPost (SysPostDeleteReq) returns (SysPostDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/syspost/{id}"
+      delete: "/v1/sys/post/{id}"
     };
   }
 
   // 批量删除SysPost
   rpc BatchDeleteSysPost (SysPostBatchDeleteReq) returns (SysPostDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/syspost"
+      delete: "/v1/sys/post"
     };
   }
 

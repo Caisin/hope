@@ -15,21 +15,21 @@ service NovelClassify {
   // 分页查询NovelClassify
   rpc GetPageNovelClassify (NovelClassifyPageReq) returns (NovelClassifyPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelclassify/page"
+      get: "/v1/novel/classify/page"
     };
   }
 
   // 获取NovelClassify
   rpc GetNovelClassify (NovelClassifyReq) returns (NovelClassifyReply)  {
     option (google.api.http) = {
-      get: "/v1/novelclassify/{id}"
+      get: "/v1/novel/classify/{id}"
     };
   }
 
   // 更新NovelClassify
   rpc UpdateNovelClassify (NovelClassifyUpdateReq) returns (NovelClassifyUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelclassify/{id}"
+      put: "/v1/novel/classify/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelClassify {
   // 创建NovelClassify
   rpc CreateNovelClassify (NovelClassifyCreateReq) returns (NovelClassifyCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelclassify"
+      post: "/v1/novel/classify"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelClassify {
   // 删除NovelClassify
   rpc DeleteNovelClassify (NovelClassifyDeleteReq) returns (NovelClassifyDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelclassify/{id}"
+      delete: "/v1/novel/classify/{id}"
     };
   }
 
   // 批量删除NovelClassify
   rpc BatchDeleteNovelClassify (NovelClassifyBatchDeleteReq) returns (NovelClassifyDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelclassify"
+      delete: "/v1/novel/classify"
     };
   }
 

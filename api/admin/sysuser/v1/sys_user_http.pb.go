@@ -28,12 +28,12 @@ type SysUserHTTPServer interface {
 
 func RegisterSysUserHTTPServer(s *http.Server, srv SysUserHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysuser/page", _SysUser_GetPageSysUser0_HTTP_Handler(srv))
-	r.GET("/v1/sysuser/{id}", _SysUser_GetSysUser0_HTTP_Handler(srv))
-	r.PUT("/v1/sysuser/{id}", _SysUser_UpdateSysUser0_HTTP_Handler(srv))
-	r.POST("/v1/sysuser", _SysUser_CreateSysUser0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysuser/{id}", _SysUser_DeleteSysUser0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysuser", _SysUser_BatchDeleteSysUser0_HTTP_Handler(srv))
+	r.GET("/v1/sys/user/page", _SysUser_GetPageSysUser0_HTTP_Handler(srv))
+	r.GET("/v1/sys/user/{id}", _SysUser_GetSysUser0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/user/{id}", _SysUser_UpdateSysUser0_HTTP_Handler(srv))
+	r.POST("/v1/sys/user", _SysUser_CreateSysUser0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/user/{id}", _SysUser_DeleteSysUser0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/user", _SysUser_BatchDeleteSysUser0_HTTP_Handler(srv))
 }
 
 func _SysUser_GetPageSysUser0_HTTP_Handler(srv SysUserHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysUserHTTPClient(client *http.Client) SysUserHTTPClient {
 
 func (c *SysUserHTTPClientImpl) BatchDeleteSysUser(ctx context.Context, in *SysUserBatchDeleteReq, opts ...http.CallOption) (*SysUserDeleteReply, error) {
 	var out SysUserDeleteReply
-	pattern := "/v1/sysuser"
+	pattern := "/v1/sys/user"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysuser.v1.SysUser/BatchDeleteSysUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysUserHTTPClientImpl) BatchDeleteSysUser(ctx context.Context, in *SysU
 
 func (c *SysUserHTTPClientImpl) CreateSysUser(ctx context.Context, in *SysUserCreateReq, opts ...http.CallOption) (*SysUserCreateReply, error) {
 	var out SysUserCreateReply
-	pattern := "/v1/sysuser"
+	pattern := "/v1/sys/user"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysuser.v1.SysUser/CreateSysUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysUserHTTPClientImpl) CreateSysUser(ctx context.Context, in *SysUserCr
 
 func (c *SysUserHTTPClientImpl) DeleteSysUser(ctx context.Context, in *SysUserDeleteReq, opts ...http.CallOption) (*SysUserDeleteReply, error) {
 	var out SysUserDeleteReply
-	pattern := "/v1/sysuser/{id}"
+	pattern := "/v1/sys/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysuser.v1.SysUser/DeleteSysUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysUserHTTPClientImpl) DeleteSysUser(ctx context.Context, in *SysUserDe
 
 func (c *SysUserHTTPClientImpl) GetPageSysUser(ctx context.Context, in *SysUserPageReq, opts ...http.CallOption) (*SysUserPageReply, error) {
 	var out SysUserPageReply
-	pattern := "/v1/sysuser/page"
+	pattern := "/v1/sys/user/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysuser.v1.SysUser/GetPageSysUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysUserHTTPClientImpl) GetPageSysUser(ctx context.Context, in *SysUserP
 
 func (c *SysUserHTTPClientImpl) GetSysUser(ctx context.Context, in *SysUserReq, opts ...http.CallOption) (*SysUserReply, error) {
 	var out SysUserReply
-	pattern := "/v1/sysuser/{id}"
+	pattern := "/v1/sys/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysuser.v1.SysUser/GetSysUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysUserHTTPClientImpl) GetSysUser(ctx context.Context, in *SysUserReq, 
 
 func (c *SysUserHTTPClientImpl) UpdateSysUser(ctx context.Context, in *SysUserUpdateReq, opts ...http.CallOption) (*SysUserUpdateReply, error) {
 	var out SysUserUpdateReply
-	pattern := "/v1/sysuser/{id}"
+	pattern := "/v1/sys/user/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysuser.v1.SysUser/UpdateSysUser"))
 	opts = append(opts, http.PathTemplate(pattern))

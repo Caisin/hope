@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/novelbookshelf": {
+    "/v1/novel/bookshelf": {
       "delete": {
         "summary": "批量删除NovelBookshelf",
         "operationId": "NovelBookshelf_BatchDeleteNovelBookshelf",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/novelbookshelf/page": {
+    "/v1/novel/bookshelf/page": {
       "get": {
         "summary": "分页查询NovelBookshelf",
         "operationId": "NovelBookshelf_GetPageNovelBookshelf",
@@ -254,7 +254,7 @@
         ]
       }
     },
-    "/v1/novelbookshelf/{id}": {
+    "/v1/novel/bookshelf/{id}": {
       "get": {
         "summary": "获取NovelBookshelf",
         "operationId": "NovelBookshelf_GetNovelBookshelf",

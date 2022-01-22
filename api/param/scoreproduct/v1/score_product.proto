@@ -15,21 +15,21 @@ service ScoreProduct {
   // 分页查询ScoreProduct
   rpc GetPageScoreProduct (ScoreProductPageReq) returns (ScoreProductPageReply)  {
     option (google.api.http) = {
-      get: "/v1/scoreproduct/page"
+      get: "/v1/score/product/page"
     };
   }
 
   // 获取ScoreProduct
   rpc GetScoreProduct (ScoreProductReq) returns (ScoreProductReply)  {
     option (google.api.http) = {
-      get: "/v1/scoreproduct/{id}"
+      get: "/v1/score/product/{id}"
     };
   }
 
   // 更新ScoreProduct
   rpc UpdateScoreProduct (ScoreProductUpdateReq) returns (ScoreProductUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/scoreproduct/{id}"
+      put: "/v1/score/product/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service ScoreProduct {
   // 创建ScoreProduct
   rpc CreateScoreProduct (ScoreProductCreateReq) returns (ScoreProductCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/scoreproduct"
+      post: "/v1/score/product"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service ScoreProduct {
   // 删除ScoreProduct
   rpc DeleteScoreProduct (ScoreProductDeleteReq) returns (ScoreProductDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/scoreproduct/{id}"
+      delete: "/v1/score/product/{id}"
     };
   }
 
   // 批量删除ScoreProduct
   rpc BatchDeleteScoreProduct (ScoreProductBatchDeleteReq) returns (ScoreProductDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/scoreproduct"
+      delete: "/v1/score/product"
     };
   }
 

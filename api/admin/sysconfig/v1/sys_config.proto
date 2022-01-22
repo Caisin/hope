@@ -15,21 +15,21 @@ service SysConfig {
   // 分页查询SysConfig
   rpc GetPageSysConfig (SysConfigPageReq) returns (SysConfigPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysconfig/page"
+      get: "/v1/sys/config/page"
     };
   }
 
   // 获取SysConfig
   rpc GetSysConfig (SysConfigReq) returns (SysConfigReply)  {
     option (google.api.http) = {
-      get: "/v1/sysconfig/{id}"
+      get: "/v1/sys/config/{id}"
     };
   }
 
   // 更新SysConfig
   rpc UpdateSysConfig (SysConfigUpdateReq) returns (SysConfigUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysconfig/{id}"
+      put: "/v1/sys/config/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysConfig {
   // 创建SysConfig
   rpc CreateSysConfig (SysConfigCreateReq) returns (SysConfigCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysconfig"
+      post: "/v1/sys/config"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysConfig {
   // 删除SysConfig
   rpc DeleteSysConfig (SysConfigDeleteReq) returns (SysConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysconfig/{id}"
+      delete: "/v1/sys/config/{id}"
     };
   }
 
   // 批量删除SysConfig
   rpc BatchDeleteSysConfig (SysConfigBatchDeleteReq) returns (SysConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysconfig"
+      delete: "/v1/sys/config"
     };
   }
 

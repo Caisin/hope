@@ -28,12 +28,12 @@ type SocialUserHTTPServer interface {
 
 func RegisterSocialUserHTTPServer(s *http.Server, srv SocialUserHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/socialuser/page", _SocialUser_GetPageSocialUser0_HTTP_Handler(srv))
-	r.GET("/v1/socialuser/{id}", _SocialUser_GetSocialUser0_HTTP_Handler(srv))
-	r.PUT("/v1/socialuser/{id}", _SocialUser_UpdateSocialUser0_HTTP_Handler(srv))
-	r.POST("/v1/socialuser", _SocialUser_CreateSocialUser0_HTTP_Handler(srv))
-	r.DELETE("/v1/socialuser/{id}", _SocialUser_DeleteSocialUser0_HTTP_Handler(srv))
-	r.DELETE("/v1/socialuser", _SocialUser_BatchDeleteSocialUser0_HTTP_Handler(srv))
+	r.GET("/v1/social/user/page", _SocialUser_GetPageSocialUser0_HTTP_Handler(srv))
+	r.GET("/v1/social/user/{id}", _SocialUser_GetSocialUser0_HTTP_Handler(srv))
+	r.PUT("/v1/social/user/{id}", _SocialUser_UpdateSocialUser0_HTTP_Handler(srv))
+	r.POST("/v1/social/user", _SocialUser_CreateSocialUser0_HTTP_Handler(srv))
+	r.DELETE("/v1/social/user/{id}", _SocialUser_DeleteSocialUser0_HTTP_Handler(srv))
+	r.DELETE("/v1/social/user", _SocialUser_BatchDeleteSocialUser0_HTTP_Handler(srv))
 }
 
 func _SocialUser_GetPageSocialUser0_HTTP_Handler(srv SocialUserHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSocialUserHTTPClient(client *http.Client) SocialUserHTTPClient {
 
 func (c *SocialUserHTTPClientImpl) BatchDeleteSocialUser(ctx context.Context, in *SocialUserBatchDeleteReq, opts ...http.CallOption) (*SocialUserDeleteReply, error) {
 	var out SocialUserDeleteReply
-	pattern := "/v1/socialuser"
+	pattern := "/v1/social/user"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/BatchDeleteSocialUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SocialUserHTTPClientImpl) BatchDeleteSocialUser(ctx context.Context, in
 
 func (c *SocialUserHTTPClientImpl) CreateSocialUser(ctx context.Context, in *SocialUserCreateReq, opts ...http.CallOption) (*SocialUserCreateReply, error) {
 	var out SocialUserCreateReply
-	pattern := "/v1/socialuser"
+	pattern := "/v1/social/user"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/CreateSocialUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SocialUserHTTPClientImpl) CreateSocialUser(ctx context.Context, in *Soc
 
 func (c *SocialUserHTTPClientImpl) DeleteSocialUser(ctx context.Context, in *SocialUserDeleteReq, opts ...http.CallOption) (*SocialUserDeleteReply, error) {
 	var out SocialUserDeleteReply
-	pattern := "/v1/socialuser/{id}"
+	pattern := "/v1/social/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/DeleteSocialUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SocialUserHTTPClientImpl) DeleteSocialUser(ctx context.Context, in *Soc
 
 func (c *SocialUserHTTPClientImpl) GetPageSocialUser(ctx context.Context, in *SocialUserPageReq, opts ...http.CallOption) (*SocialUserPageReply, error) {
 	var out SocialUserPageReply
-	pattern := "/v1/socialuser/page"
+	pattern := "/v1/social/user/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/GetPageSocialUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SocialUserHTTPClientImpl) GetPageSocialUser(ctx context.Context, in *So
 
 func (c *SocialUserHTTPClientImpl) GetSocialUser(ctx context.Context, in *SocialUserReq, opts ...http.CallOption) (*SocialUserReply, error) {
 	var out SocialUserReply
-	pattern := "/v1/socialuser/{id}"
+	pattern := "/v1/social/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/GetSocialUser"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SocialUserHTTPClientImpl) GetSocialUser(ctx context.Context, in *Social
 
 func (c *SocialUserHTTPClientImpl) UpdateSocialUser(ctx context.Context, in *SocialUserUpdateReq, opts ...http.CallOption) (*SocialUserUpdateReply, error) {
 	var out SocialUserUpdateReply
-	pattern := "/v1/socialuser/{id}"
+	pattern := "/v1/social/user/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/UpdateSocialUser"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -28,12 +28,12 @@ type SysTablesHTTPServer interface {
 
 func RegisterSysTablesHTTPServer(s *http.Server, srv SysTablesHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/systables/page", _SysTables_GetPageSysTables0_HTTP_Handler(srv))
-	r.GET("/v1/systables/{id}", _SysTables_GetSysTables0_HTTP_Handler(srv))
-	r.PUT("/v1/systables/{id}", _SysTables_UpdateSysTables0_HTTP_Handler(srv))
-	r.POST("/v1/systables", _SysTables_CreateSysTables0_HTTP_Handler(srv))
-	r.DELETE("/v1/systables/{id}", _SysTables_DeleteSysTables0_HTTP_Handler(srv))
-	r.DELETE("/v1/systables", _SysTables_BatchDeleteSysTables0_HTTP_Handler(srv))
+	r.GET("/v1/sys/tables/page", _SysTables_GetPageSysTables0_HTTP_Handler(srv))
+	r.GET("/v1/sys/tables/{id}", _SysTables_GetSysTables0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/tables/{id}", _SysTables_UpdateSysTables0_HTTP_Handler(srv))
+	r.POST("/v1/sys/tables", _SysTables_CreateSysTables0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/tables/{id}", _SysTables_DeleteSysTables0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/tables", _SysTables_BatchDeleteSysTables0_HTTP_Handler(srv))
 }
 
 func _SysTables_GetPageSysTables0_HTTP_Handler(srv SysTablesHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysTablesHTTPClient(client *http.Client) SysTablesHTTPClient {
 
 func (c *SysTablesHTTPClientImpl) BatchDeleteSysTables(ctx context.Context, in *SysTablesBatchDeleteReq, opts ...http.CallOption) (*SysTablesDeleteReply, error) {
 	var out SysTablesDeleteReply
-	pattern := "/v1/systables"
+	pattern := "/v1/sys/tables"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/systables.v1.SysTables/BatchDeleteSysTables"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysTablesHTTPClientImpl) BatchDeleteSysTables(ctx context.Context, in *
 
 func (c *SysTablesHTTPClientImpl) CreateSysTables(ctx context.Context, in *SysTablesCreateReq, opts ...http.CallOption) (*SysTablesCreateReply, error) {
 	var out SysTablesCreateReply
-	pattern := "/v1/systables"
+	pattern := "/v1/sys/tables"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/systables.v1.SysTables/CreateSysTables"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysTablesHTTPClientImpl) CreateSysTables(ctx context.Context, in *SysTa
 
 func (c *SysTablesHTTPClientImpl) DeleteSysTables(ctx context.Context, in *SysTablesDeleteReq, opts ...http.CallOption) (*SysTablesDeleteReply, error) {
 	var out SysTablesDeleteReply
-	pattern := "/v1/systables/{id}"
+	pattern := "/v1/sys/tables/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/systables.v1.SysTables/DeleteSysTables"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysTablesHTTPClientImpl) DeleteSysTables(ctx context.Context, in *SysTa
 
 func (c *SysTablesHTTPClientImpl) GetPageSysTables(ctx context.Context, in *SysTablesPageReq, opts ...http.CallOption) (*SysTablesPageReply, error) {
 	var out SysTablesPageReply
-	pattern := "/v1/systables/page"
+	pattern := "/v1/sys/tables/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/systables.v1.SysTables/GetPageSysTables"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysTablesHTTPClientImpl) GetPageSysTables(ctx context.Context, in *SysT
 
 func (c *SysTablesHTTPClientImpl) GetSysTables(ctx context.Context, in *SysTablesReq, opts ...http.CallOption) (*SysTablesReply, error) {
 	var out SysTablesReply
-	pattern := "/v1/systables/{id}"
+	pattern := "/v1/sys/tables/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/systables.v1.SysTables/GetSysTables"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysTablesHTTPClientImpl) GetSysTables(ctx context.Context, in *SysTable
 
 func (c *SysTablesHTTPClientImpl) UpdateSysTables(ctx context.Context, in *SysTablesUpdateReq, opts ...http.CallOption) (*SysTablesUpdateReply, error) {
 	var out SysTablesUpdateReply
-	pattern := "/v1/systables/{id}"
+	pattern := "/v1/sys/tables/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/systables.v1.SysTables/UpdateSysTables"))
 	opts = append(opts, http.PathTemplate(pattern))

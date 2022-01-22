@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/ambalance": {
+    "/v1/am/balance": {
       "delete": {
         "summary": "批量删除AmBalance",
         "operationId": "AmBalance_BatchDeleteAmBalance",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/ambalance/page": {
+    "/v1/am/balance/page": {
       "get": {
         "summary": "分页查询AmBalance",
         "operationId": "AmBalance_GetPageAmBalance",
@@ -271,7 +271,7 @@
         ]
       }
     },
-    "/v1/ambalance/{id}": {
+    "/v1/am/balance/{id}": {
       "get": {
         "summary": "获取AmBalance",
         "operationId": "AmBalance_GetAmBalance",

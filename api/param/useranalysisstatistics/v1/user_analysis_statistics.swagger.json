@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/useranalysisstatistics": {
+    "/v1/user/analysis/statistics": {
       "delete": {
         "summary": "批量删除UserAnalysisStatistics",
         "operationId": "UserAnalysisStatistics_BatchDeleteUserAnalysisStatistics",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/useranalysisstatistics/page": {
+    "/v1/user/analysis/statistics/page": {
       "get": {
         "summary": "分页查询UserAnalysisStatistics",
         "operationId": "UserAnalysisStatistics_GetPageUserAnalysisStatistics",
@@ -352,7 +352,7 @@
         ]
       }
     },
-    "/v1/useranalysisstatistics/{id}": {
+    "/v1/user/analysis/statistics/{id}": {
       "get": {
         "summary": "获取UserAnalysisStatistics",
         "operationId": "UserAnalysisStatistics_GetUserAnalysisStatistics",

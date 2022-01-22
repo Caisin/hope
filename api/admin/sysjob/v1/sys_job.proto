@@ -15,21 +15,21 @@ service SysJob {
   // 分页查询SysJob
   rpc GetPageSysJob (SysJobPageReq) returns (SysJobPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysjob/page"
+      get: "/v1/sys/job/page"
     };
   }
 
   // 获取SysJob
   rpc GetSysJob (SysJobReq) returns (SysJobReply)  {
     option (google.api.http) = {
-      get: "/v1/sysjob/{id}"
+      get: "/v1/sys/job/{id}"
     };
   }
 
   // 更新SysJob
   rpc UpdateSysJob (SysJobUpdateReq) returns (SysJobUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysjob/{id}"
+      put: "/v1/sys/job/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysJob {
   // 创建SysJob
   rpc CreateSysJob (SysJobCreateReq) returns (SysJobCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysjob"
+      post: "/v1/sys/job"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysJob {
   // 删除SysJob
   rpc DeleteSysJob (SysJobDeleteReq) returns (SysJobDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysjob/{id}"
+      delete: "/v1/sys/job/{id}"
     };
   }
 
   // 批量删除SysJob
   rpc BatchDeleteSysJob (SysJobBatchDeleteReq) returns (SysJobDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysjob"
+      delete: "/v1/sys/job"
     };
   }
 

@@ -28,12 +28,12 @@ type AssetItemHTTPServer interface {
 
 func RegisterAssetItemHTTPServer(s *http.Server, srv AssetItemHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/assetitem/page", _AssetItem_GetPageAssetItem0_HTTP_Handler(srv))
-	r.GET("/v1/assetitem/{id}", _AssetItem_GetAssetItem0_HTTP_Handler(srv))
-	r.PUT("/v1/assetitem/{id}", _AssetItem_UpdateAssetItem0_HTTP_Handler(srv))
-	r.POST("/v1/assetitem", _AssetItem_CreateAssetItem0_HTTP_Handler(srv))
-	r.DELETE("/v1/assetitem/{id}", _AssetItem_DeleteAssetItem0_HTTP_Handler(srv))
-	r.DELETE("/v1/assetitem", _AssetItem_BatchDeleteAssetItem0_HTTP_Handler(srv))
+	r.GET("/v1/asset/item/page", _AssetItem_GetPageAssetItem0_HTTP_Handler(srv))
+	r.GET("/v1/asset/item/{id}", _AssetItem_GetAssetItem0_HTTP_Handler(srv))
+	r.PUT("/v1/asset/item/{id}", _AssetItem_UpdateAssetItem0_HTTP_Handler(srv))
+	r.POST("/v1/asset/item", _AssetItem_CreateAssetItem0_HTTP_Handler(srv))
+	r.DELETE("/v1/asset/item/{id}", _AssetItem_DeleteAssetItem0_HTTP_Handler(srv))
+	r.DELETE("/v1/asset/item", _AssetItem_BatchDeleteAssetItem0_HTTP_Handler(srv))
 }
 
 func _AssetItem_GetPageAssetItem0_HTTP_Handler(srv AssetItemHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewAssetItemHTTPClient(client *http.Client) AssetItemHTTPClient {
 
 func (c *AssetItemHTTPClientImpl) BatchDeleteAssetItem(ctx context.Context, in *AssetItemBatchDeleteReq, opts ...http.CallOption) (*AssetItemDeleteReply, error) {
 	var out AssetItemDeleteReply
-	pattern := "/v1/assetitem"
+	pattern := "/v1/asset/item"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/BatchDeleteAssetItem"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *AssetItemHTTPClientImpl) BatchDeleteAssetItem(ctx context.Context, in *
 
 func (c *AssetItemHTTPClientImpl) CreateAssetItem(ctx context.Context, in *AssetItemCreateReq, opts ...http.CallOption) (*AssetItemCreateReply, error) {
 	var out AssetItemCreateReply
-	pattern := "/v1/assetitem"
+	pattern := "/v1/asset/item"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/CreateAssetItem"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *AssetItemHTTPClientImpl) CreateAssetItem(ctx context.Context, in *Asset
 
 func (c *AssetItemHTTPClientImpl) DeleteAssetItem(ctx context.Context, in *AssetItemDeleteReq, opts ...http.CallOption) (*AssetItemDeleteReply, error) {
 	var out AssetItemDeleteReply
-	pattern := "/v1/assetitem/{id}"
+	pattern := "/v1/asset/item/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/DeleteAssetItem"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *AssetItemHTTPClientImpl) DeleteAssetItem(ctx context.Context, in *Asset
 
 func (c *AssetItemHTTPClientImpl) GetAssetItem(ctx context.Context, in *AssetItemReq, opts ...http.CallOption) (*AssetItemReply, error) {
 	var out AssetItemReply
-	pattern := "/v1/assetitem/{id}"
+	pattern := "/v1/asset/item/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/GetAssetItem"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *AssetItemHTTPClientImpl) GetAssetItem(ctx context.Context, in *AssetIte
 
 func (c *AssetItemHTTPClientImpl) GetPageAssetItem(ctx context.Context, in *AssetItemPageReq, opts ...http.CallOption) (*AssetItemPageReply, error) {
 	var out AssetItemPageReply
-	pattern := "/v1/assetitem/page"
+	pattern := "/v1/asset/item/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/GetPageAssetItem"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *AssetItemHTTPClientImpl) GetPageAssetItem(ctx context.Context, in *Asse
 
 func (c *AssetItemHTTPClientImpl) UpdateAssetItem(ctx context.Context, in *AssetItemUpdateReq, opts ...http.CallOption) (*AssetItemUpdateReply, error) {
 	var out AssetItemUpdateReply
-	pattern := "/v1/assetitem/{id}"
+	pattern := "/v1/asset/item/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/UpdateAssetItem"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/syscolumns": {
+    "/v1/sys/columns": {
       "delete": {
         "summary": "批量删除SysColumns",
         "operationId": "SysColumns_BatchDeleteSysColumns",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/syscolumns/page": {
+    "/v1/sys/columns/page": {
       "get": {
         "summary": "分页查询SysColumns",
         "operationId": "SysColumns_GetPageSysColumns",
@@ -369,7 +369,7 @@
         ]
       }
     },
-    "/v1/syscolumns/{id}": {
+    "/v1/sys/columns/{id}": {
       "get": {
         "summary": "获取SysColumns",
         "operationId": "SysColumns_GetSysColumns",

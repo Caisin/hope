@@ -28,12 +28,12 @@ type NovelTagHTTPServer interface {
 
 func RegisterNovelTagHTTPServer(s *http.Server, srv NovelTagHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/noveltag/page", _NovelTag_GetPageNovelTag0_HTTP_Handler(srv))
-	r.GET("/v1/noveltag/{id}", _NovelTag_GetNovelTag0_HTTP_Handler(srv))
-	r.PUT("/v1/noveltag/{id}", _NovelTag_UpdateNovelTag0_HTTP_Handler(srv))
-	r.POST("/v1/noveltag", _NovelTag_CreateNovelTag0_HTTP_Handler(srv))
-	r.DELETE("/v1/noveltag/{id}", _NovelTag_DeleteNovelTag0_HTTP_Handler(srv))
-	r.DELETE("/v1/noveltag", _NovelTag_BatchDeleteNovelTag0_HTTP_Handler(srv))
+	r.GET("/v1/novel/tag/page", _NovelTag_GetPageNovelTag0_HTTP_Handler(srv))
+	r.GET("/v1/novel/tag/{id}", _NovelTag_GetNovelTag0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/tag/{id}", _NovelTag_UpdateNovelTag0_HTTP_Handler(srv))
+	r.POST("/v1/novel/tag", _NovelTag_CreateNovelTag0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/tag/{id}", _NovelTag_DeleteNovelTag0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/tag", _NovelTag_BatchDeleteNovelTag0_HTTP_Handler(srv))
 }
 
 func _NovelTag_GetPageNovelTag0_HTTP_Handler(srv NovelTagHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelTagHTTPClient(client *http.Client) NovelTagHTTPClient {
 
 func (c *NovelTagHTTPClientImpl) BatchDeleteNovelTag(ctx context.Context, in *NovelTagBatchDeleteReq, opts ...http.CallOption) (*NovelTagDeleteReply, error) {
 	var out NovelTagDeleteReply
-	pattern := "/v1/noveltag"
+	pattern := "/v1/novel/tag"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/BatchDeleteNovelTag"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelTagHTTPClientImpl) BatchDeleteNovelTag(ctx context.Context, in *No
 
 func (c *NovelTagHTTPClientImpl) CreateNovelTag(ctx context.Context, in *NovelTagCreateReq, opts ...http.CallOption) (*NovelTagCreateReply, error) {
 	var out NovelTagCreateReply
-	pattern := "/v1/noveltag"
+	pattern := "/v1/novel/tag"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/CreateNovelTag"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelTagHTTPClientImpl) CreateNovelTag(ctx context.Context, in *NovelTa
 
 func (c *NovelTagHTTPClientImpl) DeleteNovelTag(ctx context.Context, in *NovelTagDeleteReq, opts ...http.CallOption) (*NovelTagDeleteReply, error) {
 	var out NovelTagDeleteReply
-	pattern := "/v1/noveltag/{id}"
+	pattern := "/v1/novel/tag/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/DeleteNovelTag"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelTagHTTPClientImpl) DeleteNovelTag(ctx context.Context, in *NovelTa
 
 func (c *NovelTagHTTPClientImpl) GetNovelTag(ctx context.Context, in *NovelTagReq, opts ...http.CallOption) (*NovelTagReply, error) {
 	var out NovelTagReply
-	pattern := "/v1/noveltag/{id}"
+	pattern := "/v1/novel/tag/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/GetNovelTag"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelTagHTTPClientImpl) GetNovelTag(ctx context.Context, in *NovelTagRe
 
 func (c *NovelTagHTTPClientImpl) GetPageNovelTag(ctx context.Context, in *NovelTagPageReq, opts ...http.CallOption) (*NovelTagPageReply, error) {
 	var out NovelTagPageReply
-	pattern := "/v1/noveltag/page"
+	pattern := "/v1/novel/tag/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/GetPageNovelTag"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelTagHTTPClientImpl) GetPageNovelTag(ctx context.Context, in *NovelT
 
 func (c *NovelTagHTTPClientImpl) UpdateNovelTag(ctx context.Context, in *NovelTagUpdateReq, opts ...http.CallOption) (*NovelTagUpdateReply, error) {
 	var out NovelTagUpdateReply
-	pattern := "/v1/noveltag/{id}"
+	pattern := "/v1/novel/tag/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/UpdateNovelTag"))
 	opts = append(opts, http.PathTemplate(pattern))

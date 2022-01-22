@@ -28,12 +28,12 @@ type SysColumnsHTTPServer interface {
 
 func RegisterSysColumnsHTTPServer(s *http.Server, srv SysColumnsHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/syscolumns/page", _SysColumns_GetPageSysColumns0_HTTP_Handler(srv))
-	r.GET("/v1/syscolumns/{id}", _SysColumns_GetSysColumns0_HTTP_Handler(srv))
-	r.PUT("/v1/syscolumns/{id}", _SysColumns_UpdateSysColumns0_HTTP_Handler(srv))
-	r.POST("/v1/syscolumns", _SysColumns_CreateSysColumns0_HTTP_Handler(srv))
-	r.DELETE("/v1/syscolumns/{id}", _SysColumns_DeleteSysColumns0_HTTP_Handler(srv))
-	r.DELETE("/v1/syscolumns", _SysColumns_BatchDeleteSysColumns0_HTTP_Handler(srv))
+	r.GET("/v1/sys/columns/page", _SysColumns_GetPageSysColumns0_HTTP_Handler(srv))
+	r.GET("/v1/sys/columns/{id}", _SysColumns_GetSysColumns0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/columns/{id}", _SysColumns_UpdateSysColumns0_HTTP_Handler(srv))
+	r.POST("/v1/sys/columns", _SysColumns_CreateSysColumns0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/columns/{id}", _SysColumns_DeleteSysColumns0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/columns", _SysColumns_BatchDeleteSysColumns0_HTTP_Handler(srv))
 }
 
 func _SysColumns_GetPageSysColumns0_HTTP_Handler(srv SysColumnsHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysColumnsHTTPClient(client *http.Client) SysColumnsHTTPClient {
 
 func (c *SysColumnsHTTPClientImpl) BatchDeleteSysColumns(ctx context.Context, in *SysColumnsBatchDeleteReq, opts ...http.CallOption) (*SysColumnsDeleteReply, error) {
 	var out SysColumnsDeleteReply
-	pattern := "/v1/syscolumns"
+	pattern := "/v1/sys/columns"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syscolumns.v1.SysColumns/BatchDeleteSysColumns"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysColumnsHTTPClientImpl) BatchDeleteSysColumns(ctx context.Context, in
 
 func (c *SysColumnsHTTPClientImpl) CreateSysColumns(ctx context.Context, in *SysColumnsCreateReq, opts ...http.CallOption) (*SysColumnsCreateReply, error) {
 	var out SysColumnsCreateReply
-	pattern := "/v1/syscolumns"
+	pattern := "/v1/sys/columns"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/syscolumns.v1.SysColumns/CreateSysColumns"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysColumnsHTTPClientImpl) CreateSysColumns(ctx context.Context, in *Sys
 
 func (c *SysColumnsHTTPClientImpl) DeleteSysColumns(ctx context.Context, in *SysColumnsDeleteReq, opts ...http.CallOption) (*SysColumnsDeleteReply, error) {
 	var out SysColumnsDeleteReply
-	pattern := "/v1/syscolumns/{id}"
+	pattern := "/v1/sys/columns/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syscolumns.v1.SysColumns/DeleteSysColumns"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysColumnsHTTPClientImpl) DeleteSysColumns(ctx context.Context, in *Sys
 
 func (c *SysColumnsHTTPClientImpl) GetPageSysColumns(ctx context.Context, in *SysColumnsPageReq, opts ...http.CallOption) (*SysColumnsPageReply, error) {
 	var out SysColumnsPageReply
-	pattern := "/v1/syscolumns/page"
+	pattern := "/v1/sys/columns/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syscolumns.v1.SysColumns/GetPageSysColumns"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysColumnsHTTPClientImpl) GetPageSysColumns(ctx context.Context, in *Sy
 
 func (c *SysColumnsHTTPClientImpl) GetSysColumns(ctx context.Context, in *SysColumnsReq, opts ...http.CallOption) (*SysColumnsReply, error) {
 	var out SysColumnsReply
-	pattern := "/v1/syscolumns/{id}"
+	pattern := "/v1/sys/columns/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syscolumns.v1.SysColumns/GetSysColumns"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysColumnsHTTPClientImpl) GetSysColumns(ctx context.Context, in *SysCol
 
 func (c *SysColumnsHTTPClientImpl) UpdateSysColumns(ctx context.Context, in *SysColumnsUpdateReq, opts ...http.CallOption) (*SysColumnsUpdateReply, error) {
 	var out SysColumnsUpdateReply
-	pattern := "/v1/syscolumns/{id}"
+	pattern := "/v1/sys/columns/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/syscolumns.v1.SysColumns/UpdateSysColumns"))
 	opts = append(opts, http.PathTemplate(pattern))

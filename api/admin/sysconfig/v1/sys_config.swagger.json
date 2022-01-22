@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysconfig": {
+    "/v1/sys/config": {
       "delete": {
         "summary": "批量删除SysConfig",
         "operationId": "SysConfig_BatchDeleteSysConfig",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysconfig/page": {
+    "/v1/sys/config/page": {
       "get": {
         "summary": "分页查询SysConfig",
         "operationId": "SysConfig_GetPageSysConfig",
@@ -243,7 +243,7 @@
         ]
       }
     },
-    "/v1/sysconfig/{id}": {
+    "/v1/sys/config/{id}": {
       "get": {
         "summary": "获取SysConfig",
         "operationId": "SysConfig_GetSysConfig",

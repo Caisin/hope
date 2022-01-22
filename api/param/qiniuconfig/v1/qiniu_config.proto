@@ -15,21 +15,21 @@ service QiniuConfig {
   // 分页查询QiniuConfig
   rpc GetPageQiniuConfig (QiniuConfigPageReq) returns (QiniuConfigPageReply)  {
     option (google.api.http) = {
-      get: "/v1/qiniuconfig/page"
+      get: "/v1/qiniu/config/page"
     };
   }
 
   // 获取QiniuConfig
   rpc GetQiniuConfig (QiniuConfigReq) returns (QiniuConfigReply)  {
     option (google.api.http) = {
-      get: "/v1/qiniuconfig/{id}"
+      get: "/v1/qiniu/config/{id}"
     };
   }
 
   // 更新QiniuConfig
   rpc UpdateQiniuConfig (QiniuConfigUpdateReq) returns (QiniuConfigUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/qiniuconfig/{id}"
+      put: "/v1/qiniu/config/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service QiniuConfig {
   // 创建QiniuConfig
   rpc CreateQiniuConfig (QiniuConfigCreateReq) returns (QiniuConfigCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/qiniuconfig"
+      post: "/v1/qiniu/config"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service QiniuConfig {
   // 删除QiniuConfig
   rpc DeleteQiniuConfig (QiniuConfigDeleteReq) returns (QiniuConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/qiniuconfig/{id}"
+      delete: "/v1/qiniu/config/{id}"
     };
   }
 
   // 批量删除QiniuConfig
   rpc BatchDeleteQiniuConfig (QiniuConfigBatchDeleteReq) returns (QiniuConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/qiniuconfig"
+      delete: "/v1/qiniu/config"
     };
   }
 

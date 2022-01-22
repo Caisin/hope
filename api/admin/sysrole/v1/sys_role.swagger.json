@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysrole": {
+    "/v1/sys/role": {
       "delete": {
         "summary": "批量删除SysRole",
         "operationId": "SysRole_BatchDeleteSysRole",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysrole/page": {
+    "/v1/sys/role/page": {
       "get": {
         "summary": "分页查询SysRole",
         "operationId": "SysRole_GetPageSysRole",
@@ -262,7 +262,7 @@
         ]
       }
     },
-    "/v1/sysrole/{id}": {
+    "/v1/sys/role/{id}": {
       "get": {
         "summary": "获取SysRole",
         "operationId": "SysRole_GetSysRole",

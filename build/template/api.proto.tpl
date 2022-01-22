@@ -16,21 +16,21 @@ service {{.name}} {
   // 分页查询{{.name}}
   rpc GetPage{{.name}} ({{.name}}PageReq) returns ({{.name}}PageReply)  {
     option (google.api.http) = {
-      get: "/v1/{{.pkg}}/page"
+      get: "/v1/{{.apiPath}}/page"
     };
   }
 
   // 获取{{.name}}
   rpc Get{{.name}} ({{.name}}Req) returns ({{.name}}Reply)  {
     option (google.api.http) = {
-      get: "/v1/{{.pkg}}/{id}"
+      get: "/v1/{{.apiPath}}/{id}"
     };
   }
 
   // 更新{{.name}}
   rpc Update{{.name}} ({{.name}}UpdateReq) returns ({{.name}}UpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/{{.pkg}}/{id}"
+      put: "/v1/{{.apiPath}}/{id}"
       body: "*"
     };
   }
@@ -38,7 +38,7 @@ service {{.name}} {
   // 创建{{.name}}
   rpc Create{{.name}} ({{.name}}CreateReq) returns ({{.name}}CreateReply)  {
     option (google.api.http) = {
-      post: "/v1/{{.pkg}}"
+      post: "/v1/{{.apiPath}}"
       body: "*"
     };
   }
@@ -46,14 +46,14 @@ service {{.name}} {
   // 删除{{.name}}
   rpc Delete{{.name}} ({{.name}}DeleteReq) returns ({{.name}}DeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/{{.pkg}}/{id}"
+      delete: "/v1/{{.apiPath}}/{id}"
     };
   }
 
   // 批量删除{{.name}}
   rpc BatchDelete{{.name}} ({{.name}}BatchDeleteReq) returns ({{.name}}DeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/{{.pkg}}"
+      delete: "/v1/{{.apiPath}}"
     };
   }
 

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/socialuser": {
+    "/v1/social/user": {
       "delete": {
         "summary": "批量删除SocialUser",
         "operationId": "SocialUser_BatchDeleteSocialUser",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/socialuser/page": {
+    "/v1/social/user/page": {
       "get": {
         "summary": "分页查询SocialUser",
         "operationId": "SocialUser_GetPageSocialUser",
@@ -381,7 +381,7 @@
         ]
       }
     },
-    "/v1/socialuser/{id}": {
+    "/v1/social/user/{id}": {
       "get": {
         "summary": "获取SocialUser",
         "operationId": "SocialUser_GetSocialUser",

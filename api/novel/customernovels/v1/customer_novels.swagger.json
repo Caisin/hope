@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/customernovels": {
+    "/v1/customer/novels": {
       "delete": {
         "summary": "批量删除CustomerNovels",
         "operationId": "CustomerNovels_BatchDeleteCustomerNovels",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/customernovels/page": {
+    "/v1/customer/novels/page": {
       "get": {
         "summary": "分页查询CustomerNovels",
         "operationId": "CustomerNovels_GetPageCustomerNovels",
@@ -268,7 +268,7 @@
         ]
       }
     },
-    "/v1/customernovels/{id}": {
+    "/v1/customer/novels/{id}": {
       "get": {
         "summary": "获取CustomerNovels",
         "operationId": "CustomerNovels_GetCustomerNovels",

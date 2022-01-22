@@ -28,12 +28,12 @@ type CasbinRuleHTTPServer interface {
 
 func RegisterCasbinRuleHTTPServer(s *http.Server, srv CasbinRuleHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/casbinrule/page", _CasbinRule_GetPageCasbinRule0_HTTP_Handler(srv))
-	r.GET("/v1/casbinrule/{id}", _CasbinRule_GetCasbinRule0_HTTP_Handler(srv))
-	r.PUT("/v1/casbinrule/{id}", _CasbinRule_UpdateCasbinRule0_HTTP_Handler(srv))
-	r.POST("/v1/casbinrule", _CasbinRule_CreateCasbinRule0_HTTP_Handler(srv))
-	r.DELETE("/v1/casbinrule/{id}", _CasbinRule_DeleteCasbinRule0_HTTP_Handler(srv))
-	r.DELETE("/v1/casbinrule", _CasbinRule_BatchDeleteCasbinRule0_HTTP_Handler(srv))
+	r.GET("/v1/casbin/rule/page", _CasbinRule_GetPageCasbinRule0_HTTP_Handler(srv))
+	r.GET("/v1/casbin/rule/{id}", _CasbinRule_GetCasbinRule0_HTTP_Handler(srv))
+	r.PUT("/v1/casbin/rule/{id}", _CasbinRule_UpdateCasbinRule0_HTTP_Handler(srv))
+	r.POST("/v1/casbin/rule", _CasbinRule_CreateCasbinRule0_HTTP_Handler(srv))
+	r.DELETE("/v1/casbin/rule/{id}", _CasbinRule_DeleteCasbinRule0_HTTP_Handler(srv))
+	r.DELETE("/v1/casbin/rule", _CasbinRule_BatchDeleteCasbinRule0_HTTP_Handler(srv))
 }
 
 func _CasbinRule_GetPageCasbinRule0_HTTP_Handler(srv CasbinRuleHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewCasbinRuleHTTPClient(client *http.Client) CasbinRuleHTTPClient {
 
 func (c *CasbinRuleHTTPClientImpl) BatchDeleteCasbinRule(ctx context.Context, in *CasbinRuleBatchDeleteReq, opts ...http.CallOption) (*CasbinRuleDeleteReply, error) {
 	var out CasbinRuleDeleteReply
-	pattern := "/v1/casbinrule"
+	pattern := "/v1/casbin/rule"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/BatchDeleteCasbinRule"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *CasbinRuleHTTPClientImpl) BatchDeleteCasbinRule(ctx context.Context, in
 
 func (c *CasbinRuleHTTPClientImpl) CreateCasbinRule(ctx context.Context, in *CasbinRuleCreateReq, opts ...http.CallOption) (*CasbinRuleCreateReply, error) {
 	var out CasbinRuleCreateReply
-	pattern := "/v1/casbinrule"
+	pattern := "/v1/casbin/rule"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/CreateCasbinRule"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *CasbinRuleHTTPClientImpl) CreateCasbinRule(ctx context.Context, in *Cas
 
 func (c *CasbinRuleHTTPClientImpl) DeleteCasbinRule(ctx context.Context, in *CasbinRuleDeleteReq, opts ...http.CallOption) (*CasbinRuleDeleteReply, error) {
 	var out CasbinRuleDeleteReply
-	pattern := "/v1/casbinrule/{id}"
+	pattern := "/v1/casbin/rule/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/DeleteCasbinRule"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *CasbinRuleHTTPClientImpl) DeleteCasbinRule(ctx context.Context, in *Cas
 
 func (c *CasbinRuleHTTPClientImpl) GetCasbinRule(ctx context.Context, in *CasbinRuleReq, opts ...http.CallOption) (*CasbinRuleReply, error) {
 	var out CasbinRuleReply
-	pattern := "/v1/casbinrule/{id}"
+	pattern := "/v1/casbin/rule/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/GetCasbinRule"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *CasbinRuleHTTPClientImpl) GetCasbinRule(ctx context.Context, in *Casbin
 
 func (c *CasbinRuleHTTPClientImpl) GetPageCasbinRule(ctx context.Context, in *CasbinRulePageReq, opts ...http.CallOption) (*CasbinRulePageReply, error) {
 	var out CasbinRulePageReply
-	pattern := "/v1/casbinrule/page"
+	pattern := "/v1/casbin/rule/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/GetPageCasbinRule"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *CasbinRuleHTTPClientImpl) GetPageCasbinRule(ctx context.Context, in *Ca
 
 func (c *CasbinRuleHTTPClientImpl) UpdateCasbinRule(ctx context.Context, in *CasbinRuleUpdateReq, opts ...http.CallOption) (*CasbinRuleUpdateReply, error) {
 	var out CasbinRuleUpdateReply
-	pattern := "/v1/casbinrule/{id}"
+	pattern := "/v1/casbin/rule/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/UpdateCasbinRule"))
 	opts = append(opts, http.PathTemplate(pattern))

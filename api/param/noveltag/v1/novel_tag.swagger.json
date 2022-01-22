@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/noveltag": {
+    "/v1/novel/tag": {
       "delete": {
         "summary": "批量删除NovelTag",
         "operationId": "NovelTag_BatchDeleteNovelTag",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/noveltag/page": {
+    "/v1/novel/tag/page": {
       "get": {
         "summary": "分页查询NovelTag",
         "operationId": "NovelTag_GetPageNovelTag",
@@ -215,7 +215,7 @@
         ]
       }
     },
-    "/v1/noveltag/{id}": {
+    "/v1/novel/tag/{id}": {
       "get": {
         "summary": "获取NovelTag",
         "operationId": "NovelTag_GetNovelTag",

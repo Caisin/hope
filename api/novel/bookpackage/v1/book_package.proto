@@ -15,21 +15,21 @@ service BookPackage {
   // 分页查询BookPackage
   rpc GetPageBookPackage (BookPackagePageReq) returns (BookPackagePageReply)  {
     option (google.api.http) = {
-      get: "/v1/bookpackage/page"
+      get: "/v1/book/package/page"
     };
   }
 
   // 获取BookPackage
   rpc GetBookPackage (BookPackageReq) returns (BookPackageReply)  {
     option (google.api.http) = {
-      get: "/v1/bookpackage/{id}"
+      get: "/v1/book/package/{id}"
     };
   }
 
   // 更新BookPackage
   rpc UpdateBookPackage (BookPackageUpdateReq) returns (BookPackageUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/bookpackage/{id}"
+      put: "/v1/book/package/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service BookPackage {
   // 创建BookPackage
   rpc CreateBookPackage (BookPackageCreateReq) returns (BookPackageCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/bookpackage"
+      post: "/v1/book/package"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service BookPackage {
   // 删除BookPackage
   rpc DeleteBookPackage (BookPackageDeleteReq) returns (BookPackageDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/bookpackage/{id}"
+      delete: "/v1/book/package/{id}"
     };
   }
 
   // 批量删除BookPackage
   rpc BatchDeleteBookPackage (BookPackageBatchDeleteReq) returns (BookPackageDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/bookpackage"
+      delete: "/v1/book/package"
     };
   }
 

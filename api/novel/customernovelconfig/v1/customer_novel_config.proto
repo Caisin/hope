@@ -15,21 +15,21 @@ service CustomerNovelConfig {
   // 分页查询CustomerNovelConfig
   rpc GetPageCustomerNovelConfig (CustomerNovelConfigPageReq) returns (CustomerNovelConfigPageReply)  {
     option (google.api.http) = {
-      get: "/v1/customernovelconfig/page"
+      get: "/v1/customer/novel/config/page"
     };
   }
 
   // 获取CustomerNovelConfig
   rpc GetCustomerNovelConfig (CustomerNovelConfigReq) returns (CustomerNovelConfigReply)  {
     option (google.api.http) = {
-      get: "/v1/customernovelconfig/{id}"
+      get: "/v1/customer/novel/config/{id}"
     };
   }
 
   // 更新CustomerNovelConfig
   rpc UpdateCustomerNovelConfig (CustomerNovelConfigUpdateReq) returns (CustomerNovelConfigUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/customernovelconfig/{id}"
+      put: "/v1/customer/novel/config/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service CustomerNovelConfig {
   // 创建CustomerNovelConfig
   rpc CreateCustomerNovelConfig (CustomerNovelConfigCreateReq) returns (CustomerNovelConfigCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/customernovelconfig"
+      post: "/v1/customer/novel/config"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service CustomerNovelConfig {
   // 删除CustomerNovelConfig
   rpc DeleteCustomerNovelConfig (CustomerNovelConfigDeleteReq) returns (CustomerNovelConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/customernovelconfig/{id}"
+      delete: "/v1/customer/novel/config/{id}"
     };
   }
 
   // 批量删除CustomerNovelConfig
   rpc BatchDeleteCustomerNovelConfig (CustomerNovelConfigBatchDeleteReq) returns (CustomerNovelConfigDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/customernovelconfig"
+      delete: "/v1/customer/novel/config"
     };
   }
 

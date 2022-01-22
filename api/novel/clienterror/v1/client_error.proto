@@ -15,21 +15,21 @@ service ClientError {
   // 分页查询ClientError
   rpc GetPageClientError (ClientErrorPageReq) returns (ClientErrorPageReply)  {
     option (google.api.http) = {
-      get: "/v1/clienterror/page"
+      get: "/v1/client/error/page"
     };
   }
 
   // 获取ClientError
   rpc GetClientError (ClientErrorReq) returns (ClientErrorReply)  {
     option (google.api.http) = {
-      get: "/v1/clienterror/{id}"
+      get: "/v1/client/error/{id}"
     };
   }
 
   // 更新ClientError
   rpc UpdateClientError (ClientErrorUpdateReq) returns (ClientErrorUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/clienterror/{id}"
+      put: "/v1/client/error/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service ClientError {
   // 创建ClientError
   rpc CreateClientError (ClientErrorCreateReq) returns (ClientErrorCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/clienterror"
+      post: "/v1/client/error"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service ClientError {
   // 删除ClientError
   rpc DeleteClientError (ClientErrorDeleteReq) returns (ClientErrorDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/clienterror/{id}"
+      delete: "/v1/client/error/{id}"
     };
   }
 
   // 批量删除ClientError
   rpc BatchDeleteClientError (ClientErrorBatchDeleteReq) returns (ClientErrorDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/clienterror"
+      delete: "/v1/client/error"
     };
   }
 

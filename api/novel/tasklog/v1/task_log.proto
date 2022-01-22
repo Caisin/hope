@@ -15,21 +15,21 @@ service TaskLog {
   // 分页查询TaskLog
   rpc GetPageTaskLog (TaskLogPageReq) returns (TaskLogPageReply)  {
     option (google.api.http) = {
-      get: "/v1/tasklog/page"
+      get: "/v1/task/log/page"
     };
   }
 
   // 获取TaskLog
   rpc GetTaskLog (TaskLogReq) returns (TaskLogReply)  {
     option (google.api.http) = {
-      get: "/v1/tasklog/{id}"
+      get: "/v1/task/log/{id}"
     };
   }
 
   // 更新TaskLog
   rpc UpdateTaskLog (TaskLogUpdateReq) returns (TaskLogUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/tasklog/{id}"
+      put: "/v1/task/log/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service TaskLog {
   // 创建TaskLog
   rpc CreateTaskLog (TaskLogCreateReq) returns (TaskLogCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/tasklog"
+      post: "/v1/task/log"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service TaskLog {
   // 删除TaskLog
   rpc DeleteTaskLog (TaskLogDeleteReq) returns (TaskLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/tasklog/{id}"
+      delete: "/v1/task/log/{id}"
     };
   }
 
   // 批量删除TaskLog
   rpc BatchDeleteTaskLog (TaskLogBatchDeleteReq) returns (TaskLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/tasklog"
+      delete: "/v1/task/log"
     };
   }
 

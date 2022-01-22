@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/pageconfig": {
+    "/v1/page/config": {
       "delete": {
         "summary": "批量删除PageConfig",
         "operationId": "PageConfig_BatchDeletePageConfig",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/pageconfig/page": {
+    "/v1/page/config/page": {
       "get": {
         "summary": "分页查询PageConfig",
         "operationId": "PageConfig_GetPagePageConfig",
@@ -214,7 +214,7 @@
         ]
       }
     },
-    "/v1/pageconfig/{id}": {
+    "/v1/page/config/{id}": {
       "get": {
         "summary": "获取PageConfig",
         "operationId": "PageConfig_GetPageConfig",

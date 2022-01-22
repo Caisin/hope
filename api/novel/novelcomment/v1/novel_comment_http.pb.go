@@ -28,12 +28,12 @@ type NovelCommentHTTPServer interface {
 
 func RegisterNovelCommentHTTPServer(s *http.Server, srv NovelCommentHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novelcomment/page", _NovelComment_GetPageNovelComment0_HTTP_Handler(srv))
-	r.GET("/v1/novelcomment/{id}", _NovelComment_GetNovelComment0_HTTP_Handler(srv))
-	r.PUT("/v1/novelcomment/{id}", _NovelComment_UpdateNovelComment0_HTTP_Handler(srv))
-	r.POST("/v1/novelcomment", _NovelComment_CreateNovelComment0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelcomment/{id}", _NovelComment_DeleteNovelComment0_HTTP_Handler(srv))
-	r.DELETE("/v1/novelcomment", _NovelComment_BatchDeleteNovelComment0_HTTP_Handler(srv))
+	r.GET("/v1/novel/comment/page", _NovelComment_GetPageNovelComment0_HTTP_Handler(srv))
+	r.GET("/v1/novel/comment/{id}", _NovelComment_GetNovelComment0_HTTP_Handler(srv))
+	r.PUT("/v1/novel/comment/{id}", _NovelComment_UpdateNovelComment0_HTTP_Handler(srv))
+	r.POST("/v1/novel/comment", _NovelComment_CreateNovelComment0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/comment/{id}", _NovelComment_DeleteNovelComment0_HTTP_Handler(srv))
+	r.DELETE("/v1/novel/comment", _NovelComment_BatchDeleteNovelComment0_HTTP_Handler(srv))
 }
 
 func _NovelComment_GetPageNovelComment0_HTTP_Handler(srv NovelCommentHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewNovelCommentHTTPClient(client *http.Client) NovelCommentHTTPClient {
 
 func (c *NovelCommentHTTPClientImpl) BatchDeleteNovelComment(ctx context.Context, in *NovelCommentBatchDeleteReq, opts ...http.CallOption) (*NovelCommentDeleteReply, error) {
 	var out NovelCommentDeleteReply
-	pattern := "/v1/novelcomment"
+	pattern := "/v1/novel/comment"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/BatchDeleteNovelComment"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *NovelCommentHTTPClientImpl) BatchDeleteNovelComment(ctx context.Context
 
 func (c *NovelCommentHTTPClientImpl) CreateNovelComment(ctx context.Context, in *NovelCommentCreateReq, opts ...http.CallOption) (*NovelCommentCreateReply, error) {
 	var out NovelCommentCreateReply
-	pattern := "/v1/novelcomment"
+	pattern := "/v1/novel/comment"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/CreateNovelComment"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *NovelCommentHTTPClientImpl) CreateNovelComment(ctx context.Context, in 
 
 func (c *NovelCommentHTTPClientImpl) DeleteNovelComment(ctx context.Context, in *NovelCommentDeleteReq, opts ...http.CallOption) (*NovelCommentDeleteReply, error) {
 	var out NovelCommentDeleteReply
-	pattern := "/v1/novelcomment/{id}"
+	pattern := "/v1/novel/comment/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/DeleteNovelComment"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *NovelCommentHTTPClientImpl) DeleteNovelComment(ctx context.Context, in 
 
 func (c *NovelCommentHTTPClientImpl) GetNovelComment(ctx context.Context, in *NovelCommentReq, opts ...http.CallOption) (*NovelCommentReply, error) {
 	var out NovelCommentReply
-	pattern := "/v1/novelcomment/{id}"
+	pattern := "/v1/novel/comment/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/GetNovelComment"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *NovelCommentHTTPClientImpl) GetNovelComment(ctx context.Context, in *No
 
 func (c *NovelCommentHTTPClientImpl) GetPageNovelComment(ctx context.Context, in *NovelCommentPageReq, opts ...http.CallOption) (*NovelCommentPageReply, error) {
 	var out NovelCommentPageReply
-	pattern := "/v1/novelcomment/page"
+	pattern := "/v1/novel/comment/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/GetPageNovelComment"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *NovelCommentHTTPClientImpl) GetPageNovelComment(ctx context.Context, in
 
 func (c *NovelCommentHTTPClientImpl) UpdateNovelComment(ctx context.Context, in *NovelCommentUpdateReq, opts ...http.CallOption) (*NovelCommentUpdateReply, error) {
 	var out NovelCommentUpdateReply
-	pattern := "/v1/novelcomment/{id}"
+	pattern := "/v1/novel/comment/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/UpdateNovelComment"))
 	opts = append(opts, http.PathTemplate(pattern))

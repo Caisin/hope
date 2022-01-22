@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/novelbuychapterrecord": {
+    "/v1/novel/buy/chapter/record": {
       "delete": {
         "summary": "批量删除NovelBuyChapterRecord",
         "operationId": "NovelBuyChapterRecord_BatchDeleteNovelBuyChapterRecord",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/novelbuychapterrecord/page": {
+    "/v1/novel/buy/chapter/record/page": {
       "get": {
         "summary": "分页查询NovelBuyChapterRecord",
         "operationId": "NovelBuyChapterRecord_GetPageNovelBuyChapterRecord",
@@ -284,7 +284,7 @@
         ]
       }
     },
-    "/v1/novelbuychapterrecord/{id}": {
+    "/v1/novel/buy/chapter/record/{id}": {
       "get": {
         "summary": "获取NovelBuyChapterRecord",
         "operationId": "NovelBuyChapterRecord_GetNovelBuyChapterRecord",

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/vipuser": {
+    "/v1/vip/user": {
       "delete": {
         "summary": "批量删除VipUser",
         "operationId": "VipUser_BatchDeleteVipUser",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/vipuser/page": {
+    "/v1/vip/user/page": {
       "get": {
         "summary": "分页查询VipUser",
         "operationId": "VipUser_GetPageVipUser",
@@ -256,7 +256,7 @@
         ]
       }
     },
-    "/v1/vipuser/{id}": {
+    "/v1/vip/user/{id}": {
       "get": {
         "summary": "获取VipUser",
         "operationId": "VipUser_GetVipUser",

@@ -28,12 +28,12 @@ type QiniuConfigHTTPServer interface {
 
 func RegisterQiniuConfigHTTPServer(s *http.Server, srv QiniuConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/qiniuconfig/page", _QiniuConfig_GetPageQiniuConfig0_HTTP_Handler(srv))
-	r.GET("/v1/qiniuconfig/{id}", _QiniuConfig_GetQiniuConfig0_HTTP_Handler(srv))
-	r.PUT("/v1/qiniuconfig/{id}", _QiniuConfig_UpdateQiniuConfig0_HTTP_Handler(srv))
-	r.POST("/v1/qiniuconfig", _QiniuConfig_CreateQiniuConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/qiniuconfig/{id}", _QiniuConfig_DeleteQiniuConfig0_HTTP_Handler(srv))
-	r.DELETE("/v1/qiniuconfig", _QiniuConfig_BatchDeleteQiniuConfig0_HTTP_Handler(srv))
+	r.GET("/v1/qiniu/config/page", _QiniuConfig_GetPageQiniuConfig0_HTTP_Handler(srv))
+	r.GET("/v1/qiniu/config/{id}", _QiniuConfig_GetQiniuConfig0_HTTP_Handler(srv))
+	r.PUT("/v1/qiniu/config/{id}", _QiniuConfig_UpdateQiniuConfig0_HTTP_Handler(srv))
+	r.POST("/v1/qiniu/config", _QiniuConfig_CreateQiniuConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/qiniu/config/{id}", _QiniuConfig_DeleteQiniuConfig0_HTTP_Handler(srv))
+	r.DELETE("/v1/qiniu/config", _QiniuConfig_BatchDeleteQiniuConfig0_HTTP_Handler(srv))
 }
 
 func _QiniuConfig_GetPageQiniuConfig0_HTTP_Handler(srv QiniuConfigHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewQiniuConfigHTTPClient(client *http.Client) QiniuConfigHTTPClient {
 
 func (c *QiniuConfigHTTPClientImpl) BatchDeleteQiniuConfig(ctx context.Context, in *QiniuConfigBatchDeleteReq, opts ...http.CallOption) (*QiniuConfigDeleteReply, error) {
 	var out QiniuConfigDeleteReply
-	pattern := "/v1/qiniuconfig"
+	pattern := "/v1/qiniu/config"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/BatchDeleteQiniuConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *QiniuConfigHTTPClientImpl) BatchDeleteQiniuConfig(ctx context.Context, 
 
 func (c *QiniuConfigHTTPClientImpl) CreateQiniuConfig(ctx context.Context, in *QiniuConfigCreateReq, opts ...http.CallOption) (*QiniuConfigCreateReply, error) {
 	var out QiniuConfigCreateReply
-	pattern := "/v1/qiniuconfig"
+	pattern := "/v1/qiniu/config"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/CreateQiniuConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *QiniuConfigHTTPClientImpl) CreateQiniuConfig(ctx context.Context, in *Q
 
 func (c *QiniuConfigHTTPClientImpl) DeleteQiniuConfig(ctx context.Context, in *QiniuConfigDeleteReq, opts ...http.CallOption) (*QiniuConfigDeleteReply, error) {
 	var out QiniuConfigDeleteReply
-	pattern := "/v1/qiniuconfig/{id}"
+	pattern := "/v1/qiniu/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/DeleteQiniuConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *QiniuConfigHTTPClientImpl) DeleteQiniuConfig(ctx context.Context, in *Q
 
 func (c *QiniuConfigHTTPClientImpl) GetPageQiniuConfig(ctx context.Context, in *QiniuConfigPageReq, opts ...http.CallOption) (*QiniuConfigPageReply, error) {
 	var out QiniuConfigPageReply
-	pattern := "/v1/qiniuconfig/page"
+	pattern := "/v1/qiniu/config/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/GetPageQiniuConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *QiniuConfigHTTPClientImpl) GetPageQiniuConfig(ctx context.Context, in *
 
 func (c *QiniuConfigHTTPClientImpl) GetQiniuConfig(ctx context.Context, in *QiniuConfigReq, opts ...http.CallOption) (*QiniuConfigReply, error) {
 	var out QiniuConfigReply
-	pattern := "/v1/qiniuconfig/{id}"
+	pattern := "/v1/qiniu/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/GetQiniuConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *QiniuConfigHTTPClientImpl) GetQiniuConfig(ctx context.Context, in *Qini
 
 func (c *QiniuConfigHTTPClientImpl) UpdateQiniuConfig(ctx context.Context, in *QiniuConfigUpdateReq, opts ...http.CallOption) (*QiniuConfigUpdateReply, error) {
 	var out QiniuConfigUpdateReply
-	pattern := "/v1/qiniuconfig/{id}"
+	pattern := "/v1/qiniu/config/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/UpdateQiniuConfig"))
 	opts = append(opts, http.PathTemplate(pattern))

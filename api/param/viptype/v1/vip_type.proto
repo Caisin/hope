@@ -15,21 +15,21 @@ service VipType {
   // 分页查询VipType
   rpc GetPageVipType (VipTypePageReq) returns (VipTypePageReply)  {
     option (google.api.http) = {
-      get: "/v1/viptype/page"
+      get: "/v1/vip/type/page"
     };
   }
 
   // 获取VipType
   rpc GetVipType (VipTypeReq) returns (VipTypeReply)  {
     option (google.api.http) = {
-      get: "/v1/viptype/{id}"
+      get: "/v1/vip/type/{id}"
     };
   }
 
   // 更新VipType
   rpc UpdateVipType (VipTypeUpdateReq) returns (VipTypeUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/viptype/{id}"
+      put: "/v1/vip/type/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service VipType {
   // 创建VipType
   rpc CreateVipType (VipTypeCreateReq) returns (VipTypeCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/viptype"
+      post: "/v1/vip/type"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service VipType {
   // 删除VipType
   rpc DeleteVipType (VipTypeDeleteReq) returns (VipTypeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/viptype/{id}"
+      delete: "/v1/vip/type/{id}"
     };
   }
 
   // 批量删除VipType
   rpc BatchDeleteVipType (VipTypeBatchDeleteReq) returns (VipTypeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/viptype"
+      delete: "/v1/vip/type"
     };
   }
 

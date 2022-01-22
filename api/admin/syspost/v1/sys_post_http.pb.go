@@ -28,12 +28,12 @@ type SysPostHTTPServer interface {
 
 func RegisterSysPostHTTPServer(s *http.Server, srv SysPostHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/syspost/page", _SysPost_GetPageSysPost0_HTTP_Handler(srv))
-	r.GET("/v1/syspost/{id}", _SysPost_GetSysPost0_HTTP_Handler(srv))
-	r.PUT("/v1/syspost/{id}", _SysPost_UpdateSysPost0_HTTP_Handler(srv))
-	r.POST("/v1/syspost", _SysPost_CreateSysPost0_HTTP_Handler(srv))
-	r.DELETE("/v1/syspost/{id}", _SysPost_DeleteSysPost0_HTTP_Handler(srv))
-	r.DELETE("/v1/syspost", _SysPost_BatchDeleteSysPost0_HTTP_Handler(srv))
+	r.GET("/v1/sys/post/page", _SysPost_GetPageSysPost0_HTTP_Handler(srv))
+	r.GET("/v1/sys/post/{id}", _SysPost_GetSysPost0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/post/{id}", _SysPost_UpdateSysPost0_HTTP_Handler(srv))
+	r.POST("/v1/sys/post", _SysPost_CreateSysPost0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/post/{id}", _SysPost_DeleteSysPost0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/post", _SysPost_BatchDeleteSysPost0_HTTP_Handler(srv))
 }
 
 func _SysPost_GetPageSysPost0_HTTP_Handler(srv SysPostHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysPostHTTPClient(client *http.Client) SysPostHTTPClient {
 
 func (c *SysPostHTTPClientImpl) BatchDeleteSysPost(ctx context.Context, in *SysPostBatchDeleteReq, opts ...http.CallOption) (*SysPostDeleteReply, error) {
 	var out SysPostDeleteReply
-	pattern := "/v1/syspost"
+	pattern := "/v1/sys/post"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syspost.v1.SysPost/BatchDeleteSysPost"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysPostHTTPClientImpl) BatchDeleteSysPost(ctx context.Context, in *SysP
 
 func (c *SysPostHTTPClientImpl) CreateSysPost(ctx context.Context, in *SysPostCreateReq, opts ...http.CallOption) (*SysPostCreateReply, error) {
 	var out SysPostCreateReply
-	pattern := "/v1/syspost"
+	pattern := "/v1/sys/post"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/syspost.v1.SysPost/CreateSysPost"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysPostHTTPClientImpl) CreateSysPost(ctx context.Context, in *SysPostCr
 
 func (c *SysPostHTTPClientImpl) DeleteSysPost(ctx context.Context, in *SysPostDeleteReq, opts ...http.CallOption) (*SysPostDeleteReply, error) {
 	var out SysPostDeleteReply
-	pattern := "/v1/syspost/{id}"
+	pattern := "/v1/sys/post/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syspost.v1.SysPost/DeleteSysPost"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysPostHTTPClientImpl) DeleteSysPost(ctx context.Context, in *SysPostDe
 
 func (c *SysPostHTTPClientImpl) GetPageSysPost(ctx context.Context, in *SysPostPageReq, opts ...http.CallOption) (*SysPostPageReply, error) {
 	var out SysPostPageReply
-	pattern := "/v1/syspost/page"
+	pattern := "/v1/sys/post/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syspost.v1.SysPost/GetPageSysPost"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysPostHTTPClientImpl) GetPageSysPost(ctx context.Context, in *SysPostP
 
 func (c *SysPostHTTPClientImpl) GetSysPost(ctx context.Context, in *SysPostReq, opts ...http.CallOption) (*SysPostReply, error) {
 	var out SysPostReply
-	pattern := "/v1/syspost/{id}"
+	pattern := "/v1/sys/post/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/syspost.v1.SysPost/GetSysPost"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysPostHTTPClientImpl) GetSysPost(ctx context.Context, in *SysPostReq, 
 
 func (c *SysPostHTTPClientImpl) UpdateSysPost(ctx context.Context, in *SysPostUpdateReq, opts ...http.CallOption) (*SysPostUpdateReply, error) {
 	var out SysPostUpdateReply
-	pattern := "/v1/syspost/{id}"
+	pattern := "/v1/sys/post/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/syspost.v1.SysPost/UpdateSysPost"))
 	opts = append(opts, http.PathTemplate(pattern))

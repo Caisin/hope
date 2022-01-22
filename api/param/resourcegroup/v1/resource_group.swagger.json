@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/resourcegroup": {
+    "/v1/resource/group": {
       "delete": {
         "summary": "批量删除ResourceGroup",
         "operationId": "ResourceGroup_BatchDeleteResourceGroup",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/resourcegroup/page": {
+    "/v1/resource/group/page": {
       "get": {
         "summary": "分页查询ResourceGroup",
         "operationId": "ResourceGroup_GetPageResourceGroup",
@@ -200,7 +200,7 @@
         ]
       }
     },
-    "/v1/resourcegroup/{id}": {
+    "/v1/resource/group/{id}": {
       "get": {
         "summary": "获取ResourceGroup",
         "operationId": "ResourceGroup_GetResourceGroup",

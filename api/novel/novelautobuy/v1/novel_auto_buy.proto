@@ -15,21 +15,21 @@ service NovelAutoBuy {
   // 分页查询NovelAutoBuy
   rpc GetPageNovelAutoBuy (NovelAutoBuyPageReq) returns (NovelAutoBuyPageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelautobuy/page"
+      get: "/v1/novel/auto/buy/page"
     };
   }
 
   // 获取NovelAutoBuy
   rpc GetNovelAutoBuy (NovelAutoBuyReq) returns (NovelAutoBuyReply)  {
     option (google.api.http) = {
-      get: "/v1/novelautobuy/{id}"
+      get: "/v1/novel/auto/buy/{id}"
     };
   }
 
   // 更新NovelAutoBuy
   rpc UpdateNovelAutoBuy (NovelAutoBuyUpdateReq) returns (NovelAutoBuyUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelautobuy/{id}"
+      put: "/v1/novel/auto/buy/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelAutoBuy {
   // 创建NovelAutoBuy
   rpc CreateNovelAutoBuy (NovelAutoBuyCreateReq) returns (NovelAutoBuyCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelautobuy"
+      post: "/v1/novel/auto/buy"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelAutoBuy {
   // 删除NovelAutoBuy
   rpc DeleteNovelAutoBuy (NovelAutoBuyDeleteReq) returns (NovelAutoBuyDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelautobuy/{id}"
+      delete: "/v1/novel/auto/buy/{id}"
     };
   }
 
   // 批量删除NovelAutoBuy
   rpc BatchDeleteNovelAutoBuy (NovelAutoBuyBatchDeleteReq) returns (NovelAutoBuyDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelautobuy"
+      delete: "/v1/novel/auto/buy"
     };
   }
 

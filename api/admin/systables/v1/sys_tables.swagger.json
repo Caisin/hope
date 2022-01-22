@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/systables": {
+    "/v1/sys/tables": {
       "delete": {
         "summary": "批量删除SysTables",
         "operationId": "SysTables_BatchDeleteSysTables",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/systables/page": {
+    "/v1/sys/tables/page": {
       "get": {
         "summary": "分页查询SysTables",
         "operationId": "SysTables_GetPageSysTables",
@@ -360,7 +360,7 @@
         ]
       }
     },
-    "/v1/systables/{id}": {
+    "/v1/sys/tables/{id}": {
       "get": {
         "summary": "获取SysTables",
         "operationId": "SysTables_GetSysTables",

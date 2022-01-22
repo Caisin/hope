@@ -28,12 +28,12 @@ type BookPackageHTTPServer interface {
 
 func RegisterBookPackageHTTPServer(s *http.Server, srv BookPackageHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/bookpackage/page", _BookPackage_GetPageBookPackage0_HTTP_Handler(srv))
-	r.GET("/v1/bookpackage/{id}", _BookPackage_GetBookPackage0_HTTP_Handler(srv))
-	r.PUT("/v1/bookpackage/{id}", _BookPackage_UpdateBookPackage0_HTTP_Handler(srv))
-	r.POST("/v1/bookpackage", _BookPackage_CreateBookPackage0_HTTP_Handler(srv))
-	r.DELETE("/v1/bookpackage/{id}", _BookPackage_DeleteBookPackage0_HTTP_Handler(srv))
-	r.DELETE("/v1/bookpackage", _BookPackage_BatchDeleteBookPackage0_HTTP_Handler(srv))
+	r.GET("/v1/book/package/page", _BookPackage_GetPageBookPackage0_HTTP_Handler(srv))
+	r.GET("/v1/book/package/{id}", _BookPackage_GetBookPackage0_HTTP_Handler(srv))
+	r.PUT("/v1/book/package/{id}", _BookPackage_UpdateBookPackage0_HTTP_Handler(srv))
+	r.POST("/v1/book/package", _BookPackage_CreateBookPackage0_HTTP_Handler(srv))
+	r.DELETE("/v1/book/package/{id}", _BookPackage_DeleteBookPackage0_HTTP_Handler(srv))
+	r.DELETE("/v1/book/package", _BookPackage_BatchDeleteBookPackage0_HTTP_Handler(srv))
 }
 
 func _BookPackage_GetPageBookPackage0_HTTP_Handler(srv BookPackageHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewBookPackageHTTPClient(client *http.Client) BookPackageHTTPClient {
 
 func (c *BookPackageHTTPClientImpl) BatchDeleteBookPackage(ctx context.Context, in *BookPackageBatchDeleteReq, opts ...http.CallOption) (*BookPackageDeleteReply, error) {
 	var out BookPackageDeleteReply
-	pattern := "/v1/bookpackage"
+	pattern := "/v1/book/package"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/BatchDeleteBookPackage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *BookPackageHTTPClientImpl) BatchDeleteBookPackage(ctx context.Context, 
 
 func (c *BookPackageHTTPClientImpl) CreateBookPackage(ctx context.Context, in *BookPackageCreateReq, opts ...http.CallOption) (*BookPackageCreateReply, error) {
 	var out BookPackageCreateReply
-	pattern := "/v1/bookpackage"
+	pattern := "/v1/book/package"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/CreateBookPackage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *BookPackageHTTPClientImpl) CreateBookPackage(ctx context.Context, in *B
 
 func (c *BookPackageHTTPClientImpl) DeleteBookPackage(ctx context.Context, in *BookPackageDeleteReq, opts ...http.CallOption) (*BookPackageDeleteReply, error) {
 	var out BookPackageDeleteReply
-	pattern := "/v1/bookpackage/{id}"
+	pattern := "/v1/book/package/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/DeleteBookPackage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *BookPackageHTTPClientImpl) DeleteBookPackage(ctx context.Context, in *B
 
 func (c *BookPackageHTTPClientImpl) GetBookPackage(ctx context.Context, in *BookPackageReq, opts ...http.CallOption) (*BookPackageReply, error) {
 	var out BookPackageReply
-	pattern := "/v1/bookpackage/{id}"
+	pattern := "/v1/book/package/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/GetBookPackage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *BookPackageHTTPClientImpl) GetBookPackage(ctx context.Context, in *Book
 
 func (c *BookPackageHTTPClientImpl) GetPageBookPackage(ctx context.Context, in *BookPackagePageReq, opts ...http.CallOption) (*BookPackagePageReply, error) {
 	var out BookPackagePageReply
-	pattern := "/v1/bookpackage/page"
+	pattern := "/v1/book/package/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/GetPageBookPackage"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *BookPackageHTTPClientImpl) GetPageBookPackage(ctx context.Context, in *
 
 func (c *BookPackageHTTPClientImpl) UpdateBookPackage(ctx context.Context, in *BookPackageUpdateReq, opts ...http.CallOption) (*BookPackageUpdateReply, error) {
 	var out BookPackageUpdateReply
-	pattern := "/v1/bookpackage/{id}"
+	pattern := "/v1/book/package/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/UpdateBookPackage"))
 	opts = append(opts, http.PathTemplate(pattern))

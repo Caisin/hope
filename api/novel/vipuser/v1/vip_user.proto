@@ -15,21 +15,21 @@ service VipUser {
   // 分页查询VipUser
   rpc GetPageVipUser (VipUserPageReq) returns (VipUserPageReply)  {
     option (google.api.http) = {
-      get: "/v1/vipuser/page"
+      get: "/v1/vip/user/page"
     };
   }
 
   // 获取VipUser
   rpc GetVipUser (VipUserReq) returns (VipUserReply)  {
     option (google.api.http) = {
-      get: "/v1/vipuser/{id}"
+      get: "/v1/vip/user/{id}"
     };
   }
 
   // 更新VipUser
   rpc UpdateVipUser (VipUserUpdateReq) returns (VipUserUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/vipuser/{id}"
+      put: "/v1/vip/user/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service VipUser {
   // 创建VipUser
   rpc CreateVipUser (VipUserCreateReq) returns (VipUserCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/vipuser"
+      post: "/v1/vip/user"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service VipUser {
   // 删除VipUser
   rpc DeleteVipUser (VipUserDeleteReq) returns (VipUserDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/vipuser/{id}"
+      delete: "/v1/vip/user/{id}"
     };
   }
 
   // 批量删除VipUser
   rpc BatchDeleteVipUser (VipUserBatchDeleteReq) returns (VipUserDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/vipuser"
+      delete: "/v1/vip/user"
     };
   }
 

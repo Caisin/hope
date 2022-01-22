@@ -28,12 +28,12 @@ type PayOrderHTTPServer interface {
 
 func RegisterPayOrderHTTPServer(s *http.Server, srv PayOrderHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/payorder/page", _PayOrder_GetPagePayOrder0_HTTP_Handler(srv))
-	r.GET("/v1/payorder/{id}", _PayOrder_GetPayOrder0_HTTP_Handler(srv))
-	r.PUT("/v1/payorder/{id}", _PayOrder_UpdatePayOrder0_HTTP_Handler(srv))
-	r.POST("/v1/payorder", _PayOrder_CreatePayOrder0_HTTP_Handler(srv))
-	r.DELETE("/v1/payorder/{id}", _PayOrder_DeletePayOrder0_HTTP_Handler(srv))
-	r.DELETE("/v1/payorder", _PayOrder_BatchDeletePayOrder0_HTTP_Handler(srv))
+	r.GET("/v1/pay/order/page", _PayOrder_GetPagePayOrder0_HTTP_Handler(srv))
+	r.GET("/v1/pay/order/{id}", _PayOrder_GetPayOrder0_HTTP_Handler(srv))
+	r.PUT("/v1/pay/order/{id}", _PayOrder_UpdatePayOrder0_HTTP_Handler(srv))
+	r.POST("/v1/pay/order", _PayOrder_CreatePayOrder0_HTTP_Handler(srv))
+	r.DELETE("/v1/pay/order/{id}", _PayOrder_DeletePayOrder0_HTTP_Handler(srv))
+	r.DELETE("/v1/pay/order", _PayOrder_BatchDeletePayOrder0_HTTP_Handler(srv))
 }
 
 func _PayOrder_GetPagePayOrder0_HTTP_Handler(srv PayOrderHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewPayOrderHTTPClient(client *http.Client) PayOrderHTTPClient {
 
 func (c *PayOrderHTTPClientImpl) BatchDeletePayOrder(ctx context.Context, in *PayOrderBatchDeleteReq, opts ...http.CallOption) (*PayOrderDeleteReply, error) {
 	var out PayOrderDeleteReply
-	pattern := "/v1/payorder"
+	pattern := "/v1/pay/order"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/payorder.v1.PayOrder/BatchDeletePayOrder"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *PayOrderHTTPClientImpl) BatchDeletePayOrder(ctx context.Context, in *Pa
 
 func (c *PayOrderHTTPClientImpl) CreatePayOrder(ctx context.Context, in *PayOrderCreateReq, opts ...http.CallOption) (*PayOrderCreateReply, error) {
 	var out PayOrderCreateReply
-	pattern := "/v1/payorder"
+	pattern := "/v1/pay/order"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/payorder.v1.PayOrder/CreatePayOrder"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *PayOrderHTTPClientImpl) CreatePayOrder(ctx context.Context, in *PayOrde
 
 func (c *PayOrderHTTPClientImpl) DeletePayOrder(ctx context.Context, in *PayOrderDeleteReq, opts ...http.CallOption) (*PayOrderDeleteReply, error) {
 	var out PayOrderDeleteReply
-	pattern := "/v1/payorder/{id}"
+	pattern := "/v1/pay/order/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/payorder.v1.PayOrder/DeletePayOrder"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *PayOrderHTTPClientImpl) DeletePayOrder(ctx context.Context, in *PayOrde
 
 func (c *PayOrderHTTPClientImpl) GetPagePayOrder(ctx context.Context, in *PayOrderPageReq, opts ...http.CallOption) (*PayOrderPageReply, error) {
 	var out PayOrderPageReply
-	pattern := "/v1/payorder/page"
+	pattern := "/v1/pay/order/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/payorder.v1.PayOrder/GetPagePayOrder"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *PayOrderHTTPClientImpl) GetPagePayOrder(ctx context.Context, in *PayOrd
 
 func (c *PayOrderHTTPClientImpl) GetPayOrder(ctx context.Context, in *PayOrderReq, opts ...http.CallOption) (*PayOrderReply, error) {
 	var out PayOrderReply
-	pattern := "/v1/payorder/{id}"
+	pattern := "/v1/pay/order/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/payorder.v1.PayOrder/GetPayOrder"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *PayOrderHTTPClientImpl) GetPayOrder(ctx context.Context, in *PayOrderRe
 
 func (c *PayOrderHTTPClientImpl) UpdatePayOrder(ctx context.Context, in *PayOrderUpdateReq, opts ...http.CallOption) (*PayOrderUpdateReply, error) {
 	var out PayOrderUpdateReply
-	pattern := "/v1/payorder/{id}"
+	pattern := "/v1/pay/order/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/payorder.v1.PayOrder/UpdatePayOrder"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysuser": {
+    "/v1/sys/user": {
       "delete": {
         "summary": "批量删除SysUser",
         "operationId": "SysUser_BatchDeleteSysUser",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysuser/page": {
+    "/v1/sys/user/page": {
       "get": {
         "summary": "分页查询SysUser",
         "operationId": "SysUser_GetPageSysUser",
@@ -281,7 +281,7 @@
         ]
       }
     },
-    "/v1/sysuser/{id}": {
+    "/v1/sys/user/{id}": {
       "get": {
         "summary": "获取SysUser",
         "operationId": "SysUser_GetSysUser",

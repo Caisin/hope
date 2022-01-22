@@ -15,21 +15,21 @@ service NovelTag {
   // 分页查询NovelTag
   rpc GetPageNovelTag (NovelTagPageReq) returns (NovelTagPageReply)  {
     option (google.api.http) = {
-      get: "/v1/noveltag/page"
+      get: "/v1/novel/tag/page"
     };
   }
 
   // 获取NovelTag
   rpc GetNovelTag (NovelTagReq) returns (NovelTagReply)  {
     option (google.api.http) = {
-      get: "/v1/noveltag/{id}"
+      get: "/v1/novel/tag/{id}"
     };
   }
 
   // 更新NovelTag
   rpc UpdateNovelTag (NovelTagUpdateReq) returns (NovelTagUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/noveltag/{id}"
+      put: "/v1/novel/tag/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelTag {
   // 创建NovelTag
   rpc CreateNovelTag (NovelTagCreateReq) returns (NovelTagCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/noveltag"
+      post: "/v1/novel/tag"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelTag {
   // 删除NovelTag
   rpc DeleteNovelTag (NovelTagDeleteReq) returns (NovelTagDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/noveltag/{id}"
+      delete: "/v1/novel/tag/{id}"
     };
   }
 
   // 批量删除NovelTag
   rpc BatchDeleteNovelTag (NovelTagBatchDeleteReq) returns (NovelTagDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/noveltag"
+      delete: "/v1/novel/tag"
     };
   }
 

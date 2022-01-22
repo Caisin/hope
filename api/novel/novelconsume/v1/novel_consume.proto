@@ -15,21 +15,21 @@ service NovelConsume {
   // 分页查询NovelConsume
   rpc GetPageNovelConsume (NovelConsumePageReq) returns (NovelConsumePageReply)  {
     option (google.api.http) = {
-      get: "/v1/novelconsume/page"
+      get: "/v1/novel/consume/page"
     };
   }
 
   // 获取NovelConsume
   rpc GetNovelConsume (NovelConsumeReq) returns (NovelConsumeReply)  {
     option (google.api.http) = {
-      get: "/v1/novelconsume/{id}"
+      get: "/v1/novel/consume/{id}"
     };
   }
 
   // 更新NovelConsume
   rpc UpdateNovelConsume (NovelConsumeUpdateReq) returns (NovelConsumeUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/novelconsume/{id}"
+      put: "/v1/novel/consume/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service NovelConsume {
   // 创建NovelConsume
   rpc CreateNovelConsume (NovelConsumeCreateReq) returns (NovelConsumeCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/novelconsume"
+      post: "/v1/novel/consume"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service NovelConsume {
   // 删除NovelConsume
   rpc DeleteNovelConsume (NovelConsumeDeleteReq) returns (NovelConsumeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelconsume/{id}"
+      delete: "/v1/novel/consume/{id}"
     };
   }
 
   // 批量删除NovelConsume
   rpc BatchDeleteNovelConsume (NovelConsumeBatchDeleteReq) returns (NovelConsumeDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/novelconsume"
+      delete: "/v1/novel/consume"
     };
   }
 

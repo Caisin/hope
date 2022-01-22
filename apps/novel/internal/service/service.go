@@ -35,5 +35,4 @@ var ProviderSet = wire.NewSet(
 	NewUserEventService,
 	NewUserMsgService,
 	NewVipUserService,
-
 )

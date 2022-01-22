@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/userconsume": {
+    "/v1/user/consume": {
       "delete": {
         "summary": "批量删除UserConsume",
         "operationId": "UserConsume_BatchDeleteUserConsume",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/userconsume/page": {
+    "/v1/user/consume/page": {
       "get": {
         "summary": "分页查询UserConsume",
         "operationId": "UserConsume_GetPageUserConsume",
@@ -225,7 +225,7 @@
         ]
       }
     },
-    "/v1/userconsume/{id}": {
+    "/v1/user/consume/{id}": {
       "get": {
         "summary": "获取UserConsume",
         "operationId": "UserConsume_GetUserConsume",

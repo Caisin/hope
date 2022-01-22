@@ -15,21 +15,21 @@ service SysOperaLog {
   // 分页查询SysOperaLog
   rpc GetPageSysOperaLog (SysOperaLogPageReq) returns (SysOperaLogPageReply)  {
     option (google.api.http) = {
-      get: "/v1/sysoperalog/page"
+      get: "/v1/sys/opera/log/page"
     };
   }
 
   // 获取SysOperaLog
   rpc GetSysOperaLog (SysOperaLogReq) returns (SysOperaLogReply)  {
     option (google.api.http) = {
-      get: "/v1/sysoperalog/{id}"
+      get: "/v1/sys/opera/log/{id}"
     };
   }
 
   // 更新SysOperaLog
   rpc UpdateSysOperaLog (SysOperaLogUpdateReq) returns (SysOperaLogUpdateReply)  {
     option (google.api.http) = {
-      put: "/v1/sysoperalog/{id}"
+      put: "/v1/sys/opera/log/{id}"
       body: "*"
     };
   }
@@ -37,7 +37,7 @@ service SysOperaLog {
   // 创建SysOperaLog
   rpc CreateSysOperaLog (SysOperaLogCreateReq) returns (SysOperaLogCreateReply)  {
     option (google.api.http) = {
-      post: "/v1/sysoperalog"
+      post: "/v1/sys/opera/log"
       body: "*"
     };
   }
@@ -45,14 +45,14 @@ service SysOperaLog {
   // 删除SysOperaLog
   rpc DeleteSysOperaLog (SysOperaLogDeleteReq) returns (SysOperaLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysoperalog/{id}"
+      delete: "/v1/sys/opera/log/{id}"
     };
   }
 
   // 批量删除SysOperaLog
   rpc BatchDeleteSysOperaLog (SysOperaLogBatchDeleteReq) returns (SysOperaLogDeleteReply)  {
     option (google.api.http) = {
-      delete: "/v1/sysoperalog"
+      delete: "/v1/sys/opera/log"
     };
   }
 

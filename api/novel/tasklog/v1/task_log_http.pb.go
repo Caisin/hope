@@ -28,12 +28,12 @@ type TaskLogHTTPServer interface {
 
 func RegisterTaskLogHTTPServer(s *http.Server, srv TaskLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/tasklog/page", _TaskLog_GetPageTaskLog0_HTTP_Handler(srv))
-	r.GET("/v1/tasklog/{id}", _TaskLog_GetTaskLog0_HTTP_Handler(srv))
-	r.PUT("/v1/tasklog/{id}", _TaskLog_UpdateTaskLog0_HTTP_Handler(srv))
-	r.POST("/v1/tasklog", _TaskLog_CreateTaskLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/tasklog/{id}", _TaskLog_DeleteTaskLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/tasklog", _TaskLog_BatchDeleteTaskLog0_HTTP_Handler(srv))
+	r.GET("/v1/task/log/page", _TaskLog_GetPageTaskLog0_HTTP_Handler(srv))
+	r.GET("/v1/task/log/{id}", _TaskLog_GetTaskLog0_HTTP_Handler(srv))
+	r.PUT("/v1/task/log/{id}", _TaskLog_UpdateTaskLog0_HTTP_Handler(srv))
+	r.POST("/v1/task/log", _TaskLog_CreateTaskLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/task/log/{id}", _TaskLog_DeleteTaskLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/task/log", _TaskLog_BatchDeleteTaskLog0_HTTP_Handler(srv))
 }
 
 func _TaskLog_GetPageTaskLog0_HTTP_Handler(srv TaskLogHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewTaskLogHTTPClient(client *http.Client) TaskLogHTTPClient {
 
 func (c *TaskLogHTTPClientImpl) BatchDeleteTaskLog(ctx context.Context, in *TaskLogBatchDeleteReq, opts ...http.CallOption) (*TaskLogDeleteReply, error) {
 	var out TaskLogDeleteReply
-	pattern := "/v1/tasklog"
+	pattern := "/v1/task/log"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/BatchDeleteTaskLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *TaskLogHTTPClientImpl) BatchDeleteTaskLog(ctx context.Context, in *Task
 
 func (c *TaskLogHTTPClientImpl) CreateTaskLog(ctx context.Context, in *TaskLogCreateReq, opts ...http.CallOption) (*TaskLogCreateReply, error) {
 	var out TaskLogCreateReply
-	pattern := "/v1/tasklog"
+	pattern := "/v1/task/log"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/CreateTaskLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *TaskLogHTTPClientImpl) CreateTaskLog(ctx context.Context, in *TaskLogCr
 
 func (c *TaskLogHTTPClientImpl) DeleteTaskLog(ctx context.Context, in *TaskLogDeleteReq, opts ...http.CallOption) (*TaskLogDeleteReply, error) {
 	var out TaskLogDeleteReply
-	pattern := "/v1/tasklog/{id}"
+	pattern := "/v1/task/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/DeleteTaskLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *TaskLogHTTPClientImpl) DeleteTaskLog(ctx context.Context, in *TaskLogDe
 
 func (c *TaskLogHTTPClientImpl) GetPageTaskLog(ctx context.Context, in *TaskLogPageReq, opts ...http.CallOption) (*TaskLogPageReply, error) {
 	var out TaskLogPageReply
-	pattern := "/v1/tasklog/page"
+	pattern := "/v1/task/log/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/GetPageTaskLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *TaskLogHTTPClientImpl) GetPageTaskLog(ctx context.Context, in *TaskLogP
 
 func (c *TaskLogHTTPClientImpl) GetTaskLog(ctx context.Context, in *TaskLogReq, opts ...http.CallOption) (*TaskLogReply, error) {
 	var out TaskLogReply
-	pattern := "/v1/tasklog/{id}"
+	pattern := "/v1/task/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/GetTaskLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *TaskLogHTTPClientImpl) GetTaskLog(ctx context.Context, in *TaskLogReq, 
 
 func (c *TaskLogHTTPClientImpl) UpdateTaskLog(ctx context.Context, in *TaskLogUpdateReq, opts ...http.CallOption) (*TaskLogUpdateReply, error) {
 	var out TaskLogUpdateReply
-	pattern := "/v1/tasklog/{id}"
+	pattern := "/v1/task/log/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/UpdateTaskLog"))
 	opts = append(opts, http.PathTemplate(pattern))

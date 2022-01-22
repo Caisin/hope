@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/casbinrule": {
+    "/v1/casbin/rule": {
       "delete": {
         "summary": "批量删除CasbinRule",
         "operationId": "CasbinRule_BatchDeleteCasbinRule",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/casbinrule/page": {
+    "/v1/casbin/rule/page": {
       "get": {
         "summary": "分页查询CasbinRule",
         "operationId": "CasbinRule_GetPageCasbinRule",
@@ -235,7 +235,7 @@
         ]
       }
     },
-    "/v1/casbinrule/{id}": {
+    "/v1/casbin/rule/{id}": {
       "get": {
         "summary": "获取CasbinRule",
         "operationId": "CasbinRule_GetCasbinRule",

@@ -28,12 +28,12 @@ type SysOperaLogHTTPServer interface {
 
 func RegisterSysOperaLogHTTPServer(s *http.Server, srv SysOperaLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sysoperalog/page", _SysOperaLog_GetPageSysOperaLog0_HTTP_Handler(srv))
-	r.GET("/v1/sysoperalog/{id}", _SysOperaLog_GetSysOperaLog0_HTTP_Handler(srv))
-	r.PUT("/v1/sysoperalog/{id}", _SysOperaLog_UpdateSysOperaLog0_HTTP_Handler(srv))
-	r.POST("/v1/sysoperalog", _SysOperaLog_CreateSysOperaLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysoperalog/{id}", _SysOperaLog_DeleteSysOperaLog0_HTTP_Handler(srv))
-	r.DELETE("/v1/sysoperalog", _SysOperaLog_BatchDeleteSysOperaLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/opera/log/page", _SysOperaLog_GetPageSysOperaLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/opera/log/{id}", _SysOperaLog_GetSysOperaLog0_HTTP_Handler(srv))
+	r.PUT("/v1/sys/opera/log/{id}", _SysOperaLog_UpdateSysOperaLog0_HTTP_Handler(srv))
+	r.POST("/v1/sys/opera/log", _SysOperaLog_CreateSysOperaLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/opera/log/{id}", _SysOperaLog_DeleteSysOperaLog0_HTTP_Handler(srv))
+	r.DELETE("/v1/sys/opera/log", _SysOperaLog_BatchDeleteSysOperaLog0_HTTP_Handler(srv))
 }
 
 func _SysOperaLog_GetPageSysOperaLog0_HTTP_Handler(srv SysOperaLogHTTPServer) func(ctx http.Context) error {
@@ -178,7 +178,7 @@ func NewSysOperaLogHTTPClient(client *http.Client) SysOperaLogHTTPClient {
 
 func (c *SysOperaLogHTTPClientImpl) BatchDeleteSysOperaLog(ctx context.Context, in *SysOperaLogBatchDeleteReq, opts ...http.CallOption) (*SysOperaLogDeleteReply, error) {
 	var out SysOperaLogDeleteReply
-	pattern := "/v1/sysoperalog"
+	pattern := "/v1/sys/opera/log"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/BatchDeleteSysOperaLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -191,7 +191,7 @@ func (c *SysOperaLogHTTPClientImpl) BatchDeleteSysOperaLog(ctx context.Context, 
 
 func (c *SysOperaLogHTTPClientImpl) CreateSysOperaLog(ctx context.Context, in *SysOperaLogCreateReq, opts ...http.CallOption) (*SysOperaLogCreateReply, error) {
 	var out SysOperaLogCreateReply
-	pattern := "/v1/sysoperalog"
+	pattern := "/v1/sys/opera/log"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/CreateSysOperaLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -204,7 +204,7 @@ func (c *SysOperaLogHTTPClientImpl) CreateSysOperaLog(ctx context.Context, in *S
 
 func (c *SysOperaLogHTTPClientImpl) DeleteSysOperaLog(ctx context.Context, in *SysOperaLogDeleteReq, opts ...http.CallOption) (*SysOperaLogDeleteReply, error) {
 	var out SysOperaLogDeleteReply
-	pattern := "/v1/sysoperalog/{id}"
+	pattern := "/v1/sys/opera/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/DeleteSysOperaLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -217,7 +217,7 @@ func (c *SysOperaLogHTTPClientImpl) DeleteSysOperaLog(ctx context.Context, in *S
 
 func (c *SysOperaLogHTTPClientImpl) GetPageSysOperaLog(ctx context.Context, in *SysOperaLogPageReq, opts ...http.CallOption) (*SysOperaLogPageReply, error) {
 	var out SysOperaLogPageReply
-	pattern := "/v1/sysoperalog/page"
+	pattern := "/v1/sys/opera/log/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/GetPageSysOperaLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -230,7 +230,7 @@ func (c *SysOperaLogHTTPClientImpl) GetPageSysOperaLog(ctx context.Context, in *
 
 func (c *SysOperaLogHTTPClientImpl) GetSysOperaLog(ctx context.Context, in *SysOperaLogReq, opts ...http.CallOption) (*SysOperaLogReply, error) {
 	var out SysOperaLogReply
-	pattern := "/v1/sysoperalog/{id}"
+	pattern := "/v1/sys/opera/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/GetSysOperaLog"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -243,7 +243,7 @@ func (c *SysOperaLogHTTPClientImpl) GetSysOperaLog(ctx context.Context, in *SysO
 
 func (c *SysOperaLogHTTPClientImpl) UpdateSysOperaLog(ctx context.Context, in *SysOperaLogUpdateReq, opts ...http.CallOption) (*SysOperaLogUpdateReply, error) {
 	var out SysOperaLogUpdateReply
-	pattern := "/v1/sysoperalog/{id}"
+	pattern := "/v1/sys/opera/log/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/UpdateSysOperaLog"))
 	opts = append(opts, http.PathTemplate(pattern))

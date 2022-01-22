@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/sysdictdata": {
+    "/v1/sys/dict/data": {
       "delete": {
         "summary": "批量删除SysDictData",
         "operationId": "SysDictData_BatchDeleteSysDictData",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/sysdictdata/page": {
+    "/v1/sys/dict/data/page": {
       "get": {
         "summary": "分页查询SysDictData",
         "operationId": "SysDictData_GetPageSysDictData",
@@ -259,7 +259,7 @@
         ]
       }
     },
-    "/v1/sysdictdata/{id}": {
+    "/v1/sys/dict/data/{id}": {
       "get": {
         "summary": "获取SysDictData",
         "operationId": "SysDictData_GetSysDictData",

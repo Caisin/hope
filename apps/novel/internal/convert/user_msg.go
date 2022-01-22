@@ -71,84 +71,11 @@ func UserMsgData2Req(v *ent.UserMsg) *v1.UserMsgReq {
 	}
 }
 
-func UserMsgReply2Data(v *v1.UserMsgReply) *ent.UserMsg {
+func UserMsgData2Reply(v *ent.UserMsg) *v1.UserMsgData {
 	if v == nil {
 		return nil
 	}
-	return &ent.UserMsg{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		MsgId:     v.MsgId,
-		IsRead:    v.IsRead,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserMsgData2Reply(v *ent.UserMsg) *v1.UserMsgReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserMsgReply{
-		Id:        v.ID,
-		UserId:    v.UserId,
-		MsgId:     v.MsgId,
-		IsRead:    v.IsRead,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserMsgUpdateReply2Data(v *v1.UserMsgUpdateReply) *ent.UserMsg {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserMsg{
-		ID:     v.Id,
-		UserId: v.UserId,
-		MsgId:  v.MsgId,
-	}
-}
-
-func UserMsgData2UpdateReply(v *ent.UserMsg) *v1.UserMsgUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserMsgUpdateReply{
-		Id:     v.ID,
-		UserId: v.UserId,
-		MsgId:  v.MsgId,
-	}
-}
-
-func UserMsgCreateReply2Data(v *v1.UserMsgCreateReply) *ent.UserMsg {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserMsg{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		MsgId:     v.MsgId,
-		IsRead:    v.IsRead,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserMsgData2CreateReply(v *ent.UserMsg) *v1.UserMsgCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserMsgCreateReply{
+	return &v1.UserMsgData{
 		Id:        v.ID,
 		UserId:    v.UserId,
 		MsgId:     v.MsgId,

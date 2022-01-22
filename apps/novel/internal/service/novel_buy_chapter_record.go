@@ -28,25 +28,32 @@ func (s *NovelBuyChapterRecordService) GetPageNovelBuyChapterRecord(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelBuyChapterRecordReply, 0)
+	items := make([]*pb.NovelBuyChapterRecordData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelBuyChapterRecordData2Reply(datas[i]))
 	}
 	reply := &pb.NovelBuyChapterRecordPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelBuyChapterRecordService) GetNovelBuyChapterRecord(ctx context.Context, req *pb.NovelBuyChapterRecordReq) (*pb.NovelBuyChapterRecordReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelBuyChapterRecord")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBuyChapterRecordData2Reply(daya), err
+	reply := &pb.NovelBuyChapterRecordReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBuyChapterRecordData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelBuyChapterRecordService) UpdateNovelBuyChapterRecord(ctx context.Context, req *pb.NovelBuyChapterRecordUpdateReq) (*pb.NovelBuyChapterRecordUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelBuyChapterRecordService) UpdateNovelBuyChapterRecord(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBuyChapterRecordData2UpdateReply(data), err
+	reply := &pb.NovelBuyChapterRecordUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBuyChapterRecordData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelBuyChapterRecordService) CreateNovelBuyChapterRecord(ctx context.Context, req *pb.NovelBuyChapterRecordCreateReq) (*pb.NovelBuyChapterRecordCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelBuyChapterRecordService) CreateNovelBuyChapterRecord(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBuyChapterRecordData2CreateReply(data), err
+	reply := &pb.NovelBuyChapterRecordCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBuyChapterRecordData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelBuyChapterRecordService) DeleteNovelBuyChapterRecord(ctx context.Context, req *pb.NovelBuyChapterRecordDeleteReq) (*pb.NovelBuyChapterRecordDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelBuyChapterRecordService) DeleteNovelBuyChapterRecord(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelBuyChapterRecordDeleteReply{Result: err == nil}, err
+	return &pb.NovelBuyChapterRecordDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelBuyChapterRecordService) BatchDeleteNovelBuyChapterRecord(ctx context.Context, req *pb.NovelBuyChapterRecordBatchDeleteReq) (*pb.NovelBuyChapterRecordDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelBuyChapterRecordService) BatchDeleteNovelBuyChapterRecord(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelBuyChapterRecordDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelBuyChapterRecordDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

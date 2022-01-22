@@ -58,6 +58,34 @@ service VipType {
 
 }
 
+// 实体数据
+message VipTypeData {
+    int64 id = 1;
+    //账本名称
+    string vipName = 2;
+    //是否超级vip
+    bool isSuper = 3;
+    //有效天数
+    int32 validDays = 4;
+    //折扣率
+    int64 discountRate = 5;
+    //头像ID
+    int64 avatarId = 6;
+    //描述
+    string summary = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
 // 查询搜索请求
 message VipTypePageReq {
     //分页查询参数
@@ -68,10 +96,14 @@ message VipTypePageReq {
 
 // 查询搜索返回
 message VipTypePageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated VipTypeReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated VipTypeData items = 4;
 }
 
 
@@ -103,32 +135,14 @@ message VipTypeReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message VipTypeReply {
-    int64 id = 1;
-    //账本名称
-    string vipName = 2;
-    //是否超级vip
-    bool isSuper = 3;
-    //有效天数
-    int32 validDays = 4;
-    //折扣率
-    int64 discountRate = 5;
-    //头像ID
-    int64 avatarId = 6;
-    //描述
-    string summary = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    VipTypeData result = 3;
 }
 
 // 创建VipType请求
@@ -150,30 +164,12 @@ message VipTypeCreateReq {
 
 // 创建VipType返回
 message VipTypeCreateReply {
-    int64 id = 1;
-    //账本名称
-    string vipName = 2;
-    //是否超级vip
-    bool isSuper = 3;
-    //有效天数
-    int32 validDays = 4;
-    //折扣率
-    int64 discountRate = 5;
-    //头像ID
-    int64 avatarId = 6;
-    //描述
-    string summary = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    VipTypeData result = 3;
 }
 
 // 更新VipType请求
@@ -197,20 +193,12 @@ message VipTypeUpdateReq {
 
 // 更新VipType返回
 message VipTypeUpdateReply {
-    int64 id = 1;
-    //账本名称
-    string vipName = 2;
-    //是否超级vip
-    bool isSuper = 3;
-    //有效天数
-    int32 validDays = 4;
-    //折扣率
-    int64 discountRate = 5;
-    //头像ID
-    int64 avatarId = 6;
-    //描述
-    string summary = 7;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    VipTypeData result = 3;
 }
 
 // 删除VipType请求
@@ -227,6 +215,11 @@ message VipTypeBatchDeleteReq {
 
 // 删除VipType返回
 message VipTypeDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

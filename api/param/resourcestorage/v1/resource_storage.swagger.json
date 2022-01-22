@@ -727,108 +727,18 @@
     "v1ResourceStorageCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "groupId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "分组"
-        },
-        "storageType": {
-          "type": "integer",
-          "format": "int32",
-          "title": "存储类型 1"
-        },
-        "realName": {
-          "type": "string",
-          "title": "文件真实的名称"
-        },
-        "bucket": {
-          "type": "string",
-          "title": "Bucket 识别符(七牛)"
-        },
-        "name": {
-          "type": "string",
-          "title": "文件名称"
-        },
-        "suffix": {
-          "type": "string",
-          "title": "后缀"
-        },
-        "path": {
-          "type": "string",
-          "title": "路径"
-        },
-        "type": {
-          "type": "string",
-          "title": "类型"
-        },
-        "size": {
-          "type": "string",
-          "title": "大小"
-        },
-        "deleteUrl": {
-          "type": "string",
-          "title": "(sm.sm)删除的URL"
-        },
-        "filename": {
-          "type": "string",
-          "title": "(sm.sm)图片名称"
-        },
-        "key": {
-          "type": "string",
-          "title": "文件名(七牛)"
-        },
-        "height": {
-          "type": "string",
-          "title": "(sm.sm)图片高度"
-        },
-        "url": {
-          "type": "string",
-          "title": "(sm.sm)图片地址"
-        },
-        "username": {
-          "type": "string",
-          "title": "(sm.sm)用户名称"
-        },
-        "width": {
-          "type": "string",
-          "title": "(sm.sm)图片宽度"
-        },
-        "md5code": {
-          "type": "string",
-          "title": "(sm.sm)文件的MD5值"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1ResourceStorageData",
+          "title": "结果数据"
         }
       },
       "title": "创建ResourceStorage返回"
@@ -913,33 +823,7 @@
       },
       "title": "创建ResourceStorage请求"
     },
-    "v1ResourceStorageDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除ResourceStorage返回"
-    },
-    "v1ResourceStoragePageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ResourceStorageReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1ResourceStorageReply": {
+    "v1ResourceStorageData": {
       "type": "object",
       "properties": {
         "id": {
@@ -1046,7 +930,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1ResourceStorageDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除ResourceStorage返回"
+    },
+    "v1ResourceStoragePageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ResourceStorageData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1ResourceStorageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1ResourceStorageData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1ResourceStorageReq": {
       "type": "object",
@@ -1160,83 +1109,18 @@
     "v1ResourceStorageUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "groupId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "分组"
-        },
-        "storageType": {
-          "type": "integer",
-          "format": "int32",
-          "title": "存储类型 1"
-        },
-        "realName": {
+        "message": {
           "type": "string",
-          "title": "文件真实的名称"
+          "title": "消息"
         },
-        "bucket": {
-          "type": "string",
-          "title": "Bucket 识别符(七牛)"
-        },
-        "name": {
-          "type": "string",
-          "title": "文件名称"
-        },
-        "suffix": {
-          "type": "string",
-          "title": "后缀"
-        },
-        "path": {
-          "type": "string",
-          "title": "路径"
-        },
-        "type": {
-          "type": "string",
-          "title": "类型"
-        },
-        "size": {
-          "type": "string",
-          "title": "大小"
-        },
-        "deleteUrl": {
-          "type": "string",
-          "title": "(sm.sm)删除的URL"
-        },
-        "filename": {
-          "type": "string",
-          "title": "(sm.sm)图片名称"
-        },
-        "key": {
-          "type": "string",
-          "title": "文件名(七牛)"
-        },
-        "height": {
-          "type": "string",
-          "title": "(sm.sm)图片高度"
-        },
-        "url": {
-          "type": "string",
-          "title": "(sm.sm)图片地址"
-        },
-        "username": {
-          "type": "string",
-          "title": "(sm.sm)用户名称"
-        },
-        "width": {
-          "type": "string",
-          "title": "(sm.sm)图片宽度"
-        },
-        "md5code": {
-          "type": "string",
-          "title": "(sm.sm)文件的MD5值"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
+        "result": {
+          "$ref": "#/definitions/v1ResourceStorageData",
+          "title": "结果数据"
         }
       },
       "title": "更新ResourceStorage返回"

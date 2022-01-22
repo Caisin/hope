@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/adchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewAdChangeLogRepo(data *Data, logger log.Logger) biz.AdChangeLogRepo {
 
 // CreateAdChangeLog 创建
 func (r *adChangeLogRepo) CreateAdChangeLog(ctx context.Context, req *v1.AdChangeLogCreateReq) (*ent.AdChangeLog, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.AdChangeLog.Create().
 		SetUserId(req.UserId).
@@ -39,6 +44,8 @@ func (r *adChangeLogRepo) CreateAdChangeLog(ctx context.Context, req *v1.AdChang
 		SetExtInfo(req.ExtInfo).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -55,7 +62,13 @@ func (r *adChangeLogRepo) BatchDeleteAdChangeLog(ctx context.Context, req *v1.Ad
 
 // UpdateAdChangeLog 更新
 func (r *adChangeLogRepo) UpdateAdChangeLog(ctx context.Context, req *v1.AdChangeLogUpdateReq) (*ent.AdChangeLog, error) {
-	return r.data.db.AdChangeLog.UpdateOne(convert.AdChangeLogUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.AdChangeLogUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.AdChangeLog.UpdateOne(data).Save(ctx)
 }
 
 // GetAdChangeLog 根据Id查询

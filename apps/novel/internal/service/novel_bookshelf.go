@@ -28,25 +28,32 @@ func (s *NovelBookshelfService) GetPageNovelBookshelf(ctx context.Context, req *
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelBookshelfReply, 0)
+	items := make([]*pb.NovelBookshelfData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelBookshelfData2Reply(datas[i]))
 	}
 	reply := &pb.NovelBookshelfPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelBookshelfService) GetNovelBookshelf(ctx context.Context, req *pb.NovelBookshelfReq) (*pb.NovelBookshelfReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelBookshelf")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBookshelfData2Reply(daya), err
+	reply := &pb.NovelBookshelfReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBookshelfData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelBookshelfService) UpdateNovelBookshelf(ctx context.Context, req *pb.NovelBookshelfUpdateReq) (*pb.NovelBookshelfUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelBookshelfService) UpdateNovelBookshelf(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBookshelfData2UpdateReply(data), err
+	reply := &pb.NovelBookshelfUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBookshelfData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelBookshelfService) CreateNovelBookshelf(ctx context.Context, req *pb.NovelBookshelfCreateReq) (*pb.NovelBookshelfCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelBookshelfService) CreateNovelBookshelf(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBookshelfData2CreateReply(data), err
+	reply := &pb.NovelBookshelfCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBookshelfData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelBookshelfService) DeleteNovelBookshelf(ctx context.Context, req *pb.NovelBookshelfDeleteReq) (*pb.NovelBookshelfDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelBookshelfService) DeleteNovelBookshelf(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelBookshelfDeleteReply{Result: err == nil}, err
+	return &pb.NovelBookshelfDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelBookshelfService) BatchDeleteNovelBookshelf(ctx context.Context, req *pb.NovelBookshelfBatchDeleteReq) (*pb.NovelBookshelfDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelBookshelfService) BatchDeleteNovelBookshelf(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelBookshelfDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelBookshelfDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

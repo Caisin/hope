@@ -583,76 +583,18 @@
     "v1SysLoginLogCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "status": {
+        "message": {
           "type": "string",
-          "title": "状态"
+          "title": "消息"
         },
-        "ipaddr": {
-          "type": "string",
-          "title": "ip地址"
-        },
-        "loginLocation": {
-          "type": "string",
-          "title": "归属地"
-        },
-        "browser": {
-          "type": "string",
-          "title": "浏览器"
-        },
-        "os": {
-          "type": "string",
-          "title": "系统"
-        },
-        "platform": {
-          "type": "string",
-          "title": "固件"
-        },
-        "loginTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "登录时间"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "msg": {
-          "type": "string",
-          "title": "信息"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysLoginLogData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysLoginLog返回"
@@ -705,33 +647,7 @@
       },
       "title": "创建SysLoginLog请求"
     },
-    "v1SysLoginLogDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysLoginLog返回"
-    },
-    "v1SysLoginLogPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysLoginLogReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysLoginLogReply": {
+    "v1SysLoginLogData": {
       "type": "object",
       "properties": {
         "id": {
@@ -806,7 +722,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysLoginLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysLoginLog返回"
+    },
+    "v1SysLoginLogPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysLoginLogData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysLoginLogReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysLoginLogData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysLoginLogReq": {
       "type": "object",
@@ -888,51 +869,18 @@
     "v1SysLoginLogUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "status": {
+        "message": {
           "type": "string",
-          "title": "状态"
+          "title": "消息"
         },
-        "ipaddr": {
-          "type": "string",
-          "title": "ip地址"
-        },
-        "loginLocation": {
-          "type": "string",
-          "title": "归属地"
-        },
-        "browser": {
-          "type": "string",
-          "title": "浏览器"
-        },
-        "os": {
-          "type": "string",
-          "title": "系统"
-        },
-        "platform": {
-          "type": "string",
-          "title": "固件"
-        },
-        "loginTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "登录时间"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "msg": {
-          "type": "string",
-          "title": "信息"
+        "result": {
+          "$ref": "#/definitions/v1SysLoginLogData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysLoginLog返回"

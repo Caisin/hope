@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewAssetChangeLogRepo(data *Data, logger log.Logger) biz.AssetChangeLogRepo
 
 // CreateAssetChangeLog 创建
 func (r *assetChangeLogRepo) CreateAssetChangeLog(ctx context.Context, req *v1.AssetChangeLogCreateReq) (*ent.AssetChangeLog, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.AssetChangeLog.Create().
 		SetOrderId(req.OrderId).
@@ -43,6 +48,8 @@ func (r *assetChangeLogRepo) CreateAssetChangeLog(ctx context.Context, req *v1.A
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -59,7 +66,13 @@ func (r *assetChangeLogRepo) BatchDeleteAssetChangeLog(ctx context.Context, req 
 
 // UpdateAssetChangeLog 更新
 func (r *assetChangeLogRepo) UpdateAssetChangeLog(ctx context.Context, req *v1.AssetChangeLogUpdateReq) (*ent.AssetChangeLog, error) {
-	return r.data.db.AssetChangeLog.UpdateOne(convert.AssetChangeLogUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.AssetChangeLogUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.AssetChangeLog.UpdateOne(data).Save(ctx)
 }
 
 // GetAssetChangeLog 根据Id查询

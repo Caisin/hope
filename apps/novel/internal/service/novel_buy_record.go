@@ -28,25 +28,32 @@ func (s *NovelBuyRecordService) GetPageNovelBuyRecord(ctx context.Context, req *
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelBuyRecordReply, 0)
+	items := make([]*pb.NovelBuyRecordData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelBuyRecordData2Reply(datas[i]))
 	}
 	reply := &pb.NovelBuyRecordPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelBuyRecordService) GetNovelBuyRecord(ctx context.Context, req *pb.NovelBuyRecordReq) (*pb.NovelBuyRecordReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelBuyRecord")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBuyRecordData2Reply(daya), err
+	reply := &pb.NovelBuyRecordReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBuyRecordData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelBuyRecordService) UpdateNovelBuyRecord(ctx context.Context, req *pb.NovelBuyRecordUpdateReq) (*pb.NovelBuyRecordUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelBuyRecordService) UpdateNovelBuyRecord(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBuyRecordData2UpdateReply(data), err
+	reply := &pb.NovelBuyRecordUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBuyRecordData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelBuyRecordService) CreateNovelBuyRecord(ctx context.Context, req *pb.NovelBuyRecordCreateReq) (*pb.NovelBuyRecordCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelBuyRecordService) CreateNovelBuyRecord(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelBuyRecordData2CreateReply(data), err
+	reply := &pb.NovelBuyRecordCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelBuyRecordData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelBuyRecordService) DeleteNovelBuyRecord(ctx context.Context, req *pb.NovelBuyRecordDeleteReq) (*pb.NovelBuyRecordDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelBuyRecordService) DeleteNovelBuyRecord(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelBuyRecordDeleteReply{Result: err == nil}, err
+	return &pb.NovelBuyRecordDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelBuyRecordService) BatchDeleteNovelBuyRecord(ctx context.Context, req *pb.NovelBuyRecordBatchDeleteReq) (*pb.NovelBuyRecordDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelBuyRecordService) BatchDeleteNovelBuyRecord(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelBuyRecordDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelBuyRecordDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

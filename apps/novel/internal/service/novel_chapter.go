@@ -28,25 +28,32 @@ func (s *NovelChapterService) GetPageNovelChapter(ctx context.Context, req *pb.N
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelChapterReply, 0)
+	items := make([]*pb.NovelChapterData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelChapterData2Reply(datas[i]))
 	}
 	reply := &pb.NovelChapterPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelChapterService) GetNovelChapter(ctx context.Context, req *pb.NovelChapterReq) (*pb.NovelChapterReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelChapter")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelChapterData2Reply(daya), err
+	reply := &pb.NovelChapterReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelChapterData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelChapterService) UpdateNovelChapter(ctx context.Context, req *pb.NovelChapterUpdateReq) (*pb.NovelChapterUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelChapterService) UpdateNovelChapter(ctx context.Context, req *pb.No
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelChapterData2UpdateReply(data), err
+	reply := &pb.NovelChapterUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelChapterData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelChapterService) CreateNovelChapter(ctx context.Context, req *pb.NovelChapterCreateReq) (*pb.NovelChapterCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelChapterService) CreateNovelChapter(ctx context.Context, req *pb.No
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelChapterData2CreateReply(data), err
+	reply := &pb.NovelChapterCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelChapterData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelChapterService) DeleteNovelChapter(ctx context.Context, req *pb.NovelChapterDeleteReq) (*pb.NovelChapterDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelChapterService) DeleteNovelChapter(ctx context.Context, req *pb.No
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelChapterDeleteReply{Result: err == nil}, err
+	return &pb.NovelChapterDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelChapterService) BatchDeleteNovelChapter(ctx context.Context, req *pb.NovelChapterBatchDeleteReq) (*pb.NovelChapterDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelChapterService) BatchDeleteNovelChapter(ctx context.Context, req *
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelChapterDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelChapterDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

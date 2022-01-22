@@ -58,6 +58,40 @@ service AssetChangeLog {
 
 }
 
+// 实体数据
+message AssetChangeLogData {
+    int64 id = 1;
+    //订单号
+    string orderId = 2;
+    //账本ID
+    int64 balanceId = 3;
+    //关联用户事件Id
+    int64 eventId = 4;
+    //用户ID
+    int64 userId = 5;
+    //账本科目
+    int32 assetItemId = 6;
+    //变化金额
+    int64 amount = 7;
+    //变化前剩余可用
+    int64 oldBalance = 8;
+    //变化后剩余可用
+    int64 newBalance = 9;
+    //备注
+    string remark = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
 // 查询搜索请求
 message AssetChangeLogPageReq {
     //分页查询参数
@@ -68,10 +102,14 @@ message AssetChangeLogPageReq {
 
 // 查询搜索返回
 message AssetChangeLogPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated AssetChangeLogReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated AssetChangeLogData items = 4;
 }
 
 
@@ -109,38 +147,14 @@ message AssetChangeLogReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message AssetChangeLogReply {
-    int64 id = 1;
-    //订单号
-    string orderId = 2;
-    //账本ID
-    int64 balanceId = 3;
-    //关联用户事件Id
-    int64 eventId = 4;
-    //用户ID
-    int64 userId = 5;
-    //账本科目
-    int32 assetItemId = 6;
-    //变化金额
-    int64 amount = 7;
-    //变化前剩余可用
-    int64 oldBalance = 8;
-    //变化后剩余可用
-    int64 newBalance = 9;
-    //备注
-    string remark = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AssetChangeLogData result = 3;
 }
 
 // 创建AssetChangeLog请求
@@ -168,36 +182,12 @@ message AssetChangeLogCreateReq {
 
 // 创建AssetChangeLog返回
 message AssetChangeLogCreateReply {
-    int64 id = 1;
-    //订单号
-    string orderId = 2;
-    //账本ID
-    int64 balanceId = 3;
-    //关联用户事件Id
-    int64 eventId = 4;
-    //用户ID
-    int64 userId = 5;
-    //账本科目
-    int32 assetItemId = 6;
-    //变化金额
-    int64 amount = 7;
-    //变化前剩余可用
-    int64 oldBalance = 8;
-    //变化后剩余可用
-    int64 newBalance = 9;
-    //备注
-    string remark = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AssetChangeLogData result = 3;
 }
 
 // 更新AssetChangeLog请求
@@ -227,26 +217,12 @@ message AssetChangeLogUpdateReq {
 
 // 更新AssetChangeLog返回
 message AssetChangeLogUpdateReply {
-    int64 id = 1;
-    //订单号
-    string orderId = 2;
-    //账本ID
-    int64 balanceId = 3;
-    //关联用户事件Id
-    int64 eventId = 4;
-    //用户ID
-    int64 userId = 5;
-    //账本科目
-    int32 assetItemId = 6;
-    //变化金额
-    int64 amount = 7;
-    //变化前剩余可用
-    int64 oldBalance = 8;
-    //变化后剩余可用
-    int64 newBalance = 9;
-    //备注
-    string remark = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AssetChangeLogData result = 3;
 }
 
 // 删除AssetChangeLog请求
@@ -263,6 +239,11 @@ message AssetChangeLogBatchDeleteReq {
 
 // 删除AssetChangeLog返回
 message AssetChangeLogDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

@@ -58,6 +58,52 @@ service SysMenu {
 
 }
 
+// 实体数据
+message SysMenuData {
+    int64 id = 1;
+    //菜单名
+    string menuName = 2;
+    //菜单标题
+    string title = 3;
+    //图标
+    string icon = 4;
+    //路径
+    string path = 5;
+    //多级路径
+    string paths = 6;
+    //M-目录C-菜单F-按钮
+    string menuType = 7;
+    //
+    string action = 8;
+    //权限
+    string permission = 9;
+    //无缓存
+    bool noCache = 10;
+    //面包屑
+    string breadcrumb = 11;
+    //组件
+    string component = 12;
+    //排序
+    int32 sort = 13;
+    //是否可见
+    bool visible = 14;
+    //是否外链1是0否
+    bool isFrame = 15;
+    //
+    string sysApi = 16;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 17;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 18;
+    //创建者
+    int64 createBy = 19;
+    //更新者
+    int64 updateBy = 20;
+    //租户
+    int64 tenantId = 21;
+
+}
+
 // 查询搜索请求
 message SysMenuPageReq {
     //分页查询参数
@@ -68,10 +114,14 @@ message SysMenuPageReq {
 
 // 查询搜索返回
 message SysMenuPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysMenuReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysMenuData items = 4;
 }
 
 
@@ -121,50 +171,14 @@ message SysMenuReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysMenuReply {
-    int64 id = 1;
-    //菜单名
-    string menuName = 2;
-    //菜单标题
-    string title = 3;
-    //图标
-    string icon = 4;
-    //路径
-    string path = 5;
-    //多级路径
-    string paths = 6;
-    //M-目录C-菜单F-按钮
-    string menuType = 7;
-    //
-    string action = 8;
-    //权限
-    string permission = 9;
-    //无缓存
-    bool noCache = 10;
-    //面包屑
-    string breadcrumb = 11;
-    //组件
-    string component = 12;
-    //排序
-    int32 sort = 13;
-    //是否可见
-    bool visible = 14;
-    //是否外链1是0否
-    bool isFrame = 15;
-    //
-    string sysApi = 16;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 17;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
-    //创建者
-    int64 createBy = 19;
-    //更新者
-    int64 updateBy = 20;
-    //租户
-    int64 tenantId = 21;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysMenuData result = 3;
 }
 
 // 创建SysMenu请求
@@ -204,48 +218,12 @@ message SysMenuCreateReq {
 
 // 创建SysMenu返回
 message SysMenuCreateReply {
-    int64 id = 1;
-    //菜单名
-    string menuName = 2;
-    //菜单标题
-    string title = 3;
-    //图标
-    string icon = 4;
-    //路径
-    string path = 5;
-    //多级路径
-    string paths = 6;
-    //M-目录C-菜单F-按钮
-    string menuType = 7;
-    //
-    string action = 8;
-    //权限
-    string permission = 9;
-    //无缓存
-    bool noCache = 10;
-    //面包屑
-    string breadcrumb = 11;
-    //组件
-    string component = 12;
-    //排序
-    int32 sort = 13;
-    //是否可见
-    bool visible = 14;
-    //是否外链1是0否
-    bool isFrame = 15;
-    //
-    string sysApi = 16;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 17;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
-    //创建者
-    int64 createBy = 19;
-    //更新者
-    int64 updateBy = 20;
-    //租户
-    int64 tenantId = 21;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysMenuData result = 3;
 }
 
 // 更新SysMenu请求
@@ -287,38 +265,12 @@ message SysMenuUpdateReq {
 
 // 更新SysMenu返回
 message SysMenuUpdateReply {
-    int64 id = 1;
-    //菜单名
-    string menuName = 2;
-    //菜单标题
-    string title = 3;
-    //图标
-    string icon = 4;
-    //路径
-    string path = 5;
-    //多级路径
-    string paths = 6;
-    //M-目录C-菜单F-按钮
-    string menuType = 7;
-    //
-    string action = 8;
-    //权限
-    string permission = 9;
-    //无缓存
-    bool noCache = 10;
-    //面包屑
-    string breadcrumb = 11;
-    //组件
-    string component = 12;
-    //排序
-    int32 sort = 13;
-    //是否可见
-    bool visible = 14;
-    //是否外链1是0否
-    bool isFrame = 15;
-    //
-    string sysApi = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysMenuData result = 3;
 }
 
 // 删除SysMenu请求
@@ -335,6 +287,11 @@ message SysMenuBatchDeleteReq {
 
 // 删除SysMenu返回
 message SysMenuDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

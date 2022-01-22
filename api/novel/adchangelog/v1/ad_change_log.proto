@@ -58,6 +58,32 @@ service AdChangeLog {
 
 }
 
+// 实体数据
+message AdChangeLogData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //广告ID
+    string adId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //设备号
+    string deviceId = 5;
+    //手机拓展信息
+    string extInfo = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
 // 查询搜索请求
 message AdChangeLogPageReq {
     //分页查询参数
@@ -68,10 +94,14 @@ message AdChangeLogPageReq {
 
 // 查询搜索返回
 message AdChangeLogPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated AdChangeLogReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated AdChangeLogData items = 4;
 }
 
 
@@ -101,30 +131,14 @@ message AdChangeLogReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message AdChangeLogReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //广告ID
-    string adId = 3;
-    //渠道ID
-    int64 chId = 4;
-    //设备号
-    string deviceId = 5;
-    //手机拓展信息
-    string extInfo = 6;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 7;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 8;
-    //创建者
-    int64 createBy = 9;
-    //更新者
-    int64 updateBy = 10;
-    //租户
-    int64 tenantId = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AdChangeLogData result = 3;
 }
 
 // 创建AdChangeLog请求
@@ -144,28 +158,12 @@ message AdChangeLogCreateReq {
 
 // 创建AdChangeLog返回
 message AdChangeLogCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //广告ID
-    string adId = 3;
-    //渠道ID
-    int64 chId = 4;
-    //设备号
-    string deviceId = 5;
-    //手机拓展信息
-    string extInfo = 6;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 7;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 8;
-    //创建者
-    int64 createBy = 9;
-    //更新者
-    int64 updateBy = 10;
-    //租户
-    int64 tenantId = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AdChangeLogData result = 3;
 }
 
 // 更新AdChangeLog请求
@@ -187,18 +185,12 @@ message AdChangeLogUpdateReq {
 
 // 更新AdChangeLog返回
 message AdChangeLogUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //广告ID
-    string adId = 3;
-    //渠道ID
-    int64 chId = 4;
-    //设备号
-    string deviceId = 5;
-    //手机拓展信息
-    string extInfo = 6;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AdChangeLogData result = 3;
 }
 
 // 删除AdChangeLog请求
@@ -215,6 +207,11 @@ message AdChangeLogBatchDeleteReq {
 
 // 删除AdChangeLog返回
 message AdChangeLogDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

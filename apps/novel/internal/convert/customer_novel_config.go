@@ -107,114 +107,11 @@ func CustomerNovelConfigData2Req(v *ent.CustomerNovelConfig) *v1.CustomerNovelCo
 	}
 }
 
-func CustomerNovelConfigReply2Data(v *v1.CustomerNovelConfigReply) *ent.CustomerNovelConfig {
+func CustomerNovelConfigData2Reply(v *ent.CustomerNovelConfig) *v1.CustomerNovelConfigData {
 	if v == nil {
 		return nil
 	}
-	return &ent.CustomerNovelConfig{
-		ID:             v.Id,
-		GroupCode:      v.GroupCode,
-		InnerGroupCode: v.InnerGroupCode,
-		GroupName:      v.GroupName,
-		TypeId:         v.TypeId,
-		TypeCode:       v.TypeCode,
-		TypeName:       v.TypeName,
-		FieldName:      v.FieldName,
-		DefaultNum:     v.DefaultNum,
-		State:          v.State,
-		CreatedAt:      v.CreatedAt.AsTime(),
-		UpdatedAt:      v.UpdatedAt.AsTime(),
-		CreateBy:       v.CreateBy,
-		UpdateBy:       v.UpdateBy,
-		TenantId:       v.TenantId,
-	}
-}
-
-func CustomerNovelConfigData2Reply(v *ent.CustomerNovelConfig) *v1.CustomerNovelConfigReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.CustomerNovelConfigReply{
-		Id:             v.ID,
-		GroupCode:      v.GroupCode,
-		InnerGroupCode: v.InnerGroupCode,
-		GroupName:      v.GroupName,
-		TypeId:         v.TypeId,
-		TypeCode:       v.TypeCode,
-		TypeName:       v.TypeName,
-		FieldName:      v.FieldName,
-		DefaultNum:     v.DefaultNum,
-		State:          v.State,
-		CreatedAt:      timestamppb.New(v.CreatedAt),
-		UpdatedAt:      timestamppb.New(v.UpdatedAt),
-		CreateBy:       v.CreateBy,
-		UpdateBy:       v.UpdateBy,
-		TenantId:       v.TenantId,
-	}
-}
-
-func CustomerNovelConfigUpdateReply2Data(v *v1.CustomerNovelConfigUpdateReply) *ent.CustomerNovelConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.CustomerNovelConfig{
-		ID:             v.Id,
-		GroupCode:      v.GroupCode,
-		InnerGroupCode: v.InnerGroupCode,
-		GroupName:      v.GroupName,
-		TypeId:         v.TypeId,
-		TypeCode:       v.TypeCode,
-		TypeName:       v.TypeName,
-		FieldName:      v.FieldName,
-		DefaultNum:     v.DefaultNum,
-	}
-}
-
-func CustomerNovelConfigData2UpdateReply(v *ent.CustomerNovelConfig) *v1.CustomerNovelConfigUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.CustomerNovelConfigUpdateReply{
-		Id:             v.ID,
-		GroupCode:      v.GroupCode,
-		InnerGroupCode: v.InnerGroupCode,
-		GroupName:      v.GroupName,
-		TypeId:         v.TypeId,
-		TypeCode:       v.TypeCode,
-		TypeName:       v.TypeName,
-		FieldName:      v.FieldName,
-		DefaultNum:     v.DefaultNum,
-	}
-}
-
-func CustomerNovelConfigCreateReply2Data(v *v1.CustomerNovelConfigCreateReply) *ent.CustomerNovelConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.CustomerNovelConfig{
-		ID:             v.Id,
-		GroupCode:      v.GroupCode,
-		InnerGroupCode: v.InnerGroupCode,
-		GroupName:      v.GroupName,
-		TypeId:         v.TypeId,
-		TypeCode:       v.TypeCode,
-		TypeName:       v.TypeName,
-		FieldName:      v.FieldName,
-		DefaultNum:     v.DefaultNum,
-		State:          v.State,
-		CreatedAt:      v.CreatedAt.AsTime(),
-		UpdatedAt:      v.UpdatedAt.AsTime(),
-		CreateBy:       v.CreateBy,
-		UpdateBy:       v.UpdateBy,
-		TenantId:       v.TenantId,
-	}
-}
-
-func CustomerNovelConfigData2CreateReply(v *ent.CustomerNovelConfig) *v1.CustomerNovelConfigCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.CustomerNovelConfigCreateReply{
+	return &v1.CustomerNovelConfigData{
 		Id:             v.ID,
 		GroupCode:      v.GroupCode,
 		InnerGroupCode: v.InnerGroupCode,

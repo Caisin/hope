@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/customernovels"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewCustomerNovelsRepo(data *Data, logger log.Logger) biz.CustomerNovelsRepo
 
 // CreateCustomerNovels 创建
 func (r *customerNovelsRepo) CreateCustomerNovels(ctx context.Context, req *v1.CustomerNovelsCreateReq) (*ent.CustomerNovels, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.CustomerNovels.Create().
 		SetNovelId(req.NovelId).
@@ -44,6 +49,8 @@ func (r *customerNovelsRepo) CreateCustomerNovels(ctx context.Context, req *v1.C
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -60,7 +67,13 @@ func (r *customerNovelsRepo) BatchDeleteCustomerNovels(ctx context.Context, req 
 
 // UpdateCustomerNovels 更新
 func (r *customerNovelsRepo) UpdateCustomerNovels(ctx context.Context, req *v1.CustomerNovelsUpdateReq) (*ent.CustomerNovels, error) {
-	return r.data.db.CustomerNovels.UpdateOne(convert.CustomerNovelsUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.CustomerNovelsUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.CustomerNovels.UpdateOne(data).Save(ctx)
 }
 
 // GetCustomerNovels 根据Id查询

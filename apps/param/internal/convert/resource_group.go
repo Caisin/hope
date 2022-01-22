@@ -55,74 +55,11 @@ func ResourceGroupData2Req(v *ent.ResourceGroup) *v1.ResourceGroupReq {
 	return &v1.ResourceGroupReq{}
 }
 
-func ResourceGroupReply2Data(v *v1.ResourceGroupReply) *ent.ResourceGroup {
+func ResourceGroupData2Reply(v *ent.ResourceGroup) *v1.ResourceGroupData {
 	if v == nil {
 		return nil
 	}
-	return &ent.ResourceGroup{
-		ID:        v.Id,
-		Name:      v.Name,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func ResourceGroupData2Reply(v *ent.ResourceGroup) *v1.ResourceGroupReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ResourceGroupReply{
-		Id:        v.ID,
-		Name:      v.Name,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func ResourceGroupUpdateReply2Data(v *v1.ResourceGroupUpdateReply) *ent.ResourceGroup {
-	if v == nil {
-		return nil
-	}
-	return &ent.ResourceGroup{
-		ID: v.Id,
-	}
-}
-
-func ResourceGroupData2UpdateReply(v *ent.ResourceGroup) *v1.ResourceGroupUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ResourceGroupUpdateReply{
-		Id: v.ID,
-	}
-}
-
-func ResourceGroupCreateReply2Data(v *v1.ResourceGroupCreateReply) *ent.ResourceGroup {
-	if v == nil {
-		return nil
-	}
-	return &ent.ResourceGroup{
-		ID:        v.Id,
-		Name:      v.Name,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func ResourceGroupData2CreateReply(v *ent.ResourceGroup) *v1.ResourceGroupCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ResourceGroupCreateReply{
+	return &v1.ResourceGroupData{
 		Id:        v.ID,
 		Name:      v.Name,
 		CreatedAt: timestamppb.New(v.CreatedAt),

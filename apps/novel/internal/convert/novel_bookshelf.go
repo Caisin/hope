@@ -101,109 +101,11 @@ func NovelBookshelfData2Req(v *ent.NovelBookshelf) *v1.NovelBookshelfReq {
 	}
 }
 
-func NovelBookshelfReply2Data(v *v1.NovelBookshelfReply) *ent.NovelBookshelf {
+func NovelBookshelfData2Reply(v *ent.NovelBookshelf) *v1.NovelBookshelfData {
 	if v == nil {
 		return nil
 	}
-	return &ent.NovelBookshelf{
-		ID:               v.Id,
-		UserId:           v.UserId,
-		UserName:         v.UserName,
-		NovelId:          v.NovelId,
-		LastReadTime:     v.LastReadTime.AsTime(),
-		LastChapterOrder: v.LastChapterOrder,
-		LastChapterId:    v.LastChapterId,
-		LastChapterName:  v.LastChapterName,
-		Remark:           v.Remark,
-		CreatedAt:        v.CreatedAt.AsTime(),
-		UpdatedAt:        v.UpdatedAt.AsTime(),
-		CreateBy:         v.CreateBy,
-		UpdateBy:         v.UpdateBy,
-		TenantId:         v.TenantId,
-	}
-}
-
-func NovelBookshelfData2Reply(v *ent.NovelBookshelf) *v1.NovelBookshelfReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelBookshelfReply{
-		Id:               v.ID,
-		UserId:           v.UserId,
-		UserName:         v.UserName,
-		NovelId:          v.NovelId,
-		LastReadTime:     timestamppb.New(v.LastReadTime),
-		LastChapterOrder: v.LastChapterOrder,
-		LastChapterId:    v.LastChapterId,
-		LastChapterName:  v.LastChapterName,
-		Remark:           v.Remark,
-		CreatedAt:        timestamppb.New(v.CreatedAt),
-		UpdatedAt:        timestamppb.New(v.UpdatedAt),
-		CreateBy:         v.CreateBy,
-		UpdateBy:         v.UpdateBy,
-		TenantId:         v.TenantId,
-	}
-}
-
-func NovelBookshelfUpdateReply2Data(v *v1.NovelBookshelfUpdateReply) *ent.NovelBookshelf {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelBookshelf{
-		ID:               v.Id,
-		UserId:           v.UserId,
-		UserName:         v.UserName,
-		NovelId:          v.NovelId,
-		LastReadTime:     v.LastReadTime.AsTime(),
-		LastChapterOrder: v.LastChapterOrder,
-		LastChapterId:    v.LastChapterId,
-		LastChapterName:  v.LastChapterName,
-	}
-}
-
-func NovelBookshelfData2UpdateReply(v *ent.NovelBookshelf) *v1.NovelBookshelfUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelBookshelfUpdateReply{
-		Id:               v.ID,
-		UserId:           v.UserId,
-		UserName:         v.UserName,
-		NovelId:          v.NovelId,
-		LastReadTime:     timestamppb.New(v.LastReadTime),
-		LastChapterOrder: v.LastChapterOrder,
-		LastChapterId:    v.LastChapterId,
-		LastChapterName:  v.LastChapterName,
-	}
-}
-
-func NovelBookshelfCreateReply2Data(v *v1.NovelBookshelfCreateReply) *ent.NovelBookshelf {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelBookshelf{
-		ID:               v.Id,
-		UserId:           v.UserId,
-		UserName:         v.UserName,
-		NovelId:          v.NovelId,
-		LastReadTime:     v.LastReadTime.AsTime(),
-		LastChapterOrder: v.LastChapterOrder,
-		LastChapterId:    v.LastChapterId,
-		LastChapterName:  v.LastChapterName,
-		Remark:           v.Remark,
-		CreatedAt:        v.CreatedAt.AsTime(),
-		UpdatedAt:        v.UpdatedAt.AsTime(),
-		CreateBy:         v.CreateBy,
-		UpdateBy:         v.UpdateBy,
-		TenantId:         v.TenantId,
-	}
-}
-
-func NovelBookshelfData2CreateReply(v *ent.NovelBookshelf) *v1.NovelBookshelfCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelBookshelfCreateReply{
+	return &v1.NovelBookshelfData{
 		Id:               v.ID,
 		UserId:           v.UserId,
 		UserName:         v.UserName,

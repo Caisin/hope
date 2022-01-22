@@ -28,25 +28,32 @@ func (s *SysRoleService) GetPageSysRole(ctx context.Context, req *pb.SysRolePage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysRoleReply, 0)
+	items := make([]*pb.SysRoleData, 0)
 	for i := range datas {
 		items = append(items, convert.SysRoleData2Reply(datas[i]))
 	}
 	reply := &pb.SysRolePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysRoleService) GetSysRole(ctx context.Context, req *pb.SysRoleReq) (*pb.SysRoleReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysRole")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysRoleData2Reply(daya), err
+	reply := &pb.SysRoleReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysRoleData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysRoleService) UpdateSysRole(ctx context.Context, req *pb.SysRoleUpdateReq) (*pb.SysRoleUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysRoleService) UpdateSysRole(ctx context.Context, req *pb.SysRoleUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysRoleData2UpdateReply(data), err
+	reply := &pb.SysRoleUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysRoleData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysRoleService) CreateSysRole(ctx context.Context, req *pb.SysRoleCreateReq) (*pb.SysRoleCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysRoleService) CreateSysRole(ctx context.Context, req *pb.SysRoleCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysRoleData2CreateReply(data), err
+	reply := &pb.SysRoleCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysRoleData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysRoleService) DeleteSysRole(ctx context.Context, req *pb.SysRoleDeleteReq) (*pb.SysRoleDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysRoleService) DeleteSysRole(ctx context.Context, req *pb.SysRoleDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysRoleDeleteReply{Result: err == nil}, err
+	return &pb.SysRoleDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysRoleService) BatchDeleteSysRole(ctx context.Context, req *pb.SysRoleBatchDeleteReq) (*pb.SysRoleDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysRoleService) BatchDeleteSysRole(ctx context.Context, req *pb.SysRole
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysRoleDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysRoleDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

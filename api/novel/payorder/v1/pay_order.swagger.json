@@ -808,129 +808,18 @@
     "v1PayOrderCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "orderId": {
-          "type": "string",
-          "title": "订单号"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "chId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "渠道ID"
+          "title": "消息"
         },
-        "agreementId": {
-          "type": "string",
-          "format": "int64",
-          "title": "签约协议号"
-        },
-        "lastRead": {
-          "type": "string",
-          "title": "最后阅读书籍"
-        },
-        "lastChapter": {
-          "type": "string",
-          "title": "最后阅读章节"
-        },
-        "paymentName": {
-          "type": "string",
-          "title": "充值配置名称"
-        },
-        "paymentId": {
-          "type": "string",
-          "title": "充值配置ID"
-        },
-        "state": {
-          "type": "integer",
-          "format": "int32",
-          "title": "订单状态:1、待付款，2、已付款，3、取消，4、退款"
-        },
-        "payment": {
-          "type": "string",
-          "format": "int64",
-          "title": "充值金额"
-        },
-        "paymentTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "支付时间"
-        },
-        "closeTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "订单关闭时间"
-        },
-        "payType": {
-          "type": "string",
-          "title": "支付类型"
-        },
-        "coin": {
-          "type": "string",
-          "format": "int64",
-          "title": "书币"
-        },
-        "coupon": {
-          "type": "string",
-          "format": "int64",
-          "title": "书券"
-        },
-        "vipDays": {
-          "type": "string",
-          "title": "vip天数"
-        },
-        "vipType": {
-          "type": "string",
-          "format": "int64",
-          "title": "vip类型"
-        },
-        "vipName": {
-          "type": "string",
-          "title": "vip名称"
-        },
-        "times": {
-          "type": "integer",
-          "format": "int32",
-          "title": "充值次数"
-        },
-        "otherOrderId": {
-          "type": "string",
-          "title": "第三方订单"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1PayOrderData",
+          "title": "结果数据"
         }
       },
       "title": "创建PayOrder返回"
@@ -1036,33 +925,7 @@
       },
       "title": "创建PayOrder请求"
     },
-    "v1PayOrderDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除PayOrder返回"
-    },
-    "v1PayOrderPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1PayOrderReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1PayOrderReply": {
+    "v1PayOrderData": {
       "type": "object",
       "properties": {
         "id": {
@@ -1190,7 +1053,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1PayOrderDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除PayOrder返回"
+    },
+    "v1PayOrderPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1PayOrderData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1PayOrderReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1PayOrderData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1PayOrderReq": {
       "type": "object",
@@ -1325,104 +1253,18 @@
     "v1PayOrderUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "orderId": {
-          "type": "string",
-          "title": "订单号"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "chId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "渠道ID"
+          "title": "消息"
         },
-        "agreementId": {
-          "type": "string",
-          "format": "int64",
-          "title": "签约协议号"
-        },
-        "lastRead": {
-          "type": "string",
-          "title": "最后阅读书籍"
-        },
-        "lastChapter": {
-          "type": "string",
-          "title": "最后阅读章节"
-        },
-        "paymentName": {
-          "type": "string",
-          "title": "充值配置名称"
-        },
-        "paymentId": {
-          "type": "string",
-          "title": "充值配置ID"
-        },
-        "state": {
-          "type": "integer",
-          "format": "int32",
-          "title": "订单状态:1、待付款，2、已付款，3、取消，4、退款"
-        },
-        "payment": {
-          "type": "string",
-          "format": "int64",
-          "title": "充值金额"
-        },
-        "paymentTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "支付时间"
-        },
-        "closeTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "订单关闭时间"
-        },
-        "payType": {
-          "type": "string",
-          "title": "支付类型"
-        },
-        "coin": {
-          "type": "string",
-          "format": "int64",
-          "title": "书币"
-        },
-        "coupon": {
-          "type": "string",
-          "format": "int64",
-          "title": "书券"
-        },
-        "vipDays": {
-          "type": "string",
-          "title": "vip天数"
-        },
-        "vipType": {
-          "type": "string",
-          "format": "int64",
-          "title": "vip类型"
-        },
-        "vipName": {
-          "type": "string",
-          "title": "vip名称"
-        },
-        "times": {
-          "type": "integer",
-          "format": "int32",
-          "title": "充值次数"
-        },
-        "otherOrderId": {
-          "type": "string",
-          "title": "第三方订单"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
+        "result": {
+          "$ref": "#/definitions/v1PayOrderData",
+          "title": "结果数据"
         }
       },
       "title": "更新PayOrder返回"

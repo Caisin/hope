@@ -96,104 +96,11 @@ func ListenRecordData2Req(v *ent.ListenRecord) *v1.ListenRecordReq {
 	}
 }
 
-func ListenRecordReply2Data(v *v1.ListenRecordReply) *ent.ListenRecord {
+func ListenRecordData2Reply(v *ent.ListenRecord) *v1.ListenRecordData {
 	if v == nil {
 		return nil
 	}
-	return &ent.ListenRecord{
-		ID:          v.Id,
-		UserId:      v.UserId,
-		ChapterId:   v.ChapterId,
-		NovelId:     v.NovelId,
-		ListenTimes: v.ListenTimes,
-		Duration:    v.Duration.AsDuration(),
-		AllDuration: v.AllDuration.AsDuration(),
-		DayDuration: v.DayDuration.AsDuration(),
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func ListenRecordData2Reply(v *ent.ListenRecord) *v1.ListenRecordReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ListenRecordReply{
-		Id:          v.ID,
-		UserId:      v.UserId,
-		ChapterId:   v.ChapterId,
-		NovelId:     v.NovelId,
-		ListenTimes: v.ListenTimes,
-		Duration:    durationpb.New(v.Duration),
-		AllDuration: durationpb.New(v.AllDuration),
-		DayDuration: durationpb.New(v.DayDuration),
-		CreatedAt:   timestamppb.New(v.CreatedAt),
-		UpdatedAt:   timestamppb.New(v.UpdatedAt),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func ListenRecordUpdateReply2Data(v *v1.ListenRecordUpdateReply) *ent.ListenRecord {
-	if v == nil {
-		return nil
-	}
-	return &ent.ListenRecord{
-		ID:          v.Id,
-		UserId:      v.UserId,
-		ChapterId:   v.ChapterId,
-		NovelId:     v.NovelId,
-		ListenTimes: v.ListenTimes,
-		Duration:    v.Duration.AsDuration(),
-		AllDuration: v.AllDuration.AsDuration(),
-	}
-}
-
-func ListenRecordData2UpdateReply(v *ent.ListenRecord) *v1.ListenRecordUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ListenRecordUpdateReply{
-		Id:          v.ID,
-		UserId:      v.UserId,
-		ChapterId:   v.ChapterId,
-		NovelId:     v.NovelId,
-		ListenTimes: v.ListenTimes,
-		Duration:    durationpb.New(v.Duration),
-		AllDuration: durationpb.New(v.AllDuration),
-	}
-}
-
-func ListenRecordCreateReply2Data(v *v1.ListenRecordCreateReply) *ent.ListenRecord {
-	if v == nil {
-		return nil
-	}
-	return &ent.ListenRecord{
-		ID:          v.Id,
-		UserId:      v.UserId,
-		ChapterId:   v.ChapterId,
-		NovelId:     v.NovelId,
-		ListenTimes: v.ListenTimes,
-		Duration:    v.Duration.AsDuration(),
-		AllDuration: v.AllDuration.AsDuration(),
-		DayDuration: v.DayDuration.AsDuration(),
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func ListenRecordData2CreateReply(v *ent.ListenRecord) *v1.ListenRecordCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ListenRecordCreateReply{
+	return &v1.ListenRecordData{
 		Id:          v.ID,
 		UserId:      v.UserId,
 		ChapterId:   v.ChapterId,

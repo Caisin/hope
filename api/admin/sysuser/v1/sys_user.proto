@@ -58,6 +58,46 @@ service SysUser {
 
 }
 
+// 实体数据
+message SysUserData {
+    int64 id = 1;
+    //用户名
+    string username = 2;
+    //昵称
+    string nickName = 3;
+    //手机号
+    string phone = 4;
+    //部门ID
+    int64 deptId = 5;
+    //岗位ID
+    int64 postId = 6;
+    //角色ID
+    int64 roleId = 7;
+    //头像
+    string avatar = 8;
+    //性别,0保密,1男,2女
+    int32 sex = 9;
+    //邮箱
+    string email = 10;
+    //备注
+    string remark = 11;
+    //状态
+    string status = 12;
+    //拓展信息,facebook回传用的
+    string extInfo = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
 // 查询搜索请求
 message SysUserPageReq {
     //分页查询参数
@@ -68,10 +108,14 @@ message SysUserPageReq {
 
 // 查询搜索返回
 message SysUserPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysUserReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysUserData items = 4;
 }
 
 
@@ -115,44 +159,14 @@ message SysUserReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysUserReply {
-    int64 id = 1;
-    //用户名
-    string username = 2;
-    //昵称
-    string nickName = 3;
-    //手机号
-    string phone = 4;
-    //部门ID
-    int64 deptId = 5;
-    //岗位ID
-    int64 postId = 6;
-    //角色ID
-    int64 roleId = 7;
-    //头像
-    string avatar = 8;
-    //性别,0保密,1男,2女
-    int32 sex = 9;
-    //邮箱
-    string email = 10;
-    //备注
-    string remark = 11;
-    //状态
-    string status = 12;
-    //拓展信息,facebook回传用的
-    string extInfo = 13;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 14;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 15;
-    //创建者
-    int64 createBy = 16;
-    //更新者
-    int64 updateBy = 17;
-    //租户
-    int64 tenantId = 18;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysUserData result = 3;
 }
 
 // 创建SysUser请求
@@ -186,42 +200,12 @@ message SysUserCreateReq {
 
 // 创建SysUser返回
 message SysUserCreateReply {
-    int64 id = 1;
-    //用户名
-    string username = 2;
-    //昵称
-    string nickName = 3;
-    //手机号
-    string phone = 4;
-    //部门ID
-    int64 deptId = 5;
-    //岗位ID
-    int64 postId = 6;
-    //角色ID
-    int64 roleId = 7;
-    //头像
-    string avatar = 8;
-    //性别,0保密,1男,2女
-    int32 sex = 9;
-    //邮箱
-    string email = 10;
-    //备注
-    string remark = 11;
-    //状态
-    string status = 12;
-    //拓展信息,facebook回传用的
-    string extInfo = 13;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 14;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 15;
-    //创建者
-    int64 createBy = 16;
-    //更新者
-    int64 updateBy = 17;
-    //租户
-    int64 tenantId = 18;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysUserData result = 3;
 }
 
 // 更新SysUser请求
@@ -257,32 +241,12 @@ message SysUserUpdateReq {
 
 // 更新SysUser返回
 message SysUserUpdateReply {
-    int64 id = 1;
-    //用户名
-    string username = 2;
-    //昵称
-    string nickName = 3;
-    //手机号
-    string phone = 4;
-    //部门ID
-    int64 deptId = 5;
-    //岗位ID
-    int64 postId = 6;
-    //角色ID
-    int64 roleId = 7;
-    //头像
-    string avatar = 8;
-    //性别,0保密,1男,2女
-    int32 sex = 9;
-    //邮箱
-    string email = 10;
-    //备注
-    string remark = 11;
-    //状态
-    string status = 12;
-    //拓展信息,facebook回传用的
-    string extInfo = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysUserData result = 3;
 }
 
 // 删除SysUser请求
@@ -299,6 +263,11 @@ message SysUserBatchDeleteReq {
 
 // 删除SysUser返回
 message SysUserDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

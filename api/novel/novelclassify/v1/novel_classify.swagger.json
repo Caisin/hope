@@ -496,57 +496,18 @@
     "v1NovelClassifyCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "pid": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "父类ID,默认0,表示无"
+          "title": "返回码"
         },
-        "classifyName": {
+        "message": {
           "type": "string",
-          "title": "分类名称"
+          "title": "消息"
         },
-        "status": {
-          "type": "integer",
-          "format": "int32",
-          "title": "状态 0"
-        },
-        "orderNum": {
-          "type": "integer",
-          "format": "int32",
-          "title": "排序字段"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1NovelClassifyData",
+          "title": "结果数据"
         }
       },
       "title": "创建NovelClassify返回"
@@ -580,33 +541,7 @@
       },
       "title": "创建NovelClassify请求"
     },
-    "v1NovelClassifyDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除NovelClassify返回"
-    },
-    "v1NovelClassifyPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1NovelClassifyReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1NovelClassifyReply": {
+    "v1NovelClassifyData": {
       "type": "object",
       "properties": {
         "id": {
@@ -662,7 +597,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1NovelClassifyDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除NovelClassify返回"
+    },
+    "v1NovelClassifyPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelClassifyData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1NovelClassifyReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1NovelClassifyData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1NovelClassifyReq": {
       "type": "object",
@@ -725,32 +725,18 @@
     "v1NovelClassifyUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "pid": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "父类ID,默认0,表示无"
+          "title": "返回码"
         },
-        "classifyName": {
+        "message": {
           "type": "string",
-          "title": "分类名称"
+          "title": "消息"
         },
-        "status": {
-          "type": "integer",
-          "format": "int32",
-          "title": "状态 0"
-        },
-        "orderNum": {
-          "type": "integer",
-          "format": "int32",
-          "title": "排序字段"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
+        "result": {
+          "$ref": "#/definitions/v1NovelClassifyData",
+          "title": "结果数据"
         }
       },
       "title": "更新NovelClassify返回"

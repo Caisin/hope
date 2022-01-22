@@ -89,99 +89,11 @@ func QiniuConfigData2Req(v *ent.QiniuConfig) *v1.QiniuConfigReq {
 	}
 }
 
-func QiniuConfigReply2Data(v *v1.QiniuConfigReply) *ent.QiniuConfig {
+func QiniuConfigData2Reply(v *ent.QiniuConfig) *v1.QiniuConfigData {
 	if v == nil {
 		return nil
 	}
-	return &ent.QiniuConfig{
-		ID:        v.Id,
-		AccessKey: v.AccessKey,
-		Bucket:    v.Bucket,
-		Host:      v.Host,
-		SecretKey: v.SecretKey,
-		Type:      v.Type,
-		Zone:      v.Zone,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func QiniuConfigData2Reply(v *ent.QiniuConfig) *v1.QiniuConfigReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.QiniuConfigReply{
-		Id:        v.ID,
-		AccessKey: v.AccessKey,
-		Bucket:    v.Bucket,
-		Host:      v.Host,
-		SecretKey: v.SecretKey,
-		Type:      v.Type,
-		Zone:      v.Zone,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func QiniuConfigUpdateReply2Data(v *v1.QiniuConfigUpdateReply) *ent.QiniuConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.QiniuConfig{
-		ID:        v.Id,
-		AccessKey: v.AccessKey,
-		Bucket:    v.Bucket,
-		Host:      v.Host,
-		SecretKey: v.SecretKey,
-		Type:      v.Type,
-	}
-}
-
-func QiniuConfigData2UpdateReply(v *ent.QiniuConfig) *v1.QiniuConfigUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.QiniuConfigUpdateReply{
-		Id:        v.ID,
-		AccessKey: v.AccessKey,
-		Bucket:    v.Bucket,
-		Host:      v.Host,
-		SecretKey: v.SecretKey,
-		Type:      v.Type,
-	}
-}
-
-func QiniuConfigCreateReply2Data(v *v1.QiniuConfigCreateReply) *ent.QiniuConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.QiniuConfig{
-		ID:        v.Id,
-		AccessKey: v.AccessKey,
-		Bucket:    v.Bucket,
-		Host:      v.Host,
-		SecretKey: v.SecretKey,
-		Type:      v.Type,
-		Zone:      v.Zone,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func QiniuConfigData2CreateReply(v *ent.QiniuConfig) *v1.QiniuConfigCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.QiniuConfigCreateReply{
+	return &v1.QiniuConfigData{
 		Id:        v.ID,
 		AccessKey: v.AccessKey,
 		Bucket:    v.Bucket,

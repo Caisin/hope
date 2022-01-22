@@ -28,25 +28,32 @@ func (s *UserAnalysisStatisticsService) GetPageUserAnalysisStatistics(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.UserAnalysisStatisticsReply, 0)
+	items := make([]*pb.UserAnalysisStatisticsData, 0)
 	for i := range datas {
 		items = append(items, convert.UserAnalysisStatisticsData2Reply(datas[i]))
 	}
 	reply := &pb.UserAnalysisStatisticsPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *UserAnalysisStatisticsService) GetUserAnalysisStatistics(ctx context.Context, req *pb.UserAnalysisStatisticsReq) (*pb.UserAnalysisStatisticsReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetUserAnalysisStatistics")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserAnalysisStatisticsData2Reply(daya), err
+	reply := &pb.UserAnalysisStatisticsReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserAnalysisStatisticsData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserAnalysisStatisticsService) UpdateUserAnalysisStatistics(ctx context.Context, req *pb.UserAnalysisStatisticsUpdateReq) (*pb.UserAnalysisStatisticsUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *UserAnalysisStatisticsService) UpdateUserAnalysisStatistics(ctx context
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserAnalysisStatisticsData2UpdateReply(data), err
+	reply := &pb.UserAnalysisStatisticsUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserAnalysisStatisticsData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserAnalysisStatisticsService) CreateUserAnalysisStatistics(ctx context.Context, req *pb.UserAnalysisStatisticsCreateReq) (*pb.UserAnalysisStatisticsCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *UserAnalysisStatisticsService) CreateUserAnalysisStatistics(ctx context
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserAnalysisStatisticsData2CreateReply(data), err
+	reply := &pb.UserAnalysisStatisticsCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserAnalysisStatisticsData2Reply(data),
+	}
+	return reply, err
 }
 func (s *UserAnalysisStatisticsService) DeleteUserAnalysisStatistics(ctx context.Context, req *pb.UserAnalysisStatisticsDeleteReq) (*pb.UserAnalysisStatisticsDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *UserAnalysisStatisticsService) DeleteUserAnalysisStatistics(ctx context
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserAnalysisStatisticsDeleteReply{Result: err == nil}, err
+	return &pb.UserAnalysisStatisticsDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *UserAnalysisStatisticsService) BatchDeleteUserAnalysisStatistics(ctx context.Context, req *pb.UserAnalysisStatisticsBatchDeleteReq) (*pb.UserAnalysisStatisticsDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *UserAnalysisStatisticsService) BatchDeleteUserAnalysisStatistics(ctx co
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserAnalysisStatisticsDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.UserAnalysisStatisticsDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -28,25 +28,32 @@ func (s *UserResourceService) GetPageUserResource(ctx context.Context, req *pb.U
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.UserResourceReply, 0)
+	items := make([]*pb.UserResourceData, 0)
 	for i := range datas {
 		items = append(items, convert.UserResourceData2Reply(datas[i]))
 	}
 	reply := &pb.UserResourcePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *UserResourceService) GetUserResource(ctx context.Context, req *pb.UserResourceReq) (*pb.UserResourceReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetUserResource")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserResourceData2Reply(daya), err
+	reply := &pb.UserResourceReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserResourceData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserResourceService) UpdateUserResource(ctx context.Context, req *pb.UserResourceUpdateReq) (*pb.UserResourceUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *UserResourceService) UpdateUserResource(ctx context.Context, req *pb.Us
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserResourceData2UpdateReply(data), err
+	reply := &pb.UserResourceUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserResourceData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserResourceService) CreateUserResource(ctx context.Context, req *pb.UserResourceCreateReq) (*pb.UserResourceCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *UserResourceService) CreateUserResource(ctx context.Context, req *pb.Us
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserResourceData2CreateReply(data), err
+	reply := &pb.UserResourceCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserResourceData2Reply(data),
+	}
+	return reply, err
 }
 func (s *UserResourceService) DeleteUserResource(ctx context.Context, req *pb.UserResourceDeleteReq) (*pb.UserResourceDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *UserResourceService) DeleteUserResource(ctx context.Context, req *pb.Us
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserResourceDeleteReply{Result: err == nil}, err
+	return &pb.UserResourceDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *UserResourceService) BatchDeleteUserResource(ctx context.Context, req *pb.UserResourceBatchDeleteReq) (*pb.UserResourceDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *UserResourceService) BatchDeleteUserResource(ctx context.Context, req *
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserResourceDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.UserResourceDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

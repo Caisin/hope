@@ -502,55 +502,18 @@
     "v1CasbinRuleCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "p_type": {
-          "type": "string"
-        },
-        "v0": {
-          "type": "string"
-        },
-        "v1": {
-          "type": "string"
-        },
-        "v2": {
-          "type": "string"
-        },
-        "v3": {
-          "type": "string"
-        },
-        "v4": {
-          "type": "string"
-        },
-        "v5": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1CasbinRuleData",
+          "title": "结果数据"
         }
       },
       "title": "创建CasbinRule返回"
@@ -582,33 +545,7 @@
       },
       "title": "创建CasbinRule请求"
     },
-    "v1CasbinRuleDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除CasbinRule返回"
-    },
-    "v1CasbinRulePageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1CasbinRuleReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1CasbinRuleReply": {
+    "v1CasbinRuleData": {
       "type": "object",
       "properties": {
         "id": {
@@ -662,7 +599,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1CasbinRuleDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除CasbinRule返回"
+    },
+    "v1CasbinRulePageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1CasbinRuleData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1CasbinRuleReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1CasbinRuleData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1CasbinRuleReq": {
       "type": "object",
@@ -723,30 +725,18 @@
     "v1CasbinRuleUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "p_type": {
-          "type": "string"
+        "message": {
+          "type": "string",
+          "title": "消息"
         },
-        "v0": {
-          "type": "string"
-        },
-        "v1": {
-          "type": "string"
-        },
-        "v2": {
-          "type": "string"
-        },
-        "v3": {
-          "type": "string"
-        },
-        "v4": {
-          "type": "string"
-        },
-        "v5": {
-          "type": "string"
+        "result": {
+          "$ref": "#/definitions/v1CasbinRuleData",
+          "title": "结果数据"
         }
       },
       "title": "更新CasbinRule返回"

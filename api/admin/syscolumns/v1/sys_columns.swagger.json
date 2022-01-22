@@ -838,123 +838,18 @@
     "v1SysColumnsCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "columnId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "columnName": {
-          "type": "string"
-        },
-        "columnComment": {
-          "type": "string"
-        },
-        "columnType": {
-          "type": "string"
-        },
-        "goType": {
-          "type": "string"
-        },
-        "goField": {
-          "type": "string"
-        },
-        "jsonField": {
-          "type": "string"
-        },
-        "isPk": {
-          "type": "string"
-        },
-        "isIncrement": {
-          "type": "string"
-        },
-        "isRequired": {
-          "type": "string"
-        },
-        "isInsert": {
-          "type": "string"
-        },
-        "isEdit": {
-          "type": "string"
-        },
-        "isList": {
-          "type": "string"
-        },
-        "isQuery": {
-          "type": "string"
-        },
-        "queryType": {
-          "type": "string"
-        },
-        "htmlType": {
-          "type": "string"
-        },
-        "dictType": {
-          "type": "string"
-        },
-        "sort": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "list": {
-          "type": "string"
-        },
-        "pk": {
-          "type": "boolean"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "superColumn": {
-          "type": "boolean"
-        },
-        "usableColumn": {
-          "type": "boolean"
-        },
-        "increment": {
-          "type": "boolean"
-        },
-        "insert": {
-          "type": "boolean"
-        },
-        "edit": {
-          "type": "boolean"
-        },
-        "query": {
-          "type": "boolean"
-        },
-        "remark": {
-          "type": "string"
-        },
-        "fkLabelName": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysColumnsData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysColumns返回"
@@ -1054,33 +949,7 @@
       },
       "title": "创建SysColumns请求"
     },
-    "v1SysColumnsDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysColumns返回"
-    },
-    "v1SysColumnsPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysColumnsReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysColumnsReply": {
+    "v1SysColumnsData": {
       "type": "object",
       "properties": {
         "id": {
@@ -1202,7 +1071,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysColumnsDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysColumns返回"
+    },
+    "v1SysColumnsPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysColumnsData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysColumnsReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysColumnsData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysColumnsReq": {
       "type": "object",
@@ -1331,98 +1265,18 @@
     "v1SysColumnsUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "columnId": {
-          "type": "integer",
-          "format": "int32"
+        "message": {
+          "type": "string",
+          "title": "消息"
         },
-        "columnName": {
-          "type": "string"
-        },
-        "columnComment": {
-          "type": "string"
-        },
-        "columnType": {
-          "type": "string"
-        },
-        "goType": {
-          "type": "string"
-        },
-        "goField": {
-          "type": "string"
-        },
-        "jsonField": {
-          "type": "string"
-        },
-        "isPk": {
-          "type": "string"
-        },
-        "isIncrement": {
-          "type": "string"
-        },
-        "isRequired": {
-          "type": "string"
-        },
-        "isInsert": {
-          "type": "string"
-        },
-        "isEdit": {
-          "type": "string"
-        },
-        "isList": {
-          "type": "string"
-        },
-        "isQuery": {
-          "type": "string"
-        },
-        "queryType": {
-          "type": "string"
-        },
-        "htmlType": {
-          "type": "string"
-        },
-        "dictType": {
-          "type": "string"
-        },
-        "sort": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "list": {
-          "type": "string"
-        },
-        "pk": {
-          "type": "boolean"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "superColumn": {
-          "type": "boolean"
-        },
-        "usableColumn": {
-          "type": "boolean"
-        },
-        "increment": {
-          "type": "boolean"
-        },
-        "insert": {
-          "type": "boolean"
-        },
-        "edit": {
-          "type": "boolean"
-        },
-        "query": {
-          "type": "boolean"
-        },
-        "remark": {
-          "type": "string"
-        },
-        "fkLabelName": {
-          "type": "string"
+        "result": {
+          "$ref": "#/definitions/v1SysColumnsData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysColumns返回"

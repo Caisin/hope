@@ -28,25 +28,32 @@ func (s *AdChannelService) GetPageAdChannel(ctx context.Context, req *pb.AdChann
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.AdChannelReply, 0)
+	items := make([]*pb.AdChannelData, 0)
 	for i := range datas {
 		items = append(items, convert.AdChannelData2Reply(datas[i]))
 	}
 	reply := &pb.AdChannelPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *AdChannelService) GetAdChannel(ctx context.Context, req *pb.AdChannelReq) (*pb.AdChannelReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetAdChannel")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.AdChannelData2Reply(daya), err
+	reply := &pb.AdChannelReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AdChannelData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *AdChannelService) UpdateAdChannel(ctx context.Context, req *pb.AdChannelUpdateReq) (*pb.AdChannelUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *AdChannelService) UpdateAdChannel(ctx context.Context, req *pb.AdChanne
 	if err != nil {
 		return nil, err
 	}
-	return convert.AdChannelData2UpdateReply(data), err
+	reply := &pb.AdChannelUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AdChannelData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *AdChannelService) CreateAdChannel(ctx context.Context, req *pb.AdChannelCreateReq) (*pb.AdChannelCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *AdChannelService) CreateAdChannel(ctx context.Context, req *pb.AdChanne
 	if err != nil {
 		return nil, err
 	}
-	return convert.AdChannelData2CreateReply(data), err
+	reply := &pb.AdChannelCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AdChannelData2Reply(data),
+	}
+	return reply, err
 }
 func (s *AdChannelService) DeleteAdChannel(ctx context.Context, req *pb.AdChannelDeleteReq) (*pb.AdChannelDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *AdChannelService) DeleteAdChannel(ctx context.Context, req *pb.AdChanne
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AdChannelDeleteReply{Result: err == nil}, err
+	return &pb.AdChannelDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *AdChannelService) BatchDeleteAdChannel(ctx context.Context, req *pb.AdChannelBatchDeleteReq) (*pb.AdChannelDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *AdChannelService) BatchDeleteAdChannel(ctx context.Context, req *pb.AdC
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AdChannelDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.AdChannelDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -514,61 +514,18 @@
     "v1VipTypeCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "vipName": {
-          "type": "string",
-          "title": "账本名称"
-        },
-        "isSuper": {
-          "type": "boolean",
-          "title": "是否超级vip"
-        },
-        "validDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "有效天数"
-        },
-        "discountRate": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "折扣率"
+          "title": "返回码"
         },
-        "avatarId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "头像ID"
+          "title": "消息"
         },
-        "summary": {
-          "type": "string",
-          "title": "描述"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1VipTypeData",
+          "title": "结果数据"
         }
       },
       "title": "创建VipType返回"
@@ -606,33 +563,7 @@
       },
       "title": "创建VipType请求"
     },
-    "v1VipTypeDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除VipType返回"
-    },
-    "v1VipTypePageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1VipTypeReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1VipTypeReply": {
+    "v1VipTypeData": {
       "type": "object",
       "properties": {
         "id": {
@@ -692,7 +623,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1VipTypeDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除VipType返回"
+    },
+    "v1VipTypePageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1VipTypeData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1VipTypeReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1VipTypeData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1VipTypeReq": {
       "type": "object",
@@ -759,36 +755,18 @@
     "v1VipTypeUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "vipName": {
-          "type": "string",
-          "title": "账本名称"
-        },
-        "isSuper": {
-          "type": "boolean",
-          "title": "是否超级vip"
-        },
-        "validDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "有效天数"
-        },
-        "discountRate": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "折扣率"
+          "title": "返回码"
         },
-        "avatarId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "头像ID"
+          "title": "消息"
         },
-        "summary": {
-          "type": "string",
-          "title": "描述"
+        "result": {
+          "$ref": "#/definitions/v1VipTypeData",
+          "title": "结果数据"
         }
       },
       "title": "更新VipType返回"

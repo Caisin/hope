@@ -28,25 +28,32 @@ func (s *SysDictTypeService) GetPageSysDictType(ctx context.Context, req *pb.Sys
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysDictTypeReply, 0)
+	items := make([]*pb.SysDictTypeData, 0)
 	for i := range datas {
 		items = append(items, convert.SysDictTypeData2Reply(datas[i]))
 	}
 	reply := &pb.SysDictTypePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysDictTypeService) GetSysDictType(ctx context.Context, req *pb.SysDictTypeReq) (*pb.SysDictTypeReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysDictType")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDictTypeData2Reply(daya), err
+	reply := &pb.SysDictTypeReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDictTypeData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysDictTypeService) UpdateSysDictType(ctx context.Context, req *pb.SysDictTypeUpdateReq) (*pb.SysDictTypeUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysDictTypeService) UpdateSysDictType(ctx context.Context, req *pb.SysD
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDictTypeData2UpdateReply(data), err
+	reply := &pb.SysDictTypeUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDictTypeData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysDictTypeService) CreateSysDictType(ctx context.Context, req *pb.SysDictTypeCreateReq) (*pb.SysDictTypeCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysDictTypeService) CreateSysDictType(ctx context.Context, req *pb.SysD
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDictTypeData2CreateReply(data), err
+	reply := &pb.SysDictTypeCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDictTypeData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysDictTypeService) DeleteSysDictType(ctx context.Context, req *pb.SysDictTypeDeleteReq) (*pb.SysDictTypeDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysDictTypeService) DeleteSysDictType(ctx context.Context, req *pb.SysD
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysDictTypeDeleteReply{Result: err == nil}, err
+	return &pb.SysDictTypeDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysDictTypeService) BatchDeleteSysDictType(ctx context.Context, req *pb.SysDictTypeBatchDeleteReq) (*pb.SysDictTypeDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysDictTypeService) BatchDeleteSysDictType(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysDictTypeDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysDictTypeDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -58,6 +58,74 @@ service SocialUser {
 
 }
 
+// 实体数据
+message SocialUserData {
+    int64 id = 1;
+    //注册渠道
+    int64 chId = 2;
+    //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
+    string unionid = 3;
+    //第三方登录token
+    string token = 4;
+    //用户的标识，对当前公众号唯一
+    string openid = 5;
+    //小程序唯一身份ID
+    string routineOpenid = 6;
+    //用户名
+    string userName = 7;
+    //用户的昵称
+    string nickName = 8;
+    //生日
+    google.protobuf.Timestamp birthday = 9;
+    //手机
+    string phone = 10;
+    //邮箱
+    string email = 11;
+    //密码
+    string password = 12;
+    //用户头像
+    string avatar = 13;
+    //用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+    int32 sex = 14;
+    //用户所在城市区域
+    string region = 15;
+    //用户所在城市
+    string city = 16;
+    //用户的语言，简体中文为zh_CN
+    string language = 17;
+    //用户所在省份
+    string province = 18;
+    //用户所在国家
+    string country = 19;
+    //个性签名
+    string signature = 20;
+    //公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注
+    string remark = 21;
+    //用户所在的分组ID（兼容旧的用户分组接口）
+    int32 groupid = 22;
+    //用户被打上的标签ID列表
+    string tagidList = 23;
+    //用户是否订阅该公众号标识
+    int32 subscribe = 24;
+    //关注公众号时间
+    int32 subscribeTime = 25;
+    //小程序用户会话密匙
+    string sessionKey = 26;
+    //用户类型
+    string userType = 27;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 28;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 29;
+    //创建者
+    int64 createBy = 30;
+    //更新者
+    int64 updateBy = 31;
+    //租户
+    int64 tenantId = 32;
+
+}
+
 // 查询搜索请求
 message SocialUserPageReq {
     //分页查询参数
@@ -68,10 +136,14 @@ message SocialUserPageReq {
 
 // 查询搜索返回
 message SocialUserPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SocialUserReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SocialUserData items = 4;
 }
 
 
@@ -143,72 +215,14 @@ message SocialUserReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SocialUserReply {
-    int64 id = 1;
-    //注册渠道
-    int64 chId = 2;
-    //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
-    string unionid = 3;
-    //第三方登录token
-    string token = 4;
-    //用户的标识，对当前公众号唯一
-    string openid = 5;
-    //小程序唯一身份ID
-    string routineOpenid = 6;
-    //用户名
-    string userName = 7;
-    //用户的昵称
-    string nickName = 8;
-    //生日
-    google.protobuf.Timestamp birthday = 9;
-    //手机
-    string phone = 10;
-    //邮箱
-    string email = 11;
-    //密码
-    string password = 12;
-    //用户头像
-    string avatar = 13;
-    //用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
-    int32 sex = 14;
-    //用户所在城市区域
-    string region = 15;
-    //用户所在城市
-    string city = 16;
-    //用户的语言，简体中文为zh_CN
-    string language = 17;
-    //用户所在省份
-    string province = 18;
-    //用户所在国家
-    string country = 19;
-    //个性签名
-    string signature = 20;
-    //公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注
-    string remark = 21;
-    //用户所在的分组ID（兼容旧的用户分组接口）
-    int32 groupid = 22;
-    //用户被打上的标签ID列表
-    string tagidList = 23;
-    //用户是否订阅该公众号标识
-    int32 subscribe = 24;
-    //关注公众号时间
-    int32 subscribeTime = 25;
-    //小程序用户会话密匙
-    string sessionKey = 26;
-    //用户类型
-    string userType = 27;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 28;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 29;
-    //创建者
-    int64 createBy = 30;
-    //更新者
-    int64 updateBy = 31;
-    //租户
-    int64 tenantId = 32;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SocialUserData result = 3;
 }
 
 // 创建SocialUser请求
@@ -270,70 +284,12 @@ message SocialUserCreateReq {
 
 // 创建SocialUser返回
 message SocialUserCreateReply {
-    int64 id = 1;
-    //注册渠道
-    int64 chId = 2;
-    //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
-    string unionid = 3;
-    //第三方登录token
-    string token = 4;
-    //用户的标识，对当前公众号唯一
-    string openid = 5;
-    //小程序唯一身份ID
-    string routineOpenid = 6;
-    //用户名
-    string userName = 7;
-    //用户的昵称
-    string nickName = 8;
-    //生日
-    google.protobuf.Timestamp birthday = 9;
-    //手机
-    string phone = 10;
-    //邮箱
-    string email = 11;
-    //密码
-    string password = 12;
-    //用户头像
-    string avatar = 13;
-    //用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
-    int32 sex = 14;
-    //用户所在城市区域
-    string region = 15;
-    //用户所在城市
-    string city = 16;
-    //用户的语言，简体中文为zh_CN
-    string language = 17;
-    //用户所在省份
-    string province = 18;
-    //用户所在国家
-    string country = 19;
-    //个性签名
-    string signature = 20;
-    //公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注
-    string remark = 21;
-    //用户所在的分组ID（兼容旧的用户分组接口）
-    int32 groupid = 22;
-    //用户被打上的标签ID列表
-    string tagidList = 23;
-    //用户是否订阅该公众号标识
-    int32 subscribe = 24;
-    //关注公众号时间
-    int32 subscribeTime = 25;
-    //小程序用户会话密匙
-    string sessionKey = 26;
-    //用户类型
-    string userType = 27;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 28;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 29;
-    //创建者
-    int64 createBy = 30;
-    //更新者
-    int64 updateBy = 31;
-    //租户
-    int64 tenantId = 32;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SocialUserData result = 3;
 }
 
 // 更新SocialUser请求
@@ -397,60 +353,12 @@ message SocialUserUpdateReq {
 
 // 更新SocialUser返回
 message SocialUserUpdateReply {
-    int64 id = 1;
-    //注册渠道
-    int64 chId = 2;
-    //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段
-    string unionid = 3;
-    //第三方登录token
-    string token = 4;
-    //用户的标识，对当前公众号唯一
-    string openid = 5;
-    //小程序唯一身份ID
-    string routineOpenid = 6;
-    //用户名
-    string userName = 7;
-    //用户的昵称
-    string nickName = 8;
-    //生日
-    google.protobuf.Timestamp birthday = 9;
-    //手机
-    string phone = 10;
-    //邮箱
-    string email = 11;
-    //密码
-    string password = 12;
-    //用户头像
-    string avatar = 13;
-    //用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
-    int32 sex = 14;
-    //用户所在城市区域
-    string region = 15;
-    //用户所在城市
-    string city = 16;
-    //用户的语言，简体中文为zh_CN
-    string language = 17;
-    //用户所在省份
-    string province = 18;
-    //用户所在国家
-    string country = 19;
-    //个性签名
-    string signature = 20;
-    //公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注
-    string remark = 21;
-    //用户所在的分组ID（兼容旧的用户分组接口）
-    int32 groupid = 22;
-    //用户被打上的标签ID列表
-    string tagidList = 23;
-    //用户是否订阅该公众号标识
-    int32 subscribe = 24;
-    //关注公众号时间
-    int32 subscribeTime = 25;
-    //小程序用户会话密匙
-    string sessionKey = 26;
-    //用户类型
-    string userType = 27;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SocialUserData result = 3;
 }
 
 // 删除SocialUser请求
@@ -467,6 +375,11 @@ message SocialUserBatchDeleteReq {
 
 // 删除SocialUser返回
 message SocialUserDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

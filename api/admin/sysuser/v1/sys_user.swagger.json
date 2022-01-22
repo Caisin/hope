@@ -625,86 +625,18 @@
     "v1SysUserCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "username": {
-          "type": "string",
-          "title": "用户名"
-        },
-        "nickName": {
-          "type": "string",
-          "title": "昵称"
-        },
-        "phone": {
-          "type": "string",
-          "title": "手机号"
-        },
-        "deptId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "部门ID"
+          "title": "返回码"
         },
-        "postId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "岗位ID"
+          "title": "消息"
         },
-        "roleId": {
-          "type": "string",
-          "format": "int64",
-          "title": "角色ID"
-        },
-        "avatar": {
-          "type": "string",
-          "title": "头像"
-        },
-        "sex": {
-          "type": "integer",
-          "format": "int32",
-          "title": "性别,0保密,1男,2女"
-        },
-        "email": {
-          "type": "string",
-          "title": "邮箱"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "status": {
-          "type": "string",
-          "title": "状态"
-        },
-        "extInfo": {
-          "type": "string",
-          "title": "拓展信息,facebook回传用的"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysUserData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysUser返回"
@@ -767,33 +699,7 @@
       },
       "title": "创建SysUser请求"
     },
-    "v1SysUserDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysUser返回"
-    },
-    "v1SysUserPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysUserReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysUserReply": {
+    "v1SysUserData": {
       "type": "object",
       "properties": {
         "id": {
@@ -878,7 +784,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysUserDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysUser返回"
+    },
+    "v1SysUserPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysUserData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysUserReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysUserData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysUserReq": {
       "type": "object",
@@ -970,61 +941,18 @@
     "v1SysUserUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "username": {
-          "type": "string",
-          "title": "用户名"
-        },
-        "nickName": {
-          "type": "string",
-          "title": "昵称"
-        },
-        "phone": {
-          "type": "string",
-          "title": "手机号"
-        },
-        "deptId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "部门ID"
+          "title": "返回码"
         },
-        "postId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "岗位ID"
+          "title": "消息"
         },
-        "roleId": {
-          "type": "string",
-          "format": "int64",
-          "title": "角色ID"
-        },
-        "avatar": {
-          "type": "string",
-          "title": "头像"
-        },
-        "sex": {
-          "type": "integer",
-          "format": "int32",
-          "title": "性别,0保密,1男,2女"
-        },
-        "email": {
-          "type": "string",
-          "title": "邮箱"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "status": {
-          "type": "string",
-          "title": "状态"
-        },
-        "extInfo": {
-          "type": "string",
-          "title": "拓展信息,facebook回传用的"
+        "result": {
+          "$ref": "#/definitions/v1SysUserData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysUser返回"

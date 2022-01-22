@@ -487,54 +487,18 @@
     "v1SysApiCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "handle": {
-          "type": "string",
-          "title": "处理器"
-        },
-        "title": {
-          "type": "string",
-          "title": "标题"
-        },
-        "path": {
-          "type": "string",
-          "title": "地址"
-        },
-        "action": {
-          "type": "string",
-          "title": "请求类型"
-        },
-        "type": {
-          "type": "string",
-          "title": "接口类型"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysApiData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysApi返回"
@@ -565,33 +529,7 @@
       },
       "title": "创建SysApi请求"
     },
-    "v1SysApiDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysApi返回"
-    },
-    "v1SysApiPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysApiReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysApiReply": {
+    "v1SysApiData": {
       "type": "object",
       "properties": {
         "id": {
@@ -644,7 +582,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysApiDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysApi返回"
+    },
+    "v1SysApiPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysApiData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysApiReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysApiData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysApiReq": {
       "type": "object",
@@ -704,29 +707,18 @@
     "v1SysApiUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "handle": {
+        "message": {
           "type": "string",
-          "title": "处理器"
+          "title": "消息"
         },
-        "title": {
-          "type": "string",
-          "title": "标题"
-        },
-        "path": {
-          "type": "string",
-          "title": "地址"
-        },
-        "action": {
-          "type": "string",
-          "title": "请求类型"
-        },
-        "type": {
-          "type": "string",
-          "title": "接口类型"
+        "result": {
+          "$ref": "#/definitions/v1SysApiData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysApi返回"

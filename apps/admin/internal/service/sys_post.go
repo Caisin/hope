@@ -28,25 +28,32 @@ func (s *SysPostService) GetPageSysPost(ctx context.Context, req *pb.SysPostPage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysPostReply, 0)
+	items := make([]*pb.SysPostData, 0)
 	for i := range datas {
 		items = append(items, convert.SysPostData2Reply(datas[i]))
 	}
 	reply := &pb.SysPostPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysPostService) GetSysPost(ctx context.Context, req *pb.SysPostReq) (*pb.SysPostReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysPost")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysPostData2Reply(daya), err
+	reply := &pb.SysPostReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysPostData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysPostService) UpdateSysPost(ctx context.Context, req *pb.SysPostUpdateReq) (*pb.SysPostUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysPostService) UpdateSysPost(ctx context.Context, req *pb.SysPostUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysPostData2UpdateReply(data), err
+	reply := &pb.SysPostUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysPostData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysPostService) CreateSysPost(ctx context.Context, req *pb.SysPostCreateReq) (*pb.SysPostCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysPostService) CreateSysPost(ctx context.Context, req *pb.SysPostCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysPostData2CreateReply(data), err
+	reply := &pb.SysPostCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysPostData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysPostService) DeleteSysPost(ctx context.Context, req *pb.SysPostDeleteReq) (*pb.SysPostDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysPostService) DeleteSysPost(ctx context.Context, req *pb.SysPostDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysPostDeleteReply{Result: err == nil}, err
+	return &pb.SysPostDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysPostService) BatchDeleteSysPost(ctx context.Context, req *pb.SysPostBatchDeleteReq) (*pb.SysPostDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysPostService) BatchDeleteSysPost(ctx context.Context, req *pb.SysPost
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysPostDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysPostDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

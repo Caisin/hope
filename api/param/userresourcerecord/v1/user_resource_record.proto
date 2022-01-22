@@ -58,6 +58,42 @@ service UserResourceRecord {
 
 }
 
+// 实体数据
+message UserResourceRecordData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //资源ID
+    int64 resId = 3;
+    //是否默认
+    bool def = 4;
+    //头像名称
+    string name = 5;
+    //资源地址
+    string url = 6;
+    //资源类型,avatar
+    string resType = 7;
+    //备注
+    string remark = 8;
+    //使用状态,1
+    int32 state = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
 // 查询搜索请求
 message UserResourceRecordPageReq {
     //分页查询参数
@@ -68,10 +104,14 @@ message UserResourceRecordPageReq {
 
 // 查询搜索返回
 message UserResourceRecordPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated UserResourceRecordReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated UserResourceRecordData items = 4;
 }
 
 
@@ -111,40 +151,14 @@ message UserResourceRecordReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message UserResourceRecordReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //资源ID
-    int64 resId = 3;
-    //是否默认
-    bool def = 4;
-    //头像名称
-    string name = 5;
-    //资源地址
-    string url = 6;
-    //资源类型,avatar
-    string resType = 7;
-    //备注
-    string remark = 8;
-    //使用状态,1
-    int32 state = 9;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 10;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserResourceRecordData result = 3;
 }
 
 // 创建UserResourceRecord请求
@@ -174,38 +188,12 @@ message UserResourceRecordCreateReq {
 
 // 创建UserResourceRecord返回
 message UserResourceRecordCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //资源ID
-    int64 resId = 3;
-    //是否默认
-    bool def = 4;
-    //头像名称
-    string name = 5;
-    //资源地址
-    string url = 6;
-    //资源类型,avatar
-    string resType = 7;
-    //备注
-    string remark = 8;
-    //使用状态,1
-    int32 state = 9;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 10;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserResourceRecordData result = 3;
 }
 
 // 更新UserResourceRecord请求
@@ -237,28 +225,12 @@ message UserResourceRecordUpdateReq {
 
 // 更新UserResourceRecord返回
 message UserResourceRecordUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //资源ID
-    int64 resId = 3;
-    //是否默认
-    bool def = 4;
-    //头像名称
-    string name = 5;
-    //资源地址
-    string url = 6;
-    //资源类型,avatar
-    string resType = 7;
-    //备注
-    string remark = 8;
-    //使用状态,1
-    int32 state = 9;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 10;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserResourceRecordData result = 3;
 }
 
 // 删除UserResourceRecord请求
@@ -275,6 +247,11 @@ message UserResourceRecordBatchDeleteReq {
 
 // 删除UserResourceRecord返回
 message UserResourceRecordDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

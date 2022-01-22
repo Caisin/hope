@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activitycomponent"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewActivityComponentRepo(data *Data, logger log.Logger) biz.ActivityCompone
 
 // CreateActivityComponent 创建
 func (r *activityComponentRepo) CreateActivityComponent(ctx context.Context, req *v1.ActivityComponentCreateReq) (*ent.ActivityComponent, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.ActivityComponent.Create().
 		SetActivityCode(req.ActivityCode).
@@ -49,6 +54,8 @@ func (r *activityComponentRepo) CreateActivityComponent(ctx context.Context, req
 		SetResDays(req.ResDays).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -65,7 +72,13 @@ func (r *activityComponentRepo) BatchDeleteActivityComponent(ctx context.Context
 
 // UpdateActivityComponent 更新
 func (r *activityComponentRepo) UpdateActivityComponent(ctx context.Context, req *v1.ActivityComponentUpdateReq) (*ent.ActivityComponent, error) {
-	return r.data.db.ActivityComponent.UpdateOne(convert.ActivityComponentUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.ActivityComponentUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.ActivityComponent.UpdateOne(data).Save(ctx)
 }
 
 // GetActivityComponent 根据Id查询

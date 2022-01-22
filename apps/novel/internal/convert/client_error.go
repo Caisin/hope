@@ -83,94 +83,11 @@ func ClientErrorData2Req(v *ent.ClientError) *v1.ClientErrorReq {
 	}
 }
 
-func ClientErrorReply2Data(v *v1.ClientErrorReply) *ent.ClientError {
+func ClientErrorData2Reply(v *ent.ClientError) *v1.ClientErrorData {
 	if v == nil {
 		return nil
 	}
-	return &ent.ClientError{
-		ID:         v.Id,
-		AppVersion: v.AppVersion,
-		DeviceName: v.DeviceName,
-		OsName:     v.OsName,
-		ErrorInfo:  v.ErrorInfo,
-		UserId:     v.UserId,
-		CreatedAt:  v.CreatedAt.AsTime(),
-		UpdatedAt:  v.UpdatedAt.AsTime(),
-		CreateBy:   v.CreateBy,
-		UpdateBy:   v.UpdateBy,
-		TenantId:   v.TenantId,
-	}
-}
-
-func ClientErrorData2Reply(v *ent.ClientError) *v1.ClientErrorReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ClientErrorReply{
-		Id:         v.ID,
-		AppVersion: v.AppVersion,
-		DeviceName: v.DeviceName,
-		OsName:     v.OsName,
-		ErrorInfo:  v.ErrorInfo,
-		UserId:     v.UserId,
-		CreatedAt:  timestamppb.New(v.CreatedAt),
-		UpdatedAt:  timestamppb.New(v.UpdatedAt),
-		CreateBy:   v.CreateBy,
-		UpdateBy:   v.UpdateBy,
-		TenantId:   v.TenantId,
-	}
-}
-
-func ClientErrorUpdateReply2Data(v *v1.ClientErrorUpdateReply) *ent.ClientError {
-	if v == nil {
-		return nil
-	}
-	return &ent.ClientError{
-		ID:         v.Id,
-		AppVersion: v.AppVersion,
-		DeviceName: v.DeviceName,
-		OsName:     v.OsName,
-		ErrorInfo:  v.ErrorInfo,
-	}
-}
-
-func ClientErrorData2UpdateReply(v *ent.ClientError) *v1.ClientErrorUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ClientErrorUpdateReply{
-		Id:         v.ID,
-		AppVersion: v.AppVersion,
-		DeviceName: v.DeviceName,
-		OsName:     v.OsName,
-		ErrorInfo:  v.ErrorInfo,
-	}
-}
-
-func ClientErrorCreateReply2Data(v *v1.ClientErrorCreateReply) *ent.ClientError {
-	if v == nil {
-		return nil
-	}
-	return &ent.ClientError{
-		ID:         v.Id,
-		AppVersion: v.AppVersion,
-		DeviceName: v.DeviceName,
-		OsName:     v.OsName,
-		ErrorInfo:  v.ErrorInfo,
-		UserId:     v.UserId,
-		CreatedAt:  v.CreatedAt.AsTime(),
-		UpdatedAt:  v.UpdatedAt.AsTime(),
-		CreateBy:   v.CreateBy,
-		UpdateBy:   v.UpdateBy,
-		TenantId:   v.TenantId,
-	}
-}
-
-func ClientErrorData2CreateReply(v *ent.ClientError) *v1.ClientErrorCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ClientErrorCreateReply{
+	return &v1.ClientErrorData{
 		Id:         v.ID,
 		AppVersion: v.AppVersion,
 		DeviceName: v.DeviceName,

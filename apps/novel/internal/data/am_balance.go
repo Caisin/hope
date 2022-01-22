@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/ambalance"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewAmBalanceRepo(data *Data, logger log.Logger) biz.AmBalanceRepo {
 
 // CreateAmBalance 创建
 func (r *amBalanceRepo) CreateAmBalance(ctx context.Context, req *v1.AmBalanceCreateReq) (*ent.AmBalance, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.AmBalance.Create().
 		SetUserId(req.UserId).
@@ -44,6 +49,8 @@ func (r *amBalanceRepo) CreateAmBalance(ctx context.Context, req *v1.AmBalanceCr
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -60,7 +67,13 @@ func (r *amBalanceRepo) BatchDeleteAmBalance(ctx context.Context, req *v1.AmBala
 
 // UpdateAmBalance 更新
 func (r *amBalanceRepo) UpdateAmBalance(ctx context.Context, req *v1.AmBalanceUpdateReq) (*ent.AmBalance, error) {
-	return r.data.db.AmBalance.UpdateOne(convert.AmBalanceUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.AmBalanceUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.AmBalance.UpdateOne(data).Save(ctx)
 }
 
 // GetAmBalance 根据Id查询

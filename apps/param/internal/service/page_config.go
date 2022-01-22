@@ -28,25 +28,32 @@ func (s *PageConfigService) GetPagePageConfig(ctx context.Context, req *pb.PageC
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.PageConfigReply, 0)
+	items := make([]*pb.PageConfigData, 0)
 	for i := range datas {
 		items = append(items, convert.PageConfigData2Reply(datas[i]))
 	}
 	reply := &pb.PageConfigPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *PageConfigService) GetPageConfig(ctx context.Context, req *pb.PageConfigReq) (*pb.PageConfigReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetPageConfig")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.PageConfigData2Reply(daya), err
+	reply := &pb.PageConfigReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.PageConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *PageConfigService) UpdatePageConfig(ctx context.Context, req *pb.PageConfigUpdateReq) (*pb.PageConfigUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *PageConfigService) UpdatePageConfig(ctx context.Context, req *pb.PageCo
 	if err != nil {
 		return nil, err
 	}
-	return convert.PageConfigData2UpdateReply(data), err
+	reply := &pb.PageConfigUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.PageConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *PageConfigService) CreatePageConfig(ctx context.Context, req *pb.PageConfigCreateReq) (*pb.PageConfigCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *PageConfigService) CreatePageConfig(ctx context.Context, req *pb.PageCo
 	if err != nil {
 		return nil, err
 	}
-	return convert.PageConfigData2CreateReply(data), err
+	reply := &pb.PageConfigCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.PageConfigData2Reply(data),
+	}
+	return reply, err
 }
 func (s *PageConfigService) DeletePageConfig(ctx context.Context, req *pb.PageConfigDeleteReq) (*pb.PageConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *PageConfigService) DeletePageConfig(ctx context.Context, req *pb.PageCo
 	if err != nil {
 		return nil, err
 	}
-	return &pb.PageConfigDeleteReply{Result: err == nil}, err
+	return &pb.PageConfigDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *PageConfigService) BatchDeletePageConfig(ctx context.Context, req *pb.PageConfigBatchDeleteReq) (*pb.PageConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *PageConfigService) BatchDeletePageConfig(ctx context.Context, req *pb.P
 	if err != nil {
 		return nil, err
 	}
-	return &pb.PageConfigDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.PageConfigDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/syspost"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysPostRepo(data *Data, logger log.Logger) biz.SysPostRepo {
 
 // CreateSysPost 创建
 func (r *sysPostRepo) CreateSysPost(ctx context.Context, req *v1.SysPostCreateReq) (*ent.SysPost, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysPost.Create().
 		SetPostName(req.PostName).
@@ -39,6 +44,8 @@ func (r *sysPostRepo) CreateSysPost(ctx context.Context, req *v1.SysPostCreateRe
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -55,7 +62,13 @@ func (r *sysPostRepo) BatchDeleteSysPost(ctx context.Context, req *v1.SysPostBat
 
 // UpdateSysPost 更新
 func (r *sysPostRepo) UpdateSysPost(ctx context.Context, req *v1.SysPostUpdateReq) (*ent.SysPost, error) {
-	return r.data.db.SysPost.UpdateOne(convert.SysPostUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysPostUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysPost.UpdateOne(data).Save(ctx)
 }
 
 // GetSysPost 根据Id查询

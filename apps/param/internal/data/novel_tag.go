@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/noveltag"
 	"hope/apps/param/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewNovelTagRepo(data *Data, logger log.Logger) biz.NovelTagRepo {
 
 // CreateNovelTag 创建
 func (r *novelTagRepo) CreateNovelTag(ctx context.Context, req *v1.NovelTagCreateReq) (*ent.NovelTag, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.NovelTag.Create().
 		SetTagId(req.TagId).
@@ -37,6 +42,8 @@ func (r *novelTagRepo) CreateNovelTag(ctx context.Context, req *v1.NovelTagCreat
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -53,7 +60,13 @@ func (r *novelTagRepo) BatchDeleteNovelTag(ctx context.Context, req *v1.NovelTag
 
 // UpdateNovelTag 更新
 func (r *novelTagRepo) UpdateNovelTag(ctx context.Context, req *v1.NovelTagUpdateReq) (*ent.NovelTag, error) {
-	return r.data.db.NovelTag.UpdateOne(convert.NovelTagUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelTagUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.NovelTag.UpdateOne(data).Save(ctx)
 }
 
 // GetNovelTag 根据Id查询

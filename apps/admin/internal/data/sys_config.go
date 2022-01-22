@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysconfig"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysConfigRepo(data *Data, logger log.Logger) biz.SysConfigRepo {
 
 // CreateSysConfig 创建
 func (r *sysConfigRepo) CreateSysConfig(ctx context.Context, req *v1.SysConfigCreateReq) (*ent.SysConfig, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysConfig.Create().
 		SetConfigName(req.ConfigName).
@@ -41,6 +46,8 @@ func (r *sysConfigRepo) CreateSysConfig(ctx context.Context, req *v1.SysConfigCr
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -57,7 +64,13 @@ func (r *sysConfigRepo) BatchDeleteSysConfig(ctx context.Context, req *v1.SysCon
 
 // UpdateSysConfig 更新
 func (r *sysConfigRepo) UpdateSysConfig(ctx context.Context, req *v1.SysConfigUpdateReq) (*ent.SysConfig, error) {
-	return r.data.db.SysConfig.UpdateOne(convert.SysConfigUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysConfigUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysConfig.UpdateOne(data).Save(ctx)
 }
 
 // GetSysConfig 根据Id查询

@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelbuychapterrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewNovelBuyChapterRecordRepo(data *Data, logger log.Logger) biz.NovelBuyCha
 
 // CreateNovelBuyChapterRecord 创建
 func (r *novelBuyChapterRecordRepo) CreateNovelBuyChapterRecord(ctx context.Context, req *v1.NovelBuyChapterRecordCreateReq) (*ent.NovelBuyChapterRecord, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.NovelBuyChapterRecord.Create().
 		SetUserId(req.UserId).
@@ -46,6 +51,8 @@ func (r *novelBuyChapterRecordRepo) CreateNovelBuyChapterRecord(ctx context.Cont
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -62,7 +69,13 @@ func (r *novelBuyChapterRecordRepo) BatchDeleteNovelBuyChapterRecord(ctx context
 
 // UpdateNovelBuyChapterRecord 更新
 func (r *novelBuyChapterRecordRepo) UpdateNovelBuyChapterRecord(ctx context.Context, req *v1.NovelBuyChapterRecordUpdateReq) (*ent.NovelBuyChapterRecord, error) {
-	return r.data.db.NovelBuyChapterRecord.UpdateOne(convert.NovelBuyChapterRecordUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelBuyChapterRecordUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.NovelBuyChapterRecord.UpdateOne(data).Save(ctx)
 }
 
 // GetNovelBuyChapterRecord 根据Id查询

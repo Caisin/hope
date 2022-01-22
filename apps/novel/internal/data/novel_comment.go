@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelcomment"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewNovelCommentRepo(data *Data, logger log.Logger) biz.NovelCommentRepo {
 
 // CreateNovelComment 创建
 func (r *novelCommentRepo) CreateNovelComment(ctx context.Context, req *v1.NovelCommentCreateReq) (*ent.NovelComment, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.NovelComment.Create().
 		SetNovelId(req.NovelId).
@@ -48,6 +53,8 @@ func (r *novelCommentRepo) CreateNovelComment(ctx context.Context, req *v1.Novel
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -64,7 +71,13 @@ func (r *novelCommentRepo) BatchDeleteNovelComment(ctx context.Context, req *v1.
 
 // UpdateNovelComment 更新
 func (r *novelCommentRepo) UpdateNovelComment(ctx context.Context, req *v1.NovelCommentUpdateReq) (*ent.NovelComment, error) {
-	return r.data.db.NovelComment.UpdateOne(convert.NovelCommentUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelCommentUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.NovelComment.UpdateOne(data).Save(ctx)
 }
 
 // GetNovelComment 根据Id查询

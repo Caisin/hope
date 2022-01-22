@@ -28,25 +28,32 @@ func (s *NovelService) GetPageNovel(ctx context.Context, req *pb.NovelPageReq) (
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelReply, 0)
+	items := make([]*pb.NovelData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelData2Reply(datas[i]))
 	}
 	reply := &pb.NovelPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelService) GetNovel(ctx context.Context, req *pb.NovelReq) (*pb.NovelReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovel")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelData2Reply(daya), err
+	reply := &pb.NovelReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelService) UpdateNovel(ctx context.Context, req *pb.NovelUpdateReq) (*pb.NovelUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelService) UpdateNovel(ctx context.Context, req *pb.NovelUpdateReq) 
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelData2UpdateReply(data), err
+	reply := &pb.NovelUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelService) CreateNovel(ctx context.Context, req *pb.NovelCreateReq) (*pb.NovelCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelService) CreateNovel(ctx context.Context, req *pb.NovelCreateReq) 
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelData2CreateReply(data), err
+	reply := &pb.NovelCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelService) DeleteNovel(ctx context.Context, req *pb.NovelDeleteReq) (*pb.NovelDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelService) DeleteNovel(ctx context.Context, req *pb.NovelDeleteReq) 
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelDeleteReply{Result: err == nil}, err
+	return &pb.NovelDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelService) BatchDeleteNovel(ctx context.Context, req *pb.NovelBatchDeleteReq) (*pb.NovelDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelService) BatchDeleteNovel(ctx context.Context, req *pb.NovelBatchD
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

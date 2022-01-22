@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdept"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysDeptRepo(data *Data, logger log.Logger) biz.SysDeptRepo {
 
 // CreateSysDept 创建
 func (r *sysDeptRepo) CreateSysDept(ctx context.Context, req *v1.SysDeptCreateReq) (*ent.SysDept, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysDept.Create().
 		SetDeptPath(req.DeptPath).
@@ -41,6 +46,8 @@ func (r *sysDeptRepo) CreateSysDept(ctx context.Context, req *v1.SysDeptCreateRe
 		SetStatus(req.Status).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -57,7 +64,13 @@ func (r *sysDeptRepo) BatchDeleteSysDept(ctx context.Context, req *v1.SysDeptBat
 
 // UpdateSysDept 更新
 func (r *sysDeptRepo) UpdateSysDept(ctx context.Context, req *v1.SysDeptUpdateReq) (*ent.SysDept, error) {
-	return r.data.db.SysDept.UpdateOne(convert.SysDeptUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysDeptUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysDept.UpdateOne(data).Save(ctx)
 }
 
 // GetSysDept 根据Id查询

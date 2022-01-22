@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/pageconfig"
 	"hope/apps/param/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewPageConfigRepo(data *Data, logger log.Logger) biz.PageConfigRepo {
 
 // CreatePageConfig 创建
 func (r *pageConfigRepo) CreatePageConfig(ctx context.Context, req *v1.PageConfigCreateReq) (*ent.PageConfig, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.PageConfig.Create().
 		SetPageCode(req.PageCode).
@@ -37,6 +42,8 @@ func (r *pageConfigRepo) CreatePageConfig(ctx context.Context, req *v1.PageConfi
 		SetGroupCodes(req.GroupCodes).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -53,7 +60,13 @@ func (r *pageConfigRepo) BatchDeletePageConfig(ctx context.Context, req *v1.Page
 
 // UpdatePageConfig 更新
 func (r *pageConfigRepo) UpdatePageConfig(ctx context.Context, req *v1.PageConfigUpdateReq) (*ent.PageConfig, error) {
-	return r.data.db.PageConfig.UpdateOne(convert.PageConfigUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.PageConfigUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.PageConfig.UpdateOne(data).Save(ctx)
 }
 
 // GetPageConfig 根据Id查询

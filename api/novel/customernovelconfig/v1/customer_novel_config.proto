@@ -58,6 +58,40 @@ service CustomerNovelConfig {
 
 }
 
+// 实体数据
+message CustomerNovelConfigData {
+    int64 id = 1;
+    //分组编码
+    string groupCode = 2;
+    //嵌套分组
+    string innerGroupCode = 3;
+    //分组名称
+    string groupName = 4;
+    //类型ID
+    int32 typeId = 5;
+    //类型编码
+    string TypeCode = 6;
+    //类型名称
+    string typeName = 7;
+    //字段名称
+    string fieldName = 8;
+    //默认数量
+    int32 defaultNum = 9;
+    //是否可用
+    bool state = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
 // 查询搜索请求
 message CustomerNovelConfigPageReq {
     //分页查询参数
@@ -68,10 +102,14 @@ message CustomerNovelConfigPageReq {
 
 // 查询搜索返回
 message CustomerNovelConfigPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated CustomerNovelConfigReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated CustomerNovelConfigData items = 4;
 }
 
 
@@ -109,38 +147,14 @@ message CustomerNovelConfigReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message CustomerNovelConfigReply {
-    int64 id = 1;
-    //分组编码
-    string groupCode = 2;
-    //嵌套分组
-    string innerGroupCode = 3;
-    //分组名称
-    string groupName = 4;
-    //类型ID
-    int32 typeId = 5;
-    //类型编码
-    string TypeCode = 6;
-    //类型名称
-    string typeName = 7;
-    //字段名称
-    string fieldName = 8;
-    //默认数量
-    int32 defaultNum = 9;
-    //是否可用
-    bool state = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CustomerNovelConfigData result = 3;
 }
 
 // 创建CustomerNovelConfig请求
@@ -168,36 +182,12 @@ message CustomerNovelConfigCreateReq {
 
 // 创建CustomerNovelConfig返回
 message CustomerNovelConfigCreateReply {
-    int64 id = 1;
-    //分组编码
-    string groupCode = 2;
-    //嵌套分组
-    string innerGroupCode = 3;
-    //分组名称
-    string groupName = 4;
-    //类型ID
-    int32 typeId = 5;
-    //类型编码
-    string TypeCode = 6;
-    //类型名称
-    string typeName = 7;
-    //字段名称
-    string fieldName = 8;
-    //默认数量
-    int32 defaultNum = 9;
-    //是否可用
-    bool state = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CustomerNovelConfigData result = 3;
 }
 
 // 更新CustomerNovelConfig请求
@@ -227,26 +217,12 @@ message CustomerNovelConfigUpdateReq {
 
 // 更新CustomerNovelConfig返回
 message CustomerNovelConfigUpdateReply {
-    int64 id = 1;
-    //分组编码
-    string groupCode = 2;
-    //嵌套分组
-    string innerGroupCode = 3;
-    //分组名称
-    string groupName = 4;
-    //类型ID
-    int32 typeId = 5;
-    //类型编码
-    string TypeCode = 6;
-    //类型名称
-    string typeName = 7;
-    //字段名称
-    string fieldName = 8;
-    //默认数量
-    int32 defaultNum = 9;
-    //是否可用
-    bool state = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CustomerNovelConfigData result = 3;
 }
 
 // 删除CustomerNovelConfig请求
@@ -263,6 +239,11 @@ message CustomerNovelConfigBatchDeleteReq {
 
 // 删除CustomerNovelConfig返回
 message CustomerNovelConfigDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

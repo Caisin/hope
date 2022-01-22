@@ -28,25 +28,32 @@ func (s *NovelCommentService) GetPageNovelComment(ctx context.Context, req *pb.N
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelCommentReply, 0)
+	items := make([]*pb.NovelCommentData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelCommentData2Reply(datas[i]))
 	}
 	reply := &pb.NovelCommentPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelCommentService) GetNovelComment(ctx context.Context, req *pb.NovelCommentReq) (*pb.NovelCommentReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelComment")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelCommentData2Reply(daya), err
+	reply := &pb.NovelCommentReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelCommentData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelCommentService) UpdateNovelComment(ctx context.Context, req *pb.NovelCommentUpdateReq) (*pb.NovelCommentUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelCommentService) UpdateNovelComment(ctx context.Context, req *pb.No
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelCommentData2UpdateReply(data), err
+	reply := &pb.NovelCommentUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelCommentData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelCommentService) CreateNovelComment(ctx context.Context, req *pb.NovelCommentCreateReq) (*pb.NovelCommentCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelCommentService) CreateNovelComment(ctx context.Context, req *pb.No
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelCommentData2CreateReply(data), err
+	reply := &pb.NovelCommentCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelCommentData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelCommentService) DeleteNovelComment(ctx context.Context, req *pb.NovelCommentDeleteReq) (*pb.NovelCommentDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelCommentService) DeleteNovelComment(ctx context.Context, req *pb.No
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelCommentDeleteReply{Result: err == nil}, err
+	return &pb.NovelCommentDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelCommentService) BatchDeleteNovelComment(ctx context.Context, req *pb.NovelCommentBatchDeleteReq) (*pb.NovelCommentDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelCommentService) BatchDeleteNovelComment(ctx context.Context, req *
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelCommentDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelCommentDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

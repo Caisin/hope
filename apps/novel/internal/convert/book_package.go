@@ -89,99 +89,11 @@ func BookPackageData2Req(v *ent.BookPackage) *v1.BookPackageReq {
 	}
 }
 
-func BookPackageReply2Data(v *v1.BookPackageReply) *ent.BookPackage {
+func BookPackageData2Reply(v *ent.BookPackage) *v1.BookPackageData {
 	if v == nil {
 		return nil
 	}
-	return &ent.BookPackage{
-		ID:           v.Id,
-		ActivityCode: v.ActivityCode,
-		PackageName:  v.PackageName,
-		Price:        v.Price,
-		DailyPrice:   v.DailyPrice,
-		EffectTime:   v.EffectTime.AsTime(),
-		ExpiredTime:  v.ExpiredTime.AsTime(),
-		CreatedAt:    v.CreatedAt.AsTime(),
-		UpdatedAt:    v.UpdatedAt.AsTime(),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func BookPackageData2Reply(v *ent.BookPackage) *v1.BookPackageReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.BookPackageReply{
-		Id:           v.ID,
-		ActivityCode: v.ActivityCode,
-		PackageName:  v.PackageName,
-		Price:        v.Price,
-		DailyPrice:   v.DailyPrice,
-		EffectTime:   timestamppb.New(v.EffectTime),
-		ExpiredTime:  timestamppb.New(v.ExpiredTime),
-		CreatedAt:    timestamppb.New(v.CreatedAt),
-		UpdatedAt:    timestamppb.New(v.UpdatedAt),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func BookPackageUpdateReply2Data(v *v1.BookPackageUpdateReply) *ent.BookPackage {
-	if v == nil {
-		return nil
-	}
-	return &ent.BookPackage{
-		ID:           v.Id,
-		ActivityCode: v.ActivityCode,
-		PackageName:  v.PackageName,
-		Price:        v.Price,
-		DailyPrice:   v.DailyPrice,
-		EffectTime:   v.EffectTime.AsTime(),
-	}
-}
-
-func BookPackageData2UpdateReply(v *ent.BookPackage) *v1.BookPackageUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.BookPackageUpdateReply{
-		Id:           v.ID,
-		ActivityCode: v.ActivityCode,
-		PackageName:  v.PackageName,
-		Price:        v.Price,
-		DailyPrice:   v.DailyPrice,
-		EffectTime:   timestamppb.New(v.EffectTime),
-	}
-}
-
-func BookPackageCreateReply2Data(v *v1.BookPackageCreateReply) *ent.BookPackage {
-	if v == nil {
-		return nil
-	}
-	return &ent.BookPackage{
-		ID:           v.Id,
-		ActivityCode: v.ActivityCode,
-		PackageName:  v.PackageName,
-		Price:        v.Price,
-		DailyPrice:   v.DailyPrice,
-		EffectTime:   v.EffectTime.AsTime(),
-		ExpiredTime:  v.ExpiredTime.AsTime(),
-		CreatedAt:    v.CreatedAt.AsTime(),
-		UpdatedAt:    v.UpdatedAt.AsTime(),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func BookPackageData2CreateReply(v *ent.BookPackage) *v1.BookPackageCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.BookPackageCreateReply{
+	return &v1.BookPackageData{
 		Id:           v.ID,
 		ActivityCode: v.ActivityCode,
 		PackageName:  v.PackageName,

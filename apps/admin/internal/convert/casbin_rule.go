@@ -95,104 +95,11 @@ func CasbinRuleData2Req(v *ent.CasbinRule) *v1.CasbinRuleReq {
 	}
 }
 
-func CasbinRuleReply2Data(v *v1.CasbinRuleReply) *ent.CasbinRule {
+func CasbinRuleData2Reply(v *ent.CasbinRule) *v1.CasbinRuleData {
 	if v == nil {
 		return nil
 	}
-	return &ent.CasbinRule{
-		ID:        v.Id,
-		PType:     v.PType,
-		V0:        v.V0,
-		V1:        v.V1,
-		V2:        v.V2,
-		V3:        v.V3,
-		V4:        v.V4,
-		V5:        v.V5,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func CasbinRuleData2Reply(v *ent.CasbinRule) *v1.CasbinRuleReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.CasbinRuleReply{
-		Id:        v.ID,
-		PType:     v.PType,
-		V0:        v.V0,
-		V1:        v.V1,
-		V2:        v.V2,
-		V3:        v.V3,
-		V4:        v.V4,
-		V5:        v.V5,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func CasbinRuleUpdateReply2Data(v *v1.CasbinRuleUpdateReply) *ent.CasbinRule {
-	if v == nil {
-		return nil
-	}
-	return &ent.CasbinRule{
-		ID:    v.Id,
-		PType: v.PType,
-		V0:    v.V0,
-		V1:    v.V1,
-		V2:    v.V2,
-		V3:    v.V3,
-		V4:    v.V4,
-	}
-}
-
-func CasbinRuleData2UpdateReply(v *ent.CasbinRule) *v1.CasbinRuleUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.CasbinRuleUpdateReply{
-		Id:    v.ID,
-		PType: v.PType,
-		V0:    v.V0,
-		V1:    v.V1,
-		V2:    v.V2,
-		V3:    v.V3,
-		V4:    v.V4,
-	}
-}
-
-func CasbinRuleCreateReply2Data(v *v1.CasbinRuleCreateReply) *ent.CasbinRule {
-	if v == nil {
-		return nil
-	}
-	return &ent.CasbinRule{
-		ID:        v.Id,
-		PType:     v.PType,
-		V0:        v.V0,
-		V1:        v.V1,
-		V2:        v.V2,
-		V3:        v.V3,
-		V4:        v.V4,
-		V5:        v.V5,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func CasbinRuleData2CreateReply(v *ent.CasbinRule) *v1.CasbinRuleCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.CasbinRuleCreateReply{
+	return &v1.CasbinRuleData{
 		Id:        v.ID,
 		PType:     v.PType,
 		V0:        v.V0,

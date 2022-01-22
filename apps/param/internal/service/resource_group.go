@@ -28,25 +28,32 @@ func (s *ResourceGroupService) GetPageResourceGroup(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.ResourceGroupReply, 0)
+	items := make([]*pb.ResourceGroupData, 0)
 	for i := range datas {
 		items = append(items, convert.ResourceGroupData2Reply(datas[i]))
 	}
 	reply := &pb.ResourceGroupPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *ResourceGroupService) GetResourceGroup(ctx context.Context, req *pb.ResourceGroupReq) (*pb.ResourceGroupReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetResourceGroup")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.ResourceGroupData2Reply(daya), err
+	reply := &pb.ResourceGroupReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ResourceGroupData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ResourceGroupService) UpdateResourceGroup(ctx context.Context, req *pb.ResourceGroupUpdateReq) (*pb.ResourceGroupUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *ResourceGroupService) UpdateResourceGroup(ctx context.Context, req *pb.
 	if err != nil {
 		return nil, err
 	}
-	return convert.ResourceGroupData2UpdateReply(data), err
+	reply := &pb.ResourceGroupUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ResourceGroupData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ResourceGroupService) CreateResourceGroup(ctx context.Context, req *pb.ResourceGroupCreateReq) (*pb.ResourceGroupCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *ResourceGroupService) CreateResourceGroup(ctx context.Context, req *pb.
 	if err != nil {
 		return nil, err
 	}
-	return convert.ResourceGroupData2CreateReply(data), err
+	reply := &pb.ResourceGroupCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ResourceGroupData2Reply(data),
+	}
+	return reply, err
 }
 func (s *ResourceGroupService) DeleteResourceGroup(ctx context.Context, req *pb.ResourceGroupDeleteReq) (*pb.ResourceGroupDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *ResourceGroupService) DeleteResourceGroup(ctx context.Context, req *pb.
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ResourceGroupDeleteReply{Result: err == nil}, err
+	return &pb.ResourceGroupDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *ResourceGroupService) BatchDeleteResourceGroup(ctx context.Context, req *pb.ResourceGroupBatchDeleteReq) (*pb.ResourceGroupDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *ResourceGroupService) BatchDeleteResourceGroup(ctx context.Context, req
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ResourceGroupDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.ResourceGroupDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

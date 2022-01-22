@@ -28,25 +28,32 @@ func (s *UserMsgService) GetPageUserMsg(ctx context.Context, req *pb.UserMsgPage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.UserMsgReply, 0)
+	items := make([]*pb.UserMsgData, 0)
 	for i := range datas {
 		items = append(items, convert.UserMsgData2Reply(datas[i]))
 	}
 	reply := &pb.UserMsgPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *UserMsgService) GetUserMsg(ctx context.Context, req *pb.UserMsgReq) (*pb.UserMsgReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetUserMsg")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserMsgData2Reply(daya), err
+	reply := &pb.UserMsgReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserMsgData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserMsgService) UpdateUserMsg(ctx context.Context, req *pb.UserMsgUpdateReq) (*pb.UserMsgUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *UserMsgService) UpdateUserMsg(ctx context.Context, req *pb.UserMsgUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserMsgData2UpdateReply(data), err
+	reply := &pb.UserMsgUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserMsgData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserMsgService) CreateUserMsg(ctx context.Context, req *pb.UserMsgCreateReq) (*pb.UserMsgCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *UserMsgService) CreateUserMsg(ctx context.Context, req *pb.UserMsgCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserMsgData2CreateReply(data), err
+	reply := &pb.UserMsgCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserMsgData2Reply(data),
+	}
+	return reply, err
 }
 func (s *UserMsgService) DeleteUserMsg(ctx context.Context, req *pb.UserMsgDeleteReq) (*pb.UserMsgDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *UserMsgService) DeleteUserMsg(ctx context.Context, req *pb.UserMsgDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserMsgDeleteReply{Result: err == nil}, err
+	return &pb.UserMsgDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *UserMsgService) BatchDeleteUserMsg(ctx context.Context, req *pb.UserMsgBatchDeleteReq) (*pb.UserMsgDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *UserMsgService) BatchDeleteUserMsg(ctx context.Context, req *pb.UserMsg
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserMsgDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.UserMsgDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -101,109 +101,11 @@ func UserEventData2Req(v *ent.UserEvent) *v1.UserEventReq {
 	}
 }
 
-func UserEventReply2Data(v *v1.UserEventReply) *ent.UserEvent {
+func UserEventData2Reply(v *ent.UserEvent) *v1.UserEventData {
 	if v == nil {
 		return nil
 	}
-	return &ent.UserEvent{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		EventType: v.EventType,
-		NovelId:   v.NovelId,
-		ChapterId: v.ChapterId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Money:     v.Money,
-		Keyword:   v.Keyword,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserEventData2Reply(v *ent.UserEvent) *v1.UserEventReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserEventReply{
-		Id:        v.ID,
-		UserId:    v.UserId,
-		EventType: v.EventType,
-		NovelId:   v.NovelId,
-		ChapterId: v.ChapterId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Money:     v.Money,
-		Keyword:   v.Keyword,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserEventUpdateReply2Data(v *v1.UserEventUpdateReply) *ent.UserEvent {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserEvent{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		EventType: v.EventType,
-		NovelId:   v.NovelId,
-		ChapterId: v.ChapterId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Money:     v.Money,
-	}
-}
-
-func UserEventData2UpdateReply(v *ent.UserEvent) *v1.UserEventUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserEventUpdateReply{
-		Id:        v.ID,
-		UserId:    v.UserId,
-		EventType: v.EventType,
-		NovelId:   v.NovelId,
-		ChapterId: v.ChapterId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Money:     v.Money,
-	}
-}
-
-func UserEventCreateReply2Data(v *v1.UserEventCreateReply) *ent.UserEvent {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserEvent{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		EventType: v.EventType,
-		NovelId:   v.NovelId,
-		ChapterId: v.ChapterId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Money:     v.Money,
-		Keyword:   v.Keyword,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserEventData2CreateReply(v *ent.UserEvent) *v1.UserEventCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserEventCreateReply{
+	return &v1.UserEventData{
 		Id:        v.ID,
 		UserId:    v.UserId,
 		EventType: v.EventType,

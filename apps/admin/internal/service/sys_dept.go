@@ -28,25 +28,32 @@ func (s *SysDeptService) GetPageSysDept(ctx context.Context, req *pb.SysDeptPage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysDeptReply, 0)
+	items := make([]*pb.SysDeptData, 0)
 	for i := range datas {
 		items = append(items, convert.SysDeptData2Reply(datas[i]))
 	}
 	reply := &pb.SysDeptPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysDeptService) GetSysDept(ctx context.Context, req *pb.SysDeptReq) (*pb.SysDeptReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysDept")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDeptData2Reply(daya), err
+	reply := &pb.SysDeptReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDeptData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysDeptService) UpdateSysDept(ctx context.Context, req *pb.SysDeptUpdateReq) (*pb.SysDeptUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysDeptService) UpdateSysDept(ctx context.Context, req *pb.SysDeptUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDeptData2UpdateReply(data), err
+	reply := &pb.SysDeptUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDeptData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysDeptService) CreateSysDept(ctx context.Context, req *pb.SysDeptCreateReq) (*pb.SysDeptCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysDeptService) CreateSysDept(ctx context.Context, req *pb.SysDeptCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDeptData2CreateReply(data), err
+	reply := &pb.SysDeptCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDeptData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysDeptService) DeleteSysDept(ctx context.Context, req *pb.SysDeptDeleteReq) (*pb.SysDeptDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysDeptService) DeleteSysDept(ctx context.Context, req *pb.SysDeptDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysDeptDeleteReply{Result: err == nil}, err
+	return &pb.SysDeptDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysDeptService) BatchDeleteSysDept(ctx context.Context, req *pb.SysDeptBatchDeleteReq) (*pb.SysDeptDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysDeptService) BatchDeleteSysDept(ctx context.Context, req *pb.SysDept
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysDeptDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysDeptDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

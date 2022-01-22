@@ -58,6 +58,50 @@ service NovelComment {
 
 }
 
+// 实体数据
+message NovelCommentData {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //用户Id
+    int64 userId = 3;
+    //评论用户头像
+    string avatar = 4;
+    //用户名
+    string userName = 5;
+    //回复用户
+    int64 repUserId = 6;
+    //回复用户ID
+    string repUserName = 7;
+    //回复内容
+    string content = 8;
+    //评分,除以10
+    int32 score = 9;
+    //回复评论ID
+    int64 pId = 10;
+    //置顶
+    bool isTop = 11;
+    //状态,0
+    string state = 12;
+    //高亮
+    bool isHighlight = 13;
+    //是否热门
+    bool isHot = 14;
+    //备注
+    string remark = 15;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 16;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 17;
+    //创建者
+    int64 createBy = 18;
+    //更新者
+    int64 updateBy = 19;
+    //租户
+    int64 tenantId = 20;
+
+}
+
 // 查询搜索请求
 message NovelCommentPageReq {
     //分页查询参数
@@ -68,10 +112,14 @@ message NovelCommentPageReq {
 
 // 查询搜索返回
 message NovelCommentPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated NovelCommentReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated NovelCommentData items = 4;
 }
 
 
@@ -119,48 +167,14 @@ message NovelCommentReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message NovelCommentReply {
-    int64 id = 1;
-    //小说编号
-    int64 novelId = 2;
-    //用户Id
-    int64 userId = 3;
-    //评论用户头像
-    string avatar = 4;
-    //用户名
-    string userName = 5;
-    //回复用户
-    int64 repUserId = 6;
-    //回复用户ID
-    string repUserName = 7;
-    //回复内容
-    string content = 8;
-    //评分,除以10
-    int32 score = 9;
-    //回复评论ID
-    int64 pId = 10;
-    //置顶
-    bool isTop = 11;
-    //状态,0
-    string state = 12;
-    //高亮
-    bool isHighlight = 13;
-    //是否热门
-    bool isHot = 14;
-    //备注
-    string remark = 15;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 16;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 17;
-    //创建者
-    int64 createBy = 18;
-    //更新者
-    int64 updateBy = 19;
-    //租户
-    int64 tenantId = 20;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelCommentData result = 3;
 }
 
 // 创建NovelComment请求
@@ -198,46 +212,12 @@ message NovelCommentCreateReq {
 
 // 创建NovelComment返回
 message NovelCommentCreateReply {
-    int64 id = 1;
-    //小说编号
-    int64 novelId = 2;
-    //用户Id
-    int64 userId = 3;
-    //评论用户头像
-    string avatar = 4;
-    //用户名
-    string userName = 5;
-    //回复用户
-    int64 repUserId = 6;
-    //回复用户ID
-    string repUserName = 7;
-    //回复内容
-    string content = 8;
-    //评分,除以10
-    int32 score = 9;
-    //回复评论ID
-    int64 pId = 10;
-    //置顶
-    bool isTop = 11;
-    //状态,0
-    string state = 12;
-    //高亮
-    bool isHighlight = 13;
-    //是否热门
-    bool isHot = 14;
-    //备注
-    string remark = 15;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 16;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 17;
-    //创建者
-    int64 createBy = 18;
-    //更新者
-    int64 updateBy = 19;
-    //租户
-    int64 tenantId = 20;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelCommentData result = 3;
 }
 
 // 更新NovelComment请求
@@ -277,36 +257,12 @@ message NovelCommentUpdateReq {
 
 // 更新NovelComment返回
 message NovelCommentUpdateReply {
-    int64 id = 1;
-    //小说编号
-    int64 novelId = 2;
-    //用户Id
-    int64 userId = 3;
-    //评论用户头像
-    string avatar = 4;
-    //用户名
-    string userName = 5;
-    //回复用户
-    int64 repUserId = 6;
-    //回复用户ID
-    string repUserName = 7;
-    //回复内容
-    string content = 8;
-    //评分,除以10
-    int32 score = 9;
-    //回复评论ID
-    int64 pId = 10;
-    //置顶
-    bool isTop = 11;
-    //状态,0
-    string state = 12;
-    //高亮
-    bool isHighlight = 13;
-    //是否热门
-    bool isHot = 14;
-    //备注
-    string remark = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelCommentData result = 3;
 }
 
 // 删除NovelComment请求
@@ -323,6 +279,11 @@ message NovelCommentBatchDeleteReq {
 
 // 删除NovelComment返回
 message NovelCommentDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

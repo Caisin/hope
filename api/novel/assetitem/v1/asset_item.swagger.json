@@ -520,63 +520,18 @@
     "v1AssetItemCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "assetItemId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "账本科目"
-        },
-        "assetName": {
-          "type": "string",
-          "title": "账本名称"
-        },
-        "cashTag": {
-          "type": "integer",
-          "format": "int32",
-          "title": "现金标记,0书券1现金"
-        },
-        "validDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "有效天数"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1AssetItemData",
+          "title": "结果数据"
         }
       },
       "title": "创建AssetItem返回"
@@ -616,33 +571,7 @@
       },
       "title": "创建AssetItem请求"
     },
-    "v1AssetItemDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除AssetItem返回"
-    },
-    "v1AssetItemPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1AssetItemReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1AssetItemReply": {
+    "v1AssetItemData": {
       "type": "object",
       "properties": {
         "id": {
@@ -704,7 +633,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1AssetItemDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除AssetItem返回"
+    },
+    "v1AssetItemPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AssetItemData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1AssetItemReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1AssetItemData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1AssetItemReq": {
       "type": "object",
@@ -773,38 +767,18 @@
     "v1AssetItemUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "assetItemId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "账本科目"
-        },
-        "assetName": {
+        "message": {
           "type": "string",
-          "title": "账本名称"
+          "title": "消息"
         },
-        "cashTag": {
-          "type": "integer",
-          "format": "int32",
-          "title": "现金标记,0书券1现金"
-        },
-        "validDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "有效天数"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
+        "result": {
+          "$ref": "#/definitions/v1AssetItemData",
+          "title": "结果数据"
         }
       },
       "title": "更新AssetItem返回"

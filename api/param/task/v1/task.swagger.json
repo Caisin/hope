@@ -802,127 +802,18 @@
     "v1TaskCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "taskName": {
-          "type": "string",
-          "title": "任务名称"
-        },
-        "taskGroup": {
-          "type": "string",
-          "title": "任务分组"
-        },
-        "unit": {
-          "type": "string",
-          "title": "单位"
-        },
-        "topic": {
-          "type": "string",
-          "title": "订阅主题"
-        },
-        "function": {
-          "type": "string",
-          "title": "处理方法"
-        },
-        "taskCode": {
-          "type": "string",
-          "title": "任务类型"
-        },
-        "preTask": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "前置任务ID"
+          "title": "返回码"
         },
-        "novelId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "点击跳转书号"
+          "title": "消息"
         },
-        "cycleType": {
-          "type": "string",
-          "title": "循环类型,once"
-        },
-        "remark": {
-          "type": "string",
-          "title": "描述信息"
-        },
-        "amount": {
-          "type": "string",
-          "format": "int64",
-          "title": "奖励金额"
-        },
-        "reward": {
-          "type": "string",
-          "format": "int64",
-          "title": "额外奖励"
-        },
-        "amountItem": {
-          "type": "integer",
-          "format": "int32",
-          "title": "奖励资金科目"
-        },
-        "rewardItem": {
-          "type": "integer",
-          "format": "int32",
-          "title": "额外奖励资金科目"
-        },
-        "targetNames": {
-          "type": "string",
-          "title": "目标任务名,当任务为一天多次时,逗号分割"
-        },
-        "targetAmounts": {
-          "type": "string",
-          "title": "目标值,当任务为一天多次时,逗号分割"
-        },
-        "status": {
-          "type": "boolean",
-          "title": "是否启用"
-        },
-        "sortNum": {
-          "type": "string",
-          "format": "int64",
-          "title": "排序字段"
-        },
-        "actionType": {
-          "type": "string",
-          "title": "跳转动作,pay"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1TaskData",
+          "title": "结果数据"
         }
       },
       "title": "创建Task返回"
@@ -1026,33 +917,7 @@
       },
       "title": "创建Task请求"
     },
-    "v1TaskDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除Task返回"
-    },
-    "v1TaskPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1TaskReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1TaskReply": {
+    "v1TaskData": {
       "type": "object",
       "properties": {
         "id": {
@@ -1178,7 +1043,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1TaskDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除Task返回"
+    },
+    "v1TaskPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1TaskData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1TaskReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1TaskData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1TaskReq": {
       "type": "object",
@@ -1311,102 +1241,18 @@
     "v1TaskUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "taskName": {
-          "type": "string",
-          "title": "任务名称"
-        },
-        "taskGroup": {
-          "type": "string",
-          "title": "任务分组"
-        },
-        "unit": {
-          "type": "string",
-          "title": "单位"
-        },
-        "topic": {
-          "type": "string",
-          "title": "订阅主题"
-        },
-        "function": {
-          "type": "string",
-          "title": "处理方法"
-        },
-        "taskCode": {
-          "type": "string",
-          "title": "任务类型"
-        },
-        "preTask": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "前置任务ID"
+          "title": "返回码"
         },
-        "novelId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "点击跳转书号"
+          "title": "消息"
         },
-        "cycleType": {
-          "type": "string",
-          "title": "循环类型,once"
-        },
-        "remark": {
-          "type": "string",
-          "title": "描述信息"
-        },
-        "amount": {
-          "type": "string",
-          "format": "int64",
-          "title": "奖励金额"
-        },
-        "reward": {
-          "type": "string",
-          "format": "int64",
-          "title": "额外奖励"
-        },
-        "amountItem": {
-          "type": "integer",
-          "format": "int32",
-          "title": "奖励资金科目"
-        },
-        "rewardItem": {
-          "type": "integer",
-          "format": "int32",
-          "title": "额外奖励资金科目"
-        },
-        "targetNames": {
-          "type": "string",
-          "title": "目标任务名,当任务为一天多次时,逗号分割"
-        },
-        "targetAmounts": {
-          "type": "string",
-          "title": "目标值,当任务为一天多次时,逗号分割"
-        },
-        "status": {
-          "type": "boolean",
-          "title": "是否启用"
-        },
-        "sortNum": {
-          "type": "string",
-          "format": "int64",
-          "title": "排序字段"
-        },
-        "actionType": {
-          "type": "string",
-          "title": "跳转动作,pay"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
+        "result": {
+          "$ref": "#/definitions/v1TaskData",
+          "title": "结果数据"
         }
       },
       "title": "更新Task返回"

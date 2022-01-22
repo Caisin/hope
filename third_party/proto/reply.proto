@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package reply;
+
+option go_package = "hope/pkg/result;reply";
+
+import "google/protobuf/any.proto";
+
+//分页对象
+message Reply{
+  // 返回码
+  int64 code = 1;
+  // 消息
+  string message = 2;
+}

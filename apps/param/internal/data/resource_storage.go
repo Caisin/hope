@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/resourcestorage"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewResourceStorageRepo(data *Data, logger log.Logger) biz.ResourceStorageRe
 
 // CreateResourceStorage 创建
 func (r *resourceStorageRepo) CreateResourceStorage(ctx context.Context, req *v1.ResourceStorageCreateReq) (*ent.ResourceStorage, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.ResourceStorage.Create().
 		SetGroupId(req.GroupId).
@@ -52,6 +57,8 @@ func (r *resourceStorageRepo) CreateResourceStorage(ctx context.Context, req *v1
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -68,7 +75,13 @@ func (r *resourceStorageRepo) BatchDeleteResourceStorage(ctx context.Context, re
 
 // UpdateResourceStorage 更新
 func (r *resourceStorageRepo) UpdateResourceStorage(ctx context.Context, req *v1.ResourceStorageUpdateReq) (*ent.ResourceStorage, error) {
-	return r.data.db.ResourceStorage.UpdateOne(convert.ResourceStorageUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.ResourceStorageUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.ResourceStorage.UpdateOne(data).Save(ctx)
 }
 
 // GetResourceStorage 根据Id查询

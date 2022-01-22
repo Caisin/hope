@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userresourcerecord"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewUserResourceRecordRepo(data *Data, logger log.Logger) biz.UserResourceRe
 
 // CreateUserResourceRecord 创建
 func (r *userResourceRecordRepo) CreateUserResourceRecord(ctx context.Context, req *v1.UserResourceRecordCreateReq) (*ent.UserResourceRecord, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.UserResourceRecord.Create().
 		SetUserId(req.UserId).
@@ -44,6 +49,8 @@ func (r *userResourceRecordRepo) CreateUserResourceRecord(ctx context.Context, r
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -60,7 +67,13 @@ func (r *userResourceRecordRepo) BatchDeleteUserResourceRecord(ctx context.Conte
 
 // UpdateUserResourceRecord 更新
 func (r *userResourceRecordRepo) UpdateUserResourceRecord(ctx context.Context, req *v1.UserResourceRecordUpdateReq) (*ent.UserResourceRecord, error) {
-	return r.data.db.UserResourceRecord.UpdateOne(convert.UserResourceRecordUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.UserResourceRecordUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.UserResourceRecord.UpdateOne(data).Save(ctx)
 }
 
 // GetUserResourceRecord 根据Id查询

@@ -71,84 +71,11 @@ func PageConfigData2Req(v *ent.PageConfig) *v1.PageConfigReq {
 	}
 }
 
-func PageConfigReply2Data(v *v1.PageConfigReply) *ent.PageConfig {
+func PageConfigData2Reply(v *ent.PageConfig) *v1.PageConfigData {
 	if v == nil {
 		return nil
 	}
-	return &ent.PageConfig{
-		ID:         v.Id,
-		PageCode:   v.PageCode,
-		PageName:   v.PageName,
-		GroupCodes: v.GroupCodes,
-		CreatedAt:  v.CreatedAt.AsTime(),
-		UpdatedAt:  v.UpdatedAt.AsTime(),
-		CreateBy:   v.CreateBy,
-		UpdateBy:   v.UpdateBy,
-		TenantId:   v.TenantId,
-	}
-}
-
-func PageConfigData2Reply(v *ent.PageConfig) *v1.PageConfigReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.PageConfigReply{
-		Id:         v.ID,
-		PageCode:   v.PageCode,
-		PageName:   v.PageName,
-		GroupCodes: v.GroupCodes,
-		CreatedAt:  timestamppb.New(v.CreatedAt),
-		UpdatedAt:  timestamppb.New(v.UpdatedAt),
-		CreateBy:   v.CreateBy,
-		UpdateBy:   v.UpdateBy,
-		TenantId:   v.TenantId,
-	}
-}
-
-func PageConfigUpdateReply2Data(v *v1.PageConfigUpdateReply) *ent.PageConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.PageConfig{
-		ID:       v.Id,
-		PageCode: v.PageCode,
-		PageName: v.PageName,
-	}
-}
-
-func PageConfigData2UpdateReply(v *ent.PageConfig) *v1.PageConfigUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.PageConfigUpdateReply{
-		Id:       v.ID,
-		PageCode: v.PageCode,
-		PageName: v.PageName,
-	}
-}
-
-func PageConfigCreateReply2Data(v *v1.PageConfigCreateReply) *ent.PageConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.PageConfig{
-		ID:         v.Id,
-		PageCode:   v.PageCode,
-		PageName:   v.PageName,
-		GroupCodes: v.GroupCodes,
-		CreatedAt:  v.CreatedAt.AsTime(),
-		UpdatedAt:  v.UpdatedAt.AsTime(),
-		CreateBy:   v.CreateBy,
-		UpdateBy:   v.UpdateBy,
-		TenantId:   v.TenantId,
-	}
-}
-
-func PageConfigData2CreateReply(v *ent.PageConfig) *v1.PageConfigCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.PageConfigCreateReply{
+	return &v1.PageConfigData{
 		Id:         v.ID,
 		PageCode:   v.PageCode,
 		PageName:   v.PageName,

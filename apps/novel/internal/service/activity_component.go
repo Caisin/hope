@@ -28,25 +28,32 @@ func (s *ActivityComponentService) GetPageActivityComponent(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.ActivityComponentReply, 0)
+	items := make([]*pb.ActivityComponentData, 0)
 	for i := range datas {
 		items = append(items, convert.ActivityComponentData2Reply(datas[i]))
 	}
 	reply := &pb.ActivityComponentPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *ActivityComponentService) GetActivityComponent(ctx context.Context, req *pb.ActivityComponentReq) (*pb.ActivityComponentReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetActivityComponent")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.ActivityComponentData2Reply(daya), err
+	reply := &pb.ActivityComponentReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ActivityComponentData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ActivityComponentService) UpdateActivityComponent(ctx context.Context, req *pb.ActivityComponentUpdateReq) (*pb.ActivityComponentUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *ActivityComponentService) UpdateActivityComponent(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	return convert.ActivityComponentData2UpdateReply(data), err
+	reply := &pb.ActivityComponentUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ActivityComponentData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ActivityComponentService) CreateActivityComponent(ctx context.Context, req *pb.ActivityComponentCreateReq) (*pb.ActivityComponentCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *ActivityComponentService) CreateActivityComponent(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	return convert.ActivityComponentData2CreateReply(data), err
+	reply := &pb.ActivityComponentCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ActivityComponentData2Reply(data),
+	}
+	return reply, err
 }
 func (s *ActivityComponentService) DeleteActivityComponent(ctx context.Context, req *pb.ActivityComponentDeleteReq) (*pb.ActivityComponentDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *ActivityComponentService) DeleteActivityComponent(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ActivityComponentDeleteReply{Result: err == nil}, err
+	return &pb.ActivityComponentDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *ActivityComponentService) BatchDeleteActivityComponent(ctx context.Context, req *pb.ActivityComponentBatchDeleteReq) (*pb.ActivityComponentDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *ActivityComponentService) BatchDeleteActivityComponent(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ActivityComponentDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.ActivityComponentDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/userevent"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewUserEventRepo(data *Data, logger log.Logger) biz.UserEventRepo {
 
 // CreateUserEvent 创建
 func (r *userEventRepo) CreateUserEvent(ctx context.Context, req *v1.UserEventCreateReq) (*ent.UserEvent, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.UserEvent.Create().
 		SetUserId(req.UserId).
@@ -42,6 +47,8 @@ func (r *userEventRepo) CreateUserEvent(ctx context.Context, req *v1.UserEventCr
 		SetKeyword(req.Keyword).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -58,7 +65,13 @@ func (r *userEventRepo) BatchDeleteUserEvent(ctx context.Context, req *v1.UserEv
 
 // UpdateUserEvent 更新
 func (r *userEventRepo) UpdateUserEvent(ctx context.Context, req *v1.UserEventUpdateReq) (*ent.UserEvent, error) {
-	return r.data.db.UserEvent.UpdateOne(convert.UserEventUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.UserEventUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.UserEvent.UpdateOne(data).Save(ctx)
 }
 
 // GetUserEvent 根据Id查询

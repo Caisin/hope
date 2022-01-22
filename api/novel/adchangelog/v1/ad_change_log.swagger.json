@@ -493,56 +493,18 @@
     "v1AdChangeLogCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "adId": {
+        "message": {
           "type": "string",
-          "title": "广告ID"
+          "title": "消息"
         },
-        "chId": {
-          "type": "string",
-          "format": "int64",
-          "title": "渠道ID"
-        },
-        "deviceId": {
-          "type": "string",
-          "title": "设备号"
-        },
-        "extInfo": {
-          "type": "string",
-          "title": "手机拓展信息"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1AdChangeLogData",
+          "title": "结果数据"
         }
       },
       "title": "创建AdChangeLog返回"
@@ -575,33 +537,7 @@
       },
       "title": "创建AdChangeLog请求"
     },
-    "v1AdChangeLogDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除AdChangeLog返回"
-    },
-    "v1AdChangeLogPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1AdChangeLogReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1AdChangeLogReply": {
+    "v1AdChangeLogData": {
       "type": "object",
       "properties": {
         "id": {
@@ -656,7 +592,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1AdChangeLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除AdChangeLog返回"
+    },
+    "v1AdChangeLogPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AdChangeLogData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1AdChangeLogReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1AdChangeLogData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1AdChangeLogReq": {
       "type": "object",
@@ -718,31 +719,18 @@
     "v1AdChangeLogUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "adId": {
+        "message": {
           "type": "string",
-          "title": "广告ID"
+          "title": "消息"
         },
-        "chId": {
-          "type": "string",
-          "format": "int64",
-          "title": "渠道ID"
-        },
-        "deviceId": {
-          "type": "string",
-          "title": "设备号"
-        },
-        "extInfo": {
-          "type": "string",
-          "title": "手机拓展信息"
+        "result": {
+          "$ref": "#/definitions/v1AdChangeLogData",
+          "title": "结果数据"
         }
       },
       "title": "更新AdChangeLog返回"

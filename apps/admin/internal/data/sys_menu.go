@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysmenu"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysMenuRepo(data *Data, logger log.Logger) biz.SysMenuRepo {
 
 // CreateSysMenu 创建
 func (r *sysMenuRepo) CreateSysMenu(ctx context.Context, req *v1.SysMenuCreateReq) (*ent.SysMenu, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysMenu.Create().
 		SetMenuName(req.MenuName).
@@ -49,6 +54,8 @@ func (r *sysMenuRepo) CreateSysMenu(ctx context.Context, req *v1.SysMenuCreateRe
 		SetSysApi(req.SysApi).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -65,7 +72,13 @@ func (r *sysMenuRepo) BatchDeleteSysMenu(ctx context.Context, req *v1.SysMenuBat
 
 // UpdateSysMenu 更新
 func (r *sysMenuRepo) UpdateSysMenu(ctx context.Context, req *v1.SysMenuUpdateReq) (*ent.SysMenu, error) {
-	return r.data.db.SysMenu.UpdateOne(convert.SysMenuUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysMenuUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysMenu.UpdateOne(data).Save(ctx)
 }
 
 // GetSysMenu 根据Id查询

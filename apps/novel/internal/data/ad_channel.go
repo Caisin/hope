@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/adchannel"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewAdChannelRepo(data *Data, logger log.Logger) biz.AdChannelRepo {
 
 // CreateAdChannel 创建
 func (r *adChannelRepo) CreateAdChannel(ctx context.Context, req *v1.AdChannelCreateReq) (*ent.AdChannel, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.AdChannel.Create().
 		SetChannelName(req.ChannelName).
@@ -43,6 +48,8 @@ func (r *adChannelRepo) CreateAdChannel(ctx context.Context, req *v1.AdChannelCr
 		SetImg(req.Img).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -59,7 +66,13 @@ func (r *adChannelRepo) BatchDeleteAdChannel(ctx context.Context, req *v1.AdChan
 
 // UpdateAdChannel 更新
 func (r *adChannelRepo) UpdateAdChannel(ctx context.Context, req *v1.AdChannelUpdateReq) (*ent.AdChannel, error) {
-	return r.data.db.AdChannel.UpdateOne(convert.AdChannelUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.AdChannelUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.AdChannel.UpdateOne(data).Save(ctx)
 }
 
 // GetAdChannel 根据Id查询

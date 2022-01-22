@@ -161,12 +161,12 @@ func parseType(f *load.Field) string {
 	}
 }
 
-func genFields(fields []*load.Field, isModify bool) string {
+func genFields(fields []*load.Field, isModify bool, idx int) string {
 	bf := str.NewBuffer()
-	bf.Append("    int64 id = 1;\n")
+	bf.Append(fmt.Sprintf("    int64 id = %d;\n", idx+1))
 	tab := "    "
 	space := " "
-	//len := len(fields)
+	//len := len(fields)gen
 	for i, f := range fields {
 		name := f.Name
 		if name == "createdAt" && isModify {
@@ -176,7 +176,7 @@ func genFields(fields []*load.Field, isModify bool) string {
 		bf.Append(tab).Append("//").Append(strings.ReplaceAll(f.Comment, "\n", " ")).Append("\n")
 		//字段
 		bf.Append(tab).Append(parseType(f)).Append(space).Append(name).
-			Append(space).Append("=").Append(space).Append(i + 2).Append(";\n")
+			Append(space).Append("=").Append(space).Append(i + idx + 2).Append(";\n")
 	}
 	return bf.String()
 }
@@ -378,9 +378,7 @@ func %s(v *%s) *%s {
 	data2Create := str.NewBuffer()
 	req2Data := str.NewBuffer()
 	data2Req := str.NewBuffer()
-	reply2Data := str.NewBuffer()
 	data2Reply := str.NewBuffer()
-	reply2Data.Append("\t\tID:       v.Id,\n")
 	data2Reply.Append("\t\tId:       v.ID,\n")
 	fields := sc.Fields
 	l := len(fields)
@@ -415,7 +413,6 @@ func %s(v *%s) *%s {
 			toProto = fmt.Sprintf("\t\t%s:       v.%s,\n", protoName, entName)
 
 		}
-		reply2Data.Append(toEnt)
 		data2Reply.Append(toProto)
 		if l-i > 6 {
 			create2Data.Append(toEnt)
@@ -443,9 +440,7 @@ func %s(v *%s) *%s {
 	appendFun(bf, update2Data, data2Update, funTmp, name, "Update", "Req")
 	appendFun(bf, create2Data, data2Create, funTmp, name, "Create", "Req")
 	appendFun(bf, req2Data, data2Req, funTmp, name, "", "Req")
-	appendFun(bf, reply2Data, data2Reply, funTmp, name, "", "Reply")
-	appendFun(bf, update2Data, data2Update, funTmp, name, "Update", "Reply")
-	appendFun(bf, reply2Data, data2Reply, funTmp, name, "Create", "Reply")
+	bf.Append(fmt.Sprintf(funTmp, name+"Data2Reply", "ent."+name, "v1."+name+"Data", "v1."+name+"Data", data2Reply))
 	fileName := fmt.Sprintf("%s/apps/%s/internal/convert/%s.go", projectPath, model, str.Camel2Case(name))
 	dir := path.Dir(fileName)
 	file.MakeDir(dir)
@@ -457,8 +452,12 @@ func appendFun(bf, toData, toReq *str.Buffer, funTmp, name, mode, typ string) {
 	modeName := name + mode
 	entName := "ent." + name
 	v1Name := "v1." + modeName + typ
-	bf.Append(fmt.Sprintf(funTmp, modeName+typ+"2Data", v1Name, entName, entName, toData.String()))
-	bf.Append(fmt.Sprintf(funTmp, name+"Data2"+mode+typ, entName, v1Name, v1Name, toReq.String()))
+	if toData != nil {
+		bf.Append(fmt.Sprintf(funTmp, modeName+typ+"2Data", v1Name, entName, entName, toData.String()))
+	}
+	if toReq != nil {
+		bf.Append(fmt.Sprintf(funTmp, name+"Data2"+mode+typ, entName, v1Name, v1Name, toReq.String()))
+	}
 }
 
 func genProvider(projectPath, prod string, scs []*load.Schema) {

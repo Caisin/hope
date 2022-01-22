@@ -83,94 +83,11 @@ func SysPostData2Req(v *ent.SysPost) *v1.SysPostReq {
 	}
 }
 
-func SysPostReply2Data(v *v1.SysPostReply) *ent.SysPost {
+func SysPostData2Reply(v *ent.SysPost) *v1.SysPostData {
 	if v == nil {
 		return nil
 	}
-	return &ent.SysPost{
-		ID:        v.Id,
-		PostName:  v.PostName,
-		PostCode:  v.PostCode,
-		Sort:      v.Sort,
-		Status:    v.Status,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysPostData2Reply(v *ent.SysPost) *v1.SysPostReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysPostReply{
-		Id:        v.ID,
-		PostName:  v.PostName,
-		PostCode:  v.PostCode,
-		Sort:      v.Sort,
-		Status:    v.Status,
-		Remark:    v.Remark,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysPostUpdateReply2Data(v *v1.SysPostUpdateReply) *ent.SysPost {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysPost{
-		ID:       v.Id,
-		PostName: v.PostName,
-		PostCode: v.PostCode,
-		Sort:     v.Sort,
-		Status:   v.Status,
-	}
-}
-
-func SysPostData2UpdateReply(v *ent.SysPost) *v1.SysPostUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysPostUpdateReply{
-		Id:       v.ID,
-		PostName: v.PostName,
-		PostCode: v.PostCode,
-		Sort:     v.Sort,
-		Status:   v.Status,
-	}
-}
-
-func SysPostCreateReply2Data(v *v1.SysPostCreateReply) *ent.SysPost {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysPost{
-		ID:        v.Id,
-		PostName:  v.PostName,
-		PostCode:  v.PostCode,
-		Sort:      v.Sort,
-		Status:    v.Status,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysPostData2CreateReply(v *ent.SysPost) *v1.SysPostCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysPostCreateReply{
+	return &v1.SysPostData{
 		Id:        v.ID,
 		PostName:  v.PostName,
 		PostCode:  v.PostCode,

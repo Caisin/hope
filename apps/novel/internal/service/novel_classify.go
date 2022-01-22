@@ -28,25 +28,32 @@ func (s *NovelClassifyService) GetPageNovelClassify(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelClassifyReply, 0)
+	items := make([]*pb.NovelClassifyData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelClassifyData2Reply(datas[i]))
 	}
 	reply := &pb.NovelClassifyPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelClassifyService) GetNovelClassify(ctx context.Context, req *pb.NovelClassifyReq) (*pb.NovelClassifyReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelClassify")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelClassifyData2Reply(daya), err
+	reply := &pb.NovelClassifyReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelClassifyData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelClassifyService) UpdateNovelClassify(ctx context.Context, req *pb.NovelClassifyUpdateReq) (*pb.NovelClassifyUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelClassifyService) UpdateNovelClassify(ctx context.Context, req *pb.
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelClassifyData2UpdateReply(data), err
+	reply := &pb.NovelClassifyUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelClassifyData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelClassifyService) CreateNovelClassify(ctx context.Context, req *pb.NovelClassifyCreateReq) (*pb.NovelClassifyCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelClassifyService) CreateNovelClassify(ctx context.Context, req *pb.
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelClassifyData2CreateReply(data), err
+	reply := &pb.NovelClassifyCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelClassifyData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelClassifyService) DeleteNovelClassify(ctx context.Context, req *pb.NovelClassifyDeleteReq) (*pb.NovelClassifyDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelClassifyService) DeleteNovelClassify(ctx context.Context, req *pb.
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelClassifyDeleteReply{Result: err == nil}, err
+	return &pb.NovelClassifyDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelClassifyService) BatchDeleteNovelClassify(ctx context.Context, req *pb.NovelClassifyBatchDeleteReq) (*pb.NovelClassifyDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelClassifyService) BatchDeleteNovelClassify(ctx context.Context, req
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelClassifyDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelClassifyDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -58,6 +58,36 @@ service ListenRecord {
 
 }
 
+// 实体数据
+message ListenRecordData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //主键编码
+    int64 chapterId = 3;
+    //小说编号
+    int64 novelId = 4;
+    //播放次数
+    int64 listenTimes = 5;
+    //音频时长
+    google.protobuf.Duration duration = 6;
+    //总播放时长
+    google.protobuf.Duration allDuration = 7;
+    //当天播放时长
+    google.protobuf.Duration dayDuration = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
 // 查询搜索请求
 message ListenRecordPageReq {
     //分页查询参数
@@ -68,10 +98,14 @@ message ListenRecordPageReq {
 
 // 查询搜索返回
 message ListenRecordPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated ListenRecordReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated ListenRecordData items = 4;
 }
 
 
@@ -105,34 +139,14 @@ message ListenRecordReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message ListenRecordReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //主键编码
-    int64 chapterId = 3;
-    //小说编号
-    int64 novelId = 4;
-    //播放次数
-    int64 listenTimes = 5;
-    //音频时长
-    google.protobuf.Duration duration = 6;
-    //总播放时长
-    google.protobuf.Duration allDuration = 7;
-    //当天播放时长
-    google.protobuf.Duration dayDuration = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    ListenRecordData result = 3;
 }
 
 // 创建ListenRecord请求
@@ -156,32 +170,12 @@ message ListenRecordCreateReq {
 
 // 创建ListenRecord返回
 message ListenRecordCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //主键编码
-    int64 chapterId = 3;
-    //小说编号
-    int64 novelId = 4;
-    //播放次数
-    int64 listenTimes = 5;
-    //音频时长
-    google.protobuf.Duration duration = 6;
-    //总播放时长
-    google.protobuf.Duration allDuration = 7;
-    //当天播放时长
-    google.protobuf.Duration dayDuration = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    ListenRecordData result = 3;
 }
 
 // 更新ListenRecord请求
@@ -207,22 +201,12 @@ message ListenRecordUpdateReq {
 
 // 更新ListenRecord返回
 message ListenRecordUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //主键编码
-    int64 chapterId = 3;
-    //小说编号
-    int64 novelId = 4;
-    //播放次数
-    int64 listenTimes = 5;
-    //音频时长
-    google.protobuf.Duration duration = 6;
-    //总播放时长
-    google.protobuf.Duration allDuration = 7;
-    //当天播放时长
-    google.protobuf.Duration dayDuration = 8;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    ListenRecordData result = 3;
 }
 
 // 删除ListenRecord请求
@@ -239,6 +223,11 @@ message ListenRecordBatchDeleteReq {
 
 // 删除ListenRecord返回
 message ListenRecordDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

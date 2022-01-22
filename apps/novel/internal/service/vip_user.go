@@ -28,25 +28,32 @@ func (s *VipUserService) GetPageVipUser(ctx context.Context, req *pb.VipUserPage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.VipUserReply, 0)
+	items := make([]*pb.VipUserData, 0)
 	for i := range datas {
 		items = append(items, convert.VipUserData2Reply(datas[i]))
 	}
 	reply := &pb.VipUserPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *VipUserService) GetVipUser(ctx context.Context, req *pb.VipUserReq) (*pb.VipUserReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetVipUser")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.VipUserData2Reply(daya), err
+	reply := &pb.VipUserReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.VipUserData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *VipUserService) UpdateVipUser(ctx context.Context, req *pb.VipUserUpdateReq) (*pb.VipUserUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *VipUserService) UpdateVipUser(ctx context.Context, req *pb.VipUserUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.VipUserData2UpdateReply(data), err
+	reply := &pb.VipUserUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.VipUserData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *VipUserService) CreateVipUser(ctx context.Context, req *pb.VipUserCreateReq) (*pb.VipUserCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *VipUserService) CreateVipUser(ctx context.Context, req *pb.VipUserCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.VipUserData2CreateReply(data), err
+	reply := &pb.VipUserCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.VipUserData2Reply(data),
+	}
+	return reply, err
 }
 func (s *VipUserService) DeleteVipUser(ctx context.Context, req *pb.VipUserDeleteReq) (*pb.VipUserDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *VipUserService) DeleteVipUser(ctx context.Context, req *pb.VipUserDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.VipUserDeleteReply{Result: err == nil}, err
+	return &pb.VipUserDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *VipUserService) BatchDeleteVipUser(ctx context.Context, req *pb.VipUserBatchDeleteReq) (*pb.VipUserDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *VipUserService) BatchDeleteVipUser(ctx context.Context, req *pb.VipUser
 	if err != nil {
 		return nil, err
 	}
-	return &pb.VipUserDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.VipUserDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

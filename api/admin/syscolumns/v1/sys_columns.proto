@@ -58,6 +58,80 @@ service SysColumns {
 
 }
 
+// 实体数据
+message SysColumnsData {
+    int64 id = 1;
+    //
+    int32 columnId = 2;
+    //
+    string columnName = 3;
+    //
+    string columnComment = 4;
+    //
+    string columnType = 5;
+    //
+    string goType = 6;
+    //
+    string goField = 7;
+    //
+    string jsonField = 8;
+    //
+    string isPk = 9;
+    //
+    string isIncrement = 10;
+    //
+    string isRequired = 11;
+    //
+    string isInsert = 12;
+    //
+    string isEdit = 13;
+    //
+    string isList = 14;
+    //
+    string isQuery = 15;
+    //
+    string queryType = 16;
+    //
+    string htmlType = 17;
+    //
+    string dictType = 18;
+    //
+    int32 sort = 19;
+    //
+    string list = 20;
+    //
+    bool pk = 21;
+    //
+    bool required = 22;
+    //
+    bool superColumn = 23;
+    //
+    bool usableColumn = 24;
+    //
+    bool increment = 25;
+    //
+    bool insert = 26;
+    //
+    bool edit = 27;
+    //
+    bool query = 28;
+    //
+    string remark = 29;
+    //
+    string fkLabelName = 30;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 31;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 32;
+    //创建者
+    int64 createBy = 33;
+    //更新者
+    int64 updateBy = 34;
+    //租户
+    int64 tenantId = 35;
+
+}
+
 // 查询搜索请求
 message SysColumnsPageReq {
     //分页查询参数
@@ -68,10 +142,14 @@ message SysColumnsPageReq {
 
 // 查询搜索返回
 message SysColumnsPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysColumnsReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysColumnsData items = 4;
 }
 
 
@@ -149,78 +227,14 @@ message SysColumnsReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysColumnsReply {
-    int64 id = 1;
-    //
-    int32 columnId = 2;
-    //
-    string columnName = 3;
-    //
-    string columnComment = 4;
-    //
-    string columnType = 5;
-    //
-    string goType = 6;
-    //
-    string goField = 7;
-    //
-    string jsonField = 8;
-    //
-    string isPk = 9;
-    //
-    string isIncrement = 10;
-    //
-    string isRequired = 11;
-    //
-    string isInsert = 12;
-    //
-    string isEdit = 13;
-    //
-    string isList = 14;
-    //
-    string isQuery = 15;
-    //
-    string queryType = 16;
-    //
-    string htmlType = 17;
-    //
-    string dictType = 18;
-    //
-    int32 sort = 19;
-    //
-    string list = 20;
-    //
-    bool pk = 21;
-    //
-    bool required = 22;
-    //
-    bool superColumn = 23;
-    //
-    bool usableColumn = 24;
-    //
-    bool increment = 25;
-    //
-    bool insert = 26;
-    //
-    bool edit = 27;
-    //
-    bool query = 28;
-    //
-    string remark = 29;
-    //
-    string fkLabelName = 30;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 31;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 32;
-    //创建者
-    int64 createBy = 33;
-    //更新者
-    int64 updateBy = 34;
-    //租户
-    int64 tenantId = 35;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysColumnsData result = 3;
 }
 
 // 创建SysColumns请求
@@ -288,76 +302,12 @@ message SysColumnsCreateReq {
 
 // 创建SysColumns返回
 message SysColumnsCreateReply {
-    int64 id = 1;
-    //
-    int32 columnId = 2;
-    //
-    string columnName = 3;
-    //
-    string columnComment = 4;
-    //
-    string columnType = 5;
-    //
-    string goType = 6;
-    //
-    string goField = 7;
-    //
-    string jsonField = 8;
-    //
-    string isPk = 9;
-    //
-    string isIncrement = 10;
-    //
-    string isRequired = 11;
-    //
-    string isInsert = 12;
-    //
-    string isEdit = 13;
-    //
-    string isList = 14;
-    //
-    string isQuery = 15;
-    //
-    string queryType = 16;
-    //
-    string htmlType = 17;
-    //
-    string dictType = 18;
-    //
-    int32 sort = 19;
-    //
-    string list = 20;
-    //
-    bool pk = 21;
-    //
-    bool required = 22;
-    //
-    bool superColumn = 23;
-    //
-    bool usableColumn = 24;
-    //
-    bool increment = 25;
-    //
-    bool insert = 26;
-    //
-    bool edit = 27;
-    //
-    bool query = 28;
-    //
-    string remark = 29;
-    //
-    string fkLabelName = 30;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 31;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 32;
-    //创建者
-    int64 createBy = 33;
-    //更新者
-    int64 updateBy = 34;
-    //租户
-    int64 tenantId = 35;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysColumnsData result = 3;
 }
 
 // 更新SysColumns请求
@@ -427,66 +377,12 @@ message SysColumnsUpdateReq {
 
 // 更新SysColumns返回
 message SysColumnsUpdateReply {
-    int64 id = 1;
-    //
-    int32 columnId = 2;
-    //
-    string columnName = 3;
-    //
-    string columnComment = 4;
-    //
-    string columnType = 5;
-    //
-    string goType = 6;
-    //
-    string goField = 7;
-    //
-    string jsonField = 8;
-    //
-    string isPk = 9;
-    //
-    string isIncrement = 10;
-    //
-    string isRequired = 11;
-    //
-    string isInsert = 12;
-    //
-    string isEdit = 13;
-    //
-    string isList = 14;
-    //
-    string isQuery = 15;
-    //
-    string queryType = 16;
-    //
-    string htmlType = 17;
-    //
-    string dictType = 18;
-    //
-    int32 sort = 19;
-    //
-    string list = 20;
-    //
-    bool pk = 21;
-    //
-    bool required = 22;
-    //
-    bool superColumn = 23;
-    //
-    bool usableColumn = 24;
-    //
-    bool increment = 25;
-    //
-    bool insert = 26;
-    //
-    bool edit = 27;
-    //
-    bool query = 28;
-    //
-    string remark = 29;
-    //
-    string fkLabelName = 30;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysColumnsData result = 3;
 }
 
 // 删除SysColumns请求
@@ -503,6 +399,11 @@ message SysColumnsBatchDeleteReq {
 
 // 删除SysColumns返回
 message SysColumnsDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

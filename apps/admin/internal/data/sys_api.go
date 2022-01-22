@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysapi"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysApiRepo(data *Data, logger log.Logger) biz.SysApiRepo {
 
 // CreateSysApi 创建
 func (r *sysApiRepo) CreateSysApi(ctx context.Context, req *v1.SysApiCreateReq) (*ent.SysApi, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysApi.Create().
 		SetHandle(req.Handle).
@@ -39,6 +44,8 @@ func (r *sysApiRepo) CreateSysApi(ctx context.Context, req *v1.SysApiCreateReq) 
 		SetType(req.Type).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -55,7 +62,13 @@ func (r *sysApiRepo) BatchDeleteSysApi(ctx context.Context, req *v1.SysApiBatchD
 
 // UpdateSysApi 更新
 func (r *sysApiRepo) UpdateSysApi(ctx context.Context, req *v1.SysApiUpdateReq) (*ent.SysApi, error) {
-	return r.data.db.SysApi.UpdateOne(convert.SysApiUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysApiUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysApi.UpdateOne(data).Save(ctx)
 }
 
 // GetSysApi 根据Id查询

@@ -71,84 +71,11 @@ func NovelTagData2Req(v *ent.NovelTag) *v1.NovelTagReq {
 	}
 }
 
-func NovelTagReply2Data(v *v1.NovelTagReply) *ent.NovelTag {
+func NovelTagData2Reply(v *ent.NovelTag) *v1.NovelTagData {
 	if v == nil {
 		return nil
 	}
-	return &ent.NovelTag{
-		ID:        v.Id,
-		TagId:     v.TagId,
-		TagName:   v.TagName,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelTagData2Reply(v *ent.NovelTag) *v1.NovelTagReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelTagReply{
-		Id:        v.ID,
-		TagId:     v.TagId,
-		TagName:   v.TagName,
-		Remark:    v.Remark,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelTagUpdateReply2Data(v *v1.NovelTagUpdateReply) *ent.NovelTag {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelTag{
-		ID:      v.Id,
-		TagId:   v.TagId,
-		TagName: v.TagName,
-	}
-}
-
-func NovelTagData2UpdateReply(v *ent.NovelTag) *v1.NovelTagUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelTagUpdateReply{
-		Id:      v.ID,
-		TagId:   v.TagId,
-		TagName: v.TagName,
-	}
-}
-
-func NovelTagCreateReply2Data(v *v1.NovelTagCreateReply) *ent.NovelTag {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelTag{
-		ID:        v.Id,
-		TagId:     v.TagId,
-		TagName:   v.TagName,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelTagData2CreateReply(v *ent.NovelTag) *v1.NovelTagCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelTagCreateReply{
+	return &v1.NovelTagData{
 		Id:        v.ID,
 		TagId:     v.TagId,
 		TagName:   v.TagName,

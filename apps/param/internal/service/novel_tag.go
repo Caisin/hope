@@ -28,25 +28,32 @@ func (s *NovelTagService) GetPageNovelTag(ctx context.Context, req *pb.NovelTagP
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelTagReply, 0)
+	items := make([]*pb.NovelTagData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelTagData2Reply(datas[i]))
 	}
 	reply := &pb.NovelTagPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelTagService) GetNovelTag(ctx context.Context, req *pb.NovelTagReq) (*pb.NovelTagReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelTag")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelTagData2Reply(daya), err
+	reply := &pb.NovelTagReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelTagData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelTagService) UpdateNovelTag(ctx context.Context, req *pb.NovelTagUpdateReq) (*pb.NovelTagUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelTagService) UpdateNovelTag(ctx context.Context, req *pb.NovelTagUp
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelTagData2UpdateReply(data), err
+	reply := &pb.NovelTagUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelTagData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelTagService) CreateNovelTag(ctx context.Context, req *pb.NovelTagCreateReq) (*pb.NovelTagCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelTagService) CreateNovelTag(ctx context.Context, req *pb.NovelTagCr
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelTagData2CreateReply(data), err
+	reply := &pb.NovelTagCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelTagData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelTagService) DeleteNovelTag(ctx context.Context, req *pb.NovelTagDeleteReq) (*pb.NovelTagDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelTagService) DeleteNovelTag(ctx context.Context, req *pb.NovelTagDe
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelTagDeleteReply{Result: err == nil}, err
+	return &pb.NovelTagDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelTagService) BatchDeleteNovelTag(ctx context.Context, req *pb.NovelTagBatchDeleteReq) (*pb.NovelTagDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelTagService) BatchDeleteNovelTag(ctx context.Context, req *pb.Novel
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelTagDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelTagDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

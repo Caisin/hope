@@ -89,99 +89,11 @@ func VipTypeData2Req(v *ent.VipType) *v1.VipTypeReq {
 	}
 }
 
-func VipTypeReply2Data(v *v1.VipTypeReply) *ent.VipType {
+func VipTypeData2Reply(v *ent.VipType) *v1.VipTypeData {
 	if v == nil {
 		return nil
 	}
-	return &ent.VipType{
-		ID:           v.Id,
-		VipName:      v.VipName,
-		IsSuper:      v.IsSuper,
-		ValidDays:    v.ValidDays,
-		DiscountRate: v.DiscountRate,
-		AvatarId:     v.AvatarId,
-		Summary:      v.Summary,
-		CreatedAt:    v.CreatedAt.AsTime(),
-		UpdatedAt:    v.UpdatedAt.AsTime(),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func VipTypeData2Reply(v *ent.VipType) *v1.VipTypeReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.VipTypeReply{
-		Id:           v.ID,
-		VipName:      v.VipName,
-		IsSuper:      v.IsSuper,
-		ValidDays:    v.ValidDays,
-		DiscountRate: v.DiscountRate,
-		AvatarId:     v.AvatarId,
-		Summary:      v.Summary,
-		CreatedAt:    timestamppb.New(v.CreatedAt),
-		UpdatedAt:    timestamppb.New(v.UpdatedAt),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func VipTypeUpdateReply2Data(v *v1.VipTypeUpdateReply) *ent.VipType {
-	if v == nil {
-		return nil
-	}
-	return &ent.VipType{
-		ID:           v.Id,
-		VipName:      v.VipName,
-		IsSuper:      v.IsSuper,
-		ValidDays:    v.ValidDays,
-		DiscountRate: v.DiscountRate,
-		AvatarId:     v.AvatarId,
-	}
-}
-
-func VipTypeData2UpdateReply(v *ent.VipType) *v1.VipTypeUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.VipTypeUpdateReply{
-		Id:           v.ID,
-		VipName:      v.VipName,
-		IsSuper:      v.IsSuper,
-		ValidDays:    v.ValidDays,
-		DiscountRate: v.DiscountRate,
-		AvatarId:     v.AvatarId,
-	}
-}
-
-func VipTypeCreateReply2Data(v *v1.VipTypeCreateReply) *ent.VipType {
-	if v == nil {
-		return nil
-	}
-	return &ent.VipType{
-		ID:           v.Id,
-		VipName:      v.VipName,
-		IsSuper:      v.IsSuper,
-		ValidDays:    v.ValidDays,
-		DiscountRate: v.DiscountRate,
-		AvatarId:     v.AvatarId,
-		Summary:      v.Summary,
-		CreatedAt:    v.CreatedAt.AsTime(),
-		UpdatedAt:    v.UpdatedAt.AsTime(),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func VipTypeData2CreateReply(v *ent.VipType) *v1.VipTypeCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.VipTypeCreateReply{
+	return &v1.VipTypeData{
 		Id:           v.ID,
 		VipName:      v.VipName,
 		IsSuper:      v.IsSuper,

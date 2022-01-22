@@ -28,25 +28,32 @@ func (s *DataSourceService) GetPageDataSource(ctx context.Context, req *pb.DataS
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.DataSourceReply, 0)
+	items := make([]*pb.DataSourceData, 0)
 	for i := range datas {
 		items = append(items, convert.DataSourceData2Reply(datas[i]))
 	}
 	reply := &pb.DataSourcePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *DataSourceService) GetDataSource(ctx context.Context, req *pb.DataSourceReq) (*pb.DataSourceReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetDataSource")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.DataSourceData2Reply(daya), err
+	reply := &pb.DataSourceReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.DataSourceData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *DataSourceService) UpdateDataSource(ctx context.Context, req *pb.DataSourceUpdateReq) (*pb.DataSourceUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *DataSourceService) UpdateDataSource(ctx context.Context, req *pb.DataSo
 	if err != nil {
 		return nil, err
 	}
-	return convert.DataSourceData2UpdateReply(data), err
+	reply := &pb.DataSourceUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.DataSourceData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *DataSourceService) CreateDataSource(ctx context.Context, req *pb.DataSourceCreateReq) (*pb.DataSourceCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *DataSourceService) CreateDataSource(ctx context.Context, req *pb.DataSo
 	if err != nil {
 		return nil, err
 	}
-	return convert.DataSourceData2CreateReply(data), err
+	reply := &pb.DataSourceCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.DataSourceData2Reply(data),
+	}
+	return reply, err
 }
 func (s *DataSourceService) DeleteDataSource(ctx context.Context, req *pb.DataSourceDeleteReq) (*pb.DataSourceDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *DataSourceService) DeleteDataSource(ctx context.Context, req *pb.DataSo
 	if err != nil {
 		return nil, err
 	}
-	return &pb.DataSourceDeleteReply{Result: err == nil}, err
+	return &pb.DataSourceDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *DataSourceService) BatchDeleteDataSource(ctx context.Context, req *pb.DataSourceBatchDeleteReq) (*pb.DataSourceDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *DataSourceService) BatchDeleteDataSource(ctx context.Context, req *pb.D
 	if err != nil {
 		return nil, err
 	}
-	return &pb.DataSourceDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.DataSourceDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

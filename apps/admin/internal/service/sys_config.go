@@ -28,25 +28,32 @@ func (s *SysConfigService) GetPageSysConfig(ctx context.Context, req *pb.SysConf
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysConfigReply, 0)
+	items := make([]*pb.SysConfigData, 0)
 	for i := range datas {
 		items = append(items, convert.SysConfigData2Reply(datas[i]))
 	}
 	reply := &pb.SysConfigPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysConfigService) GetSysConfig(ctx context.Context, req *pb.SysConfigReq) (*pb.SysConfigReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysConfig")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysConfigData2Reply(daya), err
+	reply := &pb.SysConfigReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysConfigService) UpdateSysConfig(ctx context.Context, req *pb.SysConfigUpdateReq) (*pb.SysConfigUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysConfigService) UpdateSysConfig(ctx context.Context, req *pb.SysConfi
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysConfigData2UpdateReply(data), err
+	reply := &pb.SysConfigUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysConfigService) CreateSysConfig(ctx context.Context, req *pb.SysConfigCreateReq) (*pb.SysConfigCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysConfigService) CreateSysConfig(ctx context.Context, req *pb.SysConfi
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysConfigData2CreateReply(data), err
+	reply := &pb.SysConfigCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysConfigData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysConfigService) DeleteSysConfig(ctx context.Context, req *pb.SysConfigDeleteReq) (*pb.SysConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysConfigService) DeleteSysConfig(ctx context.Context, req *pb.SysConfi
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysConfigDeleteReply{Result: err == nil}, err
+	return &pb.SysConfigDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysConfigService) BatchDeleteSysConfig(ctx context.Context, req *pb.SysConfigBatchDeleteReq) (*pb.SysConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysConfigService) BatchDeleteSysConfig(ctx context.Context, req *pb.Sys
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysConfigDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysConfigDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -28,25 +28,32 @@ func (s *ResourceStorageService) GetPageResourceStorage(ctx context.Context, req
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.ResourceStorageReply, 0)
+	items := make([]*pb.ResourceStorageData, 0)
 	for i := range datas {
 		items = append(items, convert.ResourceStorageData2Reply(datas[i]))
 	}
 	reply := &pb.ResourceStoragePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *ResourceStorageService) GetResourceStorage(ctx context.Context, req *pb.ResourceStorageReq) (*pb.ResourceStorageReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetResourceStorage")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.ResourceStorageData2Reply(daya), err
+	reply := &pb.ResourceStorageReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ResourceStorageData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ResourceStorageService) UpdateResourceStorage(ctx context.Context, req *pb.ResourceStorageUpdateReq) (*pb.ResourceStorageUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *ResourceStorageService) UpdateResourceStorage(ctx context.Context, req 
 	if err != nil {
 		return nil, err
 	}
-	return convert.ResourceStorageData2UpdateReply(data), err
+	reply := &pb.ResourceStorageUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ResourceStorageData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ResourceStorageService) CreateResourceStorage(ctx context.Context, req *pb.ResourceStorageCreateReq) (*pb.ResourceStorageCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *ResourceStorageService) CreateResourceStorage(ctx context.Context, req 
 	if err != nil {
 		return nil, err
 	}
-	return convert.ResourceStorageData2CreateReply(data), err
+	reply := &pb.ResourceStorageCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ResourceStorageData2Reply(data),
+	}
+	return reply, err
 }
 func (s *ResourceStorageService) DeleteResourceStorage(ctx context.Context, req *pb.ResourceStorageDeleteReq) (*pb.ResourceStorageDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *ResourceStorageService) DeleteResourceStorage(ctx context.Context, req 
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ResourceStorageDeleteReply{Result: err == nil}, err
+	return &pb.ResourceStorageDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *ResourceStorageService) BatchDeleteResourceStorage(ctx context.Context, req *pb.ResourceStorageBatchDeleteReq) (*pb.ResourceStorageDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *ResourceStorageService) BatchDeleteResourceStorage(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ResourceStorageDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.ResourceStorageDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

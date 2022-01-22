@@ -83,94 +83,11 @@ func SysApiData2Req(v *ent.SysApi) *v1.SysApiReq {
 	}
 }
 
-func SysApiReply2Data(v *v1.SysApiReply) *ent.SysApi {
+func SysApiData2Reply(v *ent.SysApi) *v1.SysApiData {
 	if v == nil {
 		return nil
 	}
-	return &ent.SysApi{
-		ID:        v.Id,
-		Handle:    v.Handle,
-		Title:     v.Title,
-		Path:      v.Path,
-		Action:    v.Action,
-		Type:      v.Type,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysApiData2Reply(v *ent.SysApi) *v1.SysApiReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysApiReply{
-		Id:        v.ID,
-		Handle:    v.Handle,
-		Title:     v.Title,
-		Path:      v.Path,
-		Action:    v.Action,
-		Type:      v.Type,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysApiUpdateReply2Data(v *v1.SysApiUpdateReply) *ent.SysApi {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysApi{
-		ID:     v.Id,
-		Handle: v.Handle,
-		Title:  v.Title,
-		Path:   v.Path,
-		Action: v.Action,
-	}
-}
-
-func SysApiData2UpdateReply(v *ent.SysApi) *v1.SysApiUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysApiUpdateReply{
-		Id:     v.ID,
-		Handle: v.Handle,
-		Title:  v.Title,
-		Path:   v.Path,
-		Action: v.Action,
-	}
-}
-
-func SysApiCreateReply2Data(v *v1.SysApiCreateReply) *ent.SysApi {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysApi{
-		ID:        v.Id,
-		Handle:    v.Handle,
-		Title:     v.Title,
-		Path:      v.Path,
-		Action:    v.Action,
-		Type:      v.Type,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysApiData2CreateReply(v *ent.SysApi) *v1.SysApiCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysApiCreateReply{
+	return &v1.SysApiData{
 		Id:        v.ID,
 		Handle:    v.Handle,
 		Title:     v.Title,

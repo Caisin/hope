@@ -77,89 +77,11 @@ func UserConsumeData2Req(v *ent.UserConsume) *v1.UserConsumeReq {
 	}
 }
 
-func UserConsumeReply2Data(v *v1.UserConsumeReply) *ent.UserConsume {
+func UserConsumeData2Reply(v *ent.UserConsume) *v1.UserConsumeData {
 	if v == nil {
 		return nil
 	}
-	return &ent.UserConsume{
-		ID:        v.Id,
-		NovelId:   v.NovelId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Discount:  v.Discount,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserConsumeData2Reply(v *ent.UserConsume) *v1.UserConsumeReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserConsumeReply{
-		Id:        v.ID,
-		NovelId:   v.NovelId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Discount:  v.Discount,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserConsumeUpdateReply2Data(v *v1.UserConsumeUpdateReply) *ent.UserConsume {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserConsume{
-		ID:      v.Id,
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
-	}
-}
-
-func UserConsumeData2UpdateReply(v *ent.UserConsume) *v1.UserConsumeUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserConsumeUpdateReply{
-		Id:      v.ID,
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
-	}
-}
-
-func UserConsumeCreateReply2Data(v *v1.UserConsumeCreateReply) *ent.UserConsume {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserConsume{
-		ID:        v.Id,
-		NovelId:   v.NovelId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Discount:  v.Discount,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserConsumeData2CreateReply(v *ent.UserConsume) *v1.UserConsumeCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserConsumeCreateReply{
+	return &v1.UserConsumeData{
 		Id:        v.ID,
 		NovelId:   v.NovelId,
 		Coin:      v.Coin,

@@ -565,72 +565,18 @@
     "v1CustomerNovelConfigCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "groupCode": {
-          "type": "string",
-          "title": "分组编码"
-        },
-        "innerGroupCode": {
-          "type": "string",
-          "title": "嵌套分组"
-        },
-        "groupName": {
-          "type": "string",
-          "title": "分组名称"
-        },
-        "typeId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "类型ID"
-        },
-        "TypeCode": {
-          "type": "string",
-          "title": "类型编码"
-        },
-        "typeName": {
-          "type": "string",
-          "title": "类型名称"
-        },
-        "fieldName": {
-          "type": "string",
-          "title": "字段名称"
-        },
-        "defaultNum": {
-          "type": "integer",
-          "format": "int32",
-          "title": "默认数量"
-        },
-        "state": {
-          "type": "boolean",
-          "title": "是否可用"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1CustomerNovelConfigData",
+          "title": "结果数据"
         }
       },
       "title": "创建CustomerNovelConfig返回"
@@ -679,33 +625,7 @@
       },
       "title": "创建CustomerNovelConfig请求"
     },
-    "v1CustomerNovelConfigDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除CustomerNovelConfig返回"
-    },
-    "v1CustomerNovelConfigPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1CustomerNovelConfigReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1CustomerNovelConfigReply": {
+    "v1CustomerNovelConfigData": {
       "type": "object",
       "properties": {
         "id": {
@@ -776,7 +696,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1CustomerNovelConfigDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除CustomerNovelConfig返回"
+    },
+    "v1CustomerNovelConfigPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1CustomerNovelConfigData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1CustomerNovelConfigReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1CustomerNovelConfigData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1CustomerNovelConfigReq": {
       "type": "object",
@@ -854,47 +839,18 @@
     "v1CustomerNovelConfigUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "groupCode": {
+        "message": {
           "type": "string",
-          "title": "分组编码"
+          "title": "消息"
         },
-        "innerGroupCode": {
-          "type": "string",
-          "title": "嵌套分组"
-        },
-        "groupName": {
-          "type": "string",
-          "title": "分组名称"
-        },
-        "typeId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "类型ID"
-        },
-        "TypeCode": {
-          "type": "string",
-          "title": "类型编码"
-        },
-        "typeName": {
-          "type": "string",
-          "title": "类型名称"
-        },
-        "fieldName": {
-          "type": "string",
-          "title": "字段名称"
-        },
-        "defaultNum": {
-          "type": "integer",
-          "format": "int32",
-          "title": "默认数量"
-        },
-        "state": {
-          "type": "boolean",
-          "title": "是否可用"
+        "result": {
+          "$ref": "#/definitions/v1CustomerNovelConfigData",
+          "title": "结果数据"
         }
       },
       "title": "更新CustomerNovelConfig返回"

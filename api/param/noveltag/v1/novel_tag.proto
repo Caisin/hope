@@ -58,6 +58,28 @@ service NovelTag {
 
 }
 
+// 实体数据
+message NovelTagData {
+    int64 id = 1;
+    //主键
+    int64 tagId = 2;
+    //标签名称
+    string tagName = 3;
+    //备注
+    string remark = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
 // 查询搜索请求
 message NovelTagPageReq {
     //分页查询参数
@@ -68,10 +90,14 @@ message NovelTagPageReq {
 
 // 查询搜索返回
 message NovelTagPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated NovelTagReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated NovelTagData items = 4;
 }
 
 
@@ -97,26 +123,14 @@ message NovelTagReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message NovelTagReply {
-    int64 id = 1;
-    //主键
-    int64 tagId = 2;
-    //标签名称
-    string tagName = 3;
-    //备注
-    string remark = 4;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 5;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 6;
-    //创建者
-    int64 createBy = 7;
-    //更新者
-    int64 updateBy = 8;
-    //租户
-    int64 tenantId = 9;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelTagData result = 3;
 }
 
 // 创建NovelTag请求
@@ -132,24 +146,12 @@ message NovelTagCreateReq {
 
 // 创建NovelTag返回
 message NovelTagCreateReply {
-    int64 id = 1;
-    //主键
-    int64 tagId = 2;
-    //标签名称
-    string tagName = 3;
-    //备注
-    string remark = 4;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 5;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 6;
-    //创建者
-    int64 createBy = 7;
-    //更新者
-    int64 updateBy = 8;
-    //租户
-    int64 tenantId = 9;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelTagData result = 3;
 }
 
 // 更新NovelTag请求
@@ -167,14 +169,12 @@ message NovelTagUpdateReq {
 
 // 更新NovelTag返回
 message NovelTagUpdateReply {
-    int64 id = 1;
-    //主键
-    int64 tagId = 2;
-    //标签名称
-    string tagName = 3;
-    //备注
-    string remark = 4;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelTagData result = 3;
 }
 
 // 删除NovelTag请求
@@ -191,6 +191,11 @@ message NovelTagBatchDeleteReq {
 
 // 删除NovelTag返回
 message NovelTagDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

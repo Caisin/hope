@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysOperaLogRepo(data *Data, logger log.Logger) biz.SysOperaLogRepo {
 
 // CreateSysOperaLog 创建
 func (r *sysOperaLogRepo) CreateSysOperaLog(ctx context.Context, req *v1.SysOperaLogCreateReq) (*ent.SysOperaLog, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysOperaLog.Create().
 		SetUserId(req.UserId).
@@ -57,6 +62,8 @@ func (r *sysOperaLogRepo) CreateSysOperaLog(ctx context.Context, req *v1.SysOper
 		SetUserAgent(req.UserAgent).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -73,7 +80,13 @@ func (r *sysOperaLogRepo) BatchDeleteSysOperaLog(ctx context.Context, req *v1.Sy
 
 // UpdateSysOperaLog 更新
 func (r *sysOperaLogRepo) UpdateSysOperaLog(ctx context.Context, req *v1.SysOperaLogUpdateReq) (*ent.SysOperaLog, error) {
-	return r.data.db.SysOperaLog.UpdateOne(convert.SysOperaLogUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysOperaLogUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysOperaLog.UpdateOne(data).Save(ctx)
 }
 
 // GetSysOperaLog 根据Id查询

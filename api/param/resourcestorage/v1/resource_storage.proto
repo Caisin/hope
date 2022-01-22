@@ -58,6 +58,58 @@ service ResourceStorage {
 
 }
 
+// 实体数据
+message ResourceStorageData {
+    int64 id = 1;
+    //分组
+    int32 groupId = 2;
+    //存储类型 1
+    int32 storageType = 3;
+    //文件真实的名称
+    string realName = 4;
+    //Bucket 识别符(七牛)
+    string bucket = 5;
+    //文件名称
+    string name = 6;
+    //后缀
+    string suffix = 7;
+    //路径
+    string path = 8;
+    //类型
+    string type = 9;
+    //大小
+    string size = 10;
+    //(sm.sm)删除的URL
+    string deleteUrl = 11;
+    //(sm.sm)图片名称
+    string filename = 12;
+    //文件名(七牛)
+    string key = 13;
+    //(sm.sm)图片高度
+    string height = 14;
+    //(sm.sm)图片地址
+    string url = 15;
+    //(sm.sm)用户名称
+    string username = 16;
+    //(sm.sm)图片宽度
+    string width = 17;
+    //(sm.sm)文件的MD5值
+    string md5code = 18;
+    //备注
+    string remark = 19;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 20;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 21;
+    //创建者
+    int64 createBy = 22;
+    //更新者
+    int64 updateBy = 23;
+    //租户
+    int64 tenantId = 24;
+
+}
+
 // 查询搜索请求
 message ResourceStoragePageReq {
     //分页查询参数
@@ -68,10 +120,14 @@ message ResourceStoragePageReq {
 
 // 查询搜索返回
 message ResourceStoragePageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated ResourceStorageReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated ResourceStorageData items = 4;
 }
 
 
@@ -127,56 +183,14 @@ message ResourceStorageReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message ResourceStorageReply {
-    int64 id = 1;
-    //分组
-    int32 groupId = 2;
-    //存储类型 1
-    int32 storageType = 3;
-    //文件真实的名称
-    string realName = 4;
-    //Bucket 识别符(七牛)
-    string bucket = 5;
-    //文件名称
-    string name = 6;
-    //后缀
-    string suffix = 7;
-    //路径
-    string path = 8;
-    //类型
-    string type = 9;
-    //大小
-    string size = 10;
-    //(sm.sm)删除的URL
-    string deleteUrl = 11;
-    //(sm.sm)图片名称
-    string filename = 12;
-    //文件名(七牛)
-    string key = 13;
-    //(sm.sm)图片高度
-    string height = 14;
-    //(sm.sm)图片地址
-    string url = 15;
-    //(sm.sm)用户名称
-    string username = 16;
-    //(sm.sm)图片宽度
-    string width = 17;
-    //(sm.sm)文件的MD5值
-    string md5code = 18;
-    //备注
-    string remark = 19;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 20;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 21;
-    //创建者
-    int64 createBy = 22;
-    //更新者
-    int64 updateBy = 23;
-    //租户
-    int64 tenantId = 24;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    ResourceStorageData result = 3;
 }
 
 // 创建ResourceStorage请求
@@ -222,54 +236,12 @@ message ResourceStorageCreateReq {
 
 // 创建ResourceStorage返回
 message ResourceStorageCreateReply {
-    int64 id = 1;
-    //分组
-    int32 groupId = 2;
-    //存储类型 1
-    int32 storageType = 3;
-    //文件真实的名称
-    string realName = 4;
-    //Bucket 识别符(七牛)
-    string bucket = 5;
-    //文件名称
-    string name = 6;
-    //后缀
-    string suffix = 7;
-    //路径
-    string path = 8;
-    //类型
-    string type = 9;
-    //大小
-    string size = 10;
-    //(sm.sm)删除的URL
-    string deleteUrl = 11;
-    //(sm.sm)图片名称
-    string filename = 12;
-    //文件名(七牛)
-    string key = 13;
-    //(sm.sm)图片高度
-    string height = 14;
-    //(sm.sm)图片地址
-    string url = 15;
-    //(sm.sm)用户名称
-    string username = 16;
-    //(sm.sm)图片宽度
-    string width = 17;
-    //(sm.sm)文件的MD5值
-    string md5code = 18;
-    //备注
-    string remark = 19;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 20;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 21;
-    //创建者
-    int64 createBy = 22;
-    //更新者
-    int64 updateBy = 23;
-    //租户
-    int64 tenantId = 24;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    ResourceStorageData result = 3;
 }
 
 // 更新ResourceStorage请求
@@ -317,44 +289,12 @@ message ResourceStorageUpdateReq {
 
 // 更新ResourceStorage返回
 message ResourceStorageUpdateReply {
-    int64 id = 1;
-    //分组
-    int32 groupId = 2;
-    //存储类型 1
-    int32 storageType = 3;
-    //文件真实的名称
-    string realName = 4;
-    //Bucket 识别符(七牛)
-    string bucket = 5;
-    //文件名称
-    string name = 6;
-    //后缀
-    string suffix = 7;
-    //路径
-    string path = 8;
-    //类型
-    string type = 9;
-    //大小
-    string size = 10;
-    //(sm.sm)删除的URL
-    string deleteUrl = 11;
-    //(sm.sm)图片名称
-    string filename = 12;
-    //文件名(七牛)
-    string key = 13;
-    //(sm.sm)图片高度
-    string height = 14;
-    //(sm.sm)图片地址
-    string url = 15;
-    //(sm.sm)用户名称
-    string username = 16;
-    //(sm.sm)图片宽度
-    string width = 17;
-    //(sm.sm)文件的MD5值
-    string md5code = 18;
-    //备注
-    string remark = 19;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    ResourceStorageData result = 3;
 }
 
 // 删除ResourceStorage请求
@@ -371,6 +311,11 @@ message ResourceStorageBatchDeleteReq {
 
 // 删除ResourceStorage返回
 message ResourceStorageDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

@@ -58,6 +58,40 @@ service SysDictData {
 
 }
 
+// 实体数据
+message SysDictDataData {
+    int64 id = 1;
+    //字典类型ID
+    int64 typeId = 2;
+    //字典类型
+    string typeCode = 3;
+    //字典排序
+    int32 dictSort = 4;
+    //字典标签
+    string dictLabel = 5;
+    //字典值
+    string dictValue = 6;
+    //是否默认
+    string isDefault = 7;
+    //状态
+    int32 status = 8;
+    //默认
+    string default = 9;
+    //备注
+    string remark = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
 // 查询搜索请求
 message SysDictDataPageReq {
     //分页查询参数
@@ -68,10 +102,14 @@ message SysDictDataPageReq {
 
 // 查询搜索返回
 message SysDictDataPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysDictDataReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysDictDataData items = 4;
 }
 
 
@@ -109,38 +147,14 @@ message SysDictDataReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysDictDataReply {
-    int64 id = 1;
-    //字典类型ID
-    int64 typeId = 2;
-    //字典类型
-    string typeCode = 3;
-    //字典排序
-    int32 dictSort = 4;
-    //字典标签
-    string dictLabel = 5;
-    //字典值
-    string dictValue = 6;
-    //是否默认
-    string isDefault = 7;
-    //状态
-    int32 status = 8;
-    //默认
-    string default = 9;
-    //备注
-    string remark = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDictDataData result = 3;
 }
 
 // 创建SysDictData请求
@@ -168,36 +182,12 @@ message SysDictDataCreateReq {
 
 // 创建SysDictData返回
 message SysDictDataCreateReply {
-    int64 id = 1;
-    //字典类型ID
-    int64 typeId = 2;
-    //字典类型
-    string typeCode = 3;
-    //字典排序
-    int32 dictSort = 4;
-    //字典标签
-    string dictLabel = 5;
-    //字典值
-    string dictValue = 6;
-    //是否默认
-    string isDefault = 7;
-    //状态
-    int32 status = 8;
-    //默认
-    string default = 9;
-    //备注
-    string remark = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDictDataData result = 3;
 }
 
 // 更新SysDictData请求
@@ -227,26 +217,12 @@ message SysDictDataUpdateReq {
 
 // 更新SysDictData返回
 message SysDictDataUpdateReply {
-    int64 id = 1;
-    //字典类型ID
-    int64 typeId = 2;
-    //字典类型
-    string typeCode = 3;
-    //字典排序
-    int32 dictSort = 4;
-    //字典标签
-    string dictLabel = 5;
-    //字典值
-    string dictValue = 6;
-    //是否默认
-    string isDefault = 7;
-    //状态
-    int32 status = 8;
-    //默认
-    string default = 9;
-    //备注
-    string remark = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDictDataData result = 3;
 }
 
 // 删除SysDictData请求
@@ -263,6 +239,11 @@ message SysDictDataBatchDeleteReq {
 
 // 删除SysDictData返回
 message SysDictDataDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

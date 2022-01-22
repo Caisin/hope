@@ -28,25 +28,32 @@ func (s *CasbinRuleService) GetPageCasbinRule(ctx context.Context, req *pb.Casbi
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.CasbinRuleReply, 0)
+	items := make([]*pb.CasbinRuleData, 0)
 	for i := range datas {
 		items = append(items, convert.CasbinRuleData2Reply(datas[i]))
 	}
 	reply := &pb.CasbinRulePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *CasbinRuleService) GetCasbinRule(ctx context.Context, req *pb.CasbinRuleReq) (*pb.CasbinRuleReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetCasbinRule")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.CasbinRuleData2Reply(daya), err
+	reply := &pb.CasbinRuleReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.CasbinRuleData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *CasbinRuleService) UpdateCasbinRule(ctx context.Context, req *pb.CasbinRuleUpdateReq) (*pb.CasbinRuleUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *CasbinRuleService) UpdateCasbinRule(ctx context.Context, req *pb.Casbin
 	if err != nil {
 		return nil, err
 	}
-	return convert.CasbinRuleData2UpdateReply(data), err
+	reply := &pb.CasbinRuleUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.CasbinRuleData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *CasbinRuleService) CreateCasbinRule(ctx context.Context, req *pb.CasbinRuleCreateReq) (*pb.CasbinRuleCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *CasbinRuleService) CreateCasbinRule(ctx context.Context, req *pb.Casbin
 	if err != nil {
 		return nil, err
 	}
-	return convert.CasbinRuleData2CreateReply(data), err
+	reply := &pb.CasbinRuleCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.CasbinRuleData2Reply(data),
+	}
+	return reply, err
 }
 func (s *CasbinRuleService) DeleteCasbinRule(ctx context.Context, req *pb.CasbinRuleDeleteReq) (*pb.CasbinRuleDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *CasbinRuleService) DeleteCasbinRule(ctx context.Context, req *pb.Casbin
 	if err != nil {
 		return nil, err
 	}
-	return &pb.CasbinRuleDeleteReply{Result: err == nil}, err
+	return &pb.CasbinRuleDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *CasbinRuleService) BatchDeleteCasbinRule(ctx context.Context, req *pb.CasbinRuleBatchDeleteReq) (*pb.CasbinRuleDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *CasbinRuleService) BatchDeleteCasbinRule(ctx context.Context, req *pb.C
 	if err != nil {
 		return nil, err
 	}
-	return &pb.CasbinRuleDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.CasbinRuleDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

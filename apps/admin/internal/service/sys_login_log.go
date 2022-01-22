@@ -28,25 +28,32 @@ func (s *SysLoginLogService) GetPageSysLoginLog(ctx context.Context, req *pb.Sys
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysLoginLogReply, 0)
+	items := make([]*pb.SysLoginLogData, 0)
 	for i := range datas {
 		items = append(items, convert.SysLoginLogData2Reply(datas[i]))
 	}
 	reply := &pb.SysLoginLogPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysLoginLogService) GetSysLoginLog(ctx context.Context, req *pb.SysLoginLogReq) (*pb.SysLoginLogReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysLoginLog")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysLoginLogData2Reply(daya), err
+	reply := &pb.SysLoginLogReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysLoginLogData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysLoginLogService) UpdateSysLoginLog(ctx context.Context, req *pb.SysLoginLogUpdateReq) (*pb.SysLoginLogUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysLoginLogService) UpdateSysLoginLog(ctx context.Context, req *pb.SysL
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysLoginLogData2UpdateReply(data), err
+	reply := &pb.SysLoginLogUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysLoginLogData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysLoginLogService) CreateSysLoginLog(ctx context.Context, req *pb.SysLoginLogCreateReq) (*pb.SysLoginLogCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysLoginLogService) CreateSysLoginLog(ctx context.Context, req *pb.SysL
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysLoginLogData2CreateReply(data), err
+	reply := &pb.SysLoginLogCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysLoginLogData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysLoginLogService) DeleteSysLoginLog(ctx context.Context, req *pb.SysLoginLogDeleteReq) (*pb.SysLoginLogDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysLoginLogService) DeleteSysLoginLog(ctx context.Context, req *pb.SysL
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysLoginLogDeleteReply{Result: err == nil}, err
+	return &pb.SysLoginLogDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysLoginLogService) BatchDeleteSysLoginLog(ctx context.Context, req *pb.SysLoginLogBatchDeleteReq) (*pb.SysLoginLogDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysLoginLogService) BatchDeleteSysLoginLog(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysLoginLogDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysLoginLogDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -10,6 +10,7 @@ import (
 	"hope/apps/novel/internal/data/ent/payorder"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/schema"
+	"hope/pkg/auth"
 	"hope/pkg/pagin"
 	"hope/pkg/util/str"
 	"time"
@@ -30,6 +31,10 @@ func NewPayOrderRepo(data *Data, logger log.Logger) biz.PayOrderRepo {
 
 // CreatePayOrder 创建
 func (r *payOrderRepo) CreatePayOrder(ctx context.Context, req *v1.PayOrderCreateReq) (*ent.PayOrder, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.PayOrder.Create().
 		SetOrderId(req.OrderId).
@@ -55,6 +60,8 @@ func (r *payOrderRepo) CreatePayOrder(ctx context.Context, req *v1.PayOrderCreat
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -71,7 +78,13 @@ func (r *payOrderRepo) BatchDeletePayOrder(ctx context.Context, req *v1.PayOrder
 
 // UpdatePayOrder 更新
 func (r *payOrderRepo) UpdatePayOrder(ctx context.Context, req *v1.PayOrderUpdateReq) (*ent.PayOrder, error) {
-	return r.data.db.PayOrder.UpdateOne(convert.PayOrderUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.PayOrderUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.PayOrder.UpdateOne(data).Save(ctx)
 }
 
 // GetPayOrder 根据Id查询

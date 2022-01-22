@@ -28,25 +28,32 @@ func (s *SysJobService) GetPageSysJob(ctx context.Context, req *pb.SysJobPageReq
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysJobReply, 0)
+	items := make([]*pb.SysJobData, 0)
 	for i := range datas {
 		items = append(items, convert.SysJobData2Reply(datas[i]))
 	}
 	reply := &pb.SysJobPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysJobService) GetSysJob(ctx context.Context, req *pb.SysJobReq) (*pb.SysJobReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysJob")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysJobData2Reply(daya), err
+	reply := &pb.SysJobReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysJobData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysJobService) UpdateSysJob(ctx context.Context, req *pb.SysJobUpdateReq) (*pb.SysJobUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysJobService) UpdateSysJob(ctx context.Context, req *pb.SysJobUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysJobData2UpdateReply(data), err
+	reply := &pb.SysJobUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysJobData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysJobService) CreateSysJob(ctx context.Context, req *pb.SysJobCreateReq) (*pb.SysJobCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysJobService) CreateSysJob(ctx context.Context, req *pb.SysJobCreateRe
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysJobData2CreateReply(data), err
+	reply := &pb.SysJobCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysJobData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysJobService) DeleteSysJob(ctx context.Context, req *pb.SysJobDeleteReq) (*pb.SysJobDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysJobService) DeleteSysJob(ctx context.Context, req *pb.SysJobDeleteRe
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysJobDeleteReply{Result: err == nil}, err
+	return &pb.SysJobDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysJobService) BatchDeleteSysJob(ctx context.Context, req *pb.SysJobBatchDeleteReq) (*pb.SysJobDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysJobService) BatchDeleteSysJob(ctx context.Context, req *pb.SysJobBat
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysJobDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysJobDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

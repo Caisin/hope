@@ -28,25 +28,32 @@ func (s *QiniuConfigService) GetPageQiniuConfig(ctx context.Context, req *pb.Qin
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.QiniuConfigReply, 0)
+	items := make([]*pb.QiniuConfigData, 0)
 	for i := range datas {
 		items = append(items, convert.QiniuConfigData2Reply(datas[i]))
 	}
 	reply := &pb.QiniuConfigPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *QiniuConfigService) GetQiniuConfig(ctx context.Context, req *pb.QiniuConfigReq) (*pb.QiniuConfigReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetQiniuConfig")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.QiniuConfigData2Reply(daya), err
+	reply := &pb.QiniuConfigReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.QiniuConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *QiniuConfigService) UpdateQiniuConfig(ctx context.Context, req *pb.QiniuConfigUpdateReq) (*pb.QiniuConfigUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *QiniuConfigService) UpdateQiniuConfig(ctx context.Context, req *pb.Qini
 	if err != nil {
 		return nil, err
 	}
-	return convert.QiniuConfigData2UpdateReply(data), err
+	reply := &pb.QiniuConfigUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.QiniuConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *QiniuConfigService) CreateQiniuConfig(ctx context.Context, req *pb.QiniuConfigCreateReq) (*pb.QiniuConfigCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *QiniuConfigService) CreateQiniuConfig(ctx context.Context, req *pb.Qini
 	if err != nil {
 		return nil, err
 	}
-	return convert.QiniuConfigData2CreateReply(data), err
+	reply := &pb.QiniuConfigCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.QiniuConfigData2Reply(data),
+	}
+	return reply, err
 }
 func (s *QiniuConfigService) DeleteQiniuConfig(ctx context.Context, req *pb.QiniuConfigDeleteReq) (*pb.QiniuConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *QiniuConfigService) DeleteQiniuConfig(ctx context.Context, req *pb.Qini
 	if err != nil {
 		return nil, err
 	}
-	return &pb.QiniuConfigDeleteReply{Result: err == nil}, err
+	return &pb.QiniuConfigDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *QiniuConfigService) BatchDeleteQiniuConfig(ctx context.Context, req *pb.QiniuConfigBatchDeleteReq) (*pb.QiniuConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *QiniuConfigService) BatchDeleteQiniuConfig(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	return &pb.QiniuConfigDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.QiniuConfigDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

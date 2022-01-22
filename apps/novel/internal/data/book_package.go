@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/bookpackage"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewBookPackageRepo(data *Data, logger log.Logger) biz.BookPackageRepo {
 
 // CreateBookPackage 创建
 func (r *bookPackageRepo) CreateBookPackage(ctx context.Context, req *v1.BookPackageCreateReq) (*ent.BookPackage, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.BookPackage.Create().
 		SetActivityCode(req.ActivityCode).
@@ -40,6 +45,8 @@ func (r *bookPackageRepo) CreateBookPackage(ctx context.Context, req *v1.BookPac
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -56,7 +63,13 @@ func (r *bookPackageRepo) BatchDeleteBookPackage(ctx context.Context, req *v1.Bo
 
 // UpdateBookPackage 更新
 func (r *bookPackageRepo) UpdateBookPackage(ctx context.Context, req *v1.BookPackageUpdateReq) (*ent.BookPackage, error) {
-	return r.data.db.BookPackage.UpdateOne(convert.BookPackageUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.BookPackageUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.BookPackage.UpdateOne(data).Save(ctx)
 }
 
 // GetBookPackage 根据Id查询

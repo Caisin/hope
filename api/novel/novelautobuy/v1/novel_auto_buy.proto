@@ -58,6 +58,26 @@ service NovelAutoBuy {
 
 }
 
+// 实体数据
+message NovelAutoBuyData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //小说编号
+    int64 novelId = 3;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 4;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 5;
+    //创建者
+    int64 createBy = 6;
+    //更新者
+    int64 updateBy = 7;
+    //租户
+    int64 tenantId = 8;
+
+}
+
 // 查询搜索请求
 message NovelAutoBuyPageReq {
     //分页查询参数
@@ -68,10 +88,14 @@ message NovelAutoBuyPageReq {
 
 // 查询搜索返回
 message NovelAutoBuyPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated NovelAutoBuyReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated NovelAutoBuyData items = 4;
 }
 
 
@@ -95,24 +119,14 @@ message NovelAutoBuyReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message NovelAutoBuyReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //小说编号
-    int64 novelId = 3;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 4;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 5;
-    //创建者
-    int64 createBy = 6;
-    //更新者
-    int64 updateBy = 7;
-    //租户
-    int64 tenantId = 8;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelAutoBuyData result = 3;
 }
 
 // 创建NovelAutoBuy请求
@@ -126,22 +140,12 @@ message NovelAutoBuyCreateReq {
 
 // 创建NovelAutoBuy返回
 message NovelAutoBuyCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //小说编号
-    int64 novelId = 3;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 4;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 5;
-    //创建者
-    int64 createBy = 6;
-    //更新者
-    int64 updateBy = 7;
-    //租户
-    int64 tenantId = 8;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelAutoBuyData result = 3;
 }
 
 // 更新NovelAutoBuy请求
@@ -157,12 +161,12 @@ message NovelAutoBuyUpdateReq {
 
 // 更新NovelAutoBuy返回
 message NovelAutoBuyUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //小说编号
-    int64 novelId = 3;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelAutoBuyData result = 3;
 }
 
 // 删除NovelAutoBuy请求
@@ -179,6 +183,11 @@ message NovelAutoBuyBatchDeleteReq {
 
 // 删除NovelAutoBuy返回
 message NovelAutoBuyDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

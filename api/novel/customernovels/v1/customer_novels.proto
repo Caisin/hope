@@ -58,6 +58,42 @@ service CustomerNovels {
 
 }
 
+// 实体数据
+message CustomerNovelsData {
+    int64 id = 1;
+    //小说编码
+    int64 novelId = 2;
+    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
+    int32 typeId = 3;
+    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
+    string typeCode = 4;
+    //分组编码
+    string groupCode = 5;
+    //字段
+    string fieldName = 6;
+    //封面,无值使用小说封面
+    string cover = 7;
+    //排序字段,值越大,越靠前
+    int32 orderNum = 8;
+    //备注
+    string remark = 9;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 10;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
 // 查询搜索请求
 message CustomerNovelsPageReq {
     //分页查询参数
@@ -68,10 +104,14 @@ message CustomerNovelsPageReq {
 
 // 查询搜索返回
 message CustomerNovelsPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated CustomerNovelsReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated CustomerNovelsData items = 4;
 }
 
 
@@ -111,40 +151,14 @@ message CustomerNovelsReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message CustomerNovelsReply {
-    int64 id = 1;
-    //小说编码
-    int64 novelId = 2;
-    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
-    int32 typeId = 3;
-    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
-    string typeCode = 4;
-    //分组编码
-    string groupCode = 5;
-    //字段
-    string fieldName = 6;
-    //封面,无值使用小说封面
-    string cover = 7;
-    //排序字段,值越大,越靠前
-    int32 orderNum = 8;
-    //备注
-    string remark = 9;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 10;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CustomerNovelsData result = 3;
 }
 
 // 创建CustomerNovels请求
@@ -174,38 +188,12 @@ message CustomerNovelsCreateReq {
 
 // 创建CustomerNovels返回
 message CustomerNovelsCreateReply {
-    int64 id = 1;
-    //小说编码
-    int64 novelId = 2;
-    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
-    int32 typeId = 3;
-    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
-    string typeCode = 4;
-    //分组编码
-    string groupCode = 5;
-    //字段
-    string fieldName = 6;
-    //封面,无值使用小说封面
-    string cover = 7;
-    //排序字段,值越大,越靠前
-    int32 orderNum = 8;
-    //备注
-    string remark = 9;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 10;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CustomerNovelsData result = 3;
 }
 
 // 更新CustomerNovels请求
@@ -237,28 +225,12 @@ message CustomerNovelsUpdateReq {
 
 // 更新CustomerNovels返回
 message CustomerNovelsUpdateReply {
-    int64 id = 1;
-    //小说编码
-    int64 novelId = 2;
-    //类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值
-    int32 typeId = 3;
-    //类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值
-    string typeCode = 4;
-    //分组编码
-    string groupCode = 5;
-    //字段
-    string fieldName = 6;
-    //封面,无值使用小说封面
-    string cover = 7;
-    //排序字段,值越大,越靠前
-    int32 orderNum = 8;
-    //备注
-    string remark = 9;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 10;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CustomerNovelsData result = 3;
 }
 
 // 删除CustomerNovels请求
@@ -275,6 +247,11 @@ message CustomerNovelsBatchDeleteReq {
 
 // 删除CustomerNovels返回
 message CustomerNovelsDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

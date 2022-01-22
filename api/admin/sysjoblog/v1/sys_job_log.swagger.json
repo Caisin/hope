@@ -511,60 +511,18 @@
     "v1SysJobLogCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "jobId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "编码"
+          "title": "返回码"
         },
-        "jobName": {
+        "message": {
           "type": "string",
-          "title": "名称"
+          "title": "消息"
         },
-        "entryId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "job启动时返回的id"
-        },
-        "status": {
-          "type": "boolean",
-          "title": "状态"
-        },
-        "duration": {
-          "type": "string",
-          "title": "耗时"
-        },
-        "info": {
-          "type": "string",
-          "title": "执行详情,错误信息"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysJobLogData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysJobLog返回"
@@ -601,33 +559,7 @@
       },
       "title": "创建SysJobLog请求"
     },
-    "v1SysJobLogDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysJobLog返回"
-    },
-    "v1SysJobLogPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysJobLogReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysJobLogReply": {
+    "v1SysJobLogData": {
       "type": "object",
       "properties": {
         "id": {
@@ -686,7 +618,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysJobLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysJobLog返回"
+    },
+    "v1SysJobLogPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysJobLogData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysJobLogReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysJobLogData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysJobLogReq": {
       "type": "object",
@@ -752,35 +749,18 @@
     "v1SysJobLogUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "jobId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "编码"
+          "title": "返回码"
         },
-        "jobName": {
+        "message": {
           "type": "string",
-          "title": "名称"
+          "title": "消息"
         },
-        "entryId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "job启动时返回的id"
-        },
-        "status": {
-          "type": "boolean",
-          "title": "状态"
-        },
-        "duration": {
-          "type": "string",
-          "title": "耗时"
-        },
-        "info": {
-          "type": "string",
-          "title": "执行详情,错误信息"
+        "result": {
+          "$ref": "#/definitions/v1SysJobLogData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysJobLog返回"

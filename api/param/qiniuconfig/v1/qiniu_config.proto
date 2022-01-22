@@ -58,6 +58,34 @@ service QiniuConfig {
 
 }
 
+// 实体数据
+message QiniuConfigData {
+    int64 id = 1;
+    //accessKey
+    string accessKey = 2;
+    //Bucket 识别符
+    string bucket = 3;
+    //外链域名
+    string host = 4;
+    //secretKey
+    string secretKey = 5;
+    //空间类型
+    string type = 6;
+    //机房
+    string zone = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
 // 查询搜索请求
 message QiniuConfigPageReq {
     //分页查询参数
@@ -68,10 +96,14 @@ message QiniuConfigPageReq {
 
 // 查询搜索返回
 message QiniuConfigPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated QiniuConfigReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated QiniuConfigData items = 4;
 }
 
 
@@ -103,32 +135,14 @@ message QiniuConfigReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message QiniuConfigReply {
-    int64 id = 1;
-    //accessKey
-    string accessKey = 2;
-    //Bucket 识别符
-    string bucket = 3;
-    //外链域名
-    string host = 4;
-    //secretKey
-    string secretKey = 5;
-    //空间类型
-    string type = 6;
-    //机房
-    string zone = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    QiniuConfigData result = 3;
 }
 
 // 创建QiniuConfig请求
@@ -150,30 +164,12 @@ message QiniuConfigCreateReq {
 
 // 创建QiniuConfig返回
 message QiniuConfigCreateReply {
-    int64 id = 1;
-    //accessKey
-    string accessKey = 2;
-    //Bucket 识别符
-    string bucket = 3;
-    //外链域名
-    string host = 4;
-    //secretKey
-    string secretKey = 5;
-    //空间类型
-    string type = 6;
-    //机房
-    string zone = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    QiniuConfigData result = 3;
 }
 
 // 更新QiniuConfig请求
@@ -197,20 +193,12 @@ message QiniuConfigUpdateReq {
 
 // 更新QiniuConfig返回
 message QiniuConfigUpdateReply {
-    int64 id = 1;
-    //accessKey
-    string accessKey = 2;
-    //Bucket 识别符
-    string bucket = 3;
-    //外链域名
-    string host = 4;
-    //secretKey
-    string secretKey = 5;
-    //空间类型
-    string type = 6;
-    //机房
-    string zone = 7;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    QiniuConfigData result = 3;
 }
 
 // 删除QiniuConfig请求
@@ -227,6 +215,11 @@ message QiniuConfigBatchDeleteReq {
 
 // 删除QiniuConfig返回
 message QiniuConfigDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

@@ -58,6 +58,36 @@ service SysDept {
 
 }
 
+// 实体数据
+message SysDeptData {
+    int64 id = 1;
+    //部门路径
+    string deptPath = 2;
+    //部门名称
+    string deptName = 3;
+    //排序
+    int32 sort = 4;
+    //负责人
+    string leader = 5;
+    //手机
+    string phone = 6;
+    //邮箱
+    string email = 7;
+    //状态
+    int32 status = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
 // 查询搜索请求
 message SysDeptPageReq {
     //分页查询参数
@@ -68,10 +98,14 @@ message SysDeptPageReq {
 
 // 查询搜索返回
 message SysDeptPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysDeptReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysDeptData items = 4;
 }
 
 
@@ -105,34 +139,14 @@ message SysDeptReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysDeptReply {
-    int64 id = 1;
-    //部门路径
-    string deptPath = 2;
-    //部门名称
-    string deptName = 3;
-    //排序
-    int32 sort = 4;
-    //负责人
-    string leader = 5;
-    //手机
-    string phone = 6;
-    //邮箱
-    string email = 7;
-    //状态
-    int32 status = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDeptData result = 3;
 }
 
 // 创建SysDept请求
@@ -156,32 +170,12 @@ message SysDeptCreateReq {
 
 // 创建SysDept返回
 message SysDeptCreateReply {
-    int64 id = 1;
-    //部门路径
-    string deptPath = 2;
-    //部门名称
-    string deptName = 3;
-    //排序
-    int32 sort = 4;
-    //负责人
-    string leader = 5;
-    //手机
-    string phone = 6;
-    //邮箱
-    string email = 7;
-    //状态
-    int32 status = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDeptData result = 3;
 }
 
 // 更新SysDept请求
@@ -207,22 +201,12 @@ message SysDeptUpdateReq {
 
 // 更新SysDept返回
 message SysDeptUpdateReply {
-    int64 id = 1;
-    //部门路径
-    string deptPath = 2;
-    //部门名称
-    string deptName = 3;
-    //排序
-    int32 sort = 4;
-    //负责人
-    string leader = 5;
-    //手机
-    string phone = 6;
-    //邮箱
-    string email = 7;
-    //状态
-    int32 status = 8;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDeptData result = 3;
 }
 
 // 删除SysDept请求
@@ -239,6 +223,11 @@ message SysDeptBatchDeleteReq {
 
 // 删除SysDept返回
 message SysDeptDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

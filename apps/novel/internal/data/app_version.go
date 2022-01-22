@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/appversion"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewAppVersionRepo(data *Data, logger log.Logger) biz.AppVersionRepo {
 
 // CreateAppVersion 创建
 func (r *appVersionRepo) CreateAppVersion(ctx context.Context, req *v1.AppVersionCreateReq) (*ent.AppVersion, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.AppVersion.Create().
 		SetTitle(req.Title).
@@ -39,6 +44,8 @@ func (r *appVersionRepo) CreateAppVersion(ctx context.Context, req *v1.AppVersio
 		SetPlatform(req.Platform).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -55,7 +62,13 @@ func (r *appVersionRepo) BatchDeleteAppVersion(ctx context.Context, req *v1.AppV
 
 // UpdateAppVersion 更新
 func (r *appVersionRepo) UpdateAppVersion(ctx context.Context, req *v1.AppVersionUpdateReq) (*ent.AppVersion, error) {
-	return r.data.db.AppVersion.UpdateOne(convert.AppVersionUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.AppVersionUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.AppVersion.UpdateOne(data).Save(ctx)
 }
 
 // GetAppVersion 根据Id查询

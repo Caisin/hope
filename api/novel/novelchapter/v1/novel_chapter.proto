@@ -58,6 +58,46 @@ service NovelChapter {
 
 }
 
+// 实体数据
+message NovelChapterData {
+    int64 id = 1;
+    //小说编号
+    int64 novelId = 2;
+    //章节序号
+    int32 orderNum = 3;
+    //章节名称
+    string chapterName = 4;
+    //章节内容
+    string content = 5;
+    //阿里云音频目录
+    string mediaKey = 6;
+    //音频时长
+    string duration = 7;
+    //发布时间
+    google.protobuf.Timestamp publishTime = 8;
+    //状态：0 草稿 ，1 发布
+    int32 status = 9;
+    //0
+    bool isFree = 10;
+    //价格
+    int64 price = 11;
+    //章节字数
+    int32 wordNum = 12;
+    //备注
+    string remark = 13;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 14;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 15;
+    //创建者
+    int64 createBy = 16;
+    //更新者
+    int64 updateBy = 17;
+    //租户
+    int64 tenantId = 18;
+
+}
+
 // 查询搜索请求
 message NovelChapterPageReq {
     //分页查询参数
@@ -68,10 +108,14 @@ message NovelChapterPageReq {
 
 // 查询搜索返回
 message NovelChapterPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated NovelChapterReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated NovelChapterData items = 4;
 }
 
 
@@ -115,44 +159,14 @@ message NovelChapterReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message NovelChapterReply {
-    int64 id = 1;
-    //小说编号
-    int64 novelId = 2;
-    //章节序号
-    int32 orderNum = 3;
-    //章节名称
-    string chapterName = 4;
-    //章节内容
-    string content = 5;
-    //阿里云音频目录
-    string mediaKey = 6;
-    //音频时长
-    string duration = 7;
-    //发布时间
-    google.protobuf.Timestamp publishTime = 8;
-    //状态：0 草稿 ，1 发布
-    int32 status = 9;
-    //0
-    bool isFree = 10;
-    //价格
-    int64 price = 11;
-    //章节字数
-    int32 wordNum = 12;
-    //备注
-    string remark = 13;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 14;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 15;
-    //创建者
-    int64 createBy = 16;
-    //更新者
-    int64 updateBy = 17;
-    //租户
-    int64 tenantId = 18;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelChapterData result = 3;
 }
 
 // 创建NovelChapter请求
@@ -186,42 +200,12 @@ message NovelChapterCreateReq {
 
 // 创建NovelChapter返回
 message NovelChapterCreateReply {
-    int64 id = 1;
-    //小说编号
-    int64 novelId = 2;
-    //章节序号
-    int32 orderNum = 3;
-    //章节名称
-    string chapterName = 4;
-    //章节内容
-    string content = 5;
-    //阿里云音频目录
-    string mediaKey = 6;
-    //音频时长
-    string duration = 7;
-    //发布时间
-    google.protobuf.Timestamp publishTime = 8;
-    //状态：0 草稿 ，1 发布
-    int32 status = 9;
-    //0
-    bool isFree = 10;
-    //价格
-    int64 price = 11;
-    //章节字数
-    int32 wordNum = 12;
-    //备注
-    string remark = 13;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 14;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 15;
-    //创建者
-    int64 createBy = 16;
-    //更新者
-    int64 updateBy = 17;
-    //租户
-    int64 tenantId = 18;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelChapterData result = 3;
 }
 
 // 更新NovelChapter请求
@@ -257,32 +241,12 @@ message NovelChapterUpdateReq {
 
 // 更新NovelChapter返回
 message NovelChapterUpdateReply {
-    int64 id = 1;
-    //小说编号
-    int64 novelId = 2;
-    //章节序号
-    int32 orderNum = 3;
-    //章节名称
-    string chapterName = 4;
-    //章节内容
-    string content = 5;
-    //阿里云音频目录
-    string mediaKey = 6;
-    //音频时长
-    string duration = 7;
-    //发布时间
-    google.protobuf.Timestamp publishTime = 8;
-    //状态：0 草稿 ，1 发布
-    int32 status = 9;
-    //0
-    bool isFree = 10;
-    //价格
-    int64 price = 11;
-    //章节字数
-    int32 wordNum = 12;
-    //备注
-    string remark = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelChapterData result = 3;
 }
 
 // 删除NovelChapter请求
@@ -299,6 +263,11 @@ message NovelChapterBatchDeleteReq {
 
 // 删除NovelChapter返回
 message NovelChapterDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

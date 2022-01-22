@@ -101,109 +101,11 @@ func VipUserData2Req(v *ent.VipUser) *v1.VipUserReq {
 	}
 }
 
-func VipUserReply2Data(v *v1.VipUserReply) *ent.VipUser {
+func VipUserData2Reply(v *ent.VipUser) *v1.VipUserData {
 	if v == nil {
 		return nil
 	}
-	return &ent.VipUser{
-		ID:              v.Id,
-		UserId:          v.UserId,
-		VipType:         v.VipType,
-		SvipType:        v.SvipType,
-		SvipEffectTime:  v.SvipEffectTime.AsTime(),
-		SvipExpiredTime: v.SvipExpiredTime.AsTime(),
-		Remark:          v.Remark,
-		EffectTime:      v.EffectTime.AsTime(),
-		ExpiredTime:     v.ExpiredTime.AsTime(),
-		CreatedAt:       v.CreatedAt.AsTime(),
-		UpdatedAt:       v.UpdatedAt.AsTime(),
-		CreateBy:        v.CreateBy,
-		UpdateBy:        v.UpdateBy,
-		TenantId:        v.TenantId,
-	}
-}
-
-func VipUserData2Reply(v *ent.VipUser) *v1.VipUserReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.VipUserReply{
-		Id:              v.ID,
-		UserId:          v.UserId,
-		VipType:         v.VipType,
-		SvipType:        v.SvipType,
-		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),
-		SvipExpiredTime: timestamppb.New(v.SvipExpiredTime),
-		Remark:          v.Remark,
-		EffectTime:      timestamppb.New(v.EffectTime),
-		ExpiredTime:     timestamppb.New(v.ExpiredTime),
-		CreatedAt:       timestamppb.New(v.CreatedAt),
-		UpdatedAt:       timestamppb.New(v.UpdatedAt),
-		CreateBy:        v.CreateBy,
-		UpdateBy:        v.UpdateBy,
-		TenantId:        v.TenantId,
-	}
-}
-
-func VipUserUpdateReply2Data(v *v1.VipUserUpdateReply) *ent.VipUser {
-	if v == nil {
-		return nil
-	}
-	return &ent.VipUser{
-		ID:              v.Id,
-		UserId:          v.UserId,
-		VipType:         v.VipType,
-		SvipType:        v.SvipType,
-		SvipEffectTime:  v.SvipEffectTime.AsTime(),
-		SvipExpiredTime: v.SvipExpiredTime.AsTime(),
-		Remark:          v.Remark,
-		EffectTime:      v.EffectTime.AsTime(),
-	}
-}
-
-func VipUserData2UpdateReply(v *ent.VipUser) *v1.VipUserUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.VipUserUpdateReply{
-		Id:              v.ID,
-		UserId:          v.UserId,
-		VipType:         v.VipType,
-		SvipType:        v.SvipType,
-		SvipEffectTime:  timestamppb.New(v.SvipEffectTime),
-		SvipExpiredTime: timestamppb.New(v.SvipExpiredTime),
-		Remark:          v.Remark,
-		EffectTime:      timestamppb.New(v.EffectTime),
-	}
-}
-
-func VipUserCreateReply2Data(v *v1.VipUserCreateReply) *ent.VipUser {
-	if v == nil {
-		return nil
-	}
-	return &ent.VipUser{
-		ID:              v.Id,
-		UserId:          v.UserId,
-		VipType:         v.VipType,
-		SvipType:        v.SvipType,
-		SvipEffectTime:  v.SvipEffectTime.AsTime(),
-		SvipExpiredTime: v.SvipExpiredTime.AsTime(),
-		Remark:          v.Remark,
-		EffectTime:      v.EffectTime.AsTime(),
-		ExpiredTime:     v.ExpiredTime.AsTime(),
-		CreatedAt:       v.CreatedAt.AsTime(),
-		UpdatedAt:       v.UpdatedAt.AsTime(),
-		CreateBy:        v.CreateBy,
-		UpdateBy:        v.UpdateBy,
-		TenantId:        v.TenantId,
-	}
-}
-
-func VipUserData2CreateReply(v *ent.VipUser) *v1.VipUserCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.VipUserCreateReply{
+	return &v1.VipUserData{
 		Id:              v.ID,
 		UserId:          v.UserId,
 		VipType:         v.VipType,

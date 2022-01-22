@@ -592,79 +592,18 @@
     "v1CustomerNovelsCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "novelId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "小说编码"
+          "title": "返回码"
         },
-        "typeId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
-        },
-        "typeCode": {
+        "message": {
           "type": "string",
-          "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+          "title": "消息"
         },
-        "groupCode": {
-          "type": "string",
-          "title": "分组编码"
-        },
-        "fieldName": {
-          "type": "string",
-          "title": "字段"
-        },
-        "cover": {
-          "type": "string",
-          "title": "封面,无值使用小说封面"
-        },
-        "orderNum": {
-          "type": "integer",
-          "format": "int32",
-          "title": "排序字段,值越大,越靠前"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1CustomerNovelsData",
+          "title": "结果数据"
         }
       },
       "title": "创建CustomerNovels返回"
@@ -720,33 +659,7 @@
       },
       "title": "创建CustomerNovels请求"
     },
-    "v1CustomerNovelsDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除CustomerNovels返回"
-    },
-    "v1CustomerNovelsPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1CustomerNovelsReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1CustomerNovelsReply": {
+    "v1CustomerNovelsData": {
       "type": "object",
       "properties": {
         "id": {
@@ -824,7 +737,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1CustomerNovelsDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除CustomerNovels返回"
+    },
+    "v1CustomerNovelsPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1CustomerNovelsData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1CustomerNovelsReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1CustomerNovelsData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1CustomerNovelsReq": {
       "type": "object",
@@ -909,54 +887,18 @@
     "v1CustomerNovelsUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "novelId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "小说编码"
+          "title": "返回码"
         },
-        "typeId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "类型编号,见参数表sys_dic_data,dicType=customer_type,dic_sort值"
-        },
-        "typeCode": {
+        "message": {
           "type": "string",
-          "title": "类型编码,见参数表sys_dic_data,dicType=customer_type,dic_type值"
+          "title": "消息"
         },
-        "groupCode": {
-          "type": "string",
-          "title": "分组编码"
-        },
-        "fieldName": {
-          "type": "string",
-          "title": "字段"
-        },
-        "cover": {
-          "type": "string",
-          "title": "封面,无值使用小说封面"
-        },
-        "orderNum": {
-          "type": "integer",
-          "format": "int32",
-          "title": "排序字段,值越大,越靠前"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
+        "result": {
+          "$ref": "#/definitions/v1CustomerNovelsData",
+          "title": "结果数据"
         }
       },
       "title": "更新CustomerNovels返回"

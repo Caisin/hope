@@ -694,103 +694,18 @@
     "v1AgreementLogCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "outerAgreementNo": {
-          "type": "string",
-          "title": "外部签约协议号"
-        },
-        "orderId": {
-          "type": "string",
-          "title": "订单号"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "chId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "渠道"
+          "title": "消息"
         },
-        "userName": {
-          "type": "string",
-          "title": "用户名称"
-        },
-        "paymentName": {
-          "type": "string",
-          "title": "商品名称"
-        },
-        "paymentId": {
-          "type": "string",
-          "format": "int64",
-          "title": "支付配置ID payment_config表的ID"
-        },
-        "state": {
-          "type": "integer",
-          "format": "int32",
-          "title": "状态：1、待签约，2、签约成功，3、取消签约"
-        },
-        "payment": {
-          "type": "string",
-          "format": "int64",
-          "title": "每期扣款金额,单位：分"
-        },
-        "agreementType": {
-          "type": "string",
-          "title": "支付方式：Alipay,Google,WeChat"
-        },
-        "vipType": {
-          "type": "string",
-          "format": "int64",
-          "title": "vip类型"
-        },
-        "times": {
-          "type": "string",
-          "format": "int64",
-          "title": "第几期"
-        },
-        "cycleDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "周期天数"
-        },
-        "nextExecTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "下次执行时间"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1AgreementLogData",
+          "title": "结果数据"
         }
       },
       "title": "创建AgreementLog返回"
@@ -870,33 +785,7 @@
       },
       "title": "创建AgreementLog请求"
     },
-    "v1AgreementLogDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除AgreementLog返回"
-    },
-    "v1AgreementLogPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1AgreementLogReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1AgreementLogReply": {
+    "v1AgreementLogData": {
       "type": "object",
       "properties": {
         "id": {
@@ -998,7 +887,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1AgreementLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除AgreementLog返回"
+    },
+    "v1AgreementLogPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AgreementLogData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1AgreementLogReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1AgreementLogData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1AgreementLogReq": {
       "type": "object",
@@ -1107,78 +1061,18 @@
     "v1AgreementLogUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "outerAgreementNo": {
-          "type": "string",
-          "title": "外部签约协议号"
-        },
-        "orderId": {
-          "type": "string",
-          "title": "订单号"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "chId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "渠道"
+          "title": "消息"
         },
-        "userName": {
-          "type": "string",
-          "title": "用户名称"
-        },
-        "paymentName": {
-          "type": "string",
-          "title": "商品名称"
-        },
-        "paymentId": {
-          "type": "string",
-          "format": "int64",
-          "title": "支付配置ID payment_config表的ID"
-        },
-        "state": {
-          "type": "integer",
-          "format": "int32",
-          "title": "状态：1、待签约，2、签约成功，3、取消签约"
-        },
-        "payment": {
-          "type": "string",
-          "format": "int64",
-          "title": "每期扣款金额,单位：分"
-        },
-        "agreementType": {
-          "type": "string",
-          "title": "支付方式：Alipay,Google,WeChat"
-        },
-        "vipType": {
-          "type": "string",
-          "format": "int64",
-          "title": "vip类型"
-        },
-        "times": {
-          "type": "string",
-          "format": "int64",
-          "title": "第几期"
-        },
-        "cycleDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "周期天数"
-        },
-        "nextExecTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "下次执行时间"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
+        "result": {
+          "$ref": "#/definitions/v1AgreementLogData",
+          "title": "结果数据"
         }
       },
       "title": "更新AgreementLog返回"

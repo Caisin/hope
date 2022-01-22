@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysjob"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysJobRepo(data *Data, logger log.Logger) biz.SysJobRepo {
 
 // CreateSysJob 创建
 func (r *sysJobRepo) CreateSysJob(ctx context.Context, req *v1.SysJobCreateReq) (*ent.SysJob, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysJob.Create().
 		SetJobName(req.JobName).
@@ -44,6 +49,8 @@ func (r *sysJobRepo) CreateSysJob(ctx context.Context, req *v1.SysJobCreateReq) 
 		SetEntryId(req.EntryId).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -60,7 +67,13 @@ func (r *sysJobRepo) BatchDeleteSysJob(ctx context.Context, req *v1.SysJobBatchD
 
 // UpdateSysJob 更新
 func (r *sysJobRepo) UpdateSysJob(ctx context.Context, req *v1.SysJobUpdateReq) (*ent.SysJob, error) {
-	return r.data.db.SysJob.UpdateOne(convert.SysJobUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysJobUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysJob.UpdateOne(data).Save(ctx)
 }
 
 // GetSysJob 根据Id查询

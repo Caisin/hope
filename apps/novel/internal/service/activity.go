@@ -28,25 +28,32 @@ func (s *ActivityService) GetPageActivity(ctx context.Context, req *pb.ActivityP
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.ActivityReply, 0)
+	items := make([]*pb.ActivityData, 0)
 	for i := range datas {
 		items = append(items, convert.ActivityData2Reply(datas[i]))
 	}
 	reply := &pb.ActivityPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *ActivityService) GetActivity(ctx context.Context, req *pb.ActivityReq) (*pb.ActivityReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetActivity")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.ActivityData2Reply(daya), err
+	reply := &pb.ActivityReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ActivityData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ActivityService) UpdateActivity(ctx context.Context, req *pb.ActivityUpdateReq) (*pb.ActivityUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *ActivityService) UpdateActivity(ctx context.Context, req *pb.ActivityUp
 	if err != nil {
 		return nil, err
 	}
-	return convert.ActivityData2UpdateReply(data), err
+	reply := &pb.ActivityUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ActivityData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ActivityService) CreateActivity(ctx context.Context, req *pb.ActivityCreateReq) (*pb.ActivityCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *ActivityService) CreateActivity(ctx context.Context, req *pb.ActivityCr
 	if err != nil {
 		return nil, err
 	}
-	return convert.ActivityData2CreateReply(data), err
+	reply := &pb.ActivityCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ActivityData2Reply(data),
+	}
+	return reply, err
 }
 func (s *ActivityService) DeleteActivity(ctx context.Context, req *pb.ActivityDeleteReq) (*pb.ActivityDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *ActivityService) DeleteActivity(ctx context.Context, req *pb.ActivityDe
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ActivityDeleteReply{Result: err == nil}, err
+	return &pb.ActivityDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *ActivityService) BatchDeleteActivity(ctx context.Context, req *pb.ActivityBatchDeleteReq) (*pb.ActivityDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *ActivityService) BatchDeleteActivity(ctx context.Context, req *pb.Activ
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ActivityDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.ActivityDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -439,44 +439,18 @@
     "v1NovelAutoBuyCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "novelId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "小说编号"
+          "title": "消息"
         },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1NovelAutoBuyData",
+          "title": "结果数据"
         }
       },
       "title": "创建NovelAutoBuy返回"
@@ -497,33 +471,7 @@
       },
       "title": "创建NovelAutoBuy请求"
     },
-    "v1NovelAutoBuyDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除NovelAutoBuy返回"
-    },
-    "v1NovelAutoBuyPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1NovelAutoBuyReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1NovelAutoBuyReply": {
+    "v1NovelAutoBuyData": {
       "type": "object",
       "properties": {
         "id": {
@@ -566,7 +514,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1NovelAutoBuyDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除NovelAutoBuy返回"
+    },
+    "v1NovelAutoBuyPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1NovelAutoBuyData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1NovelAutoBuyReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1NovelAutoBuyData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1NovelAutoBuyReq": {
       "type": "object",
@@ -616,19 +629,18 @@
     "v1NovelAutoBuyUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "novelId": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "小说编号"
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1NovelAutoBuyData",
+          "title": "结果数据"
         }
       },
       "title": "更新NovelAutoBuy返回"

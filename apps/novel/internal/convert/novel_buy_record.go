@@ -107,114 +107,11 @@ func NovelBuyRecordData2Req(v *ent.NovelBuyRecord) *v1.NovelBuyRecordReq {
 	}
 }
 
-func NovelBuyRecordReply2Data(v *v1.NovelBuyRecordReply) *ent.NovelBuyRecord {
+func NovelBuyRecordData2Reply(v *ent.NovelBuyRecord) *v1.NovelBuyRecordData {
 	if v == nil {
 		return nil
 	}
-	return &ent.NovelBuyRecord{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		UserName:  v.UserName,
-		NovelId:   v.NovelId,
-		NovelName: v.NovelName,
-		PackageId: v.PackageId,
-		Cover:     v.Cover,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelBuyRecordData2Reply(v *ent.NovelBuyRecord) *v1.NovelBuyRecordReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelBuyRecordReply{
-		Id:        v.ID,
-		UserId:    v.UserId,
-		UserName:  v.UserName,
-		NovelId:   v.NovelId,
-		NovelName: v.NovelName,
-		PackageId: v.PackageId,
-		Cover:     v.Cover,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Remark:    v.Remark,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelBuyRecordUpdateReply2Data(v *v1.NovelBuyRecordUpdateReply) *ent.NovelBuyRecord {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelBuyRecord{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		UserName:  v.UserName,
-		NovelId:   v.NovelId,
-		NovelName: v.NovelName,
-		PackageId: v.PackageId,
-		Cover:     v.Cover,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-	}
-}
-
-func NovelBuyRecordData2UpdateReply(v *ent.NovelBuyRecord) *v1.NovelBuyRecordUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelBuyRecordUpdateReply{
-		Id:        v.ID,
-		UserId:    v.UserId,
-		UserName:  v.UserName,
-		NovelId:   v.NovelId,
-		NovelName: v.NovelName,
-		PackageId: v.PackageId,
-		Cover:     v.Cover,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-	}
-}
-
-func NovelBuyRecordCreateReply2Data(v *v1.NovelBuyRecordCreateReply) *ent.NovelBuyRecord {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelBuyRecord{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		UserName:  v.UserName,
-		NovelId:   v.NovelId,
-		NovelName: v.NovelName,
-		PackageId: v.PackageId,
-		Cover:     v.Cover,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelBuyRecordData2CreateReply(v *ent.NovelBuyRecord) *v1.NovelBuyRecordCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelBuyRecordCreateReply{
+	return &v1.NovelBuyRecordData{
 		Id:        v.ID,
 		UserId:    v.UserId,
 		UserName:  v.UserName,

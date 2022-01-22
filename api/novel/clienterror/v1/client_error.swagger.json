@@ -490,55 +490,18 @@
     "v1ClientErrorCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "appVersion": {
-          "type": "string",
-          "title": "App版本"
-        },
-        "deviceName": {
-          "type": "string",
-          "title": "设备名称"
-        },
-        "osName": {
-          "type": "string",
-          "title": "操作系统名称"
-        },
-        "errorInfo": {
-          "type": "string",
-          "title": "错误信息"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "createdAt": {
+        "message": {
           "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
+          "title": "消息"
         },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1ClientErrorData",
+          "title": "结果数据"
         }
       },
       "title": "创建ClientError返回"
@@ -570,33 +533,7 @@
       },
       "title": "创建ClientError请求"
     },
-    "v1ClientErrorDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除ClientError返回"
-    },
-    "v1ClientErrorPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ClientErrorReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1ClientErrorReply": {
+    "v1ClientErrorData": {
       "type": "object",
       "properties": {
         "id": {
@@ -650,7 +587,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1ClientErrorDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除ClientError返回"
+    },
+    "v1ClientErrorPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ClientErrorData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1ClientErrorReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1ClientErrorData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1ClientErrorReq": {
       "type": "object",
@@ -711,30 +713,18 @@
     "v1ClientErrorUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "appVersion": {
-          "type": "string",
-          "title": "App版本"
-        },
-        "deviceName": {
-          "type": "string",
-          "title": "设备名称"
-        },
-        "osName": {
-          "type": "string",
-          "title": "操作系统名称"
-        },
-        "errorInfo": {
-          "type": "string",
-          "title": "错误信息"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1ClientErrorData",
+          "title": "结果数据"
         }
       },
       "title": "更新ClientError返回"

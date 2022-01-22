@@ -58,6 +58,64 @@ service PayOrder {
 
 }
 
+// 实体数据
+message PayOrderData {
+    int64 id = 1;
+    //订单号
+    string orderId = 2;
+    //用户ID
+    int64 userId = 3;
+    //渠道ID
+    int64 chId = 4;
+    //签约协议号
+    int64 agreementId = 5;
+    //最后阅读书籍
+    string lastRead = 6;
+    //最后阅读章节
+    string lastChapter = 7;
+    //充值配置名称
+    string paymentName = 8;
+    //充值配置ID
+    string paymentId = 9;
+    //订单状态:1、待付款，2、已付款，3、取消，4、退款
+    int32 state = 10;
+    //充值金额
+    int64 payment = 11;
+    //支付时间
+    google.protobuf.Timestamp paymentTime = 12;
+    //订单关闭时间
+    google.protobuf.Timestamp closeTime = 13;
+    //支付类型
+    string payType = 14;
+    //书币
+    int64 coin = 15;
+    //书券
+    int64 coupon = 16;
+    //vip天数
+    string vipDays = 17;
+    //vip类型
+    int64 vipType = 18;
+    //vip名称
+    string vipName = 19;
+    //充值次数
+    int32 times = 20;
+    //第三方订单
+    string otherOrderId = 21;
+    //备注
+    string remark = 22;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 23;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 24;
+    //创建者
+    int64 createBy = 25;
+    //更新者
+    int64 updateBy = 26;
+    //租户
+    int64 tenantId = 27;
+
+}
+
 // 查询搜索请求
 message PayOrderPageReq {
     //分页查询参数
@@ -68,10 +126,14 @@ message PayOrderPageReq {
 
 // 查询搜索返回
 message PayOrderPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated PayOrderReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated PayOrderData items = 4;
 }
 
 
@@ -133,62 +195,14 @@ message PayOrderReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message PayOrderReply {
-    int64 id = 1;
-    //订单号
-    string orderId = 2;
-    //用户ID
-    int64 userId = 3;
-    //渠道ID
-    int64 chId = 4;
-    //签约协议号
-    int64 agreementId = 5;
-    //最后阅读书籍
-    string lastRead = 6;
-    //最后阅读章节
-    string lastChapter = 7;
-    //充值配置名称
-    string paymentName = 8;
-    //充值配置ID
-    string paymentId = 9;
-    //订单状态:1、待付款，2、已付款，3、取消，4、退款
-    int32 state = 10;
-    //充值金额
-    int64 payment = 11;
-    //支付时间
-    google.protobuf.Timestamp paymentTime = 12;
-    //订单关闭时间
-    google.protobuf.Timestamp closeTime = 13;
-    //支付类型
-    string payType = 14;
-    //书币
-    int64 coin = 15;
-    //书券
-    int64 coupon = 16;
-    //vip天数
-    string vipDays = 17;
-    //vip类型
-    int64 vipType = 18;
-    //vip名称
-    string vipName = 19;
-    //充值次数
-    int32 times = 20;
-    //第三方订单
-    string otherOrderId = 21;
-    //备注
-    string remark = 22;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 23;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 24;
-    //创建者
-    int64 createBy = 25;
-    //更新者
-    int64 updateBy = 26;
-    //租户
-    int64 tenantId = 27;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    PayOrderData result = 3;
 }
 
 // 创建PayOrder请求
@@ -240,60 +254,12 @@ message PayOrderCreateReq {
 
 // 创建PayOrder返回
 message PayOrderCreateReply {
-    int64 id = 1;
-    //订单号
-    string orderId = 2;
-    //用户ID
-    int64 userId = 3;
-    //渠道ID
-    int64 chId = 4;
-    //签约协议号
-    int64 agreementId = 5;
-    //最后阅读书籍
-    string lastRead = 6;
-    //最后阅读章节
-    string lastChapter = 7;
-    //充值配置名称
-    string paymentName = 8;
-    //充值配置ID
-    string paymentId = 9;
-    //订单状态:1、待付款，2、已付款，3、取消，4、退款
-    int32 state = 10;
-    //充值金额
-    int64 payment = 11;
-    //支付时间
-    google.protobuf.Timestamp paymentTime = 12;
-    //订单关闭时间
-    google.protobuf.Timestamp closeTime = 13;
-    //支付类型
-    string payType = 14;
-    //书币
-    int64 coin = 15;
-    //书券
-    int64 coupon = 16;
-    //vip天数
-    string vipDays = 17;
-    //vip类型
-    int64 vipType = 18;
-    //vip名称
-    string vipName = 19;
-    //充值次数
-    int32 times = 20;
-    //第三方订单
-    string otherOrderId = 21;
-    //备注
-    string remark = 22;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 23;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 24;
-    //创建者
-    int64 createBy = 25;
-    //更新者
-    int64 updateBy = 26;
-    //租户
-    int64 tenantId = 27;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    PayOrderData result = 3;
 }
 
 // 更新PayOrder请求
@@ -347,50 +313,12 @@ message PayOrderUpdateReq {
 
 // 更新PayOrder返回
 message PayOrderUpdateReply {
-    int64 id = 1;
-    //订单号
-    string orderId = 2;
-    //用户ID
-    int64 userId = 3;
-    //渠道ID
-    int64 chId = 4;
-    //签约协议号
-    int64 agreementId = 5;
-    //最后阅读书籍
-    string lastRead = 6;
-    //最后阅读章节
-    string lastChapter = 7;
-    //充值配置名称
-    string paymentName = 8;
-    //充值配置ID
-    string paymentId = 9;
-    //订单状态:1、待付款，2、已付款，3、取消，4、退款
-    int32 state = 10;
-    //充值金额
-    int64 payment = 11;
-    //支付时间
-    google.protobuf.Timestamp paymentTime = 12;
-    //订单关闭时间
-    google.protobuf.Timestamp closeTime = 13;
-    //支付类型
-    string payType = 14;
-    //书币
-    int64 coin = 15;
-    //书券
-    int64 coupon = 16;
-    //vip天数
-    string vipDays = 17;
-    //vip类型
-    int64 vipType = 18;
-    //vip名称
-    string vipName = 19;
-    //充值次数
-    int32 times = 20;
-    //第三方订单
-    string otherOrderId = 21;
-    //备注
-    string remark = 22;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    PayOrderData result = 3;
 }
 
 // 删除PayOrder请求
@@ -407,6 +335,11 @@ message PayOrderBatchDeleteReq {
 
 // 删除PayOrder返回
 message PayOrderDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

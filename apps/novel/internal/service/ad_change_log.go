@@ -28,25 +28,32 @@ func (s *AdChangeLogService) GetPageAdChangeLog(ctx context.Context, req *pb.AdC
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.AdChangeLogReply, 0)
+	items := make([]*pb.AdChangeLogData, 0)
 	for i := range datas {
 		items = append(items, convert.AdChangeLogData2Reply(datas[i]))
 	}
 	reply := &pb.AdChangeLogPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *AdChangeLogService) GetAdChangeLog(ctx context.Context, req *pb.AdChangeLogReq) (*pb.AdChangeLogReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetAdChangeLog")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.AdChangeLogData2Reply(daya), err
+	reply := &pb.AdChangeLogReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AdChangeLogData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *AdChangeLogService) UpdateAdChangeLog(ctx context.Context, req *pb.AdChangeLogUpdateReq) (*pb.AdChangeLogUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *AdChangeLogService) UpdateAdChangeLog(ctx context.Context, req *pb.AdCh
 	if err != nil {
 		return nil, err
 	}
-	return convert.AdChangeLogData2UpdateReply(data), err
+	reply := &pb.AdChangeLogUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AdChangeLogData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *AdChangeLogService) CreateAdChangeLog(ctx context.Context, req *pb.AdChangeLogCreateReq) (*pb.AdChangeLogCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *AdChangeLogService) CreateAdChangeLog(ctx context.Context, req *pb.AdCh
 	if err != nil {
 		return nil, err
 	}
-	return convert.AdChangeLogData2CreateReply(data), err
+	reply := &pb.AdChangeLogCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AdChangeLogData2Reply(data),
+	}
+	return reply, err
 }
 func (s *AdChangeLogService) DeleteAdChangeLog(ctx context.Context, req *pb.AdChangeLogDeleteReq) (*pb.AdChangeLogDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *AdChangeLogService) DeleteAdChangeLog(ctx context.Context, req *pb.AdCh
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AdChangeLogDeleteReply{Result: err == nil}, err
+	return &pb.AdChangeLogDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *AdChangeLogService) BatchDeleteAdChangeLog(ctx context.Context, req *pb.AdChangeLogBatchDeleteReq) (*pb.AdChangeLogDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *AdChangeLogService) BatchDeleteAdChangeLog(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AdChangeLogDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.AdChangeLogDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -107,114 +107,11 @@ func AssetChangeLogData2Req(v *ent.AssetChangeLog) *v1.AssetChangeLogReq {
 	}
 }
 
-func AssetChangeLogReply2Data(v *v1.AssetChangeLogReply) *ent.AssetChangeLog {
+func AssetChangeLogData2Reply(v *ent.AssetChangeLog) *v1.AssetChangeLogData {
 	if v == nil {
 		return nil
 	}
-	return &ent.AssetChangeLog{
-		ID:          v.Id,
-		OrderId:     v.OrderId,
-		BalanceId:   v.BalanceId,
-		EventId:     v.EventId,
-		UserId:      v.UserId,
-		AssetItemId: v.AssetItemId,
-		Amount:      v.Amount,
-		OldBalance:  v.OldBalance,
-		NewBalance:  v.NewBalance,
-		Remark:      v.Remark,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AssetChangeLogData2Reply(v *ent.AssetChangeLog) *v1.AssetChangeLogReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AssetChangeLogReply{
-		Id:          v.ID,
-		OrderId:     v.OrderId,
-		BalanceId:   v.BalanceId,
-		EventId:     v.EventId,
-		UserId:      v.UserId,
-		AssetItemId: v.AssetItemId,
-		Amount:      v.Amount,
-		OldBalance:  v.OldBalance,
-		NewBalance:  v.NewBalance,
-		Remark:      v.Remark,
-		CreatedAt:   timestamppb.New(v.CreatedAt),
-		UpdatedAt:   timestamppb.New(v.UpdatedAt),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AssetChangeLogUpdateReply2Data(v *v1.AssetChangeLogUpdateReply) *ent.AssetChangeLog {
-	if v == nil {
-		return nil
-	}
-	return &ent.AssetChangeLog{
-		ID:          v.Id,
-		OrderId:     v.OrderId,
-		BalanceId:   v.BalanceId,
-		EventId:     v.EventId,
-		UserId:      v.UserId,
-		AssetItemId: v.AssetItemId,
-		Amount:      v.Amount,
-		OldBalance:  v.OldBalance,
-		NewBalance:  v.NewBalance,
-	}
-}
-
-func AssetChangeLogData2UpdateReply(v *ent.AssetChangeLog) *v1.AssetChangeLogUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AssetChangeLogUpdateReply{
-		Id:          v.ID,
-		OrderId:     v.OrderId,
-		BalanceId:   v.BalanceId,
-		EventId:     v.EventId,
-		UserId:      v.UserId,
-		AssetItemId: v.AssetItemId,
-		Amount:      v.Amount,
-		OldBalance:  v.OldBalance,
-		NewBalance:  v.NewBalance,
-	}
-}
-
-func AssetChangeLogCreateReply2Data(v *v1.AssetChangeLogCreateReply) *ent.AssetChangeLog {
-	if v == nil {
-		return nil
-	}
-	return &ent.AssetChangeLog{
-		ID:          v.Id,
-		OrderId:     v.OrderId,
-		BalanceId:   v.BalanceId,
-		EventId:     v.EventId,
-		UserId:      v.UserId,
-		AssetItemId: v.AssetItemId,
-		Amount:      v.Amount,
-		OldBalance:  v.OldBalance,
-		NewBalance:  v.NewBalance,
-		Remark:      v.Remark,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AssetChangeLogData2CreateReply(v *ent.AssetChangeLog) *v1.AssetChangeLogCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AssetChangeLogCreateReply{
+	return &v1.AssetChangeLogData{
 		Id:          v.ID,
 		OrderId:     v.OrderId,
 		BalanceId:   v.BalanceId,

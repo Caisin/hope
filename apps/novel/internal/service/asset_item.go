@@ -28,25 +28,32 @@ func (s *AssetItemService) GetPageAssetItem(ctx context.Context, req *pb.AssetIt
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.AssetItemReply, 0)
+	items := make([]*pb.AssetItemData, 0)
 	for i := range datas {
 		items = append(items, convert.AssetItemData2Reply(datas[i]))
 	}
 	reply := &pb.AssetItemPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *AssetItemService) GetAssetItem(ctx context.Context, req *pb.AssetItemReq) (*pb.AssetItemReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetAssetItem")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.AssetItemData2Reply(daya), err
+	reply := &pb.AssetItemReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AssetItemData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *AssetItemService) UpdateAssetItem(ctx context.Context, req *pb.AssetItemUpdateReq) (*pb.AssetItemUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *AssetItemService) UpdateAssetItem(ctx context.Context, req *pb.AssetIte
 	if err != nil {
 		return nil, err
 	}
-	return convert.AssetItemData2UpdateReply(data), err
+	reply := &pb.AssetItemUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AssetItemData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *AssetItemService) CreateAssetItem(ctx context.Context, req *pb.AssetItemCreateReq) (*pb.AssetItemCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *AssetItemService) CreateAssetItem(ctx context.Context, req *pb.AssetIte
 	if err != nil {
 		return nil, err
 	}
-	return convert.AssetItemData2CreateReply(data), err
+	reply := &pb.AssetItemCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.AssetItemData2Reply(data),
+	}
+	return reply, err
 }
 func (s *AssetItemService) DeleteAssetItem(ctx context.Context, req *pb.AssetItemDeleteReq) (*pb.AssetItemDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *AssetItemService) DeleteAssetItem(ctx context.Context, req *pb.AssetIte
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AssetItemDeleteReply{Result: err == nil}, err
+	return &pb.AssetItemDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *AssetItemService) BatchDeleteAssetItem(ctx context.Context, req *pb.AssetItemBatchDeleteReq) (*pb.AssetItemDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *AssetItemService) BatchDeleteAssetItem(ctx context.Context, req *pb.Ass
 	if err != nil {
 		return nil, err
 	}
-	return &pb.AssetItemDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.AssetItemDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

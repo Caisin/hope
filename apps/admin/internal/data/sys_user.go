@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysuser"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysUserRepo(data *Data, logger log.Logger) biz.SysUserRepo {
 
 // CreateSysUser 创建
 func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateReq) (*ent.SysUser, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysUser.Create().
 		SetUsername(req.Username).
@@ -46,6 +51,8 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		SetExtInfo(req.ExtInfo).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -62,7 +69,13 @@ func (r *sysUserRepo) BatchDeleteSysUser(ctx context.Context, req *v1.SysUserBat
 
 // UpdateSysUser 更新
 func (r *sysUserRepo) UpdateSysUser(ctx context.Context, req *v1.SysUserUpdateReq) (*ent.SysUser, error) {
-	return r.data.db.SysUser.UpdateOne(convert.SysUserUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysUserUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysUser.UpdateOne(data).Save(ctx)
 }
 
 // GetSysUser 根据Id查询

@@ -107,114 +107,11 @@ func SysDictDataData2Req(v *ent.SysDictData) *v1.SysDictDataReq {
 	}
 }
 
-func SysDictDataReply2Data(v *v1.SysDictDataReply) *ent.SysDictData {
+func SysDictDataData2Reply(v *ent.SysDictData) *v1.SysDictDataData {
 	if v == nil {
 		return nil
 	}
-	return &ent.SysDictData{
-		ID:        v.Id,
-		TypeId:    v.TypeId,
-		TypeCode:  v.TypeCode,
-		DictSort:  v.DictSort,
-		DictLabel: v.DictLabel,
-		DictValue: v.DictValue,
-		IsDefault: v.IsDefault,
-		Status:    v.Status,
-		Default:   v.Default,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysDictDataData2Reply(v *ent.SysDictData) *v1.SysDictDataReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysDictDataReply{
-		Id:        v.ID,
-		TypeId:    v.TypeId,
-		TypeCode:  v.TypeCode,
-		DictSort:  v.DictSort,
-		DictLabel: v.DictLabel,
-		DictValue: v.DictValue,
-		IsDefault: v.IsDefault,
-		Status:    v.Status,
-		Default:   v.Default,
-		Remark:    v.Remark,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysDictDataUpdateReply2Data(v *v1.SysDictDataUpdateReply) *ent.SysDictData {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysDictData{
-		ID:        v.Id,
-		TypeId:    v.TypeId,
-		TypeCode:  v.TypeCode,
-		DictSort:  v.DictSort,
-		DictLabel: v.DictLabel,
-		DictValue: v.DictValue,
-		IsDefault: v.IsDefault,
-		Status:    v.Status,
-		Default:   v.Default,
-	}
-}
-
-func SysDictDataData2UpdateReply(v *ent.SysDictData) *v1.SysDictDataUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysDictDataUpdateReply{
-		Id:        v.ID,
-		TypeId:    v.TypeId,
-		TypeCode:  v.TypeCode,
-		DictSort:  v.DictSort,
-		DictLabel: v.DictLabel,
-		DictValue: v.DictValue,
-		IsDefault: v.IsDefault,
-		Status:    v.Status,
-		Default:   v.Default,
-	}
-}
-
-func SysDictDataCreateReply2Data(v *v1.SysDictDataCreateReply) *ent.SysDictData {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysDictData{
-		ID:        v.Id,
-		TypeId:    v.TypeId,
-		TypeCode:  v.TypeCode,
-		DictSort:  v.DictSort,
-		DictLabel: v.DictLabel,
-		DictValue: v.DictValue,
-		IsDefault: v.IsDefault,
-		Status:    v.Status,
-		Default:   v.Default,
-		Remark:    v.Remark,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysDictDataData2CreateReply(v *ent.SysDictData) *v1.SysDictDataCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysDictDataCreateReply{
+	return &v1.SysDictDataData{
 		Id:        v.ID,
 		TypeId:    v.TypeId,
 		TypeCode:  v.TypeCode,

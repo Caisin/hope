@@ -89,99 +89,11 @@ func AssetItemData2Req(v *ent.AssetItem) *v1.AssetItemReq {
 	}
 }
 
-func AssetItemReply2Data(v *v1.AssetItemReply) *ent.AssetItem {
+func AssetItemData2Reply(v *ent.AssetItem) *v1.AssetItemData {
 	if v == nil {
 		return nil
 	}
-	return &ent.AssetItem{
-		ID:          v.Id,
-		AssetItemId: v.AssetItemId,
-		AssetName:   v.AssetName,
-		CashTag:     v.CashTag,
-		ValidDays:   v.ValidDays,
-		EffectTime:  v.EffectTime.AsTime(),
-		ExpiredTime: v.ExpiredTime.AsTime(),
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AssetItemData2Reply(v *ent.AssetItem) *v1.AssetItemReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AssetItemReply{
-		Id:          v.ID,
-		AssetItemId: v.AssetItemId,
-		AssetName:   v.AssetName,
-		CashTag:     v.CashTag,
-		ValidDays:   v.ValidDays,
-		EffectTime:  timestamppb.New(v.EffectTime),
-		ExpiredTime: timestamppb.New(v.ExpiredTime),
-		CreatedAt:   timestamppb.New(v.CreatedAt),
-		UpdatedAt:   timestamppb.New(v.UpdatedAt),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AssetItemUpdateReply2Data(v *v1.AssetItemUpdateReply) *ent.AssetItem {
-	if v == nil {
-		return nil
-	}
-	return &ent.AssetItem{
-		ID:          v.Id,
-		AssetItemId: v.AssetItemId,
-		AssetName:   v.AssetName,
-		CashTag:     v.CashTag,
-		ValidDays:   v.ValidDays,
-		EffectTime:  v.EffectTime.AsTime(),
-	}
-}
-
-func AssetItemData2UpdateReply(v *ent.AssetItem) *v1.AssetItemUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AssetItemUpdateReply{
-		Id:          v.ID,
-		AssetItemId: v.AssetItemId,
-		AssetName:   v.AssetName,
-		CashTag:     v.CashTag,
-		ValidDays:   v.ValidDays,
-		EffectTime:  timestamppb.New(v.EffectTime),
-	}
-}
-
-func AssetItemCreateReply2Data(v *v1.AssetItemCreateReply) *ent.AssetItem {
-	if v == nil {
-		return nil
-	}
-	return &ent.AssetItem{
-		ID:          v.Id,
-		AssetItemId: v.AssetItemId,
-		AssetName:   v.AssetName,
-		CashTag:     v.CashTag,
-		ValidDays:   v.ValidDays,
-		EffectTime:  v.EffectTime.AsTime(),
-		ExpiredTime: v.ExpiredTime.AsTime(),
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AssetItemData2CreateReply(v *ent.AssetItem) *v1.AssetItemCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AssetItemCreateReply{
+	return &v1.AssetItemData{
 		Id:          v.ID,
 		AssetItemId: v.AssetItemId,
 		AssetName:   v.AssetName,

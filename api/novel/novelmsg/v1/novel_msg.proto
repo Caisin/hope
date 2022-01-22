@@ -58,6 +58,30 @@ service NovelMsg {
 
 }
 
+// 实体数据
+message NovelMsgData {
+    int64 id = 1;
+    //消息标题
+    string title = 2;
+    //消息内容
+    string msg = 3;
+    //消息类型,user
+    string msgType = 4;
+    //状态
+    bool status = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
 // 查询搜索请求
 message NovelMsgPageReq {
     //分页查询参数
@@ -68,10 +92,14 @@ message NovelMsgPageReq {
 
 // 查询搜索返回
 message NovelMsgPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated NovelMsgReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated NovelMsgData items = 4;
 }
 
 
@@ -99,28 +127,14 @@ message NovelMsgReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message NovelMsgReply {
-    int64 id = 1;
-    //消息标题
-    string title = 2;
-    //消息内容
-    string msg = 3;
-    //消息类型,user
-    string msgType = 4;
-    //状态
-    bool status = 5;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 6;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 7;
-    //创建者
-    int64 createBy = 8;
-    //更新者
-    int64 updateBy = 9;
-    //租户
-    int64 tenantId = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelMsgData result = 3;
 }
 
 // 创建NovelMsg请求
@@ -138,26 +152,12 @@ message NovelMsgCreateReq {
 
 // 创建NovelMsg返回
 message NovelMsgCreateReply {
-    int64 id = 1;
-    //消息标题
-    string title = 2;
-    //消息内容
-    string msg = 3;
-    //消息类型,user
-    string msgType = 4;
-    //状态
-    bool status = 5;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 6;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 7;
-    //创建者
-    int64 createBy = 8;
-    //更新者
-    int64 updateBy = 9;
-    //租户
-    int64 tenantId = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelMsgData result = 3;
 }
 
 // 更新NovelMsg请求
@@ -177,16 +177,12 @@ message NovelMsgUpdateReq {
 
 // 更新NovelMsg返回
 message NovelMsgUpdateReply {
-    int64 id = 1;
-    //消息标题
-    string title = 2;
-    //消息内容
-    string msg = 3;
-    //消息类型,user
-    string msgType = 4;
-    //状态
-    bool status = 5;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelMsgData result = 3;
 }
 
 // 删除NovelMsg请求
@@ -203,6 +199,11 @@ message NovelMsgBatchDeleteReq {
 
 // 删除NovelMsg返回
 message NovelMsgDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

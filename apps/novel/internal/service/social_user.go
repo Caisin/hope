@@ -28,25 +28,32 @@ func (s *SocialUserService) GetPageSocialUser(ctx context.Context, req *pb.Socia
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SocialUserReply, 0)
+	items := make([]*pb.SocialUserData, 0)
 	for i := range datas {
 		items = append(items, convert.SocialUserData2Reply(datas[i]))
 	}
 	reply := &pb.SocialUserPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SocialUserService) GetSocialUser(ctx context.Context, req *pb.SocialUserReq) (*pb.SocialUserReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSocialUser")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SocialUserData2Reply(daya), err
+	reply := &pb.SocialUserReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SocialUserData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SocialUserService) UpdateSocialUser(ctx context.Context, req *pb.SocialUserUpdateReq) (*pb.SocialUserUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SocialUserService) UpdateSocialUser(ctx context.Context, req *pb.Social
 	if err != nil {
 		return nil, err
 	}
-	return convert.SocialUserData2UpdateReply(data), err
+	reply := &pb.SocialUserUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SocialUserData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SocialUserService) CreateSocialUser(ctx context.Context, req *pb.SocialUserCreateReq) (*pb.SocialUserCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SocialUserService) CreateSocialUser(ctx context.Context, req *pb.Social
 	if err != nil {
 		return nil, err
 	}
-	return convert.SocialUserData2CreateReply(data), err
+	reply := &pb.SocialUserCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SocialUserData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SocialUserService) DeleteSocialUser(ctx context.Context, req *pb.SocialUserDeleteReq) (*pb.SocialUserDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SocialUserService) DeleteSocialUser(ctx context.Context, req *pb.Social
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SocialUserDeleteReply{Result: err == nil}, err
+	return &pb.SocialUserDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SocialUserService) BatchDeleteSocialUser(ctx context.Context, req *pb.SocialUserBatchDeleteReq) (*pb.SocialUserDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SocialUserService) BatchDeleteSocialUser(ctx context.Context, req *pb.S
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SocialUserDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SocialUserDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

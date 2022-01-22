@@ -817,128 +817,18 @@
     "v1SysOperaLogCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "title": {
+        "message": {
           "type": "string",
-          "title": "操作模块"
+          "title": "消息"
         },
-        "requestId": {
-          "type": "string",
-          "title": "请求ID"
-        },
-        "businessType": {
-          "type": "string",
-          "title": "操作类型"
-        },
-        "businessTypes": {
-          "type": "string",
-          "title": "BusinessTypes"
-        },
-        "method": {
-          "type": "string",
-          "title": "函数"
-        },
-        "requestMethod": {
-          "type": "string",
-          "title": "请求方式"
-        },
-        "operatorType": {
-          "type": "string",
-          "title": "操作类型"
-        },
-        "operName": {
-          "type": "string",
-          "title": "操作者"
-        },
-        "deptName": {
-          "type": "string",
-          "title": "部门名称"
-        },
-        "operUrl": {
-          "type": "string",
-          "title": "访问地址"
-        },
-        "operIp": {
-          "type": "string",
-          "title": "客户端ip"
-        },
-        "browser": {
-          "type": "string",
-          "title": "浏览器"
-        },
-        "os": {
-          "type": "string",
-          "title": "系统"
-        },
-        "platform": {
-          "type": "string",
-          "title": "固件"
-        },
-        "operLocation": {
-          "type": "string",
-          "title": "访问位置"
-        },
-        "operParam": {
-          "type": "string",
-          "title": "请求参数"
-        },
-        "status": {
-          "type": "string",
-          "title": "操作状态"
-        },
-        "operTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "操作时间"
-        },
-        "jsonResult": {
-          "type": "string",
-          "title": "返回数据"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "latencyTime": {
-          "type": "string",
-          "title": "耗时"
-        },
-        "userAgent": {
-          "type": "string",
-          "title": "ua"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysOperaLogData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysOperaLog返回"
@@ -1043,33 +933,7 @@
       },
       "title": "创建SysOperaLog请求"
     },
-    "v1SysOperaLogDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysOperaLog返回"
-    },
-    "v1SysOperaLogPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysOperaLogReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysOperaLogReply": {
+    "v1SysOperaLogData": {
       "type": "object",
       "properties": {
         "id": {
@@ -1196,7 +1060,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysOperaLogDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysOperaLog返回"
+    },
+    "v1SysOperaLogPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysOperaLogData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysOperaLogReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysOperaLogData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysOperaLogReq": {
       "type": "object",
@@ -1330,103 +1259,18 @@
     "v1SysOperaLogUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "title": {
+        "message": {
           "type": "string",
-          "title": "操作模块"
+          "title": "消息"
         },
-        "requestId": {
-          "type": "string",
-          "title": "请求ID"
-        },
-        "businessType": {
-          "type": "string",
-          "title": "操作类型"
-        },
-        "businessTypes": {
-          "type": "string",
-          "title": "BusinessTypes"
-        },
-        "method": {
-          "type": "string",
-          "title": "函数"
-        },
-        "requestMethod": {
-          "type": "string",
-          "title": "请求方式"
-        },
-        "operatorType": {
-          "type": "string",
-          "title": "操作类型"
-        },
-        "operName": {
-          "type": "string",
-          "title": "操作者"
-        },
-        "deptName": {
-          "type": "string",
-          "title": "部门名称"
-        },
-        "operUrl": {
-          "type": "string",
-          "title": "访问地址"
-        },
-        "operIp": {
-          "type": "string",
-          "title": "客户端ip"
-        },
-        "browser": {
-          "type": "string",
-          "title": "浏览器"
-        },
-        "os": {
-          "type": "string",
-          "title": "系统"
-        },
-        "platform": {
-          "type": "string",
-          "title": "固件"
-        },
-        "operLocation": {
-          "type": "string",
-          "title": "访问位置"
-        },
-        "operParam": {
-          "type": "string",
-          "title": "请求参数"
-        },
-        "status": {
-          "type": "string",
-          "title": "操作状态"
-        },
-        "operTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "操作时间"
-        },
-        "jsonResult": {
-          "type": "string",
-          "title": "返回数据"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "latencyTime": {
-          "type": "string",
-          "title": "耗时"
-        },
-        "userAgent": {
-          "type": "string",
-          "title": "ua"
+        "result": {
+          "$ref": "#/definitions/v1SysOperaLogData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysOperaLog返回"

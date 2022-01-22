@@ -107,114 +107,11 @@ func AdChannelData2Req(v *ent.AdChannel) *v1.AdChannelReq {
 	}
 }
 
-func AdChannelReply2Data(v *v1.AdChannelReply) *ent.AdChannel {
+func AdChannelData2Reply(v *ent.AdChannel) *v1.AdChannelData {
 	if v == nil {
 		return nil
 	}
-	return &ent.AdChannel{
-		ID:          v.Id,
-		ChannelName: v.ChannelName,
-		NovelId:     v.NovelId,
-		Reg:         v.Reg,
-		Pay:         v.Pay,
-		NovelName:   v.NovelName,
-		ChapterId:   v.ChapterId,
-		ChapterNum:  v.ChapterNum,
-		AdType:      v.AdType,
-		Img:         v.Img,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AdChannelData2Reply(v *ent.AdChannel) *v1.AdChannelReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AdChannelReply{
-		Id:          v.ID,
-		ChannelName: v.ChannelName,
-		NovelId:     v.NovelId,
-		Reg:         v.Reg,
-		Pay:         v.Pay,
-		NovelName:   v.NovelName,
-		ChapterId:   v.ChapterId,
-		ChapterNum:  v.ChapterNum,
-		AdType:      v.AdType,
-		Img:         v.Img,
-		CreatedAt:   timestamppb.New(v.CreatedAt),
-		UpdatedAt:   timestamppb.New(v.UpdatedAt),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AdChannelUpdateReply2Data(v *v1.AdChannelUpdateReply) *ent.AdChannel {
-	if v == nil {
-		return nil
-	}
-	return &ent.AdChannel{
-		ID:          v.Id,
-		ChannelName: v.ChannelName,
-		NovelId:     v.NovelId,
-		Reg:         v.Reg,
-		Pay:         v.Pay,
-		NovelName:   v.NovelName,
-		ChapterId:   v.ChapterId,
-		ChapterNum:  v.ChapterNum,
-		AdType:      v.AdType,
-	}
-}
-
-func AdChannelData2UpdateReply(v *ent.AdChannel) *v1.AdChannelUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AdChannelUpdateReply{
-		Id:          v.ID,
-		ChannelName: v.ChannelName,
-		NovelId:     v.NovelId,
-		Reg:         v.Reg,
-		Pay:         v.Pay,
-		NovelName:   v.NovelName,
-		ChapterId:   v.ChapterId,
-		ChapterNum:  v.ChapterNum,
-		AdType:      v.AdType,
-	}
-}
-
-func AdChannelCreateReply2Data(v *v1.AdChannelCreateReply) *ent.AdChannel {
-	if v == nil {
-		return nil
-	}
-	return &ent.AdChannel{
-		ID:          v.Id,
-		ChannelName: v.ChannelName,
-		NovelId:     v.NovelId,
-		Reg:         v.Reg,
-		Pay:         v.Pay,
-		NovelName:   v.NovelName,
-		ChapterId:   v.ChapterId,
-		ChapterNum:  v.ChapterNum,
-		AdType:      v.AdType,
-		Img:         v.Img,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AdChannelData2CreateReply(v *ent.AdChannel) *v1.AdChannelCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AdChannelCreateReply{
+	return &v1.AdChannelData{
 		Id:          v.ID,
 		ChannelName: v.ChannelName,
 		NovelId:     v.NovelId,

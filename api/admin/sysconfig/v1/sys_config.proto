@@ -58,6 +58,36 @@ service SysConfig {
 
 }
 
+// 实体数据
+message SysConfigData {
+    int64 id = 1;
+    //配置名称
+    string configName = 2;
+    //配置Key
+    string configKey = 3;
+    //配置值
+    string configValue = 4;
+    //配置类型
+    string configType = 5;
+    //是否前台
+    int32 isFrontend = 6;
+    //状态:U:使用状态,E:失效状态
+    string state = 7;
+    //备注
+    string remark = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
 // 查询搜索请求
 message SysConfigPageReq {
     //分页查询参数
@@ -68,10 +98,14 @@ message SysConfigPageReq {
 
 // 查询搜索返回
 message SysConfigPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysConfigReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysConfigData items = 4;
 }
 
 
@@ -105,34 +139,14 @@ message SysConfigReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysConfigReply {
-    int64 id = 1;
-    //配置名称
-    string configName = 2;
-    //配置Key
-    string configKey = 3;
-    //配置值
-    string configValue = 4;
-    //配置类型
-    string configType = 5;
-    //是否前台
-    int32 isFrontend = 6;
-    //状态:U:使用状态,E:失效状态
-    string state = 7;
-    //备注
-    string remark = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysConfigData result = 3;
 }
 
 // 创建SysConfig请求
@@ -156,32 +170,12 @@ message SysConfigCreateReq {
 
 // 创建SysConfig返回
 message SysConfigCreateReply {
-    int64 id = 1;
-    //配置名称
-    string configName = 2;
-    //配置Key
-    string configKey = 3;
-    //配置值
-    string configValue = 4;
-    //配置类型
-    string configType = 5;
-    //是否前台
-    int32 isFrontend = 6;
-    //状态:U:使用状态,E:失效状态
-    string state = 7;
-    //备注
-    string remark = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysConfigData result = 3;
 }
 
 // 更新SysConfig请求
@@ -207,22 +201,12 @@ message SysConfigUpdateReq {
 
 // 更新SysConfig返回
 message SysConfigUpdateReply {
-    int64 id = 1;
-    //配置名称
-    string configName = 2;
-    //配置Key
-    string configKey = 3;
-    //配置值
-    string configValue = 4;
-    //配置类型
-    string configType = 5;
-    //是否前台
-    int32 isFrontend = 6;
-    //状态:U:使用状态,E:失效状态
-    string state = 7;
-    //备注
-    string remark = 8;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysConfigData result = 3;
 }
 
 // 删除SysConfig请求
@@ -239,6 +223,11 @@ message SysConfigBatchDeleteReq {
 
 // 删除SysConfig返回
 message SysConfigDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

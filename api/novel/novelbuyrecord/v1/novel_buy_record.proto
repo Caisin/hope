@@ -58,6 +58,40 @@ service NovelBuyRecord {
 
 }
 
+// 实体数据
+message NovelBuyRecordData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //用户名称
+    string userName = 3;
+    //书号
+    int64 novelId = 4;
+    //书名
+    string novelName = 5;
+    //书籍打包ID
+    int64 packageId = 6;
+    //书封面
+    string cover = 7;
+    //花费书币
+    int64 coin = 8;
+    //花费书券
+    int64 coupon = 9;
+    //备注
+    string remark = 10;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 11;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 12;
+    //创建者
+    int64 createBy = 13;
+    //更新者
+    int64 updateBy = 14;
+    //租户
+    int64 tenantId = 15;
+
+}
+
 // 查询搜索请求
 message NovelBuyRecordPageReq {
     //分页查询参数
@@ -68,10 +102,14 @@ message NovelBuyRecordPageReq {
 
 // 查询搜索返回
 message NovelBuyRecordPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated NovelBuyRecordReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated NovelBuyRecordData items = 4;
 }
 
 
@@ -109,38 +147,14 @@ message NovelBuyRecordReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message NovelBuyRecordReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //用户名称
-    string userName = 3;
-    //书号
-    int64 novelId = 4;
-    //书名
-    string novelName = 5;
-    //书籍打包ID
-    int64 packageId = 6;
-    //书封面
-    string cover = 7;
-    //花费书币
-    int64 coin = 8;
-    //花费书券
-    int64 coupon = 9;
-    //备注
-    string remark = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelBuyRecordData result = 3;
 }
 
 // 创建NovelBuyRecord请求
@@ -168,36 +182,12 @@ message NovelBuyRecordCreateReq {
 
 // 创建NovelBuyRecord返回
 message NovelBuyRecordCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //用户名称
-    string userName = 3;
-    //书号
-    int64 novelId = 4;
-    //书名
-    string novelName = 5;
-    //书籍打包ID
-    int64 packageId = 6;
-    //书封面
-    string cover = 7;
-    //花费书币
-    int64 coin = 8;
-    //花费书券
-    int64 coupon = 9;
-    //备注
-    string remark = 10;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 11;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 12;
-    //创建者
-    int64 createBy = 13;
-    //更新者
-    int64 updateBy = 14;
-    //租户
-    int64 tenantId = 15;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelBuyRecordData result = 3;
 }
 
 // 更新NovelBuyRecord请求
@@ -227,26 +217,12 @@ message NovelBuyRecordUpdateReq {
 
 // 更新NovelBuyRecord返回
 message NovelBuyRecordUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //用户名称
-    string userName = 3;
-    //书号
-    int64 novelId = 4;
-    //书名
-    string novelName = 5;
-    //书籍打包ID
-    int64 packageId = 6;
-    //书封面
-    string cover = 7;
-    //花费书币
-    int64 coin = 8;
-    //花费书券
-    int64 coupon = 9;
-    //备注
-    string remark = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelBuyRecordData result = 3;
 }
 
 // 删除NovelBuyRecord请求
@@ -263,6 +239,11 @@ message NovelBuyRecordBatchDeleteReq {
 
 // 删除NovelBuyRecord返回
 message NovelBuyRecordDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

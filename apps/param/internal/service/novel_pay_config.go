@@ -28,25 +28,32 @@ func (s *NovelPayConfigService) GetPageNovelPayConfig(ctx context.Context, req *
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.NovelPayConfigReply, 0)
+	items := make([]*pb.NovelPayConfigData, 0)
 	for i := range datas {
 		items = append(items, convert.NovelPayConfigData2Reply(datas[i]))
 	}
 	reply := &pb.NovelPayConfigPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *NovelPayConfigService) GetNovelPayConfig(ctx context.Context, req *pb.NovelPayConfigReq) (*pb.NovelPayConfigReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetNovelPayConfig")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelPayConfigData2Reply(daya), err
+	reply := &pb.NovelPayConfigReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelPayConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelPayConfigService) UpdateNovelPayConfig(ctx context.Context, req *pb.NovelPayConfigUpdateReq) (*pb.NovelPayConfigUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *NovelPayConfigService) UpdateNovelPayConfig(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelPayConfigData2UpdateReply(data), err
+	reply := &pb.NovelPayConfigUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelPayConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *NovelPayConfigService) CreateNovelPayConfig(ctx context.Context, req *pb.NovelPayConfigCreateReq) (*pb.NovelPayConfigCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *NovelPayConfigService) CreateNovelPayConfig(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return convert.NovelPayConfigData2CreateReply(data), err
+	reply := &pb.NovelPayConfigCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.NovelPayConfigData2Reply(data),
+	}
+	return reply, err
 }
 func (s *NovelPayConfigService) DeleteNovelPayConfig(ctx context.Context, req *pb.NovelPayConfigDeleteReq) (*pb.NovelPayConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *NovelPayConfigService) DeleteNovelPayConfig(ctx context.Context, req *p
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelPayConfigDeleteReply{Result: err == nil}, err
+	return &pb.NovelPayConfigDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *NovelPayConfigService) BatchDeleteNovelPayConfig(ctx context.Context, req *pb.NovelPayConfigBatchDeleteReq) (*pb.NovelPayConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *NovelPayConfigService) BatchDeleteNovelPayConfig(ctx context.Context, r
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NovelPayConfigDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.NovelPayConfigDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

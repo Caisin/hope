@@ -58,6 +58,32 @@ service SysApi {
 
 }
 
+// 实体数据
+message SysApiData {
+    int64 id = 1;
+    //处理器
+    string handle = 2;
+    //标题
+    string title = 3;
+    //地址
+    string path = 4;
+    //请求类型
+    string action = 5;
+    //接口类型
+    string type = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
 // 查询搜索请求
 message SysApiPageReq {
     //分页查询参数
@@ -68,10 +94,14 @@ message SysApiPageReq {
 
 // 查询搜索返回
 message SysApiPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysApiReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysApiData items = 4;
 }
 
 
@@ -101,30 +131,14 @@ message SysApiReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysApiReply {
-    int64 id = 1;
-    //处理器
-    string handle = 2;
-    //标题
-    string title = 3;
-    //地址
-    string path = 4;
-    //请求类型
-    string action = 5;
-    //接口类型
-    string type = 6;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 7;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 8;
-    //创建者
-    int64 createBy = 9;
-    //更新者
-    int64 updateBy = 10;
-    //租户
-    int64 tenantId = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysApiData result = 3;
 }
 
 // 创建SysApi请求
@@ -144,28 +158,12 @@ message SysApiCreateReq {
 
 // 创建SysApi返回
 message SysApiCreateReply {
-    int64 id = 1;
-    //处理器
-    string handle = 2;
-    //标题
-    string title = 3;
-    //地址
-    string path = 4;
-    //请求类型
-    string action = 5;
-    //接口类型
-    string type = 6;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 7;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 8;
-    //创建者
-    int64 createBy = 9;
-    //更新者
-    int64 updateBy = 10;
-    //租户
-    int64 tenantId = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysApiData result = 3;
 }
 
 // 更新SysApi请求
@@ -187,18 +185,12 @@ message SysApiUpdateReq {
 
 // 更新SysApi返回
 message SysApiUpdateReply {
-    int64 id = 1;
-    //处理器
-    string handle = 2;
-    //标题
-    string title = 3;
-    //地址
-    string path = 4;
-    //请求类型
-    string action = 5;
-    //接口类型
-    string type = 6;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysApiData result = 3;
 }
 
 // 删除SysApi请求
@@ -215,6 +207,11 @@ message SysApiBatchDeleteReq {
 
 // 删除SysApi返回
 message SysApiDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

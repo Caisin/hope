@@ -83,94 +83,11 @@ func NovelConsumeData2Req(v *ent.NovelConsume) *v1.NovelConsumeReq {
 	}
 }
 
-func NovelConsumeReply2Data(v *v1.NovelConsumeReply) *ent.NovelConsume {
+func NovelConsumeData2Reply(v *ent.NovelConsume) *v1.NovelConsumeData {
 	if v == nil {
 		return nil
 	}
-	return &ent.NovelConsume{
-		ID:        v.Id,
-		NovelId:   v.NovelId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Discount:  v.Discount,
-		Reward:    v.Reward,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelConsumeData2Reply(v *ent.NovelConsume) *v1.NovelConsumeReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelConsumeReply{
-		Id:        v.ID,
-		NovelId:   v.NovelId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Discount:  v.Discount,
-		Reward:    v.Reward,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelConsumeUpdateReply2Data(v *v1.NovelConsumeUpdateReply) *ent.NovelConsume {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelConsume{
-		ID:       v.Id,
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
-	}
-}
-
-func NovelConsumeData2UpdateReply(v *ent.NovelConsume) *v1.NovelConsumeUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelConsumeUpdateReply{
-		Id:       v.ID,
-		NovelId:  v.NovelId,
-		Coin:     v.Coin,
-		Coupon:   v.Coupon,
-		Discount: v.Discount,
-	}
-}
-
-func NovelConsumeCreateReply2Data(v *v1.NovelConsumeCreateReply) *ent.NovelConsume {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelConsume{
-		ID:        v.Id,
-		NovelId:   v.NovelId,
-		Coin:      v.Coin,
-		Coupon:    v.Coupon,
-		Discount:  v.Discount,
-		Reward:    v.Reward,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelConsumeData2CreateReply(v *ent.NovelConsume) *v1.NovelConsumeCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelConsumeCreateReply{
+	return &v1.NovelConsumeData{
 		Id:        v.ID,
 		NovelId:   v.NovelId,
 		Coin:      v.Coin,

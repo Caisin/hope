@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysrole"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysRoleRepo(data *Data, logger log.Logger) biz.SysRoleRepo {
 
 // CreateSysRole 创建
 func (r *sysRoleRepo) CreateSysRole(ctx context.Context, req *v1.SysRoleCreateReq) (*ent.SysRole, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysRole.Create().
 		SetRoleName(req.RoleName).
@@ -44,6 +49,8 @@ func (r *sysRoleRepo) CreateSysRole(ctx context.Context, req *v1.SysRoleCreateRe
 		SetSysMenu(req.SysMenu).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -60,7 +67,13 @@ func (r *sysRoleRepo) BatchDeleteSysRole(ctx context.Context, req *v1.SysRoleBat
 
 // UpdateSysRole 更新
 func (r *sysRoleRepo) UpdateSysRole(ctx context.Context, req *v1.SysRoleUpdateReq) (*ent.SysRole, error) {
-	return r.data.db.SysRole.UpdateOne(convert.SysRoleUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysRoleUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysRole.UpdateOne(data).Save(ctx)
 }
 
 // GetSysRole 根据Id查询

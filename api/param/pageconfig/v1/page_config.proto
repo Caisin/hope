@@ -58,6 +58,28 @@ service PageConfig {
 
 }
 
+// 实体数据
+message PageConfigData {
+    int64 id = 1;
+    //页面编码
+    string pageCode = 2;
+    //页面名称
+    string pageName = 3;
+    //分组编码集,逗号分割
+    string groupCodes = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
 // 查询搜索请求
 message PageConfigPageReq {
     //分页查询参数
@@ -68,10 +90,14 @@ message PageConfigPageReq {
 
 // 查询搜索返回
 message PageConfigPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated PageConfigReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated PageConfigData items = 4;
 }
 
 
@@ -97,26 +123,14 @@ message PageConfigReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message PageConfigReply {
-    int64 id = 1;
-    //页面编码
-    string pageCode = 2;
-    //页面名称
-    string pageName = 3;
-    //分组编码集,逗号分割
-    string groupCodes = 4;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 5;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 6;
-    //创建者
-    int64 createBy = 7;
-    //更新者
-    int64 updateBy = 8;
-    //租户
-    int64 tenantId = 9;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    PageConfigData result = 3;
 }
 
 // 创建PageConfig请求
@@ -132,24 +146,12 @@ message PageConfigCreateReq {
 
 // 创建PageConfig返回
 message PageConfigCreateReply {
-    int64 id = 1;
-    //页面编码
-    string pageCode = 2;
-    //页面名称
-    string pageName = 3;
-    //分组编码集,逗号分割
-    string groupCodes = 4;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 5;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 6;
-    //创建者
-    int64 createBy = 7;
-    //更新者
-    int64 updateBy = 8;
-    //租户
-    int64 tenantId = 9;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    PageConfigData result = 3;
 }
 
 // 更新PageConfig请求
@@ -167,14 +169,12 @@ message PageConfigUpdateReq {
 
 // 更新PageConfig返回
 message PageConfigUpdateReply {
-    int64 id = 1;
-    //页面编码
-    string pageCode = 2;
-    //页面名称
-    string pageName = 3;
-    //分组编码集,逗号分割
-    string groupCodes = 4;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    PageConfigData result = 3;
 }
 
 // 删除PageConfig请求
@@ -191,6 +191,11 @@ message PageConfigBatchDeleteReq {
 
 // 删除PageConfig返回
 message PageConfigDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

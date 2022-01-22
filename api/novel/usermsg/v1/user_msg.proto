@@ -58,6 +58,28 @@ service UserMsg {
 
 }
 
+// 实体数据
+message UserMsgData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //消息编码
+    int64 msgId = 3;
+    //是否阅读
+    bool isRead = 4;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 5;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 6;
+    //创建者
+    int64 createBy = 7;
+    //更新者
+    int64 updateBy = 8;
+    //租户
+    int64 tenantId = 9;
+
+}
+
 // 查询搜索请求
 message UserMsgPageReq {
     //分页查询参数
@@ -68,10 +90,14 @@ message UserMsgPageReq {
 
 // 查询搜索返回
 message UserMsgPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated UserMsgReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated UserMsgData items = 4;
 }
 
 
@@ -97,26 +123,14 @@ message UserMsgReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message UserMsgReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //消息编码
-    int64 msgId = 3;
-    //是否阅读
-    bool isRead = 4;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 5;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 6;
-    //创建者
-    int64 createBy = 7;
-    //更新者
-    int64 updateBy = 8;
-    //租户
-    int64 tenantId = 9;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserMsgData result = 3;
 }
 
 // 创建UserMsg请求
@@ -132,24 +146,12 @@ message UserMsgCreateReq {
 
 // 创建UserMsg返回
 message UserMsgCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //消息编码
-    int64 msgId = 3;
-    //是否阅读
-    bool isRead = 4;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 5;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 6;
-    //创建者
-    int64 createBy = 7;
-    //更新者
-    int64 updateBy = 8;
-    //租户
-    int64 tenantId = 9;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserMsgData result = 3;
 }
 
 // 更新UserMsg请求
@@ -167,14 +169,12 @@ message UserMsgUpdateReq {
 
 // 更新UserMsg返回
 message UserMsgUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //消息编码
-    int64 msgId = 3;
-    //是否阅读
-    bool isRead = 4;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserMsgData result = 3;
 }
 
 // 删除UserMsg请求
@@ -191,6 +191,11 @@ message UserMsgBatchDeleteReq {
 
 // 删除UserMsg返回
 message UserMsgDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

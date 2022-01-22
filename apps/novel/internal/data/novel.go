@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novel"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewNovelRepo(data *Data, logger log.Logger) biz.NovelRepo {
 
 // CreateNovel 创建
 func (r *novelRepo) CreateNovel(ctx context.Context, req *v1.NovelCreateReq) (*ent.Novel, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.Novel.Create().
 		SetClassifyId(req.ClassifyId).
@@ -61,6 +66,8 @@ func (r *novelRepo) CreateNovel(ctx context.Context, req *v1.NovelCreateReq) (*e
 		SetMediaKey(req.MediaKey).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -77,7 +84,13 @@ func (r *novelRepo) BatchDeleteNovel(ctx context.Context, req *v1.NovelBatchDele
 
 // UpdateNovel 更新
 func (r *novelRepo) UpdateNovel(ctx context.Context, req *v1.NovelUpdateReq) (*ent.Novel, error) {
-	return r.data.db.Novel.UpdateOne(convert.NovelUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.Novel.UpdateOne(data).Save(ctx)
 }
 
 // GetNovel 根据Id查询

@@ -95,104 +95,11 @@ func ScoreProductData2Req(v *ent.ScoreProduct) *v1.ScoreProductReq {
 	}
 }
 
-func ScoreProductReply2Data(v *v1.ScoreProductReply) *ent.ScoreProduct {
+func ScoreProductData2Reply(v *ent.ScoreProduct) *v1.ScoreProductData {
 	if v == nil {
 		return nil
 	}
-	return &ent.ScoreProduct{
-		ID:          v.Id,
-		ProductName: v.ProductName,
-		Summary:     v.Summary,
-		CardUrl:     v.CardUrl,
-		Score:       v.Score,
-		VipType:     v.VipType,
-		EffectTime:  v.EffectTime.AsTime(),
-		ExpiredTime: v.ExpiredTime.AsTime(),
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func ScoreProductData2Reply(v *ent.ScoreProduct) *v1.ScoreProductReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ScoreProductReply{
-		Id:          v.ID,
-		ProductName: v.ProductName,
-		Summary:     v.Summary,
-		CardUrl:     v.CardUrl,
-		Score:       v.Score,
-		VipType:     v.VipType,
-		EffectTime:  timestamppb.New(v.EffectTime),
-		ExpiredTime: timestamppb.New(v.ExpiredTime),
-		CreatedAt:   timestamppb.New(v.CreatedAt),
-		UpdatedAt:   timestamppb.New(v.UpdatedAt),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func ScoreProductUpdateReply2Data(v *v1.ScoreProductUpdateReply) *ent.ScoreProduct {
-	if v == nil {
-		return nil
-	}
-	return &ent.ScoreProduct{
-		ID:          v.Id,
-		ProductName: v.ProductName,
-		Summary:     v.Summary,
-		CardUrl:     v.CardUrl,
-		Score:       v.Score,
-		VipType:     v.VipType,
-		EffectTime:  v.EffectTime.AsTime(),
-	}
-}
-
-func ScoreProductData2UpdateReply(v *ent.ScoreProduct) *v1.ScoreProductUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ScoreProductUpdateReply{
-		Id:          v.ID,
-		ProductName: v.ProductName,
-		Summary:     v.Summary,
-		CardUrl:     v.CardUrl,
-		Score:       v.Score,
-		VipType:     v.VipType,
-		EffectTime:  timestamppb.New(v.EffectTime),
-	}
-}
-
-func ScoreProductCreateReply2Data(v *v1.ScoreProductCreateReply) *ent.ScoreProduct {
-	if v == nil {
-		return nil
-	}
-	return &ent.ScoreProduct{
-		ID:          v.Id,
-		ProductName: v.ProductName,
-		Summary:     v.Summary,
-		CardUrl:     v.CardUrl,
-		Score:       v.Score,
-		VipType:     v.VipType,
-		EffectTime:  v.EffectTime.AsTime(),
-		ExpiredTime: v.ExpiredTime.AsTime(),
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func ScoreProductData2CreateReply(v *ent.ScoreProduct) *v1.ScoreProductCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.ScoreProductCreateReply{
+	return &v1.ScoreProductData{
 		Id:          v.ID,
 		ProductName: v.ProductName,
 		Summary:     v.Summary,

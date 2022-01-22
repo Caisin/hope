@@ -58,6 +58,42 @@ service SysLoginLog {
 
 }
 
+// 实体数据
+message SysLoginLogData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //状态
+    string status = 3;
+    //ip地址
+    string ipaddr = 4;
+    //归属地
+    string loginLocation = 5;
+    //浏览器
+    string browser = 6;
+    //系统
+    string os = 7;
+    //固件
+    string platform = 8;
+    //登录时间
+    google.protobuf.Timestamp loginTime = 9;
+    //备注
+    string remark = 10;
+    //信息
+    string msg = 11;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 12;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 13;
+    //创建者
+    int64 createBy = 14;
+    //更新者
+    int64 updateBy = 15;
+    //租户
+    int64 tenantId = 16;
+
+}
+
 // 查询搜索请求
 message SysLoginLogPageReq {
     //分页查询参数
@@ -68,10 +104,14 @@ message SysLoginLogPageReq {
 
 // 查询搜索返回
 message SysLoginLogPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysLoginLogReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysLoginLogData items = 4;
 }
 
 
@@ -111,40 +151,14 @@ message SysLoginLogReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysLoginLogReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //状态
-    string status = 3;
-    //ip地址
-    string ipaddr = 4;
-    //归属地
-    string loginLocation = 5;
-    //浏览器
-    string browser = 6;
-    //系统
-    string os = 7;
-    //固件
-    string platform = 8;
-    //登录时间
-    google.protobuf.Timestamp loginTime = 9;
-    //备注
-    string remark = 10;
-    //信息
-    string msg = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysLoginLogData result = 3;
 }
 
 // 创建SysLoginLog请求
@@ -174,38 +188,12 @@ message SysLoginLogCreateReq {
 
 // 创建SysLoginLog返回
 message SysLoginLogCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //状态
-    string status = 3;
-    //ip地址
-    string ipaddr = 4;
-    //归属地
-    string loginLocation = 5;
-    //浏览器
-    string browser = 6;
-    //系统
-    string os = 7;
-    //固件
-    string platform = 8;
-    //登录时间
-    google.protobuf.Timestamp loginTime = 9;
-    //备注
-    string remark = 10;
-    //信息
-    string msg = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysLoginLogData result = 3;
 }
 
 // 更新SysLoginLog请求
@@ -237,28 +225,12 @@ message SysLoginLogUpdateReq {
 
 // 更新SysLoginLog返回
 message SysLoginLogUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //状态
-    string status = 3;
-    //ip地址
-    string ipaddr = 4;
-    //归属地
-    string loginLocation = 5;
-    //浏览器
-    string browser = 6;
-    //系统
-    string os = 7;
-    //固件
-    string platform = 8;
-    //登录时间
-    google.protobuf.Timestamp loginTime = 9;
-    //备注
-    string remark = 10;
-    //信息
-    string msg = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysLoginLogData result = 3;
 }
 
 // 删除SysLoginLog请求
@@ -275,6 +247,11 @@ message SysLoginLogBatchDeleteReq {
 
 // 删除SysLoginLog返回
 message SysLoginLogDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

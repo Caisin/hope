@@ -697,104 +697,18 @@
     "v1ActivityComponentCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "activityCode": {
-          "type": "string",
-          "title": "活动编码"
-        },
-        "componentType": {
-          "type": "string",
-          "title": "活动组成类型,reg"
-        },
-        "policy": {
-          "type": "string",
-          "title": "策略,all"
-        },
-        "vipDays": {
-          "type": "boolean",
-          "title": "vip拓展天数,当用户为vip时生效"
-        },
-        "minConsume": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "最小消耗金额"
+          "title": "返回码"
         },
-        "maxConsume": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "最大消耗金额"
+          "title": "消息"
         },
-        "minPayNum": {
-          "type": "string",
-          "format": "int64",
-          "title": "充值次数"
-        },
-        "payTimes": {
-          "type": "string",
-          "format": "int64",
-          "title": "第几次充值"
-        },
-        "payAmount": {
-          "type": "string",
-          "format": "int64",
-          "title": "充值金额"
-        },
-        "regDays": {
-          "type": "string",
-          "format": "int64",
-          "title": "注册天数"
-        },
-        "summary": {
-          "type": "string",
-          "title": "活动描述"
-        },
-        "assetItemId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "活动期间赠送资金科目"
-        },
-        "amount": {
-          "type": "string",
-          "format": "int64",
-          "title": "活动期间赠送金额,-1为赠送等额消耗书券"
-        },
-        "resId": {
-          "type": "string",
-          "format": "int64",
-          "title": "获得资产编号"
-        },
-        "resDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "获得资产有效时间"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1ActivityComponentData",
+          "title": "结果数据"
         }
       },
       "title": "创建ActivityComponent返回"
@@ -875,33 +789,7 @@
       },
       "title": "创建ActivityComponent请求"
     },
-    "v1ActivityComponentDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除ActivityComponent返回"
-    },
-    "v1ActivityComponentPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ActivityComponentReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1ActivityComponentReply": {
+    "v1ActivityComponentData": {
       "type": "object",
       "properties": {
         "id": {
@@ -1004,7 +892,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1ActivityComponentDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除ActivityComponent返回"
+    },
+    "v1ActivityComponentPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ActivityComponentData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1ActivityComponentReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1ActivityComponentData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1ActivityComponentReq": {
       "type": "object",
@@ -1114,79 +1067,18 @@
     "v1ActivityComponentUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "activityCode": {
-          "type": "string",
-          "title": "活动编码"
-        },
-        "componentType": {
-          "type": "string",
-          "title": "活动组成类型,reg"
-        },
-        "policy": {
-          "type": "string",
-          "title": "策略,all"
-        },
-        "vipDays": {
-          "type": "boolean",
-          "title": "vip拓展天数,当用户为vip时生效"
-        },
-        "minConsume": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "最小消耗金额"
+          "title": "返回码"
         },
-        "maxConsume": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "最大消耗金额"
+          "title": "消息"
         },
-        "minPayNum": {
-          "type": "string",
-          "format": "int64",
-          "title": "充值次数"
-        },
-        "payTimes": {
-          "type": "string",
-          "format": "int64",
-          "title": "第几次充值"
-        },
-        "payAmount": {
-          "type": "string",
-          "format": "int64",
-          "title": "充值金额"
-        },
-        "regDays": {
-          "type": "string",
-          "format": "int64",
-          "title": "注册天数"
-        },
-        "summary": {
-          "type": "string",
-          "title": "活动描述"
-        },
-        "assetItemId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "活动期间赠送资金科目"
-        },
-        "amount": {
-          "type": "string",
-          "format": "int64",
-          "title": "活动期间赠送金额,-1为赠送等额消耗书券"
-        },
-        "resId": {
-          "type": "string",
-          "format": "int64",
-          "title": "获得资产编号"
-        },
-        "resDays": {
-          "type": "integer",
-          "format": "int32",
-          "title": "获得资产有效时间"
+        "result": {
+          "$ref": "#/definitions/v1ActivityComponentData",
+          "title": "结果数据"
         }
       },
       "title": "更新ActivityComponent返回"

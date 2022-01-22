@@ -58,6 +58,52 @@ service AgreementLog {
 
 }
 
+// 实体数据
+message AgreementLogData {
+    int64 id = 1;
+    //外部签约协议号
+    string outerAgreementNo = 2;
+    //订单号
+    string orderId = 3;
+    //用户ID
+    int64 userId = 4;
+    //渠道
+    int64 chId = 5;
+    //用户名称
+    string userName = 6;
+    //商品名称
+    string paymentName = 7;
+    //支付配置ID payment_config表的ID
+    int64 paymentId = 8;
+    //状态：1、待签约，2、签约成功，3、取消签约
+    int32 state = 9;
+    //每期扣款金额,单位：分
+    int64 payment = 10;
+    //支付方式：Alipay,Google,WeChat
+    string agreementType = 11;
+    //vip类型
+    int64 vipType = 12;
+    //第几期
+    int64 times = 13;
+    //周期天数
+    int32 cycleDays = 14;
+    //下次执行时间
+    google.protobuf.Timestamp nextExecTime = 15;
+    //备注
+    string remark = 16;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 17;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 18;
+    //创建者
+    int64 createBy = 19;
+    //更新者
+    int64 updateBy = 20;
+    //租户
+    int64 tenantId = 21;
+
+}
+
 // 查询搜索请求
 message AgreementLogPageReq {
     //分页查询参数
@@ -68,10 +114,14 @@ message AgreementLogPageReq {
 
 // 查询搜索返回
 message AgreementLogPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated AgreementLogReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated AgreementLogData items = 4;
 }
 
 
@@ -121,50 +171,14 @@ message AgreementLogReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message AgreementLogReply {
-    int64 id = 1;
-    //外部签约协议号
-    string outerAgreementNo = 2;
-    //订单号
-    string orderId = 3;
-    //用户ID
-    int64 userId = 4;
-    //渠道
-    int64 chId = 5;
-    //用户名称
-    string userName = 6;
-    //商品名称
-    string paymentName = 7;
-    //支付配置ID payment_config表的ID
-    int64 paymentId = 8;
-    //状态：1、待签约，2、签约成功，3、取消签约
-    int32 state = 9;
-    //每期扣款金额,单位：分
-    int64 payment = 10;
-    //支付方式：Alipay,Google,WeChat
-    string agreementType = 11;
-    //vip类型
-    int64 vipType = 12;
-    //第几期
-    int64 times = 13;
-    //周期天数
-    int32 cycleDays = 14;
-    //下次执行时间
-    google.protobuf.Timestamp nextExecTime = 15;
-    //备注
-    string remark = 16;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 17;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
-    //创建者
-    int64 createBy = 19;
-    //更新者
-    int64 updateBy = 20;
-    //租户
-    int64 tenantId = 21;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AgreementLogData result = 3;
 }
 
 // 创建AgreementLog请求
@@ -204,48 +218,12 @@ message AgreementLogCreateReq {
 
 // 创建AgreementLog返回
 message AgreementLogCreateReply {
-    int64 id = 1;
-    //外部签约协议号
-    string outerAgreementNo = 2;
-    //订单号
-    string orderId = 3;
-    //用户ID
-    int64 userId = 4;
-    //渠道
-    int64 chId = 5;
-    //用户名称
-    string userName = 6;
-    //商品名称
-    string paymentName = 7;
-    //支付配置ID payment_config表的ID
-    int64 paymentId = 8;
-    //状态：1、待签约，2、签约成功，3、取消签约
-    int32 state = 9;
-    //每期扣款金额,单位：分
-    int64 payment = 10;
-    //支付方式：Alipay,Google,WeChat
-    string agreementType = 11;
-    //vip类型
-    int64 vipType = 12;
-    //第几期
-    int64 times = 13;
-    //周期天数
-    int32 cycleDays = 14;
-    //下次执行时间
-    google.protobuf.Timestamp nextExecTime = 15;
-    //备注
-    string remark = 16;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 17;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
-    //创建者
-    int64 createBy = 19;
-    //更新者
-    int64 updateBy = 20;
-    //租户
-    int64 tenantId = 21;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AgreementLogData result = 3;
 }
 
 // 更新AgreementLog请求
@@ -287,38 +265,12 @@ message AgreementLogUpdateReq {
 
 // 更新AgreementLog返回
 message AgreementLogUpdateReply {
-    int64 id = 1;
-    //外部签约协议号
-    string outerAgreementNo = 2;
-    //订单号
-    string orderId = 3;
-    //用户ID
-    int64 userId = 4;
-    //渠道
-    int64 chId = 5;
-    //用户名称
-    string userName = 6;
-    //商品名称
-    string paymentName = 7;
-    //支付配置ID payment_config表的ID
-    int64 paymentId = 8;
-    //状态：1、待签约，2、签约成功，3、取消签约
-    int32 state = 9;
-    //每期扣款金额,单位：分
-    int64 payment = 10;
-    //支付方式：Alipay,Google,WeChat
-    string agreementType = 11;
-    //vip类型
-    int64 vipType = 12;
-    //第几期
-    int64 times = 13;
-    //周期天数
-    int32 cycleDays = 14;
-    //下次执行时间
-    google.protobuf.Timestamp nextExecTime = 15;
-    //备注
-    string remark = 16;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    AgreementLogData result = 3;
 }
 
 // 删除AgreementLog请求
@@ -335,6 +287,11 @@ message AgreementLogBatchDeleteReq {
 
 // 删除AgreementLog返回
 message AgreementLogDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

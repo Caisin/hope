@@ -469,50 +469,18 @@
     "v1UserResourceCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "resType": {
-          "type": "string",
-          "title": "资源类型,avatar"
-        },
-        "Name": {
-          "type": "string",
-          "title": "头像名称"
-        },
-        "url": {
-          "type": "string",
-          "title": "图片地址"
-        },
-        "summary": {
-          "type": "string",
-          "title": "描述"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1UserResourceData",
+          "title": "结果数据"
         }
       },
       "title": "创建UserResource返回"
@@ -539,33 +507,7 @@
       },
       "title": "创建UserResource请求"
     },
-    "v1UserResourceDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除UserResource返回"
-    },
-    "v1UserResourcePageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1UserResourceReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1UserResourceReply": {
+    "v1UserResourceData": {
       "type": "object",
       "properties": {
         "id": {
@@ -614,7 +556,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1UserResourceDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除UserResource返回"
+    },
+    "v1UserResourcePageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1UserResourceData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1UserResourceReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1UserResourceData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1UserResourceReq": {
       "type": "object",
@@ -670,25 +677,18 @@
     "v1UserResourceUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "resType": {
+        "message": {
           "type": "string",
-          "title": "资源类型,avatar"
+          "title": "消息"
         },
-        "Name": {
-          "type": "string",
-          "title": "头像名称"
-        },
-        "url": {
-          "type": "string",
-          "title": "图片地址"
-        },
-        "summary": {
-          "type": "string",
-          "title": "描述"
+        "result": {
+          "$ref": "#/definitions/v1UserResourceData",
+          "title": "结果数据"
         }
       },
       "title": "更新UserResource返回"

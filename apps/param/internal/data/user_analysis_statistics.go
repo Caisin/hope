@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/useranalysisstatistics"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewUserAnalysisStatisticsRepo(data *Data, logger log.Logger) biz.UserAnalys
 
 // CreateUserAnalysisStatistics 创建
 func (r *userAnalysisStatisticsRepo) CreateUserAnalysisStatistics(ctx context.Context, req *v1.UserAnalysisStatisticsCreateReq) (*ent.UserAnalysisStatistics, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.UserAnalysisStatistics.Create().
 		SetStatisticsDate(req.StatisticsDate).
@@ -54,6 +59,8 @@ func (r *userAnalysisStatisticsRepo) CreateUserAnalysisStatistics(ctx context.Co
 		SetDayOldArpu(req.DayOldArpu).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -70,7 +77,13 @@ func (r *userAnalysisStatisticsRepo) BatchDeleteUserAnalysisStatistics(ctx conte
 
 // UpdateUserAnalysisStatistics 更新
 func (r *userAnalysisStatisticsRepo) UpdateUserAnalysisStatistics(ctx context.Context, req *v1.UserAnalysisStatisticsUpdateReq) (*ent.UserAnalysisStatistics, error) {
-	return r.data.db.UserAnalysisStatistics.UpdateOne(convert.UserAnalysisStatisticsUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.UserAnalysisStatisticsUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.UserAnalysisStatistics.UpdateOne(data).Save(ctx)
 }
 
 // GetUserAnalysisStatistics 根据Id查询

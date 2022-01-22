@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/agreementlog"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewAgreementLogRepo(data *Data, logger log.Logger) biz.AgreementLogRepo {
 
 // CreateAgreementLog 创建
 func (r *agreementLogRepo) CreateAgreementLog(ctx context.Context, req *v1.AgreementLogCreateReq) (*ent.AgreementLog, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.AgreementLog.Create().
 		SetOuterAgreementNo(req.OuterAgreementNo).
@@ -49,6 +54,8 @@ func (r *agreementLogRepo) CreateAgreementLog(ctx context.Context, req *v1.Agree
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -65,7 +72,13 @@ func (r *agreementLogRepo) BatchDeleteAgreementLog(ctx context.Context, req *v1.
 
 // UpdateAgreementLog 更新
 func (r *agreementLogRepo) UpdateAgreementLog(ctx context.Context, req *v1.AgreementLogUpdateReq) (*ent.AgreementLog, error) {
-	return r.data.db.AgreementLog.UpdateOne(convert.AgreementLogUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.AgreementLogUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.AgreementLog.UpdateOne(data).Save(ctx)
 }
 
 // GetAgreementLog 根据Id查询

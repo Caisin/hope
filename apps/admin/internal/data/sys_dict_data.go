@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdictdata"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysDictDataRepo(data *Data, logger log.Logger) biz.SysDictDataRepo {
 
 // CreateSysDictData 创建
 func (r *sysDictDataRepo) CreateSysDictData(ctx context.Context, req *v1.SysDictDataCreateReq) (*ent.SysDictData, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysDictData.Create().
 		SetTypeId(req.TypeId).
@@ -43,6 +48,8 @@ func (r *sysDictDataRepo) CreateSysDictData(ctx context.Context, req *v1.SysDict
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -59,7 +66,13 @@ func (r *sysDictDataRepo) BatchDeleteSysDictData(ctx context.Context, req *v1.Sy
 
 // UpdateSysDictData 更新
 func (r *sysDictDataRepo) UpdateSysDictData(ctx context.Context, req *v1.SysDictDataUpdateReq) (*ent.SysDictData, error) {
-	return r.data.db.SysDictData.UpdateOne(convert.SysDictDataUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysDictDataUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysDictData.UpdateOne(data).Save(ctx)
 }
 
 // GetSysDictData 根据Id查询

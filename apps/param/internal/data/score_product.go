@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/scoreproduct"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewScoreProductRepo(data *Data, logger log.Logger) biz.ScoreProductRepo {
 
 // CreateScoreProduct 创建
 func (r *scoreProductRepo) CreateScoreProduct(ctx context.Context, req *v1.ScoreProductCreateReq) (*ent.ScoreProduct, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.ScoreProduct.Create().
 		SetProductName(req.ProductName).
@@ -41,6 +46,8 @@ func (r *scoreProductRepo) CreateScoreProduct(ctx context.Context, req *v1.Score
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -57,7 +64,13 @@ func (r *scoreProductRepo) BatchDeleteScoreProduct(ctx context.Context, req *v1.
 
 // UpdateScoreProduct 更新
 func (r *scoreProductRepo) UpdateScoreProduct(ctx context.Context, req *v1.ScoreProductUpdateReq) (*ent.ScoreProduct, error) {
-	return r.data.db.ScoreProduct.UpdateOne(convert.ScoreProductUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.ScoreProductUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.ScoreProduct.UpdateOne(data).Save(ctx)
 }
 
 // GetScoreProduct 根据Id查询

@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/datasource"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewDataSourceRepo(data *Data, logger log.Logger) biz.DataSourceRepo {
 
 // CreateDataSource 创建
 func (r *dataSourceRepo) CreateDataSource(ctx context.Context, req *v1.DataSourceCreateReq) (*ent.DataSource, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.DataSource.Create().
 		SetDbName(req.DbName).
@@ -47,6 +52,8 @@ func (r *dataSourceRepo) CreateDataSource(ctx context.Context, req *v1.DataSourc
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -63,7 +70,13 @@ func (r *dataSourceRepo) BatchDeleteDataSource(ctx context.Context, req *v1.Data
 
 // UpdateDataSource 更新
 func (r *dataSourceRepo) UpdateDataSource(ctx context.Context, req *v1.DataSourceUpdateReq) (*ent.DataSource, error) {
-	return r.data.db.DataSource.UpdateOne(convert.DataSourceUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.DataSourceUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.DataSource.UpdateOne(data).Save(ctx)
 }
 
 // GetDataSource 根据Id查询

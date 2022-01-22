@@ -83,94 +83,11 @@ func NovelClassifyData2Req(v *ent.NovelClassify) *v1.NovelClassifyReq {
 	}
 }
 
-func NovelClassifyReply2Data(v *v1.NovelClassifyReply) *ent.NovelClassify {
+func NovelClassifyData2Reply(v *ent.NovelClassify) *v1.NovelClassifyData {
 	if v == nil {
 		return nil
 	}
-	return &ent.NovelClassify{
-		ID:           v.Id,
-		Pid:          v.Pid,
-		ClassifyName: v.ClassifyName,
-		Status:       v.Status,
-		OrderNum:     v.OrderNum,
-		Remark:       v.Remark,
-		CreatedAt:    v.CreatedAt.AsTime(),
-		UpdatedAt:    v.UpdatedAt.AsTime(),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func NovelClassifyData2Reply(v *ent.NovelClassify) *v1.NovelClassifyReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelClassifyReply{
-		Id:           v.ID,
-		Pid:          v.Pid,
-		ClassifyName: v.ClassifyName,
-		Status:       v.Status,
-		OrderNum:     v.OrderNum,
-		Remark:       v.Remark,
-		CreatedAt:    timestamppb.New(v.CreatedAt),
-		UpdatedAt:    timestamppb.New(v.UpdatedAt),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func NovelClassifyUpdateReply2Data(v *v1.NovelClassifyUpdateReply) *ent.NovelClassify {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelClassify{
-		ID:           v.Id,
-		Pid:          v.Pid,
-		ClassifyName: v.ClassifyName,
-		Status:       v.Status,
-		OrderNum:     v.OrderNum,
-	}
-}
-
-func NovelClassifyData2UpdateReply(v *ent.NovelClassify) *v1.NovelClassifyUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelClassifyUpdateReply{
-		Id:           v.ID,
-		Pid:          v.Pid,
-		ClassifyName: v.ClassifyName,
-		Status:       v.Status,
-		OrderNum:     v.OrderNum,
-	}
-}
-
-func NovelClassifyCreateReply2Data(v *v1.NovelClassifyCreateReply) *ent.NovelClassify {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelClassify{
-		ID:           v.Id,
-		Pid:          v.Pid,
-		ClassifyName: v.ClassifyName,
-		Status:       v.Status,
-		OrderNum:     v.OrderNum,
-		Remark:       v.Remark,
-		CreatedAt:    v.CreatedAt.AsTime(),
-		UpdatedAt:    v.UpdatedAt.AsTime(),
-		CreateBy:     v.CreateBy,
-		UpdateBy:     v.UpdateBy,
-		TenantId:     v.TenantId,
-	}
-}
-
-func NovelClassifyData2CreateReply(v *ent.NovelClassify) *v1.NovelClassifyCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelClassifyCreateReply{
+	return &v1.NovelClassifyData{
 		Id:           v.ID,
 		Pid:          v.Pid,
 		ClassifyName: v.ClassifyName,

@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetitem"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewAssetItemRepo(data *Data, logger log.Logger) biz.AssetItemRepo {
 
 // CreateAssetItem 创建
 func (r *assetItemRepo) CreateAssetItem(ctx context.Context, req *v1.AssetItemCreateReq) (*ent.AssetItem, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.AssetItem.Create().
 		SetAssetItemId(req.AssetItemId).
@@ -40,6 +45,8 @@ func (r *assetItemRepo) CreateAssetItem(ctx context.Context, req *v1.AssetItemCr
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -56,7 +63,13 @@ func (r *assetItemRepo) BatchDeleteAssetItem(ctx context.Context, req *v1.AssetI
 
 // UpdateAssetItem 更新
 func (r *assetItemRepo) UpdateAssetItem(ctx context.Context, req *v1.AssetItemUpdateReq) (*ent.AssetItem, error) {
-	return r.data.db.AssetItem.UpdateOne(convert.AssetItemUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.AssetItemUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.AssetItem.UpdateOne(data).Save(ctx)
 }
 
 // GetAssetItem 根据Id查询

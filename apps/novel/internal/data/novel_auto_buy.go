@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelautobuy"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 
 	"hope/pkg/pagin"
 	"time"
@@ -29,12 +30,18 @@ func NewNovelAutoBuyRepo(data *Data, logger log.Logger) biz.NovelAutoBuyRepo {
 
 // CreateNovelAutoBuy 创建
 func (r *novelAutoBuyRepo) CreateNovelAutoBuy(ctx context.Context, req *v1.NovelAutoBuyCreateReq) (*ent.NovelAutoBuy, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.NovelAutoBuy.Create().
 		SetUserId(req.UserId).
 		SetNovelId(req.NovelId).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -51,7 +58,13 @@ func (r *novelAutoBuyRepo) BatchDeleteNovelAutoBuy(ctx context.Context, req *v1.
 
 // UpdateNovelAutoBuy 更新
 func (r *novelAutoBuyRepo) UpdateNovelAutoBuy(ctx context.Context, req *v1.NovelAutoBuyUpdateReq) (*ent.NovelAutoBuy, error) {
-	return r.data.db.NovelAutoBuy.UpdateOne(convert.NovelAutoBuyUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelAutoBuyUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.NovelAutoBuy.UpdateOne(data).Save(ctx)
 }
 
 // GetNovelAutoBuy 根据Id查询

@@ -83,94 +83,11 @@ func AdChangeLogData2Req(v *ent.AdChangeLog) *v1.AdChangeLogReq {
 	}
 }
 
-func AdChangeLogReply2Data(v *v1.AdChangeLogReply) *ent.AdChangeLog {
+func AdChangeLogData2Reply(v *ent.AdChangeLog) *v1.AdChangeLogData {
 	if v == nil {
 		return nil
 	}
-	return &ent.AdChangeLog{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		AdId:      v.AdId,
-		ChId:      v.ChId,
-		DeviceId:  v.DeviceId,
-		ExtInfo:   v.ExtInfo,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func AdChangeLogData2Reply(v *ent.AdChangeLog) *v1.AdChangeLogReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AdChangeLogReply{
-		Id:        v.ID,
-		UserId:    v.UserId,
-		AdId:      v.AdId,
-		ChId:      v.ChId,
-		DeviceId:  v.DeviceId,
-		ExtInfo:   v.ExtInfo,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func AdChangeLogUpdateReply2Data(v *v1.AdChangeLogUpdateReply) *ent.AdChangeLog {
-	if v == nil {
-		return nil
-	}
-	return &ent.AdChangeLog{
-		ID:       v.Id,
-		UserId:   v.UserId,
-		AdId:     v.AdId,
-		ChId:     v.ChId,
-		DeviceId: v.DeviceId,
-	}
-}
-
-func AdChangeLogData2UpdateReply(v *ent.AdChangeLog) *v1.AdChangeLogUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AdChangeLogUpdateReply{
-		Id:       v.ID,
-		UserId:   v.UserId,
-		AdId:     v.AdId,
-		ChId:     v.ChId,
-		DeviceId: v.DeviceId,
-	}
-}
-
-func AdChangeLogCreateReply2Data(v *v1.AdChangeLogCreateReply) *ent.AdChangeLog {
-	if v == nil {
-		return nil
-	}
-	return &ent.AdChangeLog{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		AdId:      v.AdId,
-		ChId:      v.ChId,
-		DeviceId:  v.DeviceId,
-		ExtInfo:   v.ExtInfo,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func AdChangeLogData2CreateReply(v *ent.AdChangeLog) *v1.AdChangeLogCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AdChangeLogCreateReply{
+	return &v1.AdChangeLogData{
 		Id:        v.ID,
 		UserId:    v.UserId,
 		AdId:      v.AdId,

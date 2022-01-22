@@ -58,6 +58,38 @@ service VipUser {
 
 }
 
+// 实体数据
+message VipUserData {
+    int64 id = 1;
+    //用户ID
+    int64 userId = 2;
+    //vip类型
+    int64 vipType = 3;
+    //svip类型
+    int64 svipType = 4;
+    //超级VIP生效时间
+    google.protobuf.Timestamp svipEffectTime = 5;
+    //超级VIP失效时间
+    google.protobuf.Timestamp svipExpiredTime = 6;
+    //备注
+    string remark = 7;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 8;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 9;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 10;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 11;
+    //创建者
+    int64 createBy = 12;
+    //更新者
+    int64 updateBy = 13;
+    //租户
+    int64 tenantId = 14;
+
+}
+
 // 查询搜索请求
 message VipUserPageReq {
     //分页查询参数
@@ -68,10 +100,14 @@ message VipUserPageReq {
 
 // 查询搜索返回
 message VipUserPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated VipUserReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated VipUserData items = 4;
 }
 
 
@@ -107,36 +143,14 @@ message VipUserReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message VipUserReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //vip类型
-    int64 vipType = 3;
-    //svip类型
-    int64 svipType = 4;
-    //超级VIP生效时间
-    google.protobuf.Timestamp svipEffectTime = 5;
-    //超级VIP失效时间
-    google.protobuf.Timestamp svipExpiredTime = 6;
-    //备注
-    string remark = 7;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 8;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 9;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 10;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 11;
-    //创建者
-    int64 createBy = 12;
-    //更新者
-    int64 updateBy = 13;
-    //租户
-    int64 tenantId = 14;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    VipUserData result = 3;
 }
 
 // 创建VipUser请求
@@ -162,34 +176,12 @@ message VipUserCreateReq {
 
 // 创建VipUser返回
 message VipUserCreateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //vip类型
-    int64 vipType = 3;
-    //svip类型
-    int64 svipType = 4;
-    //超级VIP生效时间
-    google.protobuf.Timestamp svipEffectTime = 5;
-    //超级VIP失效时间
-    google.protobuf.Timestamp svipExpiredTime = 6;
-    //备注
-    string remark = 7;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 8;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 9;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 10;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 11;
-    //创建者
-    int64 createBy = 12;
-    //更新者
-    int64 updateBy = 13;
-    //租户
-    int64 tenantId = 14;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    VipUserData result = 3;
 }
 
 // 更新VipUser请求
@@ -217,24 +209,12 @@ message VipUserUpdateReq {
 
 // 更新VipUser返回
 message VipUserUpdateReply {
-    int64 id = 1;
-    //用户ID
-    int64 userId = 2;
-    //vip类型
-    int64 vipType = 3;
-    //svip类型
-    int64 svipType = 4;
-    //超级VIP生效时间
-    google.protobuf.Timestamp svipEffectTime = 5;
-    //超级VIP失效时间
-    google.protobuf.Timestamp svipExpiredTime = 6;
-    //备注
-    string remark = 7;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 8;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 9;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    VipUserData result = 3;
 }
 
 // 删除VipUser请求
@@ -251,6 +231,11 @@ message VipUserBatchDeleteReq {
 
 // 删除VipUser返回
 message VipUserDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

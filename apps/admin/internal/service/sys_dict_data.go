@@ -28,25 +28,32 @@ func (s *SysDictDataService) GetPageSysDictData(ctx context.Context, req *pb.Sys
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysDictDataReply, 0)
+	items := make([]*pb.SysDictDataData, 0)
 	for i := range datas {
 		items = append(items, convert.SysDictDataData2Reply(datas[i]))
 	}
 	reply := &pb.SysDictDataPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysDictDataService) GetSysDictData(ctx context.Context, req *pb.SysDictDataReq) (*pb.SysDictDataReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysDictData")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDictDataData2Reply(daya), err
+	reply := &pb.SysDictDataReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDictDataData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysDictDataService) UpdateSysDictData(ctx context.Context, req *pb.SysDictDataUpdateReq) (*pb.SysDictDataUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysDictDataService) UpdateSysDictData(ctx context.Context, req *pb.SysD
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDictDataData2UpdateReply(data), err
+	reply := &pb.SysDictDataUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDictDataData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysDictDataService) CreateSysDictData(ctx context.Context, req *pb.SysDictDataCreateReq) (*pb.SysDictDataCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysDictDataService) CreateSysDictData(ctx context.Context, req *pb.SysD
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysDictDataData2CreateReply(data), err
+	reply := &pb.SysDictDataCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysDictDataData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysDictDataService) DeleteSysDictData(ctx context.Context, req *pb.SysDictDataDeleteReq) (*pb.SysDictDataDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysDictDataService) DeleteSysDictData(ctx context.Context, req *pb.SysD
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysDictDataDeleteReply{Result: err == nil}, err
+	return &pb.SysDictDataDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysDictDataService) BatchDeleteSysDictData(ctx context.Context, req *pb.SysDictDataBatchDeleteReq) (*pb.SysDictDataDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysDictDataService) BatchDeleteSysDictData(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysDictDataDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysDictDataDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

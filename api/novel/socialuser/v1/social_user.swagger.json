@@ -883,144 +883,18 @@
     "v1SocialUserCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "chId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "注册渠道"
+          "title": "返回码"
         },
-        "unionid": {
+        "message": {
           "type": "string",
-          "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+          "title": "消息"
         },
-        "token": {
-          "type": "string",
-          "title": "第三方登录token"
-        },
-        "openid": {
-          "type": "string",
-          "title": "用户的标识，对当前公众号唯一"
-        },
-        "routineOpenid": {
-          "type": "string",
-          "title": "小程序唯一身份ID"
-        },
-        "userName": {
-          "type": "string",
-          "title": "用户名"
-        },
-        "nickName": {
-          "type": "string",
-          "title": "用户的昵称"
-        },
-        "birthday": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生日"
-        },
-        "phone": {
-          "type": "string",
-          "title": "手机"
-        },
-        "email": {
-          "type": "string",
-          "title": "邮箱"
-        },
-        "password": {
-          "type": "string",
-          "title": "密码"
-        },
-        "avatar": {
-          "type": "string",
-          "title": "用户头像"
-        },
-        "sex": {
-          "type": "integer",
-          "format": "int32",
-          "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
-        },
-        "region": {
-          "type": "string",
-          "title": "用户所在城市区域"
-        },
-        "city": {
-          "type": "string",
-          "title": "用户所在城市"
-        },
-        "language": {
-          "type": "string",
-          "title": "用户的语言，简体中文为zh_CN"
-        },
-        "province": {
-          "type": "string",
-          "title": "用户所在省份"
-        },
-        "country": {
-          "type": "string",
-          "title": "用户所在国家"
-        },
-        "signature": {
-          "type": "string",
-          "title": "个性签名"
-        },
-        "remark": {
-          "type": "string",
-          "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
-        },
-        "groupid": {
-          "type": "integer",
-          "format": "int32",
-          "title": "用户所在的分组ID（兼容旧的用户分组接口）"
-        },
-        "tagidList": {
-          "type": "string",
-          "title": "用户被打上的标签ID列表"
-        },
-        "subscribe": {
-          "type": "integer",
-          "format": "int32",
-          "title": "用户是否订阅该公众号标识"
-        },
-        "subscribeTime": {
-          "type": "integer",
-          "format": "int32",
-          "title": "关注公众号时间"
-        },
-        "sessionKey": {
-          "type": "string",
-          "title": "小程序用户会话密匙"
-        },
-        "userType": {
-          "type": "string",
-          "title": "用户类型"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SocialUserData",
+          "title": "结果数据"
         }
       },
       "title": "创建SocialUser返回"
@@ -1141,33 +1015,7 @@
       },
       "title": "创建SocialUser请求"
     },
-    "v1SocialUserDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SocialUser返回"
-    },
-    "v1SocialUserPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SocialUserReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SocialUserReply": {
+    "v1SocialUserData": {
       "type": "object",
       "properties": {
         "id": {
@@ -1310,7 +1158,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SocialUserDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SocialUser返回"
+    },
+    "v1SocialUserPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SocialUserData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SocialUserReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SocialUserData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SocialUserReq": {
       "type": "object",
@@ -1460,119 +1373,18 @@
     "v1SocialUserUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "chId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "注册渠道"
+          "title": "返回码"
         },
-        "unionid": {
+        "message": {
           "type": "string",
-          "title": "只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段"
+          "title": "消息"
         },
-        "token": {
-          "type": "string",
-          "title": "第三方登录token"
-        },
-        "openid": {
-          "type": "string",
-          "title": "用户的标识，对当前公众号唯一"
-        },
-        "routineOpenid": {
-          "type": "string",
-          "title": "小程序唯一身份ID"
-        },
-        "userName": {
-          "type": "string",
-          "title": "用户名"
-        },
-        "nickName": {
-          "type": "string",
-          "title": "用户的昵称"
-        },
-        "birthday": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生日"
-        },
-        "phone": {
-          "type": "string",
-          "title": "手机"
-        },
-        "email": {
-          "type": "string",
-          "title": "邮箱"
-        },
-        "password": {
-          "type": "string",
-          "title": "密码"
-        },
-        "avatar": {
-          "type": "string",
-          "title": "用户头像"
-        },
-        "sex": {
-          "type": "integer",
-          "format": "int32",
-          "title": "用户的性别，值为1时是男性，值为2时是女性，值为0时是未知"
-        },
-        "region": {
-          "type": "string",
-          "title": "用户所在城市区域"
-        },
-        "city": {
-          "type": "string",
-          "title": "用户所在城市"
-        },
-        "language": {
-          "type": "string",
-          "title": "用户的语言，简体中文为zh_CN"
-        },
-        "province": {
-          "type": "string",
-          "title": "用户所在省份"
-        },
-        "country": {
-          "type": "string",
-          "title": "用户所在国家"
-        },
-        "signature": {
-          "type": "string",
-          "title": "个性签名"
-        },
-        "remark": {
-          "type": "string",
-          "title": "公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注"
-        },
-        "groupid": {
-          "type": "integer",
-          "format": "int32",
-          "title": "用户所在的分组ID（兼容旧的用户分组接口）"
-        },
-        "tagidList": {
-          "type": "string",
-          "title": "用户被打上的标签ID列表"
-        },
-        "subscribe": {
-          "type": "integer",
-          "format": "int32",
-          "title": "用户是否订阅该公众号标识"
-        },
-        "subscribeTime": {
-          "type": "integer",
-          "format": "int32",
-          "title": "关注公众号时间"
-        },
-        "sessionKey": {
-          "type": "string",
-          "title": "小程序用户会话密匙"
-        },
-        "userType": {
-          "type": "string",
-          "title": "用户类型"
+        "result": {
+          "$ref": "#/definitions/v1SocialUserData",
+          "title": "结果数据"
         }
       },
       "title": "更新SocialUser返回"

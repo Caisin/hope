@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelmsg"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewNovelMsgRepo(data *Data, logger log.Logger) biz.NovelMsgRepo {
 
 // CreateNovelMsg 创建
 func (r *novelMsgRepo) CreateNovelMsg(ctx context.Context, req *v1.NovelMsgCreateReq) (*ent.NovelMsg, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.NovelMsg.Create().
 		SetTitle(req.Title).
@@ -38,6 +43,8 @@ func (r *novelMsgRepo) CreateNovelMsg(ctx context.Context, req *v1.NovelMsgCreat
 		SetStatus(req.Status).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -54,7 +61,13 @@ func (r *novelMsgRepo) BatchDeleteNovelMsg(ctx context.Context, req *v1.NovelMsg
 
 // UpdateNovelMsg 更新
 func (r *novelMsgRepo) UpdateNovelMsg(ctx context.Context, req *v1.NovelMsgUpdateReq) (*ent.NovelMsg, error) {
-	return r.data.db.NovelMsg.UpdateOne(convert.NovelMsgUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelMsgUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.NovelMsg.UpdateOne(data).Save(ctx)
 }
 
 // GetNovelMsg 根据Id查询

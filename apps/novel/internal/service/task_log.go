@@ -28,25 +28,32 @@ func (s *TaskLogService) GetPageTaskLog(ctx context.Context, req *pb.TaskLogPage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.TaskLogReply, 0)
+	items := make([]*pb.TaskLogData, 0)
 	for i := range datas {
 		items = append(items, convert.TaskLogData2Reply(datas[i]))
 	}
 	reply := &pb.TaskLogPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *TaskLogService) GetTaskLog(ctx context.Context, req *pb.TaskLogReq) (*pb.TaskLogReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetTaskLog")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.TaskLogData2Reply(daya), err
+	reply := &pb.TaskLogReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.TaskLogData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *TaskLogService) UpdateTaskLog(ctx context.Context, req *pb.TaskLogUpdateReq) (*pb.TaskLogUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *TaskLogService) UpdateTaskLog(ctx context.Context, req *pb.TaskLogUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.TaskLogData2UpdateReply(data), err
+	reply := &pb.TaskLogUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.TaskLogData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *TaskLogService) CreateTaskLog(ctx context.Context, req *pb.TaskLogCreateReq) (*pb.TaskLogCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *TaskLogService) CreateTaskLog(ctx context.Context, req *pb.TaskLogCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.TaskLogData2CreateReply(data), err
+	reply := &pb.TaskLogCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.TaskLogData2Reply(data),
+	}
+	return reply, err
 }
 func (s *TaskLogService) DeleteTaskLog(ctx context.Context, req *pb.TaskLogDeleteReq) (*pb.TaskLogDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *TaskLogService) DeleteTaskLog(ctx context.Context, req *pb.TaskLogDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.TaskLogDeleteReply{Result: err == nil}, err
+	return &pb.TaskLogDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *TaskLogService) BatchDeleteTaskLog(ctx context.Context, req *pb.TaskLogBatchDeleteReq) (*pb.TaskLogDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *TaskLogService) BatchDeleteTaskLog(ctx context.Context, req *pb.TaskLog
 	if err != nil {
 		return nil, err
 	}
-	return &pb.TaskLogDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.TaskLogDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

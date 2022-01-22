@@ -58,6 +58,36 @@ service CasbinRule {
 
 }
 
+// 实体数据
+message CasbinRuleData {
+    int64 id = 1;
+    //
+    string p_type = 2;
+    //
+    string v0 = 3;
+    //
+    string v1 = 4;
+    //
+    string v2 = 5;
+    //
+    string v3 = 6;
+    //
+    string v4 = 7;
+    //
+    string v5 = 8;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 9;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 10;
+    //创建者
+    int64 createBy = 11;
+    //更新者
+    int64 updateBy = 12;
+    //租户
+    int64 tenantId = 13;
+
+}
+
 // 查询搜索请求
 message CasbinRulePageReq {
     //分页查询参数
@@ -68,10 +98,14 @@ message CasbinRulePageReq {
 
 // 查询搜索返回
 message CasbinRulePageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated CasbinRuleReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated CasbinRuleData items = 4;
 }
 
 
@@ -105,34 +139,14 @@ message CasbinRuleReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message CasbinRuleReply {
-    int64 id = 1;
-    //
-    string p_type = 2;
-    //
-    string v0 = 3;
-    //
-    string v1 = 4;
-    //
-    string v2 = 5;
-    //
-    string v3 = 6;
-    //
-    string v4 = 7;
-    //
-    string v5 = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CasbinRuleData result = 3;
 }
 
 // 创建CasbinRule请求
@@ -156,32 +170,12 @@ message CasbinRuleCreateReq {
 
 // 创建CasbinRule返回
 message CasbinRuleCreateReply {
-    int64 id = 1;
-    //
-    string p_type = 2;
-    //
-    string v0 = 3;
-    //
-    string v1 = 4;
-    //
-    string v2 = 5;
-    //
-    string v3 = 6;
-    //
-    string v4 = 7;
-    //
-    string v5 = 8;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 9;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 10;
-    //创建者
-    int64 createBy = 11;
-    //更新者
-    int64 updateBy = 12;
-    //租户
-    int64 tenantId = 13;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CasbinRuleData result = 3;
 }
 
 // 更新CasbinRule请求
@@ -207,22 +201,12 @@ message CasbinRuleUpdateReq {
 
 // 更新CasbinRule返回
 message CasbinRuleUpdateReply {
-    int64 id = 1;
-    //
-    string p_type = 2;
-    //
-    string v0 = 3;
-    //
-    string v1 = 4;
-    //
-    string v2 = 5;
-    //
-    string v3 = 6;
-    //
-    string v4 = 7;
-    //
-    string v5 = 8;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    CasbinRuleData result = 3;
 }
 
 // 删除CasbinRule请求
@@ -239,6 +223,11 @@ message CasbinRuleBatchDeleteReq {
 
 // 删除CasbinRule返回
 message CasbinRuleDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

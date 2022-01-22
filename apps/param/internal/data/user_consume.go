@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userconsume"
+	"hope/pkg/auth"
 
 	"hope/pkg/pagin"
 	"time"
@@ -29,6 +30,10 @@ func NewUserConsumeRepo(data *Data, logger log.Logger) biz.UserConsumeRepo {
 
 // CreateUserConsume 创建
 func (r *userConsumeRepo) CreateUserConsume(ctx context.Context, req *v1.UserConsumeCreateReq) (*ent.UserConsume, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.UserConsume.Create().
 		SetNovelId(req.NovelId).
@@ -37,6 +42,8 @@ func (r *userConsumeRepo) CreateUserConsume(ctx context.Context, req *v1.UserCon
 		SetDiscount(req.Discount).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -53,7 +60,13 @@ func (r *userConsumeRepo) BatchDeleteUserConsume(ctx context.Context, req *v1.Us
 
 // UpdateUserConsume 更新
 func (r *userConsumeRepo) UpdateUserConsume(ctx context.Context, req *v1.UserConsumeUpdateReq) (*ent.UserConsume, error) {
-	return r.data.db.UserConsume.UpdateOne(convert.UserConsumeUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.UserConsumeUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.UserConsume.UpdateOne(data).Save(ctx)
 }
 
 // GetUserConsume 根据Id查询

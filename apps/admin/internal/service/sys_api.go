@@ -28,25 +28,32 @@ func (s *SysApiService) GetPageSysApi(ctx context.Context, req *pb.SysApiPageReq
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysApiReply, 0)
+	items := make([]*pb.SysApiData, 0)
 	for i := range datas {
 		items = append(items, convert.SysApiData2Reply(datas[i]))
 	}
 	reply := &pb.SysApiPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysApiService) GetSysApi(ctx context.Context, req *pb.SysApiReq) (*pb.SysApiReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysApi")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysApiData2Reply(daya), err
+	reply := &pb.SysApiReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysApiData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysApiService) UpdateSysApi(ctx context.Context, req *pb.SysApiUpdateReq) (*pb.SysApiUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysApiService) UpdateSysApi(ctx context.Context, req *pb.SysApiUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysApiData2UpdateReply(data), err
+	reply := &pb.SysApiUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysApiData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysApiService) CreateSysApi(ctx context.Context, req *pb.SysApiCreateReq) (*pb.SysApiCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysApiService) CreateSysApi(ctx context.Context, req *pb.SysApiCreateRe
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysApiData2CreateReply(data), err
+	reply := &pb.SysApiCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysApiData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysApiService) DeleteSysApi(ctx context.Context, req *pb.SysApiDeleteReq) (*pb.SysApiDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysApiService) DeleteSysApi(ctx context.Context, req *pb.SysApiDeleteRe
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysApiDeleteReply{Result: err == nil}, err
+	return &pb.SysApiDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysApiService) BatchDeleteSysApi(ctx context.Context, req *pb.SysApiBatchDeleteReq) (*pb.SysApiDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysApiService) BatchDeleteSysApi(ctx context.Context, req *pb.SysApiBat
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysApiDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysApiDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -451,46 +451,18 @@
     "v1PageConfigCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "pageCode": {
-          "type": "string",
-          "title": "页面编码"
-        },
-        "pageName": {
-          "type": "string",
-          "title": "页面名称"
-        },
-        "groupCodes": {
-          "type": "string",
-          "title": "分组编码集,逗号分割"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1PageConfigData",
+          "title": "结果数据"
         }
       },
       "title": "创建PageConfig返回"
@@ -513,33 +485,7 @@
       },
       "title": "创建PageConfig请求"
     },
-    "v1PageConfigDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除PageConfig返回"
-    },
-    "v1PageConfigPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1PageConfigReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1PageConfigReply": {
+    "v1PageConfigData": {
       "type": "object",
       "properties": {
         "id": {
@@ -584,7 +530,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1PageConfigDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除PageConfig返回"
+    },
+    "v1PageConfigPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1PageConfigData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1PageConfigReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1PageConfigData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1PageConfigReq": {
       "type": "object",
@@ -636,21 +647,18 @@
     "v1PageConfigUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "pageCode": {
+        "message": {
           "type": "string",
-          "title": "页面编码"
+          "title": "消息"
         },
-        "pageName": {
-          "type": "string",
-          "title": "页面名称"
-        },
-        "groupCodes": {
-          "type": "string",
-          "title": "分组编码集,逗号分割"
+        "result": {
+          "$ref": "#/definitions/v1PageConfigData",
+          "title": "结果数据"
         }
       },
       "title": "更新PageConfig返回"

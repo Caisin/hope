@@ -96,104 +96,11 @@ func SysConfigData2Req(v *ent.SysConfig) *v1.SysConfigReq {
 	}
 }
 
-func SysConfigReply2Data(v *v1.SysConfigReply) *ent.SysConfig {
+func SysConfigData2Reply(v *ent.SysConfig) *v1.SysConfigData {
 	if v == nil {
 		return nil
 	}
-	return &ent.SysConfig{
-		ID:          v.Id,
-		ConfigName:  v.ConfigName,
-		ConfigKey:   v.ConfigKey,
-		ConfigValue: v.ConfigValue,
-		ConfigType:  v.ConfigType,
-		IsFrontend:  v.IsFrontend,
-		State:       sysconfig.State(v.State),
-		Remark:      v.Remark,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func SysConfigData2Reply(v *ent.SysConfig) *v1.SysConfigReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysConfigReply{
-		Id:          v.ID,
-		ConfigName:  v.ConfigName,
-		ConfigKey:   v.ConfigKey,
-		ConfigValue: v.ConfigValue,
-		ConfigType:  v.ConfigType,
-		IsFrontend:  v.IsFrontend,
-		State:       string(v.State),
-		Remark:      v.Remark,
-		CreatedAt:   timestamppb.New(v.CreatedAt),
-		UpdatedAt:   timestamppb.New(v.UpdatedAt),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func SysConfigUpdateReply2Data(v *v1.SysConfigUpdateReply) *ent.SysConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysConfig{
-		ID:          v.Id,
-		ConfigName:  v.ConfigName,
-		ConfigKey:   v.ConfigKey,
-		ConfigValue: v.ConfigValue,
-		ConfigType:  v.ConfigType,
-		IsFrontend:  v.IsFrontend,
-		State:       sysconfig.State(v.State),
-	}
-}
-
-func SysConfigData2UpdateReply(v *ent.SysConfig) *v1.SysConfigUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysConfigUpdateReply{
-		Id:          v.ID,
-		ConfigName:  v.ConfigName,
-		ConfigKey:   v.ConfigKey,
-		ConfigValue: v.ConfigValue,
-		ConfigType:  v.ConfigType,
-		IsFrontend:  v.IsFrontend,
-		State:       string(v.State),
-	}
-}
-
-func SysConfigCreateReply2Data(v *v1.SysConfigCreateReply) *ent.SysConfig {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysConfig{
-		ID:          v.Id,
-		ConfigName:  v.ConfigName,
-		ConfigKey:   v.ConfigKey,
-		ConfigValue: v.ConfigValue,
-		ConfigType:  v.ConfigType,
-		IsFrontend:  v.IsFrontend,
-		State:       sysconfig.State(v.State),
-		Remark:      v.Remark,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func SysConfigData2CreateReply(v *ent.SysConfig) *v1.SysConfigCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysConfigCreateReply{
+	return &v1.SysConfigData{
 		Id:          v.ID,
 		ConfigName:  v.ConfigName,
 		ConfigKey:   v.ConfigKey,

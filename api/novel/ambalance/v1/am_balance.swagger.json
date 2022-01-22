@@ -601,82 +601,18 @@
     "v1AmBalanceCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "orderId": {
+        "message": {
           "type": "string",
-          "title": "订单号"
+          "title": "消息"
         },
-        "eventId": {
-          "type": "string",
-          "format": "int64",
-          "title": "关联用户事件Id"
-        },
-        "cashTag": {
-          "type": "integer",
-          "format": "int32",
-          "title": "现金标识,0优惠券 1书币"
-        },
-        "assetItemId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "账本科目"
-        },
-        "amount": {
-          "type": "string",
-          "format": "int64",
-          "title": "原始金额"
-        },
-        "balance": {
-          "type": "string",
-          "format": "int64",
-          "title": "剩余可用"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1AmBalanceData",
+          "title": "结果数据"
         }
       },
       "title": "创建AmBalance返回"
@@ -735,33 +671,7 @@
       },
       "title": "创建AmBalance请求"
     },
-    "v1AmBalanceDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除AmBalance返回"
-    },
-    "v1AmBalancePageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1AmBalanceReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1AmBalanceReply": {
+    "v1AmBalanceData": {
       "type": "object",
       "properties": {
         "id": {
@@ -842,7 +752,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1AmBalanceDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除AmBalance返回"
+    },
+    "v1AmBalancePageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AmBalanceData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1AmBalanceReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1AmBalanceData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1AmBalanceReq": {
       "type": "object",
@@ -930,57 +905,18 @@
     "v1AmBalanceUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "orderId": {
+        "message": {
           "type": "string",
-          "title": "订单号"
+          "title": "消息"
         },
-        "eventId": {
-          "type": "string",
-          "format": "int64",
-          "title": "关联用户事件Id"
-        },
-        "cashTag": {
-          "type": "integer",
-          "format": "int32",
-          "title": "现金标识,0优惠券 1书币"
-        },
-        "assetItemId": {
-          "type": "integer",
-          "format": "int32",
-          "title": "账本科目"
-        },
-        "amount": {
-          "type": "string",
-          "format": "int64",
-          "title": "原始金额"
-        },
-        "balance": {
-          "type": "string",
-          "format": "int64",
-          "title": "剩余可用"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "effectTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "生效时间"
-        },
-        "expiredTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "失效时间"
+        "result": {
+          "$ref": "#/definitions/v1AmBalanceData",
+          "title": "结果数据"
         }
       },
       "title": "更新AmBalance返回"

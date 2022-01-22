@@ -28,25 +28,32 @@ func (s *CustomerNovelConfigService) GetPageCustomerNovelConfig(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.CustomerNovelConfigReply, 0)
+	items := make([]*pb.CustomerNovelConfigData, 0)
 	for i := range datas {
 		items = append(items, convert.CustomerNovelConfigData2Reply(datas[i]))
 	}
 	reply := &pb.CustomerNovelConfigPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *CustomerNovelConfigService) GetCustomerNovelConfig(ctx context.Context, req *pb.CustomerNovelConfigReq) (*pb.CustomerNovelConfigReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetCustomerNovelConfig")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.CustomerNovelConfigData2Reply(daya), err
+	reply := &pb.CustomerNovelConfigReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.CustomerNovelConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *CustomerNovelConfigService) UpdateCustomerNovelConfig(ctx context.Context, req *pb.CustomerNovelConfigUpdateReq) (*pb.CustomerNovelConfigUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *CustomerNovelConfigService) UpdateCustomerNovelConfig(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	return convert.CustomerNovelConfigData2UpdateReply(data), err
+	reply := &pb.CustomerNovelConfigUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.CustomerNovelConfigData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *CustomerNovelConfigService) CreateCustomerNovelConfig(ctx context.Context, req *pb.CustomerNovelConfigCreateReq) (*pb.CustomerNovelConfigCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *CustomerNovelConfigService) CreateCustomerNovelConfig(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	return convert.CustomerNovelConfigData2CreateReply(data), err
+	reply := &pb.CustomerNovelConfigCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.CustomerNovelConfigData2Reply(data),
+	}
+	return reply, err
 }
 func (s *CustomerNovelConfigService) DeleteCustomerNovelConfig(ctx context.Context, req *pb.CustomerNovelConfigDeleteReq) (*pb.CustomerNovelConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *CustomerNovelConfigService) DeleteCustomerNovelConfig(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	return &pb.CustomerNovelConfigDeleteReply{Result: err == nil}, err
+	return &pb.CustomerNovelConfigDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *CustomerNovelConfigService) BatchDeleteCustomerNovelConfig(ctx context.Context, req *pb.CustomerNovelConfigBatchDeleteReq) (*pb.CustomerNovelConfigDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *CustomerNovelConfigService) BatchDeleteCustomerNovelConfig(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	return &pb.CustomerNovelConfigDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.CustomerNovelConfigDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

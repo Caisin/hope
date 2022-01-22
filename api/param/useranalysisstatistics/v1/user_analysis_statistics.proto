@@ -58,6 +58,62 @@ service UserAnalysisStatistics {
 
 }
 
+// 实体数据
+message UserAnalysisStatisticsData {
+    int64 id = 1;
+    //统计日期
+    string statisticsDate = 2;
+    //累计注册
+    int64 allUserNum = 3;
+    //累计充值
+    int64 allPayment = 4;
+    //总充值人数
+    int64 allPayUser = 5;
+    //总订单数
+    int64 allOrderNum = 6;
+    //当日注册人数
+    int64 dayUserNum = 7;
+    //当日订单金额
+    int64 dayPayment = 8;
+    //当日订单数
+    int64 dayOrderNum = 9;
+    //当日充值人数
+    int64 dayPayUser = 10;
+    //当日注册充值
+    int64 dayRegPayment = 11;
+    //当日注册充值人数
+    int64 dayRegUserNum = 12;
+    //当日注册充值笔数
+    int64 dayRegOrderNum = 13;
+    //当日老用户充值
+    int64 oldRegPayment = 14;
+    //当日老用户充值人数
+    int64 oldRegUserNum = 15;
+    //当日老用户充值笔数
+    int64 oldRegOrderNum = 16;
+    //付费率=当日充值笔数/当日注册
+    int64 payRate = 17;
+    //ARPU(average revenue per user)=充值/注册
+    int64 arpu = 18;
+    //当日注册充值客单价=当日注册充值/当日注册充值笔数
+    int64 dayRegArpu = 19;
+    //今日充值客单价=今日充值金额/充值笔数
+    int64 dayArpu = 20;
+    //老用户充值客单价=老用户充值/老用户充值笔数
+    int64 dayOldArpu = 21;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 22;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 23;
+    //创建者
+    int64 createBy = 24;
+    //更新者
+    int64 updateBy = 25;
+    //租户
+    int64 tenantId = 26;
+
+}
+
 // 查询搜索请求
 message UserAnalysisStatisticsPageReq {
     //分页查询参数
@@ -68,10 +124,14 @@ message UserAnalysisStatisticsPageReq {
 
 // 查询搜索返回
 message UserAnalysisStatisticsPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated UserAnalysisStatisticsReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated UserAnalysisStatisticsData items = 4;
 }
 
 
@@ -131,60 +191,14 @@ message UserAnalysisStatisticsReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message UserAnalysisStatisticsReply {
-    int64 id = 1;
-    //统计日期
-    string statisticsDate = 2;
-    //累计注册
-    int64 allUserNum = 3;
-    //累计充值
-    int64 allPayment = 4;
-    //总充值人数
-    int64 allPayUser = 5;
-    //总订单数
-    int64 allOrderNum = 6;
-    //当日注册人数
-    int64 dayUserNum = 7;
-    //当日订单金额
-    int64 dayPayment = 8;
-    //当日订单数
-    int64 dayOrderNum = 9;
-    //当日充值人数
-    int64 dayPayUser = 10;
-    //当日注册充值
-    int64 dayRegPayment = 11;
-    //当日注册充值人数
-    int64 dayRegUserNum = 12;
-    //当日注册充值笔数
-    int64 dayRegOrderNum = 13;
-    //当日老用户充值
-    int64 oldRegPayment = 14;
-    //当日老用户充值人数
-    int64 oldRegUserNum = 15;
-    //当日老用户充值笔数
-    int64 oldRegOrderNum = 16;
-    //付费率=当日充值笔数/当日注册
-    int64 payRate = 17;
-    //ARPU(average revenue per user)=充值/注册
-    int64 arpu = 18;
-    //当日注册充值客单价=当日注册充值/当日注册充值笔数
-    int64 dayRegArpu = 19;
-    //今日充值客单价=今日充值金额/充值笔数
-    int64 dayArpu = 20;
-    //老用户充值客单价=老用户充值/老用户充值笔数
-    int64 dayOldArpu = 21;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 22;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 23;
-    //创建者
-    int64 createBy = 24;
-    //更新者
-    int64 updateBy = 25;
-    //租户
-    int64 tenantId = 26;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserAnalysisStatisticsData result = 3;
 }
 
 // 创建UserAnalysisStatistics请求
@@ -234,58 +248,12 @@ message UserAnalysisStatisticsCreateReq {
 
 // 创建UserAnalysisStatistics返回
 message UserAnalysisStatisticsCreateReply {
-    int64 id = 1;
-    //统计日期
-    string statisticsDate = 2;
-    //累计注册
-    int64 allUserNum = 3;
-    //累计充值
-    int64 allPayment = 4;
-    //总充值人数
-    int64 allPayUser = 5;
-    //总订单数
-    int64 allOrderNum = 6;
-    //当日注册人数
-    int64 dayUserNum = 7;
-    //当日订单金额
-    int64 dayPayment = 8;
-    //当日订单数
-    int64 dayOrderNum = 9;
-    //当日充值人数
-    int64 dayPayUser = 10;
-    //当日注册充值
-    int64 dayRegPayment = 11;
-    //当日注册充值人数
-    int64 dayRegUserNum = 12;
-    //当日注册充值笔数
-    int64 dayRegOrderNum = 13;
-    //当日老用户充值
-    int64 oldRegPayment = 14;
-    //当日老用户充值人数
-    int64 oldRegUserNum = 15;
-    //当日老用户充值笔数
-    int64 oldRegOrderNum = 16;
-    //付费率=当日充值笔数/当日注册
-    int64 payRate = 17;
-    //ARPU(average revenue per user)=充值/注册
-    int64 arpu = 18;
-    //当日注册充值客单价=当日注册充值/当日注册充值笔数
-    int64 dayRegArpu = 19;
-    //今日充值客单价=今日充值金额/充值笔数
-    int64 dayArpu = 20;
-    //老用户充值客单价=老用户充值/老用户充值笔数
-    int64 dayOldArpu = 21;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 22;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 23;
-    //创建者
-    int64 createBy = 24;
-    //更新者
-    int64 updateBy = 25;
-    //租户
-    int64 tenantId = 26;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserAnalysisStatisticsData result = 3;
 }
 
 // 更新UserAnalysisStatistics请求
@@ -337,48 +305,12 @@ message UserAnalysisStatisticsUpdateReq {
 
 // 更新UserAnalysisStatistics返回
 message UserAnalysisStatisticsUpdateReply {
-    int64 id = 1;
-    //统计日期
-    string statisticsDate = 2;
-    //累计注册
-    int64 allUserNum = 3;
-    //累计充值
-    int64 allPayment = 4;
-    //总充值人数
-    int64 allPayUser = 5;
-    //总订单数
-    int64 allOrderNum = 6;
-    //当日注册人数
-    int64 dayUserNum = 7;
-    //当日订单金额
-    int64 dayPayment = 8;
-    //当日订单数
-    int64 dayOrderNum = 9;
-    //当日充值人数
-    int64 dayPayUser = 10;
-    //当日注册充值
-    int64 dayRegPayment = 11;
-    //当日注册充值人数
-    int64 dayRegUserNum = 12;
-    //当日注册充值笔数
-    int64 dayRegOrderNum = 13;
-    //当日老用户充值
-    int64 oldRegPayment = 14;
-    //当日老用户充值人数
-    int64 oldRegUserNum = 15;
-    //当日老用户充值笔数
-    int64 oldRegOrderNum = 16;
-    //付费率=当日充值笔数/当日注册
-    int64 payRate = 17;
-    //ARPU(average revenue per user)=充值/注册
-    int64 arpu = 18;
-    //当日注册充值客单价=当日注册充值/当日注册充值笔数
-    int64 dayRegArpu = 19;
-    //今日充值客单价=今日充值金额/充值笔数
-    int64 dayArpu = 20;
-    //老用户充值客单价=老用户充值/老用户充值笔数
-    int64 dayOldArpu = 21;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    UserAnalysisStatisticsData result = 3;
 }
 
 // 删除UserAnalysisStatistics请求
@@ -395,6 +327,11 @@ message UserAnalysisStatisticsBatchDeleteReq {
 
 // 删除UserAnalysisStatistics返回
 message UserAnalysisStatisticsDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

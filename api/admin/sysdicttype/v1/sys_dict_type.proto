@@ -58,6 +58,30 @@ service SysDictType {
 
 }
 
+// 实体数据
+message SysDictTypeData {
+    int64 id = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string typeCode = 3;
+    //状态
+    int32 status = 4;
+    //备注
+    string remark = 5;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 6;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 7;
+    //创建者
+    int64 createBy = 8;
+    //更新者
+    int64 updateBy = 9;
+    //租户
+    int64 tenantId = 10;
+
+}
+
 // 查询搜索请求
 message SysDictTypePageReq {
     //分页查询参数
@@ -68,10 +92,14 @@ message SysDictTypePageReq {
 
 // 查询搜索返回
 message SysDictTypePageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysDictTypeReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysDictTypeData items = 4;
 }
 
 
@@ -99,28 +127,14 @@ message SysDictTypeReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysDictTypeReply {
-    int64 id = 1;
-    //字典名称
-    string dictName = 2;
-    //字典类型
-    string typeCode = 3;
-    //状态
-    int32 status = 4;
-    //备注
-    string remark = 5;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 6;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 7;
-    //创建者
-    int64 createBy = 8;
-    //更新者
-    int64 updateBy = 9;
-    //租户
-    int64 tenantId = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDictTypeData result = 3;
 }
 
 // 创建SysDictType请求
@@ -138,26 +152,12 @@ message SysDictTypeCreateReq {
 
 // 创建SysDictType返回
 message SysDictTypeCreateReply {
-    int64 id = 1;
-    //字典名称
-    string dictName = 2;
-    //字典类型
-    string typeCode = 3;
-    //状态
-    int32 status = 4;
-    //备注
-    string remark = 5;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 6;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 7;
-    //创建者
-    int64 createBy = 8;
-    //更新者
-    int64 updateBy = 9;
-    //租户
-    int64 tenantId = 10;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDictTypeData result = 3;
 }
 
 // 更新SysDictType请求
@@ -177,16 +177,12 @@ message SysDictTypeUpdateReq {
 
 // 更新SysDictType返回
 message SysDictTypeUpdateReply {
-    int64 id = 1;
-    //字典名称
-    string dictName = 2;
-    //字典类型
-    string typeCode = 3;
-    //状态
-    int32 status = 4;
-    //备注
-    string remark = 5;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysDictTypeData result = 3;
 }
 
 // 删除SysDictType请求
@@ -203,6 +199,11 @@ message SysDictTypeBatchDeleteReq {
 
 // 删除SysDictType返回
 message SysDictTypeDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

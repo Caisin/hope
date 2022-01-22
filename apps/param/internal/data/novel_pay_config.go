@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/novelpayconfig"
 	"hope/apps/param/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewNovelPayConfigRepo(data *Data, logger log.Logger) biz.NovelPayConfigRepo
 
 // CreateNovelPayConfig 创建
 func (r *novelPayConfigRepo) CreateNovelPayConfig(ctx context.Context, req *v1.NovelPayConfigCreateReq) (*ent.NovelPayConfig, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.NovelPayConfig.Create().
 		SetProductId(req.ProductId).
@@ -56,6 +61,8 @@ func (r *novelPayConfigRepo) CreateNovelPayConfig(ctx context.Context, req *v1.N
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -72,7 +79,13 @@ func (r *novelPayConfigRepo) BatchDeleteNovelPayConfig(ctx context.Context, req 
 
 // UpdateNovelPayConfig 更新
 func (r *novelPayConfigRepo) UpdateNovelPayConfig(ctx context.Context, req *v1.NovelPayConfigUpdateReq) (*ent.NovelPayConfig, error) {
-	return r.data.db.NovelPayConfig.UpdateOne(convert.NovelPayConfigUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelPayConfigUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.NovelPayConfig.UpdateOne(data).Save(ctx)
 }
 
 // GetNovelPayConfig 根据Id查询

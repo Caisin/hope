@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/resourcegroup"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,11 +31,17 @@ func NewResourceGroupRepo(data *Data, logger log.Logger) biz.ResourceGroupRepo {
 
 // CreateResourceGroup 创建
 func (r *resourceGroupRepo) CreateResourceGroup(ctx context.Context, req *v1.ResourceGroupCreateReq) (*ent.ResourceGroup, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.ResourceGroup.Create().
 		SetName(req.Name).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -51,7 +58,13 @@ func (r *resourceGroupRepo) BatchDeleteResourceGroup(ctx context.Context, req *v
 
 // UpdateResourceGroup 更新
 func (r *resourceGroupRepo) UpdateResourceGroup(ctx context.Context, req *v1.ResourceGroupUpdateReq) (*ent.ResourceGroup, error) {
-	return r.data.db.ResourceGroup.UpdateOne(convert.ResourceGroupUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.ResourceGroupUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.ResourceGroup.UpdateOne(data).Save(ctx)
 }
 
 // GetResourceGroup 根据Id查询

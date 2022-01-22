@@ -77,89 +77,11 @@ func UserResourceData2Req(v *ent.UserResource) *v1.UserResourceReq {
 	}
 }
 
-func UserResourceReply2Data(v *v1.UserResourceReply) *ent.UserResource {
+func UserResourceData2Reply(v *ent.UserResource) *v1.UserResourceData {
 	if v == nil {
 		return nil
 	}
-	return &ent.UserResource{
-		ID:        v.Id,
-		ResType:   v.ResType,
-		Name:      v.Name,
-		URL:       v.Url,
-		Summary:   v.Summary,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserResourceData2Reply(v *ent.UserResource) *v1.UserResourceReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserResourceReply{
-		Id:        v.ID,
-		ResType:   v.ResType,
-		Name:      v.Name,
-		Url:       v.URL,
-		Summary:   v.Summary,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserResourceUpdateReply2Data(v *v1.UserResourceUpdateReply) *ent.UserResource {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserResource{
-		ID:      v.Id,
-		ResType: v.ResType,
-		Name:    v.Name,
-		URL:     v.Url,
-	}
-}
-
-func UserResourceData2UpdateReply(v *ent.UserResource) *v1.UserResourceUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserResourceUpdateReply{
-		Id:      v.ID,
-		ResType: v.ResType,
-		Name:    v.Name,
-		Url:     v.URL,
-	}
-}
-
-func UserResourceCreateReply2Data(v *v1.UserResourceCreateReply) *ent.UserResource {
-	if v == nil {
-		return nil
-	}
-	return &ent.UserResource{
-		ID:        v.Id,
-		ResType:   v.ResType,
-		Name:      v.Name,
-		URL:       v.Url,
-		Summary:   v.Summary,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func UserResourceData2CreateReply(v *ent.UserResource) *v1.UserResourceCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.UserResourceCreateReply{
+	return &v1.UserResourceData{
 		Id:        v.ID,
 		ResType:   v.ResType,
 		Name:      v.Name,

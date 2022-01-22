@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/qiniuconfig"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewQiniuConfigRepo(data *Data, logger log.Logger) biz.QiniuConfigRepo {
 
 // CreateQiniuConfig 创建
 func (r *qiniuConfigRepo) CreateQiniuConfig(ctx context.Context, req *v1.QiniuConfigCreateReq) (*ent.QiniuConfig, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.QiniuConfig.Create().
 		SetAccessKey(req.AccessKey).
@@ -40,6 +45,8 @@ func (r *qiniuConfigRepo) CreateQiniuConfig(ctx context.Context, req *v1.QiniuCo
 		SetZone(req.Zone).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -56,7 +63,13 @@ func (r *qiniuConfigRepo) BatchDeleteQiniuConfig(ctx context.Context, req *v1.Qi
 
 // UpdateQiniuConfig 更新
 func (r *qiniuConfigRepo) UpdateQiniuConfig(ctx context.Context, req *v1.QiniuConfigUpdateReq) (*ent.QiniuConfig, error) {
-	return r.data.db.QiniuConfig.UpdateOne(convert.QiniuConfigUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.QiniuConfigUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.QiniuConfig.UpdateOne(data).Save(ctx)
 }
 
 // GetQiniuConfig 根据Id查询

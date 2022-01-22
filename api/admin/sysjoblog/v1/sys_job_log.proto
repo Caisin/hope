@@ -58,6 +58,34 @@ service SysJobLog {
 
 }
 
+// 实体数据
+message SysJobLogData {
+    int64 id = 1;
+    //编码
+    int64 jobId = 2;
+    //名称
+    string jobName = 3;
+    //job启动时返回的id
+    int32 entryId = 4;
+    //状态
+    bool status = 5;
+    //耗时
+    google.protobuf.Duration duration = 6;
+    //执行详情,错误信息
+    string info = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
 // 查询搜索请求
 message SysJobLogPageReq {
     //分页查询参数
@@ -68,10 +96,14 @@ message SysJobLogPageReq {
 
 // 查询搜索返回
 message SysJobLogPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysJobLogReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysJobLogData items = 4;
 }
 
 
@@ -103,32 +135,14 @@ message SysJobLogReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysJobLogReply {
-    int64 id = 1;
-    //编码
-    int64 jobId = 2;
-    //名称
-    string jobName = 3;
-    //job启动时返回的id
-    int32 entryId = 4;
-    //状态
-    bool status = 5;
-    //耗时
-    google.protobuf.Duration duration = 6;
-    //执行详情,错误信息
-    string info = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysJobLogData result = 3;
 }
 
 // 创建SysJobLog请求
@@ -150,30 +164,12 @@ message SysJobLogCreateReq {
 
 // 创建SysJobLog返回
 message SysJobLogCreateReply {
-    int64 id = 1;
-    //编码
-    int64 jobId = 2;
-    //名称
-    string jobName = 3;
-    //job启动时返回的id
-    int32 entryId = 4;
-    //状态
-    bool status = 5;
-    //耗时
-    google.protobuf.Duration duration = 6;
-    //执行详情,错误信息
-    string info = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysJobLogData result = 3;
 }
 
 // 更新SysJobLog请求
@@ -197,20 +193,12 @@ message SysJobLogUpdateReq {
 
 // 更新SysJobLog返回
 message SysJobLogUpdateReply {
-    int64 id = 1;
-    //编码
-    int64 jobId = 2;
-    //名称
-    string jobName = 3;
-    //job启动时返回的id
-    int32 entryId = 4;
-    //状态
-    bool status = 5;
-    //耗时
-    google.protobuf.Duration duration = 6;
-    //执行详情,错误信息
-    string info = 7;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysJobLogData result = 3;
 }
 
 // 删除SysJobLog请求
@@ -227,6 +215,11 @@ message SysJobLogBatchDeleteReq {
 
 // 删除SysJobLog返回
 message SysJobLogDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

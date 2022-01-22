@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/viptype"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewVipTypeRepo(data *Data, logger log.Logger) biz.VipTypeRepo {
 
 // CreateVipType 创建
 func (r *vipTypeRepo) CreateVipType(ctx context.Context, req *v1.VipTypeCreateReq) (*ent.VipType, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.VipType.Create().
 		SetVipName(req.VipName).
@@ -40,6 +45,8 @@ func (r *vipTypeRepo) CreateVipType(ctx context.Context, req *v1.VipTypeCreateRe
 		SetSummary(req.Summary).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -56,7 +63,13 @@ func (r *vipTypeRepo) BatchDeleteVipType(ctx context.Context, req *v1.VipTypeBat
 
 // UpdateVipType 更新
 func (r *vipTypeRepo) UpdateVipType(ctx context.Context, req *v1.VipTypeUpdateReq) (*ent.VipType, error) {
-	return r.data.db.VipType.UpdateOne(convert.VipTypeUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.VipTypeUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.VipType.UpdateOne(data).Save(ctx)
 }
 
 // GetVipType 根据Id查询

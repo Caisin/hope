@@ -95,104 +95,11 @@ func SysDeptData2Req(v *ent.SysDept) *v1.SysDeptReq {
 	}
 }
 
-func SysDeptReply2Data(v *v1.SysDeptReply) *ent.SysDept {
+func SysDeptData2Reply(v *ent.SysDept) *v1.SysDeptData {
 	if v == nil {
 		return nil
 	}
-	return &ent.SysDept{
-		ID:        v.Id,
-		DeptPath:  v.DeptPath,
-		DeptName:  v.DeptName,
-		Sort:      v.Sort,
-		Leader:    v.Leader,
-		Phone:     v.Phone,
-		Email:     v.Email,
-		Status:    v.Status,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysDeptData2Reply(v *ent.SysDept) *v1.SysDeptReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysDeptReply{
-		Id:        v.ID,
-		DeptPath:  v.DeptPath,
-		DeptName:  v.DeptName,
-		Sort:      v.Sort,
-		Leader:    v.Leader,
-		Phone:     v.Phone,
-		Email:     v.Email,
-		Status:    v.Status,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysDeptUpdateReply2Data(v *v1.SysDeptUpdateReply) *ent.SysDept {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysDept{
-		ID:       v.Id,
-		DeptPath: v.DeptPath,
-		DeptName: v.DeptName,
-		Sort:     v.Sort,
-		Leader:   v.Leader,
-		Phone:    v.Phone,
-		Email:    v.Email,
-	}
-}
-
-func SysDeptData2UpdateReply(v *ent.SysDept) *v1.SysDeptUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysDeptUpdateReply{
-		Id:       v.ID,
-		DeptPath: v.DeptPath,
-		DeptName: v.DeptName,
-		Sort:     v.Sort,
-		Leader:   v.Leader,
-		Phone:    v.Phone,
-		Email:    v.Email,
-	}
-}
-
-func SysDeptCreateReply2Data(v *v1.SysDeptCreateReply) *ent.SysDept {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysDept{
-		ID:        v.Id,
-		DeptPath:  v.DeptPath,
-		DeptName:  v.DeptName,
-		Sort:      v.Sort,
-		Leader:    v.Leader,
-		Phone:     v.Phone,
-		Email:     v.Email,
-		Status:    v.Status,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysDeptData2CreateReply(v *ent.SysDept) *v1.SysDeptCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysDeptCreateReply{
+	return &v1.SysDeptData{
 		Id:        v.ID,
 		DeptPath:  v.DeptPath,
 		DeptName:  v.DeptName,

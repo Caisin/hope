@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activity"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewActivityRepo(data *Data, logger log.Logger) biz.ActivityRepo {
 
 // CreateActivity 创建
 func (r *activityRepo) CreateActivity(ctx context.Context, req *v1.ActivityCreateReq) (*ent.Activity, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.Activity.Create().
 		SetActivityCode(req.ActivityCode).
@@ -44,6 +49,8 @@ func (r *activityRepo) CreateActivity(ctx context.Context, req *v1.ActivityCreat
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -60,7 +67,13 @@ func (r *activityRepo) BatchDeleteActivity(ctx context.Context, req *v1.Activity
 
 // UpdateActivity 更新
 func (r *activityRepo) UpdateActivity(ctx context.Context, req *v1.ActivityUpdateReq) (*ent.Activity, error) {
-	return r.data.db.Activity.UpdateOne(convert.ActivityUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.ActivityUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.Activity.UpdateOne(data).Save(ctx)
 }
 
 // GetActivity 根据Id查询

@@ -664,93 +664,18 @@
     "v1SysMenuCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "menuName": {
-          "type": "string",
-          "title": "菜单名"
-        },
-        "title": {
-          "type": "string",
-          "title": "菜单标题"
-        },
-        "icon": {
-          "type": "string",
-          "title": "图标"
-        },
-        "path": {
-          "type": "string",
-          "title": "路径"
-        },
-        "paths": {
-          "type": "string",
-          "title": "多级路径"
-        },
-        "menuType": {
-          "type": "string",
-          "title": "M-目录C-菜单F-按钮"
-        },
-        "action": {
-          "type": "string"
-        },
-        "permission": {
-          "type": "string",
-          "title": "权限"
-        },
-        "noCache": {
-          "type": "boolean",
-          "title": "无缓存"
-        },
-        "breadcrumb": {
-          "type": "string",
-          "title": "面包屑"
-        },
-        "component": {
-          "type": "string",
-          "title": "组件"
-        },
-        "sort": {
-          "type": "integer",
-          "format": "int32",
-          "title": "排序"
-        },
-        "visible": {
-          "type": "boolean",
-          "title": "是否可见"
-        },
-        "isFrame": {
-          "type": "boolean",
-          "title": "是否外链1是0否"
-        },
-        "sysApi": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysMenuData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysMenu返回"
@@ -820,33 +745,7 @@
       },
       "title": "创建SysMenu请求"
     },
-    "v1SysMenuDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysMenu返回"
-    },
-    "v1SysMenuPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysMenuReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysMenuReply": {
+    "v1SysMenuData": {
       "type": "object",
       "properties": {
         "id": {
@@ -938,7 +837,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysMenuDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysMenu返回"
+    },
+    "v1SysMenuPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysMenuData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysMenuReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysMenuData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysMenuReq": {
       "type": "object",
@@ -1037,68 +1001,18 @@
     "v1SysMenuUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "menuName": {
+        "message": {
           "type": "string",
-          "title": "菜单名"
+          "title": "消息"
         },
-        "title": {
-          "type": "string",
-          "title": "菜单标题"
-        },
-        "icon": {
-          "type": "string",
-          "title": "图标"
-        },
-        "path": {
-          "type": "string",
-          "title": "路径"
-        },
-        "paths": {
-          "type": "string",
-          "title": "多级路径"
-        },
-        "menuType": {
-          "type": "string",
-          "title": "M-目录C-菜单F-按钮"
-        },
-        "action": {
-          "type": "string"
-        },
-        "permission": {
-          "type": "string",
-          "title": "权限"
-        },
-        "noCache": {
-          "type": "boolean",
-          "title": "无缓存"
-        },
-        "breadcrumb": {
-          "type": "string",
-          "title": "面包屑"
-        },
-        "component": {
-          "type": "string",
-          "title": "组件"
-        },
-        "sort": {
-          "type": "integer",
-          "format": "int32",
-          "title": "排序"
-        },
-        "visible": {
-          "type": "boolean",
-          "title": "是否可见"
-        },
-        "isFrame": {
-          "type": "boolean",
-          "title": "是否外链1是0否"
-        },
-        "sysApi": {
-          "type": "string"
+        "result": {
+          "$ref": "#/definitions/v1SysMenuData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysMenu返回"

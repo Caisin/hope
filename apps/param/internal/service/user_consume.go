@@ -28,25 +28,32 @@ func (s *UserConsumeService) GetPageUserConsume(ctx context.Context, req *pb.Use
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.UserConsumeReply, 0)
+	items := make([]*pb.UserConsumeData, 0)
 	for i := range datas {
 		items = append(items, convert.UserConsumeData2Reply(datas[i]))
 	}
 	reply := &pb.UserConsumePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *UserConsumeService) GetUserConsume(ctx context.Context, req *pb.UserConsumeReq) (*pb.UserConsumeReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetUserConsume")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserConsumeData2Reply(daya), err
+	reply := &pb.UserConsumeReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserConsumeData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserConsumeService) UpdateUserConsume(ctx context.Context, req *pb.UserConsumeUpdateReq) (*pb.UserConsumeUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *UserConsumeService) UpdateUserConsume(ctx context.Context, req *pb.User
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserConsumeData2UpdateReply(data), err
+	reply := &pb.UserConsumeUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserConsumeData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *UserConsumeService) CreateUserConsume(ctx context.Context, req *pb.UserConsumeCreateReq) (*pb.UserConsumeCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *UserConsumeService) CreateUserConsume(ctx context.Context, req *pb.User
 	if err != nil {
 		return nil, err
 	}
-	return convert.UserConsumeData2CreateReply(data), err
+	reply := &pb.UserConsumeCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.UserConsumeData2Reply(data),
+	}
+	return reply, err
 }
 func (s *UserConsumeService) DeleteUserConsume(ctx context.Context, req *pb.UserConsumeDeleteReq) (*pb.UserConsumeDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *UserConsumeService) DeleteUserConsume(ctx context.Context, req *pb.User
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserConsumeDeleteReply{Result: err == nil}, err
+	return &pb.UserConsumeDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *UserConsumeService) BatchDeleteUserConsume(ctx context.Context, req *pb.UserConsumeBatchDeleteReq) (*pb.UserConsumeDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *UserConsumeService) BatchDeleteUserConsume(ctx context.Context, req *pb
 	if err != nil {
 		return nil, err
 	}
-	return &pb.UserConsumeDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.UserConsumeDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

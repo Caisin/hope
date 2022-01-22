@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysloginlog"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysLoginLogRepo(data *Data, logger log.Logger) biz.SysLoginLogRepo {
 
 // CreateSysLoginLog 创建
 func (r *sysLoginLogRepo) CreateSysLoginLog(ctx context.Context, req *v1.SysLoginLogCreateReq) (*ent.SysLoginLog, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysLoginLog.Create().
 		SetUserId(req.UserId).
@@ -44,6 +49,8 @@ func (r *sysLoginLogRepo) CreateSysLoginLog(ctx context.Context, req *v1.SysLogi
 		SetMsg(req.Msg).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -60,7 +67,13 @@ func (r *sysLoginLogRepo) BatchDeleteSysLoginLog(ctx context.Context, req *v1.Sy
 
 // UpdateSysLoginLog 更新
 func (r *sysLoginLogRepo) UpdateSysLoginLog(ctx context.Context, req *v1.SysLoginLogUpdateReq) (*ent.SysLoginLog, error) {
-	return r.data.db.SysLoginLog.UpdateOne(convert.SysLoginLogUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysLoginLogUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysLoginLog.UpdateOne(data).Save(ctx)
 }
 
 // GetSysLoginLog 根据Id查询

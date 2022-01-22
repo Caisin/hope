@@ -28,25 +28,32 @@ func (s *SysColumnsService) GetPageSysColumns(ctx context.Context, req *pb.SysCo
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysColumnsReply, 0)
+	items := make([]*pb.SysColumnsData, 0)
 	for i := range datas {
 		items = append(items, convert.SysColumnsData2Reply(datas[i]))
 	}
 	reply := &pb.SysColumnsPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysColumnsService) GetSysColumns(ctx context.Context, req *pb.SysColumnsReq) (*pb.SysColumnsReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysColumns")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysColumnsData2Reply(daya), err
+	reply := &pb.SysColumnsReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysColumnsData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysColumnsService) UpdateSysColumns(ctx context.Context, req *pb.SysColumnsUpdateReq) (*pb.SysColumnsUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysColumnsService) UpdateSysColumns(ctx context.Context, req *pb.SysCol
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysColumnsData2UpdateReply(data), err
+	reply := &pb.SysColumnsUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysColumnsData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysColumnsService) CreateSysColumns(ctx context.Context, req *pb.SysColumnsCreateReq) (*pb.SysColumnsCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysColumnsService) CreateSysColumns(ctx context.Context, req *pb.SysCol
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysColumnsData2CreateReply(data), err
+	reply := &pb.SysColumnsCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysColumnsData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysColumnsService) DeleteSysColumns(ctx context.Context, req *pb.SysColumnsDeleteReq) (*pb.SysColumnsDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysColumnsService) DeleteSysColumns(ctx context.Context, req *pb.SysCol
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysColumnsDeleteReply{Result: err == nil}, err
+	return &pb.SysColumnsDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysColumnsService) BatchDeleteSysColumns(ctx context.Context, req *pb.SysColumnsBatchDeleteReq) (*pb.SysColumnsDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysColumnsService) BatchDeleteSysColumns(ctx context.Context, req *pb.S
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysColumnsDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysColumnsDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

@@ -28,25 +28,32 @@ func (s *ScoreProductService) GetPageScoreProduct(ctx context.Context, req *pb.S
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.ScoreProductReply, 0)
+	items := make([]*pb.ScoreProductData, 0)
 	for i := range datas {
 		items = append(items, convert.ScoreProductData2Reply(datas[i]))
 	}
 	reply := &pb.ScoreProductPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *ScoreProductService) GetScoreProduct(ctx context.Context, req *pb.ScoreProductReq) (*pb.ScoreProductReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetScoreProduct")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.ScoreProductData2Reply(daya), err
+	reply := &pb.ScoreProductReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ScoreProductData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ScoreProductService) UpdateScoreProduct(ctx context.Context, req *pb.ScoreProductUpdateReq) (*pb.ScoreProductUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *ScoreProductService) UpdateScoreProduct(ctx context.Context, req *pb.Sc
 	if err != nil {
 		return nil, err
 	}
-	return convert.ScoreProductData2UpdateReply(data), err
+	reply := &pb.ScoreProductUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ScoreProductData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *ScoreProductService) CreateScoreProduct(ctx context.Context, req *pb.ScoreProductCreateReq) (*pb.ScoreProductCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *ScoreProductService) CreateScoreProduct(ctx context.Context, req *pb.Sc
 	if err != nil {
 		return nil, err
 	}
-	return convert.ScoreProductData2CreateReply(data), err
+	reply := &pb.ScoreProductCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.ScoreProductData2Reply(data),
+	}
+	return reply, err
 }
 func (s *ScoreProductService) DeleteScoreProduct(ctx context.Context, req *pb.ScoreProductDeleteReq) (*pb.ScoreProductDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *ScoreProductService) DeleteScoreProduct(ctx context.Context, req *pb.Sc
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ScoreProductDeleteReply{Result: err == nil}, err
+	return &pb.ScoreProductDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *ScoreProductService) BatchDeleteScoreProduct(ctx context.Context, req *pb.ScoreProductBatchDeleteReq) (*pb.ScoreProductDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *ScoreProductService) BatchDeleteScoreProduct(ctx context.Context, req *
 	if err != nil {
 		return nil, err
 	}
-	return &pb.ScoreProductDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.ScoreProductDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

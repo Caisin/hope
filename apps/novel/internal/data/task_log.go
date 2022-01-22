@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/tasklog"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewTaskLogRepo(data *Data, logger log.Logger) biz.TaskLogRepo {
 
 // CreateTaskLog 创建
 func (r *taskLogRepo) CreateTaskLog(ctx context.Context, req *v1.TaskLogCreateReq) (*ent.TaskLog, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.TaskLog.Create().
 		SetUserId(req.UserId).
@@ -52,6 +57,8 @@ func (r *taskLogRepo) CreateTaskLog(ctx context.Context, req *v1.TaskLogCreateRe
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -68,7 +75,13 @@ func (r *taskLogRepo) BatchDeleteTaskLog(ctx context.Context, req *v1.TaskLogBat
 
 // UpdateTaskLog 更新
 func (r *taskLogRepo) UpdateTaskLog(ctx context.Context, req *v1.TaskLogUpdateReq) (*ent.TaskLog, error) {
-	return r.data.db.TaskLog.UpdateOne(convert.TaskLogUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.TaskLogUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.TaskLog.UpdateOne(data).Save(ctx)
 }
 
 // GetTaskLog 根据Id查询

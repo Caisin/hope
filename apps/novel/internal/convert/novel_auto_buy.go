@@ -65,79 +65,11 @@ func NovelAutoBuyData2Req(v *ent.NovelAutoBuy) *v1.NovelAutoBuyReq {
 	}
 }
 
-func NovelAutoBuyReply2Data(v *v1.NovelAutoBuyReply) *ent.NovelAutoBuy {
+func NovelAutoBuyData2Reply(v *ent.NovelAutoBuy) *v1.NovelAutoBuyData {
 	if v == nil {
 		return nil
 	}
-	return &ent.NovelAutoBuy{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		NovelId:   v.NovelId,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelAutoBuyData2Reply(v *ent.NovelAutoBuy) *v1.NovelAutoBuyReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelAutoBuyReply{
-		Id:        v.ID,
-		UserId:    v.UserId,
-		NovelId:   v.NovelId,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelAutoBuyUpdateReply2Data(v *v1.NovelAutoBuyUpdateReply) *ent.NovelAutoBuy {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelAutoBuy{
-		ID:     v.Id,
-		UserId: v.UserId,
-	}
-}
-
-func NovelAutoBuyData2UpdateReply(v *ent.NovelAutoBuy) *v1.NovelAutoBuyUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelAutoBuyUpdateReply{
-		Id:     v.ID,
-		UserId: v.UserId,
-	}
-}
-
-func NovelAutoBuyCreateReply2Data(v *v1.NovelAutoBuyCreateReply) *ent.NovelAutoBuy {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelAutoBuy{
-		ID:        v.Id,
-		UserId:    v.UserId,
-		NovelId:   v.NovelId,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelAutoBuyData2CreateReply(v *ent.NovelAutoBuy) *v1.NovelAutoBuyCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelAutoBuyCreateReply{
+	return &v1.NovelAutoBuyData{
 		Id:        v.ID,
 		UserId:    v.UserId,
 		NovelId:   v.NovelId,

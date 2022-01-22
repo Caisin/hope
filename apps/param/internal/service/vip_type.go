@@ -28,25 +28,32 @@ func (s *VipTypeService) GetPageVipType(ctx context.Context, req *pb.VipTypePage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.VipTypeReply, 0)
+	items := make([]*pb.VipTypeData, 0)
 	for i := range datas {
 		items = append(items, convert.VipTypeData2Reply(datas[i]))
 	}
 	reply := &pb.VipTypePageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *VipTypeService) GetVipType(ctx context.Context, req *pb.VipTypeReq) (*pb.VipTypeReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetVipType")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.VipTypeData2Reply(daya), err
+	reply := &pb.VipTypeReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.VipTypeData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *VipTypeService) UpdateVipType(ctx context.Context, req *pb.VipTypeUpdateReq) (*pb.VipTypeUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *VipTypeService) UpdateVipType(ctx context.Context, req *pb.VipTypeUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.VipTypeData2UpdateReply(data), err
+	reply := &pb.VipTypeUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.VipTypeData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *VipTypeService) CreateVipType(ctx context.Context, req *pb.VipTypeCreateReq) (*pb.VipTypeCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *VipTypeService) CreateVipType(ctx context.Context, req *pb.VipTypeCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.VipTypeData2CreateReply(data), err
+	reply := &pb.VipTypeCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.VipTypeData2Reply(data),
+	}
+	return reply, err
 }
 func (s *VipTypeService) DeleteVipType(ctx context.Context, req *pb.VipTypeDeleteReq) (*pb.VipTypeDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *VipTypeService) DeleteVipType(ctx context.Context, req *pb.VipTypeDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.VipTypeDeleteReply{Result: err == nil}, err
+	return &pb.VipTypeDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *VipTypeService) BatchDeleteVipType(ctx context.Context, req *pb.VipTypeBatchDeleteReq) (*pb.VipTypeDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *VipTypeService) BatchDeleteVipType(ctx context.Context, req *pb.VipType
 	if err != nil {
 		return nil, err
 	}
-	return &pb.VipTypeDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.VipTypeDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

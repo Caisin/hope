@@ -9,6 +9,7 @@ import (
 	"hope/apps/{{.model}}/internal/data/ent"
 	"hope/apps/{{.model}}/internal/data/ent/{{.pkg}}"
 	"hope/apps/{{.model}}/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	{{if hasStr .fields}}"hope/pkg/util/str"{{end }}
 	{{if hasSchema .fields}}"hope/apps/{{.model}}/internal/data/ent/schema"{{end }}
 	"hope/pkg/pagin"
@@ -30,10 +31,16 @@ func New{{.name}}Repo(data *Data, logger log.Logger) biz.{{.name}}Repo {
 
 // Create{{.name}} 创建
 func (r *{{.llName}}Repo) Create{{.name}}(ctx context.Context, req *v1.{{.name}}CreateReq) (*ent.{{.name}}, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.{{.name}}.Create().
 {{ genCreateSetFields .fields }}	SetCreatedAt(now).
 	SetUpdatedAt(now).
+	SetCreateBy(claims.UserId).
+	SetTenantId(claims.TenantId).
 	Save(ctx)
 
 }
@@ -50,7 +57,13 @@ func (r *{{.llName}}Repo) BatchDelete{{.name}}(ctx context.Context, req *v1.{{.n
 
 // Update{{.name}} 更新
 func (r *{{.llName}}Repo) Update{{.name}}(ctx context.Context, req *v1.{{.name}}UpdateReq) (*ent.{{.name}}, error) {
-	return r.data.db.{{.name}}.UpdateOne(convert.{{.name}}UpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.{{.name}}UpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.{{.name}}.UpdateOne(data).Save(ctx)
 }
 
 // Get{{.name}} 根据Id查询
@@ -62,7 +75,7 @@ func (r *{{.llName}}Repo) Get{{.name}}(ctx context.Context, req *v1.{{.name}}Req
 func (r *{{.llName}}Repo) Page{{.name}}(ctx context.Context, req *v1.{{.name}}PageReq) ([]*ent.{{.name}}, error) {
 	p := req.Pagin
 	if p == nil {
-		req.Pagin=&pagin.Pagination{
+		req.Pagin = &pagin.Pagination{
 			Page:     1,
 			PageSize: 10,
 		}

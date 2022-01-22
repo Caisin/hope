@@ -9,6 +9,7 @@ import (
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/task"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewTaskRepo(data *Data, logger log.Logger) biz.TaskRepo {
 
 // CreateTask 创建
 func (r *taskRepo) CreateTask(ctx context.Context, req *v1.TaskCreateReq) (*ent.Task, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.Task.Create().
 		SetTaskName(req.TaskName).
@@ -55,6 +60,8 @@ func (r *taskRepo) CreateTask(ctx context.Context, req *v1.TaskCreateReq) (*ent.
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -71,7 +78,13 @@ func (r *taskRepo) BatchDeleteTask(ctx context.Context, req *v1.TaskBatchDeleteR
 
 // UpdateTask 更新
 func (r *taskRepo) UpdateTask(ctx context.Context, req *v1.TaskUpdateReq) (*ent.Task, error) {
-	return r.data.db.Task.UpdateOne(convert.TaskUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.TaskUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.Task.UpdateOne(data).Save(ctx)
 }
 
 // GetTask 根据Id查询

@@ -58,6 +58,32 @@ service NovelClassify {
 
 }
 
+// 实体数据
+message NovelClassifyData {
+    int64 id = 1;
+    //父类ID,默认0,表示无
+    int64 pid = 2;
+    //分类名称
+    string classifyName = 3;
+    //状态 0
+    int32 status = 4;
+    //排序字段
+    int32 orderNum = 5;
+    //备注
+    string remark = 6;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 7;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 8;
+    //创建者
+    int64 createBy = 9;
+    //更新者
+    int64 updateBy = 10;
+    //租户
+    int64 tenantId = 11;
+
+}
+
 // 查询搜索请求
 message NovelClassifyPageReq {
     //分页查询参数
@@ -68,10 +94,14 @@ message NovelClassifyPageReq {
 
 // 查询搜索返回
 message NovelClassifyPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated NovelClassifyReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated NovelClassifyData items = 4;
 }
 
 
@@ -101,30 +131,14 @@ message NovelClassifyReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message NovelClassifyReply {
-    int64 id = 1;
-    //父类ID,默认0,表示无
-    int64 pid = 2;
-    //分类名称
-    string classifyName = 3;
-    //状态 0
-    int32 status = 4;
-    //排序字段
-    int32 orderNum = 5;
-    //备注
-    string remark = 6;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 7;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 8;
-    //创建者
-    int64 createBy = 9;
-    //更新者
-    int64 updateBy = 10;
-    //租户
-    int64 tenantId = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelClassifyData result = 3;
 }
 
 // 创建NovelClassify请求
@@ -144,28 +158,12 @@ message NovelClassifyCreateReq {
 
 // 创建NovelClassify返回
 message NovelClassifyCreateReply {
-    int64 id = 1;
-    //父类ID,默认0,表示无
-    int64 pid = 2;
-    //分类名称
-    string classifyName = 3;
-    //状态 0
-    int32 status = 4;
-    //排序字段
-    int32 orderNum = 5;
-    //备注
-    string remark = 6;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 7;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 8;
-    //创建者
-    int64 createBy = 9;
-    //更新者
-    int64 updateBy = 10;
-    //租户
-    int64 tenantId = 11;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelClassifyData result = 3;
 }
 
 // 更新NovelClassify请求
@@ -187,18 +185,12 @@ message NovelClassifyUpdateReq {
 
 // 更新NovelClassify返回
 message NovelClassifyUpdateReply {
-    int64 id = 1;
-    //父类ID,默认0,表示无
-    int64 pid = 2;
-    //分类名称
-    string classifyName = 3;
-    //状态 0
-    int32 status = 4;
-    //排序字段
-    int32 orderNum = 5;
-    //备注
-    string remark = 6;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    NovelClassifyData result = 3;
 }
 
 // 删除NovelClassify请求
@@ -215,6 +207,11 @@ message NovelClassifyBatchDeleteReq {
 
 // 删除NovelClassify返回
 message NovelClassifyDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

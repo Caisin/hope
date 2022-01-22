@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/systables"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysTablesRepo(data *Data, logger log.Logger) biz.SysTablesRepo {
 
 // CreateSysTables 创建
 func (r *sysTablesRepo) CreateSysTables(ctx context.Context, req *v1.SysTablesCreateReq) (*ent.SysTables, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysTables.Create().
 		SetTableName(req.TableName).
@@ -60,6 +65,8 @@ func (r *sysTablesRepo) CreateSysTables(ctx context.Context, req *v1.SysTablesCr
 		SetLogicalDeleteColumn(req.LogicalDeleteColumn).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -76,7 +83,13 @@ func (r *sysTablesRepo) BatchDeleteSysTables(ctx context.Context, req *v1.SysTab
 
 // UpdateSysTables 更新
 func (r *sysTablesRepo) UpdateSysTables(ctx context.Context, req *v1.SysTablesUpdateReq) (*ent.SysTables, error) {
-	return r.data.db.SysTables.UpdateOne(convert.SysTablesUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysTablesUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysTables.UpdateOne(data).Save(ctx)
 }
 
 // GetSysTables 根据Id查询

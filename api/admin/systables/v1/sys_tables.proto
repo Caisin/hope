@@ -58,6 +58,74 @@ service SysTables {
 
 }
 
+// 实体数据
+message SysTablesData {
+    int64 id = 1;
+    //表名称
+    string tableName = 2;
+    //表备注
+    string tableComment = 3;
+    //类名
+    string className = 4;
+    //
+    string tplCategory = 5;
+    //包名
+    string packageName = 6;
+    //go文件名
+    string moduleName = 7;
+    //前端文件名
+    string moduleFrontName = 8;
+    //
+    string businessName = 9;
+    //功能名称
+    string functionName = 10;
+    //功能作者
+    string functionAuthor = 11;
+    //
+    string pkColumn = 12;
+    //
+    string pkGoField = 13;
+    //
+    string pkJsonField = 14;
+    //
+    string options = 15;
+    //
+    string treeCode = 16;
+    //
+    string treeParentCode = 17;
+    //
+    string treeName = 18;
+    //
+    bool tree = 19;
+    //
+    bool crud = 20;
+    //
+    string remark = 21;
+    //
+    int32 isDataScope = 22;
+    //
+    int32 isActions = 23;
+    //
+    int32 isAuth = 24;
+    //
+    string isLogicalDelete = 25;
+    //
+    bool logicalDelete = 26;
+    //
+    string logicalDeleteColumn = 27;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 28;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 29;
+    //创建者
+    int64 createBy = 30;
+    //更新者
+    int64 updateBy = 31;
+    //租户
+    int64 tenantId = 32;
+
+}
+
 // 查询搜索请求
 message SysTablesPageReq {
     //分页查询参数
@@ -68,10 +136,14 @@ message SysTablesPageReq {
 
 // 查询搜索返回
 message SysTablesPageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated SysTablesReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated SysTablesData items = 4;
 }
 
 
@@ -143,72 +215,14 @@ message SysTablesReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message SysTablesReply {
-    int64 id = 1;
-    //表名称
-    string tableName = 2;
-    //表备注
-    string tableComment = 3;
-    //类名
-    string className = 4;
-    //
-    string tplCategory = 5;
-    //包名
-    string packageName = 6;
-    //go文件名
-    string moduleName = 7;
-    //前端文件名
-    string moduleFrontName = 8;
-    //
-    string businessName = 9;
-    //功能名称
-    string functionName = 10;
-    //功能作者
-    string functionAuthor = 11;
-    //
-    string pkColumn = 12;
-    //
-    string pkGoField = 13;
-    //
-    string pkJsonField = 14;
-    //
-    string options = 15;
-    //
-    string treeCode = 16;
-    //
-    string treeParentCode = 17;
-    //
-    string treeName = 18;
-    //
-    bool tree = 19;
-    //
-    bool crud = 20;
-    //
-    string remark = 21;
-    //
-    int32 isDataScope = 22;
-    //
-    int32 isActions = 23;
-    //
-    int32 isAuth = 24;
-    //
-    string isLogicalDelete = 25;
-    //
-    bool logicalDelete = 26;
-    //
-    string logicalDeleteColumn = 27;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 28;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 29;
-    //创建者
-    int64 createBy = 30;
-    //更新者
-    int64 updateBy = 31;
-    //租户
-    int64 tenantId = 32;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysTablesData result = 3;
 }
 
 // 创建SysTables请求
@@ -270,70 +284,12 @@ message SysTablesCreateReq {
 
 // 创建SysTables返回
 message SysTablesCreateReply {
-    int64 id = 1;
-    //表名称
-    string tableName = 2;
-    //表备注
-    string tableComment = 3;
-    //类名
-    string className = 4;
-    //
-    string tplCategory = 5;
-    //包名
-    string packageName = 6;
-    //go文件名
-    string moduleName = 7;
-    //前端文件名
-    string moduleFrontName = 8;
-    //
-    string businessName = 9;
-    //功能名称
-    string functionName = 10;
-    //功能作者
-    string functionAuthor = 11;
-    //
-    string pkColumn = 12;
-    //
-    string pkGoField = 13;
-    //
-    string pkJsonField = 14;
-    //
-    string options = 15;
-    //
-    string treeCode = 16;
-    //
-    string treeParentCode = 17;
-    //
-    string treeName = 18;
-    //
-    bool tree = 19;
-    //
-    bool crud = 20;
-    //
-    string remark = 21;
-    //
-    int32 isDataScope = 22;
-    //
-    int32 isActions = 23;
-    //
-    int32 isAuth = 24;
-    //
-    string isLogicalDelete = 25;
-    //
-    bool logicalDelete = 26;
-    //
-    string logicalDeleteColumn = 27;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 28;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 29;
-    //创建者
-    int64 createBy = 30;
-    //更新者
-    int64 updateBy = 31;
-    //租户
-    int64 tenantId = 32;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysTablesData result = 3;
 }
 
 // 更新SysTables请求
@@ -397,60 +353,12 @@ message SysTablesUpdateReq {
 
 // 更新SysTables返回
 message SysTablesUpdateReply {
-    int64 id = 1;
-    //表名称
-    string tableName = 2;
-    //表备注
-    string tableComment = 3;
-    //类名
-    string className = 4;
-    //
-    string tplCategory = 5;
-    //包名
-    string packageName = 6;
-    //go文件名
-    string moduleName = 7;
-    //前端文件名
-    string moduleFrontName = 8;
-    //
-    string businessName = 9;
-    //功能名称
-    string functionName = 10;
-    //功能作者
-    string functionAuthor = 11;
-    //
-    string pkColumn = 12;
-    //
-    string pkGoField = 13;
-    //
-    string pkJsonField = 14;
-    //
-    string options = 15;
-    //
-    string treeCode = 16;
-    //
-    string treeParentCode = 17;
-    //
-    string treeName = 18;
-    //
-    bool tree = 19;
-    //
-    bool crud = 20;
-    //
-    string remark = 21;
-    //
-    int32 isDataScope = 22;
-    //
-    int32 isActions = 23;
-    //
-    int32 isAuth = 24;
-    //
-    string isLogicalDelete = 25;
-    //
-    bool logicalDelete = 26;
-    //
-    string logicalDeleteColumn = 27;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysTablesData result = 3;
 }
 
 // 删除SysTables请求
@@ -467,6 +375,11 @@ message SysTablesBatchDeleteReq {
 
 // 删除SysTables返回
 message SysTablesDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

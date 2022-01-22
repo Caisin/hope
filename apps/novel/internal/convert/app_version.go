@@ -83,94 +83,11 @@ func AppVersionData2Req(v *ent.AppVersion) *v1.AppVersionReq {
 	}
 }
 
-func AppVersionReply2Data(v *v1.AppVersionReply) *ent.AppVersion {
+func AppVersionData2Reply(v *ent.AppVersion) *v1.AppVersionData {
 	if v == nil {
 		return nil
 	}
-	return &ent.AppVersion{
-		ID:          v.Id,
-		Title:       v.Title,
-		Version:     v.Version,
-		UpdateInfo:  v.UpdateInfo,
-		DownloadUrl: v.DownloadUrl,
-		Platform:    v.Platform,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AppVersionData2Reply(v *ent.AppVersion) *v1.AppVersionReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AppVersionReply{
-		Id:          v.ID,
-		Title:       v.Title,
-		Version:     v.Version,
-		UpdateInfo:  v.UpdateInfo,
-		DownloadUrl: v.DownloadUrl,
-		Platform:    v.Platform,
-		CreatedAt:   timestamppb.New(v.CreatedAt),
-		UpdatedAt:   timestamppb.New(v.UpdatedAt),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AppVersionUpdateReply2Data(v *v1.AppVersionUpdateReply) *ent.AppVersion {
-	if v == nil {
-		return nil
-	}
-	return &ent.AppVersion{
-		ID:          v.Id,
-		Title:       v.Title,
-		Version:     v.Version,
-		UpdateInfo:  v.UpdateInfo,
-		DownloadUrl: v.DownloadUrl,
-	}
-}
-
-func AppVersionData2UpdateReply(v *ent.AppVersion) *v1.AppVersionUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AppVersionUpdateReply{
-		Id:          v.ID,
-		Title:       v.Title,
-		Version:     v.Version,
-		UpdateInfo:  v.UpdateInfo,
-		DownloadUrl: v.DownloadUrl,
-	}
-}
-
-func AppVersionCreateReply2Data(v *v1.AppVersionCreateReply) *ent.AppVersion {
-	if v == nil {
-		return nil
-	}
-	return &ent.AppVersion{
-		ID:          v.Id,
-		Title:       v.Title,
-		Version:     v.Version,
-		UpdateInfo:  v.UpdateInfo,
-		DownloadUrl: v.DownloadUrl,
-		Platform:    v.Platform,
-		CreatedAt:   v.CreatedAt.AsTime(),
-		UpdatedAt:   v.UpdatedAt.AsTime(),
-		CreateBy:    v.CreateBy,
-		UpdateBy:    v.UpdateBy,
-		TenantId:    v.TenantId,
-	}
-}
-
-func AppVersionData2CreateReply(v *ent.AppVersion) *v1.AppVersionCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.AppVersionCreateReply{
+	return &v1.AppVersionData{
 		Id:          v.ID,
 		Title:       v.Title,
 		Version:     v.Version,

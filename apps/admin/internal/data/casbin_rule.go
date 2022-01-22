@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewCasbinRuleRepo(data *Data, logger log.Logger) biz.CasbinRuleRepo {
 
 // CreateCasbinRule 创建
 func (r *casbinRuleRepo) CreateCasbinRule(ctx context.Context, req *v1.CasbinRuleCreateReq) (*ent.CasbinRule, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.CasbinRule.Create().
 		SetPType(req.PType).
@@ -41,6 +46,8 @@ func (r *casbinRuleRepo) CreateCasbinRule(ctx context.Context, req *v1.CasbinRul
 		SetV5(req.V5).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -57,7 +64,13 @@ func (r *casbinRuleRepo) BatchDeleteCasbinRule(ctx context.Context, req *v1.Casb
 
 // UpdateCasbinRule 更新
 func (r *casbinRuleRepo) UpdateCasbinRule(ctx context.Context, req *v1.CasbinRuleUpdateReq) (*ent.CasbinRule, error) {
-	return r.data.db.CasbinRule.UpdateOne(convert.CasbinRuleUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.CasbinRuleUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.CasbinRule.UpdateOne(data).Save(ctx)
 }
 
 // GetCasbinRule 根据Id查询

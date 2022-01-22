@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSocialUserRepo(data *Data, logger log.Logger) biz.SocialUserRepo {
 
 // CreateSocialUser 创建
 func (r *socialUserRepo) CreateSocialUser(ctx context.Context, req *v1.SocialUserCreateReq) (*ent.SocialUser, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SocialUser.Create().
 		SetChId(req.ChId).
@@ -60,6 +65,8 @@ func (r *socialUserRepo) CreateSocialUser(ctx context.Context, req *v1.SocialUse
 		SetUserType(req.UserType).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -76,7 +83,13 @@ func (r *socialUserRepo) BatchDeleteSocialUser(ctx context.Context, req *v1.Soci
 
 // UpdateSocialUser 更新
 func (r *socialUserRepo) UpdateSocialUser(ctx context.Context, req *v1.SocialUserUpdateReq) (*ent.SocialUser, error) {
-	return r.data.db.SocialUser.UpdateOne(convert.SocialUserUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SocialUserUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SocialUser.UpdateOne(data).Save(ctx)
 }
 
 // GetSocialUser 根据Id查询

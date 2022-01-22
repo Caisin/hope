@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/vipuser"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewVipUserRepo(data *Data, logger log.Logger) biz.VipUserRepo {
 
 // CreateVipUser 创建
 func (r *vipUserRepo) CreateVipUser(ctx context.Context, req *v1.VipUserCreateReq) (*ent.VipUser, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.VipUser.Create().
 		SetUserId(req.UserId).
@@ -42,6 +47,8 @@ func (r *vipUserRepo) CreateVipUser(ctx context.Context, req *v1.VipUserCreateRe
 		SetExpiredTime(req.ExpiredTime.AsTime()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -58,7 +65,13 @@ func (r *vipUserRepo) BatchDeleteVipUser(ctx context.Context, req *v1.VipUserBat
 
 // UpdateVipUser 更新
 func (r *vipUserRepo) UpdateVipUser(ctx context.Context, req *v1.VipUserUpdateReq) (*ent.VipUser, error) {
-	return r.data.db.VipUser.UpdateOne(convert.VipUserUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.VipUserUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.VipUser.UpdateOne(data).Save(ctx)
 }
 
 // GetVipUser 根据Id查询

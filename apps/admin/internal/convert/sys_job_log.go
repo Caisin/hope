@@ -90,99 +90,11 @@ func SysJobLogData2Req(v *ent.SysJobLog) *v1.SysJobLogReq {
 	}
 }
 
-func SysJobLogReply2Data(v *v1.SysJobLogReply) *ent.SysJobLog {
+func SysJobLogData2Reply(v *ent.SysJobLog) *v1.SysJobLogData {
 	if v == nil {
 		return nil
 	}
-	return &ent.SysJobLog{
-		ID:        v.Id,
-		JobId:     v.JobId,
-		JobName:   v.JobName,
-		EntryId:   v.EntryId,
-		Status:    v.Status,
-		Duration:  v.Duration.AsDuration(),
-		Info:      v.Info,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysJobLogData2Reply(v *ent.SysJobLog) *v1.SysJobLogReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysJobLogReply{
-		Id:        v.ID,
-		JobId:     v.JobId,
-		JobName:   v.JobName,
-		EntryId:   v.EntryId,
-		Status:    v.Status,
-		Duration:  durationpb.New(v.Duration),
-		Info:      v.Info,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysJobLogUpdateReply2Data(v *v1.SysJobLogUpdateReply) *ent.SysJobLog {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysJobLog{
-		ID:       v.Id,
-		JobId:    v.JobId,
-		JobName:  v.JobName,
-		EntryId:  v.EntryId,
-		Status:   v.Status,
-		Duration: v.Duration.AsDuration(),
-	}
-}
-
-func SysJobLogData2UpdateReply(v *ent.SysJobLog) *v1.SysJobLogUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysJobLogUpdateReply{
-		Id:       v.ID,
-		JobId:    v.JobId,
-		JobName:  v.JobName,
-		EntryId:  v.EntryId,
-		Status:   v.Status,
-		Duration: durationpb.New(v.Duration),
-	}
-}
-
-func SysJobLogCreateReply2Data(v *v1.SysJobLogCreateReply) *ent.SysJobLog {
-	if v == nil {
-		return nil
-	}
-	return &ent.SysJobLog{
-		ID:        v.Id,
-		JobId:     v.JobId,
-		JobName:   v.JobName,
-		EntryId:   v.EntryId,
-		Status:    v.Status,
-		Duration:  v.Duration.AsDuration(),
-		Info:      v.Info,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func SysJobLogData2CreateReply(v *ent.SysJobLog) *v1.SysJobLogCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.SysJobLogCreateReply{
+	return &v1.SysJobLogData{
 		Id:        v.ID,
 		JobId:     v.JobId,
 		JobName:   v.JobName,

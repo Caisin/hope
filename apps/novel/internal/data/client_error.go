@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/clienterror"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewClientErrorRepo(data *Data, logger log.Logger) biz.ClientErrorRepo {
 
 // CreateClientError 创建
 func (r *clientErrorRepo) CreateClientError(ctx context.Context, req *v1.ClientErrorCreateReq) (*ent.ClientError, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.ClientError.Create().
 		SetAppVersion(req.AppVersion).
@@ -39,6 +44,8 @@ func (r *clientErrorRepo) CreateClientError(ctx context.Context, req *v1.ClientE
 		SetUserId(req.UserId).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -55,7 +62,13 @@ func (r *clientErrorRepo) BatchDeleteClientError(ctx context.Context, req *v1.Cl
 
 // UpdateClientError 更新
 func (r *clientErrorRepo) UpdateClientError(ctx context.Context, req *v1.ClientErrorUpdateReq) (*ent.ClientError, error) {
-	return r.data.db.ClientError.UpdateOne(convert.ClientErrorUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.ClientErrorUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.ClientError.UpdateOne(data).Save(ctx)
 }
 
 // GetClientError 根据Id查询

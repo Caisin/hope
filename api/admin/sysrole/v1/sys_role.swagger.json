@@ -574,73 +574,18 @@
     "v1SysRoleCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "roleName": {
-          "type": "string",
-          "title": "角色名称"
-        },
-        "status": {
-          "type": "string",
-          "title": "状态"
-        },
-        "roleKey": {
-          "type": "string",
-          "title": "角色代码"
-        },
-        "roleSort": {
-          "type": "integer",
-          "format": "int32",
-          "title": "角色排序"
-        },
-        "flag": {
-          "type": "string",
-          "title": "标记"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "admin": {
-          "type": "boolean",
-          "title": "是否管理员"
-        },
-        "dataScope": {
-          "type": "string",
-          "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
-        },
-        "sysDept": {
-          "type": "string"
-        },
-        "sysMenu": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "创建者"
+          "title": "返回码"
         },
-        "updateBy": {
+        "message": {
           "type": "string",
-          "format": "int64",
-          "title": "更新者"
+          "title": "消息"
         },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1SysRoleData",
+          "title": "结果数据"
         }
       },
       "title": "创建SysRole返回"
@@ -690,33 +635,7 @@
       },
       "title": "创建SysRole请求"
     },
-    "v1SysRoleDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除SysRole返回"
-    },
-    "v1SysRolePageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1SysRoleReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1SysRoleReply": {
+    "v1SysRoleData": {
       "type": "object",
       "properties": {
         "id": {
@@ -788,7 +707,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1SysRoleDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除SysRole返回"
+    },
+    "v1SysRolePageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SysRoleData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1SysRoleReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1SysRoleData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1SysRoleReq": {
       "type": "object",
@@ -867,48 +851,18 @@
     "v1SysRoleUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "code": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "返回码"
         },
-        "roleName": {
+        "message": {
           "type": "string",
-          "title": "角色名称"
+          "title": "消息"
         },
-        "status": {
-          "type": "string",
-          "title": "状态"
-        },
-        "roleKey": {
-          "type": "string",
-          "title": "角色代码"
-        },
-        "roleSort": {
-          "type": "integer",
-          "format": "int32",
-          "title": "角色排序"
-        },
-        "flag": {
-          "type": "string",
-          "title": "标记"
-        },
-        "remark": {
-          "type": "string",
-          "title": "备注"
-        },
-        "admin": {
-          "type": "boolean",
-          "title": "是否管理员"
-        },
-        "dataScope": {
-          "type": "string",
-          "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
-        },
-        "sysDept": {
-          "type": "string"
-        },
-        "sysMenu": {
-          "type": "string"
+        "result": {
+          "$ref": "#/definitions/v1SysRoleData",
+          "title": "结果数据"
         }
       },
       "title": "更新SysRole返回"

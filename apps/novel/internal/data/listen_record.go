@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/listenrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 
 	"hope/pkg/pagin"
 	"time"
@@ -29,6 +30,10 @@ func NewListenRecordRepo(data *Data, logger log.Logger) biz.ListenRecordRepo {
 
 // CreateListenRecord 创建
 func (r *listenRecordRepo) CreateListenRecord(ctx context.Context, req *v1.ListenRecordCreateReq) (*ent.ListenRecord, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.ListenRecord.Create().
 		SetUserId(req.UserId).
@@ -40,6 +45,8 @@ func (r *listenRecordRepo) CreateListenRecord(ctx context.Context, req *v1.Liste
 		SetDayDuration(req.DayDuration.AsDuration()).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -56,7 +63,13 @@ func (r *listenRecordRepo) BatchDeleteListenRecord(ctx context.Context, req *v1.
 
 // UpdateListenRecord 更新
 func (r *listenRecordRepo) UpdateListenRecord(ctx context.Context, req *v1.ListenRecordUpdateReq) (*ent.ListenRecord, error) {
-	return r.data.db.ListenRecord.UpdateOne(convert.ListenRecordUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.ListenRecordUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.ListenRecord.UpdateOne(data).Save(ctx)
 }
 
 // GetListenRecord 根据Id查询

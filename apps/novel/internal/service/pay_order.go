@@ -28,25 +28,32 @@ func (s *PayOrderService) GetPagePayOrder(ctx context.Context, req *pb.PayOrderP
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.PayOrderReply, 0)
+	items := make([]*pb.PayOrderData, 0)
 	for i := range datas {
 		items = append(items, convert.PayOrderData2Reply(datas[i]))
 	}
 	reply := &pb.PayOrderPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *PayOrderService) GetPayOrder(ctx context.Context, req *pb.PayOrderReq) (*pb.PayOrderReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetPayOrder")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.PayOrderData2Reply(daya), err
+	reply := &pb.PayOrderReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.PayOrderData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *PayOrderService) UpdatePayOrder(ctx context.Context, req *pb.PayOrderUpdateReq) (*pb.PayOrderUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *PayOrderService) UpdatePayOrder(ctx context.Context, req *pb.PayOrderUp
 	if err != nil {
 		return nil, err
 	}
-	return convert.PayOrderData2UpdateReply(data), err
+	reply := &pb.PayOrderUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.PayOrderData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *PayOrderService) CreatePayOrder(ctx context.Context, req *pb.PayOrderCreateReq) (*pb.PayOrderCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *PayOrderService) CreatePayOrder(ctx context.Context, req *pb.PayOrderCr
 	if err != nil {
 		return nil, err
 	}
-	return convert.PayOrderData2CreateReply(data), err
+	reply := &pb.PayOrderCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.PayOrderData2Reply(data),
+	}
+	return reply, err
 }
 func (s *PayOrderService) DeletePayOrder(ctx context.Context, req *pb.PayOrderDeleteReq) (*pb.PayOrderDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *PayOrderService) DeletePayOrder(ctx context.Context, req *pb.PayOrderDe
 	if err != nil {
 		return nil, err
 	}
-	return &pb.PayOrderDeleteReply{Result: err == nil}, err
+	return &pb.PayOrderDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *PayOrderService) BatchDeletePayOrder(ctx context.Context, req *pb.PayOrderBatchDeleteReq) (*pb.PayOrderDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *PayOrderService) BatchDeletePayOrder(ctx context.Context, req *pb.PayOr
 	if err != nil {
 		return nil, err
 	}
-	return &pb.PayOrderDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.PayOrderDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

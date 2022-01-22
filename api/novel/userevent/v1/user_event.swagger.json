@@ -559,72 +559,18 @@
     "v1UserEventCreateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "eventType": {
+        "message": {
           "type": "string",
-          "title": "事件类型,read"
+          "title": "消息"
         },
-        "novelId": {
-          "type": "string",
-          "format": "int64",
-          "title": "书号"
-        },
-        "chapterId": {
-          "type": "string",
-          "format": "int64",
-          "title": "章节号"
-        },
-        "coin": {
-          "type": "string",
-          "format": "int64",
-          "title": "书币"
-        },
-        "coupon": {
-          "type": "string",
-          "format": "int64",
-          "title": "书券"
-        },
-        "money": {
-          "type": "string",
-          "format": "int64",
-          "title": "金额,充值金额"
-        },
-        "keyword": {
-          "type": "string",
-          "title": "搜索关键字"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "创建时间"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "更新时间"
-        },
-        "createBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建者"
-        },
-        "updateBy": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新者"
-        },
-        "tenantId": {
-          "type": "string",
-          "format": "int64",
-          "title": "租户"
+        "result": {
+          "$ref": "#/definitions/v1UserEventData",
+          "title": "结果数据"
         }
       },
       "title": "创建UserEvent返回"
@@ -673,33 +619,7 @@
       },
       "title": "创建UserEvent请求"
     },
-    "v1UserEventDeleteReply": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "boolean"
-        }
-      },
-      "title": "删除UserEvent返回"
-    },
-    "v1UserEventPageReply": {
-      "type": "object",
-      "properties": {
-        "pagin": {
-          "$ref": "#/definitions/paginPagination",
-          "title": "分页参数"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1UserEventReply"
-          },
-          "title": "查询条目"
-        }
-      },
-      "title": "查询搜索返回"
-    },
-    "v1UserEventReply": {
+    "v1UserEventData": {
       "type": "object",
       "properties": {
         "id": {
@@ -770,7 +690,72 @@
           "title": "租户"
         }
       },
+      "title": "实体数据"
+    },
+    "v1UserEventDeleteReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "删除UserEvent返回"
+    },
+    "v1UserEventPageReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64",
+          "title": "总条数"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1UserEventData"
+          },
+          "title": "查询数据"
+        }
+      },
       "title": "查询搜索返回"
+    },
+    "v1UserEventReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/v1UserEventData",
+          "title": "结果数据"
+        }
+      },
+      "title": "查询返回"
     },
     "v1UserEventReq": {
       "type": "object",
@@ -848,47 +833,18 @@
     "v1UserEventUpdateReply": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "userId": {
+        "code": {
           "type": "string",
           "format": "int64",
-          "title": "用户ID"
+          "title": "返回码"
         },
-        "eventType": {
+        "message": {
           "type": "string",
-          "title": "事件类型,read"
+          "title": "消息"
         },
-        "novelId": {
-          "type": "string",
-          "format": "int64",
-          "title": "书号"
-        },
-        "chapterId": {
-          "type": "string",
-          "format": "int64",
-          "title": "章节号"
-        },
-        "coin": {
-          "type": "string",
-          "format": "int64",
-          "title": "书币"
-        },
-        "coupon": {
-          "type": "string",
-          "format": "int64",
-          "title": "书券"
-        },
-        "money": {
-          "type": "string",
-          "format": "int64",
-          "title": "金额,充值金额"
-        },
-        "keyword": {
-          "type": "string",
-          "title": "搜索关键字"
+        "result": {
+          "$ref": "#/definitions/v1UserEventData",
+          "title": "结果数据"
         }
       },
       "title": "更新UserEvent返回"

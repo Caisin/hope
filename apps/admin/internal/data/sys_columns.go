@@ -9,6 +9,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/syscolumns"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewSysColumnsRepo(data *Data, logger log.Logger) biz.SysColumnsRepo {
 
 // CreateSysColumns 创建
 func (r *sysColumnsRepo) CreateSysColumns(ctx context.Context, req *v1.SysColumnsCreateReq) (*ent.SysColumns, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.SysColumns.Create().
 		SetColumnId(req.ColumnId).
@@ -63,6 +68,8 @@ func (r *sysColumnsRepo) CreateSysColumns(ctx context.Context, req *v1.SysColumn
 		SetFkLabelName(req.FkLabelName).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -79,7 +86,13 @@ func (r *sysColumnsRepo) BatchDeleteSysColumns(ctx context.Context, req *v1.SysC
 
 // UpdateSysColumns 更新
 func (r *sysColumnsRepo) UpdateSysColumns(ctx context.Context, req *v1.SysColumnsUpdateReq) (*ent.SysColumns, error) {
-	return r.data.db.SysColumns.UpdateOne(convert.SysColumnsUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.SysColumnsUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.SysColumns.UpdateOne(data).Save(ctx)
 }
 
 // GetSysColumns 根据Id查询

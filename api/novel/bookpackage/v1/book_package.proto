@@ -58,6 +58,34 @@ service BookPackage {
 
 }
 
+// 实体数据
+message BookPackageData {
+    int64 id = 1;
+    //活动编码
+    string activityCode = 2;
+    //书籍包名称
+    string packageName = 3;
+    //活动打包价格
+    int64 price = 4;
+    //日常价格,既所有书本正常购买的价格
+    int64 dailyPrice = 5;
+    //生效时间
+    google.protobuf.Timestamp effectTime = 6;
+    //失效时间
+    google.protobuf.Timestamp expiredTime = 7;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 8;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 9;
+    //创建者
+    int64 createBy = 10;
+    //更新者
+    int64 updateBy = 11;
+    //租户
+    int64 tenantId = 12;
+
+}
+
 // 查询搜索请求
 message BookPackagePageReq {
     //分页查询参数
@@ -68,10 +96,14 @@ message BookPackagePageReq {
 
 // 查询搜索返回
 message BookPackagePageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated BookPackageReply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated BookPackageData items = 4;
 }
 
 
@@ -103,32 +135,14 @@ message BookPackageReq {
 
 }
 
-// 查询搜索返回
+// 查询返回
 message BookPackageReply {
-    int64 id = 1;
-    //活动编码
-    string activityCode = 2;
-    //书籍包名称
-    string packageName = 3;
-    //活动打包价格
-    int64 price = 4;
-    //日常价格,既所有书本正常购买的价格
-    int64 dailyPrice = 5;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 6;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    BookPackageData result = 3;
 }
 
 // 创建BookPackage请求
@@ -150,30 +164,12 @@ message BookPackageCreateReq {
 
 // 创建BookPackage返回
 message BookPackageCreateReply {
-    int64 id = 1;
-    //活动编码
-    string activityCode = 2;
-    //书籍包名称
-    string packageName = 3;
-    //活动打包价格
-    int64 price = 4;
-    //日常价格,既所有书本正常购买的价格
-    int64 dailyPrice = 5;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 6;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 7;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 8;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 9;
-    //创建者
-    int64 createBy = 10;
-    //更新者
-    int64 updateBy = 11;
-    //租户
-    int64 tenantId = 12;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    BookPackageData result = 3;
 }
 
 // 更新BookPackage请求
@@ -197,20 +193,12 @@ message BookPackageUpdateReq {
 
 // 更新BookPackage返回
 message BookPackageUpdateReply {
-    int64 id = 1;
-    //活动编码
-    string activityCode = 2;
-    //书籍包名称
-    string packageName = 3;
-    //活动打包价格
-    int64 price = 4;
-    //日常价格,既所有书本正常购买的价格
-    int64 dailyPrice = 5;
-    //生效时间
-    google.protobuf.Timestamp effectTime = 6;
-    //失效时间
-    google.protobuf.Timestamp expiredTime = 7;
-
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    BookPackageData result = 3;
 }
 
 // 删除BookPackage请求
@@ -227,6 +215,11 @@ message BookPackageBatchDeleteReq {
 
 // 删除BookPackage返回
 message BookPackageDeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

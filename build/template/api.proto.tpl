@@ -59,6 +59,11 @@ service {{.name}} {
 
 }
 
+// 实体数据
+message {{.name}}Data {
+{{genFields .fields false 0}}
+}
+
 // 查询搜索请求
 message {{.name}}PageReq {
     //分页查询参数
@@ -69,21 +74,30 @@ message {{.name}}PageReq {
 
 // 查询搜索返回
 message {{.name}}PageReply {
-    //分页参数
-    pagin.Pagination pagin = 1;
-    //查询条目
-    repeated {{.name}}Reply items = 2;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 总条数
+    int64 total = 3;
+    // 查询数据
+    repeated {{.name}}Data items = 4;
 }
 
 
 // 查询搜索请求
 message {{.name}}Req {
-{{genFields .fields false}}
+{{genFields .fields false 0}}
 }
 
-// 查询搜索返回
+// 查询返回
 message {{.name}}Reply {
-{{genFields .fields false}}
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    {{.name}}Data result = 3;
 }
 
 // 创建{{.name}}请求
@@ -93,18 +107,28 @@ message {{.name}}CreateReq {
 
 // 创建{{.name}}返回
 message {{.name}}CreateReply {
-{{genFields .fields false}}
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    {{.name}}Data result = 3;
 }
 
 // 更新{{.name}}请求
 message {{.name}}UpdateReq {
-{{genFields .fields true}}
+{{genFields .fields true 0}}
 }
 
 
 // 更新{{.name}}返回
 message {{.name}}UpdateReply {
-{{genFields .fields true}}
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    {{.name}}Data result = 3;
 }
 
 // 删除{{.name}}请求
@@ -121,6 +145,11 @@ message {{.name}}BatchDeleteReq {
 
 // 删除{{.name}}返回
 message {{.name}}DeleteReply {
-    bool result = 1;
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果
+    bool result = 3;
 }
 

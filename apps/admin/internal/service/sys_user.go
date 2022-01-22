@@ -28,25 +28,32 @@ func (s *SysUserService) GetPageSysUser(ctx context.Context, req *pb.SysUserPage
 	if err != nil {
 		return nil, err
 	}
-	items := make([]*pb.SysUserReply, 0)
+	items := make([]*pb.SysUserData, 0)
 	for i := range datas {
 		items = append(items, convert.SysUserData2Reply(datas[i]))
 	}
 	reply := &pb.SysUserPageReply{
-		Pagin: req.Pagin,
-		Items: items,
+		Code:    200,
+		Message: "success",
+		Total:   req.Pagin.Total,
+		Items:   items,
 	}
-	return reply, err
+	return reply, nil
 }
 func (s *SysUserService) GetSysUser(ctx context.Context, req *pb.SysUserReq) (*pb.SysUserReply, error) {
 	tr := otel.Tracer("api")
 	ctx, span := tr.Start(ctx, "GetSysUser")
 	defer span.End()
-	daya, err := s.uc.Get(ctx, req)
+	data, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysUserData2Reply(daya), err
+	reply := &pb.SysUserReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysUserData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysUserService) UpdateSysUser(ctx context.Context, req *pb.SysUserUpdateReq) (*pb.SysUserUpdateReply, error) {
 	tr := otel.Tracer("api")
@@ -56,7 +63,12 @@ func (s *SysUserService) UpdateSysUser(ctx context.Context, req *pb.SysUserUpdat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysUserData2UpdateReply(data), err
+	reply := &pb.SysUserUpdateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysUserData2Reply(data),
+	}
+	return reply, nil
 }
 func (s *SysUserService) CreateSysUser(ctx context.Context, req *pb.SysUserCreateReq) (*pb.SysUserCreateReply, error) {
 	tr := otel.Tracer("api")
@@ -66,7 +78,12 @@ func (s *SysUserService) CreateSysUser(ctx context.Context, req *pb.SysUserCreat
 	if err != nil {
 		return nil, err
 	}
-	return convert.SysUserData2CreateReply(data), err
+	reply := &pb.SysUserCreateReply{
+		Code:    200,
+		Message: "success",
+		Result:  convert.SysUserData2Reply(data),
+	}
+	return reply, err
 }
 func (s *SysUserService) DeleteSysUser(ctx context.Context, req *pb.SysUserDeleteReq) (*pb.SysUserDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -76,7 +93,7 @@ func (s *SysUserService) DeleteSysUser(ctx context.Context, req *pb.SysUserDelet
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysUserDeleteReply{Result: err == nil}, err
+	return &pb.SysUserDeleteReply{Code: 200, Message: "success", Result: err == nil}, err
 }
 func (s *SysUserService) BatchDeleteSysUser(ctx context.Context, req *pb.SysUserBatchDeleteReq) (*pb.SysUserDeleteReply, error) {
 	tr := otel.Tracer("api")
@@ -86,5 +103,5 @@ func (s *SysUserService) BatchDeleteSysUser(ctx context.Context, req *pb.SysUser
 	if err != nil {
 		return nil, err
 	}
-	return &pb.SysUserDeleteReply{Result: err == nil && num > 0}, err
+	return &pb.SysUserDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }

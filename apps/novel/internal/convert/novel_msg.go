@@ -77,89 +77,11 @@ func NovelMsgData2Req(v *ent.NovelMsg) *v1.NovelMsgReq {
 	}
 }
 
-func NovelMsgReply2Data(v *v1.NovelMsgReply) *ent.NovelMsg {
+func NovelMsgData2Reply(v *ent.NovelMsg) *v1.NovelMsgData {
 	if v == nil {
 		return nil
 	}
-	return &ent.NovelMsg{
-		ID:        v.Id,
-		Title:     v.Title,
-		Msg:       v.Msg,
-		MsgType:   v.MsgType,
-		Status:    v.Status,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelMsgData2Reply(v *ent.NovelMsg) *v1.NovelMsgReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelMsgReply{
-		Id:        v.ID,
-		Title:     v.Title,
-		Msg:       v.Msg,
-		MsgType:   v.MsgType,
-		Status:    v.Status,
-		CreatedAt: timestamppb.New(v.CreatedAt),
-		UpdatedAt: timestamppb.New(v.UpdatedAt),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelMsgUpdateReply2Data(v *v1.NovelMsgUpdateReply) *ent.NovelMsg {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelMsg{
-		ID:      v.Id,
-		Title:   v.Title,
-		Msg:     v.Msg,
-		MsgType: v.MsgType,
-	}
-}
-
-func NovelMsgData2UpdateReply(v *ent.NovelMsg) *v1.NovelMsgUpdateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelMsgUpdateReply{
-		Id:      v.ID,
-		Title:   v.Title,
-		Msg:     v.Msg,
-		MsgType: v.MsgType,
-	}
-}
-
-func NovelMsgCreateReply2Data(v *v1.NovelMsgCreateReply) *ent.NovelMsg {
-	if v == nil {
-		return nil
-	}
-	return &ent.NovelMsg{
-		ID:        v.Id,
-		Title:     v.Title,
-		Msg:       v.Msg,
-		MsgType:   v.MsgType,
-		Status:    v.Status,
-		CreatedAt: v.CreatedAt.AsTime(),
-		UpdatedAt: v.UpdatedAt.AsTime(),
-		CreateBy:  v.CreateBy,
-		UpdateBy:  v.UpdateBy,
-		TenantId:  v.TenantId,
-	}
-}
-
-func NovelMsgData2CreateReply(v *ent.NovelMsg) *v1.NovelMsgCreateReply {
-	if v == nil {
-		return nil
-	}
-	return &v1.NovelMsgCreateReply{
+	return &v1.NovelMsgData{
 		Id:        v.ID,
 		Title:     v.Title,
 		Msg:       v.Msg,

@@ -9,6 +9,7 @@ import (
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelbookshelf"
 	"hope/apps/novel/internal/data/ent/predicate"
+	"hope/pkg/auth"
 	"hope/pkg/util/str"
 
 	"hope/pkg/pagin"
@@ -30,6 +31,10 @@ func NewNovelBookshelfRepo(data *Data, logger log.Logger) biz.NovelBookshelfRepo
 
 // CreateNovelBookshelf 创建
 func (r *novelBookshelfRepo) CreateNovelBookshelf(ctx context.Context, req *v1.NovelBookshelfCreateReq) (*ent.NovelBookshelf, error) {
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
 	now := time.Now()
 	return r.data.db.NovelBookshelf.Create().
 		SetUserId(req.UserId).
@@ -42,6 +47,8 @@ func (r *novelBookshelfRepo) CreateNovelBookshelf(ctx context.Context, req *v1.N
 		SetRemark(req.Remark).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
+		SetCreateBy(claims.UserId).
+		SetTenantId(claims.TenantId).
 		Save(ctx)
 
 }
@@ -58,7 +65,13 @@ func (r *novelBookshelfRepo) BatchDeleteNovelBookshelf(ctx context.Context, req 
 
 // UpdateNovelBookshelf 更新
 func (r *novelBookshelfRepo) UpdateNovelBookshelf(ctx context.Context, req *v1.NovelBookshelfUpdateReq) (*ent.NovelBookshelf, error) {
-	return r.data.db.NovelBookshelf.UpdateOne(convert.NovelBookshelfUpdateReq2Data(req)).Save(ctx)
+	claims, err := auth.GetClaims(ctx)
+	if err != nil {
+		return nil, err
+	}
+	data := convert.NovelBookshelfUpdateReq2Data(req)
+	data.UpdateBy = claims.UserId
+	return r.data.db.NovelBookshelf.UpdateOne(data).Save(ctx)
 }
 
 // GetNovelBookshelf 根据Id查询

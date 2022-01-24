@@ -1,0 +1,225 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/admin/auth/v1/auth.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Auth"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/sys/auth/login": {
+      "post": {
+        "summary": "用户登陆",
+        "operationId": "Auth_Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1LoginReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1LoginReq"
+            }
+          }
+        ],
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/sys/auth/logout": {
+      "post": {
+        "summary": "退出登陆",
+        "operationId": "Auth_LogOut",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1LogOutReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1LogOutReq"
+            }
+          }
+        ],
+        "tags": [
+          "Auth"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "LoginReplyRole": {
+      "type": "object",
+      "properties": {
+        "roleName": {
+          "type": "string",
+          "title": "角色名"
+        },
+        "value": {
+          "type": "string",
+          "title": "角色编码"
+        }
+      }
+    },
+    "LoginReplyUserInfo": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户ID"
+        },
+        "username": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "realName": {
+          "type": "string",
+          "title": "真实姓名"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "头像"
+        },
+        "desc": {
+          "type": "string",
+          "title": "描述"
+        },
+        "token": {
+          "type": "string",
+          "title": "token"
+        },
+        "homePath": {
+          "type": "string",
+          "title": "首页路径"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LoginReplyRole"
+          },
+          "title": "角色"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1LogOutReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "boolean",
+          "title": "结果数据"
+        }
+      },
+      "title": "退出登录返回"
+    },
+    "v1LogOutReq": {
+      "type": "object",
+      "title": "退出登录请求"
+    },
+    "v1LoginReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "$ref": "#/definitions/LoginReplyUserInfo",
+          "title": "结果数据"
+        }
+      },
+      "title": "登陆返回"
+    },
+    "v1LoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        }
+      },
+      "title": "登陆请求"
+    }
+  }
+}

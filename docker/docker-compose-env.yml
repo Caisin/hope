@@ -8,12 +8,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root #设置root帐号密码
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - D:/work/data/mysql/db:/var/lib/mysql #数据文件挂载
       - D:/work/data/mysql/conf:/etc/mysql/conf.d #配置文件挂载
       - D:/work/data/mysql/log:/var/log/mysql #日志文件挂载
-      
+
   redis:
     image: redis
     container_name: redis
@@ -22,8 +22,8 @@ services:
     volumes:
       - D:/work/data/redis/data:/data #数据文件挂载
     ports:
-      - 6379:6379
-      
+      - "6379:6379"
+
   metabase:
     image: metabase/metabase
     container_name: metabase
@@ -33,8 +33,8 @@ services:
     volumes:
       - D:/work/data/metabase/data:/metabase-data #数据文件挂载
     ports:
-      - 3000:3000
-      
+      - "3000:3000"
+
   jaegertracing:
     image: jaegertracing/all-in-one:latest
     container_name: jaegertracing
@@ -44,17 +44,17 @@ services:
     volumes:
       - D:/work/data/jaegertracing/tmp:/tmp #数据文件挂载
     ports:
-      - 5775:5775
-      - 6831:6831
-      - 6832:6832
-      - 5778:5778
-      - 14268:14268
-      - 14250:14250
-      - 16686:16686 #ui地址  
-      
+      - "5775:5775"
+      - "6831:6831"
+      - "6832:6832"
+      - "5778:5778"
+      - "14268:14268"
+      - "14250:14250"
+      - "16686:16686" #ui地址
+
   prometheus:
     image: prom/prometheus
-#    network_mode: "host"
+    #    network_mode: "host"
     container_name: prometheus
     ports:
       - "9090:9090"
@@ -69,7 +69,7 @@ services:
 
   grafana:
     image: grafana/grafana-enterprise
-#    network_mode: "host"
+    #    network_mode: "host"
     container_name: grafana-enterprise
     ports:
       - "4000:3000"
@@ -79,3 +79,28 @@ services:
       - D:/work/data/grafana/etc:/etc/grafana #grafana配置文件
       - D:/work/data/grafana/grafana_data:/var/lib/grafana   #数据存储映射
     restart: always
+
+#https://nsq.io/deployment/docker.html
+  nsqlookupd:
+    image: nsqio/nsq
+    command: /nsqlookupd
+    ports:
+      - "4160:4160"
+      - "4161:4161"
+  nsqd:
+    image: nsqio/nsq
+    command: /nsqd --lookupd-tcp-address=nsqlookupd:4160 --data-path=/data
+    volumes:
+      - D:/work/data/nsqd/data:/data
+    depends_on:
+      - nsqlookupd
+    ports:
+      - "4150:4150"
+      - "4151:4151"
+  nsqadmin:
+    image: nsqio/nsq
+    command: /nsqadmin --lookupd-http-address=nsqlookupd:4161
+    depends_on:
+      - nsqlookupd
+    ports:
+      - "4171:4171"

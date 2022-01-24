@@ -16,6 +16,7 @@ func SysUserUpdateReq2Data(v *v1.SysUserUpdateReq) *ent.SysUser {
 	return &ent.SysUser{
 		ID:       v.Id,
 		Username: v.Username,
+		Password: v.Password,
 		NickName: v.NickName,
 		Phone:    v.Phone,
 		DeptId:   v.DeptId,
@@ -25,6 +26,8 @@ func SysUserUpdateReq2Data(v *v1.SysUserUpdateReq) *ent.SysUser {
 		Sex:      v.Sex,
 		Email:    v.Email,
 		Remark:   v.Remark,
+		Desc:     v.Desc,
+		HomePath: v.HomePath,
 		Status:   v.Status,
 	}
 }
@@ -36,6 +39,7 @@ func SysUserData2UpdateReq(v *ent.SysUser) *v1.SysUserUpdateReq {
 	return &v1.SysUserUpdateReq{
 		Id:       v.ID,
 		Username: v.Username,
+		Password: v.Password,
 		NickName: v.NickName,
 		Phone:    v.Phone,
 		DeptId:   v.DeptId,
@@ -45,6 +49,8 @@ func SysUserData2UpdateReq(v *ent.SysUser) *v1.SysUserUpdateReq {
 		Sex:      v.Sex,
 		Email:    v.Email,
 		Remark:   v.Remark,
+		Desc:     v.Desc,
+		HomePath: v.HomePath,
 		Status:   v.Status,
 	}
 }
@@ -55,6 +61,7 @@ func SysUserCreateReq2Data(v *v1.SysUserCreateReq) *ent.SysUser {
 	}
 	return &ent.SysUser{
 		Username: v.Username,
+		Password: v.Password,
 		NickName: v.NickName,
 		Phone:    v.Phone,
 		DeptId:   v.DeptId,
@@ -64,6 +71,8 @@ func SysUserCreateReq2Data(v *v1.SysUserCreateReq) *ent.SysUser {
 		Sex:      v.Sex,
 		Email:    v.Email,
 		Remark:   v.Remark,
+		Desc:     v.Desc,
+		HomePath: v.HomePath,
 		Status:   v.Status,
 	}
 }
@@ -74,6 +83,7 @@ func SysUserData2CreateReq(v *ent.SysUser) *v1.SysUserCreateReq {
 	}
 	return &v1.SysUserCreateReq{
 		Username: v.Username,
+		Password: v.Password,
 		NickName: v.NickName,
 		Phone:    v.Phone,
 		DeptId:   v.DeptId,
@@ -83,6 +93,8 @@ func SysUserData2CreateReq(v *ent.SysUser) *v1.SysUserCreateReq {
 		Sex:      v.Sex,
 		Email:    v.Email,
 		Remark:   v.Remark,
+		Desc:     v.Desc,
+		HomePath: v.HomePath,
 		Status:   v.Status,
 	}
 }
@@ -93,6 +105,7 @@ func SysUserReq2Data(v *v1.SysUserReq) *ent.SysUser {
 	}
 	return &ent.SysUser{
 		Username: v.Username,
+		Password: v.Password,
 		NickName: v.NickName,
 		Phone:    v.Phone,
 		DeptId:   v.DeptId,
@@ -102,6 +115,8 @@ func SysUserReq2Data(v *v1.SysUserReq) *ent.SysUser {
 		Sex:      v.Sex,
 		Email:    v.Email,
 		Remark:   v.Remark,
+		Desc:     v.Desc,
+		HomePath: v.HomePath,
 		Status:   v.Status,
 	}
 }
@@ -112,6 +127,7 @@ func SysUserData2Req(v *ent.SysUser) *v1.SysUserReq {
 	}
 	return &v1.SysUserReq{
 		Username: v.Username,
+		Password: v.Password,
 		NickName: v.NickName,
 		Phone:    v.Phone,
 		DeptId:   v.DeptId,
@@ -121,6 +137,8 @@ func SysUserData2Req(v *ent.SysUser) *v1.SysUserReq {
 		Sex:      v.Sex,
 		Email:    v.Email,
 		Remark:   v.Remark,
+		Desc:     v.Desc,
+		HomePath: v.HomePath,
 		Status:   v.Status,
 	}
 }
@@ -132,6 +150,7 @@ func SysUserData2Reply(v *ent.SysUser) *v1.SysUserData {
 	return &v1.SysUserData{
 		Id:        v.ID,
 		Username:  v.Username,
+		Password:  v.Password,
 		NickName:  v.NickName,
 		Phone:     v.Phone,
 		DeptId:    v.DeptId,
@@ -141,6 +160,8 @@ func SysUserData2Reply(v *ent.SysUser) *v1.SysUserData {
 		Sex:       v.Sex,
 		Email:     v.Email,
 		Remark:    v.Remark,
+		Desc:      v.Desc,
+		HomePath:  v.HomePath,
 		Status:    v.Status,
 		ExtInfo:   v.ExtInfo,
 		CreatedAt: timestamppb.New(v.CreatedAt),

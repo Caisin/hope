@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/sysapi"
-	"hope/apps/admin/internal/data/ent/syscolumns"
 	"hope/apps/admin/internal/data/ent/sysconfig"
 	"hope/apps/admin/internal/data/ent/sysdept"
 	"hope/apps/admin/internal/data/ent/sysdictdata"
@@ -19,7 +18,6 @@ import (
 	"hope/apps/admin/internal/data/ent/sysoperalog"
 	"hope/apps/admin/internal/data/ent/syspost"
 	"hope/apps/admin/internal/data/ent/sysrole"
-	"hope/apps/admin/internal/data/ent/systables"
 	"hope/apps/admin/internal/data/ent/sysuser"
 
 	"entgo.io/ent"
@@ -46,7 +44,6 @@ func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
 		casbinrule.Table:  casbinrule.ValidColumn,
 		sysapi.Table:      sysapi.ValidColumn,
-		syscolumns.Table:  syscolumns.ValidColumn,
 		sysconfig.Table:   sysconfig.ValidColumn,
 		sysdept.Table:     sysdept.ValidColumn,
 		sysdictdata.Table: sysdictdata.ValidColumn,
@@ -58,7 +55,6 @@ func columnChecker(table string) func(string) error {
 		sysoperalog.Table: sysoperalog.ValidColumn,
 		syspost.Table:     syspost.ValidColumn,
 		sysrole.Table:     sysrole.ValidColumn,
-		systables.Table:   systables.ValidColumn,
 		sysuser.Table:     sysuser.ValidColumn,
 	}
 	check, ok := checks[table]

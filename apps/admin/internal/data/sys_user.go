@@ -36,6 +36,10 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		return nil, err
 	}
 	now := time.Now()
+	encrypt, err := auth.Encrypt(req.Password)
+	if err != nil {
+		return nil, err
+	}
 	return r.data.db.SysUser.Create().
 		SetUsername(req.Username).
 		SetNickName(req.NickName).
@@ -49,6 +53,9 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		SetRemark(req.Remark).
 		SetStatus(req.Status).
 		SetExtInfo(req.ExtInfo).
+		SetHomePath(req.HomePath).
+		SetDesc(req.Desc).
+		SetPassword(encrypt).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		SetCreateBy(claims.UserId).

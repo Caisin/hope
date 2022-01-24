@@ -9,7 +9,6 @@ var ProviderSet = wire.NewSet(
 	NewData,
 	NewCasbinRuleRepo,
 	NewSysApiRepo,
-	NewSysColumnsRepo,
 	NewSysConfigRepo,
 	NewSysDeptRepo,
 	NewSysDictDataRepo,
@@ -21,6 +20,5 @@ var ProviderSet = wire.NewSet(
 	NewSysOperaLogRepo,
 	NewSysPostRepo,
 	NewSysRoleRepo,
-	NewSysTablesRepo,
 	NewSysUserRepo,
 )

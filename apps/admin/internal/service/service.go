@@ -6,7 +6,6 @@ import "github.com/google/wire"
 var ProviderSet = wire.NewSet(
 	NewCasbinRuleService,
 	NewSysApiService,
-	NewSysColumnsService,
 	NewSysConfigService,
 	NewSysDeptService,
 	NewSysDictDataService,
@@ -18,6 +17,5 @@ var ProviderSet = wire.NewSet(
 	NewSysOperaLogService,
 	NewSysPostService,
 	NewSysRoleService,
-	NewSysTablesService,
 	NewSysUserService,
 )

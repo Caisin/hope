@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package sysuser.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "hope/api/admin/sysuser/v1;v1";
+
+// The Auth service definition.
+service Auth {
+  // 用户登陆
+  rpc Login (LoginReq) returns (LoginReply)  {
+    option (google.api.http) = {
+      post: "/v1/sys/auth/login"
+      body: "*"
+    };
+  }
+
+  // 退出登陆
+  rpc LogOut (LogOutReq) returns (LogOutReply)  {
+    option (google.api.http) = {
+      post: "/v1/sys/auth/logout"
+      body: "*"
+    };
+  }
+
+}
+
+//登陆请求
+message LoginReq{
+  //用户名
+  string username = 1;
+  //密码
+  string password = 2;
+}
+//登陆返回
+message LoginReply{
+
+  message Role{
+    //角色名
+    string roleName = 1;
+    //角色编码
+    string value = 2;
+  }
+  message UserInfo{
+    //用户ID
+    int64 userId = 1;
+    //用户名
+    string username = 2;
+    //真实姓名
+    string realName = 3;
+    //头像
+    string avatar = 4;
+    //描述
+    string desc = 5;
+    //token
+    string token = 6;
+    //首页路径
+    string homePath = 7;
+    //角色
+    repeated Role roles = 8;
+  }
+  // 返回码
+  int64 code = 1;
+  // 消息
+  string message = 2;
+  // 结果数据
+  UserInfo result = 3;
+}
+//退出登录请求
+message LogOutReq{
+
+}
+//退出登录返回
+message LogOutReply{
+  // 返回码
+  int64 code = 1;
+  // 消息
+  string message = 2;
+  // 结果数据
+  bool result = 3;
+}

@@ -15,9 +15,11 @@ type SysUser struct {
 // Fields of the SysUser.
 func (SysUser) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.String("username").Optional().
+		field.String("username").
 			Comment(`用户名`),
-		field.String("nickName").Optional().
+		field.String("password").
+			Comment(`密码`),
+		field.String("nickName").
 			Comment(`昵称`),
 		field.String("phone").Optional().
 			Comment(`手机号`),
@@ -35,6 +37,10 @@ func (SysUser) Fields() []ent.Field {
 			Comment(`邮箱`),
 		field.String("remark").Optional().
 			Comment(`备注`),
+		field.String("desc").Optional().
+			Comment(`个人简介`),
+		field.String("homePath").Optional().
+			Comment(`登陆默认打开页面`),
 		field.String("status").Optional().
 			Comment(`状态`),
 		field.String("extInfo").Optional().

@@ -155,6 +155,13 @@
             "type": "string"
           },
           {
+            "name": "param.password",
+            "description": "密码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "param.nickName",
             "description": "昵称.",
             "in": "query",
@@ -217,6 +224,20 @@
           {
             "name": "param.remark",
             "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.desc",
+            "description": "个人简介.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.homePath",
+            "description": "登陆默认打开页面.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -315,6 +336,13 @@
             "type": "string"
           },
           {
+            "name": "password",
+            "description": "密码.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "nickName",
             "description": "昵称.",
             "in": "query",
@@ -377,6 +405,20 @@
           {
             "name": "remark",
             "description": "备注.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "desc",
+            "description": "个人简介.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "homePath",
+            "description": "登陆默认打开页面.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -506,6 +548,10 @@
                   "type": "string",
                   "title": "用户名"
                 },
+                "password": {
+                  "type": "string",
+                  "title": "密码"
+                },
                 "nickName": {
                   "type": "string",
                   "title": "昵称"
@@ -545,6 +591,14 @@
                 "remark": {
                   "type": "string",
                   "title": "备注"
+                },
+                "desc": {
+                  "type": "string",
+                  "title": "个人简介"
+                },
+                "homePath": {
+                  "type": "string",
+                  "title": "登陆默认打开页面"
                 },
                 "status": {
                   "type": "string",
@@ -648,6 +702,10 @@
           "type": "string",
           "title": "用户名"
         },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
         "nickName": {
           "type": "string",
           "title": "昵称"
@@ -687,6 +745,14 @@
         "remark": {
           "type": "string",
           "title": "备注"
+        },
+        "desc": {
+          "type": "string",
+          "title": "个人简介"
+        },
+        "homePath": {
+          "type": "string",
+          "title": "登陆默认打开页面"
         },
         "status": {
           "type": "string",
@@ -710,6 +776,10 @@
           "type": "string",
           "title": "用户名"
         },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
         "nickName": {
           "type": "string",
           "title": "昵称"
@@ -749,6 +819,14 @@
         "remark": {
           "type": "string",
           "title": "备注"
+        },
+        "desc": {
+          "type": "string",
+          "title": "个人简介"
+        },
+        "homePath": {
+          "type": "string",
+          "title": "登陆默认打开页面"
         },
         "status": {
           "type": "string",
@@ -862,6 +940,10 @@
           "type": "string",
           "title": "用户名"
         },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
         "nickName": {
           "type": "string",
           "title": "昵称"
@@ -901,6 +983,14 @@
         "remark": {
           "type": "string",
           "title": "备注"
+        },
+        "desc": {
+          "type": "string",
+          "title": "个人简介"
+        },
+        "homePath": {
+          "type": "string",
+          "title": "登陆默认打开页面"
         },
         "status": {
           "type": "string",

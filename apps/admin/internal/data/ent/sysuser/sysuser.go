@@ -13,6 +13,8 @@ const (
 	FieldID = "id"
 	// FieldUsername holds the string denoting the username field in the database.
 	FieldUsername = "username"
+	// FieldPassword holds the string denoting the password field in the database.
+	FieldPassword = "password"
 	// FieldNickName holds the string denoting the nickname field in the database.
 	FieldNickName = "nick_name"
 	// FieldPhone holds the string denoting the phone field in the database.
@@ -31,6 +33,10 @@ const (
 	FieldEmail = "email"
 	// FieldRemark holds the string denoting the remark field in the database.
 	FieldRemark = "remark"
+	// FieldDesc holds the string denoting the desc field in the database.
+	FieldDesc = "desc"
+	// FieldHomePath holds the string denoting the homepath field in the database.
+	FieldHomePath = "home_path"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldExtInfo holds the string denoting the extinfo field in the database.
@@ -96,6 +102,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldUsername,
+	FieldPassword,
 	FieldNickName,
 	FieldPhone,
 	FieldDeptId,
@@ -105,6 +112,8 @@ var Columns = []string{
 	FieldSex,
 	FieldEmail,
 	FieldRemark,
+	FieldDesc,
+	FieldHomePath,
 	FieldStatus,
 	FieldExtInfo,
 	FieldCreatedAt,

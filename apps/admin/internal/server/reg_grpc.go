@@ -5,7 +5,6 @@ import (
 
 	casbinrule "hope/api/admin/casbinrule/v1"
 	sysapi "hope/api/admin/sysapi/v1"
-	syscolumns "hope/api/admin/syscolumns/v1"
 	sysconfig "hope/api/admin/sysconfig/v1"
 	sysdept "hope/api/admin/sysdept/v1"
 	sysdictdata "hope/api/admin/sysdictdata/v1"
@@ -17,7 +16,6 @@ import (
 	sysoperalog "hope/api/admin/sysoperalog/v1"
 	syspost "hope/api/admin/syspost/v1"
 	sysrole "hope/api/admin/sysrole/v1"
-	systables "hope/api/admin/systables/v1"
 	sysuser "hope/api/admin/sysuser/v1"
 	"hope/apps/admin/internal/service"
 )
@@ -26,7 +24,6 @@ func RegisterGRPCServer(
 
 	casbinRuleService *service.CasbinRuleService,
 	sysApiService *service.SysApiService,
-	sysColumnsService *service.SysColumnsService,
 	sysConfigService *service.SysConfigService,
 	sysDeptService *service.SysDeptService,
 	sysDictDataService *service.SysDictDataService,
@@ -38,7 +35,6 @@ func RegisterGRPCServer(
 	sysOperaLogService *service.SysOperaLogService,
 	sysPostService *service.SysPostService,
 	sysRoleService *service.SysRoleService,
-	sysTablesService *service.SysTablesService,
 	sysUserService *service.SysUserService,
 ) []func(*grpc.Server) {
 	list := make([]func(*grpc.Server), 0)
@@ -48,9 +44,6 @@ func RegisterGRPCServer(
 	})
 	list = append(list, func(srv *grpc.Server) {
 		sysapi.RegisterSysApiServer(srv, sysApiService)
-	})
-	list = append(list, func(srv *grpc.Server) {
-		syscolumns.RegisterSysColumnsServer(srv, sysColumnsService)
 	})
 	list = append(list, func(srv *grpc.Server) {
 		sysconfig.RegisterSysConfigServer(srv, sysConfigService)
@@ -84,9 +77,6 @@ func RegisterGRPCServer(
 	})
 	list = append(list, func(srv *grpc.Server) {
 		sysrole.RegisterSysRoleServer(srv, sysRoleService)
-	})
-	list = append(list, func(srv *grpc.Server) {
-		systables.RegisterSysTablesServer(srv, sysTablesService)
 	})
 	list = append(list, func(srv *grpc.Server) {
 		sysuser.RegisterSysUserServer(srv, sysUserService)

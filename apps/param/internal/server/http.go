@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
@@ -13,6 +14,7 @@ import (
 	task "hope/api/param/task/v1"
 	"hope/apps/param/internal/conf"
 	"hope/apps/param/internal/service"
+	"hope/pkg/auth"
 )
 
 // NewHTTPServer new a HTTP server.
@@ -22,6 +24,7 @@ func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), tp *tracesdk.Tra
 			recovery.Recovery(),
 			tracing.Server(),
 			logging.Server(logger),
+			jwt.Server(auth.SecretKeyFun),
 		),
 		//跨域
 		http.Filter(handlers.CORS(

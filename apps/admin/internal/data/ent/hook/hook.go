@@ -34,19 +34,6 @@ func (f SysApiFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, erro
 	return f(ctx, mv)
 }
 
-// The SysColumnsFunc type is an adapter to allow the use of ordinary
-// function as SysColumns mutator.
-type SysColumnsFunc func(context.Context, *ent.SysColumnsMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f SysColumnsFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysColumnsMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysColumnsMutation", m)
-	}
-	return f(ctx, mv)
-}
-
 // The SysConfigFunc type is an adapter to allow the use of ordinary
 // function as SysConfig mutator.
 type SysConfigFunc func(context.Context, *ent.SysConfigMutation) (ent.Value, error)
@@ -186,19 +173,6 @@ func (f SysRoleFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, err
 	mv, ok := m.(*ent.SysRoleMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysRoleMutation", m)
-	}
-	return f(ctx, mv)
-}
-
-// The SysTablesFunc type is an adapter to allow the use of ordinary
-// function as SysTables mutator.
-type SysTablesFunc func(context.Context, *ent.SysTablesMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f SysTablesFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysTablesMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysTablesMutation", m)
 	}
 	return f(ctx, mv)
 }

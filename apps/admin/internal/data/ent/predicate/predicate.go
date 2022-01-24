@@ -12,9 +12,6 @@ type CasbinRule func(*sql.Selector)
 // SysApi is the predicate function for sysapi builders.
 type SysApi func(*sql.Selector)
 
-// SysColumns is the predicate function for syscolumns builders.
-type SysColumns func(*sql.Selector)
-
 // SysConfig is the predicate function for sysconfig builders.
 type SysConfig func(*sql.Selector)
 
@@ -47,9 +44,6 @@ type SysPost func(*sql.Selector)
 
 // SysRole is the predicate function for sysrole builders.
 type SysRole func(*sql.Selector)
-
-// SysTables is the predicate function for systables builders.
-type SysTables func(*sql.Selector)
 
 // SysUser is the predicate function for sysuser builders.
 type SysUser func(*sql.Selector)

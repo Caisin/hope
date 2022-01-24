@@ -38,37 +38,15 @@ func (suu *SysUserUpdate) SetUsername(s string) *SysUserUpdate {
 	return suu
 }
 
-// SetNillableUsername sets the "username" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableUsername(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetUsername(*s)
-	}
-	return suu
-}
-
-// ClearUsername clears the value of the "username" field.
-func (suu *SysUserUpdate) ClearUsername() *SysUserUpdate {
-	suu.mutation.ClearUsername()
+// SetPassword sets the "password" field.
+func (suu *SysUserUpdate) SetPassword(s string) *SysUserUpdate {
+	suu.mutation.SetPassword(s)
 	return suu
 }
 
 // SetNickName sets the "nickName" field.
 func (suu *SysUserUpdate) SetNickName(s string) *SysUserUpdate {
 	suu.mutation.SetNickName(s)
-	return suu
-}
-
-// SetNillableNickName sets the "nickName" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableNickName(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetNickName(*s)
-	}
-	return suu
-}
-
-// ClearNickName clears the value of the "nickName" field.
-func (suu *SysUserUpdate) ClearNickName() *SysUserUpdate {
-	suu.mutation.ClearNickName()
 	return suu
 }
 
@@ -243,6 +221,46 @@ func (suu *SysUserUpdate) SetNillableRemark(s *string) *SysUserUpdate {
 // ClearRemark clears the value of the "remark" field.
 func (suu *SysUserUpdate) ClearRemark() *SysUserUpdate {
 	suu.mutation.ClearRemark()
+	return suu
+}
+
+// SetDesc sets the "desc" field.
+func (suu *SysUserUpdate) SetDesc(s string) *SysUserUpdate {
+	suu.mutation.SetDesc(s)
+	return suu
+}
+
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillableDesc(s *string) *SysUserUpdate {
+	if s != nil {
+		suu.SetDesc(*s)
+	}
+	return suu
+}
+
+// ClearDesc clears the value of the "desc" field.
+func (suu *SysUserUpdate) ClearDesc() *SysUserUpdate {
+	suu.mutation.ClearDesc()
+	return suu
+}
+
+// SetHomePath sets the "homePath" field.
+func (suu *SysUserUpdate) SetHomePath(s string) *SysUserUpdate {
+	suu.mutation.SetHomePath(s)
+	return suu
+}
+
+// SetNillableHomePath sets the "homePath" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillableHomePath(s *string) *SysUserUpdate {
+	if s != nil {
+		suu.SetHomePath(*s)
+	}
+	return suu
+}
+
+// ClearHomePath clears the value of the "homePath" field.
+func (suu *SysUserUpdate) ClearHomePath() *SysUserUpdate {
+	suu.mutation.ClearHomePath()
 	return suu
 }
 
@@ -606,22 +624,17 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysuser.FieldUsername,
 		})
 	}
-	if suu.mutation.UsernameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+	if value, ok := suu.mutation.Password(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysuser.FieldUsername,
+			Value:  value,
+			Column: sysuser.FieldPassword,
 		})
 	}
 	if value, ok := suu.mutation.NickName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysuser.FieldNickName,
-		})
-	}
-	if suu.mutation.NickNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
 			Column: sysuser.FieldNickName,
 		})
 	}
@@ -715,6 +728,32 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysuser.FieldRemark,
+		})
+	}
+	if value, ok := suu.mutation.Desc(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysuser.FieldDesc,
+		})
+	}
+	if suu.mutation.DescCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysuser.FieldDesc,
+		})
+	}
+	if value, ok := suu.mutation.HomePath(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysuser.FieldHomePath,
+		})
+	}
+	if suu.mutation.HomePathCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysuser.FieldHomePath,
 		})
 	}
 	if value, ok := suu.mutation.Status(); ok {
@@ -1049,37 +1088,15 @@ func (suuo *SysUserUpdateOne) SetUsername(s string) *SysUserUpdateOne {
 	return suuo
 }
 
-// SetNillableUsername sets the "username" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableUsername(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetUsername(*s)
-	}
-	return suuo
-}
-
-// ClearUsername clears the value of the "username" field.
-func (suuo *SysUserUpdateOne) ClearUsername() *SysUserUpdateOne {
-	suuo.mutation.ClearUsername()
+// SetPassword sets the "password" field.
+func (suuo *SysUserUpdateOne) SetPassword(s string) *SysUserUpdateOne {
+	suuo.mutation.SetPassword(s)
 	return suuo
 }
 
 // SetNickName sets the "nickName" field.
 func (suuo *SysUserUpdateOne) SetNickName(s string) *SysUserUpdateOne {
 	suuo.mutation.SetNickName(s)
-	return suuo
-}
-
-// SetNillableNickName sets the "nickName" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableNickName(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetNickName(*s)
-	}
-	return suuo
-}
-
-// ClearNickName clears the value of the "nickName" field.
-func (suuo *SysUserUpdateOne) ClearNickName() *SysUserUpdateOne {
-	suuo.mutation.ClearNickName()
 	return suuo
 }
 
@@ -1254,6 +1271,46 @@ func (suuo *SysUserUpdateOne) SetNillableRemark(s *string) *SysUserUpdateOne {
 // ClearRemark clears the value of the "remark" field.
 func (suuo *SysUserUpdateOne) ClearRemark() *SysUserUpdateOne {
 	suuo.mutation.ClearRemark()
+	return suuo
+}
+
+// SetDesc sets the "desc" field.
+func (suuo *SysUserUpdateOne) SetDesc(s string) *SysUserUpdateOne {
+	suuo.mutation.SetDesc(s)
+	return suuo
+}
+
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillableDesc(s *string) *SysUserUpdateOne {
+	if s != nil {
+		suuo.SetDesc(*s)
+	}
+	return suuo
+}
+
+// ClearDesc clears the value of the "desc" field.
+func (suuo *SysUserUpdateOne) ClearDesc() *SysUserUpdateOne {
+	suuo.mutation.ClearDesc()
+	return suuo
+}
+
+// SetHomePath sets the "homePath" field.
+func (suuo *SysUserUpdateOne) SetHomePath(s string) *SysUserUpdateOne {
+	suuo.mutation.SetHomePath(s)
+	return suuo
+}
+
+// SetNillableHomePath sets the "homePath" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillableHomePath(s *string) *SysUserUpdateOne {
+	if s != nil {
+		suuo.SetHomePath(*s)
+	}
+	return suuo
+}
+
+// ClearHomePath clears the value of the "homePath" field.
+func (suuo *SysUserUpdateOne) ClearHomePath() *SysUserUpdateOne {
+	suuo.mutation.ClearHomePath()
 	return suuo
 }
 
@@ -1641,22 +1698,17 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 			Column: sysuser.FieldUsername,
 		})
 	}
-	if suuo.mutation.UsernameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+	if value, ok := suuo.mutation.Password(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysuser.FieldUsername,
+			Value:  value,
+			Column: sysuser.FieldPassword,
 		})
 	}
 	if value, ok := suuo.mutation.NickName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysuser.FieldNickName,
-		})
-	}
-	if suuo.mutation.NickNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
 			Column: sysuser.FieldNickName,
 		})
 	}
@@ -1750,6 +1802,32 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysuser.FieldRemark,
+		})
+	}
+	if value, ok := suuo.mutation.Desc(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysuser.FieldDesc,
+		})
+	}
+	if suuo.mutation.DescCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysuser.FieldDesc,
+		})
+	}
+	if value, ok := suuo.mutation.HomePath(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysuser.FieldHomePath,
+		})
+	}
+	if suuo.mutation.HomePathCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysuser.FieldHomePath,
 		})
 	}
 	if value, ok := suuo.mutation.Status(); ok {

@@ -21,6 +21,9 @@ type SysUser struct {
 	// Username holds the value of the "username" field.
 	// 用户名
 	Username string `json:"username,omitempty"`
+	// Password holds the value of the "password" field.
+	// 密码
+	Password string `json:"password,omitempty"`
 	// NickName holds the value of the "nickName" field.
 	// 昵称
 	NickName string `json:"nickName,omitempty"`
@@ -48,6 +51,12 @@ type SysUser struct {
 	// Remark holds the value of the "remark" field.
 	// 备注
 	Remark string `json:"remark,omitempty"`
+	// Desc holds the value of the "desc" field.
+	// 个人简介
+	Desc string `json:"desc,omitempty"`
+	// HomePath holds the value of the "homePath" field.
+	// 登陆默认打开页面
+	HomePath string `json:"homePath,omitempty"`
 	// Status holds the value of the "status" field.
 	// 状态
 	Status string `json:"status,omitempty"`
@@ -153,7 +162,7 @@ func (*SysUser) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case sysuser.FieldID, sysuser.FieldDeptId, sysuser.FieldPostId, sysuser.FieldRoleId, sysuser.FieldSex, sysuser.FieldCreateBy, sysuser.FieldUpdateBy, sysuser.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysuser.FieldUsername, sysuser.FieldNickName, sysuser.FieldPhone, sysuser.FieldAvatar, sysuser.FieldEmail, sysuser.FieldRemark, sysuser.FieldStatus, sysuser.FieldExtInfo:
+		case sysuser.FieldUsername, sysuser.FieldPassword, sysuser.FieldNickName, sysuser.FieldPhone, sysuser.FieldAvatar, sysuser.FieldEmail, sysuser.FieldRemark, sysuser.FieldDesc, sysuser.FieldHomePath, sysuser.FieldStatus, sysuser.FieldExtInfo:
 			values[i] = new(sql.NullString)
 		case sysuser.FieldCreatedAt, sysuser.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -183,6 +192,12 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field username", values[i])
 			} else if value.Valid {
 				su.Username = value.String
+			}
+		case sysuser.FieldPassword:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field password", values[i])
+			} else if value.Valid {
+				su.Password = value.String
 			}
 		case sysuser.FieldNickName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -237,6 +252,18 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field remark", values[i])
 			} else if value.Valid {
 				su.Remark = value.String
+			}
+		case sysuser.FieldDesc:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field desc", values[i])
+			} else if value.Valid {
+				su.Desc = value.String
+			}
+		case sysuser.FieldHomePath:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field homePath", values[i])
+			} else if value.Valid {
+				su.HomePath = value.String
 			}
 		case sysuser.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -335,6 +362,8 @@ func (su *SysUser) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", su.ID))
 	builder.WriteString(", username=")
 	builder.WriteString(su.Username)
+	builder.WriteString(", password=")
+	builder.WriteString(su.Password)
 	builder.WriteString(", nickName=")
 	builder.WriteString(su.NickName)
 	builder.WriteString(", phone=")
@@ -353,6 +382,10 @@ func (su *SysUser) String() string {
 	builder.WriteString(su.Email)
 	builder.WriteString(", remark=")
 	builder.WriteString(su.Remark)
+	builder.WriteString(", desc=")
+	builder.WriteString(su.Desc)
+	builder.WriteString(", homePath=")
+	builder.WriteString(su.HomePath)
 	builder.WriteString(", status=")
 	builder.WriteString(su.Status)
 	builder.WriteString(", extInfo=")

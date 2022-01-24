@@ -11,7 +11,6 @@ import (
 
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/sysapi"
-	"hope/apps/admin/internal/data/ent/syscolumns"
 	"hope/apps/admin/internal/data/ent/sysconfig"
 	"hope/apps/admin/internal/data/ent/sysdept"
 	"hope/apps/admin/internal/data/ent/sysdictdata"
@@ -23,7 +22,6 @@ import (
 	"hope/apps/admin/internal/data/ent/sysoperalog"
 	"hope/apps/admin/internal/data/ent/syspost"
 	"hope/apps/admin/internal/data/ent/sysrole"
-	"hope/apps/admin/internal/data/ent/systables"
 	"hope/apps/admin/internal/data/ent/sysuser"
 
 	"entgo.io/ent/dialect"
@@ -40,8 +38,6 @@ type Client struct {
 	CasbinRule *CasbinRuleClient
 	// SysApi is the client for interacting with the SysApi builders.
 	SysApi *SysApiClient
-	// SysColumns is the client for interacting with the SysColumns builders.
-	SysColumns *SysColumnsClient
 	// SysConfig is the client for interacting with the SysConfig builders.
 	SysConfig *SysConfigClient
 	// SysDept is the client for interacting with the SysDept builders.
@@ -64,8 +60,6 @@ type Client struct {
 	SysPost *SysPostClient
 	// SysRole is the client for interacting with the SysRole builders.
 	SysRole *SysRoleClient
-	// SysTables is the client for interacting with the SysTables builders.
-	SysTables *SysTablesClient
 	// SysUser is the client for interacting with the SysUser builders.
 	SysUser *SysUserClient
 }
@@ -83,7 +77,6 @@ func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.CasbinRule = NewCasbinRuleClient(c.config)
 	c.SysApi = NewSysApiClient(c.config)
-	c.SysColumns = NewSysColumnsClient(c.config)
 	c.SysConfig = NewSysConfigClient(c.config)
 	c.SysDept = NewSysDeptClient(c.config)
 	c.SysDictData = NewSysDictDataClient(c.config)
@@ -95,7 +88,6 @@ func (c *Client) init() {
 	c.SysOperaLog = NewSysOperaLogClient(c.config)
 	c.SysPost = NewSysPostClient(c.config)
 	c.SysRole = NewSysRoleClient(c.config)
-	c.SysTables = NewSysTablesClient(c.config)
 	c.SysUser = NewSysUserClient(c.config)
 }
 
@@ -132,7 +124,6 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		config:      cfg,
 		CasbinRule:  NewCasbinRuleClient(cfg),
 		SysApi:      NewSysApiClient(cfg),
-		SysColumns:  NewSysColumnsClient(cfg),
 		SysConfig:   NewSysConfigClient(cfg),
 		SysDept:     NewSysDeptClient(cfg),
 		SysDictData: NewSysDictDataClient(cfg),
@@ -144,7 +135,6 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		SysOperaLog: NewSysOperaLogClient(cfg),
 		SysPost:     NewSysPostClient(cfg),
 		SysRole:     NewSysRoleClient(cfg),
-		SysTables:   NewSysTablesClient(cfg),
 		SysUser:     NewSysUserClient(cfg),
 	}, nil
 }
@@ -166,7 +156,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		config:      cfg,
 		CasbinRule:  NewCasbinRuleClient(cfg),
 		SysApi:      NewSysApiClient(cfg),
-		SysColumns:  NewSysColumnsClient(cfg),
 		SysConfig:   NewSysConfigClient(cfg),
 		SysDept:     NewSysDeptClient(cfg),
 		SysDictData: NewSysDictDataClient(cfg),
@@ -178,7 +167,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		SysOperaLog: NewSysOperaLogClient(cfg),
 		SysPost:     NewSysPostClient(cfg),
 		SysRole:     NewSysRoleClient(cfg),
-		SysTables:   NewSysTablesClient(cfg),
 		SysUser:     NewSysUserClient(cfg),
 	}, nil
 }
@@ -211,7 +199,6 @@ func (c *Client) Close() error {
 func (c *Client) Use(hooks ...Hook) {
 	c.CasbinRule.Use(hooks...)
 	c.SysApi.Use(hooks...)
-	c.SysColumns.Use(hooks...)
 	c.SysConfig.Use(hooks...)
 	c.SysDept.Use(hooks...)
 	c.SysDictData.Use(hooks...)
@@ -223,7 +210,6 @@ func (c *Client) Use(hooks ...Hook) {
 	c.SysOperaLog.Use(hooks...)
 	c.SysPost.Use(hooks...)
 	c.SysRole.Use(hooks...)
-	c.SysTables.Use(hooks...)
 	c.SysUser.Use(hooks...)
 }
 
@@ -405,96 +391,6 @@ func (c *SysApiClient) GetX(ctx context.Context, id int64) *SysApi {
 // Hooks returns the client hooks.
 func (c *SysApiClient) Hooks() []Hook {
 	return c.hooks.SysApi
-}
-
-// SysColumnsClient is a client for the SysColumns schema.
-type SysColumnsClient struct {
-	config
-}
-
-// NewSysColumnsClient returns a client for the SysColumns from the given config.
-func NewSysColumnsClient(c config) *SysColumnsClient {
-	return &SysColumnsClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `syscolumns.Hooks(f(g(h())))`.
-func (c *SysColumnsClient) Use(hooks ...Hook) {
-	c.hooks.SysColumns = append(c.hooks.SysColumns, hooks...)
-}
-
-// Create returns a create builder for SysColumns.
-func (c *SysColumnsClient) Create() *SysColumnsCreate {
-	mutation := newSysColumnsMutation(c.config, OpCreate)
-	return &SysColumnsCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of SysColumns entities.
-func (c *SysColumnsClient) CreateBulk(builders ...*SysColumnsCreate) *SysColumnsCreateBulk {
-	return &SysColumnsCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for SysColumns.
-func (c *SysColumnsClient) Update() *SysColumnsUpdate {
-	mutation := newSysColumnsMutation(c.config, OpUpdate)
-	return &SysColumnsUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *SysColumnsClient) UpdateOne(sc *SysColumns) *SysColumnsUpdateOne {
-	mutation := newSysColumnsMutation(c.config, OpUpdateOne, withSysColumns(sc))
-	return &SysColumnsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *SysColumnsClient) UpdateOneID(id int64) *SysColumnsUpdateOne {
-	mutation := newSysColumnsMutation(c.config, OpUpdateOne, withSysColumnsID(id))
-	return &SysColumnsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for SysColumns.
-func (c *SysColumnsClient) Delete() *SysColumnsDelete {
-	mutation := newSysColumnsMutation(c.config, OpDelete)
-	return &SysColumnsDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *SysColumnsClient) DeleteOne(sc *SysColumns) *SysColumnsDeleteOne {
-	return c.DeleteOneID(sc.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *SysColumnsClient) DeleteOneID(id int64) *SysColumnsDeleteOne {
-	builder := c.Delete().Where(syscolumns.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &SysColumnsDeleteOne{builder}
-}
-
-// Query returns a query builder for SysColumns.
-func (c *SysColumnsClient) Query() *SysColumnsQuery {
-	return &SysColumnsQuery{
-		config: c.config,
-	}
-}
-
-// Get returns a SysColumns entity by its id.
-func (c *SysColumnsClient) Get(ctx context.Context, id int64) (*SysColumns, error) {
-	return c.Query().Where(syscolumns.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *SysColumnsClient) GetX(ctx context.Context, id int64) *SysColumns {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *SysColumnsClient) Hooks() []Hook {
-	return c.hooks.SysColumns
 }
 
 // SysConfigClient is a client for the SysConfig schema.
@@ -1725,96 +1621,6 @@ func (c *SysRoleClient) QueryUsers(sr *SysRole) *SysUserQuery {
 // Hooks returns the client hooks.
 func (c *SysRoleClient) Hooks() []Hook {
 	return c.hooks.SysRole
-}
-
-// SysTablesClient is a client for the SysTables schema.
-type SysTablesClient struct {
-	config
-}
-
-// NewSysTablesClient returns a client for the SysTables from the given config.
-func NewSysTablesClient(c config) *SysTablesClient {
-	return &SysTablesClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `systables.Hooks(f(g(h())))`.
-func (c *SysTablesClient) Use(hooks ...Hook) {
-	c.hooks.SysTables = append(c.hooks.SysTables, hooks...)
-}
-
-// Create returns a create builder for SysTables.
-func (c *SysTablesClient) Create() *SysTablesCreate {
-	mutation := newSysTablesMutation(c.config, OpCreate)
-	return &SysTablesCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of SysTables entities.
-func (c *SysTablesClient) CreateBulk(builders ...*SysTablesCreate) *SysTablesCreateBulk {
-	return &SysTablesCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for SysTables.
-func (c *SysTablesClient) Update() *SysTablesUpdate {
-	mutation := newSysTablesMutation(c.config, OpUpdate)
-	return &SysTablesUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *SysTablesClient) UpdateOne(st *SysTables) *SysTablesUpdateOne {
-	mutation := newSysTablesMutation(c.config, OpUpdateOne, withSysTables(st))
-	return &SysTablesUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *SysTablesClient) UpdateOneID(id int64) *SysTablesUpdateOne {
-	mutation := newSysTablesMutation(c.config, OpUpdateOne, withSysTablesID(id))
-	return &SysTablesUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for SysTables.
-func (c *SysTablesClient) Delete() *SysTablesDelete {
-	mutation := newSysTablesMutation(c.config, OpDelete)
-	return &SysTablesDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *SysTablesClient) DeleteOne(st *SysTables) *SysTablesDeleteOne {
-	return c.DeleteOneID(st.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *SysTablesClient) DeleteOneID(id int64) *SysTablesDeleteOne {
-	builder := c.Delete().Where(systables.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &SysTablesDeleteOne{builder}
-}
-
-// Query returns a query builder for SysTables.
-func (c *SysTablesClient) Query() *SysTablesQuery {
-	return &SysTablesQuery{
-		config: c.config,
-	}
-}
-
-// Get returns a SysTables entity by its id.
-func (c *SysTablesClient) Get(ctx context.Context, id int64) (*SysTables, error) {
-	return c.Query().Where(systables.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *SysTablesClient) GetX(ctx context.Context, id int64) *SysTables {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *SysTablesClient) Hooks() []Hook {
-	return c.hooks.SysTables
 }
 
 // SysUserClient is a client for the SysUser schema.

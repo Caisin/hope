@@ -121,11 +121,19 @@ func main() {
 
 			//生成data
 			dataFileName := fmt.Sprintf("%s/apps/%s/internal/data/%s.go", projectPath, prod, str.Camel2Case(name))
-			genFile(dataTemplate, m, dataFileName)
+			if file.CheckExist(dataFileName) {
+				genFile(dataTemplate, m, dataFileName)
+			} else {
+				fmt.Println(dataFileName + " is exist!")
+			}
 
-			//生成data
+			//生成service
 			serviceFileName := fmt.Sprintf("%s/apps/%s/internal/service/%s.go", projectPath, prod, str.Camel2Case(name))
-			genFile(serviceTemplate, m, serviceFileName)
+			if file.CheckExist(serviceFileName) {
+				genFile(serviceTemplate, m, serviceFileName)
+			} else {
+				fmt.Println(serviceFileName + " is exist!")
+			}
 		}
 		genProvider(projectPath, prod, schemas)
 		genRegServer(projectPath, prod, schemas)

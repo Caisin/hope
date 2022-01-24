@@ -26,7 +26,6 @@ type config struct {
 type hooks struct {
 	CasbinRule  []ent.Hook
 	SysApi      []ent.Hook
-	SysColumns  []ent.Hook
 	SysConfig   []ent.Hook
 	SysDept     []ent.Hook
 	SysDictData []ent.Hook
@@ -38,7 +37,6 @@ type hooks struct {
 	SysOperaLog []ent.Hook
 	SysPost     []ent.Hook
 	SysRole     []ent.Hook
-	SysTables   []ent.Hook
 	SysUser     []ent.Hook
 }
 

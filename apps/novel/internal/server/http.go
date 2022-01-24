@@ -3,6 +3,7 @@ package server
 import (
 	prom "github.com/go-kratos/kratos/contrib/metrics/prometheus/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/ratelimit"
@@ -13,6 +14,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"hope/apps/novel/internal/conf"
+	"hope/pkg/auth"
 )
 
 // NewHTTPServer new a HTTP server.
@@ -32,6 +34,8 @@ func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), logger log.Logge
 				metrics.WithSeconds(prom.NewHistogram(hv)),
 				metrics.WithRequests(prom.NewCounter(cv)),
 			),
+			//应用授权
+			jwt.Server(auth.SecretKeyFun),
 		),
 	}
 	if c.Http.Network != "" {

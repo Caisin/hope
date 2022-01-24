@@ -31,25 +31,15 @@ func (suc *SysUserCreate) SetUsername(s string) *SysUserCreate {
 	return suc
 }
 
-// SetNillableUsername sets the "username" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableUsername(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetUsername(*s)
-	}
+// SetPassword sets the "password" field.
+func (suc *SysUserCreate) SetPassword(s string) *SysUserCreate {
+	suc.mutation.SetPassword(s)
 	return suc
 }
 
 // SetNickName sets the "nickName" field.
 func (suc *SysUserCreate) SetNickName(s string) *SysUserCreate {
 	suc.mutation.SetNickName(s)
-	return suc
-}
-
-// SetNillableNickName sets the "nickName" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableNickName(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetNickName(*s)
-	}
 	return suc
 }
 
@@ -161,6 +151,34 @@ func (suc *SysUserCreate) SetRemark(s string) *SysUserCreate {
 func (suc *SysUserCreate) SetNillableRemark(s *string) *SysUserCreate {
 	if s != nil {
 		suc.SetRemark(*s)
+	}
+	return suc
+}
+
+// SetDesc sets the "desc" field.
+func (suc *SysUserCreate) SetDesc(s string) *SysUserCreate {
+	suc.mutation.SetDesc(s)
+	return suc
+}
+
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (suc *SysUserCreate) SetNillableDesc(s *string) *SysUserCreate {
+	if s != nil {
+		suc.SetDesc(*s)
+	}
+	return suc
+}
+
+// SetHomePath sets the "homePath" field.
+func (suc *SysUserCreate) SetHomePath(s string) *SysUserCreate {
+	suc.mutation.SetHomePath(s)
+	return suc
+}
+
+// SetNillableHomePath sets the "homePath" field if the given value is not nil.
+func (suc *SysUserCreate) SetNillableHomePath(s *string) *SysUserCreate {
+	if s != nil {
+		suc.SetHomePath(*s)
 	}
 	return suc
 }
@@ -441,6 +459,15 @@ func (suc *SysUserCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (suc *SysUserCreate) check() error {
+	if _, ok := suc.mutation.Username(); !ok {
+		return &ValidationError{Name: "username", err: errors.New(`ent: missing required field "username"`)}
+	}
+	if _, ok := suc.mutation.Password(); !ok {
+		return &ValidationError{Name: "password", err: errors.New(`ent: missing required field "password"`)}
+	}
+	if _, ok := suc.mutation.NickName(); !ok {
+		return &ValidationError{Name: "nickName", err: errors.New(`ent: missing required field "nickName"`)}
+	}
 	if _, ok := suc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -490,6 +517,14 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 			Column: sysuser.FieldUsername,
 		})
 		_node.Username = value
+	}
+	if value, ok := suc.mutation.Password(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysuser.FieldPassword,
+		})
+		_node.Password = value
 	}
 	if value, ok := suc.mutation.NickName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -546,6 +581,22 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 			Column: sysuser.FieldRemark,
 		})
 		_node.Remark = value
+	}
+	if value, ok := suc.mutation.Desc(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysuser.FieldDesc,
+		})
+		_node.Desc = value
+	}
+	if value, ok := suc.mutation.HomePath(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysuser.FieldHomePath,
+		})
+		_node.HomePath = value
 	}
 	if value, ok := suc.mutation.Status(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

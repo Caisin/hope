@@ -3,6 +3,7 @@ package server
 import (
 	prom "github.com/go-kratos/kratos/contrib/metrics/prometheus/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/ratelimit"
@@ -11,6 +12,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/prometheus/client_golang/prometheus"
 	"hope/apps/novel/internal/conf"
+	"hope/pkg/auth"
 )
 
 // NewGRPCServer new a gRPC server.
@@ -30,6 +32,7 @@ func NewGRPCServer(c *conf.Server, regFun []func(*grpc.Server), logger log.Logge
 				metrics.WithSeconds(prom.NewHistogram(hv)),
 				metrics.WithRequests(prom.NewCounter(cv)),
 			),
+			jwt.Server(auth.SecretKeyFun),
 		),
 	}
 	if c.Grpc.Network != "" {

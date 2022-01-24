@@ -6,7 +6,6 @@ import "github.com/google/wire"
 var ProviderSet = wire.NewSet(
 	NewCasbinRuleUseCase,
 	NewSysApiUseCase,
-	NewSysColumnsUseCase,
 	NewSysConfigUseCase,
 	NewSysDeptUseCase,
 	NewSysDictDataUseCase,
@@ -18,6 +17,5 @@ var ProviderSet = wire.NewSet(
 	NewSysOperaLogUseCase,
 	NewSysPostUseCase,
 	NewSysRoleUseCase,
-	NewSysTablesUseCase,
 	NewSysUserUseCase,
 )

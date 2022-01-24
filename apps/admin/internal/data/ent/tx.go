@@ -16,8 +16,6 @@ type Tx struct {
 	CasbinRule *CasbinRuleClient
 	// SysApi is the client for interacting with the SysApi builders.
 	SysApi *SysApiClient
-	// SysColumns is the client for interacting with the SysColumns builders.
-	SysColumns *SysColumnsClient
 	// SysConfig is the client for interacting with the SysConfig builders.
 	SysConfig *SysConfigClient
 	// SysDept is the client for interacting with the SysDept builders.
@@ -40,8 +38,6 @@ type Tx struct {
 	SysPost *SysPostClient
 	// SysRole is the client for interacting with the SysRole builders.
 	SysRole *SysRoleClient
-	// SysTables is the client for interacting with the SysTables builders.
-	SysTables *SysTablesClient
 	// SysUser is the client for interacting with the SysUser builders.
 	SysUser *SysUserClient
 
@@ -181,7 +177,6 @@ func (tx *Tx) Client() *Client {
 func (tx *Tx) init() {
 	tx.CasbinRule = NewCasbinRuleClient(tx.config)
 	tx.SysApi = NewSysApiClient(tx.config)
-	tx.SysColumns = NewSysColumnsClient(tx.config)
 	tx.SysConfig = NewSysConfigClient(tx.config)
 	tx.SysDept = NewSysDeptClient(tx.config)
 	tx.SysDictData = NewSysDictDataClient(tx.config)
@@ -193,7 +188,6 @@ func (tx *Tx) init() {
 	tx.SysOperaLog = NewSysOperaLogClient(tx.config)
 	tx.SysPost = NewSysPostClient(tx.config)
 	tx.SysRole = NewSysRoleClient(tx.config)
-	tx.SysTables = NewSysTablesClient(tx.config)
 	tx.SysUser = NewSysUserClient(tx.config)
 }
 

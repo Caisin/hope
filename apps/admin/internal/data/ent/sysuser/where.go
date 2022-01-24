@@ -100,6 +100,13 @@ func Username(v string) predicate.SysUser {
 	})
 }
 
+// Password applies equality check predicate on the "password" field. It's identical to PasswordEQ.
+func Password(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPassword), v))
+	})
+}
+
 // NickName applies equality check predicate on the "nickName" field. It's identical to NickNameEQ.
 func NickName(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
@@ -160,6 +167,20 @@ func Email(v string) predicate.SysUser {
 func Remark(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldRemark), v))
+	})
+}
+
+// Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
+func Desc(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDesc), v))
+	})
+}
+
+// HomePath applies equality check predicate on the "homePath" field. It's identical to HomePathEQ.
+func HomePath(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldHomePath), v))
 	})
 }
 
@@ -309,20 +330,6 @@ func UsernameHasSuffix(v string) predicate.SysUser {
 	})
 }
 
-// UsernameIsNil applies the IsNil predicate on the "username" field.
-func UsernameIsNil() predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldUsername)))
-	})
-}
-
-// UsernameNotNil applies the NotNil predicate on the "username" field.
-func UsernameNotNil() predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldUsername)))
-	})
-}
-
 // UsernameEqualFold applies the EqualFold predicate on the "username" field.
 func UsernameEqualFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
@@ -334,6 +341,117 @@ func UsernameEqualFold(v string) predicate.SysUser {
 func UsernameContainsFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldUsername), v))
+	})
+}
+
+// PasswordEQ applies the EQ predicate on the "password" field.
+func PasswordEQ(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordNEQ applies the NEQ predicate on the "password" field.
+func PasswordNEQ(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordIn applies the In predicate on the "password" field.
+func PasswordIn(vs ...string) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPassword), v...))
+	})
+}
+
+// PasswordNotIn applies the NotIn predicate on the "password" field.
+func PasswordNotIn(vs ...string) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPassword), v...))
+	})
+}
+
+// PasswordGT applies the GT predicate on the "password" field.
+func PasswordGT(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordGTE applies the GTE predicate on the "password" field.
+func PasswordGTE(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordLT applies the LT predicate on the "password" field.
+func PasswordLT(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordLTE applies the LTE predicate on the "password" field.
+func PasswordLTE(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordContains applies the Contains predicate on the "password" field.
+func PasswordContains(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordHasPrefix applies the HasPrefix predicate on the "password" field.
+func PasswordHasPrefix(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordHasSuffix applies the HasSuffix predicate on the "password" field.
+func PasswordHasSuffix(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordEqualFold applies the EqualFold predicate on the "password" field.
+func PasswordEqualFold(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldPassword), v))
+	})
+}
+
+// PasswordContainsFold applies the ContainsFold predicate on the "password" field.
+func PasswordContainsFold(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldPassword), v))
 	})
 }
 
@@ -431,20 +549,6 @@ func NickNameHasPrefix(v string) predicate.SysUser {
 func NickNameHasSuffix(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldNickName), v))
-	})
-}
-
-// NickNameIsNil applies the IsNil predicate on the "nickName" field.
-func NickNameIsNil() predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldNickName)))
-	})
-}
-
-// NickNameNotNil applies the NotNil predicate on the "nickName" field.
-func NickNameNotNil() predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldNickName)))
 	})
 }
 
@@ -1263,6 +1367,256 @@ func RemarkEqualFold(v string) predicate.SysUser {
 func RemarkContainsFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldRemark), v))
+	})
+}
+
+// DescEQ applies the EQ predicate on the "desc" field.
+func DescEQ(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDesc), v))
+	})
+}
+
+// DescNEQ applies the NEQ predicate on the "desc" field.
+func DescNEQ(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDesc), v))
+	})
+}
+
+// DescIn applies the In predicate on the "desc" field.
+func DescIn(vs ...string) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldDesc), v...))
+	})
+}
+
+// DescNotIn applies the NotIn predicate on the "desc" field.
+func DescNotIn(vs ...string) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldDesc), v...))
+	})
+}
+
+// DescGT applies the GT predicate on the "desc" field.
+func DescGT(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDesc), v))
+	})
+}
+
+// DescGTE applies the GTE predicate on the "desc" field.
+func DescGTE(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDesc), v))
+	})
+}
+
+// DescLT applies the LT predicate on the "desc" field.
+func DescLT(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDesc), v))
+	})
+}
+
+// DescLTE applies the LTE predicate on the "desc" field.
+func DescLTE(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDesc), v))
+	})
+}
+
+// DescContains applies the Contains predicate on the "desc" field.
+func DescContains(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldDesc), v))
+	})
+}
+
+// DescHasPrefix applies the HasPrefix predicate on the "desc" field.
+func DescHasPrefix(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldDesc), v))
+	})
+}
+
+// DescHasSuffix applies the HasSuffix predicate on the "desc" field.
+func DescHasSuffix(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldDesc), v))
+	})
+}
+
+// DescIsNil applies the IsNil predicate on the "desc" field.
+func DescIsNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldDesc)))
+	})
+}
+
+// DescNotNil applies the NotNil predicate on the "desc" field.
+func DescNotNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldDesc)))
+	})
+}
+
+// DescEqualFold applies the EqualFold predicate on the "desc" field.
+func DescEqualFold(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldDesc), v))
+	})
+}
+
+// DescContainsFold applies the ContainsFold predicate on the "desc" field.
+func DescContainsFold(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldDesc), v))
+	})
+}
+
+// HomePathEQ applies the EQ predicate on the "homePath" field.
+func HomePathEQ(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathNEQ applies the NEQ predicate on the "homePath" field.
+func HomePathNEQ(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathIn applies the In predicate on the "homePath" field.
+func HomePathIn(vs ...string) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldHomePath), v...))
+	})
+}
+
+// HomePathNotIn applies the NotIn predicate on the "homePath" field.
+func HomePathNotIn(vs ...string) predicate.SysUser {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysUser(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldHomePath), v...))
+	})
+}
+
+// HomePathGT applies the GT predicate on the "homePath" field.
+func HomePathGT(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathGTE applies the GTE predicate on the "homePath" field.
+func HomePathGTE(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathLT applies the LT predicate on the "homePath" field.
+func HomePathLT(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathLTE applies the LTE predicate on the "homePath" field.
+func HomePathLTE(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathContains applies the Contains predicate on the "homePath" field.
+func HomePathContains(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathHasPrefix applies the HasPrefix predicate on the "homePath" field.
+func HomePathHasPrefix(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathHasSuffix applies the HasSuffix predicate on the "homePath" field.
+func HomePathHasSuffix(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathIsNil applies the IsNil predicate on the "homePath" field.
+func HomePathIsNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldHomePath)))
+	})
+}
+
+// HomePathNotNil applies the NotNil predicate on the "homePath" field.
+func HomePathNotNil() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldHomePath)))
+	})
+}
+
+// HomePathEqualFold applies the EqualFold predicate on the "homePath" field.
+func HomePathEqualFold(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldHomePath), v))
+	})
+}
+
+// HomePathContainsFold applies the ContainsFold predicate on the "homePath" field.
+func HomePathContainsFold(v string) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldHomePath), v))
 	})
 }
 

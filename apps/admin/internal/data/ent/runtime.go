@@ -6,7 +6,6 @@ import (
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/schema"
 	"hope/apps/admin/internal/data/ent/sysapi"
-	"hope/apps/admin/internal/data/ent/syscolumns"
 	"hope/apps/admin/internal/data/ent/sysconfig"
 	"hope/apps/admin/internal/data/ent/sysdept"
 	"hope/apps/admin/internal/data/ent/sysdictdata"
@@ -18,7 +17,6 @@ import (
 	"hope/apps/admin/internal/data/ent/sysoperalog"
 	"hope/apps/admin/internal/data/ent/syspost"
 	"hope/apps/admin/internal/data/ent/sysrole"
-	"hope/apps/admin/internal/data/ent/systables"
 	"hope/apps/admin/internal/data/ent/sysuser"
 	"time"
 )
@@ -75,30 +73,6 @@ func init() {
 	sysapiDescTenantId := sysapiFields[9].Descriptor()
 	// sysapi.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysapi.DefaultTenantId = sysapiDescTenantId.Default.(int64)
-	syscolumnsFields := schema.SysColumns{}.Fields()
-	_ = syscolumnsFields
-	// syscolumnsDescCreatedAt is the schema descriptor for createdAt field.
-	syscolumnsDescCreatedAt := syscolumnsFields[29].Descriptor()
-	// syscolumns.DefaultCreatedAt holds the default value on creation for the createdAt field.
-	syscolumns.DefaultCreatedAt = syscolumnsDescCreatedAt.Default.(func() time.Time)
-	// syscolumnsDescUpdatedAt is the schema descriptor for updatedAt field.
-	syscolumnsDescUpdatedAt := syscolumnsFields[30].Descriptor()
-	// syscolumns.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
-	syscolumns.DefaultUpdatedAt = syscolumnsDescUpdatedAt.Default.(func() time.Time)
-	// syscolumns.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
-	syscolumns.UpdateDefaultUpdatedAt = syscolumnsDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// syscolumnsDescCreateBy is the schema descriptor for createBy field.
-	syscolumnsDescCreateBy := syscolumnsFields[31].Descriptor()
-	// syscolumns.DefaultCreateBy holds the default value on creation for the createBy field.
-	syscolumns.DefaultCreateBy = syscolumnsDescCreateBy.Default.(int64)
-	// syscolumnsDescUpdateBy is the schema descriptor for updateBy field.
-	syscolumnsDescUpdateBy := syscolumnsFields[32].Descriptor()
-	// syscolumns.DefaultUpdateBy holds the default value on creation for the updateBy field.
-	syscolumns.DefaultUpdateBy = syscolumnsDescUpdateBy.Default.(int64)
-	// syscolumnsDescTenantId is the schema descriptor for tenantId field.
-	syscolumnsDescTenantId := syscolumnsFields[33].Descriptor()
-	// syscolumns.DefaultTenantId holds the default value on creation for the tenantId field.
-	syscolumns.DefaultTenantId = syscolumnsDescTenantId.Default.(int64)
 	sysconfigFields := schema.SysConfig{}.Fields()
 	_ = sysconfigFields
 	// sysconfigDescCreatedAt is the schema descriptor for createdAt field.
@@ -363,52 +337,28 @@ func init() {
 	sysroleDescTenantId := sysroleFields[14].Descriptor()
 	// sysrole.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysrole.DefaultTenantId = sysroleDescTenantId.Default.(int64)
-	systablesFields := schema.SysTables{}.Fields()
-	_ = systablesFields
-	// systablesDescCreatedAt is the schema descriptor for createdAt field.
-	systablesDescCreatedAt := systablesFields[26].Descriptor()
-	// systables.DefaultCreatedAt holds the default value on creation for the createdAt field.
-	systables.DefaultCreatedAt = systablesDescCreatedAt.Default.(func() time.Time)
-	// systablesDescUpdatedAt is the schema descriptor for updatedAt field.
-	systablesDescUpdatedAt := systablesFields[27].Descriptor()
-	// systables.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
-	systables.DefaultUpdatedAt = systablesDescUpdatedAt.Default.(func() time.Time)
-	// systables.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
-	systables.UpdateDefaultUpdatedAt = systablesDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// systablesDescCreateBy is the schema descriptor for createBy field.
-	systablesDescCreateBy := systablesFields[28].Descriptor()
-	// systables.DefaultCreateBy holds the default value on creation for the createBy field.
-	systables.DefaultCreateBy = systablesDescCreateBy.Default.(int64)
-	// systablesDescUpdateBy is the schema descriptor for updateBy field.
-	systablesDescUpdateBy := systablesFields[29].Descriptor()
-	// systables.DefaultUpdateBy holds the default value on creation for the updateBy field.
-	systables.DefaultUpdateBy = systablesDescUpdateBy.Default.(int64)
-	// systablesDescTenantId is the schema descriptor for tenantId field.
-	systablesDescTenantId := systablesFields[30].Descriptor()
-	// systables.DefaultTenantId holds the default value on creation for the tenantId field.
-	systables.DefaultTenantId = systablesDescTenantId.Default.(int64)
 	sysuserFields := schema.SysUser{}.Fields()
 	_ = sysuserFields
 	// sysuserDescCreatedAt is the schema descriptor for createdAt field.
-	sysuserDescCreatedAt := sysuserFields[12].Descriptor()
+	sysuserDescCreatedAt := sysuserFields[15].Descriptor()
 	// sysuser.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	sysuser.DefaultCreatedAt = sysuserDescCreatedAt.Default.(func() time.Time)
 	// sysuserDescUpdatedAt is the schema descriptor for updatedAt field.
-	sysuserDescUpdatedAt := sysuserFields[13].Descriptor()
+	sysuserDescUpdatedAt := sysuserFields[16].Descriptor()
 	// sysuser.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	sysuser.DefaultUpdatedAt = sysuserDescUpdatedAt.Default.(func() time.Time)
 	// sysuser.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	sysuser.UpdateDefaultUpdatedAt = sysuserDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysuserDescCreateBy is the schema descriptor for createBy field.
-	sysuserDescCreateBy := sysuserFields[14].Descriptor()
+	sysuserDescCreateBy := sysuserFields[17].Descriptor()
 	// sysuser.DefaultCreateBy holds the default value on creation for the createBy field.
 	sysuser.DefaultCreateBy = sysuserDescCreateBy.Default.(int64)
 	// sysuserDescUpdateBy is the schema descriptor for updateBy field.
-	sysuserDescUpdateBy := sysuserFields[15].Descriptor()
+	sysuserDescUpdateBy := sysuserFields[18].Descriptor()
 	// sysuser.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	sysuser.DefaultUpdateBy = sysuserDescUpdateBy.Default.(int64)
 	// sysuserDescTenantId is the schema descriptor for tenantId field.
-	sysuserDescTenantId := sysuserFields[16].Descriptor()
+	sysuserDescTenantId := sysuserFields[19].Descriptor()
 	// sysuser.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysuser.DefaultTenantId = sysuserDescTenantId.Default.(int64)
 }

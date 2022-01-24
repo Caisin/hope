@@ -6,7 +6,7 @@ go 1.17
 require (
 	entgo.io/ent v0.9.1
 	github.com/go-kratos/kratos/contrib/metrics/prometheus/v2 v2.0.0-20220121075225-a87abe223c18
-	github.com/go-kratos/kratos/v2 v2.1.4
+	github.com/go-kratos/kratos/v2 v2.1.5
 	github.com/go-kratos/swagger-api v1.0.1
 	github.com/go-redis/redis/extra/redisotel v0.3.0
 	github.com/go-redis/redis/v8 v8.11.4

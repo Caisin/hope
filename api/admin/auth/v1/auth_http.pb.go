@@ -29,7 +29,7 @@ func RegisterAuthHTTPServer(s *http.Server, srv AuthHTTPServer) {
 	r.POST("/v1/sys/auth/login", _Auth_Login0_HTTP_Handler(srv))
 	r.POST("/v1/sys/auth/logout", _Auth_LogOut0_HTTP_Handler(srv))
 	r.GET("/v1/sys/auth/getUserInfo", _Auth_GetUserInfo0_HTTP_Handler(srv))
-	r.GET("/v1/sys/auth/getUserInfo", _Auth_GetPermCode0_HTTP_Handler(srv))
+	r.GET("/v1/sys/auth/getPermCode", _Auth_GetPermCode0_HTTP_Handler(srv))
 }
 
 func _Auth_Login0_HTTP_Handler(srv AuthHTTPServer) func(ctx http.Context) error {
@@ -125,7 +125,7 @@ func NewAuthHTTPClient(client *http.Client) AuthHTTPClient {
 
 func (c *AuthHTTPClientImpl) GetPermCode(ctx context.Context, in *GetPermReq, opts ...http.CallOption) (*GetPermReply, error) {
 	var out GetPermReply
-	pattern := "/v1/sys/auth/getUserInfo"
+	pattern := "/v1/sys/auth/getPermCode"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysuser.v1.Auth/GetPermCode"))
 	opts = append(opts, http.PathTemplate(pattern))

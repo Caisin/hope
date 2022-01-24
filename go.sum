@@ -149,8 +149,9 @@ github.com/go-kratos/grpc-gateway/v2 v2.5.1-0.20210811062259-c92d36e434b1/go.mod
 github.com/go-kratos/kratos/contrib/metrics/prometheus/v2 v2.0.0-20220121075225-a87abe223c18 h1:FvfLdc60XlvCGCl7rfUTaUOLp2yQ3SmURYl6+wxqHsw=
 github.com/go-kratos/kratos/contrib/metrics/prometheus/v2 v2.0.0-20220121075225-a87abe223c18/go.mod h1:uNkFYM9LIV8ICJsu8AIL0nQ76mGzExwGQSTqBibu1Gg=
 github.com/go-kratos/kratos/v2 v2.0.3/go.mod h1:Hgl0YPry9YyLtwTTfwLfowPKg+YS0dgZ06O5NHqz5hE=
-github.com/go-kratos/kratos/v2 v2.1.4 h1:DQkov26ewRnWdjqxalMd/D10WUP5bMmW2V5oO90C8dg=
 github.com/go-kratos/kratos/v2 v2.1.4/go.mod h1:/SOOBnLEDEgQRXV9bVVyZsITmxKsilSCc15U8uiNzcI=
+github.com/go-kratos/kratos/v2 v2.1.5 h1:q8kTXyY1KkNJS3tmhvGUJfysipM5AIuoJaXBEvDBnFI=
+github.com/go-kratos/kratos/v2 v2.1.5/go.mod h1:zMonCKAf8+He4b9NQ/QHr20tMznd4NO5XrNds36w/5k=
 github.com/go-kratos/swagger-api v1.0.1 h1:zBagw2tWA+icYrRPFqM3jFL60nO743ZiIvuiI6CpV6E=
 github.com/go-kratos/swagger-api v1.0.1/go.mod h1:KMYylgeNaApBgPYIF6kIP1kjGFgI4aDQNbQNBTqaewI=
 github.com/go-logfmt/logfmt v0.3.0/go.mod h1:Qt1PoO58o5twSAckw1HlFXLmHsOX5/0LbT9GBnD5lWE=
@@ -841,6 +842,7 @@ google.golang.org/genproto v0.0.0-20210617175327-b9e0b3197ced/go.mod h1:SzzZ/N+n
 google.golang.org/genproto v0.0.0-20210629200056-84d6f6074151/go.mod h1:yiaVoXHpRzHGyxV3o4DktVWY4mSUErTKaeEOq6C3t3U=
 google.golang.org/genproto v0.0.0-20210701191553-46259e63a0a9/go.mod h1:yiaVoXHpRzHGyxV3o4DktVWY4mSUErTKaeEOq6C3t3U=
 google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67/go.mod h1:ob2IJxKrgPT52GcgX759i1sleT07tiKowYBGbczaW48=
+google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
 google.golang.org/genproto v0.0.0-20220118154757-00ab72f36ad5 h1:zzNejm+EgrbLfDZ6lu9Uud2IVvHySPl8vQzf04laR5Q=
 google.golang.org/genproto v0.0.0-20220118154757-00ab72f36ad5/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
 google.golang.org/grpc v1.17.0/go.mod h1:6QZJwpn2B+Zp71q/5VxRsJ6NXXVCE5NRUHRo+f3cWCs=

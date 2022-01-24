@@ -39,6 +39,13 @@ service Auth {
     };
   }
 
+  // 获取用户菜单列表
+  rpc GetMenuList (GetPermReq) returns (GetPermReply)  {
+    option (google.api.http) = {
+      get: "/v1/sys/auth/getMenuList"
+    };
+  }
+
 }
 
 //登陆请求

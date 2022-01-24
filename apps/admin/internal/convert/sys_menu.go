@@ -15,6 +15,7 @@ func SysMenuUpdateReq2Data(v *v1.SysMenuUpdateReq) *ent.SysMenu {
 	}
 	return &ent.SysMenu{
 		ID:         v.Id,
+		ParentId:   v.ParentId,
 		MenuName:   v.MenuName,
 		Title:      v.Title,
 		Icon:       v.Icon,
@@ -38,6 +39,7 @@ func SysMenuData2UpdateReq(v *ent.SysMenu) *v1.SysMenuUpdateReq {
 	}
 	return &v1.SysMenuUpdateReq{
 		Id:         v.ID,
+		ParentId:   v.ParentId,
 		MenuName:   v.MenuName,
 		Title:      v.Title,
 		Icon:       v.Icon,
@@ -60,6 +62,7 @@ func SysMenuCreateReq2Data(v *v1.SysMenuCreateReq) *ent.SysMenu {
 		return nil
 	}
 	return &ent.SysMenu{
+		ParentId:   v.ParentId,
 		MenuName:   v.MenuName,
 		Title:      v.Title,
 		Icon:       v.Icon,
@@ -82,6 +85,7 @@ func SysMenuData2CreateReq(v *ent.SysMenu) *v1.SysMenuCreateReq {
 		return nil
 	}
 	return &v1.SysMenuCreateReq{
+		ParentId:   v.ParentId,
 		MenuName:   v.MenuName,
 		Title:      v.Title,
 		Icon:       v.Icon,
@@ -104,6 +108,7 @@ func SysMenuReq2Data(v *v1.SysMenuReq) *ent.SysMenu {
 		return nil
 	}
 	return &ent.SysMenu{
+		ParentId:   v.ParentId,
 		MenuName:   v.MenuName,
 		Title:      v.Title,
 		Icon:       v.Icon,
@@ -126,6 +131,7 @@ func SysMenuData2Req(v *ent.SysMenu) *v1.SysMenuReq {
 		return nil
 	}
 	return &v1.SysMenuReq{
+		ParentId:   v.ParentId,
 		MenuName:   v.MenuName,
 		Title:      v.Title,
 		Icon:       v.Icon,
@@ -149,6 +155,7 @@ func SysMenuData2Reply(v *ent.SysMenu) *v1.SysMenuData {
 	}
 	return &v1.SysMenuData{
 		Id:         v.ID,
+		ParentId:   v.ParentId,
 		MenuName:   v.MenuName,
 		Title:      v.Title,
 		Icon:       v.Icon,

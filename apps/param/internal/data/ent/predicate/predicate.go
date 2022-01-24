@@ -3,6 +3,9 @@
 package predicate
 
 import (
+	"fmt"
+
+	"entgo.io/ent/dialect/gremlin/graph/dsl"
 	"entgo.io/ent/dialect/sql"
 )
 

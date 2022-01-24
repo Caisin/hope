@@ -43,8 +43,6 @@ func (SysUser) Fields() []ent.Field {
 			Comment(`登陆默认打开页面`),
 		field.String("status").Optional().
 			Comment(`状态`),
-		field.String("extInfo").Optional().
-			Comment(`拓展信息,facebook回传用的`),
 	}
 	fields = append(fields, mixin.Fields()...)
 	return fields

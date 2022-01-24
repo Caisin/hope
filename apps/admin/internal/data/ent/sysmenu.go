@@ -16,6 +16,9 @@ type SysMenu struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
+	// ParentId holds the value of the "parentId" field.
+	// 父菜单Id
+	ParentId int64 `json:"parentId,omitempty"`
 	// MenuName holds the value of the "menuName" field.
 	// 菜单名
 	MenuName string `json:"menuName,omitempty"`
@@ -32,7 +35,7 @@ type SysMenu struct {
 	// 多级路径
 	Paths string `json:"paths,omitempty"`
 	// MenuType holds the value of the "menuType" field.
-	// M-目录C-菜单F-按钮
+	// D-目录M-菜单F-按钮
 	MenuType string `json:"menuType,omitempty"`
 	// Action holds the value of the "action" field.
 	Action string `json:"action,omitempty"`
@@ -76,8 +79,7 @@ type SysMenu struct {
 	TenantId int64 `json:"tenantId,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysMenuQuery when eager-loading is set.
-	Edges            SysMenuEdges `json:"edges"`
-	sys_menu_childes *int64
+	Edges SysMenuEdges `json:"edges"`
 }
 
 // SysMenuEdges holds the relations/edges for other nodes in the graph.
@@ -132,14 +134,12 @@ func (*SysMenu) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case sysmenu.FieldNoCache, sysmenu.FieldVisible, sysmenu.FieldIsFrame:
 			values[i] = new(sql.NullBool)
-		case sysmenu.FieldID, sysmenu.FieldSort, sysmenu.FieldCreateBy, sysmenu.FieldUpdateBy, sysmenu.FieldTenantId:
+		case sysmenu.FieldID, sysmenu.FieldParentId, sysmenu.FieldSort, sysmenu.FieldCreateBy, sysmenu.FieldUpdateBy, sysmenu.FieldTenantId:
 			values[i] = new(sql.NullInt64)
 		case sysmenu.FieldMenuName, sysmenu.FieldTitle, sysmenu.FieldIcon, sysmenu.FieldPath, sysmenu.FieldPaths, sysmenu.FieldMenuType, sysmenu.FieldAction, sysmenu.FieldPermission, sysmenu.FieldBreadcrumb, sysmenu.FieldComponent, sysmenu.FieldSysApi:
 			values[i] = new(sql.NullString)
 		case sysmenu.FieldCreatedAt, sysmenu.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case sysmenu.ForeignKeys[0]: // sys_menu_childes
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysMenu", columns[i])
 		}
@@ -161,6 +161,12 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			sm.ID = int64(value.Int64)
+		case sysmenu.FieldParentId:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field parentId", values[i])
+			} else if value.Valid {
+				sm.ParentId = value.Int64
+			}
 		case sysmenu.FieldMenuName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field menuName", values[i])
@@ -281,13 +287,6 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				sm.TenantId = value.Int64
 			}
-		case sysmenu.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field sys_menu_childes", value)
-			} else if value.Valid {
-				sm.sys_menu_childes = new(int64)
-				*sm.sys_menu_childes = int64(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -331,6 +330,8 @@ func (sm *SysMenu) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysMenu(")
 	builder.WriteString(fmt.Sprintf("id=%v", sm.ID))
+	builder.WriteString(", parentId=")
+	builder.WriteString(fmt.Sprintf("%v", sm.ParentId))
 	builder.WriteString(", menuName=")
 	builder.WriteString(sm.MenuName)
 	builder.WriteString(", title=")

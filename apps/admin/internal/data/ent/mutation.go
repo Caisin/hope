@@ -11374,6 +11374,42 @@ func (m *SysMenuMutation) ID() (id int64, exists bool) {
 	return *m.id, true
 }
 
+// SetParentId sets the "parentId" field.
+func (m *SysMenuMutation) SetParentId(i int64) {
+	m.parent = &i
+}
+
+// ParentId returns the value of the "parentId" field in the mutation.
+func (m *SysMenuMutation) ParentId() (r int64, exists bool) {
+	v := m.parent
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldParentId returns the old "parentId" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldParentId(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldParentId is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldParentId requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldParentId: %w", err)
+	}
+	return oldValue.ParentId, nil
+}
+
+// ResetParentId resets all changes to the "parentId" field.
+func (m *SysMenuMutation) ResetParentId() {
+	m.parent = nil
+}
+
 // SetMenuName sets the "menuName" field.
 func (m *SysMenuMutation) SetMenuName(s string) {
 	m.menuName = &s
@@ -12536,7 +12572,10 @@ func (m *SysMenuMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysMenuMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 21)
+	if m.parent != nil {
+		fields = append(fields, sysmenu.FieldParentId)
+	}
 	if m.menuName != nil {
 		fields = append(fields, sysmenu.FieldMenuName)
 	}
@@ -12605,6 +12644,8 @@ func (m *SysMenuMutation) Fields() []string {
 // schema.
 func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case sysmenu.FieldParentId:
+		return m.ParentId()
 	case sysmenu.FieldMenuName:
 		return m.MenuName()
 	case sysmenu.FieldTitle:
@@ -12654,6 +12695,8 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case sysmenu.FieldParentId:
+		return m.OldParentId(ctx)
 	case sysmenu.FieldMenuName:
 		return m.OldMenuName(ctx)
 	case sysmenu.FieldTitle:
@@ -12703,6 +12746,13 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 // type.
 func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case sysmenu.FieldParentId:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetParentId(v)
+		return nil
 	case sysmenu.FieldMenuName:
 		v, ok := value.(string)
 		if !ok {
@@ -13036,6 +13086,9 @@ func (m *SysMenuMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *SysMenuMutation) ResetField(name string) error {
 	switch name {
+	case sysmenu.FieldParentId:
+		m.ResetParentId()
+		return nil
 	case sysmenu.FieldMenuName:
 		m.ResetMenuName()
 		return nil

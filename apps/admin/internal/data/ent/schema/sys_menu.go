@@ -15,10 +15,15 @@ type SysMenu struct {
 // Fields of the SysMenu.
 func (SysMenu) Fields() []ent.Field {
 	fields := []ent.Field{
-		field.String("menuName").Optional().
+		field.Int64("parentId").
+			Default(0).
+			Comment(`父菜单Id`),
+		field.String("name").
 			Comment(`菜单名`),
-		field.String("title").Optional().
+		field.String("title").
 			Comment(`菜单标题`),
+		field.String("redirect").Optional().
+			Comment(`跳转路径`),
 		field.String("icon").Optional().
 			Comment(`图标`),
 		field.String("path").Optional().
@@ -26,25 +31,25 @@ func (SysMenu) Fields() []ent.Field {
 		field.String("paths").Optional().
 			Comment(`多级路径`),
 		field.String("menuType").Optional().
-			Comment(`M-目录C-菜单F-按钮`),
+			Comment(`D-目录M-菜单F-按钮`),
 		field.String("action").Optional().
 			Comment(``),
 		field.String("permission").Optional().
 			Comment(`权限`),
-		field.Bool("noCache").Optional().
-			Comment(`无缓存`),
-		field.String("breadcrumb").Optional().
-			Comment(`面包屑`),
+		field.Bool("ignoreKeepAlive").Optional().
+			Comment(`不缓存`),
+		field.Bool("hideBreadcrumb").Optional().
+			Comment(`隐藏面包屑`),
+		field.Bool("hideChildrenInMenu").Optional().
+			Comment(`隐藏子菜单`),
 		field.String("component").Optional().
 			Comment(`组件`),
 		field.Int32("sort").Optional().
 			Comment(`排序`),
-		field.Bool("visible").Optional().
-			Comment(`是否可见`),
+		field.Bool("hideMenu").Optional().
+			Comment(`影藏菜单`),
 		field.Bool("isFrame").Optional().
 			Comment(`是否外链1是0否`),
-		field.String("sysApi").Optional().
-			Comment(``),
 	}
 	fields = append(fields, mixin.Fields()...)
 	return fields
@@ -54,6 +59,6 @@ func (SysMenu) Fields() []ent.Field {
 func (SysMenu) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("role", SysRole.Type).Ref("menus"),
-		edge.To("childes", SysMenu.Type).From("parent").Unique(),
+		edge.To("children", SysMenu.Type).From("parent").Field("parentId").Required().Unique(),
 	}
 }

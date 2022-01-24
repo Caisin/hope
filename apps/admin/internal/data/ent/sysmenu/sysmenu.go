@@ -11,6 +11,8 @@ const (
 	Label = "sys_menu"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldParentId holds the string denoting the parentid field in the database.
+	FieldParentId = "parent_id"
 	// FieldMenuName holds the string denoting the menuname field in the database.
 	FieldMenuName = "menu_name"
 	// FieldTitle holds the string denoting the title field in the database.
@@ -67,16 +69,17 @@ const (
 	// ParentTable is the table that holds the parent relation/edge.
 	ParentTable = "sys_menus"
 	// ParentColumn is the table column denoting the parent relation/edge.
-	ParentColumn = "sys_menu_childes"
+	ParentColumn = "parent_id"
 	// ChildesTable is the table that holds the childes relation/edge.
 	ChildesTable = "sys_menus"
 	// ChildesColumn is the table column denoting the childes relation/edge.
-	ChildesColumn = "sys_menu_childes"
+	ChildesColumn = "parent_id"
 )
 
 // Columns holds all SQL columns for sysmenu fields.
 var Columns = []string{
 	FieldID,
+	FieldParentId,
 	FieldMenuName,
 	FieldTitle,
 	FieldIcon,
@@ -99,12 +102,6 @@ var Columns = []string{
 	FieldTenantId,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "sys_menus"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"sys_menu_childes",
-}
-
 var (
 	// RolePrimaryKey and RoleColumn2 are the table columns denoting the
 	// primary key for the role relation (M2M).
@@ -118,15 +115,12 @@ func ValidColumn(column string) bool {
 			return true
 		}
 	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
-			return true
-		}
-	}
 	return false
 }
 
 var (
+	// DefaultParentId holds the default value on creation for the "parentId" field.
+	DefaultParentId int64
 	// DefaultCreatedAt holds the default value on creation for the "createdAt" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updatedAt" field.

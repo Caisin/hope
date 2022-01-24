@@ -93,6 +93,13 @@ func IDLTE(id int64) predicate.SysMenu {
 	})
 }
 
+// ParentId applies equality check predicate on the "parentId" field. It's identical to ParentIdEQ.
+func ParentId(v int64) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldParentId), v))
+	})
+}
+
 // MenuName applies equality check predicate on the "menuName" field. It's identical to MenuNameEQ.
 func MenuName(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
@@ -230,6 +237,54 @@ func UpdateBy(v int64) predicate.SysMenu {
 func TenantId(v int64) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTenantId), v))
+	})
+}
+
+// ParentIdEQ applies the EQ predicate on the "parentId" field.
+func ParentIdEQ(v int64) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldParentId), v))
+	})
+}
+
+// ParentIdNEQ applies the NEQ predicate on the "parentId" field.
+func ParentIdNEQ(v int64) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldParentId), v))
+	})
+}
+
+// ParentIdIn applies the In predicate on the "parentId" field.
+func ParentIdIn(vs ...int64) predicate.SysMenu {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysMenu(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldParentId), v...))
+	})
+}
+
+// ParentIdNotIn applies the NotIn predicate on the "parentId" field.
+func ParentIdNotIn(vs ...int64) predicate.SysMenu {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysMenu(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldParentId), v...))
 	})
 }
 

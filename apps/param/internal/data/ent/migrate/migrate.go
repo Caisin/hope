@@ -5,7 +5,6 @@ package migrate
 import (
 	"context"
 	"fmt"
-	"io"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql/schema"

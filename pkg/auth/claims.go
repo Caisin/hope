@@ -42,7 +42,10 @@ func GetClaims(ctx context.Context) (*Claims, error) {
 	if ok {
 		//todo 临时解决方案
 		c = Claims{}
-		c.UserId = cast.ToInt64(mc["userId"])
+		userId, ok := mc["userId"]
+		if ok {
+			c.UserId = cast.ToInt64(userId)
+		}
 		c.Avatar = cast.ToString(mc["avatar"])
 		c.TenantId = cast.ToInt64(mc["tenantId"])
 		c.Audience = cast.ToString(mc["aud"])

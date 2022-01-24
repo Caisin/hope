@@ -21,6 +21,20 @@ type SysMenuCreate struct {
 	hooks    []Hook
 }
 
+// SetParentId sets the "parentId" field.
+func (smc *SysMenuCreate) SetParentId(i int64) *SysMenuCreate {
+	smc.mutation.SetParentId(i)
+	return smc
+}
+
+// SetNillableParentId sets the "parentId" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableParentId(i *int64) *SysMenuCreate {
+	if i != nil {
+		smc.SetParentId(*i)
+	}
+	return smc
+}
+
 // SetMenuName sets the "menuName" field.
 func (smc *SysMenuCreate) SetMenuName(s string) *SysMenuCreate {
 	smc.mutation.SetMenuName(s)
@@ -322,14 +336,6 @@ func (smc *SysMenuCreate) SetParentID(id int64) *SysMenuCreate {
 	return smc
 }
 
-// SetNillableParentID sets the "parent" edge to the SysMenu entity by ID if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableParentID(id *int64) *SysMenuCreate {
-	if id != nil {
-		smc = smc.SetParentID(*id)
-	}
-	return smc
-}
-
 // SetParent sets the "parent" edge to the SysMenu entity.
 func (smc *SysMenuCreate) SetParent(s *SysMenu) *SysMenuCreate {
 	return smc.SetParentID(s.ID)
@@ -421,6 +427,10 @@ func (smc *SysMenuCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (smc *SysMenuCreate) defaults() {
+	if _, ok := smc.mutation.ParentId(); !ok {
+		v := sysmenu.DefaultParentId
+		smc.mutation.SetParentId(v)
+	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
 		v := sysmenu.DefaultCreatedAt()
 		smc.mutation.SetCreatedAt(v)
@@ -445,6 +455,9 @@ func (smc *SysMenuCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (smc *SysMenuCreate) check() error {
+	if _, ok := smc.mutation.ParentId(); !ok {
+		return &ValidationError{Name: "parentId", err: errors.New(`ent: missing required field "parentId"`)}
+	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -459,6 +472,9 @@ func (smc *SysMenuCreate) check() error {
 	}
 	if _, ok := smc.mutation.TenantId(); !ok {
 		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+	}
+	if _, ok := smc.mutation.ParentID(); !ok {
+		return &ValidationError{Name: "parent", err: errors.New("ent: missing required edge \"parent\"")}
 	}
 	return nil
 }
@@ -683,7 +699,7 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.sys_menu_childes = &nodes[0]
+		_node.ParentId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := smc.mutation.ChildesIDs(); len(nodes) > 0 {

@@ -30,7 +30,6 @@ type SysMenuQuery struct {
 	withRole    *SysRoleQuery
 	withParent  *SysMenuQuery
 	withChildes *SysMenuQuery
-	withFKs     bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -362,12 +361,12 @@ func (smq *SysMenuQuery) WithChildes(opts ...func(*SysMenuQuery)) *SysMenuQuery 
 // Example:
 //
 //	var v []struct {
-//		MenuName string `json:"menuName,omitempty"`
+//		ParentId int64 `json:"parentId,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SysMenu.Query().
-//		GroupBy(sysmenu.FieldMenuName).
+//		GroupBy(sysmenu.FieldParentId).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -389,11 +388,11 @@ func (smq *SysMenuQuery) GroupBy(field string, fields ...string) *SysMenuGroupBy
 // Example:
 //
 //	var v []struct {
-//		MenuName string `json:"menuName,omitempty"`
+//		ParentId int64 `json:"parentId,omitempty"`
 //	}
 //
 //	client.SysMenu.Query().
-//		Select(sysmenu.FieldMenuName).
+//		Select(sysmenu.FieldParentId).
 //		Scan(ctx, &v)
 //
 func (smq *SysMenuQuery) Select(fields ...string) *SysMenuSelect {
@@ -420,7 +419,6 @@ func (smq *SysMenuQuery) prepareQuery(ctx context.Context) error {
 func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 	var (
 		nodes       = []*SysMenu{}
-		withFKs     = smq.withFKs
 		_spec       = smq.querySpec()
 		loadedTypes = [3]bool{
 			smq.withRole != nil,
@@ -428,12 +426,6 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 			smq.withChildes != nil,
 		}
 	)
-	if smq.withParent != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, sysmenu.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &SysMenu{config: smq.config}
 		nodes = append(nodes, node)
@@ -523,10 +515,7 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 		ids := make([]int64, 0, len(nodes))
 		nodeids := make(map[int64][]*SysMenu)
 		for i := range nodes {
-			if nodes[i].sys_menu_childes == nil {
-				continue
-			}
-			fk := *nodes[i].sys_menu_childes
+			fk := nodes[i].ParentId
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -540,7 +529,7 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_menu_childes" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "parentId" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Parent = n
@@ -556,7 +545,6 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Childes = []*SysMenu{}
 		}
-		query.withFKs = true
 		query.Where(predicate.SysMenu(func(s *sql.Selector) {
 			s.Where(sql.InValues(sysmenu.ChildesColumn, fks...))
 		}))
@@ -565,13 +553,10 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.sys_menu_childes
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "sys_menu_childes" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ParentId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "sys_menu_childes" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "parentId" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Childes = append(node.Edges.Childes, n)
 		}

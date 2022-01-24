@@ -111,7 +111,7 @@ func (r *authRepo) GetUserInfo(ctx context.Context, req *v1.GetUserInfoReq) (*v1
 			Value:    role.RoleKey,
 		})
 	}
-
+	reply.Result.Roles = rs
 	return reply, err
 }
 

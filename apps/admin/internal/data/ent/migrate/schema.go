@@ -264,7 +264,7 @@ var (
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
 		{Name: "update_by", Type: field.TypeInt64, Default: 0},
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
-		{Name: "sys_menu_childes", Type: field.TypeInt64, Nullable: true},
+		{Name: "parent_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SysMenusTable holds the schema information for the "sys_menus" table.
 	SysMenusTable = &schema.Table{

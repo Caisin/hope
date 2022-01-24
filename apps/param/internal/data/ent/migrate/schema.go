@@ -3,6 +3,21 @@
 package migrate
 
 import (
+	"hope/apps/param/internal/data/ent/novelpayconfig"
+	"hope/apps/param/internal/data/ent/noveltag"
+	"hope/apps/param/internal/data/ent/pageconfig"
+	"hope/apps/param/internal/data/ent/qiniuconfig"
+	"hope/apps/param/internal/data/ent/resourcegroup"
+	"hope/apps/param/internal/data/ent/resourcestorage"
+	"hope/apps/param/internal/data/ent/scoreproduct"
+	"hope/apps/param/internal/data/ent/task"
+	"hope/apps/param/internal/data/ent/useranalysisstatistics"
+	"hope/apps/param/internal/data/ent/userconsume"
+	"hope/apps/param/internal/data/ent/userresource"
+	"hope/apps/param/internal/data/ent/userresourcerecord"
+	"hope/apps/param/internal/data/ent/viptype"
+
+	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/dialect/sql/schema"
 	"entgo.io/ent/schema/field"
 )

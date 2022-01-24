@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysmenu"
@@ -25,6 +26,20 @@ type SysMenuUpdate struct {
 // Where appends a list predicates to the SysMenuUpdate builder.
 func (smu *SysMenuUpdate) Where(ps ...predicate.SysMenu) *SysMenuUpdate {
 	smu.mutation.Where(ps...)
+	return smu
+}
+
+// SetParentId sets the "parentId" field.
+func (smu *SysMenuUpdate) SetParentId(i int64) *SysMenuUpdate {
+	smu.mutation.SetParentId(i)
+	return smu
+}
+
+// SetNillableParentId sets the "parentId" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableParentId(i *int64) *SysMenuUpdate {
+	if i != nil {
+		smu.SetParentId(*i)
+	}
 	return smu
 }
 
@@ -425,14 +440,6 @@ func (smu *SysMenuUpdate) SetParentID(id int64) *SysMenuUpdate {
 	return smu
 }
 
-// SetNillableParentID sets the "parent" edge to the SysMenu entity by ID if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableParentID(id *int64) *SysMenuUpdate {
-	if id != nil {
-		smu = smu.SetParentID(*id)
-	}
-	return smu
-}
-
 // SetParent sets the "parent" edge to the SysMenu entity.
 func (smu *SysMenuUpdate) SetParent(s *SysMenu) *SysMenuUpdate {
 	return smu.SetParentID(s.ID)
@@ -514,12 +521,18 @@ func (smu *SysMenuUpdate) Save(ctx context.Context) (int, error) {
 	)
 	smu.defaults()
 	if len(smu.hooks) == 0 {
+		if err = smu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = smu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SysMenuMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = smu.check(); err != nil {
+				return 0, err
 			}
 			smu.mutation = mutation
 			affected, err = smu.sqlSave(ctx)
@@ -567,6 +580,14 @@ func (smu *SysMenuUpdate) defaults() {
 		v := sysmenu.UpdateDefaultUpdatedAt()
 		smu.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (smu *SysMenuUpdate) check() error {
+	if _, ok := smu.mutation.ParentID(); smu.mutation.ParentCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"parent\"")
+	}
+	return nil
 }
 
 func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -1000,6 +1021,20 @@ type SysMenuUpdateOne struct {
 	mutation *SysMenuMutation
 }
 
+// SetParentId sets the "parentId" field.
+func (smuo *SysMenuUpdateOne) SetParentId(i int64) *SysMenuUpdateOne {
+	smuo.mutation.SetParentId(i)
+	return smuo
+}
+
+// SetNillableParentId sets the "parentId" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableParentId(i *int64) *SysMenuUpdateOne {
+	if i != nil {
+		smuo.SetParentId(*i)
+	}
+	return smuo
+}
+
 // SetMenuName sets the "menuName" field.
 func (smuo *SysMenuUpdateOne) SetMenuName(s string) *SysMenuUpdateOne {
 	smuo.mutation.SetMenuName(s)
@@ -1397,14 +1432,6 @@ func (smuo *SysMenuUpdateOne) SetParentID(id int64) *SysMenuUpdateOne {
 	return smuo
 }
 
-// SetNillableParentID sets the "parent" edge to the SysMenu entity by ID if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableParentID(id *int64) *SysMenuUpdateOne {
-	if id != nil {
-		smuo = smuo.SetParentID(*id)
-	}
-	return smuo
-}
-
 // SetParent sets the "parent" edge to the SysMenu entity.
 func (smuo *SysMenuUpdateOne) SetParent(s *SysMenu) *SysMenuUpdateOne {
 	return smuo.SetParentID(s.ID)
@@ -1493,12 +1520,18 @@ func (smuo *SysMenuUpdateOne) Save(ctx context.Context) (*SysMenu, error) {
 	)
 	smuo.defaults()
 	if len(smuo.hooks) == 0 {
+		if err = smuo.check(); err != nil {
+			return nil, err
+		}
 		node, err = smuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SysMenuMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = smuo.check(); err != nil {
+				return nil, err
 			}
 			smuo.mutation = mutation
 			node, err = smuo.sqlSave(ctx)
@@ -1546,6 +1579,14 @@ func (smuo *SysMenuUpdateOne) defaults() {
 		v := sysmenu.UpdateDefaultUpdatedAt()
 		smuo.mutation.SetUpdatedAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (smuo *SysMenuUpdateOne) check() error {
+	if _, ok := smuo.mutation.ParentID(); smuo.mutation.ParentCleared() && !ok {
+		return errors.New("ent: clearing a required unique edge \"parent\"")
+	}
+	return nil
 }
 
 func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err error) {

@@ -243,26 +243,30 @@ func init() {
 	sysloginlog.DefaultTenantId = sysloginlogDescTenantId.Default.(int64)
 	sysmenuFields := schema.SysMenu{}.Fields()
 	_ = sysmenuFields
+	// sysmenuDescParentId is the schema descriptor for parentId field.
+	sysmenuDescParentId := sysmenuFields[0].Descriptor()
+	// sysmenu.DefaultParentId holds the default value on creation for the parentId field.
+	sysmenu.DefaultParentId = sysmenuDescParentId.Default.(int64)
 	// sysmenuDescCreatedAt is the schema descriptor for createdAt field.
-	sysmenuDescCreatedAt := sysmenuFields[15].Descriptor()
+	sysmenuDescCreatedAt := sysmenuFields[16].Descriptor()
 	// sysmenu.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	sysmenu.DefaultCreatedAt = sysmenuDescCreatedAt.Default.(func() time.Time)
 	// sysmenuDescUpdatedAt is the schema descriptor for updatedAt field.
-	sysmenuDescUpdatedAt := sysmenuFields[16].Descriptor()
+	sysmenuDescUpdatedAt := sysmenuFields[17].Descriptor()
 	// sysmenu.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	sysmenu.DefaultUpdatedAt = sysmenuDescUpdatedAt.Default.(func() time.Time)
 	// sysmenu.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	sysmenu.UpdateDefaultUpdatedAt = sysmenuDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysmenuDescCreateBy is the schema descriptor for createBy field.
-	sysmenuDescCreateBy := sysmenuFields[17].Descriptor()
+	sysmenuDescCreateBy := sysmenuFields[18].Descriptor()
 	// sysmenu.DefaultCreateBy holds the default value on creation for the createBy field.
 	sysmenu.DefaultCreateBy = sysmenuDescCreateBy.Default.(int64)
 	// sysmenuDescUpdateBy is the schema descriptor for updateBy field.
-	sysmenuDescUpdateBy := sysmenuFields[18].Descriptor()
+	sysmenuDescUpdateBy := sysmenuFields[19].Descriptor()
 	// sysmenu.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	sysmenu.DefaultUpdateBy = sysmenuDescUpdateBy.Default.(int64)
 	// sysmenuDescTenantId is the schema descriptor for tenantId field.
-	sysmenuDescTenantId := sysmenuFields[19].Descriptor()
+	sysmenuDescTenantId := sysmenuFields[20].Descriptor()
 	// sysmenu.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysmenu.DefaultTenantId = sysmenuDescTenantId.Default.(int64)
 	sysoperalogFields := schema.SysOperaLog{}.Fields()

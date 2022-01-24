@@ -61,46 +61,48 @@ service SysMenu {
 // 实体数据
 message SysMenuData {
     int64 id = 1;
+    //父菜单Id
+    int64 parentId = 2;
     //菜单名
-    string menuName = 2;
+    string menuName = 3;
     //菜单标题
-    string title = 3;
+    string title = 4;
     //图标
-    string icon = 4;
+    string icon = 5;
     //路径
-    string path = 5;
+    string path = 6;
     //多级路径
-    string paths = 6;
-    //M-目录C-菜单F-按钮
-    string menuType = 7;
+    string paths = 7;
+    //D-目录M-菜单F-按钮
+    string menuType = 8;
     //
-    string action = 8;
+    string action = 9;
     //权限
-    string permission = 9;
+    string permission = 10;
     //无缓存
-    bool noCache = 10;
+    bool noCache = 11;
     //面包屑
-    string breadcrumb = 11;
+    string breadcrumb = 12;
     //组件
-    string component = 12;
+    string component = 13;
     //排序
-    int32 sort = 13;
+    int32 sort = 14;
     //是否可见
-    bool visible = 14;
+    bool visible = 15;
     //是否外链1是0否
-    bool isFrame = 15;
+    bool isFrame = 16;
     //
-    string sysApi = 16;
+    string sysApi = 17;
     //创建时间
-    google.protobuf.Timestamp createdAt = 17;
+    google.protobuf.Timestamp createdAt = 18;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
+    google.protobuf.Timestamp updatedAt = 19;
     //创建者
-    int64 createBy = 19;
+    int64 createBy = 20;
     //更新者
-    int64 updateBy = 20;
+    int64 updateBy = 21;
     //租户
-    int64 tenantId = 21;
+    int64 tenantId = 22;
 
 }
 
@@ -128,6 +130,65 @@ message SysMenuPageReply {
 // 查询搜索请求
 message SysMenuReq {
     int64 id = 1;
+    //父菜单Id
+    int64 parentId = 2;
+    //菜单名
+    string menuName = 3;
+    //菜单标题
+    string title = 4;
+    //图标
+    string icon = 5;
+    //路径
+    string path = 6;
+    //多级路径
+    string paths = 7;
+    //D-目录M-菜单F-按钮
+    string menuType = 8;
+    //
+    string action = 9;
+    //权限
+    string permission = 10;
+    //无缓存
+    bool noCache = 11;
+    //面包屑
+    string breadcrumb = 12;
+    //组件
+    string component = 13;
+    //排序
+    int32 sort = 14;
+    //是否可见
+    bool visible = 15;
+    //是否外链1是0否
+    bool isFrame = 16;
+    //
+    string sysApi = 17;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 18;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 19;
+    //创建者
+    int64 createBy = 20;
+    //更新者
+    int64 updateBy = 21;
+    //租户
+    int64 tenantId = 22;
+
+}
+
+// 查询返回
+message SysMenuReply {
+    // 返回码
+    int64 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysMenuData result = 3;
+}
+
+// 创建SysMenu请求
+message SysMenuCreateReq {
+    //父菜单Id
+    int64 parentId = 1;
     //菜单名
     string menuName = 2;
     //菜单标题
@@ -138,7 +199,7 @@ message SysMenuReq {
     string path = 5;
     //多级路径
     string paths = 6;
-    //M-目录C-菜单F-按钮
+    //D-目录M-菜单F-按钮
     string menuType = 7;
     //
     string action = 8;
@@ -158,61 +219,6 @@ message SysMenuReq {
     bool isFrame = 15;
     //
     string sysApi = 16;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 17;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
-    //创建者
-    int64 createBy = 19;
-    //更新者
-    int64 updateBy = 20;
-    //租户
-    int64 tenantId = 21;
-
-}
-
-// 查询返回
-message SysMenuReply {
-    // 返回码
-    int64 code = 1;
-    // 消息
-    string message = 2;
-    // 结果数据
-    SysMenuData result = 3;
-}
-
-// 创建SysMenu请求
-message SysMenuCreateReq {
-    //菜单名
-    string menuName = 1;
-    //菜单标题
-    string title = 2;
-    //图标
-    string icon = 3;
-    //路径
-    string path = 4;
-    //多级路径
-    string paths = 5;
-    //M-目录C-菜单F-按钮
-    string menuType = 6;
-    //
-    string action = 7;
-    //权限
-    string permission = 8;
-    //无缓存
-    bool noCache = 9;
-    //面包屑
-    string breadcrumb = 10;
-    //组件
-    string component = 11;
-    //排序
-    int32 sort = 12;
-    //是否可见
-    bool visible = 13;
-    //是否外链1是0否
-    bool isFrame = 14;
-    //
-    string sysApi = 15;
 
 }
 
@@ -229,36 +235,38 @@ message SysMenuCreateReply {
 // 更新SysMenu请求
 message SysMenuUpdateReq {
     int64 id = 1;
+    //父菜单Id
+    int64 parentId = 2;
     //菜单名
-    string menuName = 2;
+    string menuName = 3;
     //菜单标题
-    string title = 3;
+    string title = 4;
     //图标
-    string icon = 4;
+    string icon = 5;
     //路径
-    string path = 5;
+    string path = 6;
     //多级路径
-    string paths = 6;
-    //M-目录C-菜单F-按钮
-    string menuType = 7;
+    string paths = 7;
+    //D-目录M-菜单F-按钮
+    string menuType = 8;
     //
-    string action = 8;
+    string action = 9;
     //权限
-    string permission = 9;
+    string permission = 10;
     //无缓存
-    bool noCache = 10;
+    bool noCache = 11;
     //面包屑
-    string breadcrumb = 11;
+    string breadcrumb = 12;
     //组件
-    string component = 12;
+    string component = 13;
     //排序
-    int32 sort = 13;
+    int32 sort = 14;
     //是否可见
-    bool visible = 14;
+    bool visible = 15;
     //是否外链1是0否
-    bool isFrame = 15;
+    bool isFrame = 16;
     //
-    string sysApi = 16;
+    string sysApi = 17;
 
 }
 

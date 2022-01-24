@@ -26,6 +26,10 @@ type AuthClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginReply, error)
 	// 退出登陆
 	LogOut(ctx context.Context, in *LogOutReq, opts ...grpc.CallOption) (*LogOutReply, error)
+	// 获取用户信息
+	GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*LoginReply, error)
+	// 获取用户权限编码
+	GetPermCode(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error)
 }
 
 type authClient struct {
@@ -54,6 +58,24 @@ func (c *authClient) LogOut(ctx context.Context, in *LogOutReq, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *authClient) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*LoginReply, error) {
+	out := new(LoginReply)
+	err := c.cc.Invoke(ctx, "/sysuser.v1.Auth/GetUserInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) GetPermCode(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error) {
+	out := new(GetPermReply)
+	err := c.cc.Invoke(ctx, "/sysuser.v1.Auth/GetPermCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
@@ -62,6 +84,10 @@ type AuthServer interface {
 	Login(context.Context, *LoginReq) (*LoginReply, error)
 	// 退出登陆
 	LogOut(context.Context, *LogOutReq) (*LogOutReply, error)
+	// 获取用户信息
+	GetUserInfo(context.Context, *GetUserInfoReq) (*LoginReply, error)
+	// 获取用户权限编码
+	GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -74,6 +100,12 @@ func (UnimplementedAuthServer) Login(context.Context, *LoginReq) (*LoginReply, e
 }
 func (UnimplementedAuthServer) LogOut(context.Context, *LogOutReq) (*LogOutReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LogOut not implemented")
+}
+func (UnimplementedAuthServer) GetUserInfo(context.Context, *GetUserInfoReq) (*LoginReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfo not implemented")
+}
+func (UnimplementedAuthServer) GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPermCode not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -124,6 +156,42 @@ func _Auth_LogOut_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysuser.v1.Auth/GetUserInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetUserInfo(ctx, req.(*GetUserInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_GetPermCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPermReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetPermCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysuser.v1.Auth/GetPermCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetPermCode(ctx, req.(*GetPermReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -138,6 +206,14 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LogOut",
 			Handler:    _Auth_LogOut_Handler,
+		},
+		{
+			MethodName: "GetUserInfo",
+			Handler:    _Auth_GetUserInfo_Handler,
+		},
+		{
+			MethodName: "GetPermCode",
+			Handler:    _Auth_GetPermCode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

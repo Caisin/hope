@@ -25,6 +25,20 @@ service Auth {
     };
   }
 
+  // 获取用户信息
+  rpc GetUserInfo (GetUserInfoReq) returns (LoginReply)  {
+    option (google.api.http) = {
+      get: "/v1/sys/auth/getUserInfo"
+    };
+  }
+
+  // 获取用户权限编码
+  rpc GetPermCode (GetPermReq) returns (GetPermReply)  {
+    option (google.api.http) = {
+      get: "/v1/sys/auth/getUserInfo"
+    };
+  }
+
 }
 
 //登陆请求
@@ -69,8 +83,27 @@ message LoginReply{
   UserInfo result = 3;
 }
 //退出登录请求
+message GetUserInfoReq{
+
+}
+//退出登录请求
 message LogOutReq{
 
+}
+
+//获取权限请求
+message GetPermReq{
+
+}
+
+//获取权限请求
+message GetPermReply{
+  // 返回码
+  int64 code = 1;
+  // 消息
+  string message = 2;
+  //权限编码列表
+  repeated string result = 3;
 }
 //退出登录返回
 message LogOutReply{

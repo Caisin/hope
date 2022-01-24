@@ -16,6 +16,29 @@
     "application/json"
   ],
   "paths": {
+    "/v1/sys/auth/getUserInfo": {
+      "get": {
+        "summary": "获取用户权限编码",
+        "operationId": "Auth_GetPermCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPermReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
     "/v1/sys/auth/login": {
       "post": {
         "summary": "用户登陆",
@@ -164,6 +187,28 @@
           }
         }
       }
+    },
+    "v1GetPermReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "format": "int64",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "权限编码列表"
+        }
+      },
+      "title": "获取权限请求"
     },
     "v1LogOutReply": {
       "type": "object",

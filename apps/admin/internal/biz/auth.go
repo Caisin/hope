@@ -9,6 +9,8 @@ import (
 type AuthRepo interface {
 	Login(context.Context, *v1.LoginReq) (*v1.LoginReply, error)
 	Logout(context.Context, *v1.LogOutReq) error
+	GetUserInfo(context.Context, *v1.GetUserInfoReq) (*v1.LoginReply, error)
+	GetPermCode(context.Context, *v1.GetPermReq) (*v1.GetPermReply, error)
 }
 
 type AuthUseCase struct {
@@ -25,4 +27,12 @@ func (uc *AuthUseCase) Login(ctx context.Context, req *v1.LoginReq) (*v1.LoginRe
 }
 func (uc *AuthUseCase) Logout(ctx context.Context, req *v1.LogOutReq) error {
 	return uc.repo.Logout(ctx, req)
+}
+
+func (uc *AuthUseCase) GetUserInfo(ctx context.Context, req *v1.GetUserInfoReq) (*v1.LoginReply, error) {
+	return uc.repo.GetUserInfo(ctx, req)
+}
+
+func (uc *AuthUseCase) GetPermCode(ctx context.Context, req *v1.GetPermReq) (*v1.GetPermReply, error) {
+	return uc.repo.GetPermCode(ctx, req)
 }

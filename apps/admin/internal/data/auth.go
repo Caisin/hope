@@ -16,31 +16,21 @@ import (
 type authRepo struct {
 	data *Data
 	log  *log.Helper
-	ur   *sysUserRepo
-	rr   *sysRoleRepo
 }
 
 // NewAuthRepo .
 func NewAuthRepo(
 	data *Data,
-	ur *sysUserRepo,
-	rr *sysRoleRepo,
 	logger log.Logger,
 ) biz.AuthRepo {
 	return &authRepo{
 		data: data,
 		log:  log.NewHelper(logger),
-		ur:   ur,
-		rr:   rr,
 	}
 }
 
 // Login 登陆
 func (r *authRepo) Login(ctx context.Context, req *v1.LoginReq) (*v1.LoginReply, error) {
-	claims, err := auth.GetClaims(ctx)
-	if err != nil {
-		return nil, err
-	}
 	username := req.Username
 	user, err := r.data.db.SysUser.Query().Where(sysuser.Username(username)).First(ctx)
 	if err != nil {
@@ -54,7 +44,7 @@ func (r *authRepo) Login(ctx context.Context, req *v1.LoginReq) (*v1.LoginReply,
 	if err != nil {
 		return nil, err
 	}
-	claims = &auth.Claims{
+	claims := &auth.Claims{
 		UserId:   user.ID,
 		Avatar:   user.Avatar,
 		TenantId: 1,
@@ -62,7 +52,7 @@ func (r *authRepo) Login(ctx context.Context, req *v1.LoginReq) (*v1.LoginReply,
 	claims.ExpiresAt = time.Now().Add(72 * time.Hour).UnixNano()
 	claims.Id = cast.ToString(user.ID)
 	claims.Subject = user.Username
-	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(auth.JwtKey)
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(auth.JwtKey))
 	if err != nil {
 		return nil, err
 	}

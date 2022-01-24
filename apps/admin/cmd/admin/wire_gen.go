@@ -9,6 +9,7 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/prometheus/client_golang/prometheus"
 	"hope/apps/admin/internal/biz"
 	"hope/apps/admin/internal/conf"
 	"hope/apps/admin/internal/data"
@@ -19,7 +20,7 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
+func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, histogramVec *prometheus.HistogramVec, counterVec *prometheus.CounterVec) (*kratos.App, func(), error) {
 	client := data.NewEntClient(confData, logger)
 	redisClient := data.NewRedisClient(confData, logger)
 	dataData, cleanup, err := data.NewData(client, redisClient, logger)
@@ -68,10 +69,13 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	sysUserRepo := data.NewSysUserRepo(dataData, logger)
 	sysUserUseCase := biz.NewSysUserUseCase(sysUserRepo, logger)
 	sysUserService := service.NewSysUserService(sysUserUseCase, logger)
-	v := server.RegisterHTTPServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService)
-	httpServer := server.NewHTTPServer(confServer, v, logger)
-	v2 := server.RegisterGRPCServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService)
-	grpcServer := server.NewGRPCServer(confServer, v2, logger)
+	authRepo := data.NewAuthRepo(dataData, logger)
+	authUseCase := biz.NewAuthUseCase(authRepo, logger)
+	authService := service.NewAuthService(authUseCase, logger)
+	v := server.RegisterHTTPServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService, authService)
+	httpServer := server.NewHTTPServer(confServer, v, logger, histogramVec, counterVec)
+	v2 := server.RegisterGRPCServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService, authService)
+	grpcServer := server.NewGRPCServer(confServer, v2, logger, histogramVec, counterVec)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()

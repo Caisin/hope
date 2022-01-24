@@ -48,8 +48,8 @@ func (SysMenu) Fields() []ent.Field {
 			Comment(`排序`),
 		field.Bool("hideMenu").Optional().
 			Comment(`影藏菜单`),
-		field.Bool("isFrame").Optional().
-			Comment(`是否外链1是0否`),
+		field.String("frameSrc").Optional().
+			Comment(`外链地址`),
 	}
 	fields = append(fields, mixin.Fields()...)
 	return fields

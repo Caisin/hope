@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"hope/pkg/file"
 	"hope/pkg/util/str"
-	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -101,7 +100,6 @@ func main() {
 			fields := sc.Fields
 			name := sc.Name
 			//sc.Name
-			log.Printf("%v", fields)
 			m := make(map[string]interface{})
 			m["model"] = prod
 			m["name"] = name

@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package sysoperalog.v1;
 
 import "google/api/annotations.proto";
@@ -131,7 +132,7 @@ message SysOperaLogPageReq {
 // 查询搜索返回
 message SysOperaLogPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -206,7 +207,7 @@ message SysOperaLogReq {
 // 查询返回
 message SysOperaLogReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -267,7 +268,7 @@ message SysOperaLogCreateReq {
 // 创建SysOperaLog返回
 message SysOperaLogCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -330,7 +331,7 @@ message SysOperaLogUpdateReq {
 // 更新SysOperaLog返回
 message SysOperaLogUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -352,7 +353,7 @@ message SysOperaLogBatchDeleteReq {
 // 删除SysOperaLog返回
 message SysOperaLogDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

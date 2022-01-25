@@ -8,6 +8,7 @@ import (
 	"hope/apps/param/internal/data/ent/novelpayconfig"
 	"hope/apps/param/internal/data/ent/noveltag"
 	"hope/apps/param/internal/data/ent/pageconfig"
+	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/qiniuconfig"
 	"hope/apps/param/internal/data/ent/resourcegroup"
 	"hope/apps/param/internal/data/ent/resourcestorage"
@@ -19,6 +20,7 @@ import (
 	"hope/apps/param/internal/data/ent/userresourcerecord"
 	"hope/apps/param/internal/data/ent/viptype"
 	"sync"
+	"time"
 
 	"entgo.io/ent"
 )

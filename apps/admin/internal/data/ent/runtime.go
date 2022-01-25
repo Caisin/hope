@@ -248,25 +248,25 @@ func init() {
 	// sysmenu.DefaultParentId holds the default value on creation for the parentId field.
 	sysmenu.DefaultParentId = sysmenuDescParentId.Default.(int64)
 	// sysmenuDescCreatedAt is the schema descriptor for createdAt field.
-	sysmenuDescCreatedAt := sysmenuFields[16].Descriptor()
+	sysmenuDescCreatedAt := sysmenuFields[17].Descriptor()
 	// sysmenu.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	sysmenu.DefaultCreatedAt = sysmenuDescCreatedAt.Default.(func() time.Time)
 	// sysmenuDescUpdatedAt is the schema descriptor for updatedAt field.
-	sysmenuDescUpdatedAt := sysmenuFields[17].Descriptor()
+	sysmenuDescUpdatedAt := sysmenuFields[18].Descriptor()
 	// sysmenu.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	sysmenu.DefaultUpdatedAt = sysmenuDescUpdatedAt.Default.(func() time.Time)
 	// sysmenu.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	sysmenu.UpdateDefaultUpdatedAt = sysmenuDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysmenuDescCreateBy is the schema descriptor for createBy field.
-	sysmenuDescCreateBy := sysmenuFields[18].Descriptor()
+	sysmenuDescCreateBy := sysmenuFields[19].Descriptor()
 	// sysmenu.DefaultCreateBy holds the default value on creation for the createBy field.
 	sysmenu.DefaultCreateBy = sysmenuDescCreateBy.Default.(int64)
 	// sysmenuDescUpdateBy is the schema descriptor for updateBy field.
-	sysmenuDescUpdateBy := sysmenuFields[19].Descriptor()
+	sysmenuDescUpdateBy := sysmenuFields[20].Descriptor()
 	// sysmenu.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	sysmenu.DefaultUpdateBy = sysmenuDescUpdateBy.Default.(int64)
 	// sysmenuDescTenantId is the schema descriptor for tenantId field.
-	sysmenuDescTenantId := sysmenuFields[20].Descriptor()
+	sysmenuDescTenantId := sysmenuFields[21].Descriptor()
 	// sysmenu.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysmenu.DefaultTenantId = sysmenuDescTenantId.Default.(int64)
 	sysoperalogFields := schema.SysOperaLog{}.Fields()
@@ -344,25 +344,25 @@ func init() {
 	sysuserFields := schema.SysUser{}.Fields()
 	_ = sysuserFields
 	// sysuserDescCreatedAt is the schema descriptor for createdAt field.
-	sysuserDescCreatedAt := sysuserFields[15].Descriptor()
+	sysuserDescCreatedAt := sysuserFields[14].Descriptor()
 	// sysuser.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	sysuser.DefaultCreatedAt = sysuserDescCreatedAt.Default.(func() time.Time)
 	// sysuserDescUpdatedAt is the schema descriptor for updatedAt field.
-	sysuserDescUpdatedAt := sysuserFields[16].Descriptor()
+	sysuserDescUpdatedAt := sysuserFields[15].Descriptor()
 	// sysuser.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	sysuser.DefaultUpdatedAt = sysuserDescUpdatedAt.Default.(func() time.Time)
 	// sysuser.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	sysuser.UpdateDefaultUpdatedAt = sysuserDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysuserDescCreateBy is the schema descriptor for createBy field.
-	sysuserDescCreateBy := sysuserFields[17].Descriptor()
+	sysuserDescCreateBy := sysuserFields[16].Descriptor()
 	// sysuser.DefaultCreateBy holds the default value on creation for the createBy field.
 	sysuser.DefaultCreateBy = sysuserDescCreateBy.Default.(int64)
 	// sysuserDescUpdateBy is the schema descriptor for updateBy field.
-	sysuserDescUpdateBy := sysuserFields[18].Descriptor()
+	sysuserDescUpdateBy := sysuserFields[17].Descriptor()
 	// sysuser.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	sysuser.DefaultUpdateBy = sysuserDescUpdateBy.Default.(int64)
 	// sysuserDescTenantId is the schema descriptor for tenantId field.
-	sysuserDescTenantId := sysuserFields[19].Descriptor()
+	sysuserDescTenantId := sysuserFields[18].Descriptor()
 	// sysuser.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysuser.DefaultTenantId = sysuserDescTenantId.Default.(int64)
 }

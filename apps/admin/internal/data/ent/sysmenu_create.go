@@ -35,17 +35,9 @@ func (smc *SysMenuCreate) SetNillableParentId(i *int64) *SysMenuCreate {
 	return smc
 }
 
-// SetMenuName sets the "menuName" field.
-func (smc *SysMenuCreate) SetMenuName(s string) *SysMenuCreate {
-	smc.mutation.SetMenuName(s)
-	return smc
-}
-
-// SetNillableMenuName sets the "menuName" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableMenuName(s *string) *SysMenuCreate {
-	if s != nil {
-		smc.SetMenuName(*s)
-	}
+// SetName sets the "name" field.
+func (smc *SysMenuCreate) SetName(s string) *SysMenuCreate {
+	smc.mutation.SetName(s)
 	return smc
 }
 
@@ -55,10 +47,16 @@ func (smc *SysMenuCreate) SetTitle(s string) *SysMenuCreate {
 	return smc
 }
 
-// SetNillableTitle sets the "title" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableTitle(s *string) *SysMenuCreate {
+// SetRedirect sets the "redirect" field.
+func (smc *SysMenuCreate) SetRedirect(s string) *SysMenuCreate {
+	smc.mutation.SetRedirect(s)
+	return smc
+}
+
+// SetNillableRedirect sets the "redirect" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableRedirect(s *string) *SysMenuCreate {
 	if s != nil {
-		smc.SetTitle(*s)
+		smc.SetRedirect(*s)
 	}
 	return smc
 }
@@ -147,30 +145,44 @@ func (smc *SysMenuCreate) SetNillablePermission(s *string) *SysMenuCreate {
 	return smc
 }
 
-// SetNoCache sets the "noCache" field.
-func (smc *SysMenuCreate) SetNoCache(b bool) *SysMenuCreate {
-	smc.mutation.SetNoCache(b)
+// SetIgnoreKeepAlive sets the "ignoreKeepAlive" field.
+func (smc *SysMenuCreate) SetIgnoreKeepAlive(b bool) *SysMenuCreate {
+	smc.mutation.SetIgnoreKeepAlive(b)
 	return smc
 }
 
-// SetNillableNoCache sets the "noCache" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableNoCache(b *bool) *SysMenuCreate {
+// SetNillableIgnoreKeepAlive sets the "ignoreKeepAlive" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableIgnoreKeepAlive(b *bool) *SysMenuCreate {
 	if b != nil {
-		smc.SetNoCache(*b)
+		smc.SetIgnoreKeepAlive(*b)
 	}
 	return smc
 }
 
-// SetBreadcrumb sets the "breadcrumb" field.
-func (smc *SysMenuCreate) SetBreadcrumb(s string) *SysMenuCreate {
-	smc.mutation.SetBreadcrumb(s)
+// SetHideBreadcrumb sets the "hideBreadcrumb" field.
+func (smc *SysMenuCreate) SetHideBreadcrumb(b bool) *SysMenuCreate {
+	smc.mutation.SetHideBreadcrumb(b)
 	return smc
 }
 
-// SetNillableBreadcrumb sets the "breadcrumb" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableBreadcrumb(s *string) *SysMenuCreate {
-	if s != nil {
-		smc.SetBreadcrumb(*s)
+// SetNillableHideBreadcrumb sets the "hideBreadcrumb" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableHideBreadcrumb(b *bool) *SysMenuCreate {
+	if b != nil {
+		smc.SetHideBreadcrumb(*b)
+	}
+	return smc
+}
+
+// SetHideChildrenInMenu sets the "hideChildrenInMenu" field.
+func (smc *SysMenuCreate) SetHideChildrenInMenu(b bool) *SysMenuCreate {
+	smc.mutation.SetHideChildrenInMenu(b)
+	return smc
+}
+
+// SetNillableHideChildrenInMenu sets the "hideChildrenInMenu" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableHideChildrenInMenu(b *bool) *SysMenuCreate {
+	if b != nil {
+		smc.SetHideChildrenInMenu(*b)
 	}
 	return smc
 }
@@ -203,44 +215,30 @@ func (smc *SysMenuCreate) SetNillableSort(i *int32) *SysMenuCreate {
 	return smc
 }
 
-// SetVisible sets the "visible" field.
-func (smc *SysMenuCreate) SetVisible(b bool) *SysMenuCreate {
-	smc.mutation.SetVisible(b)
+// SetHideMenu sets the "hideMenu" field.
+func (smc *SysMenuCreate) SetHideMenu(b bool) *SysMenuCreate {
+	smc.mutation.SetHideMenu(b)
 	return smc
 }
 
-// SetNillableVisible sets the "visible" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableVisible(b *bool) *SysMenuCreate {
+// SetNillableHideMenu sets the "hideMenu" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableHideMenu(b *bool) *SysMenuCreate {
 	if b != nil {
-		smc.SetVisible(*b)
+		smc.SetHideMenu(*b)
 	}
 	return smc
 }
 
-// SetIsFrame sets the "isFrame" field.
-func (smc *SysMenuCreate) SetIsFrame(b bool) *SysMenuCreate {
-	smc.mutation.SetIsFrame(b)
+// SetFrameSrc sets the "frameSrc" field.
+func (smc *SysMenuCreate) SetFrameSrc(s string) *SysMenuCreate {
+	smc.mutation.SetFrameSrc(s)
 	return smc
 }
 
-// SetNillableIsFrame sets the "isFrame" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableIsFrame(b *bool) *SysMenuCreate {
-	if b != nil {
-		smc.SetIsFrame(*b)
-	}
-	return smc
-}
-
-// SetSysApi sets the "sysApi" field.
-func (smc *SysMenuCreate) SetSysApi(s string) *SysMenuCreate {
-	smc.mutation.SetSysApi(s)
-	return smc
-}
-
-// SetNillableSysApi sets the "sysApi" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableSysApi(s *string) *SysMenuCreate {
+// SetNillableFrameSrc sets the "frameSrc" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableFrameSrc(s *string) *SysMenuCreate {
 	if s != nil {
-		smc.SetSysApi(*s)
+		smc.SetFrameSrc(*s)
 	}
 	return smc
 }
@@ -341,19 +339,19 @@ func (smc *SysMenuCreate) SetParent(s *SysMenu) *SysMenuCreate {
 	return smc.SetParentID(s.ID)
 }
 
-// AddChildeIDs adds the "childes" edge to the SysMenu entity by IDs.
-func (smc *SysMenuCreate) AddChildeIDs(ids ...int64) *SysMenuCreate {
-	smc.mutation.AddChildeIDs(ids...)
+// AddChildIDs adds the "children" edge to the SysMenu entity by IDs.
+func (smc *SysMenuCreate) AddChildIDs(ids ...int64) *SysMenuCreate {
+	smc.mutation.AddChildIDs(ids...)
 	return smc
 }
 
-// AddChildes adds the "childes" edges to the SysMenu entity.
-func (smc *SysMenuCreate) AddChildes(s ...*SysMenu) *SysMenuCreate {
+// AddChildren adds the "children" edges to the SysMenu entity.
+func (smc *SysMenuCreate) AddChildren(s ...*SysMenu) *SysMenuCreate {
 	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return smc.AddChildeIDs(ids...)
+	return smc.AddChildIDs(ids...)
 }
 
 // Mutation returns the SysMenuMutation object of the builder.
@@ -458,6 +456,12 @@ func (smc *SysMenuCreate) check() error {
 	if _, ok := smc.mutation.ParentId(); !ok {
 		return &ValidationError{Name: "parentId", err: errors.New(`ent: missing required field "parentId"`)}
 	}
+	if _, ok := smc.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "name"`)}
+	}
+	if _, ok := smc.mutation.Title(); !ok {
+		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "title"`)}
+	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
 	}
@@ -503,13 +507,13 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := smc.mutation.MenuName(); ok {
+	if value, ok := smc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysmenu.FieldMenuName,
+			Column: sysmenu.FieldName,
 		})
-		_node.MenuName = value
+		_node.Name = value
 	}
 	if value, ok := smc.mutation.Title(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -518,6 +522,14 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 			Column: sysmenu.FieldTitle,
 		})
 		_node.Title = value
+	}
+	if value, ok := smc.mutation.Redirect(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysmenu.FieldRedirect,
+		})
+		_node.Redirect = value
 	}
 	if value, ok := smc.mutation.Icon(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -567,21 +579,29 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		})
 		_node.Permission = value
 	}
-	if value, ok := smc.mutation.NoCache(); ok {
+	if value, ok := smc.mutation.IgnoreKeepAlive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldNoCache,
+			Column: sysmenu.FieldIgnoreKeepAlive,
 		})
-		_node.NoCache = value
+		_node.IgnoreKeepAlive = value
 	}
-	if value, ok := smc.mutation.Breadcrumb(); ok {
+	if value, ok := smc.mutation.HideBreadcrumb(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldBreadcrumb,
+			Column: sysmenu.FieldHideBreadcrumb,
 		})
-		_node.Breadcrumb = value
+		_node.HideBreadcrumb = value
+	}
+	if value, ok := smc.mutation.HideChildrenInMenu(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldHideChildrenInMenu,
+		})
+		_node.HideChildrenInMenu = value
 	}
 	if value, ok := smc.mutation.Component(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -599,29 +619,21 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		})
 		_node.Sort = value
 	}
-	if value, ok := smc.mutation.Visible(); ok {
+	if value, ok := smc.mutation.HideMenu(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldVisible,
+			Column: sysmenu.FieldHideMenu,
 		})
-		_node.Visible = value
+		_node.HideMenu = value
 	}
-	if value, ok := smc.mutation.IsFrame(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsFrame,
-		})
-		_node.IsFrame = value
-	}
-	if value, ok := smc.mutation.SysApi(); ok {
+	if value, ok := smc.mutation.FrameSrc(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysmenu.FieldSysApi,
+			Column: sysmenu.FieldFrameSrc,
 		})
-		_node.SysApi = value
+		_node.FrameSrc = value
 	}
 	if value, ok := smc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -702,12 +714,12 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		_node.ParentId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := smc.mutation.ChildesIDs(); len(nodes) > 0 {
+	if nodes := smc.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   sysmenu.ChildesTable,
-			Columns: []string{sysmenu.ChildesColumn},
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

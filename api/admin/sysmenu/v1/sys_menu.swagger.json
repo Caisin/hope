@@ -148,7 +148,15 @@
             "format": "int64"
           },
           {
-            "name": "param.menuName",
+            "name": "param.parentId",
+            "description": "父菜单Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "param.name",
             "description": "菜单名.",
             "in": "query",
             "required": false,
@@ -157,6 +165,13 @@
           {
             "name": "param.title",
             "description": "菜单标题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.redirect",
+            "description": "跳转路径.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -184,7 +199,7 @@
           },
           {
             "name": "param.menuType",
-            "description": "M-目录C-菜单F-按钮.",
+            "description": "D-目录M-菜单F-按钮.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -203,18 +218,25 @@
             "type": "string"
           },
           {
-            "name": "param.noCache",
-            "description": "无缓存.",
+            "name": "param.ignoreKeepAlive",
+            "description": "不缓存.",
             "in": "query",
             "required": false,
             "type": "boolean"
           },
           {
-            "name": "param.breadcrumb",
-            "description": "面包屑.",
+            "name": "param.hideBreadcrumb",
+            "description": "隐藏面包屑.",
             "in": "query",
             "required": false,
-            "type": "string"
+            "type": "boolean"
+          },
+          {
+            "name": "param.hideChildrenInMenu",
+            "description": "隐藏子菜单.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           },
           {
             "name": "param.component",
@@ -232,21 +254,15 @@
             "format": "int32"
           },
           {
-            "name": "param.visible",
-            "description": "是否可见.",
+            "name": "param.hideMenu",
+            "description": "影藏菜单.",
             "in": "query",
             "required": false,
             "type": "boolean"
           },
           {
-            "name": "param.isFrame",
-            "description": "是否外链1是0否.",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "name": "param.sysApi",
+            "name": "param.frameSrc",
+            "description": "外链地址.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -324,7 +340,15 @@
             "format": "int64"
           },
           {
-            "name": "menuName",
+            "name": "parentId",
+            "description": "父菜单Id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "name",
             "description": "菜单名.",
             "in": "query",
             "required": false,
@@ -333,6 +357,13 @@
           {
             "name": "title",
             "description": "菜单标题.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "redirect",
+            "description": "跳转路径.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -360,7 +391,7 @@
           },
           {
             "name": "menuType",
-            "description": "M-目录C-菜单F-按钮.",
+            "description": "D-目录M-菜单F-按钮.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -379,18 +410,25 @@
             "type": "string"
           },
           {
-            "name": "noCache",
-            "description": "无缓存.",
+            "name": "ignoreKeepAlive",
+            "description": "不缓存.",
             "in": "query",
             "required": false,
             "type": "boolean"
           },
           {
-            "name": "breadcrumb",
-            "description": "面包屑.",
+            "name": "hideBreadcrumb",
+            "description": "隐藏面包屑.",
             "in": "query",
             "required": false,
-            "type": "string"
+            "type": "boolean"
+          },
+          {
+            "name": "hideChildrenInMenu",
+            "description": "隐藏子菜单.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           },
           {
             "name": "component",
@@ -408,21 +446,15 @@
             "format": "int32"
           },
           {
-            "name": "visible",
-            "description": "是否可见.",
+            "name": "hideMenu",
+            "description": "影藏菜单.",
             "in": "query",
             "required": false,
             "type": "boolean"
           },
           {
-            "name": "isFrame",
-            "description": "是否外链1是0否.",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "name": "sysApi",
+            "name": "frameSrc",
+            "description": "外链地址.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -534,13 +566,22 @@
             "schema": {
               "type": "object",
               "properties": {
-                "menuName": {
+                "parentId": {
+                  "type": "string",
+                  "format": "int64",
+                  "title": "父菜单Id"
+                },
+                "name": {
                   "type": "string",
                   "title": "菜单名"
                 },
                 "title": {
                   "type": "string",
                   "title": "菜单标题"
+                },
+                "redirect": {
+                  "type": "string",
+                  "title": "跳转路径"
                 },
                 "icon": {
                   "type": "string",
@@ -556,7 +597,7 @@
                 },
                 "menuType": {
                   "type": "string",
-                  "title": "M-目录C-菜单F-按钮"
+                  "title": "D-目录M-菜单F-按钮"
                 },
                 "action": {
                   "type": "string"
@@ -565,13 +606,17 @@
                   "type": "string",
                   "title": "权限"
                 },
-                "noCache": {
+                "ignoreKeepAlive": {
                   "type": "boolean",
-                  "title": "无缓存"
+                  "title": "不缓存"
                 },
-                "breadcrumb": {
-                  "type": "string",
-                  "title": "面包屑"
+                "hideBreadcrumb": {
+                  "type": "boolean",
+                  "title": "隐藏面包屑"
+                },
+                "hideChildrenInMenu": {
+                  "type": "boolean",
+                  "title": "隐藏子菜单"
                 },
                 "component": {
                   "type": "string",
@@ -582,16 +627,13 @@
                   "format": "int32",
                   "title": "排序"
                 },
-                "visible": {
+                "hideMenu": {
                   "type": "boolean",
-                  "title": "是否可见"
+                  "title": "影藏菜单"
                 },
-                "isFrame": {
-                  "type": "boolean",
-                  "title": "是否外链1是0否"
-                },
-                "sysApi": {
-                  "type": "string"
+                "frameSrc": {
+                  "type": "string",
+                  "title": "外链地址"
                 }
               },
               "title": "更新SysMenu请求"
@@ -683,13 +725,22 @@
     "v1SysMenuCreateReq": {
       "type": "object",
       "properties": {
-        "menuName": {
+        "parentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "父菜单Id"
+        },
+        "name": {
           "type": "string",
           "title": "菜单名"
         },
         "title": {
           "type": "string",
           "title": "菜单标题"
+        },
+        "redirect": {
+          "type": "string",
+          "title": "跳转路径"
         },
         "icon": {
           "type": "string",
@@ -705,7 +756,7 @@
         },
         "menuType": {
           "type": "string",
-          "title": "M-目录C-菜单F-按钮"
+          "title": "D-目录M-菜单F-按钮"
         },
         "action": {
           "type": "string"
@@ -714,13 +765,17 @@
           "type": "string",
           "title": "权限"
         },
-        "noCache": {
+        "ignoreKeepAlive": {
           "type": "boolean",
-          "title": "无缓存"
+          "title": "不缓存"
         },
-        "breadcrumb": {
-          "type": "string",
-          "title": "面包屑"
+        "hideBreadcrumb": {
+          "type": "boolean",
+          "title": "隐藏面包屑"
+        },
+        "hideChildrenInMenu": {
+          "type": "boolean",
+          "title": "隐藏子菜单"
         },
         "component": {
           "type": "string",
@@ -731,16 +786,13 @@
           "format": "int32",
           "title": "排序"
         },
-        "visible": {
+        "hideMenu": {
           "type": "boolean",
-          "title": "是否可见"
+          "title": "影藏菜单"
         },
-        "isFrame": {
-          "type": "boolean",
-          "title": "是否外链1是0否"
-        },
-        "sysApi": {
-          "type": "string"
+        "frameSrc": {
+          "type": "string",
+          "title": "外链地址"
         }
       },
       "title": "创建SysMenu请求"
@@ -752,13 +804,22 @@
           "type": "string",
           "format": "int64"
         },
-        "menuName": {
+        "parentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "父菜单Id"
+        },
+        "name": {
           "type": "string",
           "title": "菜单名"
         },
         "title": {
           "type": "string",
           "title": "菜单标题"
+        },
+        "redirect": {
+          "type": "string",
+          "title": "跳转路径"
         },
         "icon": {
           "type": "string",
@@ -774,7 +835,7 @@
         },
         "menuType": {
           "type": "string",
-          "title": "M-目录C-菜单F-按钮"
+          "title": "D-目录M-菜单F-按钮"
         },
         "action": {
           "type": "string"
@@ -783,13 +844,17 @@
           "type": "string",
           "title": "权限"
         },
-        "noCache": {
+        "ignoreKeepAlive": {
           "type": "boolean",
-          "title": "无缓存"
+          "title": "不缓存"
         },
-        "breadcrumb": {
-          "type": "string",
-          "title": "面包屑"
+        "hideBreadcrumb": {
+          "type": "boolean",
+          "title": "隐藏面包屑"
+        },
+        "hideChildrenInMenu": {
+          "type": "boolean",
+          "title": "隐藏子菜单"
         },
         "component": {
           "type": "string",
@@ -800,16 +865,13 @@
           "format": "int32",
           "title": "排序"
         },
-        "visible": {
+        "hideMenu": {
           "type": "boolean",
-          "title": "是否可见"
+          "title": "影藏菜单"
         },
-        "isFrame": {
-          "type": "boolean",
-          "title": "是否外链1是0否"
-        },
-        "sysApi": {
-          "type": "string"
+        "frameSrc": {
+          "type": "string",
+          "title": "外链地址"
         },
         "createdAt": {
           "type": "string",
@@ -911,13 +973,22 @@
           "type": "string",
           "format": "int64"
         },
-        "menuName": {
+        "parentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "父菜单Id"
+        },
+        "name": {
           "type": "string",
           "title": "菜单名"
         },
         "title": {
           "type": "string",
           "title": "菜单标题"
+        },
+        "redirect": {
+          "type": "string",
+          "title": "跳转路径"
         },
         "icon": {
           "type": "string",
@@ -933,7 +1004,7 @@
         },
         "menuType": {
           "type": "string",
-          "title": "M-目录C-菜单F-按钮"
+          "title": "D-目录M-菜单F-按钮"
         },
         "action": {
           "type": "string"
@@ -942,13 +1013,17 @@
           "type": "string",
           "title": "权限"
         },
-        "noCache": {
+        "ignoreKeepAlive": {
           "type": "boolean",
-          "title": "无缓存"
+          "title": "不缓存"
         },
-        "breadcrumb": {
-          "type": "string",
-          "title": "面包屑"
+        "hideBreadcrumb": {
+          "type": "boolean",
+          "title": "隐藏面包屑"
+        },
+        "hideChildrenInMenu": {
+          "type": "boolean",
+          "title": "隐藏子菜单"
         },
         "component": {
           "type": "string",
@@ -959,16 +1034,13 @@
           "format": "int32",
           "title": "排序"
         },
-        "visible": {
+        "hideMenu": {
           "type": "boolean",
-          "title": "是否可见"
+          "title": "影藏菜单"
         },
-        "isFrame": {
-          "type": "boolean",
-          "title": "是否外链1是0否"
-        },
-        "sysApi": {
-          "type": "string"
+        "frameSrc": {
+          "type": "string",
+          "title": "外链地址"
         },
         "createdAt": {
           "type": "string",

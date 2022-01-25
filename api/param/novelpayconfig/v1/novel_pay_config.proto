@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package novelpayconfig.v1;
 
 import "google/api/annotations.proto";
@@ -129,7 +130,7 @@ message NovelPayConfigPageReq {
 // 查询搜索返回
 message NovelPayConfigPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -202,7 +203,7 @@ message NovelPayConfigReq {
 // 查询返回
 message NovelPayConfigReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -261,7 +262,7 @@ message NovelPayConfigCreateReq {
 // 创建NovelPayConfig返回
 message NovelPayConfigCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -322,7 +323,7 @@ message NovelPayConfigUpdateReq {
 // 更新NovelPayConfig返回
 message NovelPayConfigUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -344,7 +345,7 @@ message NovelPayConfigBatchDeleteReq {
 // 删除NovelPayConfig返回
 message NovelPayConfigDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

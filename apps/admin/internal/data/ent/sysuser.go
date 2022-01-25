@@ -60,9 +60,6 @@ type SysUser struct {
 	// Status holds the value of the "status" field.
 	// 状态
 	Status string `json:"status,omitempty"`
-	// ExtInfo holds the value of the "extInfo" field.
-	// 拓展信息,facebook回传用的
-	ExtInfo string `json:"extInfo,omitempty"`
 	// CreatedAt holds the value of the "createdAt" field.
 	// 创建时间
 	CreatedAt time.Time `json:"createdAt,omitempty"`
@@ -162,7 +159,7 @@ func (*SysUser) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case sysuser.FieldID, sysuser.FieldDeptId, sysuser.FieldPostId, sysuser.FieldRoleId, sysuser.FieldSex, sysuser.FieldCreateBy, sysuser.FieldUpdateBy, sysuser.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysuser.FieldUsername, sysuser.FieldPassword, sysuser.FieldNickName, sysuser.FieldPhone, sysuser.FieldAvatar, sysuser.FieldEmail, sysuser.FieldRemark, sysuser.FieldDesc, sysuser.FieldHomePath, sysuser.FieldStatus, sysuser.FieldExtInfo:
+		case sysuser.FieldUsername, sysuser.FieldPassword, sysuser.FieldNickName, sysuser.FieldPhone, sysuser.FieldAvatar, sysuser.FieldEmail, sysuser.FieldRemark, sysuser.FieldDesc, sysuser.FieldHomePath, sysuser.FieldStatus:
 			values[i] = new(sql.NullString)
 		case sysuser.FieldCreatedAt, sysuser.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -270,12 +267,6 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
 				su.Status = value.String
-			}
-		case sysuser.FieldExtInfo:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field extInfo", values[i])
-			} else if value.Valid {
-				su.ExtInfo = value.String
 			}
 		case sysuser.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -388,8 +379,6 @@ func (su *SysUser) String() string {
 	builder.WriteString(su.HomePath)
 	builder.WriteString(", status=")
 	builder.WriteString(su.Status)
-	builder.WriteString(", extInfo=")
-	builder.WriteString(su.ExtInfo)
 	builder.WriteString(", createdAt=")
 	builder.WriteString(su.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", updatedAt=")

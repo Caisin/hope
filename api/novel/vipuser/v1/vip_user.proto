@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package vipuser.v1;
 
 import "google/api/annotations.proto";
@@ -101,7 +102,7 @@ message VipUserPageReq {
 // 查询搜索返回
 message VipUserPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -146,7 +147,7 @@ message VipUserReq {
 // 查询返回
 message VipUserReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -177,7 +178,7 @@ message VipUserCreateReq {
 // 创建VipUser返回
 message VipUserCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -210,7 +211,7 @@ message VipUserUpdateReq {
 // 更新VipUser返回
 message VipUserUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -232,7 +233,7 @@ message VipUserBatchDeleteReq {
 // 删除VipUser返回
 message VipUserDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

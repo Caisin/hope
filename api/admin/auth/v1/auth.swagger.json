@@ -16,6 +16,29 @@
     "application/json"
   ],
   "paths": {
+    "/v1/sys/auth/getMenuList": {
+      "get": {
+        "summary": "获取用户菜单列表",
+        "operationId": "Auth_GetMenuList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPermReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
     "/v1/sys/auth/getPermCode": {
       "get": {
         "summary": "获取用户权限编码",

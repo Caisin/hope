@@ -11254,45 +11254,46 @@ func (m *SysLoginLogMutation) ResetEdge(name string) error {
 // SysMenuMutation represents an operation that mutates the SysMenu nodes in the graph.
 type SysMenuMutation struct {
 	config
-	op             Op
-	typ            string
-	id             *int64
-	menuName       *string
-	title          *string
-	icon           *string
-	_path          *string
-	paths          *string
-	menuType       *string
-	action         *string
-	permission     *string
-	noCache        *bool
-	breadcrumb     *string
-	component      *string
-	sort           *int32
-	addsort        *int32
-	visible        *bool
-	isFrame        *bool
-	sysApi         *string
-	createdAt      *time.Time
-	updatedAt      *time.Time
-	createBy       *int64
-	addcreateBy    *int64
-	updateBy       *int64
-	addupdateBy    *int64
-	tenantId       *int64
-	addtenantId    *int64
-	clearedFields  map[string]struct{}
-	role           map[int64]struct{}
-	removedrole    map[int64]struct{}
-	clearedrole    bool
-	parent         *int64
-	clearedparent  bool
-	childes        map[int64]struct{}
-	removedchildes map[int64]struct{}
-	clearedchildes bool
-	done           bool
-	oldValue       func(context.Context) (*SysMenu, error)
-	predicates     []predicate.SysMenu
+	op                 Op
+	typ                string
+	id                 *int64
+	name               *string
+	title              *string
+	redirect           *string
+	icon               *string
+	_path              *string
+	paths              *string
+	menuType           *string
+	action             *string
+	permission         *string
+	ignoreKeepAlive    *bool
+	hideBreadcrumb     *bool
+	hideChildrenInMenu *bool
+	component          *string
+	sort               *int32
+	addsort            *int32
+	hideMenu           *bool
+	frameSrc           *string
+	createdAt          *time.Time
+	updatedAt          *time.Time
+	createBy           *int64
+	addcreateBy        *int64
+	updateBy           *int64
+	addupdateBy        *int64
+	tenantId           *int64
+	addtenantId        *int64
+	clearedFields      map[string]struct{}
+	role               map[int64]struct{}
+	removedrole        map[int64]struct{}
+	clearedrole        bool
+	parent             *int64
+	clearedparent      bool
+	children           map[int64]struct{}
+	removedchildren    map[int64]struct{}
+	clearedchildren    bool
+	done               bool
+	oldValue           func(context.Context) (*SysMenu, error)
+	predicates         []predicate.SysMenu
 }
 
 var _ ent.Mutation = (*SysMenuMutation)(nil)
@@ -11410,53 +11411,40 @@ func (m *SysMenuMutation) ResetParentId() {
 	m.parent = nil
 }
 
-// SetMenuName sets the "menuName" field.
-func (m *SysMenuMutation) SetMenuName(s string) {
-	m.menuName = &s
+// SetName sets the "name" field.
+func (m *SysMenuMutation) SetName(s string) {
+	m.name = &s
 }
 
-// MenuName returns the value of the "menuName" field in the mutation.
-func (m *SysMenuMutation) MenuName() (r string, exists bool) {
-	v := m.menuName
+// Name returns the value of the "name" field in the mutation.
+func (m *SysMenuMutation) Name() (r string, exists bool) {
+	v := m.name
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldMenuName returns the old "menuName" field's value of the SysMenu entity.
+// OldName returns the old "name" field's value of the SysMenu entity.
 // If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuMutation) OldMenuName(ctx context.Context) (v string, err error) {
+func (m *SysMenuMutation) OldName(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldMenuName is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldMenuName requires an ID field in the mutation")
+		return v, fmt.Errorf("OldName requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldMenuName: %w", err)
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
 	}
-	return oldValue.MenuName, nil
+	return oldValue.Name, nil
 }
 
-// ClearMenuName clears the value of the "menuName" field.
-func (m *SysMenuMutation) ClearMenuName() {
-	m.menuName = nil
-	m.clearedFields[sysmenu.FieldMenuName] = struct{}{}
-}
-
-// MenuNameCleared returns if the "menuName" field was cleared in this mutation.
-func (m *SysMenuMutation) MenuNameCleared() bool {
-	_, ok := m.clearedFields[sysmenu.FieldMenuName]
-	return ok
-}
-
-// ResetMenuName resets all changes to the "menuName" field.
-func (m *SysMenuMutation) ResetMenuName() {
-	m.menuName = nil
-	delete(m.clearedFields, sysmenu.FieldMenuName)
+// ResetName resets all changes to the "name" field.
+func (m *SysMenuMutation) ResetName() {
+	m.name = nil
 }
 
 // SetTitle sets the "title" field.
@@ -11490,22 +11478,58 @@ func (m *SysMenuMutation) OldTitle(ctx context.Context) (v string, err error) {
 	return oldValue.Title, nil
 }
 
-// ClearTitle clears the value of the "title" field.
-func (m *SysMenuMutation) ClearTitle() {
-	m.title = nil
-	m.clearedFields[sysmenu.FieldTitle] = struct{}{}
-}
-
-// TitleCleared returns if the "title" field was cleared in this mutation.
-func (m *SysMenuMutation) TitleCleared() bool {
-	_, ok := m.clearedFields[sysmenu.FieldTitle]
-	return ok
-}
-
 // ResetTitle resets all changes to the "title" field.
 func (m *SysMenuMutation) ResetTitle() {
 	m.title = nil
-	delete(m.clearedFields, sysmenu.FieldTitle)
+}
+
+// SetRedirect sets the "redirect" field.
+func (m *SysMenuMutation) SetRedirect(s string) {
+	m.redirect = &s
+}
+
+// Redirect returns the value of the "redirect" field in the mutation.
+func (m *SysMenuMutation) Redirect() (r string, exists bool) {
+	v := m.redirect
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRedirect returns the old "redirect" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldRedirect(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRedirect is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRedirect requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRedirect: %w", err)
+	}
+	return oldValue.Redirect, nil
+}
+
+// ClearRedirect clears the value of the "redirect" field.
+func (m *SysMenuMutation) ClearRedirect() {
+	m.redirect = nil
+	m.clearedFields[sysmenu.FieldRedirect] = struct{}{}
+}
+
+// RedirectCleared returns if the "redirect" field was cleared in this mutation.
+func (m *SysMenuMutation) RedirectCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldRedirect]
+	return ok
+}
+
+// ResetRedirect resets all changes to the "redirect" field.
+func (m *SysMenuMutation) ResetRedirect() {
+	m.redirect = nil
+	delete(m.clearedFields, sysmenu.FieldRedirect)
 }
 
 // SetIcon sets the "icon" field.
@@ -11802,102 +11826,151 @@ func (m *SysMenuMutation) ResetPermission() {
 	delete(m.clearedFields, sysmenu.FieldPermission)
 }
 
-// SetNoCache sets the "noCache" field.
-func (m *SysMenuMutation) SetNoCache(b bool) {
-	m.noCache = &b
+// SetIgnoreKeepAlive sets the "ignoreKeepAlive" field.
+func (m *SysMenuMutation) SetIgnoreKeepAlive(b bool) {
+	m.ignoreKeepAlive = &b
 }
 
-// NoCache returns the value of the "noCache" field in the mutation.
-func (m *SysMenuMutation) NoCache() (r bool, exists bool) {
-	v := m.noCache
+// IgnoreKeepAlive returns the value of the "ignoreKeepAlive" field in the mutation.
+func (m *SysMenuMutation) IgnoreKeepAlive() (r bool, exists bool) {
+	v := m.ignoreKeepAlive
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldNoCache returns the old "noCache" field's value of the SysMenu entity.
+// OldIgnoreKeepAlive returns the old "ignoreKeepAlive" field's value of the SysMenu entity.
 // If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuMutation) OldNoCache(ctx context.Context) (v bool, err error) {
+func (m *SysMenuMutation) OldIgnoreKeepAlive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldNoCache is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldIgnoreKeepAlive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldNoCache requires an ID field in the mutation")
+		return v, fmt.Errorf("OldIgnoreKeepAlive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldNoCache: %w", err)
+		return v, fmt.Errorf("querying old value for OldIgnoreKeepAlive: %w", err)
 	}
-	return oldValue.NoCache, nil
+	return oldValue.IgnoreKeepAlive, nil
 }
 
-// ClearNoCache clears the value of the "noCache" field.
-func (m *SysMenuMutation) ClearNoCache() {
-	m.noCache = nil
-	m.clearedFields[sysmenu.FieldNoCache] = struct{}{}
+// ClearIgnoreKeepAlive clears the value of the "ignoreKeepAlive" field.
+func (m *SysMenuMutation) ClearIgnoreKeepAlive() {
+	m.ignoreKeepAlive = nil
+	m.clearedFields[sysmenu.FieldIgnoreKeepAlive] = struct{}{}
 }
 
-// NoCacheCleared returns if the "noCache" field was cleared in this mutation.
-func (m *SysMenuMutation) NoCacheCleared() bool {
-	_, ok := m.clearedFields[sysmenu.FieldNoCache]
+// IgnoreKeepAliveCleared returns if the "ignoreKeepAlive" field was cleared in this mutation.
+func (m *SysMenuMutation) IgnoreKeepAliveCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldIgnoreKeepAlive]
 	return ok
 }
 
-// ResetNoCache resets all changes to the "noCache" field.
-func (m *SysMenuMutation) ResetNoCache() {
-	m.noCache = nil
-	delete(m.clearedFields, sysmenu.FieldNoCache)
+// ResetIgnoreKeepAlive resets all changes to the "ignoreKeepAlive" field.
+func (m *SysMenuMutation) ResetIgnoreKeepAlive() {
+	m.ignoreKeepAlive = nil
+	delete(m.clearedFields, sysmenu.FieldIgnoreKeepAlive)
 }
 
-// SetBreadcrumb sets the "breadcrumb" field.
-func (m *SysMenuMutation) SetBreadcrumb(s string) {
-	m.breadcrumb = &s
+// SetHideBreadcrumb sets the "hideBreadcrumb" field.
+func (m *SysMenuMutation) SetHideBreadcrumb(b bool) {
+	m.hideBreadcrumb = &b
 }
 
-// Breadcrumb returns the value of the "breadcrumb" field in the mutation.
-func (m *SysMenuMutation) Breadcrumb() (r string, exists bool) {
-	v := m.breadcrumb
+// HideBreadcrumb returns the value of the "hideBreadcrumb" field in the mutation.
+func (m *SysMenuMutation) HideBreadcrumb() (r bool, exists bool) {
+	v := m.hideBreadcrumb
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldBreadcrumb returns the old "breadcrumb" field's value of the SysMenu entity.
+// OldHideBreadcrumb returns the old "hideBreadcrumb" field's value of the SysMenu entity.
 // If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuMutation) OldBreadcrumb(ctx context.Context) (v string, err error) {
+func (m *SysMenuMutation) OldHideBreadcrumb(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldBreadcrumb is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldHideBreadcrumb is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldBreadcrumb requires an ID field in the mutation")
+		return v, fmt.Errorf("OldHideBreadcrumb requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldBreadcrumb: %w", err)
+		return v, fmt.Errorf("querying old value for OldHideBreadcrumb: %w", err)
 	}
-	return oldValue.Breadcrumb, nil
+	return oldValue.HideBreadcrumb, nil
 }
 
-// ClearBreadcrumb clears the value of the "breadcrumb" field.
-func (m *SysMenuMutation) ClearBreadcrumb() {
-	m.breadcrumb = nil
-	m.clearedFields[sysmenu.FieldBreadcrumb] = struct{}{}
+// ClearHideBreadcrumb clears the value of the "hideBreadcrumb" field.
+func (m *SysMenuMutation) ClearHideBreadcrumb() {
+	m.hideBreadcrumb = nil
+	m.clearedFields[sysmenu.FieldHideBreadcrumb] = struct{}{}
 }
 
-// BreadcrumbCleared returns if the "breadcrumb" field was cleared in this mutation.
-func (m *SysMenuMutation) BreadcrumbCleared() bool {
-	_, ok := m.clearedFields[sysmenu.FieldBreadcrumb]
+// HideBreadcrumbCleared returns if the "hideBreadcrumb" field was cleared in this mutation.
+func (m *SysMenuMutation) HideBreadcrumbCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldHideBreadcrumb]
 	return ok
 }
 
-// ResetBreadcrumb resets all changes to the "breadcrumb" field.
-func (m *SysMenuMutation) ResetBreadcrumb() {
-	m.breadcrumb = nil
-	delete(m.clearedFields, sysmenu.FieldBreadcrumb)
+// ResetHideBreadcrumb resets all changes to the "hideBreadcrumb" field.
+func (m *SysMenuMutation) ResetHideBreadcrumb() {
+	m.hideBreadcrumb = nil
+	delete(m.clearedFields, sysmenu.FieldHideBreadcrumb)
+}
+
+// SetHideChildrenInMenu sets the "hideChildrenInMenu" field.
+func (m *SysMenuMutation) SetHideChildrenInMenu(b bool) {
+	m.hideChildrenInMenu = &b
+}
+
+// HideChildrenInMenu returns the value of the "hideChildrenInMenu" field in the mutation.
+func (m *SysMenuMutation) HideChildrenInMenu() (r bool, exists bool) {
+	v := m.hideChildrenInMenu
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldHideChildrenInMenu returns the old "hideChildrenInMenu" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldHideChildrenInMenu(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldHideChildrenInMenu is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldHideChildrenInMenu requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldHideChildrenInMenu: %w", err)
+	}
+	return oldValue.HideChildrenInMenu, nil
+}
+
+// ClearHideChildrenInMenu clears the value of the "hideChildrenInMenu" field.
+func (m *SysMenuMutation) ClearHideChildrenInMenu() {
+	m.hideChildrenInMenu = nil
+	m.clearedFields[sysmenu.FieldHideChildrenInMenu] = struct{}{}
+}
+
+// HideChildrenInMenuCleared returns if the "hideChildrenInMenu" field was cleared in this mutation.
+func (m *SysMenuMutation) HideChildrenInMenuCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldHideChildrenInMenu]
+	return ok
+}
+
+// ResetHideChildrenInMenu resets all changes to the "hideChildrenInMenu" field.
+func (m *SysMenuMutation) ResetHideChildrenInMenu() {
+	m.hideChildrenInMenu = nil
+	delete(m.clearedFields, sysmenu.FieldHideChildrenInMenu)
 }
 
 // SetComponent sets the "component" field.
@@ -12019,151 +12092,102 @@ func (m *SysMenuMutation) ResetSort() {
 	delete(m.clearedFields, sysmenu.FieldSort)
 }
 
-// SetVisible sets the "visible" field.
-func (m *SysMenuMutation) SetVisible(b bool) {
-	m.visible = &b
+// SetHideMenu sets the "hideMenu" field.
+func (m *SysMenuMutation) SetHideMenu(b bool) {
+	m.hideMenu = &b
 }
 
-// Visible returns the value of the "visible" field in the mutation.
-func (m *SysMenuMutation) Visible() (r bool, exists bool) {
-	v := m.visible
+// HideMenu returns the value of the "hideMenu" field in the mutation.
+func (m *SysMenuMutation) HideMenu() (r bool, exists bool) {
+	v := m.hideMenu
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldVisible returns the old "visible" field's value of the SysMenu entity.
+// OldHideMenu returns the old "hideMenu" field's value of the SysMenu entity.
 // If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuMutation) OldVisible(ctx context.Context) (v bool, err error) {
+func (m *SysMenuMutation) OldHideMenu(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldVisible is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldHideMenu is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldVisible requires an ID field in the mutation")
+		return v, fmt.Errorf("OldHideMenu requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldVisible: %w", err)
+		return v, fmt.Errorf("querying old value for OldHideMenu: %w", err)
 	}
-	return oldValue.Visible, nil
+	return oldValue.HideMenu, nil
 }
 
-// ClearVisible clears the value of the "visible" field.
-func (m *SysMenuMutation) ClearVisible() {
-	m.visible = nil
-	m.clearedFields[sysmenu.FieldVisible] = struct{}{}
+// ClearHideMenu clears the value of the "hideMenu" field.
+func (m *SysMenuMutation) ClearHideMenu() {
+	m.hideMenu = nil
+	m.clearedFields[sysmenu.FieldHideMenu] = struct{}{}
 }
 
-// VisibleCleared returns if the "visible" field was cleared in this mutation.
-func (m *SysMenuMutation) VisibleCleared() bool {
-	_, ok := m.clearedFields[sysmenu.FieldVisible]
+// HideMenuCleared returns if the "hideMenu" field was cleared in this mutation.
+func (m *SysMenuMutation) HideMenuCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldHideMenu]
 	return ok
 }
 
-// ResetVisible resets all changes to the "visible" field.
-func (m *SysMenuMutation) ResetVisible() {
-	m.visible = nil
-	delete(m.clearedFields, sysmenu.FieldVisible)
+// ResetHideMenu resets all changes to the "hideMenu" field.
+func (m *SysMenuMutation) ResetHideMenu() {
+	m.hideMenu = nil
+	delete(m.clearedFields, sysmenu.FieldHideMenu)
 }
 
-// SetIsFrame sets the "isFrame" field.
-func (m *SysMenuMutation) SetIsFrame(b bool) {
-	m.isFrame = &b
+// SetFrameSrc sets the "frameSrc" field.
+func (m *SysMenuMutation) SetFrameSrc(s string) {
+	m.frameSrc = &s
 }
 
-// IsFrame returns the value of the "isFrame" field in the mutation.
-func (m *SysMenuMutation) IsFrame() (r bool, exists bool) {
-	v := m.isFrame
+// FrameSrc returns the value of the "frameSrc" field in the mutation.
+func (m *SysMenuMutation) FrameSrc() (r string, exists bool) {
+	v := m.frameSrc
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldIsFrame returns the old "isFrame" field's value of the SysMenu entity.
+// OldFrameSrc returns the old "frameSrc" field's value of the SysMenu entity.
 // If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuMutation) OldIsFrame(ctx context.Context) (v bool, err error) {
+func (m *SysMenuMutation) OldFrameSrc(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldIsFrame is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldFrameSrc is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldIsFrame requires an ID field in the mutation")
+		return v, fmt.Errorf("OldFrameSrc requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldIsFrame: %w", err)
+		return v, fmt.Errorf("querying old value for OldFrameSrc: %w", err)
 	}
-	return oldValue.IsFrame, nil
+	return oldValue.FrameSrc, nil
 }
 
-// ClearIsFrame clears the value of the "isFrame" field.
-func (m *SysMenuMutation) ClearIsFrame() {
-	m.isFrame = nil
-	m.clearedFields[sysmenu.FieldIsFrame] = struct{}{}
+// ClearFrameSrc clears the value of the "frameSrc" field.
+func (m *SysMenuMutation) ClearFrameSrc() {
+	m.frameSrc = nil
+	m.clearedFields[sysmenu.FieldFrameSrc] = struct{}{}
 }
 
-// IsFrameCleared returns if the "isFrame" field was cleared in this mutation.
-func (m *SysMenuMutation) IsFrameCleared() bool {
-	_, ok := m.clearedFields[sysmenu.FieldIsFrame]
+// FrameSrcCleared returns if the "frameSrc" field was cleared in this mutation.
+func (m *SysMenuMutation) FrameSrcCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldFrameSrc]
 	return ok
 }
 
-// ResetIsFrame resets all changes to the "isFrame" field.
-func (m *SysMenuMutation) ResetIsFrame() {
-	m.isFrame = nil
-	delete(m.clearedFields, sysmenu.FieldIsFrame)
-}
-
-// SetSysApi sets the "sysApi" field.
-func (m *SysMenuMutation) SetSysApi(s string) {
-	m.sysApi = &s
-}
-
-// SysApi returns the value of the "sysApi" field in the mutation.
-func (m *SysMenuMutation) SysApi() (r string, exists bool) {
-	v := m.sysApi
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldSysApi returns the old "sysApi" field's value of the SysMenu entity.
-// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuMutation) OldSysApi(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldSysApi is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldSysApi requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldSysApi: %w", err)
-	}
-	return oldValue.SysApi, nil
-}
-
-// ClearSysApi clears the value of the "sysApi" field.
-func (m *SysMenuMutation) ClearSysApi() {
-	m.sysApi = nil
-	m.clearedFields[sysmenu.FieldSysApi] = struct{}{}
-}
-
-// SysApiCleared returns if the "sysApi" field was cleared in this mutation.
-func (m *SysMenuMutation) SysApiCleared() bool {
-	_, ok := m.clearedFields[sysmenu.FieldSysApi]
-	return ok
-}
-
-// ResetSysApi resets all changes to the "sysApi" field.
-func (m *SysMenuMutation) ResetSysApi() {
-	m.sysApi = nil
-	delete(m.clearedFields, sysmenu.FieldSysApi)
+// ResetFrameSrc resets all changes to the "frameSrc" field.
+func (m *SysMenuMutation) ResetFrameSrc() {
+	m.frameSrc = nil
+	delete(m.clearedFields, sysmenu.FieldFrameSrc)
 }
 
 // SetCreatedAt sets the "createdAt" field.
@@ -12499,58 +12523,58 @@ func (m *SysMenuMutation) ResetParent() {
 	m.clearedparent = false
 }
 
-// AddChildeIDs adds the "childes" edge to the SysMenu entity by ids.
-func (m *SysMenuMutation) AddChildeIDs(ids ...int64) {
-	if m.childes == nil {
-		m.childes = make(map[int64]struct{})
+// AddChildIDs adds the "children" edge to the SysMenu entity by ids.
+func (m *SysMenuMutation) AddChildIDs(ids ...int64) {
+	if m.children == nil {
+		m.children = make(map[int64]struct{})
 	}
 	for i := range ids {
-		m.childes[ids[i]] = struct{}{}
+		m.children[ids[i]] = struct{}{}
 	}
 }
 
-// ClearChildes clears the "childes" edge to the SysMenu entity.
-func (m *SysMenuMutation) ClearChildes() {
-	m.clearedchildes = true
+// ClearChildren clears the "children" edge to the SysMenu entity.
+func (m *SysMenuMutation) ClearChildren() {
+	m.clearedchildren = true
 }
 
-// ChildesCleared reports if the "childes" edge to the SysMenu entity was cleared.
-func (m *SysMenuMutation) ChildesCleared() bool {
-	return m.clearedchildes
+// ChildrenCleared reports if the "children" edge to the SysMenu entity was cleared.
+func (m *SysMenuMutation) ChildrenCleared() bool {
+	return m.clearedchildren
 }
 
-// RemoveChildeIDs removes the "childes" edge to the SysMenu entity by IDs.
-func (m *SysMenuMutation) RemoveChildeIDs(ids ...int64) {
-	if m.removedchildes == nil {
-		m.removedchildes = make(map[int64]struct{})
+// RemoveChildIDs removes the "children" edge to the SysMenu entity by IDs.
+func (m *SysMenuMutation) RemoveChildIDs(ids ...int64) {
+	if m.removedchildren == nil {
+		m.removedchildren = make(map[int64]struct{})
 	}
 	for i := range ids {
-		delete(m.childes, ids[i])
-		m.removedchildes[ids[i]] = struct{}{}
+		delete(m.children, ids[i])
+		m.removedchildren[ids[i]] = struct{}{}
 	}
 }
 
-// RemovedChildes returns the removed IDs of the "childes" edge to the SysMenu entity.
-func (m *SysMenuMutation) RemovedChildesIDs() (ids []int64) {
-	for id := range m.removedchildes {
+// RemovedChildren returns the removed IDs of the "children" edge to the SysMenu entity.
+func (m *SysMenuMutation) RemovedChildrenIDs() (ids []int64) {
+	for id := range m.removedchildren {
 		ids = append(ids, id)
 	}
 	return
 }
 
-// ChildesIDs returns the "childes" edge IDs in the mutation.
-func (m *SysMenuMutation) ChildesIDs() (ids []int64) {
-	for id := range m.childes {
+// ChildrenIDs returns the "children" edge IDs in the mutation.
+func (m *SysMenuMutation) ChildrenIDs() (ids []int64) {
+	for id := range m.children {
 		ids = append(ids, id)
 	}
 	return
 }
 
-// ResetChildes resets all changes to the "childes" edge.
-func (m *SysMenuMutation) ResetChildes() {
-	m.childes = nil
-	m.clearedchildes = false
-	m.removedchildes = nil
+// ResetChildren resets all changes to the "children" edge.
+func (m *SysMenuMutation) ResetChildren() {
+	m.children = nil
+	m.clearedchildren = false
+	m.removedchildren = nil
 }
 
 // Where appends a list predicates to the SysMenuMutation builder.
@@ -12572,15 +12596,18 @@ func (m *SysMenuMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysMenuMutation) Fields() []string {
-	fields := make([]string, 0, 21)
+	fields := make([]string, 0, 22)
 	if m.parent != nil {
 		fields = append(fields, sysmenu.FieldParentId)
 	}
-	if m.menuName != nil {
-		fields = append(fields, sysmenu.FieldMenuName)
+	if m.name != nil {
+		fields = append(fields, sysmenu.FieldName)
 	}
 	if m.title != nil {
 		fields = append(fields, sysmenu.FieldTitle)
+	}
+	if m.redirect != nil {
+		fields = append(fields, sysmenu.FieldRedirect)
 	}
 	if m.icon != nil {
 		fields = append(fields, sysmenu.FieldIcon)
@@ -12600,11 +12627,14 @@ func (m *SysMenuMutation) Fields() []string {
 	if m.permission != nil {
 		fields = append(fields, sysmenu.FieldPermission)
 	}
-	if m.noCache != nil {
-		fields = append(fields, sysmenu.FieldNoCache)
+	if m.ignoreKeepAlive != nil {
+		fields = append(fields, sysmenu.FieldIgnoreKeepAlive)
 	}
-	if m.breadcrumb != nil {
-		fields = append(fields, sysmenu.FieldBreadcrumb)
+	if m.hideBreadcrumb != nil {
+		fields = append(fields, sysmenu.FieldHideBreadcrumb)
+	}
+	if m.hideChildrenInMenu != nil {
+		fields = append(fields, sysmenu.FieldHideChildrenInMenu)
 	}
 	if m.component != nil {
 		fields = append(fields, sysmenu.FieldComponent)
@@ -12612,14 +12642,11 @@ func (m *SysMenuMutation) Fields() []string {
 	if m.sort != nil {
 		fields = append(fields, sysmenu.FieldSort)
 	}
-	if m.visible != nil {
-		fields = append(fields, sysmenu.FieldVisible)
+	if m.hideMenu != nil {
+		fields = append(fields, sysmenu.FieldHideMenu)
 	}
-	if m.isFrame != nil {
-		fields = append(fields, sysmenu.FieldIsFrame)
-	}
-	if m.sysApi != nil {
-		fields = append(fields, sysmenu.FieldSysApi)
+	if m.frameSrc != nil {
+		fields = append(fields, sysmenu.FieldFrameSrc)
 	}
 	if m.createdAt != nil {
 		fields = append(fields, sysmenu.FieldCreatedAt)
@@ -12646,10 +12673,12 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case sysmenu.FieldParentId:
 		return m.ParentId()
-	case sysmenu.FieldMenuName:
-		return m.MenuName()
+	case sysmenu.FieldName:
+		return m.Name()
 	case sysmenu.FieldTitle:
 		return m.Title()
+	case sysmenu.FieldRedirect:
+		return m.Redirect()
 	case sysmenu.FieldIcon:
 		return m.Icon()
 	case sysmenu.FieldPath:
@@ -12662,20 +12691,20 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 		return m.Action()
 	case sysmenu.FieldPermission:
 		return m.Permission()
-	case sysmenu.FieldNoCache:
-		return m.NoCache()
-	case sysmenu.FieldBreadcrumb:
-		return m.Breadcrumb()
+	case sysmenu.FieldIgnoreKeepAlive:
+		return m.IgnoreKeepAlive()
+	case sysmenu.FieldHideBreadcrumb:
+		return m.HideBreadcrumb()
+	case sysmenu.FieldHideChildrenInMenu:
+		return m.HideChildrenInMenu()
 	case sysmenu.FieldComponent:
 		return m.Component()
 	case sysmenu.FieldSort:
 		return m.Sort()
-	case sysmenu.FieldVisible:
-		return m.Visible()
-	case sysmenu.FieldIsFrame:
-		return m.IsFrame()
-	case sysmenu.FieldSysApi:
-		return m.SysApi()
+	case sysmenu.FieldHideMenu:
+		return m.HideMenu()
+	case sysmenu.FieldFrameSrc:
+		return m.FrameSrc()
 	case sysmenu.FieldCreatedAt:
 		return m.CreatedAt()
 	case sysmenu.FieldUpdatedAt:
@@ -12697,10 +12726,12 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 	switch name {
 	case sysmenu.FieldParentId:
 		return m.OldParentId(ctx)
-	case sysmenu.FieldMenuName:
-		return m.OldMenuName(ctx)
+	case sysmenu.FieldName:
+		return m.OldName(ctx)
 	case sysmenu.FieldTitle:
 		return m.OldTitle(ctx)
+	case sysmenu.FieldRedirect:
+		return m.OldRedirect(ctx)
 	case sysmenu.FieldIcon:
 		return m.OldIcon(ctx)
 	case sysmenu.FieldPath:
@@ -12713,20 +12744,20 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldAction(ctx)
 	case sysmenu.FieldPermission:
 		return m.OldPermission(ctx)
-	case sysmenu.FieldNoCache:
-		return m.OldNoCache(ctx)
-	case sysmenu.FieldBreadcrumb:
-		return m.OldBreadcrumb(ctx)
+	case sysmenu.FieldIgnoreKeepAlive:
+		return m.OldIgnoreKeepAlive(ctx)
+	case sysmenu.FieldHideBreadcrumb:
+		return m.OldHideBreadcrumb(ctx)
+	case sysmenu.FieldHideChildrenInMenu:
+		return m.OldHideChildrenInMenu(ctx)
 	case sysmenu.FieldComponent:
 		return m.OldComponent(ctx)
 	case sysmenu.FieldSort:
 		return m.OldSort(ctx)
-	case sysmenu.FieldVisible:
-		return m.OldVisible(ctx)
-	case sysmenu.FieldIsFrame:
-		return m.OldIsFrame(ctx)
-	case sysmenu.FieldSysApi:
-		return m.OldSysApi(ctx)
+	case sysmenu.FieldHideMenu:
+		return m.OldHideMenu(ctx)
+	case sysmenu.FieldFrameSrc:
+		return m.OldFrameSrc(ctx)
 	case sysmenu.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case sysmenu.FieldUpdatedAt:
@@ -12753,12 +12784,12 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetParentId(v)
 		return nil
-	case sysmenu.FieldMenuName:
+	case sysmenu.FieldName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetMenuName(v)
+		m.SetName(v)
 		return nil
 	case sysmenu.FieldTitle:
 		v, ok := value.(string)
@@ -12766,6 +12797,13 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTitle(v)
+		return nil
+	case sysmenu.FieldRedirect:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRedirect(v)
 		return nil
 	case sysmenu.FieldIcon:
 		v, ok := value.(string)
@@ -12809,19 +12847,26 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPermission(v)
 		return nil
-	case sysmenu.FieldNoCache:
+	case sysmenu.FieldIgnoreKeepAlive:
 		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetNoCache(v)
+		m.SetIgnoreKeepAlive(v)
 		return nil
-	case sysmenu.FieldBreadcrumb:
-		v, ok := value.(string)
+	case sysmenu.FieldHideBreadcrumb:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetBreadcrumb(v)
+		m.SetHideBreadcrumb(v)
+		return nil
+	case sysmenu.FieldHideChildrenInMenu:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetHideChildrenInMenu(v)
 		return nil
 	case sysmenu.FieldComponent:
 		v, ok := value.(string)
@@ -12837,26 +12882,19 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetSort(v)
 		return nil
-	case sysmenu.FieldVisible:
+	case sysmenu.FieldHideMenu:
 		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetVisible(v)
+		m.SetHideMenu(v)
 		return nil
-	case sysmenu.FieldIsFrame:
-		v, ok := value.(bool)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetIsFrame(v)
-		return nil
-	case sysmenu.FieldSysApi:
+	case sysmenu.FieldFrameSrc:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetSysApi(v)
+		m.SetFrameSrc(v)
 		return nil
 	case sysmenu.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -12974,11 +13012,8 @@ func (m *SysMenuMutation) AddField(name string, value ent.Value) error {
 // mutation.
 func (m *SysMenuMutation) ClearedFields() []string {
 	var fields []string
-	if m.FieldCleared(sysmenu.FieldMenuName) {
-		fields = append(fields, sysmenu.FieldMenuName)
-	}
-	if m.FieldCleared(sysmenu.FieldTitle) {
-		fields = append(fields, sysmenu.FieldTitle)
+	if m.FieldCleared(sysmenu.FieldRedirect) {
+		fields = append(fields, sysmenu.FieldRedirect)
 	}
 	if m.FieldCleared(sysmenu.FieldIcon) {
 		fields = append(fields, sysmenu.FieldIcon)
@@ -12998,11 +13033,14 @@ func (m *SysMenuMutation) ClearedFields() []string {
 	if m.FieldCleared(sysmenu.FieldPermission) {
 		fields = append(fields, sysmenu.FieldPermission)
 	}
-	if m.FieldCleared(sysmenu.FieldNoCache) {
-		fields = append(fields, sysmenu.FieldNoCache)
+	if m.FieldCleared(sysmenu.FieldIgnoreKeepAlive) {
+		fields = append(fields, sysmenu.FieldIgnoreKeepAlive)
 	}
-	if m.FieldCleared(sysmenu.FieldBreadcrumb) {
-		fields = append(fields, sysmenu.FieldBreadcrumb)
+	if m.FieldCleared(sysmenu.FieldHideBreadcrumb) {
+		fields = append(fields, sysmenu.FieldHideBreadcrumb)
+	}
+	if m.FieldCleared(sysmenu.FieldHideChildrenInMenu) {
+		fields = append(fields, sysmenu.FieldHideChildrenInMenu)
 	}
 	if m.FieldCleared(sysmenu.FieldComponent) {
 		fields = append(fields, sysmenu.FieldComponent)
@@ -13010,14 +13048,11 @@ func (m *SysMenuMutation) ClearedFields() []string {
 	if m.FieldCleared(sysmenu.FieldSort) {
 		fields = append(fields, sysmenu.FieldSort)
 	}
-	if m.FieldCleared(sysmenu.FieldVisible) {
-		fields = append(fields, sysmenu.FieldVisible)
+	if m.FieldCleared(sysmenu.FieldHideMenu) {
+		fields = append(fields, sysmenu.FieldHideMenu)
 	}
-	if m.FieldCleared(sysmenu.FieldIsFrame) {
-		fields = append(fields, sysmenu.FieldIsFrame)
-	}
-	if m.FieldCleared(sysmenu.FieldSysApi) {
-		fields = append(fields, sysmenu.FieldSysApi)
+	if m.FieldCleared(sysmenu.FieldFrameSrc) {
+		fields = append(fields, sysmenu.FieldFrameSrc)
 	}
 	return fields
 }
@@ -13033,11 +13068,8 @@ func (m *SysMenuMutation) FieldCleared(name string) bool {
 // error if the field is not defined in the schema.
 func (m *SysMenuMutation) ClearField(name string) error {
 	switch name {
-	case sysmenu.FieldMenuName:
-		m.ClearMenuName()
-		return nil
-	case sysmenu.FieldTitle:
-		m.ClearTitle()
+	case sysmenu.FieldRedirect:
+		m.ClearRedirect()
 		return nil
 	case sysmenu.FieldIcon:
 		m.ClearIcon()
@@ -13057,11 +13089,14 @@ func (m *SysMenuMutation) ClearField(name string) error {
 	case sysmenu.FieldPermission:
 		m.ClearPermission()
 		return nil
-	case sysmenu.FieldNoCache:
-		m.ClearNoCache()
+	case sysmenu.FieldIgnoreKeepAlive:
+		m.ClearIgnoreKeepAlive()
 		return nil
-	case sysmenu.FieldBreadcrumb:
-		m.ClearBreadcrumb()
+	case sysmenu.FieldHideBreadcrumb:
+		m.ClearHideBreadcrumb()
+		return nil
+	case sysmenu.FieldHideChildrenInMenu:
+		m.ClearHideChildrenInMenu()
 		return nil
 	case sysmenu.FieldComponent:
 		m.ClearComponent()
@@ -13069,14 +13104,11 @@ func (m *SysMenuMutation) ClearField(name string) error {
 	case sysmenu.FieldSort:
 		m.ClearSort()
 		return nil
-	case sysmenu.FieldVisible:
-		m.ClearVisible()
+	case sysmenu.FieldHideMenu:
+		m.ClearHideMenu()
 		return nil
-	case sysmenu.FieldIsFrame:
-		m.ClearIsFrame()
-		return nil
-	case sysmenu.FieldSysApi:
-		m.ClearSysApi()
+	case sysmenu.FieldFrameSrc:
+		m.ClearFrameSrc()
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenu nullable field %s", name)
@@ -13089,11 +13121,14 @@ func (m *SysMenuMutation) ResetField(name string) error {
 	case sysmenu.FieldParentId:
 		m.ResetParentId()
 		return nil
-	case sysmenu.FieldMenuName:
-		m.ResetMenuName()
+	case sysmenu.FieldName:
+		m.ResetName()
 		return nil
 	case sysmenu.FieldTitle:
 		m.ResetTitle()
+		return nil
+	case sysmenu.FieldRedirect:
+		m.ResetRedirect()
 		return nil
 	case sysmenu.FieldIcon:
 		m.ResetIcon()
@@ -13113,11 +13148,14 @@ func (m *SysMenuMutation) ResetField(name string) error {
 	case sysmenu.FieldPermission:
 		m.ResetPermission()
 		return nil
-	case sysmenu.FieldNoCache:
-		m.ResetNoCache()
+	case sysmenu.FieldIgnoreKeepAlive:
+		m.ResetIgnoreKeepAlive()
 		return nil
-	case sysmenu.FieldBreadcrumb:
-		m.ResetBreadcrumb()
+	case sysmenu.FieldHideBreadcrumb:
+		m.ResetHideBreadcrumb()
+		return nil
+	case sysmenu.FieldHideChildrenInMenu:
+		m.ResetHideChildrenInMenu()
 		return nil
 	case sysmenu.FieldComponent:
 		m.ResetComponent()
@@ -13125,14 +13163,11 @@ func (m *SysMenuMutation) ResetField(name string) error {
 	case sysmenu.FieldSort:
 		m.ResetSort()
 		return nil
-	case sysmenu.FieldVisible:
-		m.ResetVisible()
+	case sysmenu.FieldHideMenu:
+		m.ResetHideMenu()
 		return nil
-	case sysmenu.FieldIsFrame:
-		m.ResetIsFrame()
-		return nil
-	case sysmenu.FieldSysApi:
-		m.ResetSysApi()
+	case sysmenu.FieldFrameSrc:
+		m.ResetFrameSrc()
 		return nil
 	case sysmenu.FieldCreatedAt:
 		m.ResetCreatedAt()
@@ -13162,8 +13197,8 @@ func (m *SysMenuMutation) AddedEdges() []string {
 	if m.parent != nil {
 		edges = append(edges, sysmenu.EdgeParent)
 	}
-	if m.childes != nil {
-		edges = append(edges, sysmenu.EdgeChildes)
+	if m.children != nil {
+		edges = append(edges, sysmenu.EdgeChildren)
 	}
 	return edges
 }
@@ -13182,9 +13217,9 @@ func (m *SysMenuMutation) AddedIDs(name string) []ent.Value {
 		if id := m.parent; id != nil {
 			return []ent.Value{*id}
 		}
-	case sysmenu.EdgeChildes:
-		ids := make([]ent.Value, 0, len(m.childes))
-		for id := range m.childes {
+	case sysmenu.EdgeChildren:
+		ids := make([]ent.Value, 0, len(m.children))
+		for id := range m.children {
 			ids = append(ids, id)
 		}
 		return ids
@@ -13198,8 +13233,8 @@ func (m *SysMenuMutation) RemovedEdges() []string {
 	if m.removedrole != nil {
 		edges = append(edges, sysmenu.EdgeRole)
 	}
-	if m.removedchildes != nil {
-		edges = append(edges, sysmenu.EdgeChildes)
+	if m.removedchildren != nil {
+		edges = append(edges, sysmenu.EdgeChildren)
 	}
 	return edges
 }
@@ -13214,9 +13249,9 @@ func (m *SysMenuMutation) RemovedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
-	case sysmenu.EdgeChildes:
-		ids := make([]ent.Value, 0, len(m.removedchildes))
-		for id := range m.removedchildes {
+	case sysmenu.EdgeChildren:
+		ids := make([]ent.Value, 0, len(m.removedchildren))
+		for id := range m.removedchildren {
 			ids = append(ids, id)
 		}
 		return ids
@@ -13233,8 +13268,8 @@ func (m *SysMenuMutation) ClearedEdges() []string {
 	if m.clearedparent {
 		edges = append(edges, sysmenu.EdgeParent)
 	}
-	if m.clearedchildes {
-		edges = append(edges, sysmenu.EdgeChildes)
+	if m.clearedchildren {
+		edges = append(edges, sysmenu.EdgeChildren)
 	}
 	return edges
 }
@@ -13247,8 +13282,8 @@ func (m *SysMenuMutation) EdgeCleared(name string) bool {
 		return m.clearedrole
 	case sysmenu.EdgeParent:
 		return m.clearedparent
-	case sysmenu.EdgeChildes:
-		return m.clearedchildes
+	case sysmenu.EdgeChildren:
+		return m.clearedchildren
 	}
 	return false
 }
@@ -13274,8 +13309,8 @@ func (m *SysMenuMutation) ResetEdge(name string) error {
 	case sysmenu.EdgeParent:
 		m.ResetParent()
 		return nil
-	case sysmenu.EdgeChildes:
-		m.ResetChildes()
+	case sysmenu.EdgeChildren:
+		m.ResetChildren()
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenu edge %s", name)
@@ -18353,7 +18388,6 @@ type SysUserMutation struct {
 	desc             *string
 	homePath         *string
 	status           *string
-	extInfo          *string
 	createdAt        *time.Time
 	updatedAt        *time.Time
 	createBy         *int64
@@ -19149,55 +19183,6 @@ func (m *SysUserMutation) ResetStatus() {
 	delete(m.clearedFields, sysuser.FieldStatus)
 }
 
-// SetExtInfo sets the "extInfo" field.
-func (m *SysUserMutation) SetExtInfo(s string) {
-	m.extInfo = &s
-}
-
-// ExtInfo returns the value of the "extInfo" field in the mutation.
-func (m *SysUserMutation) ExtInfo() (r string, exists bool) {
-	v := m.extInfo
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldExtInfo returns the old "extInfo" field's value of the SysUser entity.
-// If the SysUser object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysUserMutation) OldExtInfo(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldExtInfo is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldExtInfo requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldExtInfo: %w", err)
-	}
-	return oldValue.ExtInfo, nil
-}
-
-// ClearExtInfo clears the value of the "extInfo" field.
-func (m *SysUserMutation) ClearExtInfo() {
-	m.extInfo = nil
-	m.clearedFields[sysuser.FieldExtInfo] = struct{}{}
-}
-
-// ExtInfoCleared returns if the "extInfo" field was cleared in this mutation.
-func (m *SysUserMutation) ExtInfoCleared() bool {
-	_, ok := m.clearedFields[sysuser.FieldExtInfo]
-	return ok
-}
-
-// ResetExtInfo resets all changes to the "extInfo" field.
-func (m *SysUserMutation) ResetExtInfo() {
-	m.extInfo = nil
-	delete(m.clearedFields, sysuser.FieldExtInfo)
-}
-
 // SetCreatedAt sets the "createdAt" field.
 func (m *SysUserMutation) SetCreatedAt(t time.Time) {
 	m.createdAt = &t
@@ -19697,7 +19682,7 @@ func (m *SysUserMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysUserMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 19)
 	if m.username != nil {
 		fields = append(fields, sysuser.FieldUsername)
 	}
@@ -19739,9 +19724,6 @@ func (m *SysUserMutation) Fields() []string {
 	}
 	if m.status != nil {
 		fields = append(fields, sysuser.FieldStatus)
-	}
-	if m.extInfo != nil {
-		fields = append(fields, sysuser.FieldExtInfo)
 	}
 	if m.createdAt != nil {
 		fields = append(fields, sysuser.FieldCreatedAt)
@@ -19794,8 +19776,6 @@ func (m *SysUserMutation) Field(name string) (ent.Value, bool) {
 		return m.HomePath()
 	case sysuser.FieldStatus:
 		return m.Status()
-	case sysuser.FieldExtInfo:
-		return m.ExtInfo()
 	case sysuser.FieldCreatedAt:
 		return m.CreatedAt()
 	case sysuser.FieldUpdatedAt:
@@ -19843,8 +19823,6 @@ func (m *SysUserMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldHomePath(ctx)
 	case sysuser.FieldStatus:
 		return m.OldStatus(ctx)
-	case sysuser.FieldExtInfo:
-		return m.OldExtInfo(ctx)
 	case sysuser.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case sysuser.FieldUpdatedAt:
@@ -19961,13 +19939,6 @@ func (m *SysUserMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetStatus(v)
-		return nil
-	case sysuser.FieldExtInfo:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetExtInfo(v)
 		return nil
 	case sysuser.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -20130,9 +20101,6 @@ func (m *SysUserMutation) ClearedFields() []string {
 	if m.FieldCleared(sysuser.FieldStatus) {
 		fields = append(fields, sysuser.FieldStatus)
 	}
-	if m.FieldCleared(sysuser.FieldExtInfo) {
-		fields = append(fields, sysuser.FieldExtInfo)
-	}
 	return fields
 }
 
@@ -20179,9 +20147,6 @@ func (m *SysUserMutation) ClearField(name string) error {
 		return nil
 	case sysuser.FieldStatus:
 		m.ClearStatus()
-		return nil
-	case sysuser.FieldExtInfo:
-		m.ClearExtInfo()
 		return nil
 	}
 	return fmt.Errorf("unknown SysUser nullable field %s", name)
@@ -20232,9 +20197,6 @@ func (m *SysUserMutation) ResetField(name string) error {
 		return nil
 	case sysuser.FieldStatus:
 		m.ResetStatus()
-		return nil
-	case sysuser.FieldExtInfo:
-		m.ResetExtInfo()
 		return nil
 	case sysuser.FieldCreatedAt:
 		m.ResetCreatedAt()

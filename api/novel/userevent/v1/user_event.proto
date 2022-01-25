@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package userevent.v1;
 
 import "google/api/annotations.proto";
@@ -101,7 +102,7 @@ message UserEventPageReq {
 // 查询搜索返回
 message UserEventPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -146,7 +147,7 @@ message UserEventReq {
 // 查询返回
 message UserEventReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -177,7 +178,7 @@ message UserEventCreateReq {
 // 创建UserEvent返回
 message UserEventCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -210,7 +211,7 @@ message UserEventUpdateReq {
 // 更新UserEvent返回
 message UserEventUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -232,7 +233,7 @@ message UserEventBatchDeleteReq {
 // 删除UserEvent返回
 message UserEventDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

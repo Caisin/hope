@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package syspost.v1;
 
 import "google/api/annotations.proto";
@@ -95,7 +96,7 @@ message SysPostPageReq {
 // 查询搜索返回
 message SysPostPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -134,7 +135,7 @@ message SysPostReq {
 // 查询返回
 message SysPostReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -159,7 +160,7 @@ message SysPostCreateReq {
 // 创建SysPost返回
 message SysPostCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -186,7 +187,7 @@ message SysPostUpdateReq {
 // 更新SysPost返回
 message SysPostUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -208,7 +209,7 @@ message SysPostBatchDeleteReq {
 // 删除SysPost返回
 message SysPostDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

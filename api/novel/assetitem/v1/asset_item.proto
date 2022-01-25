@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package assetitem.v1;
 
 import "google/api/annotations.proto";
@@ -97,7 +98,7 @@ message AssetItemPageReq {
 // 查询搜索返回
 message AssetItemPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -138,7 +139,7 @@ message AssetItemReq {
 // 查询返回
 message AssetItemReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -165,7 +166,7 @@ message AssetItemCreateReq {
 // 创建AssetItem返回
 message AssetItemCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -194,7 +195,7 @@ message AssetItemUpdateReq {
 // 更新AssetItem返回
 message AssetItemUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -216,7 +217,7 @@ message AssetItemBatchDeleteReq {
 // 删除AssetItem返回
 message AssetItemDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

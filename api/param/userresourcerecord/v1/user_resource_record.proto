@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package userresourcerecord.v1;
 
 import "google/api/annotations.proto";
@@ -105,7 +106,7 @@ message UserResourceRecordPageReq {
 // 查询搜索返回
 message UserResourceRecordPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -154,7 +155,7 @@ message UserResourceRecordReq {
 // 查询返回
 message UserResourceRecordReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -189,7 +190,7 @@ message UserResourceRecordCreateReq {
 // 创建UserResourceRecord返回
 message UserResourceRecordCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -226,7 +227,7 @@ message UserResourceRecordUpdateReq {
 // 更新UserResourceRecord返回
 message UserResourceRecordUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -248,7 +249,7 @@ message UserResourceRecordBatchDeleteReq {
 // 删除UserResourceRecord返回
 message UserResourceRecordDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

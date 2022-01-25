@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package novelbookshelf.v1;
 
 import "google/api/annotations.proto";
@@ -101,7 +102,7 @@ message NovelBookshelfPageReq {
 // 查询搜索返回
 message NovelBookshelfPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -146,7 +147,7 @@ message NovelBookshelfReq {
 // 查询返回
 message NovelBookshelfReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -177,7 +178,7 @@ message NovelBookshelfCreateReq {
 // 创建NovelBookshelf返回
 message NovelBookshelfCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -210,7 +211,7 @@ message NovelBookshelfUpdateReq {
 // 更新NovelBookshelf返回
 message NovelBookshelfUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -232,7 +233,7 @@ message NovelBookshelfBatchDeleteReq {
 // 删除NovelBookshelf返回
 message NovelBookshelfDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

@@ -37,21 +37,23 @@ func (r *sysMenuRepo) CreateSysMenu(ctx context.Context, req *v1.SysMenuCreateRe
 	}
 	now := time.Now()
 	return r.data.db.SysMenu.Create().
-		SetMenuName(req.MenuName).
+		SetParentId(req.ParentId).
+		SetName(req.Name).
 		SetTitle(req.Title).
+		SetRedirect(req.Redirect).
 		SetIcon(req.Icon).
 		SetPath(req.Path).
 		SetPaths(req.Paths).
 		SetMenuType(req.MenuType).
 		SetAction(req.Action).
 		SetPermission(req.Permission).
-		SetNoCache(req.NoCache).
-		SetBreadcrumb(req.Breadcrumb).
+		SetIgnoreKeepAlive(req.IgnoreKeepAlive).
+		SetHideBreadcrumb(req.HideBreadcrumb).
+		SetHideChildrenInMenu(req.HideChildrenInMenu).
 		SetComponent(req.Component).
 		SetSort(req.Sort).
-		SetVisible(req.Visible).
-		SetIsFrame(req.IsFrame).
-		SetSysApi(req.SysApi).
+		SetHideMenu(req.HideMenu).
+		SetFrameSrc(req.FrameSrc).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		SetCreateBy(claims.UserId).
@@ -130,11 +132,17 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 	if req.Id > 0 {
 		list = append(list, sysmenu.ID(req.Id))
 	}
-	if str.IsBlank(req.MenuName) {
-		list = append(list, sysmenu.MenuNameContains(req.MenuName))
+	if req.ParentId > 0 {
+		list = append(list, sysmenu.ParentId(req.ParentId))
+	}
+	if str.IsBlank(req.Name) {
+		list = append(list, sysmenu.NameContains(req.Name))
 	}
 	if str.IsBlank(req.Title) {
 		list = append(list, sysmenu.TitleContains(req.Title))
+	}
+	if str.IsBlank(req.Redirect) {
+		list = append(list, sysmenu.RedirectContains(req.Redirect))
 	}
 	if str.IsBlank(req.Icon) {
 		list = append(list, sysmenu.IconContains(req.Icon))
@@ -154,20 +162,18 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 	if str.IsBlank(req.Permission) {
 		list = append(list, sysmenu.PermissionContains(req.Permission))
 	}
-	list = append(list, sysmenu.NoCache(req.NoCache))
-	if str.IsBlank(req.Breadcrumb) {
-		list = append(list, sysmenu.BreadcrumbContains(req.Breadcrumb))
-	}
+	list = append(list, sysmenu.IgnoreKeepAlive(req.IgnoreKeepAlive))
+	list = append(list, sysmenu.HideBreadcrumb(req.HideBreadcrumb))
+	list = append(list, sysmenu.HideChildrenInMenu(req.HideChildrenInMenu))
 	if str.IsBlank(req.Component) {
 		list = append(list, sysmenu.ComponentContains(req.Component))
 	}
 	if req.Sort > 0 {
 		list = append(list, sysmenu.Sort(req.Sort))
 	}
-	list = append(list, sysmenu.Visible(req.Visible))
-	list = append(list, sysmenu.IsFrame(req.IsFrame))
-	if str.IsBlank(req.SysApi) {
-		list = append(list, sysmenu.SysApiContains(req.SysApi))
+	list = append(list, sysmenu.HideMenu(req.HideMenu))
+	if str.IsBlank(req.FrameSrc) {
+		list = append(list, sysmenu.FrameSrcContains(req.FrameSrc))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, sysmenu.CreatedAtGTE(req.CreatedAt.AsTime()))

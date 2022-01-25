@@ -197,20 +197,6 @@ func (suc *SysUserCreate) SetNillableStatus(s *string) *SysUserCreate {
 	return suc
 }
 
-// SetExtInfo sets the "extInfo" field.
-func (suc *SysUserCreate) SetExtInfo(s string) *SysUserCreate {
-	suc.mutation.SetExtInfo(s)
-	return suc
-}
-
-// SetNillableExtInfo sets the "extInfo" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableExtInfo(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetExtInfo(*s)
-	}
-	return suc
-}
-
 // SetCreatedAt sets the "createdAt" field.
 func (suc *SysUserCreate) SetCreatedAt(t time.Time) *SysUserCreate {
 	suc.mutation.SetCreatedAt(t)
@@ -605,14 +591,6 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 			Column: sysuser.FieldStatus,
 		})
 		_node.Status = value
-	}
-	if value, ok := suc.mutation.ExtInfo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldExtInfo,
-		})
-		_node.ExtInfo = value
 	}
 	if value, ok := suc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

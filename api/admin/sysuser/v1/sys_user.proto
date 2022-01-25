@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package sysuser.v1;
 
 import "google/api/annotations.proto";
@@ -89,18 +90,16 @@ message SysUserData {
     string homePath = 14;
     //状态
     string status = 15;
-    //拓展信息,facebook回传用的
-    string extInfo = 16;
     //创建时间
-    google.protobuf.Timestamp createdAt = 17;
+    google.protobuf.Timestamp createdAt = 16;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
+    google.protobuf.Timestamp updatedAt = 17;
     //创建者
-    int64 createBy = 19;
+    int64 createBy = 18;
     //更新者
-    int64 updateBy = 20;
+    int64 updateBy = 19;
     //租户
-    int64 tenantId = 21;
+    int64 tenantId = 20;
 
 }
 
@@ -115,7 +114,7 @@ message SysUserPageReq {
 // 查询搜索返回
 message SysUserPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -156,25 +155,23 @@ message SysUserReq {
     string homePath = 14;
     //状态
     string status = 15;
-    //拓展信息,facebook回传用的
-    string extInfo = 16;
     //创建时间
-    google.protobuf.Timestamp createdAt = 17;
+    google.protobuf.Timestamp createdAt = 16;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 18;
+    google.protobuf.Timestamp updatedAt = 17;
     //创建者
-    int64 createBy = 19;
+    int64 createBy = 18;
     //更新者
-    int64 updateBy = 20;
+    int64 updateBy = 19;
     //租户
-    int64 tenantId = 21;
+    int64 tenantId = 20;
 
 }
 
 // 查询返回
 message SysUserReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -211,15 +208,13 @@ message SysUserCreateReq {
     string homePath = 13;
     //状态
     string status = 14;
-    //拓展信息,facebook回传用的
-    string extInfo = 15;
 
 }
 
 // 创建SysUser返回
 message SysUserCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -257,8 +252,6 @@ message SysUserUpdateReq {
     string homePath = 14;
     //状态
     string status = 15;
-    //拓展信息,facebook回传用的
-    string extInfo = 16;
 
 }
 
@@ -266,7 +259,7 @@ message SysUserUpdateReq {
 // 更新SysUser返回
 message SysUserUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -288,7 +281,7 @@ message SysUserBatchDeleteReq {
 // 删除SysUser返回
 message SysUserDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

@@ -30,6 +30,8 @@ type AuthClient interface {
 	GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*LoginReply, error)
 	// 获取用户权限编码
 	GetPermCode(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error)
+	// 获取用户菜单列表
+	GetMenuList(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error)
 }
 
 type authClient struct {
@@ -76,6 +78,15 @@ func (c *authClient) GetPermCode(ctx context.Context, in *GetPermReq, opts ...gr
 	return out, nil
 }
 
+func (c *authClient) GetMenuList(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error) {
+	out := new(GetPermReply)
+	err := c.cc.Invoke(ctx, "/sysuser.v1.Auth/GetMenuList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
@@ -88,6 +99,8 @@ type AuthServer interface {
 	GetUserInfo(context.Context, *GetUserInfoReq) (*LoginReply, error)
 	// 获取用户权限编码
 	GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error)
+	// 获取用户菜单列表
+	GetMenuList(context.Context, *GetPermReq) (*GetPermReply, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -106,6 +119,9 @@ func (UnimplementedAuthServer) GetUserInfo(context.Context, *GetUserInfoReq) (*L
 }
 func (UnimplementedAuthServer) GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPermCode not implemented")
+}
+func (UnimplementedAuthServer) GetMenuList(context.Context, *GetPermReq) (*GetPermReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMenuList not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -192,6 +208,24 @@ func _Auth_GetPermCode_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_GetMenuList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPermReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetMenuList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysuser.v1.Auth/GetMenuList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetMenuList(ctx, req.(*GetPermReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -214,6 +248,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPermCode",
 			Handler:    _Auth_GetPermCode_Handler,
+		},
+		{
+			MethodName: "GetMenuList",
+			Handler:    _Auth_GetMenuList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

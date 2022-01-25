@@ -75,7 +75,7 @@ message {{.name}}PageReq {
 // 查询搜索返回
 message {{.name}}PageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -93,7 +93,7 @@ message {{.name}}Req {
 // 查询返回
 message {{.name}}Reply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -108,7 +108,7 @@ message {{.name}}CreateReq {
 // 创建{{.name}}返回
 message {{.name}}CreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -124,7 +124,7 @@ message {{.name}}UpdateReq {
 // 更新{{.name}}返回
 message {{.name}}UpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -146,7 +146,7 @@ message {{.name}}BatchDeleteReq {
 // 删除{{.name}}返回
 message {{.name}}DeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

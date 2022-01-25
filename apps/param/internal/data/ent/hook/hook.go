@@ -2,7 +2,11 @@
 
 package hook
 
-import "hope/apps/param/internal/data/ent"
+import (
+	"context"
+	"fmt"
+	"hope/apps/param/internal/data/ent"
+)
 
 // The NovelPayConfigFunc type is an adapter to allow the use of ordinary
 // function as NovelPayConfig mutator.

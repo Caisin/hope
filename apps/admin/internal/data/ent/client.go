@@ -1268,15 +1268,15 @@ func (c *SysMenuClient) QueryParent(sm *SysMenu) *SysMenuQuery {
 	return query
 }
 
-// QueryChildes queries the childes edge of a SysMenu.
-func (c *SysMenuClient) QueryChildes(sm *SysMenu) *SysMenuQuery {
+// QueryChildren queries the children edge of a SysMenu.
+func (c *SysMenuClient) QueryChildren(sm *SysMenu) *SysMenuQuery {
 	query := &SysMenuQuery{config: c.config}
 	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
 		id := sm.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysmenu.Table, sysmenu.FieldID, id),
 			sqlgraph.To(sysmenu.Table, sysmenu.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, sysmenu.ChildesTable, sysmenu.ChildesColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysmenu.ChildrenTable, sysmenu.ChildrenColumn),
 		)
 		fromV = sqlgraph.Neighbors(sm.driver.Dialect(), step)
 		return fromV, nil

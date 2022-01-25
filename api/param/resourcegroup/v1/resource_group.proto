@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package resourcegroup.v1;
 
 import "google/api/annotations.proto";
@@ -87,7 +88,7 @@ message ResourceGroupPageReq {
 // 查询搜索返回
 message ResourceGroupPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -118,7 +119,7 @@ message ResourceGroupReq {
 // 查询返回
 message ResourceGroupReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -135,7 +136,7 @@ message ResourceGroupCreateReq {
 // 创建ResourceGroup返回
 message ResourceGroupCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -154,7 +155,7 @@ message ResourceGroupUpdateReq {
 // 更新ResourceGroup返回
 message ResourceGroupUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -176,7 +177,7 @@ message ResourceGroupBatchDeleteReq {
 // 删除ResourceGroup返回
 message ResourceGroupDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

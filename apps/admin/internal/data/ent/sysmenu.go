@@ -19,12 +19,15 @@ type SysMenu struct {
 	// ParentId holds the value of the "parentId" field.
 	// 父菜单Id
 	ParentId int64 `json:"parentId,omitempty"`
-	// MenuName holds the value of the "menuName" field.
+	// Name holds the value of the "name" field.
 	// 菜单名
-	MenuName string `json:"menuName,omitempty"`
+	Name string `json:"name,omitempty"`
 	// Title holds the value of the "title" field.
 	// 菜单标题
 	Title string `json:"title,omitempty"`
+	// Redirect holds the value of the "redirect" field.
+	// 跳转路径
+	Redirect string `json:"redirect,omitempty"`
 	// Icon holds the value of the "icon" field.
 	// 图标
 	Icon string `json:"icon,omitempty"`
@@ -42,26 +45,27 @@ type SysMenu struct {
 	// Permission holds the value of the "permission" field.
 	// 权限
 	Permission string `json:"permission,omitempty"`
-	// NoCache holds the value of the "noCache" field.
-	// 无缓存
-	NoCache bool `json:"noCache,omitempty"`
-	// Breadcrumb holds the value of the "breadcrumb" field.
-	// 面包屑
-	Breadcrumb string `json:"breadcrumb,omitempty"`
+	// IgnoreKeepAlive holds the value of the "ignoreKeepAlive" field.
+	// 不缓存
+	IgnoreKeepAlive bool `json:"ignoreKeepAlive,omitempty"`
+	// HideBreadcrumb holds the value of the "hideBreadcrumb" field.
+	// 隐藏面包屑
+	HideBreadcrumb bool `json:"hideBreadcrumb,omitempty"`
+	// HideChildrenInMenu holds the value of the "hideChildrenInMenu" field.
+	// 隐藏子菜单
+	HideChildrenInMenu bool `json:"hideChildrenInMenu,omitempty"`
 	// Component holds the value of the "component" field.
 	// 组件
 	Component string `json:"component,omitempty"`
 	// Sort holds the value of the "sort" field.
 	// 排序
 	Sort int32 `json:"sort,omitempty"`
-	// Visible holds the value of the "visible" field.
-	// 是否可见
-	Visible bool `json:"visible,omitempty"`
-	// IsFrame holds the value of the "isFrame" field.
-	// 是否外链1是0否
-	IsFrame bool `json:"isFrame,omitempty"`
-	// SysApi holds the value of the "sysApi" field.
-	SysApi string `json:"sysApi,omitempty"`
+	// HideMenu holds the value of the "hideMenu" field.
+	// 影藏菜单
+	HideMenu bool `json:"hideMenu,omitempty"`
+	// FrameSrc holds the value of the "frameSrc" field.
+	// 外链地址
+	FrameSrc string `json:"frameSrc,omitempty"`
 	// CreatedAt holds the value of the "createdAt" field.
 	// 创建时间
 	CreatedAt time.Time `json:"createdAt,omitempty"`
@@ -88,8 +92,8 @@ type SysMenuEdges struct {
 	Role []*SysRole `json:"role,omitempty"`
 	// Parent holds the value of the parent edge.
 	Parent *SysMenu `json:"parent,omitempty"`
-	// Childes holds the value of the childes edge.
-	Childes []*SysMenu `json:"childes,omitempty"`
+	// Children holds the value of the children edge.
+	Children []*SysMenu `json:"children,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
 	loadedTypes [3]bool
@@ -118,13 +122,13 @@ func (e SysMenuEdges) ParentOrErr() (*SysMenu, error) {
 	return nil, &NotLoadedError{edge: "parent"}
 }
 
-// ChildesOrErr returns the Childes value or an error if the edge
+// ChildrenOrErr returns the Children value or an error if the edge
 // was not loaded in eager-loading.
-func (e SysMenuEdges) ChildesOrErr() ([]*SysMenu, error) {
+func (e SysMenuEdges) ChildrenOrErr() ([]*SysMenu, error) {
 	if e.loadedTypes[2] {
-		return e.Childes, nil
+		return e.Children, nil
 	}
-	return nil, &NotLoadedError{edge: "childes"}
+	return nil, &NotLoadedError{edge: "children"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -132,11 +136,11 @@ func (*SysMenu) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysmenu.FieldNoCache, sysmenu.FieldVisible, sysmenu.FieldIsFrame:
+		case sysmenu.FieldIgnoreKeepAlive, sysmenu.FieldHideBreadcrumb, sysmenu.FieldHideChildrenInMenu, sysmenu.FieldHideMenu:
 			values[i] = new(sql.NullBool)
 		case sysmenu.FieldID, sysmenu.FieldParentId, sysmenu.FieldSort, sysmenu.FieldCreateBy, sysmenu.FieldUpdateBy, sysmenu.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysmenu.FieldMenuName, sysmenu.FieldTitle, sysmenu.FieldIcon, sysmenu.FieldPath, sysmenu.FieldPaths, sysmenu.FieldMenuType, sysmenu.FieldAction, sysmenu.FieldPermission, sysmenu.FieldBreadcrumb, sysmenu.FieldComponent, sysmenu.FieldSysApi:
+		case sysmenu.FieldName, sysmenu.FieldTitle, sysmenu.FieldRedirect, sysmenu.FieldIcon, sysmenu.FieldPath, sysmenu.FieldPaths, sysmenu.FieldMenuType, sysmenu.FieldAction, sysmenu.FieldPermission, sysmenu.FieldComponent, sysmenu.FieldFrameSrc:
 			values[i] = new(sql.NullString)
 		case sysmenu.FieldCreatedAt, sysmenu.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -167,17 +171,23 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				sm.ParentId = value.Int64
 			}
-		case sysmenu.FieldMenuName:
+		case sysmenu.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field menuName", values[i])
+				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				sm.MenuName = value.String
+				sm.Name = value.String
 			}
 		case sysmenu.FieldTitle:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field title", values[i])
 			} else if value.Valid {
 				sm.Title = value.String
+			}
+		case sysmenu.FieldRedirect:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field redirect", values[i])
+			} else if value.Valid {
+				sm.Redirect = value.String
 			}
 		case sysmenu.FieldIcon:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -215,17 +225,23 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				sm.Permission = value.String
 			}
-		case sysmenu.FieldNoCache:
+		case sysmenu.FieldIgnoreKeepAlive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field noCache", values[i])
+				return fmt.Errorf("unexpected type %T for field ignoreKeepAlive", values[i])
 			} else if value.Valid {
-				sm.NoCache = value.Bool
+				sm.IgnoreKeepAlive = value.Bool
 			}
-		case sysmenu.FieldBreadcrumb:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field breadcrumb", values[i])
+		case sysmenu.FieldHideBreadcrumb:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field hideBreadcrumb", values[i])
 			} else if value.Valid {
-				sm.Breadcrumb = value.String
+				sm.HideBreadcrumb = value.Bool
+			}
+		case sysmenu.FieldHideChildrenInMenu:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field hideChildrenInMenu", values[i])
+			} else if value.Valid {
+				sm.HideChildrenInMenu = value.Bool
 			}
 		case sysmenu.FieldComponent:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -239,23 +255,17 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				sm.Sort = int32(value.Int64)
 			}
-		case sysmenu.FieldVisible:
+		case sysmenu.FieldHideMenu:
 			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field visible", values[i])
+				return fmt.Errorf("unexpected type %T for field hideMenu", values[i])
 			} else if value.Valid {
-				sm.Visible = value.Bool
+				sm.HideMenu = value.Bool
 			}
-		case sysmenu.FieldIsFrame:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field isFrame", values[i])
-			} else if value.Valid {
-				sm.IsFrame = value.Bool
-			}
-		case sysmenu.FieldSysApi:
+		case sysmenu.FieldFrameSrc:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field sysApi", values[i])
+				return fmt.Errorf("unexpected type %T for field frameSrc", values[i])
 			} else if value.Valid {
-				sm.SysApi = value.String
+				sm.FrameSrc = value.String
 			}
 		case sysmenu.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -302,9 +312,9 @@ func (sm *SysMenu) QueryParent() *SysMenuQuery {
 	return (&SysMenuClient{config: sm.config}).QueryParent(sm)
 }
 
-// QueryChildes queries the "childes" edge of the SysMenu entity.
-func (sm *SysMenu) QueryChildes() *SysMenuQuery {
-	return (&SysMenuClient{config: sm.config}).QueryChildes(sm)
+// QueryChildren queries the "children" edge of the SysMenu entity.
+func (sm *SysMenu) QueryChildren() *SysMenuQuery {
+	return (&SysMenuClient{config: sm.config}).QueryChildren(sm)
 }
 
 // Update returns a builder for updating this SysMenu.
@@ -332,10 +342,12 @@ func (sm *SysMenu) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", sm.ID))
 	builder.WriteString(", parentId=")
 	builder.WriteString(fmt.Sprintf("%v", sm.ParentId))
-	builder.WriteString(", menuName=")
-	builder.WriteString(sm.MenuName)
+	builder.WriteString(", name=")
+	builder.WriteString(sm.Name)
 	builder.WriteString(", title=")
 	builder.WriteString(sm.Title)
+	builder.WriteString(", redirect=")
+	builder.WriteString(sm.Redirect)
 	builder.WriteString(", icon=")
 	builder.WriteString(sm.Icon)
 	builder.WriteString(", path=")
@@ -348,20 +360,20 @@ func (sm *SysMenu) String() string {
 	builder.WriteString(sm.Action)
 	builder.WriteString(", permission=")
 	builder.WriteString(sm.Permission)
-	builder.WriteString(", noCache=")
-	builder.WriteString(fmt.Sprintf("%v", sm.NoCache))
-	builder.WriteString(", breadcrumb=")
-	builder.WriteString(sm.Breadcrumb)
+	builder.WriteString(", ignoreKeepAlive=")
+	builder.WriteString(fmt.Sprintf("%v", sm.IgnoreKeepAlive))
+	builder.WriteString(", hideBreadcrumb=")
+	builder.WriteString(fmt.Sprintf("%v", sm.HideBreadcrumb))
+	builder.WriteString(", hideChildrenInMenu=")
+	builder.WriteString(fmt.Sprintf("%v", sm.HideChildrenInMenu))
 	builder.WriteString(", component=")
 	builder.WriteString(sm.Component)
 	builder.WriteString(", sort=")
 	builder.WriteString(fmt.Sprintf("%v", sm.Sort))
-	builder.WriteString(", visible=")
-	builder.WriteString(fmt.Sprintf("%v", sm.Visible))
-	builder.WriteString(", isFrame=")
-	builder.WriteString(fmt.Sprintf("%v", sm.IsFrame))
-	builder.WriteString(", sysApi=")
-	builder.WriteString(sm.SysApi)
+	builder.WriteString(", hideMenu=")
+	builder.WriteString(fmt.Sprintf("%v", sm.HideMenu))
+	builder.WriteString(", frameSrc=")
+	builder.WriteString(sm.FrameSrc)
 	builder.WriteString(", createdAt=")
 	builder.WriteString(sm.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", updatedAt=")

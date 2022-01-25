@@ -43,23 +43,9 @@ func (smu *SysMenuUpdate) SetNillableParentId(i *int64) *SysMenuUpdate {
 	return smu
 }
 
-// SetMenuName sets the "menuName" field.
-func (smu *SysMenuUpdate) SetMenuName(s string) *SysMenuUpdate {
-	smu.mutation.SetMenuName(s)
-	return smu
-}
-
-// SetNillableMenuName sets the "menuName" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableMenuName(s *string) *SysMenuUpdate {
-	if s != nil {
-		smu.SetMenuName(*s)
-	}
-	return smu
-}
-
-// ClearMenuName clears the value of the "menuName" field.
-func (smu *SysMenuUpdate) ClearMenuName() *SysMenuUpdate {
-	smu.mutation.ClearMenuName()
+// SetName sets the "name" field.
+func (smu *SysMenuUpdate) SetName(s string) *SysMenuUpdate {
+	smu.mutation.SetName(s)
 	return smu
 }
 
@@ -69,17 +55,23 @@ func (smu *SysMenuUpdate) SetTitle(s string) *SysMenuUpdate {
 	return smu
 }
 
-// SetNillableTitle sets the "title" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableTitle(s *string) *SysMenuUpdate {
+// SetRedirect sets the "redirect" field.
+func (smu *SysMenuUpdate) SetRedirect(s string) *SysMenuUpdate {
+	smu.mutation.SetRedirect(s)
+	return smu
+}
+
+// SetNillableRedirect sets the "redirect" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableRedirect(s *string) *SysMenuUpdate {
 	if s != nil {
-		smu.SetTitle(*s)
+		smu.SetRedirect(*s)
 	}
 	return smu
 }
 
-// ClearTitle clears the value of the "title" field.
-func (smu *SysMenuUpdate) ClearTitle() *SysMenuUpdate {
-	smu.mutation.ClearTitle()
+// ClearRedirect clears the value of the "redirect" field.
+func (smu *SysMenuUpdate) ClearRedirect() *SysMenuUpdate {
+	smu.mutation.ClearRedirect()
 	return smu
 }
 
@@ -203,43 +195,63 @@ func (smu *SysMenuUpdate) ClearPermission() *SysMenuUpdate {
 	return smu
 }
 
-// SetNoCache sets the "noCache" field.
-func (smu *SysMenuUpdate) SetNoCache(b bool) *SysMenuUpdate {
-	smu.mutation.SetNoCache(b)
+// SetIgnoreKeepAlive sets the "ignoreKeepAlive" field.
+func (smu *SysMenuUpdate) SetIgnoreKeepAlive(b bool) *SysMenuUpdate {
+	smu.mutation.SetIgnoreKeepAlive(b)
 	return smu
 }
 
-// SetNillableNoCache sets the "noCache" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableNoCache(b *bool) *SysMenuUpdate {
+// SetNillableIgnoreKeepAlive sets the "ignoreKeepAlive" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableIgnoreKeepAlive(b *bool) *SysMenuUpdate {
 	if b != nil {
-		smu.SetNoCache(*b)
+		smu.SetIgnoreKeepAlive(*b)
 	}
 	return smu
 }
 
-// ClearNoCache clears the value of the "noCache" field.
-func (smu *SysMenuUpdate) ClearNoCache() *SysMenuUpdate {
-	smu.mutation.ClearNoCache()
+// ClearIgnoreKeepAlive clears the value of the "ignoreKeepAlive" field.
+func (smu *SysMenuUpdate) ClearIgnoreKeepAlive() *SysMenuUpdate {
+	smu.mutation.ClearIgnoreKeepAlive()
 	return smu
 }
 
-// SetBreadcrumb sets the "breadcrumb" field.
-func (smu *SysMenuUpdate) SetBreadcrumb(s string) *SysMenuUpdate {
-	smu.mutation.SetBreadcrumb(s)
+// SetHideBreadcrumb sets the "hideBreadcrumb" field.
+func (smu *SysMenuUpdate) SetHideBreadcrumb(b bool) *SysMenuUpdate {
+	smu.mutation.SetHideBreadcrumb(b)
 	return smu
 }
 
-// SetNillableBreadcrumb sets the "breadcrumb" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableBreadcrumb(s *string) *SysMenuUpdate {
-	if s != nil {
-		smu.SetBreadcrumb(*s)
+// SetNillableHideBreadcrumb sets the "hideBreadcrumb" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableHideBreadcrumb(b *bool) *SysMenuUpdate {
+	if b != nil {
+		smu.SetHideBreadcrumb(*b)
 	}
 	return smu
 }
 
-// ClearBreadcrumb clears the value of the "breadcrumb" field.
-func (smu *SysMenuUpdate) ClearBreadcrumb() *SysMenuUpdate {
-	smu.mutation.ClearBreadcrumb()
+// ClearHideBreadcrumb clears the value of the "hideBreadcrumb" field.
+func (smu *SysMenuUpdate) ClearHideBreadcrumb() *SysMenuUpdate {
+	smu.mutation.ClearHideBreadcrumb()
+	return smu
+}
+
+// SetHideChildrenInMenu sets the "hideChildrenInMenu" field.
+func (smu *SysMenuUpdate) SetHideChildrenInMenu(b bool) *SysMenuUpdate {
+	smu.mutation.SetHideChildrenInMenu(b)
+	return smu
+}
+
+// SetNillableHideChildrenInMenu sets the "hideChildrenInMenu" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableHideChildrenInMenu(b *bool) *SysMenuUpdate {
+	if b != nil {
+		smu.SetHideChildrenInMenu(*b)
+	}
+	return smu
+}
+
+// ClearHideChildrenInMenu clears the value of the "hideChildrenInMenu" field.
+func (smu *SysMenuUpdate) ClearHideChildrenInMenu() *SysMenuUpdate {
+	smu.mutation.ClearHideChildrenInMenu()
 	return smu
 }
 
@@ -290,63 +302,43 @@ func (smu *SysMenuUpdate) ClearSort() *SysMenuUpdate {
 	return smu
 }
 
-// SetVisible sets the "visible" field.
-func (smu *SysMenuUpdate) SetVisible(b bool) *SysMenuUpdate {
-	smu.mutation.SetVisible(b)
+// SetHideMenu sets the "hideMenu" field.
+func (smu *SysMenuUpdate) SetHideMenu(b bool) *SysMenuUpdate {
+	smu.mutation.SetHideMenu(b)
 	return smu
 }
 
-// SetNillableVisible sets the "visible" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableVisible(b *bool) *SysMenuUpdate {
+// SetNillableHideMenu sets the "hideMenu" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableHideMenu(b *bool) *SysMenuUpdate {
 	if b != nil {
-		smu.SetVisible(*b)
+		smu.SetHideMenu(*b)
 	}
 	return smu
 }
 
-// ClearVisible clears the value of the "visible" field.
-func (smu *SysMenuUpdate) ClearVisible() *SysMenuUpdate {
-	smu.mutation.ClearVisible()
+// ClearHideMenu clears the value of the "hideMenu" field.
+func (smu *SysMenuUpdate) ClearHideMenu() *SysMenuUpdate {
+	smu.mutation.ClearHideMenu()
 	return smu
 }
 
-// SetIsFrame sets the "isFrame" field.
-func (smu *SysMenuUpdate) SetIsFrame(b bool) *SysMenuUpdate {
-	smu.mutation.SetIsFrame(b)
+// SetFrameSrc sets the "frameSrc" field.
+func (smu *SysMenuUpdate) SetFrameSrc(s string) *SysMenuUpdate {
+	smu.mutation.SetFrameSrc(s)
 	return smu
 }
 
-// SetNillableIsFrame sets the "isFrame" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableIsFrame(b *bool) *SysMenuUpdate {
-	if b != nil {
-		smu.SetIsFrame(*b)
-	}
-	return smu
-}
-
-// ClearIsFrame clears the value of the "isFrame" field.
-func (smu *SysMenuUpdate) ClearIsFrame() *SysMenuUpdate {
-	smu.mutation.ClearIsFrame()
-	return smu
-}
-
-// SetSysApi sets the "sysApi" field.
-func (smu *SysMenuUpdate) SetSysApi(s string) *SysMenuUpdate {
-	smu.mutation.SetSysApi(s)
-	return smu
-}
-
-// SetNillableSysApi sets the "sysApi" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableSysApi(s *string) *SysMenuUpdate {
+// SetNillableFrameSrc sets the "frameSrc" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableFrameSrc(s *string) *SysMenuUpdate {
 	if s != nil {
-		smu.SetSysApi(*s)
+		smu.SetFrameSrc(*s)
 	}
 	return smu
 }
 
-// ClearSysApi clears the value of the "sysApi" field.
-func (smu *SysMenuUpdate) ClearSysApi() *SysMenuUpdate {
-	smu.mutation.ClearSysApi()
+// ClearFrameSrc clears the value of the "frameSrc" field.
+func (smu *SysMenuUpdate) ClearFrameSrc() *SysMenuUpdate {
+	smu.mutation.ClearFrameSrc()
 	return smu
 }
 
@@ -445,19 +437,19 @@ func (smu *SysMenuUpdate) SetParent(s *SysMenu) *SysMenuUpdate {
 	return smu.SetParentID(s.ID)
 }
 
-// AddChildeIDs adds the "childes" edge to the SysMenu entity by IDs.
-func (smu *SysMenuUpdate) AddChildeIDs(ids ...int64) *SysMenuUpdate {
-	smu.mutation.AddChildeIDs(ids...)
+// AddChildIDs adds the "children" edge to the SysMenu entity by IDs.
+func (smu *SysMenuUpdate) AddChildIDs(ids ...int64) *SysMenuUpdate {
+	smu.mutation.AddChildIDs(ids...)
 	return smu
 }
 
-// AddChildes adds the "childes" edges to the SysMenu entity.
-func (smu *SysMenuUpdate) AddChildes(s ...*SysMenu) *SysMenuUpdate {
+// AddChildren adds the "children" edges to the SysMenu entity.
+func (smu *SysMenuUpdate) AddChildren(s ...*SysMenu) *SysMenuUpdate {
 	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return smu.AddChildeIDs(ids...)
+	return smu.AddChildIDs(ids...)
 }
 
 // Mutation returns the SysMenuMutation object of the builder.
@@ -492,25 +484,25 @@ func (smu *SysMenuUpdate) ClearParent() *SysMenuUpdate {
 	return smu
 }
 
-// ClearChildes clears all "childes" edges to the SysMenu entity.
-func (smu *SysMenuUpdate) ClearChildes() *SysMenuUpdate {
-	smu.mutation.ClearChildes()
+// ClearChildren clears all "children" edges to the SysMenu entity.
+func (smu *SysMenuUpdate) ClearChildren() *SysMenuUpdate {
+	smu.mutation.ClearChildren()
 	return smu
 }
 
-// RemoveChildeIDs removes the "childes" edge to SysMenu entities by IDs.
-func (smu *SysMenuUpdate) RemoveChildeIDs(ids ...int64) *SysMenuUpdate {
-	smu.mutation.RemoveChildeIDs(ids...)
+// RemoveChildIDs removes the "children" edge to SysMenu entities by IDs.
+func (smu *SysMenuUpdate) RemoveChildIDs(ids ...int64) *SysMenuUpdate {
+	smu.mutation.RemoveChildIDs(ids...)
 	return smu
 }
 
-// RemoveChildes removes "childes" edges to SysMenu entities.
-func (smu *SysMenuUpdate) RemoveChildes(s ...*SysMenu) *SysMenuUpdate {
+// RemoveChildren removes "children" edges to SysMenu entities.
+func (smu *SysMenuUpdate) RemoveChildren(s ...*SysMenu) *SysMenuUpdate {
 	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return smu.RemoveChildeIDs(ids...)
+	return smu.RemoveChildIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -608,17 +600,11 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := smu.mutation.MenuName(); ok {
+	if value, ok := smu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysmenu.FieldMenuName,
-		})
-	}
-	if smu.mutation.MenuNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldMenuName,
+			Column: sysmenu.FieldName,
 		})
 	}
 	if value, ok := smu.mutation.Title(); ok {
@@ -628,10 +614,17 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysmenu.FieldTitle,
 		})
 	}
-	if smu.mutation.TitleCleared() {
+	if value, ok := smu.mutation.Redirect(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysmenu.FieldRedirect,
+		})
+	}
+	if smu.mutation.RedirectCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysmenu.FieldTitle,
+			Column: sysmenu.FieldRedirect,
 		})
 	}
 	if value, ok := smu.mutation.Icon(); ok {
@@ -712,30 +705,43 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysmenu.FieldPermission,
 		})
 	}
-	if value, ok := smu.mutation.NoCache(); ok {
+	if value, ok := smu.mutation.IgnoreKeepAlive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldNoCache,
+			Column: sysmenu.FieldIgnoreKeepAlive,
 		})
 	}
-	if smu.mutation.NoCacheCleared() {
+	if smu.mutation.IgnoreKeepAliveCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
-			Column: sysmenu.FieldNoCache,
+			Column: sysmenu.FieldIgnoreKeepAlive,
 		})
 	}
-	if value, ok := smu.mutation.Breadcrumb(); ok {
+	if value, ok := smu.mutation.HideBreadcrumb(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldBreadcrumb,
+			Column: sysmenu.FieldHideBreadcrumb,
 		})
 	}
-	if smu.mutation.BreadcrumbCleared() {
+	if smu.mutation.HideBreadcrumbCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldBreadcrumb,
+			Type:   field.TypeBool,
+			Column: sysmenu.FieldHideBreadcrumb,
+		})
+	}
+	if value, ok := smu.mutation.HideChildrenInMenu(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldHideChildrenInMenu,
+		})
+	}
+	if smu.mutation.HideChildrenInMenuCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysmenu.FieldHideChildrenInMenu,
 		})
 	}
 	if value, ok := smu.mutation.Component(); ok {
@@ -771,43 +777,30 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysmenu.FieldSort,
 		})
 	}
-	if value, ok := smu.mutation.Visible(); ok {
+	if value, ok := smu.mutation.HideMenu(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldVisible,
+			Column: sysmenu.FieldHideMenu,
 		})
 	}
-	if smu.mutation.VisibleCleared() {
+	if smu.mutation.HideMenuCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
-			Column: sysmenu.FieldVisible,
+			Column: sysmenu.FieldHideMenu,
 		})
 	}
-	if value, ok := smu.mutation.IsFrame(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsFrame,
-		})
-	}
-	if smu.mutation.IsFrameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysmenu.FieldIsFrame,
-		})
-	}
-	if value, ok := smu.mutation.SysApi(); ok {
+	if value, ok := smu.mutation.FrameSrc(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysmenu.FieldSysApi,
+			Column: sysmenu.FieldFrameSrc,
 		})
 	}
-	if smu.mutation.SysApiCleared() {
+	if smu.mutation.FrameSrcCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysmenu.FieldSysApi,
+			Column: sysmenu.FieldFrameSrc,
 		})
 	}
 	if value, ok := smu.mutation.UpdatedAt(); ok {
@@ -948,12 +941,12 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if smu.mutation.ChildesCleared() {
+	if smu.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   sysmenu.ChildesTable,
-			Columns: []string{sysmenu.ChildesColumn},
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -964,12 +957,12 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := smu.mutation.RemovedChildesIDs(); len(nodes) > 0 && !smu.mutation.ChildesCleared() {
+	if nodes := smu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !smu.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   sysmenu.ChildesTable,
-			Columns: []string{sysmenu.ChildesColumn},
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -983,12 +976,12 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := smu.mutation.ChildesIDs(); len(nodes) > 0 {
+	if nodes := smu.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   sysmenu.ChildesTable,
-			Columns: []string{sysmenu.ChildesColumn},
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -1035,23 +1028,9 @@ func (smuo *SysMenuUpdateOne) SetNillableParentId(i *int64) *SysMenuUpdateOne {
 	return smuo
 }
 
-// SetMenuName sets the "menuName" field.
-func (smuo *SysMenuUpdateOne) SetMenuName(s string) *SysMenuUpdateOne {
-	smuo.mutation.SetMenuName(s)
-	return smuo
-}
-
-// SetNillableMenuName sets the "menuName" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableMenuName(s *string) *SysMenuUpdateOne {
-	if s != nil {
-		smuo.SetMenuName(*s)
-	}
-	return smuo
-}
-
-// ClearMenuName clears the value of the "menuName" field.
-func (smuo *SysMenuUpdateOne) ClearMenuName() *SysMenuUpdateOne {
-	smuo.mutation.ClearMenuName()
+// SetName sets the "name" field.
+func (smuo *SysMenuUpdateOne) SetName(s string) *SysMenuUpdateOne {
+	smuo.mutation.SetName(s)
 	return smuo
 }
 
@@ -1061,17 +1040,23 @@ func (smuo *SysMenuUpdateOne) SetTitle(s string) *SysMenuUpdateOne {
 	return smuo
 }
 
-// SetNillableTitle sets the "title" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableTitle(s *string) *SysMenuUpdateOne {
+// SetRedirect sets the "redirect" field.
+func (smuo *SysMenuUpdateOne) SetRedirect(s string) *SysMenuUpdateOne {
+	smuo.mutation.SetRedirect(s)
+	return smuo
+}
+
+// SetNillableRedirect sets the "redirect" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableRedirect(s *string) *SysMenuUpdateOne {
 	if s != nil {
-		smuo.SetTitle(*s)
+		smuo.SetRedirect(*s)
 	}
 	return smuo
 }
 
-// ClearTitle clears the value of the "title" field.
-func (smuo *SysMenuUpdateOne) ClearTitle() *SysMenuUpdateOne {
-	smuo.mutation.ClearTitle()
+// ClearRedirect clears the value of the "redirect" field.
+func (smuo *SysMenuUpdateOne) ClearRedirect() *SysMenuUpdateOne {
+	smuo.mutation.ClearRedirect()
 	return smuo
 }
 
@@ -1195,43 +1180,63 @@ func (smuo *SysMenuUpdateOne) ClearPermission() *SysMenuUpdateOne {
 	return smuo
 }
 
-// SetNoCache sets the "noCache" field.
-func (smuo *SysMenuUpdateOne) SetNoCache(b bool) *SysMenuUpdateOne {
-	smuo.mutation.SetNoCache(b)
+// SetIgnoreKeepAlive sets the "ignoreKeepAlive" field.
+func (smuo *SysMenuUpdateOne) SetIgnoreKeepAlive(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetIgnoreKeepAlive(b)
 	return smuo
 }
 
-// SetNillableNoCache sets the "noCache" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableNoCache(b *bool) *SysMenuUpdateOne {
+// SetNillableIgnoreKeepAlive sets the "ignoreKeepAlive" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableIgnoreKeepAlive(b *bool) *SysMenuUpdateOne {
 	if b != nil {
-		smuo.SetNoCache(*b)
+		smuo.SetIgnoreKeepAlive(*b)
 	}
 	return smuo
 }
 
-// ClearNoCache clears the value of the "noCache" field.
-func (smuo *SysMenuUpdateOne) ClearNoCache() *SysMenuUpdateOne {
-	smuo.mutation.ClearNoCache()
+// ClearIgnoreKeepAlive clears the value of the "ignoreKeepAlive" field.
+func (smuo *SysMenuUpdateOne) ClearIgnoreKeepAlive() *SysMenuUpdateOne {
+	smuo.mutation.ClearIgnoreKeepAlive()
 	return smuo
 }
 
-// SetBreadcrumb sets the "breadcrumb" field.
-func (smuo *SysMenuUpdateOne) SetBreadcrumb(s string) *SysMenuUpdateOne {
-	smuo.mutation.SetBreadcrumb(s)
+// SetHideBreadcrumb sets the "hideBreadcrumb" field.
+func (smuo *SysMenuUpdateOne) SetHideBreadcrumb(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetHideBreadcrumb(b)
 	return smuo
 }
 
-// SetNillableBreadcrumb sets the "breadcrumb" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableBreadcrumb(s *string) *SysMenuUpdateOne {
-	if s != nil {
-		smuo.SetBreadcrumb(*s)
+// SetNillableHideBreadcrumb sets the "hideBreadcrumb" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableHideBreadcrumb(b *bool) *SysMenuUpdateOne {
+	if b != nil {
+		smuo.SetHideBreadcrumb(*b)
 	}
 	return smuo
 }
 
-// ClearBreadcrumb clears the value of the "breadcrumb" field.
-func (smuo *SysMenuUpdateOne) ClearBreadcrumb() *SysMenuUpdateOne {
-	smuo.mutation.ClearBreadcrumb()
+// ClearHideBreadcrumb clears the value of the "hideBreadcrumb" field.
+func (smuo *SysMenuUpdateOne) ClearHideBreadcrumb() *SysMenuUpdateOne {
+	smuo.mutation.ClearHideBreadcrumb()
+	return smuo
+}
+
+// SetHideChildrenInMenu sets the "hideChildrenInMenu" field.
+func (smuo *SysMenuUpdateOne) SetHideChildrenInMenu(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetHideChildrenInMenu(b)
+	return smuo
+}
+
+// SetNillableHideChildrenInMenu sets the "hideChildrenInMenu" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableHideChildrenInMenu(b *bool) *SysMenuUpdateOne {
+	if b != nil {
+		smuo.SetHideChildrenInMenu(*b)
+	}
+	return smuo
+}
+
+// ClearHideChildrenInMenu clears the value of the "hideChildrenInMenu" field.
+func (smuo *SysMenuUpdateOne) ClearHideChildrenInMenu() *SysMenuUpdateOne {
+	smuo.mutation.ClearHideChildrenInMenu()
 	return smuo
 }
 
@@ -1282,63 +1287,43 @@ func (smuo *SysMenuUpdateOne) ClearSort() *SysMenuUpdateOne {
 	return smuo
 }
 
-// SetVisible sets the "visible" field.
-func (smuo *SysMenuUpdateOne) SetVisible(b bool) *SysMenuUpdateOne {
-	smuo.mutation.SetVisible(b)
+// SetHideMenu sets the "hideMenu" field.
+func (smuo *SysMenuUpdateOne) SetHideMenu(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetHideMenu(b)
 	return smuo
 }
 
-// SetNillableVisible sets the "visible" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableVisible(b *bool) *SysMenuUpdateOne {
+// SetNillableHideMenu sets the "hideMenu" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableHideMenu(b *bool) *SysMenuUpdateOne {
 	if b != nil {
-		smuo.SetVisible(*b)
+		smuo.SetHideMenu(*b)
 	}
 	return smuo
 }
 
-// ClearVisible clears the value of the "visible" field.
-func (smuo *SysMenuUpdateOne) ClearVisible() *SysMenuUpdateOne {
-	smuo.mutation.ClearVisible()
+// ClearHideMenu clears the value of the "hideMenu" field.
+func (smuo *SysMenuUpdateOne) ClearHideMenu() *SysMenuUpdateOne {
+	smuo.mutation.ClearHideMenu()
 	return smuo
 }
 
-// SetIsFrame sets the "isFrame" field.
-func (smuo *SysMenuUpdateOne) SetIsFrame(b bool) *SysMenuUpdateOne {
-	smuo.mutation.SetIsFrame(b)
+// SetFrameSrc sets the "frameSrc" field.
+func (smuo *SysMenuUpdateOne) SetFrameSrc(s string) *SysMenuUpdateOne {
+	smuo.mutation.SetFrameSrc(s)
 	return smuo
 }
 
-// SetNillableIsFrame sets the "isFrame" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableIsFrame(b *bool) *SysMenuUpdateOne {
-	if b != nil {
-		smuo.SetIsFrame(*b)
-	}
-	return smuo
-}
-
-// ClearIsFrame clears the value of the "isFrame" field.
-func (smuo *SysMenuUpdateOne) ClearIsFrame() *SysMenuUpdateOne {
-	smuo.mutation.ClearIsFrame()
-	return smuo
-}
-
-// SetSysApi sets the "sysApi" field.
-func (smuo *SysMenuUpdateOne) SetSysApi(s string) *SysMenuUpdateOne {
-	smuo.mutation.SetSysApi(s)
-	return smuo
-}
-
-// SetNillableSysApi sets the "sysApi" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableSysApi(s *string) *SysMenuUpdateOne {
+// SetNillableFrameSrc sets the "frameSrc" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableFrameSrc(s *string) *SysMenuUpdateOne {
 	if s != nil {
-		smuo.SetSysApi(*s)
+		smuo.SetFrameSrc(*s)
 	}
 	return smuo
 }
 
-// ClearSysApi clears the value of the "sysApi" field.
-func (smuo *SysMenuUpdateOne) ClearSysApi() *SysMenuUpdateOne {
-	smuo.mutation.ClearSysApi()
+// ClearFrameSrc clears the value of the "frameSrc" field.
+func (smuo *SysMenuUpdateOne) ClearFrameSrc() *SysMenuUpdateOne {
+	smuo.mutation.ClearFrameSrc()
 	return smuo
 }
 
@@ -1437,19 +1422,19 @@ func (smuo *SysMenuUpdateOne) SetParent(s *SysMenu) *SysMenuUpdateOne {
 	return smuo.SetParentID(s.ID)
 }
 
-// AddChildeIDs adds the "childes" edge to the SysMenu entity by IDs.
-func (smuo *SysMenuUpdateOne) AddChildeIDs(ids ...int64) *SysMenuUpdateOne {
-	smuo.mutation.AddChildeIDs(ids...)
+// AddChildIDs adds the "children" edge to the SysMenu entity by IDs.
+func (smuo *SysMenuUpdateOne) AddChildIDs(ids ...int64) *SysMenuUpdateOne {
+	smuo.mutation.AddChildIDs(ids...)
 	return smuo
 }
 
-// AddChildes adds the "childes" edges to the SysMenu entity.
-func (smuo *SysMenuUpdateOne) AddChildes(s ...*SysMenu) *SysMenuUpdateOne {
+// AddChildren adds the "children" edges to the SysMenu entity.
+func (smuo *SysMenuUpdateOne) AddChildren(s ...*SysMenu) *SysMenuUpdateOne {
 	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return smuo.AddChildeIDs(ids...)
+	return smuo.AddChildIDs(ids...)
 }
 
 // Mutation returns the SysMenuMutation object of the builder.
@@ -1484,25 +1469,25 @@ func (smuo *SysMenuUpdateOne) ClearParent() *SysMenuUpdateOne {
 	return smuo
 }
 
-// ClearChildes clears all "childes" edges to the SysMenu entity.
-func (smuo *SysMenuUpdateOne) ClearChildes() *SysMenuUpdateOne {
-	smuo.mutation.ClearChildes()
+// ClearChildren clears all "children" edges to the SysMenu entity.
+func (smuo *SysMenuUpdateOne) ClearChildren() *SysMenuUpdateOne {
+	smuo.mutation.ClearChildren()
 	return smuo
 }
 
-// RemoveChildeIDs removes the "childes" edge to SysMenu entities by IDs.
-func (smuo *SysMenuUpdateOne) RemoveChildeIDs(ids ...int64) *SysMenuUpdateOne {
-	smuo.mutation.RemoveChildeIDs(ids...)
+// RemoveChildIDs removes the "children" edge to SysMenu entities by IDs.
+func (smuo *SysMenuUpdateOne) RemoveChildIDs(ids ...int64) *SysMenuUpdateOne {
+	smuo.mutation.RemoveChildIDs(ids...)
 	return smuo
 }
 
-// RemoveChildes removes "childes" edges to SysMenu entities.
-func (smuo *SysMenuUpdateOne) RemoveChildes(s ...*SysMenu) *SysMenuUpdateOne {
+// RemoveChildren removes "children" edges to SysMenu entities.
+func (smuo *SysMenuUpdateOne) RemoveChildren(s ...*SysMenu) *SysMenuUpdateOne {
 	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
-	return smuo.RemoveChildeIDs(ids...)
+	return smuo.RemoveChildIDs(ids...)
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -1624,17 +1609,11 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 			}
 		}
 	}
-	if value, ok := smuo.mutation.MenuName(); ok {
+	if value, ok := smuo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysmenu.FieldMenuName,
-		})
-	}
-	if smuo.mutation.MenuNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldMenuName,
+			Column: sysmenu.FieldName,
 		})
 	}
 	if value, ok := smuo.mutation.Title(); ok {
@@ -1644,10 +1623,17 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 			Column: sysmenu.FieldTitle,
 		})
 	}
-	if smuo.mutation.TitleCleared() {
+	if value, ok := smuo.mutation.Redirect(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysmenu.FieldRedirect,
+		})
+	}
+	if smuo.mutation.RedirectCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysmenu.FieldTitle,
+			Column: sysmenu.FieldRedirect,
 		})
 	}
 	if value, ok := smuo.mutation.Icon(); ok {
@@ -1728,30 +1714,43 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 			Column: sysmenu.FieldPermission,
 		})
 	}
-	if value, ok := smuo.mutation.NoCache(); ok {
+	if value, ok := smuo.mutation.IgnoreKeepAlive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldNoCache,
+			Column: sysmenu.FieldIgnoreKeepAlive,
 		})
 	}
-	if smuo.mutation.NoCacheCleared() {
+	if smuo.mutation.IgnoreKeepAliveCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
-			Column: sysmenu.FieldNoCache,
+			Column: sysmenu.FieldIgnoreKeepAlive,
 		})
 	}
-	if value, ok := smuo.mutation.Breadcrumb(); ok {
+	if value, ok := smuo.mutation.HideBreadcrumb(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldBreadcrumb,
+			Column: sysmenu.FieldHideBreadcrumb,
 		})
 	}
-	if smuo.mutation.BreadcrumbCleared() {
+	if smuo.mutation.HideBreadcrumbCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldBreadcrumb,
+			Type:   field.TypeBool,
+			Column: sysmenu.FieldHideBreadcrumb,
+		})
+	}
+	if value, ok := smuo.mutation.HideChildrenInMenu(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldHideChildrenInMenu,
+		})
+	}
+	if smuo.mutation.HideChildrenInMenuCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysmenu.FieldHideChildrenInMenu,
 		})
 	}
 	if value, ok := smuo.mutation.Component(); ok {
@@ -1787,43 +1786,30 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 			Column: sysmenu.FieldSort,
 		})
 	}
-	if value, ok := smuo.mutation.Visible(); ok {
+	if value, ok := smuo.mutation.HideMenu(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldVisible,
+			Column: sysmenu.FieldHideMenu,
 		})
 	}
-	if smuo.mutation.VisibleCleared() {
+	if smuo.mutation.HideMenuCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
-			Column: sysmenu.FieldVisible,
+			Column: sysmenu.FieldHideMenu,
 		})
 	}
-	if value, ok := smuo.mutation.IsFrame(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsFrame,
-		})
-	}
-	if smuo.mutation.IsFrameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysmenu.FieldIsFrame,
-		})
-	}
-	if value, ok := smuo.mutation.SysApi(); ok {
+	if value, ok := smuo.mutation.FrameSrc(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysmenu.FieldSysApi,
+			Column: sysmenu.FieldFrameSrc,
 		})
 	}
-	if smuo.mutation.SysApiCleared() {
+	if smuo.mutation.FrameSrcCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysmenu.FieldSysApi,
+			Column: sysmenu.FieldFrameSrc,
 		})
 	}
 	if value, ok := smuo.mutation.UpdatedAt(); ok {
@@ -1964,12 +1950,12 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if smuo.mutation.ChildesCleared() {
+	if smuo.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   sysmenu.ChildesTable,
-			Columns: []string{sysmenu.ChildesColumn},
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -1980,12 +1966,12 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := smuo.mutation.RemovedChildesIDs(); len(nodes) > 0 && !smuo.mutation.ChildesCleared() {
+	if nodes := smuo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !smuo.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   sysmenu.ChildesTable,
-			Columns: []string{sysmenu.ChildesColumn},
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -1999,12 +1985,12 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := smuo.mutation.ChildesIDs(); len(nodes) > 0 {
+	if nodes := smuo.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   sysmenu.ChildesTable,
-			Columns: []string{sysmenu.ChildesColumn},
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

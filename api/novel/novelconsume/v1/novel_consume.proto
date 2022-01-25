@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package novelconsume.v1;
 
 import "google/api/annotations.proto";
@@ -95,7 +96,7 @@ message NovelConsumePageReq {
 // 查询搜索返回
 message NovelConsumePageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -134,7 +135,7 @@ message NovelConsumeReq {
 // 查询返回
 message NovelConsumeReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -159,7 +160,7 @@ message NovelConsumeCreateReq {
 // 创建NovelConsume返回
 message NovelConsumeCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -186,7 +187,7 @@ message NovelConsumeUpdateReq {
 // 更新NovelConsume返回
 message NovelConsumeUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -208,7 +209,7 @@ message NovelConsumeBatchDeleteReq {
 // 删除NovelConsume返回
 message NovelConsumeDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

@@ -39,8 +39,6 @@ const (
 	FieldHomePath = "home_path"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
-	// FieldExtInfo holds the string denoting the extinfo field in the database.
-	FieldExtInfo = "ext_info"
 	// FieldCreatedAt holds the string denoting the createdat field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updatedat field in the database.
@@ -115,7 +113,6 @@ var Columns = []string{
 	FieldDesc,
 	FieldHomePath,
 	FieldStatus,
-	FieldExtInfo,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldCreateBy,

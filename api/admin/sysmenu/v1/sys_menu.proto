@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package sysmenu.v1;
 
 import "google/api/annotations.proto";
@@ -64,45 +65,47 @@ message SysMenuData {
     //父菜单Id
     int64 parentId = 2;
     //菜单名
-    string menuName = 3;
+    string name = 3;
     //菜单标题
     string title = 4;
+    //跳转路径
+    string redirect = 5;
     //图标
-    string icon = 5;
+    string icon = 6;
     //路径
-    string path = 6;
+    string path = 7;
     //多级路径
-    string paths = 7;
+    string paths = 8;
     //D-目录M-菜单F-按钮
-    string menuType = 8;
+    string menuType = 9;
     //
-    string action = 9;
+    string action = 10;
     //权限
-    string permission = 10;
-    //无缓存
-    bool noCache = 11;
-    //面包屑
-    string breadcrumb = 12;
+    string permission = 11;
+    //不缓存
+    bool ignoreKeepAlive = 12;
+    //隐藏面包屑
+    bool hideBreadcrumb = 13;
+    //隐藏子菜单
+    bool hideChildrenInMenu = 14;
     //组件
-    string component = 13;
+    string component = 15;
     //排序
-    int32 sort = 14;
-    //是否可见
-    bool visible = 15;
-    //是否外链1是0否
-    bool isFrame = 16;
-    //
-    string sysApi = 17;
+    int32 sort = 16;
+    //影藏菜单
+    bool hideMenu = 17;
+    //外链地址
+    string frameSrc = 18;
     //创建时间
-    google.protobuf.Timestamp createdAt = 18;
+    google.protobuf.Timestamp createdAt = 19;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 19;
+    google.protobuf.Timestamp updatedAt = 20;
     //创建者
-    int64 createBy = 20;
+    int64 createBy = 21;
     //更新者
-    int64 updateBy = 21;
+    int64 updateBy = 22;
     //租户
-    int64 tenantId = 22;
+    int64 tenantId = 23;
 
 }
 
@@ -117,7 +120,7 @@ message SysMenuPageReq {
 // 查询搜索返回
 message SysMenuPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -133,9 +136,70 @@ message SysMenuReq {
     //父菜单Id
     int64 parentId = 2;
     //菜单名
-    string menuName = 3;
+    string name = 3;
     //菜单标题
     string title = 4;
+    //跳转路径
+    string redirect = 5;
+    //图标
+    string icon = 6;
+    //路径
+    string path = 7;
+    //多级路径
+    string paths = 8;
+    //D-目录M-菜单F-按钮
+    string menuType = 9;
+    //
+    string action = 10;
+    //权限
+    string permission = 11;
+    //不缓存
+    bool ignoreKeepAlive = 12;
+    //隐藏面包屑
+    bool hideBreadcrumb = 13;
+    //隐藏子菜单
+    bool hideChildrenInMenu = 14;
+    //组件
+    string component = 15;
+    //排序
+    int32 sort = 16;
+    //影藏菜单
+    bool hideMenu = 17;
+    //外链地址
+    string frameSrc = 18;
+    //创建时间
+    google.protobuf.Timestamp createdAt = 19;
+    //更新时间
+    google.protobuf.Timestamp updatedAt = 20;
+    //创建者
+    int64 createBy = 21;
+    //更新者
+    int64 updateBy = 22;
+    //租户
+    int64 tenantId = 23;
+
+}
+
+// 查询返回
+message SysMenuReply {
+    // 返回码
+    int32 code = 1;
+    // 消息
+    string message = 2;
+    // 结果数据
+    SysMenuData result = 3;
+}
+
+// 创建SysMenu请求
+message SysMenuCreateReq {
+    //父菜单Id
+    int64 parentId = 1;
+    //菜单名
+    string name = 2;
+    //菜单标题
+    string title = 3;
+    //跳转路径
+    string redirect = 4;
     //图标
     string icon = 5;
     //路径
@@ -148,84 +212,27 @@ message SysMenuReq {
     string action = 9;
     //权限
     string permission = 10;
-    //无缓存
-    bool noCache = 11;
-    //面包屑
-    string breadcrumb = 12;
+    //不缓存
+    bool ignoreKeepAlive = 11;
+    //隐藏面包屑
+    bool hideBreadcrumb = 12;
+    //隐藏子菜单
+    bool hideChildrenInMenu = 13;
     //组件
-    string component = 13;
+    string component = 14;
     //排序
-    int32 sort = 14;
-    //是否可见
-    bool visible = 15;
-    //是否外链1是0否
-    bool isFrame = 16;
-    //
-    string sysApi = 17;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 18;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 19;
-    //创建者
-    int64 createBy = 20;
-    //更新者
-    int64 updateBy = 21;
-    //租户
-    int64 tenantId = 22;
-
-}
-
-// 查询返回
-message SysMenuReply {
-    // 返回码
-    int64 code = 1;
-    // 消息
-    string message = 2;
-    // 结果数据
-    SysMenuData result = 3;
-}
-
-// 创建SysMenu请求
-message SysMenuCreateReq {
-    //父菜单Id
-    int64 parentId = 1;
-    //菜单名
-    string menuName = 2;
-    //菜单标题
-    string title = 3;
-    //图标
-    string icon = 4;
-    //路径
-    string path = 5;
-    //多级路径
-    string paths = 6;
-    //D-目录M-菜单F-按钮
-    string menuType = 7;
-    //
-    string action = 8;
-    //权限
-    string permission = 9;
-    //无缓存
-    bool noCache = 10;
-    //面包屑
-    string breadcrumb = 11;
-    //组件
-    string component = 12;
-    //排序
-    int32 sort = 13;
-    //是否可见
-    bool visible = 14;
-    //是否外链1是0否
-    bool isFrame = 15;
-    //
-    string sysApi = 16;
+    int32 sort = 15;
+    //影藏菜单
+    bool hideMenu = 16;
+    //外链地址
+    string frameSrc = 17;
 
 }
 
 // 创建SysMenu返回
 message SysMenuCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -238,35 +245,37 @@ message SysMenuUpdateReq {
     //父菜单Id
     int64 parentId = 2;
     //菜单名
-    string menuName = 3;
+    string name = 3;
     //菜单标题
     string title = 4;
+    //跳转路径
+    string redirect = 5;
     //图标
-    string icon = 5;
+    string icon = 6;
     //路径
-    string path = 6;
+    string path = 7;
     //多级路径
-    string paths = 7;
+    string paths = 8;
     //D-目录M-菜单F-按钮
-    string menuType = 8;
+    string menuType = 9;
     //
-    string action = 9;
+    string action = 10;
     //权限
-    string permission = 10;
-    //无缓存
-    bool noCache = 11;
-    //面包屑
-    string breadcrumb = 12;
+    string permission = 11;
+    //不缓存
+    bool ignoreKeepAlive = 12;
+    //隐藏面包屑
+    bool hideBreadcrumb = 13;
+    //隐藏子菜单
+    bool hideChildrenInMenu = 14;
     //组件
-    string component = 13;
+    string component = 15;
     //排序
-    int32 sort = 14;
-    //是否可见
-    bool visible = 15;
-    //是否外链1是0否
-    bool isFrame = 16;
-    //
-    string sysApi = 17;
+    int32 sort = 16;
+    //影藏菜单
+    bool hideMenu = 17;
+    //外链地址
+    string frameSrc = 18;
 
 }
 
@@ -274,7 +283,7 @@ message SysMenuUpdateReq {
 // 更新SysMenu返回
 message SysMenuUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -296,7 +305,7 @@ message SysMenuBatchDeleteReq {
 // 删除SysMenu返回
 message SysMenuDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

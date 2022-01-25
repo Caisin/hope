@@ -100,10 +100,10 @@ func ParentId(v int64) predicate.SysMenu {
 	})
 }
 
-// MenuName applies equality check predicate on the "menuName" field. It's identical to MenuNameEQ.
-func MenuName(v string) predicate.SysMenu {
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMenuName), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
@@ -111,6 +111,13 @@ func MenuName(v string) predicate.SysMenu {
 func Title(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTitle), v))
+	})
+}
+
+// Redirect applies equality check predicate on the "redirect" field. It's identical to RedirectEQ.
+func Redirect(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRedirect), v))
 	})
 }
 
@@ -156,17 +163,24 @@ func Permission(v string) predicate.SysMenu {
 	})
 }
 
-// NoCache applies equality check predicate on the "noCache" field. It's identical to NoCacheEQ.
-func NoCache(v bool) predicate.SysMenu {
+// IgnoreKeepAlive applies equality check predicate on the "ignoreKeepAlive" field. It's identical to IgnoreKeepAliveEQ.
+func IgnoreKeepAlive(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNoCache), v))
+		s.Where(sql.EQ(s.C(FieldIgnoreKeepAlive), v))
 	})
 }
 
-// Breadcrumb applies equality check predicate on the "breadcrumb" field. It's identical to BreadcrumbEQ.
-func Breadcrumb(v string) predicate.SysMenu {
+// HideBreadcrumb applies equality check predicate on the "hideBreadcrumb" field. It's identical to HideBreadcrumbEQ.
+func HideBreadcrumb(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldBreadcrumb), v))
+		s.Where(sql.EQ(s.C(FieldHideBreadcrumb), v))
+	})
+}
+
+// HideChildrenInMenu applies equality check predicate on the "hideChildrenInMenu" field. It's identical to HideChildrenInMenuEQ.
+func HideChildrenInMenu(v bool) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldHideChildrenInMenu), v))
 	})
 }
 
@@ -184,24 +198,17 @@ func Sort(v int32) predicate.SysMenu {
 	})
 }
 
-// Visible applies equality check predicate on the "visible" field. It's identical to VisibleEQ.
-func Visible(v bool) predicate.SysMenu {
+// HideMenu applies equality check predicate on the "hideMenu" field. It's identical to HideMenuEQ.
+func HideMenu(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldVisible), v))
+		s.Where(sql.EQ(s.C(FieldHideMenu), v))
 	})
 }
 
-// IsFrame applies equality check predicate on the "isFrame" field. It's identical to IsFrameEQ.
-func IsFrame(v bool) predicate.SysMenu {
+// FrameSrc applies equality check predicate on the "frameSrc" field. It's identical to FrameSrcEQ.
+func FrameSrc(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsFrame), v))
-	})
-}
-
-// SysApi applies equality check predicate on the "sysApi" field. It's identical to SysApiEQ.
-func SysApi(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSysApi), v))
+		s.Where(sql.EQ(s.C(FieldFrameSrc), v))
 	})
 }
 
@@ -288,22 +295,22 @@ func ParentIdNotIn(vs ...int64) predicate.SysMenu {
 	})
 }
 
-// MenuNameEQ applies the EQ predicate on the "menuName" field.
-func MenuNameEQ(v string) predicate.SysMenu {
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMenuName), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// MenuNameNEQ applies the NEQ predicate on the "menuName" field.
-func MenuNameNEQ(v string) predicate.SysMenu {
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldMenuName), v))
+		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// MenuNameIn applies the In predicate on the "menuName" field.
-func MenuNameIn(vs ...string) predicate.SysMenu {
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.SysMenu {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -315,12 +322,12 @@ func MenuNameIn(vs ...string) predicate.SysMenu {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldMenuName), v...))
+		s.Where(sql.In(s.C(FieldName), v...))
 	})
 }
 
-// MenuNameNotIn applies the NotIn predicate on the "menuName" field.
-func MenuNameNotIn(vs ...string) predicate.SysMenu {
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.SysMenu {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -332,84 +339,70 @@ func MenuNameNotIn(vs ...string) predicate.SysMenu {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldMenuName), v...))
+		s.Where(sql.NotIn(s.C(FieldName), v...))
 	})
 }
 
-// MenuNameGT applies the GT predicate on the "menuName" field.
-func MenuNameGT(v string) predicate.SysMenu {
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldMenuName), v))
+		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// MenuNameGTE applies the GTE predicate on the "menuName" field.
-func MenuNameGTE(v string) predicate.SysMenu {
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldMenuName), v))
+		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// MenuNameLT applies the LT predicate on the "menuName" field.
-func MenuNameLT(v string) predicate.SysMenu {
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldMenuName), v))
+		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// MenuNameLTE applies the LTE predicate on the "menuName" field.
-func MenuNameLTE(v string) predicate.SysMenu {
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldMenuName), v))
+		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// MenuNameContains applies the Contains predicate on the "menuName" field.
-func MenuNameContains(v string) predicate.SysMenu {
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldMenuName), v))
+		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// MenuNameHasPrefix applies the HasPrefix predicate on the "menuName" field.
-func MenuNameHasPrefix(v string) predicate.SysMenu {
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldMenuName), v))
+		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// MenuNameHasSuffix applies the HasSuffix predicate on the "menuName" field.
-func MenuNameHasSuffix(v string) predicate.SysMenu {
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldMenuName), v))
+		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// MenuNameIsNil applies the IsNil predicate on the "menuName" field.
-func MenuNameIsNil() predicate.SysMenu {
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldMenuName)))
+		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// MenuNameNotNil applies the NotNil predicate on the "menuName" field.
-func MenuNameNotNil() predicate.SysMenu {
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldMenuName)))
-	})
-}
-
-// MenuNameEqualFold applies the EqualFold predicate on the "menuName" field.
-func MenuNameEqualFold(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldMenuName), v))
-	})
-}
-
-// MenuNameContainsFold applies the ContainsFold predicate on the "menuName" field.
-func MenuNameContainsFold(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldMenuName), v))
+		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 
@@ -510,20 +503,6 @@ func TitleHasSuffix(v string) predicate.SysMenu {
 	})
 }
 
-// TitleIsNil applies the IsNil predicate on the "title" field.
-func TitleIsNil() predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldTitle)))
-	})
-}
-
-// TitleNotNil applies the NotNil predicate on the "title" field.
-func TitleNotNil() predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldTitle)))
-	})
-}
-
 // TitleEqualFold applies the EqualFold predicate on the "title" field.
 func TitleEqualFold(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
@@ -535,6 +514,131 @@ func TitleEqualFold(v string) predicate.SysMenu {
 func TitleContainsFold(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldTitle), v))
+	})
+}
+
+// RedirectEQ applies the EQ predicate on the "redirect" field.
+func RedirectEQ(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectNEQ applies the NEQ predicate on the "redirect" field.
+func RedirectNEQ(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectIn applies the In predicate on the "redirect" field.
+func RedirectIn(vs ...string) predicate.SysMenu {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysMenu(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldRedirect), v...))
+	})
+}
+
+// RedirectNotIn applies the NotIn predicate on the "redirect" field.
+func RedirectNotIn(vs ...string) predicate.SysMenu {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysMenu(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldRedirect), v...))
+	})
+}
+
+// RedirectGT applies the GT predicate on the "redirect" field.
+func RedirectGT(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectGTE applies the GTE predicate on the "redirect" field.
+func RedirectGTE(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectLT applies the LT predicate on the "redirect" field.
+func RedirectLT(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectLTE applies the LTE predicate on the "redirect" field.
+func RedirectLTE(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectContains applies the Contains predicate on the "redirect" field.
+func RedirectContains(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectHasPrefix applies the HasPrefix predicate on the "redirect" field.
+func RedirectHasPrefix(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectHasSuffix applies the HasSuffix predicate on the "redirect" field.
+func RedirectHasSuffix(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectIsNil applies the IsNil predicate on the "redirect" field.
+func RedirectIsNil() predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldRedirect)))
+	})
+}
+
+// RedirectNotNil applies the NotNil predicate on the "redirect" field.
+func RedirectNotNil() predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldRedirect)))
+	})
+}
+
+// RedirectEqualFold applies the EqualFold predicate on the "redirect" field.
+func RedirectEqualFold(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldRedirect), v))
+	})
+}
+
+// RedirectContainsFold applies the ContainsFold predicate on the "redirect" field.
+func RedirectContainsFold(v string) predicate.SysMenu {
+	return predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldRedirect), v))
 	})
 }
 
@@ -1288,156 +1392,87 @@ func PermissionContainsFold(v string) predicate.SysMenu {
 	})
 }
 
-// NoCacheEQ applies the EQ predicate on the "noCache" field.
-func NoCacheEQ(v bool) predicate.SysMenu {
+// IgnoreKeepAliveEQ applies the EQ predicate on the "ignoreKeepAlive" field.
+func IgnoreKeepAliveEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldNoCache), v))
+		s.Where(sql.EQ(s.C(FieldIgnoreKeepAlive), v))
 	})
 }
 
-// NoCacheNEQ applies the NEQ predicate on the "noCache" field.
-func NoCacheNEQ(v bool) predicate.SysMenu {
+// IgnoreKeepAliveNEQ applies the NEQ predicate on the "ignoreKeepAlive" field.
+func IgnoreKeepAliveNEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldNoCache), v))
+		s.Where(sql.NEQ(s.C(FieldIgnoreKeepAlive), v))
 	})
 }
 
-// NoCacheIsNil applies the IsNil predicate on the "noCache" field.
-func NoCacheIsNil() predicate.SysMenu {
+// IgnoreKeepAliveIsNil applies the IsNil predicate on the "ignoreKeepAlive" field.
+func IgnoreKeepAliveIsNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldNoCache)))
+		s.Where(sql.IsNull(s.C(FieldIgnoreKeepAlive)))
 	})
 }
 
-// NoCacheNotNil applies the NotNil predicate on the "noCache" field.
-func NoCacheNotNil() predicate.SysMenu {
+// IgnoreKeepAliveNotNil applies the NotNil predicate on the "ignoreKeepAlive" field.
+func IgnoreKeepAliveNotNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldNoCache)))
+		s.Where(sql.NotNull(s.C(FieldIgnoreKeepAlive)))
 	})
 }
 
-// BreadcrumbEQ applies the EQ predicate on the "breadcrumb" field.
-func BreadcrumbEQ(v string) predicate.SysMenu {
+// HideBreadcrumbEQ applies the EQ predicate on the "hideBreadcrumb" field.
+func HideBreadcrumbEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldBreadcrumb), v))
+		s.Where(sql.EQ(s.C(FieldHideBreadcrumb), v))
 	})
 }
 
-// BreadcrumbNEQ applies the NEQ predicate on the "breadcrumb" field.
-func BreadcrumbNEQ(v string) predicate.SysMenu {
+// HideBreadcrumbNEQ applies the NEQ predicate on the "hideBreadcrumb" field.
+func HideBreadcrumbNEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldBreadcrumb), v))
+		s.Where(sql.NEQ(s.C(FieldHideBreadcrumb), v))
 	})
 }
 
-// BreadcrumbIn applies the In predicate on the "breadcrumb" field.
-func BreadcrumbIn(vs ...string) predicate.SysMenu {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
+// HideBreadcrumbIsNil applies the IsNil predicate on the "hideBreadcrumb" field.
+func HideBreadcrumbIsNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldBreadcrumb), v...))
+		s.Where(sql.IsNull(s.C(FieldHideBreadcrumb)))
 	})
 }
 
-// BreadcrumbNotIn applies the NotIn predicate on the "breadcrumb" field.
-func BreadcrumbNotIn(vs ...string) predicate.SysMenu {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
+// HideBreadcrumbNotNil applies the NotNil predicate on the "hideBreadcrumb" field.
+func HideBreadcrumbNotNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldBreadcrumb), v...))
+		s.Where(sql.NotNull(s.C(FieldHideBreadcrumb)))
 	})
 }
 
-// BreadcrumbGT applies the GT predicate on the "breadcrumb" field.
-func BreadcrumbGT(v string) predicate.SysMenu {
+// HideChildrenInMenuEQ applies the EQ predicate on the "hideChildrenInMenu" field.
+func HideChildrenInMenuEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldBreadcrumb), v))
+		s.Where(sql.EQ(s.C(FieldHideChildrenInMenu), v))
 	})
 }
 
-// BreadcrumbGTE applies the GTE predicate on the "breadcrumb" field.
-func BreadcrumbGTE(v string) predicate.SysMenu {
+// HideChildrenInMenuNEQ applies the NEQ predicate on the "hideChildrenInMenu" field.
+func HideChildrenInMenuNEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldBreadcrumb), v))
+		s.Where(sql.NEQ(s.C(FieldHideChildrenInMenu), v))
 	})
 }
 
-// BreadcrumbLT applies the LT predicate on the "breadcrumb" field.
-func BreadcrumbLT(v string) predicate.SysMenu {
+// HideChildrenInMenuIsNil applies the IsNil predicate on the "hideChildrenInMenu" field.
+func HideChildrenInMenuIsNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldBreadcrumb), v))
+		s.Where(sql.IsNull(s.C(FieldHideChildrenInMenu)))
 	})
 }
 
-// BreadcrumbLTE applies the LTE predicate on the "breadcrumb" field.
-func BreadcrumbLTE(v string) predicate.SysMenu {
+// HideChildrenInMenuNotNil applies the NotNil predicate on the "hideChildrenInMenu" field.
+func HideChildrenInMenuNotNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldBreadcrumb), v))
-	})
-}
-
-// BreadcrumbContains applies the Contains predicate on the "breadcrumb" field.
-func BreadcrumbContains(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldBreadcrumb), v))
-	})
-}
-
-// BreadcrumbHasPrefix applies the HasPrefix predicate on the "breadcrumb" field.
-func BreadcrumbHasPrefix(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldBreadcrumb), v))
-	})
-}
-
-// BreadcrumbHasSuffix applies the HasSuffix predicate on the "breadcrumb" field.
-func BreadcrumbHasSuffix(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldBreadcrumb), v))
-	})
-}
-
-// BreadcrumbIsNil applies the IsNil predicate on the "breadcrumb" field.
-func BreadcrumbIsNil() predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldBreadcrumb)))
-	})
-}
-
-// BreadcrumbNotNil applies the NotNil predicate on the "breadcrumb" field.
-func BreadcrumbNotNil() predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldBreadcrumb)))
-	})
-}
-
-// BreadcrumbEqualFold applies the EqualFold predicate on the "breadcrumb" field.
-func BreadcrumbEqualFold(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldBreadcrumb), v))
-	})
-}
-
-// BreadcrumbContainsFold applies the ContainsFold predicate on the "breadcrumb" field.
-func BreadcrumbContainsFold(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldBreadcrumb), v))
+		s.Where(sql.NotNull(s.C(FieldHideChildrenInMenu)))
 	})
 }
 
@@ -1656,78 +1691,50 @@ func SortNotNil() predicate.SysMenu {
 	})
 }
 
-// VisibleEQ applies the EQ predicate on the "visible" field.
-func VisibleEQ(v bool) predicate.SysMenu {
+// HideMenuEQ applies the EQ predicate on the "hideMenu" field.
+func HideMenuEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldVisible), v))
+		s.Where(sql.EQ(s.C(FieldHideMenu), v))
 	})
 }
 
-// VisibleNEQ applies the NEQ predicate on the "visible" field.
-func VisibleNEQ(v bool) predicate.SysMenu {
+// HideMenuNEQ applies the NEQ predicate on the "hideMenu" field.
+func HideMenuNEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldVisible), v))
+		s.Where(sql.NEQ(s.C(FieldHideMenu), v))
 	})
 }
 
-// VisibleIsNil applies the IsNil predicate on the "visible" field.
-func VisibleIsNil() predicate.SysMenu {
+// HideMenuIsNil applies the IsNil predicate on the "hideMenu" field.
+func HideMenuIsNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldVisible)))
+		s.Where(sql.IsNull(s.C(FieldHideMenu)))
 	})
 }
 
-// VisibleNotNil applies the NotNil predicate on the "visible" field.
-func VisibleNotNil() predicate.SysMenu {
+// HideMenuNotNil applies the NotNil predicate on the "hideMenu" field.
+func HideMenuNotNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldVisible)))
+		s.Where(sql.NotNull(s.C(FieldHideMenu)))
 	})
 }
 
-// IsFrameEQ applies the EQ predicate on the "isFrame" field.
-func IsFrameEQ(v bool) predicate.SysMenu {
+// FrameSrcEQ applies the EQ predicate on the "frameSrc" field.
+func FrameSrcEQ(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsFrame), v))
+		s.Where(sql.EQ(s.C(FieldFrameSrc), v))
 	})
 }
 
-// IsFrameNEQ applies the NEQ predicate on the "isFrame" field.
-func IsFrameNEQ(v bool) predicate.SysMenu {
+// FrameSrcNEQ applies the NEQ predicate on the "frameSrc" field.
+func FrameSrcNEQ(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldIsFrame), v))
+		s.Where(sql.NEQ(s.C(FieldFrameSrc), v))
 	})
 }
 
-// IsFrameIsNil applies the IsNil predicate on the "isFrame" field.
-func IsFrameIsNil() predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldIsFrame)))
-	})
-}
-
-// IsFrameNotNil applies the NotNil predicate on the "isFrame" field.
-func IsFrameNotNil() predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldIsFrame)))
-	})
-}
-
-// SysApiEQ applies the EQ predicate on the "sysApi" field.
-func SysApiEQ(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSysApi), v))
-	})
-}
-
-// SysApiNEQ applies the NEQ predicate on the "sysApi" field.
-func SysApiNEQ(v string) predicate.SysMenu {
-	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldSysApi), v))
-	})
-}
-
-// SysApiIn applies the In predicate on the "sysApi" field.
-func SysApiIn(vs ...string) predicate.SysMenu {
+// FrameSrcIn applies the In predicate on the "frameSrc" field.
+func FrameSrcIn(vs ...string) predicate.SysMenu {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1739,12 +1746,12 @@ func SysApiIn(vs ...string) predicate.SysMenu {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldSysApi), v...))
+		s.Where(sql.In(s.C(FieldFrameSrc), v...))
 	})
 }
 
-// SysApiNotIn applies the NotIn predicate on the "sysApi" field.
-func SysApiNotIn(vs ...string) predicate.SysMenu {
+// FrameSrcNotIn applies the NotIn predicate on the "frameSrc" field.
+func FrameSrcNotIn(vs ...string) predicate.SysMenu {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1756,84 +1763,84 @@ func SysApiNotIn(vs ...string) predicate.SysMenu {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldSysApi), v...))
+		s.Where(sql.NotIn(s.C(FieldFrameSrc), v...))
 	})
 }
 
-// SysApiGT applies the GT predicate on the "sysApi" field.
-func SysApiGT(v string) predicate.SysMenu {
+// FrameSrcGT applies the GT predicate on the "frameSrc" field.
+func FrameSrcGT(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldSysApi), v))
+		s.Where(sql.GT(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiGTE applies the GTE predicate on the "sysApi" field.
-func SysApiGTE(v string) predicate.SysMenu {
+// FrameSrcGTE applies the GTE predicate on the "frameSrc" field.
+func FrameSrcGTE(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldSysApi), v))
+		s.Where(sql.GTE(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiLT applies the LT predicate on the "sysApi" field.
-func SysApiLT(v string) predicate.SysMenu {
+// FrameSrcLT applies the LT predicate on the "frameSrc" field.
+func FrameSrcLT(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldSysApi), v))
+		s.Where(sql.LT(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiLTE applies the LTE predicate on the "sysApi" field.
-func SysApiLTE(v string) predicate.SysMenu {
+// FrameSrcLTE applies the LTE predicate on the "frameSrc" field.
+func FrameSrcLTE(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldSysApi), v))
+		s.Where(sql.LTE(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiContains applies the Contains predicate on the "sysApi" field.
-func SysApiContains(v string) predicate.SysMenu {
+// FrameSrcContains applies the Contains predicate on the "frameSrc" field.
+func FrameSrcContains(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldSysApi), v))
+		s.Where(sql.Contains(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiHasPrefix applies the HasPrefix predicate on the "sysApi" field.
-func SysApiHasPrefix(v string) predicate.SysMenu {
+// FrameSrcHasPrefix applies the HasPrefix predicate on the "frameSrc" field.
+func FrameSrcHasPrefix(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldSysApi), v))
+		s.Where(sql.HasPrefix(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiHasSuffix applies the HasSuffix predicate on the "sysApi" field.
-func SysApiHasSuffix(v string) predicate.SysMenu {
+// FrameSrcHasSuffix applies the HasSuffix predicate on the "frameSrc" field.
+func FrameSrcHasSuffix(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldSysApi), v))
+		s.Where(sql.HasSuffix(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiIsNil applies the IsNil predicate on the "sysApi" field.
-func SysApiIsNil() predicate.SysMenu {
+// FrameSrcIsNil applies the IsNil predicate on the "frameSrc" field.
+func FrameSrcIsNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldSysApi)))
+		s.Where(sql.IsNull(s.C(FieldFrameSrc)))
 	})
 }
 
-// SysApiNotNil applies the NotNil predicate on the "sysApi" field.
-func SysApiNotNil() predicate.SysMenu {
+// FrameSrcNotNil applies the NotNil predicate on the "frameSrc" field.
+func FrameSrcNotNil() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldSysApi)))
+		s.Where(sql.NotNull(s.C(FieldFrameSrc)))
 	})
 }
 
-// SysApiEqualFold applies the EqualFold predicate on the "sysApi" field.
-func SysApiEqualFold(v string) predicate.SysMenu {
+// FrameSrcEqualFold applies the EqualFold predicate on the "frameSrc" field.
+func FrameSrcEqualFold(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldSysApi), v))
+		s.Where(sql.EqualFold(s.C(FieldFrameSrc), v))
 	})
 }
 
-// SysApiContainsFold applies the ContainsFold predicate on the "sysApi" field.
-func SysApiContainsFold(v string) predicate.SysMenu {
+// FrameSrcContainsFold applies the ContainsFold predicate on the "frameSrc" field.
+func FrameSrcContainsFold(v string) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldSysApi), v))
+		s.Where(sql.ContainsFold(s.C(FieldFrameSrc), v))
 	})
 }
 
@@ -2273,25 +2280,25 @@ func HasParentWith(preds ...predicate.SysMenu) predicate.SysMenu {
 	})
 }
 
-// HasChildes applies the HasEdge predicate on the "childes" edge.
-func HasChildes() predicate.SysMenu {
+// HasChildren applies the HasEdge predicate on the "children" edge.
+func HasChildren() predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(ChildesTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, ChildesTable, ChildesColumn),
+			sqlgraph.To(ChildrenTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
 
-// HasChildesWith applies the HasEdge predicate on the "childes" edge with a given conditions (other predicates).
-func HasChildesWith(preds ...predicate.SysMenu) predicate.SysMenu {
+// HasChildrenWith applies the HasEdge predicate on the "children" edge with a given conditions (other predicates).
+func HasChildrenWith(preds ...predicate.SysMenu) predicate.SysMenu {
 	return predicate.SysMenu(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, ChildesTable, ChildesColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

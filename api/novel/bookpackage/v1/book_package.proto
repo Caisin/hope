@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package bookpackage.v1;
 
 import "google/api/annotations.proto";
@@ -97,7 +98,7 @@ message BookPackagePageReq {
 // 查询搜索返回
 message BookPackagePageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -138,7 +139,7 @@ message BookPackageReq {
 // 查询返回
 message BookPackageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -165,7 +166,7 @@ message BookPackageCreateReq {
 // 创建BookPackage返回
 message BookPackageCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -194,7 +195,7 @@ message BookPackageUpdateReq {
 // 更新BookPackage返回
 message BookPackageUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -216,7 +217,7 @@ message BookPackageBatchDeleteReq {
 // 删除BookPackage返回
 message BookPackageDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

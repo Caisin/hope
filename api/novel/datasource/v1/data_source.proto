@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package datasource.v1;
 
 import "google/api/annotations.proto";
@@ -111,7 +112,7 @@ message DataSourcePageReq {
 // 查询搜索返回
 message DataSourcePageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -166,7 +167,7 @@ message DataSourceReq {
 // 查询返回
 message DataSourceReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -207,7 +208,7 @@ message DataSourceCreateReq {
 // 创建DataSource返回
 message DataSourceCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -250,7 +251,7 @@ message DataSourceUpdateReq {
 // 更新DataSource返回
 message DataSourceUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -272,7 +273,7 @@ message DataSourceBatchDeleteReq {
 // 删除DataSource返回
 message DataSourceDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

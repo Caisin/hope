@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package listenrecord.v1;
 
 import "google/api/annotations.proto";
@@ -99,7 +100,7 @@ message ListenRecordPageReq {
 // 查询搜索返回
 message ListenRecordPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -142,7 +143,7 @@ message ListenRecordReq {
 // 查询返回
 message ListenRecordReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -171,7 +172,7 @@ message ListenRecordCreateReq {
 // 创建ListenRecord返回
 message ListenRecordCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -202,7 +203,7 @@ message ListenRecordUpdateReq {
 // 更新ListenRecord返回
 message ListenRecordUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -224,7 +225,7 @@ message ListenRecordBatchDeleteReq {
 // 删除ListenRecord返回
 message ListenRecordDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

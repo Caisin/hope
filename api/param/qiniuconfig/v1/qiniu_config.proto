@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package qiniuconfig.v1;
 
 import "google/api/annotations.proto";
@@ -97,7 +98,7 @@ message QiniuConfigPageReq {
 // 查询搜索返回
 message QiniuConfigPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -138,7 +139,7 @@ message QiniuConfigReq {
 // 查询返回
 message QiniuConfigReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -165,7 +166,7 @@ message QiniuConfigCreateReq {
 // 创建QiniuConfig返回
 message QiniuConfigCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -194,7 +195,7 @@ message QiniuConfigUpdateReq {
 // 更新QiniuConfig返回
 message QiniuConfigUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -216,7 +217,7 @@ message QiniuConfigBatchDeleteReq {
 // 删除QiniuConfig返回
 message QiniuConfigDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

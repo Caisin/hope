@@ -250,13 +250,6 @@
             "type": "string"
           },
           {
-            "name": "param.extInfo",
-            "description": "拓展信息,facebook回传用的.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "param.createdAt",
             "description": "创建时间.",
             "in": "query",
@@ -431,13 +424,6 @@
             "type": "string"
           },
           {
-            "name": "extInfo",
-            "description": "拓展信息,facebook回传用的.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "createdAt",
             "description": "创建时间.",
             "in": "query",
@@ -603,10 +589,6 @@
                 "status": {
                   "type": "string",
                   "title": "状态"
-                },
-                "extInfo": {
-                  "type": "string",
-                  "title": "拓展信息,facebook回传用的"
                 }
               },
               "title": "更新SysUser请求"
@@ -757,10 +739,6 @@
         "status": {
           "type": "string",
           "title": "状态"
-        },
-        "extInfo": {
-          "type": "string",
-          "title": "拓展信息,facebook回传用的"
         }
       },
       "title": "创建SysUser请求"
@@ -831,10 +809,6 @@
         "status": {
           "type": "string",
           "title": "状态"
-        },
-        "extInfo": {
-          "type": "string",
-          "title": "拓展信息,facebook回传用的"
         },
         "createdAt": {
           "type": "string",
@@ -995,10 +969,6 @@
         "status": {
           "type": "string",
           "title": "状态"
-        },
-        "extInfo": {
-          "type": "string",
-          "title": "拓展信息,facebook回传用的"
         },
         "createdAt": {
           "type": "string",

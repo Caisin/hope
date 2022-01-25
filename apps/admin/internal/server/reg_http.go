@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 
+	auth "hope/api/admin/auth/v1"
 	casbinrule "hope/api/admin/casbinrule/v1"
 	sysapi "hope/api/admin/sysapi/v1"
 	sysconfig "hope/api/admin/sysconfig/v1"
@@ -36,6 +37,7 @@ func RegisterHTTPServer(
 	sysPostService *service.SysPostService,
 	sysRoleService *service.SysRoleService,
 	sysUserService *service.SysUserService,
+	authService *service.AuthService,
 ) []func(*http.Server) {
 	list := make([]func(*http.Server), 0)
 
@@ -80,6 +82,9 @@ func RegisterHTTPServer(
 	})
 	list = append(list, func(srv *http.Server) {
 		sysuser.RegisterSysUserHTTPServer(srv, sysUserService)
+	})
+	list = append(list, func(srv *http.Server) {
+		auth.RegisterAuthHTTPServer(srv, authService)
 	})
 	return list
 }

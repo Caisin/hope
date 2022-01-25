@@ -83,7 +83,7 @@ message LoginReply{
     repeated Role roles = 8;
   }
   // 返回码
-  int64 code = 1;
+  int32 code = 1;
   // 消息
   string message = 2;
   // 结果数据
@@ -106,7 +106,7 @@ message GetPermReq{
 //获取权限请求
 message GetPermReply{
   // 返回码
-  int64 code = 1;
+  int32 code = 1;
   // 消息
   string message = 2;
   //权限编码列表
@@ -115,7 +115,7 @@ message GetPermReply{
 //退出登录返回
 message LogOutReply{
   // 返回码
-  int64 code = 1;
+  int32 code = 1;
   // 消息
   string message = 2;
   // 结果数据

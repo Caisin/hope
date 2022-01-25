@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
+	auth "hope/api/admin/auth/v1"
 	casbinrule "hope/api/admin/casbinrule/v1"
 	sysapi "hope/api/admin/sysapi/v1"
 	sysconfig "hope/api/admin/sysconfig/v1"
@@ -36,6 +37,7 @@ func RegisterGRPCServer(
 	sysPostService *service.SysPostService,
 	sysRoleService *service.SysRoleService,
 	sysUserService *service.SysUserService,
+	authService *service.AuthService,
 ) []func(*grpc.Server) {
 	list := make([]func(*grpc.Server), 0)
 
@@ -80,6 +82,9 @@ func RegisterGRPCServer(
 	})
 	list = append(list, func(srv *grpc.Server) {
 		sysuser.RegisterSysUserServer(srv, sysUserService)
+	})
+	list = append(list, func(srv *grpc.Server) {
+		auth.RegisterAuthServer(srv, authService)
 	})
 	return list
 }

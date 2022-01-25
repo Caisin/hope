@@ -17,9 +17,7 @@ import (
 	"hope/apps/param/internal/data/ent/userresource"
 	"hope/apps/param/internal/data/ent/userresourcerecord"
 	"hope/apps/param/internal/data/ent/viptype"
-
-	"entgo.io/ent"
-	"entgo.io/ent/privacy"
+	"time"
 )
 
 // The init function reads all schema descriptors with runtime code

@@ -52,7 +52,6 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		SetEmail(req.Email).
 		SetRemark(req.Remark).
 		SetStatus(req.Status).
-		SetExtInfo(req.ExtInfo).
 		SetHomePath(req.HomePath).
 		SetDesc(req.Desc).
 		SetPassword(encrypt).
@@ -166,9 +165,6 @@ func (r *sysUserRepo) genCondition(req *v1.SysUserReq) []predicate.SysUser {
 	}
 	if str.IsBlank(req.Status) {
 		list = append(list, sysuser.StatusContains(req.Status))
-	}
-	if str.IsBlank(req.ExtInfo) {
-		list = append(list, sysuser.ExtInfoContains(req.ExtInfo))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, sysuser.CreatedAtGTE(req.CreatedAt.AsTime()))

@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package tasklog.v1;
 
 import "google/api/annotations.proto";
@@ -121,7 +122,7 @@ message TaskLogPageReq {
 // 查询搜索返回
 message TaskLogPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -186,7 +187,7 @@ message TaskLogReq {
 // 查询返回
 message TaskLogReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -237,7 +238,7 @@ message TaskLogCreateReq {
 // 创建TaskLog返回
 message TaskLogCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -290,7 +291,7 @@ message TaskLogUpdateReq {
 // 更新TaskLog返回
 message TaskLogUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -312,7 +313,7 @@ message TaskLogBatchDeleteReq {
 // 删除TaskLog返回
 message TaskLogDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

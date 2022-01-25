@@ -27,9 +27,9 @@ type SysMenuQuery struct {
 	fields     []string
 	predicates []predicate.SysMenu
 	// eager-loading edges.
-	withRole    *SysRoleQuery
-	withParent  *SysMenuQuery
-	withChildes *SysMenuQuery
+	withRole     *SysRoleQuery
+	withParent   *SysMenuQuery
+	withChildren *SysMenuQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -110,8 +110,8 @@ func (smq *SysMenuQuery) QueryParent() *SysMenuQuery {
 	return query
 }
 
-// QueryChildes chains the current query on the "childes" edge.
-func (smq *SysMenuQuery) QueryChildes() *SysMenuQuery {
+// QueryChildren chains the current query on the "children" edge.
+func (smq *SysMenuQuery) QueryChildren() *SysMenuQuery {
 	query := &SysMenuQuery{config: smq.config}
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := smq.prepareQuery(ctx); err != nil {
@@ -124,7 +124,7 @@ func (smq *SysMenuQuery) QueryChildes() *SysMenuQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysmenu.Table, sysmenu.FieldID, selector),
 			sqlgraph.To(sysmenu.Table, sysmenu.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, sysmenu.ChildesTable, sysmenu.ChildesColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysmenu.ChildrenTable, sysmenu.ChildrenColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(smq.driver.Dialect(), step)
 		return fromU, nil
@@ -308,14 +308,14 @@ func (smq *SysMenuQuery) Clone() *SysMenuQuery {
 		return nil
 	}
 	return &SysMenuQuery{
-		config:      smq.config,
-		limit:       smq.limit,
-		offset:      smq.offset,
-		order:       append([]OrderFunc{}, smq.order...),
-		predicates:  append([]predicate.SysMenu{}, smq.predicates...),
-		withRole:    smq.withRole.Clone(),
-		withParent:  smq.withParent.Clone(),
-		withChildes: smq.withChildes.Clone(),
+		config:       smq.config,
+		limit:        smq.limit,
+		offset:       smq.offset,
+		order:        append([]OrderFunc{}, smq.order...),
+		predicates:   append([]predicate.SysMenu{}, smq.predicates...),
+		withRole:     smq.withRole.Clone(),
+		withParent:   smq.withParent.Clone(),
+		withChildren: smq.withChildren.Clone(),
 		// clone intermediate query.
 		sql:  smq.sql.Clone(),
 		path: smq.path,
@@ -344,14 +344,14 @@ func (smq *SysMenuQuery) WithParent(opts ...func(*SysMenuQuery)) *SysMenuQuery {
 	return smq
 }
 
-// WithChildes tells the query-builder to eager-load the nodes that are connected to
-// the "childes" edge. The optional arguments are used to configure the query builder of the edge.
-func (smq *SysMenuQuery) WithChildes(opts ...func(*SysMenuQuery)) *SysMenuQuery {
+// WithChildren tells the query-builder to eager-load the nodes that are connected to
+// the "children" edge. The optional arguments are used to configure the query builder of the edge.
+func (smq *SysMenuQuery) WithChildren(opts ...func(*SysMenuQuery)) *SysMenuQuery {
 	query := &SysMenuQuery{config: smq.config}
 	for _, opt := range opts {
 		opt(query)
 	}
-	smq.withChildes = query
+	smq.withChildren = query
 	return smq
 }
 
@@ -423,7 +423,7 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 		loadedTypes = [3]bool{
 			smq.withRole != nil,
 			smq.withParent != nil,
-			smq.withChildes != nil,
+			smq.withChildren != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
@@ -537,16 +537,16 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 		}
 	}
 
-	if query := smq.withChildes; query != nil {
+	if query := smq.withChildren; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
 		nodeids := make(map[int64]*SysMenu)
 		for i := range nodes {
 			fks = append(fks, nodes[i].ID)
 			nodeids[nodes[i].ID] = nodes[i]
-			nodes[i].Edges.Childes = []*SysMenu{}
+			nodes[i].Edges.Children = []*SysMenu{}
 		}
 		query.Where(predicate.SysMenu(func(s *sql.Selector) {
-			s.Where(sql.InValues(sysmenu.ChildesColumn, fks...))
+			s.Where(sql.InValues(sysmenu.ChildrenColumn, fks...))
 		}))
 		neighbors, err := query.All(ctx)
 		if err != nil {
@@ -558,7 +558,7 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 			if !ok {
 				return nil, fmt.Errorf(`unexpected foreign-key "parentId" returned %v for node %v`, fk, n.ID)
 			}
-			node.Edges.Childes = append(node.Edges.Childes, n)
+			node.Edges.Children = append(node.Edges.Children, n)
 		}
 	}
 

@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package noveltag.v1;
 
 import "google/api/annotations.proto";
@@ -91,7 +92,7 @@ message NovelTagPageReq {
 // 查询搜索返回
 message NovelTagPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -126,7 +127,7 @@ message NovelTagReq {
 // 查询返回
 message NovelTagReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -147,7 +148,7 @@ message NovelTagCreateReq {
 // 创建NovelTag返回
 message NovelTagCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -170,7 +171,7 @@ message NovelTagUpdateReq {
 // 更新NovelTag返回
 message NovelTagUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -192,7 +193,7 @@ message NovelTagBatchDeleteReq {
 // 删除NovelTag返回
 message NovelTagDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

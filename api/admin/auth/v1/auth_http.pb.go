@@ -18,6 +18,7 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 type AuthHTTPServer interface {
+	GetMenuList(context.Context, *GetPermReq) (*GetPermReply, error)
 	GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error)
 	GetUserInfo(context.Context, *GetUserInfoReq) (*LoginReply, error)
 	LogOut(context.Context, *LogOutReq) (*LogOutReply, error)
@@ -30,6 +31,7 @@ func RegisterAuthHTTPServer(s *http.Server, srv AuthHTTPServer) {
 	r.POST("/v1/sys/auth/logout", _Auth_LogOut0_HTTP_Handler(srv))
 	r.GET("/v1/sys/auth/getUserInfo", _Auth_GetUserInfo0_HTTP_Handler(srv))
 	r.GET("/v1/sys/auth/getPermCode", _Auth_GetPermCode0_HTTP_Handler(srv))
+	r.GET("/v1/sys/auth/getMenuList", _Auth_GetMenuList0_HTTP_Handler(srv))
 }
 
 func _Auth_Login0_HTTP_Handler(srv AuthHTTPServer) func(ctx http.Context) error {
@@ -108,7 +110,27 @@ func _Auth_GetPermCode0_HTTP_Handler(srv AuthHTTPServer) func(ctx http.Context) 
 	}
 }
 
+func _Auth_GetMenuList0_HTTP_Handler(srv AuthHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in GetPermReq
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, "/sysuser.v1.Auth/GetMenuList")
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GetMenuList(ctx, req.(*GetPermReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*GetPermReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type AuthHTTPClient interface {
+	GetMenuList(ctx context.Context, req *GetPermReq, opts ...http.CallOption) (rsp *GetPermReply, err error)
 	GetPermCode(ctx context.Context, req *GetPermReq, opts ...http.CallOption) (rsp *GetPermReply, err error)
 	GetUserInfo(ctx context.Context, req *GetUserInfoReq, opts ...http.CallOption) (rsp *LoginReply, err error)
 	LogOut(ctx context.Context, req *LogOutReq, opts ...http.CallOption) (rsp *LogOutReply, err error)
@@ -121,6 +143,19 @@ type AuthHTTPClientImpl struct {
 
 func NewAuthHTTPClient(client *http.Client) AuthHTTPClient {
 	return &AuthHTTPClientImpl{client}
+}
+
+func (c *AuthHTTPClientImpl) GetMenuList(ctx context.Context, in *GetPermReq, opts ...http.CallOption) (*GetPermReply, error) {
+	var out GetPermReply
+	pattern := "/v1/sys/auth/getMenuList"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation("/sysuser.v1.Auth/GetMenuList"))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
 }
 
 func (c *AuthHTTPClientImpl) GetPermCode(ctx context.Context, in *GetPermReq, opts ...http.CallOption) (*GetPermReply, error) {

@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package adchannel.v1;
 
 import "google/api/annotations.proto";
@@ -103,7 +104,7 @@ message AdChannelPageReq {
 // 查询搜索返回
 message AdChannelPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -150,7 +151,7 @@ message AdChannelReq {
 // 查询返回
 message AdChannelReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -183,7 +184,7 @@ message AdChannelCreateReq {
 // 创建AdChannel返回
 message AdChannelCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -218,7 +219,7 @@ message AdChannelUpdateReq {
 // 更新AdChannel返回
 message AdChannelUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -240,7 +241,7 @@ message AdChannelBatchDeleteReq {
 // 删除AdChannel返回
 message AdChannelDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package customernovels.v1;
 
 import "google/api/annotations.proto";
@@ -105,7 +106,7 @@ message CustomerNovelsPageReq {
 // 查询搜索返回
 message CustomerNovelsPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -154,7 +155,7 @@ message CustomerNovelsReq {
 // 查询返回
 message CustomerNovelsReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -189,7 +190,7 @@ message CustomerNovelsCreateReq {
 // 创建CustomerNovels返回
 message CustomerNovelsCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -226,7 +227,7 @@ message CustomerNovelsUpdateReq {
 // 更新CustomerNovels返回
 message CustomerNovelsUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -248,7 +249,7 @@ message CustomerNovelsBatchDeleteReq {
 // 删除CustomerNovels返回
 message CustomerNovelsDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

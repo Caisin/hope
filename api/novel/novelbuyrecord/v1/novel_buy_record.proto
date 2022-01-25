@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package novelbuyrecord.v1;
 
 import "google/api/annotations.proto";
@@ -103,7 +104,7 @@ message NovelBuyRecordPageReq {
 // 查询搜索返回
 message NovelBuyRecordPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -150,7 +151,7 @@ message NovelBuyRecordReq {
 // 查询返回
 message NovelBuyRecordReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -183,7 +184,7 @@ message NovelBuyRecordCreateReq {
 // 创建NovelBuyRecord返回
 message NovelBuyRecordCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -218,7 +219,7 @@ message NovelBuyRecordUpdateReq {
 // 更新NovelBuyRecord返回
 message NovelBuyRecordUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -240,7 +241,7 @@ message NovelBuyRecordBatchDeleteReq {
 // 删除NovelBuyRecord返回
 message NovelBuyRecordDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

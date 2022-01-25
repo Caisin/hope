@@ -13,10 +13,12 @@ const (
 	FieldID = "id"
 	// FieldParentId holds the string denoting the parentid field in the database.
 	FieldParentId = "parent_id"
-	// FieldMenuName holds the string denoting the menuname field in the database.
-	FieldMenuName = "menu_name"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
 	// FieldTitle holds the string denoting the title field in the database.
 	FieldTitle = "title"
+	// FieldRedirect holds the string denoting the redirect field in the database.
+	FieldRedirect = "redirect"
 	// FieldIcon holds the string denoting the icon field in the database.
 	FieldIcon = "icon"
 	// FieldPath holds the string denoting the path field in the database.
@@ -29,20 +31,20 @@ const (
 	FieldAction = "action"
 	// FieldPermission holds the string denoting the permission field in the database.
 	FieldPermission = "permission"
-	// FieldNoCache holds the string denoting the nocache field in the database.
-	FieldNoCache = "no_cache"
-	// FieldBreadcrumb holds the string denoting the breadcrumb field in the database.
-	FieldBreadcrumb = "breadcrumb"
+	// FieldIgnoreKeepAlive holds the string denoting the ignorekeepalive field in the database.
+	FieldIgnoreKeepAlive = "ignore_keep_alive"
+	// FieldHideBreadcrumb holds the string denoting the hidebreadcrumb field in the database.
+	FieldHideBreadcrumb = "hide_breadcrumb"
+	// FieldHideChildrenInMenu holds the string denoting the hidechildreninmenu field in the database.
+	FieldHideChildrenInMenu = "hide_children_in_menu"
 	// FieldComponent holds the string denoting the component field in the database.
 	FieldComponent = "component"
 	// FieldSort holds the string denoting the sort field in the database.
 	FieldSort = "sort"
-	// FieldVisible holds the string denoting the visible field in the database.
-	FieldVisible = "visible"
-	// FieldIsFrame holds the string denoting the isframe field in the database.
-	FieldIsFrame = "is_frame"
-	// FieldSysApi holds the string denoting the sysapi field in the database.
-	FieldSysApi = "sys_api"
+	// FieldHideMenu holds the string denoting the hidemenu field in the database.
+	FieldHideMenu = "hide_menu"
+	// FieldFrameSrc holds the string denoting the framesrc field in the database.
+	FieldFrameSrc = "frame_src"
 	// FieldCreatedAt holds the string denoting the createdat field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updatedat field in the database.
@@ -57,8 +59,8 @@ const (
 	EdgeRole = "role"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
 	EdgeParent = "parent"
-	// EdgeChildes holds the string denoting the childes edge name in mutations.
-	EdgeChildes = "childes"
+	// EdgeChildren holds the string denoting the children edge name in mutations.
+	EdgeChildren = "children"
 	// Table holds the table name of the sysmenu in the database.
 	Table = "sys_menus"
 	// RoleTable is the table that holds the role relation/edge. The primary key declared below.
@@ -70,31 +72,32 @@ const (
 	ParentTable = "sys_menus"
 	// ParentColumn is the table column denoting the parent relation/edge.
 	ParentColumn = "parent_id"
-	// ChildesTable is the table that holds the childes relation/edge.
-	ChildesTable = "sys_menus"
-	// ChildesColumn is the table column denoting the childes relation/edge.
-	ChildesColumn = "parent_id"
+	// ChildrenTable is the table that holds the children relation/edge.
+	ChildrenTable = "sys_menus"
+	// ChildrenColumn is the table column denoting the children relation/edge.
+	ChildrenColumn = "parent_id"
 )
 
 // Columns holds all SQL columns for sysmenu fields.
 var Columns = []string{
 	FieldID,
 	FieldParentId,
-	FieldMenuName,
+	FieldName,
 	FieldTitle,
+	FieldRedirect,
 	FieldIcon,
 	FieldPath,
 	FieldPaths,
 	FieldMenuType,
 	FieldAction,
 	FieldPermission,
-	FieldNoCache,
-	FieldBreadcrumb,
+	FieldIgnoreKeepAlive,
+	FieldHideBreadcrumb,
+	FieldHideChildrenInMenu,
 	FieldComponent,
 	FieldSort,
-	FieldVisible,
-	FieldIsFrame,
-	FieldSysApi,
+	FieldHideMenu,
+	FieldFrameSrc,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldCreateBy,

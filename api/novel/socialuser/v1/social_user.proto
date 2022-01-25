@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package socialuser.v1;
 
 import "google/api/annotations.proto";
@@ -137,7 +138,7 @@ message SocialUserPageReq {
 // 查询搜索返回
 message SocialUserPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -218,7 +219,7 @@ message SocialUserReq {
 // 查询返回
 message SocialUserReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -285,7 +286,7 @@ message SocialUserCreateReq {
 // 创建SocialUser返回
 message SocialUserCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -354,7 +355,7 @@ message SocialUserUpdateReq {
 // 更新SocialUser返回
 message SocialUserUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -376,7 +377,7 @@ message SocialUserBatchDeleteReq {
 // 删除SocialUser返回
 message SocialUserDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

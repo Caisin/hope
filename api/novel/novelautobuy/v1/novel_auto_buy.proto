@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package novelautobuy.v1;
 
 import "google/api/annotations.proto";
@@ -89,7 +90,7 @@ message NovelAutoBuyPageReq {
 // 查询搜索返回
 message NovelAutoBuyPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -122,7 +123,7 @@ message NovelAutoBuyReq {
 // 查询返回
 message NovelAutoBuyReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -141,7 +142,7 @@ message NovelAutoBuyCreateReq {
 // 创建NovelAutoBuy返回
 message NovelAutoBuyCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -162,7 +163,7 @@ message NovelAutoBuyUpdateReq {
 // 更新NovelAutoBuy返回
 message NovelAutoBuyUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -184,7 +185,7 @@ message NovelAutoBuyBatchDeleteReq {
 // 删除NovelAutoBuy返回
 message NovelAutoBuyDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

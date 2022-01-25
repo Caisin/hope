@@ -284,26 +284,6 @@ func (suu *SysUserUpdate) ClearStatus() *SysUserUpdate {
 	return suu
 }
 
-// SetExtInfo sets the "extInfo" field.
-func (suu *SysUserUpdate) SetExtInfo(s string) *SysUserUpdate {
-	suu.mutation.SetExtInfo(s)
-	return suu
-}
-
-// SetNillableExtInfo sets the "extInfo" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableExtInfo(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetExtInfo(*s)
-	}
-	return suu
-}
-
-// ClearExtInfo clears the value of the "extInfo" field.
-func (suu *SysUserUpdate) ClearExtInfo() *SysUserUpdate {
-	suu.mutation.ClearExtInfo()
-	return suu
-}
-
 // SetUpdatedAt sets the "updatedAt" field.
 func (suu *SysUserUpdate) SetUpdatedAt(t time.Time) *SysUserUpdate {
 	suu.mutation.SetUpdatedAt(t)
@@ -767,19 +747,6 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysuser.FieldStatus,
-		})
-	}
-	if value, ok := suu.mutation.ExtInfo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldExtInfo,
-		})
-	}
-	if suu.mutation.ExtInfoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldExtInfo,
 		})
 	}
 	if value, ok := suu.mutation.UpdatedAt(); ok {
@@ -1334,26 +1301,6 @@ func (suuo *SysUserUpdateOne) ClearStatus() *SysUserUpdateOne {
 	return suuo
 }
 
-// SetExtInfo sets the "extInfo" field.
-func (suuo *SysUserUpdateOne) SetExtInfo(s string) *SysUserUpdateOne {
-	suuo.mutation.SetExtInfo(s)
-	return suuo
-}
-
-// SetNillableExtInfo sets the "extInfo" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableExtInfo(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetExtInfo(*s)
-	}
-	return suuo
-}
-
-// ClearExtInfo clears the value of the "extInfo" field.
-func (suuo *SysUserUpdateOne) ClearExtInfo() *SysUserUpdateOne {
-	suuo.mutation.ClearExtInfo()
-	return suuo
-}
-
 // SetUpdatedAt sets the "updatedAt" field.
 func (suuo *SysUserUpdateOne) SetUpdatedAt(t time.Time) *SysUserUpdateOne {
 	suuo.mutation.SetUpdatedAt(t)
@@ -1841,19 +1788,6 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysuser.FieldStatus,
-		})
-	}
-	if value, ok := suuo.mutation.ExtInfo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldExtInfo,
-		})
-	}
-	if suuo.mutation.ExtInfoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldExtInfo,
 		})
 	}
 	if value, ok := suuo.mutation.UpdatedAt(); ok {

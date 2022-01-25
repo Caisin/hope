@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package task.v1;
 
 import "google/api/annotations.proto";
@@ -127,7 +128,7 @@ message TaskPageReq {
 // 查询搜索返回
 message TaskPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -198,7 +199,7 @@ message TaskReq {
 // 查询返回
 message TaskReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -255,7 +256,7 @@ message TaskCreateReq {
 // 创建Task返回
 message TaskCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -314,7 +315,7 @@ message TaskUpdateReq {
 // 更新Task返回
 message TaskUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -336,7 +337,7 @@ message TaskBatchDeleteReq {
 // 删除Task返回
 message TaskDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

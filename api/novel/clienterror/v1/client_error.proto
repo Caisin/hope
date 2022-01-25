@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package clienterror.v1;
 
 import "google/api/annotations.proto";
@@ -95,7 +96,7 @@ message ClientErrorPageReq {
 // 查询搜索返回
 message ClientErrorPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -134,7 +135,7 @@ message ClientErrorReq {
 // 查询返回
 message ClientErrorReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -159,7 +160,7 @@ message ClientErrorCreateReq {
 // 创建ClientError返回
 message ClientErrorCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -186,7 +187,7 @@ message ClientErrorUpdateReq {
 // 更新ClientError返回
 message ClientErrorUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -208,7 +209,7 @@ message ClientErrorBatchDeleteReq {
 // 删除ClientError返回
 message ClientErrorDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

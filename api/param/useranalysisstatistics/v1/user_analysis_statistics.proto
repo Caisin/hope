@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package useranalysisstatistics.v1;
 
 import "google/api/annotations.proto";
@@ -125,7 +126,7 @@ message UserAnalysisStatisticsPageReq {
 // 查询搜索返回
 message UserAnalysisStatisticsPageReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 总条数
@@ -194,7 +195,7 @@ message UserAnalysisStatisticsReq {
 // 查询返回
 message UserAnalysisStatisticsReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -249,7 +250,7 @@ message UserAnalysisStatisticsCreateReq {
 // 创建UserAnalysisStatistics返回
 message UserAnalysisStatisticsCreateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -306,7 +307,7 @@ message UserAnalysisStatisticsUpdateReq {
 // 更新UserAnalysisStatistics返回
 message UserAnalysisStatisticsUpdateReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果数据
@@ -328,7 +329,7 @@ message UserAnalysisStatisticsBatchDeleteReq {
 // 删除UserAnalysisStatistics返回
 message UserAnalysisStatisticsDeleteReply {
     // 返回码
-    int64 code = 1;
+    int32 code = 1;
     // 消息
     string message = 2;
     // 结果

@@ -1,0 +1,9 @@
+export interface {{.name}} {
+  id: string;
+{{- range .fields}}
+  {{- if .Comment}}
+  //{{.Comment}}
+  {{- end}}
+  {{.Name}}: {{tsType .Info.Type}};
+{{- end}}
+}

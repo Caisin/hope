@@ -1,0 +1,19 @@
+import { defHttp } from '/@/utils/http/axios';
+import { {{.name}} } from '/@/api/{{.model}}/model/{{.pkg}}';
+import { BasicFetchResult, DelReq } from '/@/api/model/baseModel';
+
+enum Api {
+  ApiList = '/{{.model}}/v1/{{.apiPath}}',
+}
+
+export const get{{.name}}Page = (params?: {{.name}}) =>
+  defHttp.get<BasicFetchResult<{{.name}}>>({ url: Api.ApiList + '/page', params });
+
+export const create{{.name}} = (data?: {{.name}}) => defHttp.post({ url: Api.ApiList, data });
+
+export const update{{.name}} = (data?: {{.name}}) =>
+  defHttp.put({ url: Api.ApiList + '/' + data?.id, data });
+
+export const del{{.name}} = (id: string) => defHttp.delete({ url: Api.ApiList + '/' + id });
+
+export const batchDel{{.name}} = (data?: DelReq) => defHttp.delete({ url: Api.ApiList, data });

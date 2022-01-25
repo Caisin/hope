@@ -1,0 +1,39 @@
+import { BasicColumn, FormSchema } from '/@/components/Table';
+import { formatToDateTime } from '/@/utils/dateUtil';
+
+//表格字段
+export const columns: BasicColumn[] = [
+{{- range .fields}}
+  {
+    title: '{{.Comment}}',
+    dataIndex: '{{.Name}}',
+    sorter: true,
+    align: 'left',
+{{- dealTime .}}
+  },
+{{- end}}
+];
+
+//搜索条件
+export const searchFormSchema: FormSchema[] = [
+{{- range .fields}}
+  {
+    label: '{{.Comment}}',
+    field: '{{.Name}}',
+    component: '{{fcp .}}',
+    colProps: { span: 8 },
+    {{- formTime .}}
+  },
+{{- end}}
+];
+
+//添加,更新
+export const formSchema: FormSchema[] = [
+  {{- range .fields}}
+  {
+    label: '{{.Comment}}',
+    field: '{{.Name}}',
+    component: '{{fcp .}}',
+  },
+  {{- end}}
+];

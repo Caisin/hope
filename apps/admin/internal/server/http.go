@@ -13,16 +13,23 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
+	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/handlers"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"hope/apps/admin/internal/conf"
 	"hope/pkg/auth"
+	"hope/pkg/middleware"
 	"strings"
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, regFun []func(server *http.Server), logger log.Logger, hv *prometheus.HistogramVec, cv *prometheus.CounterVec) *http.Server {
+func NewHTTPServer(c *conf.Server,
+	regFun []func(server *http.Server),
+	logger log.Logger,
+	hv *prometheus.HistogramVec,
+	rdc *redis.Client,
+	cv *prometheus.CounterVec) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			//限流
@@ -47,6 +54,8 @@ func NewHTTPServer(c *conf.Server, regFun []func(server *http.Server), logger lo
 				}
 				return true
 			}).Build(),
+			//权限校验
+			middleware.PermissionCheck(rdc),
 		),
 		//cors
 		http.Filter(handlers.CORS(

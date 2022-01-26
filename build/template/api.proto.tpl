@@ -14,7 +14,7 @@ option go_package = "hope/api/{{.model}}/{{.pkg}}/v1;v1";
 service {{.name}} {
 
   // 分页查询{{.name}}
-  rpc GetPage{{.name}} ({{.name}}PageReq) returns ({{.name}}PageReply)  {
+  rpc Get{{.name}}Page ({{.name}}PageReq) returns ({{.name}}PageReply)  {
     option (google.api.http) = {
       get: "/v1/{{.apiPath}}/page"
     };

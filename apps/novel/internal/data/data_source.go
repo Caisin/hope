@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/datasource/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/datasource"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -74,9 +73,22 @@ func (r *dataSourceRepo) UpdateDataSource(ctx context.Context, req *v1.DataSourc
 	if err != nil {
 		return nil, err
 	}
-	data := convert.DataSourceUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.DataSource.UpdateOne(data).Save(ctx)
+	return r.data.db.DataSource.UpdateOneID(req.Id).
+		SetDbName(req.DbName).
+		SetHost(req.Host).
+		SetPort(req.Port).
+		SetDatabase(req.Database).
+		SetUserName(req.UserName).
+		SetPwd(req.Pwd).
+		SetStatus(req.Status).
+		SetDbType(datasource.DbType(req.DbType)).
+		SetConnMaxIdleTime(req.ConnMaxIdleTime).
+		SetConnMaxLifeTime(req.ConnMaxLifeTime).
+		SetMaxIdleConns(req.MaxIdleConns).
+		SetMaxOpenConns(req.MaxOpenConns).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetDataSource 根据Id查询

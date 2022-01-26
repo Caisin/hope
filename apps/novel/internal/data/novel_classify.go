@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelclassify/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelclassify"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -66,9 +65,14 @@ func (r *novelClassifyRepo) UpdateNovelClassify(ctx context.Context, req *v1.Nov
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelClassifyUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelClassify.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelClassify.UpdateOneID(req.Id).
+		SetPid(req.Pid).
+		SetClassifyName(req.ClassifyName).
+		SetStatus(req.Status).
+		SetOrderNum(req.OrderNum).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelClassify 根据Id查询

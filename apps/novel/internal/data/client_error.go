@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/clienterror/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/clienterror"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -66,9 +65,14 @@ func (r *clientErrorRepo) UpdateClientError(ctx context.Context, req *v1.ClientE
 	if err != nil {
 		return nil, err
 	}
-	data := convert.ClientErrorUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.ClientError.UpdateOne(data).Save(ctx)
+	return r.data.db.ClientError.UpdateOneID(req.Id).
+		SetAppVersion(req.AppVersion).
+		SetDeviceName(req.DeviceName).
+		SetOsName(req.OsName).
+		SetErrorInfo(req.ErrorInfo).
+		SetUserId(req.UserId).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetClientError 根据Id查询

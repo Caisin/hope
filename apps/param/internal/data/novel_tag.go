@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/noveltag/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/noveltag"
 	"hope/apps/param/internal/data/ent/predicate"
@@ -64,9 +63,12 @@ func (r *novelTagRepo) UpdateNovelTag(ctx context.Context, req *v1.NovelTagUpdat
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelTagUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelTag.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelTag.UpdateOneID(req.Id).
+		SetTagId(req.TagId).
+		SetTagName(req.TagName).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelTag 根据Id查询

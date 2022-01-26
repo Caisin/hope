@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysoperalog/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
@@ -84,9 +83,32 @@ func (r *sysOperaLogRepo) UpdateSysOperaLog(ctx context.Context, req *v1.SysOper
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysOperaLogUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysOperaLog.UpdateOne(data).Save(ctx)
+	return r.data.db.SysOperaLog.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetTitle(req.Title).
+		SetRequestId(req.RequestId).
+		SetBusinessType(req.BusinessType).
+		SetBusinessTypes(req.BusinessTypes).
+		SetMethod(req.Method).
+		SetRequestMethod(req.RequestMethod).
+		SetOperatorType(req.OperatorType).
+		SetOperName(req.OperName).
+		SetDeptName(req.DeptName).
+		SetOperUrl(req.OperUrl).
+		SetOperIp(req.OperIp).
+		SetBrowser(req.Browser).
+		SetOs(req.Os).
+		SetPlatform(req.Platform).
+		SetOperLocation(req.OperLocation).
+		SetOperParam(req.OperParam).
+		SetStatus(req.Status).
+		SetOperTime(req.OperTime.AsTime()).
+		SetJsonResult(req.JsonResult).
+		SetRemark(req.Remark).
+		SetLatencyTime(req.LatencyTime).
+		SetUserAgent(req.UserAgent).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysOperaLog 根据Id查询

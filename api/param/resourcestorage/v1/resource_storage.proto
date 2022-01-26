@@ -1,5 +1,4 @@
-syntax = "proto3";
-
+syntax = "proto3";
 package resourcestorage.v1;
 
 import "google/api/annotations.proto";

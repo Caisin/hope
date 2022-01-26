@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysapi/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysapi"
@@ -66,9 +65,14 @@ func (r *sysApiRepo) UpdateSysApi(ctx context.Context, req *v1.SysApiUpdateReq) 
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysApiUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysApi.UpdateOne(data).Save(ctx)
+	return r.data.db.SysApi.UpdateOneID(req.Id).
+		SetHandle(req.Handle).
+		SetTitle(req.Title).
+		SetPath(req.Path).
+		SetAction(req.Action).
+		SetType(req.Type).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysApi 根据Id查询

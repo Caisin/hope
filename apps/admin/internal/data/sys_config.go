@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysconfig/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysconfig"
@@ -68,9 +67,16 @@ func (r *sysConfigRepo) UpdateSysConfig(ctx context.Context, req *v1.SysConfigUp
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysConfigUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysConfig.UpdateOne(data).Save(ctx)
+	return r.data.db.SysConfig.UpdateOneID(req.Id).
+		SetConfigName(req.ConfigName).
+		SetConfigKey(req.ConfigKey).
+		SetConfigValue(req.ConfigValue).
+		SetConfigType(req.ConfigType).
+		SetIsFrontend(req.IsFrontend).
+		SetState(sysconfig.State(req.State)).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysConfig 根据Id查询

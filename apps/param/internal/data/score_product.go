@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/scoreproduct/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/scoreproduct"
@@ -68,9 +67,16 @@ func (r *scoreProductRepo) UpdateScoreProduct(ctx context.Context, req *v1.Score
 	if err != nil {
 		return nil, err
 	}
-	data := convert.ScoreProductUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.ScoreProduct.UpdateOne(data).Save(ctx)
+	return r.data.db.ScoreProduct.UpdateOneID(req.Id).
+		SetProductName(req.ProductName).
+		SetSummary(req.Summary).
+		SetCardUrl(req.CardUrl).
+		SetScore(req.Score).
+		SetVipType(req.VipType).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetScoreProduct 根据Id查询

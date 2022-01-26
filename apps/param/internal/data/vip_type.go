@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/viptype/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/viptype"
@@ -67,9 +66,15 @@ func (r *vipTypeRepo) UpdateVipType(ctx context.Context, req *v1.VipTypeUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.VipTypeUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.VipType.UpdateOne(data).Save(ctx)
+	return r.data.db.VipType.UpdateOneID(req.Id).
+		SetVipName(req.VipName).
+		SetIsSuper(req.IsSuper).
+		SetValidDays(req.ValidDays).
+		SetDiscountRate(req.DiscountRate).
+		SetAvatarId(req.AvatarId).
+		SetSummary(req.Summary).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetVipType 根据Id查询

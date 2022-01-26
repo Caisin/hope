@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/{{.model}}/{{.pkg}}/v1"
 	"hope/apps/{{.model}}/internal/biz"
-	"hope/apps/{{.model}}/internal/convert"
 	"hope/apps/{{.model}}/internal/data/ent"
 	"hope/apps/{{.model}}/internal/data/ent/{{.pkg}}"
 	"hope/apps/{{.model}}/internal/data/ent/predicate"
@@ -61,9 +60,9 @@ func (r *{{.llName}}Repo) Update{{.name}}(ctx context.Context, req *v1.{{.name}}
 	if err != nil {
 		return nil, err
 	}
-	data := convert.{{.name}}UpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.{{.name}}.UpdateOne(data).Save(ctx)
+	return r.data.db.{{.name}}.UpdateOneID(req.Id).
+{{ genCreateSetFields .fields }}		SetUpdateBy(claims.UserId).
+	Save(ctx)
 }
 
 // Get{{.name}} 根据Id查询

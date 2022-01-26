@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelautobuy/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelautobuy"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -62,9 +61,11 @@ func (r *novelAutoBuyRepo) UpdateNovelAutoBuy(ctx context.Context, req *v1.Novel
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelAutoBuyUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelAutoBuy.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelAutoBuy.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetNovelId(req.NovelId).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelAutoBuy 根据Id查询

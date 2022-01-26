@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysloginlog/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysloginlog"
@@ -71,9 +70,19 @@ func (r *sysLoginLogRepo) UpdateSysLoginLog(ctx context.Context, req *v1.SysLogi
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysLoginLogUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysLoginLog.UpdateOne(data).Save(ctx)
+	return r.data.db.SysLoginLog.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetStatus(req.Status).
+		SetIpaddr(req.Ipaddr).
+		SetLoginLocation(req.LoginLocation).
+		SetBrowser(req.Browser).
+		SetOs(req.Os).
+		SetPlatform(req.Platform).
+		SetLoginTime(req.LoginTime.AsTime()).
+		SetRemark(req.Remark).
+		SetMsg(req.Msg).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysLoginLog 根据Id查询

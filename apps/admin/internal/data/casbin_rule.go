@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/casbinrule/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/predicate"
@@ -68,9 +67,16 @@ func (r *casbinRuleRepo) UpdateCasbinRule(ctx context.Context, req *v1.CasbinRul
 	if err != nil {
 		return nil, err
 	}
-	data := convert.CasbinRuleUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.CasbinRule.UpdateOne(data).Save(ctx)
+	return r.data.db.CasbinRule.UpdateOneID(req.Id).
+		SetPType(req.PType).
+		SetV0(req.V0).
+		SetV1(req.V1).
+		SetV2(req.V2).
+		SetV3(req.V3).
+		SetV4(req.V4).
+		SetV5(req.V5).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetCasbinRule 根据Id查询

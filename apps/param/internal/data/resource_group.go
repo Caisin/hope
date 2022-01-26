@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/resourcegroup/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/resourcegroup"
@@ -62,9 +61,10 @@ func (r *resourceGroupRepo) UpdateResourceGroup(ctx context.Context, req *v1.Res
 	if err != nil {
 		return nil, err
 	}
-	data := convert.ResourceGroupUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.ResourceGroup.UpdateOne(data).Save(ctx)
+	return r.data.db.ResourceGroup.UpdateOneID(req.Id).
+		SetName(req.Name).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetResourceGroup 根据Id查询

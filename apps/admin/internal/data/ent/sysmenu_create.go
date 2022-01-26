@@ -243,6 +243,20 @@ func (smc *SysMenuCreate) SetNillableFrameSrc(s *string) *SysMenuCreate {
 	return smc
 }
 
+// SetState sets the "state" field.
+func (smc *SysMenuCreate) SetState(s sysmenu.State) *SysMenuCreate {
+	smc.mutation.SetState(s)
+	return smc
+}
+
+// SetNillableState sets the "state" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableState(s *sysmenu.State) *SysMenuCreate {
+	if s != nil {
+		smc.SetState(*s)
+	}
+	return smc
+}
+
 // SetCreatedAt sets the "createdAt" field.
 func (smc *SysMenuCreate) SetCreatedAt(t time.Time) *SysMenuCreate {
 	smc.mutation.SetCreatedAt(t)
@@ -429,6 +443,10 @@ func (smc *SysMenuCreate) defaults() {
 		v := sysmenu.DefaultParentId
 		smc.mutation.SetParentId(v)
 	}
+	if _, ok := smc.mutation.State(); !ok {
+		v := sysmenu.DefaultState
+		smc.mutation.SetState(v)
+	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
 		v := sysmenu.DefaultCreatedAt()
 		smc.mutation.SetCreatedAt(v)
@@ -461,6 +479,14 @@ func (smc *SysMenuCreate) check() error {
 	}
 	if _, ok := smc.mutation.Title(); !ok {
 		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "title"`)}
+	}
+	if _, ok := smc.mutation.State(); !ok {
+		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "state"`)}
+	}
+	if v, ok := smc.mutation.State(); ok {
+		if err := sysmenu.StateValidator(v); err != nil {
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
+		}
 	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
@@ -634,6 +660,14 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 			Column: sysmenu.FieldFrameSrc,
 		})
 		_node.FrameSrc = value
+	}
+	if value, ok := smc.mutation.State(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeEnum,
+			Value:  value,
+			Column: sysmenu.FieldState,
+		})
+		_node.State = value
 	}
 	if value, ok := smc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

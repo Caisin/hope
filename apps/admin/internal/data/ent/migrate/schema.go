@@ -260,6 +260,7 @@ var (
 		{Name: "sort", Type: field.TypeInt32, Nullable: true},
 		{Name: "hide_menu", Type: field.TypeBool, Nullable: true},
 		{Name: "frame_src", Type: field.TypeString, Nullable: true},
+		{Name: "state", Type: field.TypeEnum, Enums: []string{"U", "E"}, Default: "U"},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
@@ -275,7 +276,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_menus_sys_menus_children",
-				Columns:    []*schema.Column{SysMenusColumns[22]},
+				Columns:    []*schema.Column{SysMenusColumns[23]},
 				RefColumns: []*schema.Column{SysMenusColumns[0]},
 				OnDelete:   schema.SetNull,
 			},

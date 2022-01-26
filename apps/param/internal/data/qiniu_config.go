@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/qiniuconfig/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/qiniuconfig"
@@ -67,9 +66,15 @@ func (r *qiniuConfigRepo) UpdateQiniuConfig(ctx context.Context, req *v1.QiniuCo
 	if err != nil {
 		return nil, err
 	}
-	data := convert.QiniuConfigUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.QiniuConfig.UpdateOne(data).Save(ctx)
+	return r.data.db.QiniuConfig.UpdateOneID(req.Id).
+		SetAccessKey(req.AccessKey).
+		SetBucket(req.Bucket).
+		SetHost(req.Host).
+		SetSecretKey(req.SecretKey).
+		SetType(req.Type).
+		SetZone(req.Zone).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetQiniuConfig 根据Id查询

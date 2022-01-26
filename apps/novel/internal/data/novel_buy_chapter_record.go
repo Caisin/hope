@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelbuychapterrecord/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelbuychapterrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -73,9 +72,21 @@ func (r *novelBuyChapterRecordRepo) UpdateNovelBuyChapterRecord(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelBuyChapterRecordUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelBuyChapterRecord.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelBuyChapterRecord.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetUserName(req.UserName).
+		SetChapterId(req.ChapterId).
+		SetChapterOrderNum(req.ChapterOrderNum).
+		SetNovelId(req.NovelId).
+		SetNovelName(req.NovelName).
+		SetChapterName(req.ChapterName).
+		SetIsSvip(req.IsSvip).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetDiscount(req.Discount).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelBuyChapterRecord 根据Id查询

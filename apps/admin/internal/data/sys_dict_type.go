@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysdicttype/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdicttype"
@@ -65,9 +64,13 @@ func (r *sysDictTypeRepo) UpdateSysDictType(ctx context.Context, req *v1.SysDict
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysDictTypeUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysDictType.UpdateOne(data).Save(ctx)
+	return r.data.db.SysDictType.UpdateOneID(req.Id).
+		SetDictName(req.DictName).
+		SetTypeCode(req.TypeCode).
+		SetStatus(req.Status).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysDictType 根据Id查询

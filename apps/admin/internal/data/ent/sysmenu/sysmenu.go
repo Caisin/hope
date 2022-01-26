@@ -3,6 +3,7 @@
 package sysmenu
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -45,6 +46,8 @@ const (
 	FieldHideMenu = "hide_menu"
 	// FieldFrameSrc holds the string denoting the framesrc field in the database.
 	FieldFrameSrc = "frame_src"
+	// FieldState holds the string denoting the state field in the database.
+	FieldState = "state"
 	// FieldCreatedAt holds the string denoting the createdat field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updatedat field in the database.
@@ -98,6 +101,7 @@ var Columns = []string{
 	FieldSort,
 	FieldHideMenu,
 	FieldFrameSrc,
+	FieldState,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldCreateBy,
@@ -137,3 +141,29 @@ var (
 	// DefaultTenantId holds the default value on creation for the "tenantId" field.
 	DefaultTenantId int64
 )
+
+// State defines the type for the "state" enum field.
+type State string
+
+// StateU is the default value of the State enum.
+const DefaultState = StateU
+
+// State values.
+const (
+	StateU State = "U"
+	StateE State = "E"
+)
+
+func (s State) String() string {
+	return string(s)
+}
+
+// StateValidator is a validator for the "state" field enum values. It is called by the builders before save.
+func StateValidator(s State) error {
+	switch s {
+	case StateU, StateE:
+		return nil
+	default:
+		return fmt.Errorf("sysmenu: invalid enum value for state field: %q", s)
+	}
+}

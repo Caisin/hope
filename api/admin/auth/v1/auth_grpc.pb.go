@@ -31,7 +31,7 @@ type AuthClient interface {
 	// 获取用户权限编码
 	GetPermCode(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error)
 	// 获取用户菜单列表
-	GetMenuList(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error)
+	GetMenuList(ctx context.Context, in *GetMenuReq, opts ...grpc.CallOption) (*GetMenuReply, error)
 }
 
 type authClient struct {
@@ -78,8 +78,8 @@ func (c *authClient) GetPermCode(ctx context.Context, in *GetPermReq, opts ...gr
 	return out, nil
 }
 
-func (c *authClient) GetMenuList(ctx context.Context, in *GetPermReq, opts ...grpc.CallOption) (*GetPermReply, error) {
-	out := new(GetPermReply)
+func (c *authClient) GetMenuList(ctx context.Context, in *GetMenuReq, opts ...grpc.CallOption) (*GetMenuReply, error) {
+	out := new(GetMenuReply)
 	err := c.cc.Invoke(ctx, "/sysuser.v1.Auth/GetMenuList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ type AuthServer interface {
 	// 获取用户权限编码
 	GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error)
 	// 获取用户菜单列表
-	GetMenuList(context.Context, *GetPermReq) (*GetPermReply, error)
+	GetMenuList(context.Context, *GetMenuReq) (*GetMenuReply, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -120,7 +120,7 @@ func (UnimplementedAuthServer) GetUserInfo(context.Context, *GetUserInfoReq) (*L
 func (UnimplementedAuthServer) GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPermCode not implemented")
 }
-func (UnimplementedAuthServer) GetMenuList(context.Context, *GetPermReq) (*GetPermReply, error) {
+func (UnimplementedAuthServer) GetMenuList(context.Context, *GetMenuReq) (*GetMenuReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMenuList not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
@@ -209,7 +209,7 @@ func _Auth_GetPermCode_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _Auth_GetMenuList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPermReq)
+	in := new(GetMenuReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -221,7 +221,7 @@ func _Auth_GetMenuList_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/sysuser.v1.Auth/GetMenuList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetMenuList(ctx, req.(*GetPermReq))
+		return srv.(AuthServer).GetMenuList(ctx, req.(*GetMenuReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }

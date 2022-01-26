@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/task/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/task"
@@ -82,9 +81,30 @@ func (r *taskRepo) UpdateTask(ctx context.Context, req *v1.TaskUpdateReq) (*ent.
 	if err != nil {
 		return nil, err
 	}
-	data := convert.TaskUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.Task.UpdateOne(data).Save(ctx)
+	return r.data.db.Task.UpdateOneID(req.Id).
+		SetTaskName(req.TaskName).
+		SetTaskGroup(req.TaskGroup).
+		SetUnit(req.Unit).
+		SetTopic(req.Topic).
+		SetFunction(req.Function).
+		SetTaskCode(req.TaskCode).
+		SetPreTask(req.PreTask).
+		SetNovelId(req.NovelId).
+		SetCycleType(req.CycleType).
+		SetRemark(req.Remark).
+		SetAmount(req.Amount).
+		SetReward(req.Reward).
+		SetAmountItem(req.AmountItem).
+		SetRewardItem(req.RewardItem).
+		SetTargetNames(req.TargetNames).
+		SetTargetAmounts(req.TargetAmounts).
+		SetStatus(req.Status).
+		SetSortNum(req.SortNum).
+		SetActionType(req.ActionType).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetTask 根据Id查询

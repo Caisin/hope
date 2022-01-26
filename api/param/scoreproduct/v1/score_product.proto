@@ -1,5 +1,4 @@
-syntax = "proto3";
-
+syntax = "proto3";
 package scoreproduct.v1;
 
 import "google/api/annotations.proto";

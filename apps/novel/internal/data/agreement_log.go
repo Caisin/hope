@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/agreementlog/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/agreementlog"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -76,9 +75,24 @@ func (r *agreementLogRepo) UpdateAgreementLog(ctx context.Context, req *v1.Agree
 	if err != nil {
 		return nil, err
 	}
-	data := convert.AgreementLogUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.AgreementLog.UpdateOne(data).Save(ctx)
+	return r.data.db.AgreementLog.UpdateOneID(req.Id).
+		SetOuterAgreementNo(req.OuterAgreementNo).
+		SetOrderId(req.OrderId).
+		SetUserId(req.UserId).
+		SetChId(req.ChId).
+		SetUserName(req.UserName).
+		SetPaymentName(req.PaymentName).
+		SetPaymentId(req.PaymentId).
+		SetState(req.State).
+		SetPayment(req.Payment).
+		SetAgreementType(agreementlog.AgreementType(req.AgreementType)).
+		SetVipType(req.VipType).
+		SetTimes(req.Times).
+		SetCycleDays(req.CycleDays).
+		SetNextExecTime(req.NextExecTime.AsTime()).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetAgreementLog 根据Id查询

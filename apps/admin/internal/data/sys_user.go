@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysuser/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysuser"
@@ -36,12 +35,9 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		return nil, err
 	}
 	now := time.Now()
-	encrypt, err := auth.Encrypt(req.Password)
-	if err != nil {
-		return nil, err
-	}
 	return r.data.db.SysUser.Create().
 		SetUsername(req.Username).
+		SetPassword(req.Password).
 		SetNickName(req.NickName).
 		SetPhone(req.Phone).
 		SetDeptId(req.DeptId).
@@ -51,10 +47,9 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		SetSex(req.Sex).
 		SetEmail(req.Email).
 		SetRemark(req.Remark).
-		SetStatus(req.Status).
-		SetHomePath(req.HomePath).
 		SetDesc(req.Desc).
-		SetPassword(encrypt).
+		SetHomePath(req.HomePath).
+		SetStatus(req.Status).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		SetCreateBy(claims.UserId).
@@ -79,9 +74,23 @@ func (r *sysUserRepo) UpdateSysUser(ctx context.Context, req *v1.SysUserUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysUserUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysUser.UpdateOne(data).Save(ctx)
+	return r.data.db.SysUser.UpdateOneID(req.Id).
+		SetUsername(req.Username).
+		SetPassword(req.Password).
+		SetNickName(req.NickName).
+		SetPhone(req.Phone).
+		SetDeptId(req.DeptId).
+		SetPostId(req.PostId).
+		SetRoleId(req.RoleId).
+		SetAvatar(req.Avatar).
+		SetSex(req.Sex).
+		SetEmail(req.Email).
+		SetRemark(req.Remark).
+		SetDesc(req.Desc).
+		SetHomePath(req.HomePath).
+		SetStatus(req.Status).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysUser 根据Id查询
@@ -136,6 +145,9 @@ func (r *sysUserRepo) genCondition(req *v1.SysUserReq) []predicate.SysUser {
 	if str.IsBlank(req.Username) {
 		list = append(list, sysuser.UsernameContains(req.Username))
 	}
+	if str.IsBlank(req.Password) {
+		list = append(list, sysuser.PasswordContains(req.Password))
+	}
 	if str.IsBlank(req.NickName) {
 		list = append(list, sysuser.NickNameContains(req.NickName))
 	}
@@ -162,6 +174,12 @@ func (r *sysUserRepo) genCondition(req *v1.SysUserReq) []predicate.SysUser {
 	}
 	if str.IsBlank(req.Remark) {
 		list = append(list, sysuser.RemarkContains(req.Remark))
+	}
+	if str.IsBlank(req.Desc) {
+		list = append(list, sysuser.DescContains(req.Desc))
+	}
+	if str.IsBlank(req.HomePath) {
+		list = append(list, sysuser.HomePathContains(req.HomePath))
 	}
 	if str.IsBlank(req.Status) {
 		list = append(list, sysuser.StatusContains(req.Status))

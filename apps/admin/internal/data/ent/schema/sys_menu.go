@@ -50,6 +50,8 @@ func (SysMenu) Fields() []ent.Field {
 			Comment(`影藏菜单`),
 		field.String("frameSrc").Optional().
 			Comment(`外链地址`),
+		field.Enum("state").Values("U", "E").Default("U").
+			Comment(`状态:U:使用,E:失效`),
 	}
 	fields = append(fields, mixin.Fields()...)
 	return fields

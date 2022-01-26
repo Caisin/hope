@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/bookpackage/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/bookpackage"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -67,9 +66,15 @@ func (r *bookPackageRepo) UpdateBookPackage(ctx context.Context, req *v1.BookPac
 	if err != nil {
 		return nil, err
 	}
-	data := convert.BookPackageUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.BookPackage.UpdateOne(data).Save(ctx)
+	return r.data.db.BookPackage.UpdateOneID(req.Id).
+		SetActivityCode(req.ActivityCode).
+		SetPackageName(req.PackageName).
+		SetPrice(req.Price).
+		SetDailyPrice(req.DailyPrice).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetBookPackage 根据Id查询

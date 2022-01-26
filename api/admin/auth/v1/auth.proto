@@ -40,7 +40,7 @@ service Auth {
   }
 
   // 获取用户菜单列表
-  rpc GetMenuList (GetPermReq) returns (GetPermReply)  {
+  rpc GetMenuList (GetMenuReq) returns (GetMenuReply)  {
     option (google.api.http) = {
       get: "/v1/sys/auth/getMenuList"
     };
@@ -96,6 +96,57 @@ message GetUserInfoReq{
 //退出登录请求
 message LogOutReq{
 
+}
+
+//获取菜单请求
+message GetMenuReq{
+
+}
+
+//获取菜单返回
+message GetMenuReply{
+  message Menu{
+    message Meta{
+      //菜单标题
+      string title = 1;
+      //图标
+      string icon = 2;
+      //不缓存
+      bool ignoreKeepAlive = 3;
+      //隐藏面包屑
+      bool hideBreadcrumb = 4;
+      //隐藏子菜单
+      bool hideChildrenInMenu = 5;
+      //排序
+      int32 sort = 6;
+      //影藏菜单
+      bool hideMenu = 7;
+      //外链地址
+      string frameSrc = 8;
+    }
+    //菜单编号
+    int64 id = 1;
+    //父菜单Id
+    int64 parentId = 2;
+    //路径
+    string path = 3;
+    //菜单名
+    string name = 4;
+    //组件
+    string component = 5;
+    //跳转路径
+    string redirect = 6;
+    // 菜单元信息
+    Meta meta = 7;
+    //子菜单
+    repeated Menu children = 8;
+  }
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  //权限编码列表
+  repeated Menu result = 3;
 }
 
 //获取权限请求

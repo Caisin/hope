@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/appversion/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/appversion"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -66,9 +65,14 @@ func (r *appVersionRepo) UpdateAppVersion(ctx context.Context, req *v1.AppVersio
 	if err != nil {
 		return nil, err
 	}
-	data := convert.AppVersionUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.AppVersion.UpdateOne(data).Save(ctx)
+	return r.data.db.AppVersion.UpdateOneID(req.Id).
+		SetTitle(req.Title).
+		SetVersion(req.Version).
+		SetUpdateInfo(req.UpdateInfo).
+		SetDownloadUrl(req.DownloadUrl).
+		SetPlatform(req.Platform).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetAppVersion 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novel/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novel"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -88,9 +87,36 @@ func (r *novelRepo) UpdateNovel(ctx context.Context, req *v1.NovelUpdateReq) (*e
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.Novel.UpdateOne(data).Save(ctx)
+	return r.data.db.Novel.UpdateOneID(req.Id).
+		SetClassifyId(req.ClassifyId).
+		SetClassifyName(req.ClassifyName).
+		SetAuthorId(req.AuthorId).
+		SetTitle(req.Title).
+		SetSummary(req.Summary).
+		SetAuthor(req.Author).
+		SetAnchor(req.Anchor).
+		SetHits(req.Hits).
+		SetKeywords(req.Keywords).
+		SetSource(req.Source).
+		SetScore(req.Score).
+		SetCover(req.Cover).
+		SetTagIds(req.TagIds).
+		SetWordNum(req.WordNum).
+		SetFreeNum(req.FreeNum).
+		SetOnlineState(req.OnlineState).
+		SetPrice(req.Price).
+		SetPublish(req.Publish).
+		SetOriginalPrice(req.OriginalPrice).
+		SetChapterPrice(req.ChapterPrice).
+		SetChapterCount(req.ChapterCount).
+		SetSignType(req.SignType).
+		SetSignDate(req.SignDate.AsTime()).
+		SetLeadingMan(req.LeadingMan).
+		SetLeadingLady(req.LeadingLady).
+		SetRemark(req.Remark).
+		SetMediaKey(req.MediaKey).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovel 根据Id查询

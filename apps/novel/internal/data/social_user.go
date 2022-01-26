@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/socialuser/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/socialuser"
@@ -87,9 +86,35 @@ func (r *socialUserRepo) UpdateSocialUser(ctx context.Context, req *v1.SocialUse
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SocialUserUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SocialUser.UpdateOne(data).Save(ctx)
+	return r.data.db.SocialUser.UpdateOneID(req.Id).
+		SetChId(req.ChId).
+		SetUnionid(req.Unionid).
+		SetToken(req.Token).
+		SetOpenid(req.Openid).
+		SetRoutineOpenid(req.RoutineOpenid).
+		SetUserName(req.UserName).
+		SetNickName(req.NickName).
+		SetBirthday(req.Birthday.AsTime()).
+		SetPhone(req.Phone).
+		SetEmail(req.Email).
+		SetPassword(req.Password).
+		SetAvatar(req.Avatar).
+		SetSex(req.Sex).
+		SetRegion(req.Region).
+		SetCity(req.City).
+		SetLanguage(req.Language).
+		SetProvince(req.Province).
+		SetCountry(req.Country).
+		SetSignature(req.Signature).
+		SetRemark(req.Remark).
+		SetGroupid(req.Groupid).
+		SetTagidList(req.TagidList).
+		SetSubscribe(req.Subscribe).
+		SetSubscribeTime(req.SubscribeTime).
+		SetSessionKey(req.SessionKey).
+		SetUserType(req.UserType).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSocialUser 根据Id查询

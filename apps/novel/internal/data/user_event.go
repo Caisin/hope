@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/userevent/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/userevent"
@@ -69,9 +68,17 @@ func (r *userEventRepo) UpdateUserEvent(ctx context.Context, req *v1.UserEventUp
 	if err != nil {
 		return nil, err
 	}
-	data := convert.UserEventUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.UserEvent.UpdateOne(data).Save(ctx)
+	return r.data.db.UserEvent.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetEventType(req.EventType).
+		SetNovelId(req.NovelId).
+		SetChapterId(req.ChapterId).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetMoney(req.Money).
+		SetKeyword(req.Keyword).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetUserEvent 根据Id查询

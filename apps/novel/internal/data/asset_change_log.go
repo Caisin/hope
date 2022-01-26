@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/assetchangelog/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -70,9 +69,18 @@ func (r *assetChangeLogRepo) UpdateAssetChangeLog(ctx context.Context, req *v1.A
 	if err != nil {
 		return nil, err
 	}
-	data := convert.AssetChangeLogUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.AssetChangeLog.UpdateOne(data).Save(ctx)
+	return r.data.db.AssetChangeLog.UpdateOneID(req.Id).
+		SetOrderId(req.OrderId).
+		SetBalanceId(req.BalanceId).
+		SetEventId(req.EventId).
+		SetUserId(req.UserId).
+		SetAssetItemId(req.AssetItemId).
+		SetAmount(req.Amount).
+		SetOldBalance(req.OldBalance).
+		SetNewBalance(req.NewBalance).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetAssetChangeLog 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/pageconfig/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/pageconfig"
 	"hope/apps/param/internal/data/ent/predicate"
@@ -64,9 +63,12 @@ func (r *pageConfigRepo) UpdatePageConfig(ctx context.Context, req *v1.PageConfi
 	if err != nil {
 		return nil, err
 	}
-	data := convert.PageConfigUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.PageConfig.UpdateOne(data).Save(ctx)
+	return r.data.db.PageConfig.UpdateOneID(req.Id).
+		SetPageCode(req.PageCode).
+		SetPageName(req.PageName).
+		SetGroupCodes(req.GroupCodes).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetPageConfig 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/payorder/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/payorder"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -82,9 +81,30 @@ func (r *payOrderRepo) UpdatePayOrder(ctx context.Context, req *v1.PayOrderUpdat
 	if err != nil {
 		return nil, err
 	}
-	data := convert.PayOrderUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.PayOrder.UpdateOne(data).Save(ctx)
+	return r.data.db.PayOrder.UpdateOneID(req.Id).
+		SetOrderId(req.OrderId).
+		SetUserId(req.UserId).
+		SetChId(req.ChId).
+		SetAgreementId(req.AgreementId).
+		SetLastRead(req.LastRead).
+		SetLastChapter(req.LastChapter).
+		SetPaymentName(req.PaymentName).
+		SetPaymentId(req.PaymentId).
+		SetState(schema.OrderState(req.State)).
+		SetPayment(req.Payment).
+		SetPaymentTime(req.PaymentTime.AsTime()).
+		SetCloseTime(req.CloseTime.AsTime()).
+		SetPayType(payorder.PayType(req.PayType)).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetVipDays(req.VipDays).
+		SetVipType(req.VipType).
+		SetVipName(req.VipName).
+		SetTimes(req.Times).
+		SetOtherOrderId(req.OtherOrderId).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetPayOrder 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/listenrecord/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/listenrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -67,9 +66,16 @@ func (r *listenRecordRepo) UpdateListenRecord(ctx context.Context, req *v1.Liste
 	if err != nil {
 		return nil, err
 	}
-	data := convert.ListenRecordUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.ListenRecord.UpdateOne(data).Save(ctx)
+	return r.data.db.ListenRecord.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetChapterId(req.ChapterId).
+		SetNovelId(req.NovelId).
+		SetListenTimes(req.ListenTimes).
+		SetDuration(req.Duration.AsDuration()).
+		SetAllDuration(req.AllDuration.AsDuration()).
+		SetDayDuration(req.DayDuration.AsDuration()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetListenRecord 根据Id查询

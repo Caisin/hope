@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelchapter/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelchapter"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -73,9 +72,21 @@ func (r *novelChapterRepo) UpdateNovelChapter(ctx context.Context, req *v1.Novel
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelChapterUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelChapter.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelChapter.UpdateOneID(req.Id).
+		SetNovelId(req.NovelId).
+		SetOrderNum(req.OrderNum).
+		SetChapterName(req.ChapterName).
+		SetContent(req.Content).
+		SetMediaKey(req.MediaKey).
+		SetDuration(req.Duration).
+		SetPublishTime(req.PublishTime.AsTime()).
+		SetStatus(req.Status).
+		SetIsFree(req.IsFree).
+		SetPrice(req.Price).
+		SetWordNum(req.WordNum).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelChapter 根据Id查询

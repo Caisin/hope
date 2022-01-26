@@ -342,6 +342,20 @@ func (smu *SysMenuUpdate) ClearFrameSrc() *SysMenuUpdate {
 	return smu
 }
 
+// SetState sets the "state" field.
+func (smu *SysMenuUpdate) SetState(s sysmenu.State) *SysMenuUpdate {
+	smu.mutation.SetState(s)
+	return smu
+}
+
+// SetNillableState sets the "state" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableState(s *sysmenu.State) *SysMenuUpdate {
+	if s != nil {
+		smu.SetState(*s)
+	}
+	return smu
+}
+
 // SetUpdatedAt sets the "updatedAt" field.
 func (smu *SysMenuUpdate) SetUpdatedAt(t time.Time) *SysMenuUpdate {
 	smu.mutation.SetUpdatedAt(t)
@@ -576,6 +590,11 @@ func (smu *SysMenuUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (smu *SysMenuUpdate) check() error {
+	if v, ok := smu.mutation.State(); ok {
+		if err := sysmenu.StateValidator(v); err != nil {
+			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+		}
+	}
 	if _, ok := smu.mutation.ParentID(); smu.mutation.ParentCleared() && !ok {
 		return errors.New("ent: clearing a required unique edge \"parent\"")
 	}
@@ -801,6 +820,13 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysmenu.FieldFrameSrc,
+		})
+	}
+	if value, ok := smu.mutation.State(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeEnum,
+			Value:  value,
+			Column: sysmenu.FieldState,
 		})
 	}
 	if value, ok := smu.mutation.UpdatedAt(); ok {
@@ -1327,6 +1353,20 @@ func (smuo *SysMenuUpdateOne) ClearFrameSrc() *SysMenuUpdateOne {
 	return smuo
 }
 
+// SetState sets the "state" field.
+func (smuo *SysMenuUpdateOne) SetState(s sysmenu.State) *SysMenuUpdateOne {
+	smuo.mutation.SetState(s)
+	return smuo
+}
+
+// SetNillableState sets the "state" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableState(s *sysmenu.State) *SysMenuUpdateOne {
+	if s != nil {
+		smuo.SetState(*s)
+	}
+	return smuo
+}
+
 // SetUpdatedAt sets the "updatedAt" field.
 func (smuo *SysMenuUpdateOne) SetUpdatedAt(t time.Time) *SysMenuUpdateOne {
 	smuo.mutation.SetUpdatedAt(t)
@@ -1568,6 +1608,11 @@ func (smuo *SysMenuUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (smuo *SysMenuUpdateOne) check() error {
+	if v, ok := smuo.mutation.State(); ok {
+		if err := sysmenu.StateValidator(v); err != nil {
+			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+		}
+	}
 	if _, ok := smuo.mutation.ParentID(); smuo.mutation.ParentCleared() && !ok {
 		return errors.New("ent: clearing a required unique edge \"parent\"")
 	}
@@ -1810,6 +1855,13 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysmenu.FieldFrameSrc,
+		})
+	}
+	if value, ok := smuo.mutation.State(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeEnum,
+			Value:  value,
+			Column: sysmenu.FieldState,
 		})
 	}
 	if value, ok := smuo.mutation.UpdatedAt(); ok {

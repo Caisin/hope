@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/vipuser/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/vipuser"
@@ -69,9 +68,17 @@ func (r *vipUserRepo) UpdateVipUser(ctx context.Context, req *v1.VipUserUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.VipUserUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.VipUser.UpdateOne(data).Save(ctx)
+	return r.data.db.VipUser.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetVipType(req.VipType).
+		SetSvipType(req.SvipType).
+		SetSvipEffectTime(req.SvipEffectTime.AsTime()).
+		SetSvipExpiredTime(req.SvipExpiredTime.AsTime()).
+		SetRemark(req.Remark).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetVipUser 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/activitycomponent/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activitycomponent"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -76,9 +75,24 @@ func (r *activityComponentRepo) UpdateActivityComponent(ctx context.Context, req
 	if err != nil {
 		return nil, err
 	}
-	data := convert.ActivityComponentUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.ActivityComponent.UpdateOne(data).Save(ctx)
+	return r.data.db.ActivityComponent.UpdateOneID(req.Id).
+		SetActivityCode(req.ActivityCode).
+		SetComponentType(req.ComponentType).
+		SetPolicy(req.Policy).
+		SetVipDays(req.VipDays).
+		SetMinConsume(req.MinConsume).
+		SetMaxConsume(req.MaxConsume).
+		SetMinPayNum(req.MinPayNum).
+		SetPayTimes(req.PayTimes).
+		SetPayAmount(req.PayAmount).
+		SetRegDays(req.RegDays).
+		SetSummary(req.Summary).
+		SetAssetItemId(req.AssetItemId).
+		SetAmount(req.Amount).
+		SetResId(req.ResId).
+		SetResDays(req.ResDays).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetActivityComponent 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/userresource/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userresource"
@@ -65,9 +64,13 @@ func (r *userResourceRepo) UpdateUserResource(ctx context.Context, req *v1.UserR
 	if err != nil {
 		return nil, err
 	}
-	data := convert.UserResourceUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.UserResource.UpdateOne(data).Save(ctx)
+	return r.data.db.UserResource.UpdateOneID(req.Id).
+		SetResType(req.ResType).
+		SetName(req.Name).
+		SetURL(req.Url).
+		SetSummary(req.Summary).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetUserResource 根据Id查询

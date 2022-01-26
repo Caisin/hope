@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/activity/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/activity"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -71,9 +70,19 @@ func (r *activityRepo) UpdateActivity(ctx context.Context, req *v1.ActivityUpdat
 	if err != nil {
 		return nil, err
 	}
-	data := convert.ActivityUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.Activity.UpdateOne(data).Save(ctx)
+	return r.data.db.Activity.UpdateOneID(req.Id).
+		SetActivityCode(req.ActivityCode).
+		SetActivityName(req.ActivityName).
+		SetSummary(req.Summary).
+		SetRuleImgSc(req.RuleImgSc).
+		SetRuleImgTc(req.RuleImgTc).
+		SetPopupImg(req.PopupImg).
+		SetRegDays(req.RegDays).
+		SetCycleType(req.CycleType).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetActivity 根据Id查询

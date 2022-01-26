@@ -31,6 +31,7 @@ func SysMenuUpdateReq2Data(v *v1.SysMenuUpdateReq) *ent.SysMenu {
 		Component:          v.Component,
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
+		FrameSrc:           v.FrameSrc,
 	}
 }
 
@@ -56,6 +57,7 @@ func SysMenuData2UpdateReq(v *ent.SysMenu) *v1.SysMenuUpdateReq {
 		Component:          v.Component,
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
+		FrameSrc:           v.FrameSrc,
 	}
 }
 
@@ -80,6 +82,7 @@ func SysMenuCreateReq2Data(v *v1.SysMenuCreateReq) *ent.SysMenu {
 		Component:          v.Component,
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
+		FrameSrc:           v.FrameSrc,
 	}
 }
 
@@ -104,6 +107,7 @@ func SysMenuData2CreateReq(v *ent.SysMenu) *v1.SysMenuCreateReq {
 		Component:          v.Component,
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
+		FrameSrc:           v.FrameSrc,
 	}
 }
 
@@ -128,6 +132,7 @@ func SysMenuReq2Data(v *v1.SysMenuReq) *ent.SysMenu {
 		Component:          v.Component,
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
+		FrameSrc:           v.FrameSrc,
 	}
 }
 
@@ -152,6 +157,7 @@ func SysMenuData2Req(v *ent.SysMenu) *v1.SysMenuReq {
 		Component:          v.Component,
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
+		FrameSrc:           v.FrameSrc,
 	}
 }
 
@@ -178,6 +184,7 @@ func SysMenuData2Reply(v *ent.SysMenu) *v1.SysMenuData {
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
+		State:              string(v.State),
 		CreatedAt:          timestamppb.New(v.CreatedAt),
 		UpdatedAt:          timestamppb.New(v.UpdatedAt),
 		CreateBy:           v.CreateBy,

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/ambalance/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/ambalance"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -71,9 +70,19 @@ func (r *amBalanceRepo) UpdateAmBalance(ctx context.Context, req *v1.AmBalanceUp
 	if err != nil {
 		return nil, err
 	}
-	data := convert.AmBalanceUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.AmBalance.UpdateOne(data).Save(ctx)
+	return r.data.db.AmBalance.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetOrderId(req.OrderId).
+		SetEventId(req.EventId).
+		SetCashTag(req.CashTag).
+		SetAssetItemId(req.AssetItemId).
+		SetAmount(req.Amount).
+		SetBalance(req.Balance).
+		SetRemark(req.Remark).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetAmBalance 根据Id查询

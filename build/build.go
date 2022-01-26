@@ -119,28 +119,24 @@ func main() {
 
 			//生成data
 			dataFileName := fmt.Sprintf("%s/apps/%s/internal/data/%s.go", projectPath, prod, str.Camel2Case(name))
-			if file.CheckExist(dataFileName) {
-				genFile(dataTemplate, m, dataFileName)
-			} else {
-				fmt.Println(dataFileName + " is exist!")
-			}
+			genFile(dataTemplate, m, dataFileName)
 
 			//生成service
 			serviceFileName := fmt.Sprintf("%s/apps/%s/internal/service/%s.go", projectPath, prod, str.Camel2Case(name))
-			if file.CheckExist(serviceFileName) {
-				genFile(serviceTemplate, m, serviceFileName)
-			} else {
-				fmt.Println(serviceFileName + " is exist!")
-			}
+			genFile(serviceTemplate, m, serviceFileName)
 		}
-		genProvider(projectPath, prod, schemas)
-		genRegServer(projectPath, prod, schemas)
+		//genProvider(projectPath, prod, schemas)
+		//genRegServer(projectPath, prod, schemas)
 		file.RemoveAll(tmpDir)
 	}
 }
 
 //根据模板
 func genFile(tmp *template.Template, m interface{}, fileName string) {
+	if file.CheckExist(fileName) {
+		fmt.Println(fileName + " is exist!")
+		return
+	}
 	bf := str.NewBuffer()
 	err := tmp.Execute(bf, m)
 	if err != nil {

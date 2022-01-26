@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/adchangelog/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/adchangelog"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -66,9 +65,14 @@ func (r *adChangeLogRepo) UpdateAdChangeLog(ctx context.Context, req *v1.AdChang
 	if err != nil {
 		return nil, err
 	}
-	data := convert.AdChangeLogUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.AdChangeLog.UpdateOne(data).Save(ctx)
+	return r.data.db.AdChangeLog.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetAdId(req.AdId).
+		SetChId(req.ChId).
+		SetDeviceId(req.DeviceId).
+		SetExtInfo(req.ExtInfo).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetAdChangeLog 根据Id查询

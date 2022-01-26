@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/assetitem/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/assetitem"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -67,9 +66,15 @@ func (r *assetItemRepo) UpdateAssetItem(ctx context.Context, req *v1.AssetItemUp
 	if err != nil {
 		return nil, err
 	}
-	data := convert.AssetItemUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.AssetItem.UpdateOne(data).Save(ctx)
+	return r.data.db.AssetItem.UpdateOneID(req.Id).
+		SetAssetItemId(req.AssetItemId).
+		SetAssetName(req.AssetName).
+		SetCashTag(req.CashTag).
+		SetValidDays(req.ValidDays).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetAssetItem 根据Id查询

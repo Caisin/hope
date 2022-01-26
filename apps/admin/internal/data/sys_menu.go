@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysmenu/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysmenu"
@@ -54,6 +53,7 @@ func (r *sysMenuRepo) CreateSysMenu(ctx context.Context, req *v1.SysMenuCreateRe
 		SetSort(req.Sort).
 		SetHideMenu(req.HideMenu).
 		SetFrameSrc(req.FrameSrc).
+		SetState(sysmenu.State(req.State)).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		SetCreateBy(claims.UserId).
@@ -78,9 +78,27 @@ func (r *sysMenuRepo) UpdateSysMenu(ctx context.Context, req *v1.SysMenuUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysMenuUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysMenu.UpdateOne(data).Save(ctx)
+	return r.data.db.SysMenu.UpdateOneID(req.Id).
+		SetParentId(req.ParentId).
+		SetName(req.Name).
+		SetTitle(req.Title).
+		SetRedirect(req.Redirect).
+		SetIcon(req.Icon).
+		SetPath(req.Path).
+		SetPaths(req.Paths).
+		SetMenuType(req.MenuType).
+		SetAction(req.Action).
+		SetPermission(req.Permission).
+		SetIgnoreKeepAlive(req.IgnoreKeepAlive).
+		SetHideBreadcrumb(req.HideBreadcrumb).
+		SetHideChildrenInMenu(req.HideChildrenInMenu).
+		SetComponent(req.Component).
+		SetSort(req.Sort).
+		SetHideMenu(req.HideMenu).
+		SetFrameSrc(req.FrameSrc).
+		SetState(sysmenu.State(req.State)).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysMenu 根据Id查询
@@ -174,6 +192,10 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 	list = append(list, sysmenu.HideMenu(req.HideMenu))
 	if str.IsBlank(req.FrameSrc) {
 		list = append(list, sysmenu.FrameSrcContains(req.FrameSrc))
+	}
+	state := sysmenu.State(req.State)
+	if sysmenu.StateValidator(state) == nil {
+		list = append(list, sysmenu.StateEQ(state))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, sysmenu.CreatedAtGTE(req.CreatedAt.AsTime()))

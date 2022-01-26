@@ -66,6 +66,9 @@ type SysMenu struct {
 	// FrameSrc holds the value of the "frameSrc" field.
 	// 外链地址
 	FrameSrc string `json:"frameSrc,omitempty"`
+	// State holds the value of the "state" field.
+	// 状态:U:使用,E:失效
+	State sysmenu.State `json:"state,omitempty"`
 	// CreatedAt holds the value of the "createdAt" field.
 	// 创建时间
 	CreatedAt time.Time `json:"createdAt,omitempty"`
@@ -140,7 +143,7 @@ func (*SysMenu) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullBool)
 		case sysmenu.FieldID, sysmenu.FieldParentId, sysmenu.FieldSort, sysmenu.FieldCreateBy, sysmenu.FieldUpdateBy, sysmenu.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysmenu.FieldName, sysmenu.FieldTitle, sysmenu.FieldRedirect, sysmenu.FieldIcon, sysmenu.FieldPath, sysmenu.FieldPaths, sysmenu.FieldMenuType, sysmenu.FieldAction, sysmenu.FieldPermission, sysmenu.FieldComponent, sysmenu.FieldFrameSrc:
+		case sysmenu.FieldName, sysmenu.FieldTitle, sysmenu.FieldRedirect, sysmenu.FieldIcon, sysmenu.FieldPath, sysmenu.FieldPaths, sysmenu.FieldMenuType, sysmenu.FieldAction, sysmenu.FieldPermission, sysmenu.FieldComponent, sysmenu.FieldFrameSrc, sysmenu.FieldState:
 			values[i] = new(sql.NullString)
 		case sysmenu.FieldCreatedAt, sysmenu.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -267,6 +270,12 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				sm.FrameSrc = value.String
 			}
+		case sysmenu.FieldState:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field state", values[i])
+			} else if value.Valid {
+				sm.State = sysmenu.State(value.String)
+			}
 		case sysmenu.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field createdAt", values[i])
@@ -374,6 +383,8 @@ func (sm *SysMenu) String() string {
 	builder.WriteString(fmt.Sprintf("%v", sm.HideMenu))
 	builder.WriteString(", frameSrc=")
 	builder.WriteString(sm.FrameSrc)
+	builder.WriteString(", state=")
+	builder.WriteString(fmt.Sprintf("%v", sm.State))
 	builder.WriteString(", createdAt=")
 	builder.WriteString(sm.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", updatedAt=")

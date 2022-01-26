@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelbookshelf/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelbookshelf"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -69,9 +68,17 @@ func (r *novelBookshelfRepo) UpdateNovelBookshelf(ctx context.Context, req *v1.N
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelBookshelfUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelBookshelf.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelBookshelf.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetUserName(req.UserName).
+		SetNovelId(req.NovelId).
+		SetLastReadTime(req.LastReadTime.AsTime()).
+		SetLastChapterOrder(req.LastChapterOrder).
+		SetLastChapterId(req.LastChapterId).
+		SetLastChapterName(req.LastChapterName).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelBookshelf 根据Id查询

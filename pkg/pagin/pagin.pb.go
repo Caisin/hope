@@ -4,6 +4,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/runtime/protoimpl"
+	"hope/pkg/util/str"
 	"reflect"
 	"sync"
 )
@@ -74,7 +75,7 @@ func (x *Pagination) GetTotal() int64 {
 
 func (x *Pagination) GetField() string {
 	if x != nil {
-		return x.Field
+		return str.Camel2Case(x.Field)
 	}
 	return ""
 }

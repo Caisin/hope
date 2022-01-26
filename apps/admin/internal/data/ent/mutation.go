@@ -11274,6 +11274,7 @@ type SysMenuMutation struct {
 	addsort            *int32
 	hideMenu           *bool
 	frameSrc           *string
+	state              *sysmenu.State
 	createdAt          *time.Time
 	updatedAt          *time.Time
 	createBy           *int64
@@ -12190,6 +12191,42 @@ func (m *SysMenuMutation) ResetFrameSrc() {
 	delete(m.clearedFields, sysmenu.FieldFrameSrc)
 }
 
+// SetState sets the "state" field.
+func (m *SysMenuMutation) SetState(s sysmenu.State) {
+	m.state = &s
+}
+
+// State returns the value of the "state" field in the mutation.
+func (m *SysMenuMutation) State() (r sysmenu.State, exists bool) {
+	v := m.state
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldState returns the old "state" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldState(ctx context.Context) (v sysmenu.State, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldState is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldState requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldState: %w", err)
+	}
+	return oldValue.State, nil
+}
+
+// ResetState resets all changes to the "state" field.
+func (m *SysMenuMutation) ResetState() {
+	m.state = nil
+}
+
 // SetCreatedAt sets the "createdAt" field.
 func (m *SysMenuMutation) SetCreatedAt(t time.Time) {
 	m.createdAt = &t
@@ -12596,7 +12633,7 @@ func (m *SysMenuMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysMenuMutation) Fields() []string {
-	fields := make([]string, 0, 22)
+	fields := make([]string, 0, 23)
 	if m.parent != nil {
 		fields = append(fields, sysmenu.FieldParentId)
 	}
@@ -12647,6 +12684,9 @@ func (m *SysMenuMutation) Fields() []string {
 	}
 	if m.frameSrc != nil {
 		fields = append(fields, sysmenu.FieldFrameSrc)
+	}
+	if m.state != nil {
+		fields = append(fields, sysmenu.FieldState)
 	}
 	if m.createdAt != nil {
 		fields = append(fields, sysmenu.FieldCreatedAt)
@@ -12705,6 +12745,8 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 		return m.HideMenu()
 	case sysmenu.FieldFrameSrc:
 		return m.FrameSrc()
+	case sysmenu.FieldState:
+		return m.State()
 	case sysmenu.FieldCreatedAt:
 		return m.CreatedAt()
 	case sysmenu.FieldUpdatedAt:
@@ -12758,6 +12800,8 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldHideMenu(ctx)
 	case sysmenu.FieldFrameSrc:
 		return m.OldFrameSrc(ctx)
+	case sysmenu.FieldState:
+		return m.OldState(ctx)
 	case sysmenu.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case sysmenu.FieldUpdatedAt:
@@ -12895,6 +12939,13 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetFrameSrc(v)
+		return nil
+	case sysmenu.FieldState:
+		v, ok := value.(sysmenu.State)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetState(v)
 		return nil
 	case sysmenu.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -13168,6 +13219,9 @@ func (m *SysMenuMutation) ResetField(name string) error {
 		return nil
 	case sysmenu.FieldFrameSrc:
 		m.ResetFrameSrc()
+		return nil
+	case sysmenu.FieldState:
+		m.ResetState()
 		return nil
 	case sysmenu.FieldCreatedAt:
 		m.ResetCreatedAt()

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/resourcestorage/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/resourcestorage"
@@ -79,9 +78,27 @@ func (r *resourceStorageRepo) UpdateResourceStorage(ctx context.Context, req *v1
 	if err != nil {
 		return nil, err
 	}
-	data := convert.ResourceStorageUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.ResourceStorage.UpdateOne(data).Save(ctx)
+	return r.data.db.ResourceStorage.UpdateOneID(req.Id).
+		SetGroupId(req.GroupId).
+		SetStorageType(req.StorageType).
+		SetRealName(req.RealName).
+		SetBucket(req.Bucket).
+		SetName(req.Name).
+		SetSuffix(req.Suffix).
+		SetPath(req.Path).
+		SetType(req.Type).
+		SetSize(req.Size).
+		SetDeleteUrl(req.DeleteUrl).
+		SetFilename(req.Filename).
+		SetKey(req.Key).
+		SetHeight(req.Height).
+		SetURL(req.Url).
+		SetUsername(req.Username).
+		SetWidth(req.Width).
+		SetMd5code(req.Md5Code).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetResourceStorage 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelcomment/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelcomment"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -75,9 +74,23 @@ func (r *novelCommentRepo) UpdateNovelComment(ctx context.Context, req *v1.Novel
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelCommentUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelComment.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelComment.UpdateOneID(req.Id).
+		SetNovelId(req.NovelId).
+		SetUserId(req.UserId).
+		SetAvatar(req.Avatar).
+		SetUserName(req.UserName).
+		SetRepUserId(req.RepUserId).
+		SetRepUserName(req.RepUserName).
+		SetContent(req.Content).
+		SetScore(req.Score).
+		SetPId(req.PId).
+		SetIsTop(req.IsTop).
+		SetState(novelcomment.State(req.State)).
+		SetIsHighlight(req.IsHighlight).
+		SetIsHot(req.IsHot).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelComment 根据Id查询

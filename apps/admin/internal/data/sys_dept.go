@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysdept/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdept"
@@ -68,9 +67,16 @@ func (r *sysDeptRepo) UpdateSysDept(ctx context.Context, req *v1.SysDeptUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysDeptUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysDept.UpdateOne(data).Save(ctx)
+	return r.data.db.SysDept.UpdateOneID(req.Id).
+		SetDeptPath(req.DeptPath).
+		SetDeptName(req.DeptName).
+		SetSort(req.Sort).
+		SetLeader(req.Leader).
+		SetPhone(req.Phone).
+		SetEmail(req.Email).
+		SetStatus(req.Status).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysDept 根据Id查询

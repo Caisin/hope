@@ -18,7 +18,7 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 type AuthHTTPServer interface {
-	GetMenuList(context.Context, *GetPermReq) (*GetPermReply, error)
+	GetMenuList(context.Context, *GetMenuReq) (*GetMenuReply, error)
 	GetPermCode(context.Context, *GetPermReq) (*GetPermReply, error)
 	GetUserInfo(context.Context, *GetUserInfoReq) (*LoginReply, error)
 	LogOut(context.Context, *LogOutReq) (*LogOutReply, error)
@@ -112,25 +112,25 @@ func _Auth_GetPermCode0_HTTP_Handler(srv AuthHTTPServer) func(ctx http.Context) 
 
 func _Auth_GetMenuList0_HTTP_Handler(srv AuthHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in GetPermReq
+		var in GetMenuReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, "/sysuser.v1.Auth/GetMenuList")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetMenuList(ctx, req.(*GetPermReq))
+			return srv.GetMenuList(ctx, req.(*GetMenuReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*GetPermReply)
+		reply := out.(*GetMenuReply)
 		return ctx.Result(200, reply)
 	}
 }
 
 type AuthHTTPClient interface {
-	GetMenuList(ctx context.Context, req *GetPermReq, opts ...http.CallOption) (rsp *GetPermReply, err error)
+	GetMenuList(ctx context.Context, req *GetMenuReq, opts ...http.CallOption) (rsp *GetMenuReply, err error)
 	GetPermCode(ctx context.Context, req *GetPermReq, opts ...http.CallOption) (rsp *GetPermReply, err error)
 	GetUserInfo(ctx context.Context, req *GetUserInfoReq, opts ...http.CallOption) (rsp *LoginReply, err error)
 	LogOut(ctx context.Context, req *LogOutReq, opts ...http.CallOption) (rsp *LogOutReply, err error)
@@ -145,8 +145,8 @@ func NewAuthHTTPClient(client *http.Client) AuthHTTPClient {
 	return &AuthHTTPClientImpl{client}
 }
 
-func (c *AuthHTTPClientImpl) GetMenuList(ctx context.Context, in *GetPermReq, opts ...http.CallOption) (*GetPermReply, error) {
-	var out GetPermReply
+func (c *AuthHTTPClientImpl) GetMenuList(ctx context.Context, in *GetMenuReq, opts ...http.CallOption) (*GetMenuReply, error) {
+	var out GetMenuReply
 	pattern := "/v1/sys/auth/getMenuList"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysuser.v1.Auth/GetMenuList"))

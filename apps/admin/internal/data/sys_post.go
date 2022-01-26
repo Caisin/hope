@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/syspost/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/syspost"
@@ -66,9 +65,14 @@ func (r *sysPostRepo) UpdateSysPost(ctx context.Context, req *v1.SysPostUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysPostUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysPost.UpdateOne(data).Save(ctx)
+	return r.data.db.SysPost.UpdateOneID(req.Id).
+		SetPostName(req.PostName).
+		SetPostCode(req.PostCode).
+		SetSort(req.Sort).
+		SetStatus(req.Status).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysPost 根据Id查询

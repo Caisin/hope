@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelconsume/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelconsume"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -65,9 +64,14 @@ func (r *novelConsumeRepo) UpdateNovelConsume(ctx context.Context, req *v1.Novel
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelConsumeUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelConsume.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelConsume.UpdateOneID(req.Id).
+		SetNovelId(req.NovelId).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetDiscount(req.Discount).
+		SetReward(req.Reward).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelConsume 根据Id查询

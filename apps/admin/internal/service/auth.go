@@ -45,3 +45,10 @@ func (s *AuthService) GetPermCode(ctx context.Context, req *pb.GetPermReq) (*pb.
 	defer span.End()
 	return s.uc.GetPermCode(ctx, req)
 }
+
+func (s *AuthService) GetMenuList(ctx context.Context, req *pb.GetMenuReq) (*pb.GetMenuReply, error) {
+	tr := otel.Tracer("api")
+	ctx, span := tr.Start(ctx, "GetMenuList")
+	defer span.End()
+	return s.uc.GetMenuList(ctx, req)
+}

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/tasklog/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/predicate"
 	"hope/apps/novel/internal/data/ent/tasklog"
@@ -79,9 +78,27 @@ func (r *taskLogRepo) UpdateTaskLog(ctx context.Context, req *v1.TaskLogUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.TaskLogUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.TaskLog.UpdateOne(data).Save(ctx)
+	return r.data.db.TaskLog.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetTaskGroup(req.TaskGroup).
+		SetTaskCode(req.TaskCode).
+		SetTaskId(req.TaskId).
+		SetTaskName(req.TaskName).
+		SetAmount(req.Amount).
+		SetReward(req.Reward).
+		SetAmountItem(req.AmountItem).
+		SetRewardItem(req.RewardItem).
+		SetTargetAmount(req.TargetAmount).
+		SetDoneAmount(req.DoneAmount).
+		SetState(req.State).
+		SetDoneAt(req.DoneAt.AsTime()).
+		SetObtainAt(req.ObtainAt.AsTime()).
+		SetDoneTimes(req.DoneTimes).
+		SetAllTimes(req.AllTimes).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetTaskLog 根据Id查询

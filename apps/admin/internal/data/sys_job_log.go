@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysjoblog/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysjoblog"
@@ -67,9 +66,15 @@ func (r *sysJobLogRepo) UpdateSysJobLog(ctx context.Context, req *v1.SysJobLogUp
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysJobLogUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysJobLog.UpdateOne(data).Save(ctx)
+	return r.data.db.SysJobLog.UpdateOneID(req.Id).
+		SetJobId(req.JobId).
+		SetJobName(req.JobName).
+		SetEntryId(req.EntryId).
+		SetStatus(req.Status).
+		SetDuration(req.Duration.AsDuration()).
+		SetInfo(req.Info).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysJobLog 根据Id查询

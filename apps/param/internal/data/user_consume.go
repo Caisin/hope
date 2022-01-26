@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/userconsume/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userconsume"
@@ -64,9 +63,13 @@ func (r *userConsumeRepo) UpdateUserConsume(ctx context.Context, req *v1.UserCon
 	if err != nil {
 		return nil, err
 	}
-	data := convert.UserConsumeUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.UserConsume.UpdateOne(data).Save(ctx)
+	return r.data.db.UserConsume.UpdateOneID(req.Id).
+		SetNovelId(req.NovelId).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetDiscount(req.Discount).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetUserConsume 根据Id查询

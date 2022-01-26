@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelbuyrecord/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelbuyrecord"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -70,9 +69,18 @@ func (r *novelBuyRecordRepo) UpdateNovelBuyRecord(ctx context.Context, req *v1.N
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelBuyRecordUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelBuyRecord.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelBuyRecord.UpdateOneID(req.Id).
+		SetUserId(req.UserId).
+		SetUserName(req.UserName).
+		SetNovelId(req.NovelId).
+		SetNovelName(req.NovelName).
+		SetPackageId(req.PackageId).
+		SetCover(req.Cover).
+		SetCoin(req.Coin).
+		SetCoupon(req.Coupon).
+		SetRemark(req.Remark).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelBuyRecord 根据Id查询

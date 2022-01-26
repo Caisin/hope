@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/admin/sysrole/v1"
 	"hope/apps/admin/internal/biz"
-	"hope/apps/admin/internal/convert"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysrole"
@@ -71,9 +70,19 @@ func (r *sysRoleRepo) UpdateSysRole(ctx context.Context, req *v1.SysRoleUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	data := convert.SysRoleUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.SysRole.UpdateOne(data).Save(ctx)
+	return r.data.db.SysRole.UpdateOneID(req.Id).
+		SetRoleName(req.RoleName).
+		SetStatus(req.Status).
+		SetRoleKey(req.RoleKey).
+		SetRoleSort(req.RoleSort).
+		SetFlag(req.Flag).
+		SetRemark(req.Remark).
+		SetAdmin(req.Admin).
+		SetDataScope(req.DataScope).
+		SetSysDept(req.SysDept).
+		SetSysMenu(req.SysMenu).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetSysRole 根据Id查询

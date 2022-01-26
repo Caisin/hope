@@ -121,7 +121,7 @@ func TestAdmin(t *testing.T) {
 
 	//dataTs模板
 	apiTemplate := createTemplate(projectPath, "api.ts.template", funcMap)
-	id := 1
+	id := 0
 	bf := str.NewBuffer()
 	for _, prod := range prods {
 		tmpDir := fmt.Sprintf("%s/build/%s/schema", projectPath, prod)
@@ -171,7 +171,7 @@ func TestAdmin(t *testing.T) {
 			genFile(apiTemplate, m, apiFileName)
 		}
 
-		genMenu(id, prod, schemas, bf)
+		id = genMenu(id, prod, schemas, bf)
 		file.RemoveAll(tmpDir)
 	}
 	file.FileCreate(bf, projectPath+"/menu.sql")
@@ -224,7 +224,7 @@ func dealTime(f load.Field) string {
 //表单时间处理
 func formTime(f load.Field) string {
 	if f.Info.Type == field.TypeTime {
-		return "\n    defaultValue: '2059-01-01 00:00:00',\n    componentProps: {\n      showTime: true,\n  },"
+		return "\n    componentProps: {\n      showTime: true,\n    },"
 	}
 	return ""
 }
@@ -269,10 +269,9 @@ func TestName(t *testing.T) {
 	now := time.Now().Format("2006-01-02 15:04:05")
 	fmt.Println(now)
 }
-func genMenu(id int, mod string, scs []*load.Schema, bf *str.Buffer) (int, *str.Buffer) {
-	pId := id
+func genMenu(id int, mod string, scs []*load.Schema, bf *str.Buffer) int {
+	pId := 0
 	now := time.Now().Format("2006-01-02 15:04:05")
-
 	id++
 	menu := fmt.Sprintf(`
 INSERT INTO sys_menus (id, title, icon, path, paths,
@@ -287,36 +286,37 @@ VALUES (%d, '%s', null, '/%s', '/',
         null, null, null);
 `,
 		id, mod+"管理", mod,
-		"M", "", "Layout",
+		"D", "", "Layout",
 		now, now,
 		pId, str.LeftUpper(mod),
 	)
 	bf.WriteString(menu)
+	pId = id
 	for _, sc := range scs {
-		fpId := id + 1
 		name := sc.Name
 		title := sc.Name
 		lwName := str.LeftLower(name)
 		path := str.LeftLower(sc.Name)
 		basePerm := str.Camel2Split(name, ":")
-		component := fmt.Sprintf("%s/%s/index", mod, lwName)
+		component := fmt.Sprintf("/%s/%s/index", mod, lwName)
 		id++
+		fpId := id
 		query := fmt.Sprintf(`
 INSERT INTO sys_menus (id, title, icon, path, paths,
                        menu_type, action, permission, component, sort,
                        created_at, updated_at, create_by, update_by, tenant_id,
                        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
                        hide_children_in_menu, hide_menu, frame_src)
-VALUES (%d, '%s', null, '%s', '/',
+VALUES (%d, '%s', null, '/%s/%s', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
-        %d, '%s', '%s', null, null,
+        %d, '%s', '', null, null,
         null, null, null);
 `,
-			id, title+"管理", path,
-			"F", basePerm+":query", component,
+			id, title+"管理", mod, path,
+			"M", basePerm+":query", component,
 			now, now,
-			fpId, name, fmt.Sprintf("/%s/%s", mod, path),
+			pId, name,
 		)
 		bf.WriteString(query)
 		id++
@@ -329,13 +329,13 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
-        %d, '%s', '%s', null, null,
+        %d, '%s', '', null, null,
         null, null, null);
 `,
 			id, title+"新增",
 			"F", basePerm+":create", "",
 			now, now,
-			fpId, name, "",
+			fpId, "",
 		)
 		bf.WriteString(create)
 		id++
@@ -348,13 +348,13 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
-        %d, '%s', '%s', null, null,
+        %d, '', '', null, null,
         null, null, null);
 `,
 			id, title+"删除",
 			"F", basePerm+":delete", "",
 			now, now,
-			fpId, name, "",
+			fpId,
 		)
 		bf.WriteString(del)
 		id++
@@ -367,13 +367,13 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
-        %d, '%s', '%s', null, null,
+        %d, '', '', null, null,
         null, null, null);
 `,
 			id, title+"批量删除",
 			"F", basePerm+":batchDelete", "",
 			now, now,
-			fpId, name, "",
+			fpId,
 		)
 		bf.WriteString(batchDelete)
 		id++
@@ -386,16 +386,16 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
-        %d, '%s', '%s', null, null,
+        %d, '', '', null, null,
         null, null, null);
 `,
 			id, title+"修改",
 			"F", basePerm+":update", "",
 			now, now,
-			fpId, name, "",
+			fpId,
 		)
 		bf.WriteString(update)
 
 	}
-	return id, bf
+	return id
 }

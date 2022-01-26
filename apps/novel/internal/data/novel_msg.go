@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/novelmsg/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/novelmsg"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -65,9 +64,13 @@ func (r *novelMsgRepo) UpdateNovelMsg(ctx context.Context, req *v1.NovelMsgUpdat
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelMsgUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelMsg.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelMsg.UpdateOneID(req.Id).
+		SetTitle(req.Title).
+		SetMsg(req.Msg).
+		SetMsgType(req.MsgType).
+		SetStatus(req.Status).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelMsg 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/useranalysisstatistics/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/useranalysisstatistics"
@@ -81,9 +80,29 @@ func (r *userAnalysisStatisticsRepo) UpdateUserAnalysisStatistics(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	data := convert.UserAnalysisStatisticsUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.UserAnalysisStatistics.UpdateOne(data).Save(ctx)
+	return r.data.db.UserAnalysisStatistics.UpdateOneID(req.Id).
+		SetStatisticsDate(req.StatisticsDate).
+		SetAllUserNum(req.AllUserNum).
+		SetAllPayment(req.AllPayment).
+		SetAllPayUser(req.AllPayUser).
+		SetAllOrderNum(req.AllOrderNum).
+		SetDayUserNum(req.DayUserNum).
+		SetDayPayment(req.DayPayment).
+		SetDayOrderNum(req.DayOrderNum).
+		SetDayPayUser(req.DayPayUser).
+		SetDayRegPayment(req.DayRegPayment).
+		SetDayRegUserNum(req.DayRegUserNum).
+		SetDayRegOrderNum(req.DayRegOrderNum).
+		SetOldRegPayment(req.OldRegPayment).
+		SetOldRegUserNum(req.OldRegUserNum).
+		SetOldRegOrderNum(req.OldRegOrderNum).
+		SetPayRate(req.PayRate).
+		SetArpu(req.Arpu).
+		SetDayRegArpu(req.DayRegArpu).
+		SetDayArpu(req.DayArpu).
+		SetDayOldArpu(req.DayOldArpu).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetUserAnalysisStatistics 根据Id查询

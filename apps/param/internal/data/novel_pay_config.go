@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/param/novelpayconfig/v1"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/convert"
 	"hope/apps/param/internal/data/ent"
 	"hope/apps/param/internal/data/ent/novelpayconfig"
 	"hope/apps/param/internal/data/ent/predicate"
@@ -83,9 +82,31 @@ func (r *novelPayConfigRepo) UpdateNovelPayConfig(ctx context.Context, req *v1.N
 	if err != nil {
 		return nil, err
 	}
-	data := convert.NovelPayConfigUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.NovelPayConfig.UpdateOne(data).Save(ctx)
+	return r.data.db.NovelPayConfig.UpdateOneID(req.Id).
+		SetProductId(req.ProductId).
+		SetPaymentName(req.PaymentName).
+		SetFirstPayment(req.FirstPayment).
+		SetPayment(req.Payment).
+		SetOriginalPrice(req.OriginalPrice).
+		SetCfgType(req.CfgType).
+		SetCoin(req.Coin).
+		SetCurrency(req.Currency).
+		SetCoupon(req.Coupon).
+		SetCoinItem(req.CoinItem).
+		SetCouponItem(req.CouponItem).
+		SetSort(req.Sort).
+		SetState(req.State).
+		SetIsSend(req.IsSend).
+		SetPayType(req.PayType).
+		SetVipType(req.VipType).
+		SetIsHot(req.IsHot).
+		SetCycleDay(req.CycleDay).
+		SetSummary(req.Summary).
+		SetRemark(req.Remark).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetNovelPayConfig 根据Id查询

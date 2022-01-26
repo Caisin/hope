@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/customernovels/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/customernovels"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -71,9 +70,19 @@ func (r *customerNovelsRepo) UpdateCustomerNovels(ctx context.Context, req *v1.C
 	if err != nil {
 		return nil, err
 	}
-	data := convert.CustomerNovelsUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.CustomerNovels.UpdateOne(data).Save(ctx)
+	return r.data.db.CustomerNovels.UpdateOneID(req.Id).
+		SetNovelId(req.NovelId).
+		SetTypeId(req.TypeId).
+		SetTypeCode(req.TypeCode).
+		SetGroupCode(req.GroupCode).
+		SetFieldName(req.FieldName).
+		SetCover(req.Cover).
+		SetOrderNum(req.OrderNum).
+		SetRemark(req.Remark).
+		SetEffectTime(req.EffectTime.AsTime()).
+		SetExpiredTime(req.ExpiredTime.AsTime()).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetCustomerNovels 根据Id查询

@@ -5,7 +5,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	v1 "hope/api/novel/adchannel/v1"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/convert"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/adchannel"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -70,9 +69,18 @@ func (r *adChannelRepo) UpdateAdChannel(ctx context.Context, req *v1.AdChannelUp
 	if err != nil {
 		return nil, err
 	}
-	data := convert.AdChannelUpdateReq2Data(req)
-	data.UpdateBy = claims.UserId
-	return r.data.db.AdChannel.UpdateOne(data).Save(ctx)
+	return r.data.db.AdChannel.UpdateOneID(req.Id).
+		SetChannelName(req.ChannelName).
+		SetNovelId(req.NovelId).
+		SetReg(req.Reg).
+		SetPay(req.Pay).
+		SetNovelName(req.NovelName).
+		SetChapterId(req.ChapterId).
+		SetChapterNum(req.ChapterNum).
+		SetAdType(req.AdType).
+		SetImg(req.Img).
+		SetUpdateBy(claims.UserId).
+		Save(ctx)
 }
 
 // GetAdChannel 根据Id查询

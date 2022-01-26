@@ -1,5 +1,4 @@
-syntax = "proto3";
-
+syntax = "proto3";
 package sysmenu.v1;
 
 import "google/api/annotations.proto";
@@ -96,16 +95,18 @@ message SysMenuData {
     bool hideMenu = 17;
     //外链地址
     string frameSrc = 18;
+    //状态:U:使用,E:失效
+    string state = 19;
     //创建时间
-    google.protobuf.Timestamp createdAt = 19;
+    google.protobuf.Timestamp createdAt = 20;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 20;
+    google.protobuf.Timestamp updatedAt = 21;
     //创建者
-    int64 createBy = 21;
+    int64 createBy = 22;
     //更新者
-    int64 updateBy = 22;
+    int64 updateBy = 23;
     //租户
-    int64 tenantId = 23;
+    int64 tenantId = 24;
 
 }
 
@@ -167,16 +168,18 @@ message SysMenuReq {
     bool hideMenu = 17;
     //外链地址
     string frameSrc = 18;
+    //状态:U:使用,E:失效
+    string state = 19;
     //创建时间
-    google.protobuf.Timestamp createdAt = 19;
+    google.protobuf.Timestamp createdAt = 20;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 20;
+    google.protobuf.Timestamp updatedAt = 21;
     //创建者
-    int64 createBy = 21;
+    int64 createBy = 22;
     //更新者
-    int64 updateBy = 22;
+    int64 updateBy = 23;
     //租户
-    int64 tenantId = 23;
+    int64 tenantId = 24;
 
 }
 
@@ -226,6 +229,8 @@ message SysMenuCreateReq {
     bool hideMenu = 16;
     //外链地址
     string frameSrc = 17;
+    //状态:U:使用,E:失效
+    string state = 18;
 
 }
 
@@ -276,6 +281,8 @@ message SysMenuUpdateReq {
     bool hideMenu = 17;
     //外链地址
     string frameSrc = 18;
+    //状态:U:使用,E:失效
+    string state = 19;
 
 }
 

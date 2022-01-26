@@ -294,7 +294,11 @@ VALUES (%d, '%s', null, '/%s', '/',
 	pId = id
 	for _, sc := range scs {
 		name := sc.Name
-		title := sc.Name
+		title := name
+		s, ok := tableNameMapping[sc.Name]
+		if ok {
+			title = s
+		}
 		lwName := str.LeftLower(name)
 		path := str.LeftLower(sc.Name)
 		basePerm := str.Camel2Split(name, ":")

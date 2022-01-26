@@ -61,6 +61,7 @@
 
   import { columns, searchFormSchema } from './{{.pkg}}.data';
   import { DelReq } from '/@/api/model/baseModel';
+  import { beforeFetch, transformDateFunc } from '/@/utils/hope';
 
   export default defineComponent({
     name: '{{.name}}Management',
@@ -75,6 +76,7 @@
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
+          transformDateFunc: transformDateFunc,
         },
         useSearchForm: true,
         showTableSetting: true,
@@ -87,6 +89,7 @@
           slots: { customRender: 'action' },
           fixed: 'right',
         },
+        beforeFetch: beforeFetch,
         rowKey: '{{.pk}}',
       });
 

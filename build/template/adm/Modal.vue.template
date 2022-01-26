@@ -10,6 +10,7 @@
   import { formSchema } from './{{.pkg}}.data';
 
   import { create{{.name}}, update{{.name}} } from '/@/api/{{.model}}/{{.pkg}}';
+  import { transformDateFunc } from '/@/utils/hope';
 
   export default defineComponent({
     name: '{{.name}}Modal',
@@ -22,6 +23,7 @@
         labelWidth: 100,
         schemas: formSchema,
         showActionButtonGroup: false,
+        transformDateFunc: transformDateFunc,
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {

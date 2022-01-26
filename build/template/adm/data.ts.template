@@ -3,6 +3,12 @@ import { formatToDateTime } from '/@/utils/dateUtil';
 
 //表格字段
 export const columns: BasicColumn[] = [
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    sorter: true,
+    align: 'left',
+  },
 {{- range .fields}}
   {
     title: '{{.Comment}}',
@@ -29,6 +35,11 @@ export const searchFormSchema: FormSchema[] = [
 
 //添加,更新
 export const formSchema: FormSchema[] = [
+  {
+    label: 'ID',
+    field: 'id',
+    component: 'Input',
+  },
   {{- range .fields}}
   {
     label: '{{.Comment}}',

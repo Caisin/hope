@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AgreementLogClient interface {
 	// 分页查询AgreementLog
-	GetPageAgreementLog(ctx context.Context, in *AgreementLogPageReq, opts ...grpc.CallOption) (*AgreementLogPageReply, error)
+	GetAgreementLogPage(ctx context.Context, in *AgreementLogPageReq, opts ...grpc.CallOption) (*AgreementLogPageReply, error)
 	// 获取AgreementLog
 	GetAgreementLog(ctx context.Context, in *AgreementLogReq, opts ...grpc.CallOption) (*AgreementLogReply, error)
 	// 更新AgreementLog
@@ -44,9 +44,9 @@ func NewAgreementLogClient(cc grpc.ClientConnInterface) AgreementLogClient {
 	return &agreementLogClient{cc}
 }
 
-func (c *agreementLogClient) GetPageAgreementLog(ctx context.Context, in *AgreementLogPageReq, opts ...grpc.CallOption) (*AgreementLogPageReply, error) {
+func (c *agreementLogClient) GetAgreementLogPage(ctx context.Context, in *AgreementLogPageReq, opts ...grpc.CallOption) (*AgreementLogPageReply, error) {
 	out := new(AgreementLogPageReply)
-	err := c.cc.Invoke(ctx, "/agreementlog.v1.AgreementLog/GetPageAgreementLog", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/agreementlog.v1.AgreementLog/GetAgreementLogPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *agreementLogClient) BatchDeleteAgreementLog(ctx context.Context, in *Ag
 // for forward compatibility
 type AgreementLogServer interface {
 	// 分页查询AgreementLog
-	GetPageAgreementLog(context.Context, *AgreementLogPageReq) (*AgreementLogPageReply, error)
+	GetAgreementLogPage(context.Context, *AgreementLogPageReq) (*AgreementLogPageReply, error)
 	// 获取AgreementLog
 	GetAgreementLog(context.Context, *AgreementLogReq) (*AgreementLogReply, error)
 	// 更新AgreementLog
@@ -121,8 +121,8 @@ type AgreementLogServer interface {
 type UnimplementedAgreementLogServer struct {
 }
 
-func (UnimplementedAgreementLogServer) GetPageAgreementLog(context.Context, *AgreementLogPageReq) (*AgreementLogPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageAgreementLog not implemented")
+func (UnimplementedAgreementLogServer) GetAgreementLogPage(context.Context, *AgreementLogPageReq) (*AgreementLogPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAgreementLogPage not implemented")
 }
 func (UnimplementedAgreementLogServer) GetAgreementLog(context.Context, *AgreementLogReq) (*AgreementLogReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAgreementLog not implemented")
@@ -152,20 +152,20 @@ func RegisterAgreementLogServer(s grpc.ServiceRegistrar, srv AgreementLogServer)
 	s.RegisterService(&AgreementLog_ServiceDesc, srv)
 }
 
-func _AgreementLog_GetPageAgreementLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AgreementLog_GetAgreementLogPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AgreementLogPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AgreementLogServer).GetPageAgreementLog(ctx, in)
+		return srv.(AgreementLogServer).GetAgreementLogPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/agreementlog.v1.AgreementLog/GetPageAgreementLog",
+		FullMethod: "/agreementlog.v1.AgreementLog/GetAgreementLogPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgreementLogServer).GetPageAgreementLog(ctx, req.(*AgreementLogPageReq))
+		return srv.(AgreementLogServer).GetAgreementLogPage(ctx, req.(*AgreementLogPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var AgreementLog_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AgreementLogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageAgreementLog",
-			Handler:    _AgreementLog_GetPageAgreementLog_Handler,
+			MethodName: "GetAgreementLogPage",
+			Handler:    _AgreementLog_GetAgreementLogPage_Handler,
 		},
 		{
 			MethodName: "GetAgreementLog",

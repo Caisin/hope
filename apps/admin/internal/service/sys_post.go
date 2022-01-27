@@ -20,9 +20,9 @@ func NewSysPostService(uc *biz.SysPostUseCase, logger log.Logger) *SysPostServic
 	return &SysPostService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysPostService) GetPageSysPost(ctx context.Context, req *pb.SysPostPageReq) (*pb.SysPostPageReply, error) {
+func (s *SysPostService) GetSysPostPage(ctx context.Context, req *pb.SysPostPageReq) (*pb.SysPostPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysPost")
+	ctx, span := tr.Start(ctx, "GetSysPostPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -22,13 +22,13 @@ type ListenRecordHTTPServer interface {
 	CreateListenRecord(context.Context, *ListenRecordCreateReq) (*ListenRecordCreateReply, error)
 	DeleteListenRecord(context.Context, *ListenRecordDeleteReq) (*ListenRecordDeleteReply, error)
 	GetListenRecord(context.Context, *ListenRecordReq) (*ListenRecordReply, error)
-	GetPageListenRecord(context.Context, *ListenRecordPageReq) (*ListenRecordPageReply, error)
+	GetListenRecordPage(context.Context, *ListenRecordPageReq) (*ListenRecordPageReply, error)
 	UpdateListenRecord(context.Context, *ListenRecordUpdateReq) (*ListenRecordUpdateReply, error)
 }
 
 func RegisterListenRecordHTTPServer(s *http.Server, srv ListenRecordHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/listen/record/page", _ListenRecord_GetPageListenRecord0_HTTP_Handler(srv))
+	r.GET("/v1/listen/record/page", _ListenRecord_GetListenRecordPage0_HTTP_Handler(srv))
 	r.GET("/v1/listen/record/{id}", _ListenRecord_GetListenRecord0_HTTP_Handler(srv))
 	r.PUT("/v1/listen/record/{id}", _ListenRecord_UpdateListenRecord0_HTTP_Handler(srv))
 	r.POST("/v1/listen/record", _ListenRecord_CreateListenRecord0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterListenRecordHTTPServer(s *http.Server, srv ListenRecordHTTPServer) 
 	r.DELETE("/v1/listen/record", _ListenRecord_BatchDeleteListenRecord0_HTTP_Handler(srv))
 }
 
-func _ListenRecord_GetPageListenRecord0_HTTP_Handler(srv ListenRecordHTTPServer) func(ctx http.Context) error {
+func _ListenRecord_GetListenRecordPage0_HTTP_Handler(srv ListenRecordHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ListenRecordPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/listenrecord.v1.ListenRecord/GetPageListenRecord")
+		http.SetOperation(ctx, "/listenrecord.v1.ListenRecord/GetListenRecordPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageListenRecord(ctx, req.(*ListenRecordPageReq))
+			return srv.GetListenRecordPage(ctx, req.(*ListenRecordPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type ListenRecordHTTPClient interface {
 	CreateListenRecord(ctx context.Context, req *ListenRecordCreateReq, opts ...http.CallOption) (rsp *ListenRecordCreateReply, err error)
 	DeleteListenRecord(ctx context.Context, req *ListenRecordDeleteReq, opts ...http.CallOption) (rsp *ListenRecordDeleteReply, err error)
 	GetListenRecord(ctx context.Context, req *ListenRecordReq, opts ...http.CallOption) (rsp *ListenRecordReply, err error)
-	GetPageListenRecord(ctx context.Context, req *ListenRecordPageReq, opts ...http.CallOption) (rsp *ListenRecordPageReply, err error)
+	GetListenRecordPage(ctx context.Context, req *ListenRecordPageReq, opts ...http.CallOption) (rsp *ListenRecordPageReply, err error)
 	UpdateListenRecord(ctx context.Context, req *ListenRecordUpdateReq, opts ...http.CallOption) (rsp *ListenRecordUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *ListenRecordHTTPClientImpl) GetListenRecord(ctx context.Context, in *Li
 	return &out, err
 }
 
-func (c *ListenRecordHTTPClientImpl) GetPageListenRecord(ctx context.Context, in *ListenRecordPageReq, opts ...http.CallOption) (*ListenRecordPageReply, error) {
+func (c *ListenRecordHTTPClientImpl) GetListenRecordPage(ctx context.Context, in *ListenRecordPageReq, opts ...http.CallOption) (*ListenRecordPageReply, error) {
 	var out ListenRecordPageReply
 	pattern := "/v1/listen/record/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/listenrecord.v1.ListenRecord/GetPageListenRecord"))
+	opts = append(opts, http.Operation("/listenrecord.v1.ListenRecord/GetListenRecordPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

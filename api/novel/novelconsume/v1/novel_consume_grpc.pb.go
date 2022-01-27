@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelConsumeClient interface {
 	// 分页查询NovelConsume
-	GetPageNovelConsume(ctx context.Context, in *NovelConsumePageReq, opts ...grpc.CallOption) (*NovelConsumePageReply, error)
+	GetNovelConsumePage(ctx context.Context, in *NovelConsumePageReq, opts ...grpc.CallOption) (*NovelConsumePageReply, error)
 	// 获取NovelConsume
 	GetNovelConsume(ctx context.Context, in *NovelConsumeReq, opts ...grpc.CallOption) (*NovelConsumeReply, error)
 	// 更新NovelConsume
@@ -44,9 +44,9 @@ func NewNovelConsumeClient(cc grpc.ClientConnInterface) NovelConsumeClient {
 	return &novelConsumeClient{cc}
 }
 
-func (c *novelConsumeClient) GetPageNovelConsume(ctx context.Context, in *NovelConsumePageReq, opts ...grpc.CallOption) (*NovelConsumePageReply, error) {
+func (c *novelConsumeClient) GetNovelConsumePage(ctx context.Context, in *NovelConsumePageReq, opts ...grpc.CallOption) (*NovelConsumePageReply, error) {
 	out := new(NovelConsumePageReply)
-	err := c.cc.Invoke(ctx, "/novelconsume.v1.NovelConsume/GetPageNovelConsume", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelconsume.v1.NovelConsume/GetNovelConsumePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelConsumeClient) BatchDeleteNovelConsume(ctx context.Context, in *No
 // for forward compatibility
 type NovelConsumeServer interface {
 	// 分页查询NovelConsume
-	GetPageNovelConsume(context.Context, *NovelConsumePageReq) (*NovelConsumePageReply, error)
+	GetNovelConsumePage(context.Context, *NovelConsumePageReq) (*NovelConsumePageReply, error)
 	// 获取NovelConsume
 	GetNovelConsume(context.Context, *NovelConsumeReq) (*NovelConsumeReply, error)
 	// 更新NovelConsume
@@ -121,8 +121,8 @@ type NovelConsumeServer interface {
 type UnimplementedNovelConsumeServer struct {
 }
 
-func (UnimplementedNovelConsumeServer) GetPageNovelConsume(context.Context, *NovelConsumePageReq) (*NovelConsumePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelConsume not implemented")
+func (UnimplementedNovelConsumeServer) GetNovelConsumePage(context.Context, *NovelConsumePageReq) (*NovelConsumePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelConsumePage not implemented")
 }
 func (UnimplementedNovelConsumeServer) GetNovelConsume(context.Context, *NovelConsumeReq) (*NovelConsumeReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelConsume not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelConsumeServer(s grpc.ServiceRegistrar, srv NovelConsumeServer)
 	s.RegisterService(&NovelConsume_ServiceDesc, srv)
 }
 
-func _NovelConsume_GetPageNovelConsume_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelConsume_GetNovelConsumePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelConsumePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelConsumeServer).GetPageNovelConsume(ctx, in)
+		return srv.(NovelConsumeServer).GetNovelConsumePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelconsume.v1.NovelConsume/GetPageNovelConsume",
+		FullMethod: "/novelconsume.v1.NovelConsume/GetNovelConsumePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelConsumeServer).GetPageNovelConsume(ctx, req.(*NovelConsumePageReq))
+		return srv.(NovelConsumeServer).GetNovelConsumePage(ctx, req.(*NovelConsumePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelConsume_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelConsumeServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelConsume",
-			Handler:    _NovelConsume_GetPageNovelConsume_Handler,
+			MethodName: "GetNovelConsumePage",
+			Handler:    _NovelConsume_GetNovelConsumePage_Handler,
 		},
 		{
 			MethodName: "GetNovelConsume",

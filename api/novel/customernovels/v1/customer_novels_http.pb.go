@@ -22,13 +22,13 @@ type CustomerNovelsHTTPServer interface {
 	CreateCustomerNovels(context.Context, *CustomerNovelsCreateReq) (*CustomerNovelsCreateReply, error)
 	DeleteCustomerNovels(context.Context, *CustomerNovelsDeleteReq) (*CustomerNovelsDeleteReply, error)
 	GetCustomerNovels(context.Context, *CustomerNovelsReq) (*CustomerNovelsReply, error)
-	GetPageCustomerNovels(context.Context, *CustomerNovelsPageReq) (*CustomerNovelsPageReply, error)
+	GetCustomerNovelsPage(context.Context, *CustomerNovelsPageReq) (*CustomerNovelsPageReply, error)
 	UpdateCustomerNovels(context.Context, *CustomerNovelsUpdateReq) (*CustomerNovelsUpdateReply, error)
 }
 
 func RegisterCustomerNovelsHTTPServer(s *http.Server, srv CustomerNovelsHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/customer/novels/page", _CustomerNovels_GetPageCustomerNovels0_HTTP_Handler(srv))
+	r.GET("/v1/customer/novels/page", _CustomerNovels_GetCustomerNovelsPage0_HTTP_Handler(srv))
 	r.GET("/v1/customer/novels/{id}", _CustomerNovels_GetCustomerNovels0_HTTP_Handler(srv))
 	r.PUT("/v1/customer/novels/{id}", _CustomerNovels_UpdateCustomerNovels0_HTTP_Handler(srv))
 	r.POST("/v1/customer/novels", _CustomerNovels_CreateCustomerNovels0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterCustomerNovelsHTTPServer(s *http.Server, srv CustomerNovelsHTTPServ
 	r.DELETE("/v1/customer/novels", _CustomerNovels_BatchDeleteCustomerNovels0_HTTP_Handler(srv))
 }
 
-func _CustomerNovels_GetPageCustomerNovels0_HTTP_Handler(srv CustomerNovelsHTTPServer) func(ctx http.Context) error {
+func _CustomerNovels_GetCustomerNovelsPage0_HTTP_Handler(srv CustomerNovelsHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in CustomerNovelsPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/customernovels.v1.CustomerNovels/GetPageCustomerNovels")
+		http.SetOperation(ctx, "/customernovels.v1.CustomerNovels/GetCustomerNovelsPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageCustomerNovels(ctx, req.(*CustomerNovelsPageReq))
+			return srv.GetCustomerNovelsPage(ctx, req.(*CustomerNovelsPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type CustomerNovelsHTTPClient interface {
 	CreateCustomerNovels(ctx context.Context, req *CustomerNovelsCreateReq, opts ...http.CallOption) (rsp *CustomerNovelsCreateReply, err error)
 	DeleteCustomerNovels(ctx context.Context, req *CustomerNovelsDeleteReq, opts ...http.CallOption) (rsp *CustomerNovelsDeleteReply, err error)
 	GetCustomerNovels(ctx context.Context, req *CustomerNovelsReq, opts ...http.CallOption) (rsp *CustomerNovelsReply, err error)
-	GetPageCustomerNovels(ctx context.Context, req *CustomerNovelsPageReq, opts ...http.CallOption) (rsp *CustomerNovelsPageReply, err error)
+	GetCustomerNovelsPage(ctx context.Context, req *CustomerNovelsPageReq, opts ...http.CallOption) (rsp *CustomerNovelsPageReply, err error)
 	UpdateCustomerNovels(ctx context.Context, req *CustomerNovelsUpdateReq, opts ...http.CallOption) (rsp *CustomerNovelsUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *CustomerNovelsHTTPClientImpl) GetCustomerNovels(ctx context.Context, in
 	return &out, err
 }
 
-func (c *CustomerNovelsHTTPClientImpl) GetPageCustomerNovels(ctx context.Context, in *CustomerNovelsPageReq, opts ...http.CallOption) (*CustomerNovelsPageReply, error) {
+func (c *CustomerNovelsHTTPClientImpl) GetCustomerNovelsPage(ctx context.Context, in *CustomerNovelsPageReq, opts ...http.CallOption) (*CustomerNovelsPageReply, error) {
 	var out CustomerNovelsPageReply
 	pattern := "/v1/customer/novels/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/GetPageCustomerNovels"))
+	opts = append(opts, http.Operation("/customernovels.v1.CustomerNovels/GetCustomerNovelsPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/adchangelog/v1;v1";
 service AdChangeLog {
 
   // 分页查询AdChangeLog
-  rpc GetPageAdChangeLog (AdChangeLogPageReq) returns (AdChangeLogPageReply)  {
+  rpc GetAdChangeLogPage (AdChangeLogPageReq) returns (AdChangeLogPageReply)  {
     option (google.api.http) = {
       get: "/v1/ad/change/log/page"
     };

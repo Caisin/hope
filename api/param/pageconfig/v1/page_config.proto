@@ -13,7 +13,7 @@ option go_package = "hope/api/param/pageconfig/v1;v1";
 service PageConfig {
 
   // 分页查询PageConfig
-  rpc GetPagePageConfig (PageConfigPageReq) returns (PageConfigPageReply)  {
+  rpc GetPageConfigPage (PageConfigPageReq) returns (PageConfigPageReply)  {
     option (google.api.http) = {
       get: "/v1/page/config/page"
     };

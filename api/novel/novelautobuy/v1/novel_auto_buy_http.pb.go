@@ -22,13 +22,13 @@ type NovelAutoBuyHTTPServer interface {
 	CreateNovelAutoBuy(context.Context, *NovelAutoBuyCreateReq) (*NovelAutoBuyCreateReply, error)
 	DeleteNovelAutoBuy(context.Context, *NovelAutoBuyDeleteReq) (*NovelAutoBuyDeleteReply, error)
 	GetNovelAutoBuy(context.Context, *NovelAutoBuyReq) (*NovelAutoBuyReply, error)
-	GetPageNovelAutoBuy(context.Context, *NovelAutoBuyPageReq) (*NovelAutoBuyPageReply, error)
+	GetNovelAutoBuyPage(context.Context, *NovelAutoBuyPageReq) (*NovelAutoBuyPageReply, error)
 	UpdateNovelAutoBuy(context.Context, *NovelAutoBuyUpdateReq) (*NovelAutoBuyUpdateReply, error)
 }
 
 func RegisterNovelAutoBuyHTTPServer(s *http.Server, srv NovelAutoBuyHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/auto/buy/page", _NovelAutoBuy_GetPageNovelAutoBuy0_HTTP_Handler(srv))
+	r.GET("/v1/novel/auto/buy/page", _NovelAutoBuy_GetNovelAutoBuyPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/auto/buy/{id}", _NovelAutoBuy_GetNovelAutoBuy0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/auto/buy/{id}", _NovelAutoBuy_UpdateNovelAutoBuy0_HTTP_Handler(srv))
 	r.POST("/v1/novel/auto/buy", _NovelAutoBuy_CreateNovelAutoBuy0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelAutoBuyHTTPServer(s *http.Server, srv NovelAutoBuyHTTPServer) 
 	r.DELETE("/v1/novel/auto/buy", _NovelAutoBuy_BatchDeleteNovelAutoBuy0_HTTP_Handler(srv))
 }
 
-func _NovelAutoBuy_GetPageNovelAutoBuy0_HTTP_Handler(srv NovelAutoBuyHTTPServer) func(ctx http.Context) error {
+func _NovelAutoBuy_GetNovelAutoBuyPage0_HTTP_Handler(srv NovelAutoBuyHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelAutoBuyPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelautobuy.v1.NovelAutoBuy/GetPageNovelAutoBuy")
+		http.SetOperation(ctx, "/novelautobuy.v1.NovelAutoBuy/GetNovelAutoBuyPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelAutoBuy(ctx, req.(*NovelAutoBuyPageReq))
+			return srv.GetNovelAutoBuyPage(ctx, req.(*NovelAutoBuyPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelAutoBuyHTTPClient interface {
 	CreateNovelAutoBuy(ctx context.Context, req *NovelAutoBuyCreateReq, opts ...http.CallOption) (rsp *NovelAutoBuyCreateReply, err error)
 	DeleteNovelAutoBuy(ctx context.Context, req *NovelAutoBuyDeleteReq, opts ...http.CallOption) (rsp *NovelAutoBuyDeleteReply, err error)
 	GetNovelAutoBuy(ctx context.Context, req *NovelAutoBuyReq, opts ...http.CallOption) (rsp *NovelAutoBuyReply, err error)
-	GetPageNovelAutoBuy(ctx context.Context, req *NovelAutoBuyPageReq, opts ...http.CallOption) (rsp *NovelAutoBuyPageReply, err error)
+	GetNovelAutoBuyPage(ctx context.Context, req *NovelAutoBuyPageReq, opts ...http.CallOption) (rsp *NovelAutoBuyPageReply, err error)
 	UpdateNovelAutoBuy(ctx context.Context, req *NovelAutoBuyUpdateReq, opts ...http.CallOption) (rsp *NovelAutoBuyUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelAutoBuyHTTPClientImpl) GetNovelAutoBuy(ctx context.Context, in *No
 	return &out, err
 }
 
-func (c *NovelAutoBuyHTTPClientImpl) GetPageNovelAutoBuy(ctx context.Context, in *NovelAutoBuyPageReq, opts ...http.CallOption) (*NovelAutoBuyPageReply, error) {
+func (c *NovelAutoBuyHTTPClientImpl) GetNovelAutoBuyPage(ctx context.Context, in *NovelAutoBuyPageReq, opts ...http.CallOption) (*NovelAutoBuyPageReply, error) {
 	var out NovelAutoBuyPageReply
 	pattern := "/v1/novel/auto/buy/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/GetPageNovelAutoBuy"))
+	opts = append(opts, http.Operation("/novelautobuy.v1.NovelAutoBuy/GetNovelAutoBuyPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

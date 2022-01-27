@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysdicttype/v1;v1";
 service SysDictType {
 
   // 分页查询SysDictType
-  rpc GetPageSysDictType (SysDictTypePageReq) returns (SysDictTypePageReply)  {
+  rpc GetSysDictTypePage (SysDictTypePageReq) returns (SysDictTypePageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/dict/type/page"
     };

@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/assetitem/v1;v1";
 service AssetItem {
 
   // 分页查询AssetItem
-  rpc GetPageAssetItem (AssetItemPageReq) returns (AssetItemPageReply)  {
+  rpc GetAssetItemPage (AssetItemPageReq) returns (AssetItemPageReply)  {
     option (google.api.http) = {
       get: "/v1/asset/item/page"
     };

@@ -22,13 +22,13 @@ type NovelBuyRecordHTTPServer interface {
 	CreateNovelBuyRecord(context.Context, *NovelBuyRecordCreateReq) (*NovelBuyRecordCreateReply, error)
 	DeleteNovelBuyRecord(context.Context, *NovelBuyRecordDeleteReq) (*NovelBuyRecordDeleteReply, error)
 	GetNovelBuyRecord(context.Context, *NovelBuyRecordReq) (*NovelBuyRecordReply, error)
-	GetPageNovelBuyRecord(context.Context, *NovelBuyRecordPageReq) (*NovelBuyRecordPageReply, error)
+	GetNovelBuyRecordPage(context.Context, *NovelBuyRecordPageReq) (*NovelBuyRecordPageReply, error)
 	UpdateNovelBuyRecord(context.Context, *NovelBuyRecordUpdateReq) (*NovelBuyRecordUpdateReply, error)
 }
 
 func RegisterNovelBuyRecordHTTPServer(s *http.Server, srv NovelBuyRecordHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/buy/record/page", _NovelBuyRecord_GetPageNovelBuyRecord0_HTTP_Handler(srv))
+	r.GET("/v1/novel/buy/record/page", _NovelBuyRecord_GetNovelBuyRecordPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/buy/record/{id}", _NovelBuyRecord_GetNovelBuyRecord0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/buy/record/{id}", _NovelBuyRecord_UpdateNovelBuyRecord0_HTTP_Handler(srv))
 	r.POST("/v1/novel/buy/record", _NovelBuyRecord_CreateNovelBuyRecord0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelBuyRecordHTTPServer(s *http.Server, srv NovelBuyRecordHTTPServ
 	r.DELETE("/v1/novel/buy/record", _NovelBuyRecord_BatchDeleteNovelBuyRecord0_HTTP_Handler(srv))
 }
 
-func _NovelBuyRecord_GetPageNovelBuyRecord0_HTTP_Handler(srv NovelBuyRecordHTTPServer) func(ctx http.Context) error {
+func _NovelBuyRecord_GetNovelBuyRecordPage0_HTTP_Handler(srv NovelBuyRecordHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelBuyRecordPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelbuyrecord.v1.NovelBuyRecord/GetPageNovelBuyRecord")
+		http.SetOperation(ctx, "/novelbuyrecord.v1.NovelBuyRecord/GetNovelBuyRecordPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelBuyRecord(ctx, req.(*NovelBuyRecordPageReq))
+			return srv.GetNovelBuyRecordPage(ctx, req.(*NovelBuyRecordPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelBuyRecordHTTPClient interface {
 	CreateNovelBuyRecord(ctx context.Context, req *NovelBuyRecordCreateReq, opts ...http.CallOption) (rsp *NovelBuyRecordCreateReply, err error)
 	DeleteNovelBuyRecord(ctx context.Context, req *NovelBuyRecordDeleteReq, opts ...http.CallOption) (rsp *NovelBuyRecordDeleteReply, err error)
 	GetNovelBuyRecord(ctx context.Context, req *NovelBuyRecordReq, opts ...http.CallOption) (rsp *NovelBuyRecordReply, err error)
-	GetPageNovelBuyRecord(ctx context.Context, req *NovelBuyRecordPageReq, opts ...http.CallOption) (rsp *NovelBuyRecordPageReply, err error)
+	GetNovelBuyRecordPage(ctx context.Context, req *NovelBuyRecordPageReq, opts ...http.CallOption) (rsp *NovelBuyRecordPageReply, err error)
 	UpdateNovelBuyRecord(ctx context.Context, req *NovelBuyRecordUpdateReq, opts ...http.CallOption) (rsp *NovelBuyRecordUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelBuyRecordHTTPClientImpl) GetNovelBuyRecord(ctx context.Context, in
 	return &out, err
 }
 
-func (c *NovelBuyRecordHTTPClientImpl) GetPageNovelBuyRecord(ctx context.Context, in *NovelBuyRecordPageReq, opts ...http.CallOption) (*NovelBuyRecordPageReply, error) {
+func (c *NovelBuyRecordHTTPClientImpl) GetNovelBuyRecordPage(ctx context.Context, in *NovelBuyRecordPageReq, opts ...http.CallOption) (*NovelBuyRecordPageReply, error) {
 	var out NovelBuyRecordPageReply
 	pattern := "/v1/novel/buy/record/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelbuyrecord.v1.NovelBuyRecord/GetPageNovelBuyRecord"))
+	opts = append(opts, http.Operation("/novelbuyrecord.v1.NovelBuyRecord/GetNovelBuyRecordPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserResourceClient interface {
 	// 分页查询UserResource
-	GetPageUserResource(ctx context.Context, in *UserResourcePageReq, opts ...grpc.CallOption) (*UserResourcePageReply, error)
+	GetUserResourcePage(ctx context.Context, in *UserResourcePageReq, opts ...grpc.CallOption) (*UserResourcePageReply, error)
 	// 获取UserResource
 	GetUserResource(ctx context.Context, in *UserResourceReq, opts ...grpc.CallOption) (*UserResourceReply, error)
 	// 更新UserResource
@@ -44,9 +44,9 @@ func NewUserResourceClient(cc grpc.ClientConnInterface) UserResourceClient {
 	return &userResourceClient{cc}
 }
 
-func (c *userResourceClient) GetPageUserResource(ctx context.Context, in *UserResourcePageReq, opts ...grpc.CallOption) (*UserResourcePageReply, error) {
+func (c *userResourceClient) GetUserResourcePage(ctx context.Context, in *UserResourcePageReq, opts ...grpc.CallOption) (*UserResourcePageReply, error) {
 	out := new(UserResourcePageReply)
-	err := c.cc.Invoke(ctx, "/userresource.v1.UserResource/GetPageUserResource", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/userresource.v1.UserResource/GetUserResourcePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *userResourceClient) BatchDeleteUserResource(ctx context.Context, in *Us
 // for forward compatibility
 type UserResourceServer interface {
 	// 分页查询UserResource
-	GetPageUserResource(context.Context, *UserResourcePageReq) (*UserResourcePageReply, error)
+	GetUserResourcePage(context.Context, *UserResourcePageReq) (*UserResourcePageReply, error)
 	// 获取UserResource
 	GetUserResource(context.Context, *UserResourceReq) (*UserResourceReply, error)
 	// 更新UserResource
@@ -121,8 +121,8 @@ type UserResourceServer interface {
 type UnimplementedUserResourceServer struct {
 }
 
-func (UnimplementedUserResourceServer) GetPageUserResource(context.Context, *UserResourcePageReq) (*UserResourcePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageUserResource not implemented")
+func (UnimplementedUserResourceServer) GetUserResourcePage(context.Context, *UserResourcePageReq) (*UserResourcePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserResourcePage not implemented")
 }
 func (UnimplementedUserResourceServer) GetUserResource(context.Context, *UserResourceReq) (*UserResourceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserResource not implemented")
@@ -152,20 +152,20 @@ func RegisterUserResourceServer(s grpc.ServiceRegistrar, srv UserResourceServer)
 	s.RegisterService(&UserResource_ServiceDesc, srv)
 }
 
-func _UserResource_GetPageUserResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserResource_GetUserResourcePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserResourcePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserResourceServer).GetPageUserResource(ctx, in)
+		return srv.(UserResourceServer).GetUserResourcePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/userresource.v1.UserResource/GetPageUserResource",
+		FullMethod: "/userresource.v1.UserResource/GetUserResourcePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserResourceServer).GetPageUserResource(ctx, req.(*UserResourcePageReq))
+		return srv.(UserResourceServer).GetUserResourcePage(ctx, req.(*UserResourcePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var UserResource_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserResourceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageUserResource",
-			Handler:    _UserResource_GetPageUserResource_Handler,
+			MethodName: "GetUserResourcePage",
+			Handler:    _UserResource_GetUserResourcePage_Handler,
 		},
 		{
 			MethodName: "GetUserResource",

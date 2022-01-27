@@ -22,13 +22,13 @@ type AgreementLogHTTPServer interface {
 	CreateAgreementLog(context.Context, *AgreementLogCreateReq) (*AgreementLogCreateReply, error)
 	DeleteAgreementLog(context.Context, *AgreementLogDeleteReq) (*AgreementLogDeleteReply, error)
 	GetAgreementLog(context.Context, *AgreementLogReq) (*AgreementLogReply, error)
-	GetPageAgreementLog(context.Context, *AgreementLogPageReq) (*AgreementLogPageReply, error)
+	GetAgreementLogPage(context.Context, *AgreementLogPageReq) (*AgreementLogPageReply, error)
 	UpdateAgreementLog(context.Context, *AgreementLogUpdateReq) (*AgreementLogUpdateReply, error)
 }
 
 func RegisterAgreementLogHTTPServer(s *http.Server, srv AgreementLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/agreement/log/page", _AgreementLog_GetPageAgreementLog0_HTTP_Handler(srv))
+	r.GET("/v1/agreement/log/page", _AgreementLog_GetAgreementLogPage0_HTTP_Handler(srv))
 	r.GET("/v1/agreement/log/{id}", _AgreementLog_GetAgreementLog0_HTTP_Handler(srv))
 	r.PUT("/v1/agreement/log/{id}", _AgreementLog_UpdateAgreementLog0_HTTP_Handler(srv))
 	r.POST("/v1/agreement/log", _AgreementLog_CreateAgreementLog0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterAgreementLogHTTPServer(s *http.Server, srv AgreementLogHTTPServer) 
 	r.DELETE("/v1/agreement/log", _AgreementLog_BatchDeleteAgreementLog0_HTTP_Handler(srv))
 }
 
-func _AgreementLog_GetPageAgreementLog0_HTTP_Handler(srv AgreementLogHTTPServer) func(ctx http.Context) error {
+func _AgreementLog_GetAgreementLogPage0_HTTP_Handler(srv AgreementLogHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in AgreementLogPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/agreementlog.v1.AgreementLog/GetPageAgreementLog")
+		http.SetOperation(ctx, "/agreementlog.v1.AgreementLog/GetAgreementLogPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageAgreementLog(ctx, req.(*AgreementLogPageReq))
+			return srv.GetAgreementLogPage(ctx, req.(*AgreementLogPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type AgreementLogHTTPClient interface {
 	CreateAgreementLog(ctx context.Context, req *AgreementLogCreateReq, opts ...http.CallOption) (rsp *AgreementLogCreateReply, err error)
 	DeleteAgreementLog(ctx context.Context, req *AgreementLogDeleteReq, opts ...http.CallOption) (rsp *AgreementLogDeleteReply, err error)
 	GetAgreementLog(ctx context.Context, req *AgreementLogReq, opts ...http.CallOption) (rsp *AgreementLogReply, err error)
-	GetPageAgreementLog(ctx context.Context, req *AgreementLogPageReq, opts ...http.CallOption) (rsp *AgreementLogPageReply, err error)
+	GetAgreementLogPage(ctx context.Context, req *AgreementLogPageReq, opts ...http.CallOption) (rsp *AgreementLogPageReply, err error)
 	UpdateAgreementLog(ctx context.Context, req *AgreementLogUpdateReq, opts ...http.CallOption) (rsp *AgreementLogUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *AgreementLogHTTPClientImpl) GetAgreementLog(ctx context.Context, in *Ag
 	return &out, err
 }
 
-func (c *AgreementLogHTTPClientImpl) GetPageAgreementLog(ctx context.Context, in *AgreementLogPageReq, opts ...http.CallOption) (*AgreementLogPageReply, error) {
+func (c *AgreementLogHTTPClientImpl) GetAgreementLogPage(ctx context.Context, in *AgreementLogPageReq, opts ...http.CallOption) (*AgreementLogPageReply, error) {
 	var out AgreementLogPageReply
 	pattern := "/v1/agreement/log/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/GetPageAgreementLog"))
+	opts = append(opts, http.Operation("/agreementlog.v1.AgreementLog/GetAgreementLogPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

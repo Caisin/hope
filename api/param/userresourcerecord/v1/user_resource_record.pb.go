@@ -1345,8 +1345,8 @@ var file_api_param_userresourcerecord_v1_user_resource_record_proto_rawDesc = []
 	0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x72,
 	0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0x9c, 0x08, 0x0a, 0x12, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65,
 	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12, 0xa8, 0x01, 0x0a,
-	0x19, 0x47, 0x65, 0x74, 0x50, 0x61, 0x67, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x6f,
-	0x75, 0x72, 0x63, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12, 0x30, 0x2e, 0x75, 0x73, 0x65,
+	0x19, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x50, 0x61, 0x67, 0x65, 0x12, 0x30, 0x2e, 0x75, 0x73, 0x65,
 	0x72, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x2e,
 	0x76, 0x31, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x52,
 	0x65, 0x63, 0x6f, 0x72, 0x64, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x32, 0x2e, 0x75,
@@ -1463,13 +1463,13 @@ var file_api_param_userresourcerecord_v1_user_resource_record_proto_depIdxs = []
 	12, // 15: userresourcerecord.v1.UserResourceRecordUpdateReq.effectTime:type_name -> google.protobuf.Timestamp
 	12, // 16: userresourcerecord.v1.UserResourceRecordUpdateReq.expiredTime:type_name -> google.protobuf.Timestamp
 	0,  // 17: userresourcerecord.v1.UserResourceRecordUpdateReply.result:type_name -> userresourcerecord.v1.UserResourceRecordData
-	1,  // 18: userresourcerecord.v1.UserResourceRecord.GetPageUserResourceRecord:input_type -> userresourcerecord.v1.UserResourceRecordPageReq
+	1,  // 18: userresourcerecord.v1.UserResourceRecord.GetUserResourceRecordPage:input_type -> userresourcerecord.v1.UserResourceRecordPageReq
 	3,  // 19: userresourcerecord.v1.UserResourceRecord.GetUserResourceRecord:input_type -> userresourcerecord.v1.UserResourceRecordReq
 	7,  // 20: userresourcerecord.v1.UserResourceRecord.UpdateUserResourceRecord:input_type -> userresourcerecord.v1.UserResourceRecordUpdateReq
 	5,  // 21: userresourcerecord.v1.UserResourceRecord.CreateUserResourceRecord:input_type -> userresourcerecord.v1.UserResourceRecordCreateReq
 	9,  // 22: userresourcerecord.v1.UserResourceRecord.DeleteUserResourceRecord:input_type -> userresourcerecord.v1.UserResourceRecordDeleteReq
 	10, // 23: userresourcerecord.v1.UserResourceRecord.BatchDeleteUserResourceRecord:input_type -> userresourcerecord.v1.UserResourceRecordBatchDeleteReq
-	2,  // 24: userresourcerecord.v1.UserResourceRecord.GetPageUserResourceRecord:output_type -> userresourcerecord.v1.UserResourceRecordPageReply
+	2,  // 24: userresourcerecord.v1.UserResourceRecord.GetUserResourceRecordPage:output_type -> userresourcerecord.v1.UserResourceRecordPageReply
 	4,  // 25: userresourcerecord.v1.UserResourceRecord.GetUserResourceRecord:output_type -> userresourcerecord.v1.UserResourceRecordReply
 	8,  // 26: userresourcerecord.v1.UserResourceRecord.UpdateUserResourceRecord:output_type -> userresourcerecord.v1.UserResourceRecordUpdateReply
 	6,  // 27: userresourcerecord.v1.UserResourceRecord.CreateUserResourceRecord:output_type -> userresourcerecord.v1.UserResourceRecordCreateReply

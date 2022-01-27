@@ -52,6 +52,10 @@ func (SysMenu) Fields() []ent.Field {
 			Comment(`外链地址`),
 		field.Enum("state").Values("U", "E").Default("U").
 			Comment(`状态:U:使用,E:失效`),
+		field.Bool("checkPermission").Default(true).
+			Comment(`是否校验权限`),
+		field.String("operation").
+			Comment(`操作资源`),
 	}
 	fields = append(fields, mixin.Fields()...)
 	return fields

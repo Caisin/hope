@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClientErrorClient interface {
 	// 分页查询ClientError
-	GetPageClientError(ctx context.Context, in *ClientErrorPageReq, opts ...grpc.CallOption) (*ClientErrorPageReply, error)
+	GetClientErrorPage(ctx context.Context, in *ClientErrorPageReq, opts ...grpc.CallOption) (*ClientErrorPageReply, error)
 	// 获取ClientError
 	GetClientError(ctx context.Context, in *ClientErrorReq, opts ...grpc.CallOption) (*ClientErrorReply, error)
 	// 更新ClientError
@@ -44,9 +44,9 @@ func NewClientErrorClient(cc grpc.ClientConnInterface) ClientErrorClient {
 	return &clientErrorClient{cc}
 }
 
-func (c *clientErrorClient) GetPageClientError(ctx context.Context, in *ClientErrorPageReq, opts ...grpc.CallOption) (*ClientErrorPageReply, error) {
+func (c *clientErrorClient) GetClientErrorPage(ctx context.Context, in *ClientErrorPageReq, opts ...grpc.CallOption) (*ClientErrorPageReply, error) {
 	out := new(ClientErrorPageReply)
-	err := c.cc.Invoke(ctx, "/clienterror.v1.ClientError/GetPageClientError", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/clienterror.v1.ClientError/GetClientErrorPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *clientErrorClient) BatchDeleteClientError(ctx context.Context, in *Clie
 // for forward compatibility
 type ClientErrorServer interface {
 	// 分页查询ClientError
-	GetPageClientError(context.Context, *ClientErrorPageReq) (*ClientErrorPageReply, error)
+	GetClientErrorPage(context.Context, *ClientErrorPageReq) (*ClientErrorPageReply, error)
 	// 获取ClientError
 	GetClientError(context.Context, *ClientErrorReq) (*ClientErrorReply, error)
 	// 更新ClientError
@@ -121,8 +121,8 @@ type ClientErrorServer interface {
 type UnimplementedClientErrorServer struct {
 }
 
-func (UnimplementedClientErrorServer) GetPageClientError(context.Context, *ClientErrorPageReq) (*ClientErrorPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageClientError not implemented")
+func (UnimplementedClientErrorServer) GetClientErrorPage(context.Context, *ClientErrorPageReq) (*ClientErrorPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClientErrorPage not implemented")
 }
 func (UnimplementedClientErrorServer) GetClientError(context.Context, *ClientErrorReq) (*ClientErrorReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClientError not implemented")
@@ -152,20 +152,20 @@ func RegisterClientErrorServer(s grpc.ServiceRegistrar, srv ClientErrorServer) {
 	s.RegisterService(&ClientError_ServiceDesc, srv)
 }
 
-func _ClientError_GetPageClientError_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ClientError_GetClientErrorPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ClientErrorPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ClientErrorServer).GetPageClientError(ctx, in)
+		return srv.(ClientErrorServer).GetClientErrorPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/clienterror.v1.ClientError/GetPageClientError",
+		FullMethod: "/clienterror.v1.ClientError/GetClientErrorPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientErrorServer).GetPageClientError(ctx, req.(*ClientErrorPageReq))
+		return srv.(ClientErrorServer).GetClientErrorPage(ctx, req.(*ClientErrorPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var ClientError_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ClientErrorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageClientError",
-			Handler:    _ClientError_GetPageClientError_Handler,
+			MethodName: "GetClientErrorPage",
+			Handler:    _ClientError_GetClientErrorPage_Handler,
 		},
 		{
 			MethodName: "GetClientError",

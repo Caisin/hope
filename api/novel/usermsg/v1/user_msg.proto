@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/usermsg/v1;v1";
 service UserMsg {
 
   // 分页查询UserMsg
-  rpc GetPageUserMsg (UserMsgPageReq) returns (UserMsgPageReply)  {
+  rpc GetUserMsgPage (UserMsgPageReq) returns (UserMsgPageReply)  {
     option (google.api.http) = {
       get: "/v1/user/msg/page"
     };

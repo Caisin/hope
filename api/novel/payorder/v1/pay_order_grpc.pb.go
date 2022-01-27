@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PayOrderClient interface {
 	// 分页查询PayOrder
-	GetPagePayOrder(ctx context.Context, in *PayOrderPageReq, opts ...grpc.CallOption) (*PayOrderPageReply, error)
+	GetPayOrderPage(ctx context.Context, in *PayOrderPageReq, opts ...grpc.CallOption) (*PayOrderPageReply, error)
 	// 获取PayOrder
 	GetPayOrder(ctx context.Context, in *PayOrderReq, opts ...grpc.CallOption) (*PayOrderReply, error)
 	// 更新PayOrder
@@ -44,9 +44,9 @@ func NewPayOrderClient(cc grpc.ClientConnInterface) PayOrderClient {
 	return &payOrderClient{cc}
 }
 
-func (c *payOrderClient) GetPagePayOrder(ctx context.Context, in *PayOrderPageReq, opts ...grpc.CallOption) (*PayOrderPageReply, error) {
+func (c *payOrderClient) GetPayOrderPage(ctx context.Context, in *PayOrderPageReq, opts ...grpc.CallOption) (*PayOrderPageReply, error) {
 	out := new(PayOrderPageReply)
-	err := c.cc.Invoke(ctx, "/payorder.v1.PayOrder/GetPagePayOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/payorder.v1.PayOrder/GetPayOrderPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *payOrderClient) BatchDeletePayOrder(ctx context.Context, in *PayOrderBa
 // for forward compatibility
 type PayOrderServer interface {
 	// 分页查询PayOrder
-	GetPagePayOrder(context.Context, *PayOrderPageReq) (*PayOrderPageReply, error)
+	GetPayOrderPage(context.Context, *PayOrderPageReq) (*PayOrderPageReply, error)
 	// 获取PayOrder
 	GetPayOrder(context.Context, *PayOrderReq) (*PayOrderReply, error)
 	// 更新PayOrder
@@ -121,8 +121,8 @@ type PayOrderServer interface {
 type UnimplementedPayOrderServer struct {
 }
 
-func (UnimplementedPayOrderServer) GetPagePayOrder(context.Context, *PayOrderPageReq) (*PayOrderPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPagePayOrder not implemented")
+func (UnimplementedPayOrderServer) GetPayOrderPage(context.Context, *PayOrderPageReq) (*PayOrderPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPayOrderPage not implemented")
 }
 func (UnimplementedPayOrderServer) GetPayOrder(context.Context, *PayOrderReq) (*PayOrderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPayOrder not implemented")
@@ -152,20 +152,20 @@ func RegisterPayOrderServer(s grpc.ServiceRegistrar, srv PayOrderServer) {
 	s.RegisterService(&PayOrder_ServiceDesc, srv)
 }
 
-func _PayOrder_GetPagePayOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PayOrder_GetPayOrderPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PayOrderPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PayOrderServer).GetPagePayOrder(ctx, in)
+		return srv.(PayOrderServer).GetPayOrderPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/payorder.v1.PayOrder/GetPagePayOrder",
+		FullMethod: "/payorder.v1.PayOrder/GetPayOrderPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PayOrderServer).GetPagePayOrder(ctx, req.(*PayOrderPageReq))
+		return srv.(PayOrderServer).GetPayOrderPage(ctx, req.(*PayOrderPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var PayOrder_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PayOrderServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPagePayOrder",
-			Handler:    _PayOrder_GetPagePayOrder_Handler,
+			MethodName: "GetPayOrderPage",
+			Handler:    _PayOrder_GetPayOrderPage_Handler,
 		},
 		{
 			MethodName: "GetPayOrder",

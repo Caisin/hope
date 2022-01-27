@@ -21,14 +21,14 @@ type SysLoginLogHTTPServer interface {
 	BatchDeleteSysLoginLog(context.Context, *SysLoginLogBatchDeleteReq) (*SysLoginLogDeleteReply, error)
 	CreateSysLoginLog(context.Context, *SysLoginLogCreateReq) (*SysLoginLogCreateReply, error)
 	DeleteSysLoginLog(context.Context, *SysLoginLogDeleteReq) (*SysLoginLogDeleteReply, error)
-	GetPageSysLoginLog(context.Context, *SysLoginLogPageReq) (*SysLoginLogPageReply, error)
 	GetSysLoginLog(context.Context, *SysLoginLogReq) (*SysLoginLogReply, error)
+	GetSysLoginLogPage(context.Context, *SysLoginLogPageReq) (*SysLoginLogPageReply, error)
 	UpdateSysLoginLog(context.Context, *SysLoginLogUpdateReq) (*SysLoginLogUpdateReply, error)
 }
 
 func RegisterSysLoginLogHTTPServer(s *http.Server, srv SysLoginLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/login/log/page", _SysLoginLog_GetPageSysLoginLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/login/log/page", _SysLoginLog_GetSysLoginLogPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/login/log/{id}", _SysLoginLog_GetSysLoginLog0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/login/log/{id}", _SysLoginLog_UpdateSysLoginLog0_HTTP_Handler(srv))
 	r.POST("/v1/sys/login/log", _SysLoginLog_CreateSysLoginLog0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysLoginLogHTTPServer(s *http.Server, srv SysLoginLogHTTPServer) {
 	r.DELETE("/v1/sys/login/log", _SysLoginLog_BatchDeleteSysLoginLog0_HTTP_Handler(srv))
 }
 
-func _SysLoginLog_GetPageSysLoginLog0_HTTP_Handler(srv SysLoginLogHTTPServer) func(ctx http.Context) error {
+func _SysLoginLog_GetSysLoginLogPage0_HTTP_Handler(srv SysLoginLogHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysLoginLogPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysloginlog.v1.SysLoginLog/GetPageSysLoginLog")
+		http.SetOperation(ctx, "/sysloginlog.v1.SysLoginLog/GetSysLoginLogPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysLoginLog(ctx, req.(*SysLoginLogPageReq))
+			return srv.GetSysLoginLogPage(ctx, req.(*SysLoginLogPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysLoginLogHTTPClient interface {
 	BatchDeleteSysLoginLog(ctx context.Context, req *SysLoginLogBatchDeleteReq, opts ...http.CallOption) (rsp *SysLoginLogDeleteReply, err error)
 	CreateSysLoginLog(ctx context.Context, req *SysLoginLogCreateReq, opts ...http.CallOption) (rsp *SysLoginLogCreateReply, err error)
 	DeleteSysLoginLog(ctx context.Context, req *SysLoginLogDeleteReq, opts ...http.CallOption) (rsp *SysLoginLogDeleteReply, err error)
-	GetPageSysLoginLog(ctx context.Context, req *SysLoginLogPageReq, opts ...http.CallOption) (rsp *SysLoginLogPageReply, err error)
 	GetSysLoginLog(ctx context.Context, req *SysLoginLogReq, opts ...http.CallOption) (rsp *SysLoginLogReply, err error)
+	GetSysLoginLogPage(ctx context.Context, req *SysLoginLogPageReq, opts ...http.CallOption) (rsp *SysLoginLogPageReply, err error)
 	UpdateSysLoginLog(ctx context.Context, req *SysLoginLogUpdateReq, opts ...http.CallOption) (rsp *SysLoginLogUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysLoginLogHTTPClientImpl) DeleteSysLoginLog(ctx context.Context, in *S
 	return &out, err
 }
 
-func (c *SysLoginLogHTTPClientImpl) GetPageSysLoginLog(ctx context.Context, in *SysLoginLogPageReq, opts ...http.CallOption) (*SysLoginLogPageReply, error) {
-	var out SysLoginLogPageReply
-	pattern := "/v1/sys/login/log/page"
+func (c *SysLoginLogHTTPClientImpl) GetSysLoginLog(ctx context.Context, in *SysLoginLogReq, opts ...http.CallOption) (*SysLoginLogReply, error) {
+	var out SysLoginLogReply
+	pattern := "/v1/sys/login/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/GetPageSysLoginLog"))
+	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/GetSysLoginLog"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysLoginLogHTTPClientImpl) GetPageSysLoginLog(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *SysLoginLogHTTPClientImpl) GetSysLoginLog(ctx context.Context, in *SysLoginLogReq, opts ...http.CallOption) (*SysLoginLogReply, error) {
-	var out SysLoginLogReply
-	pattern := "/v1/sys/login/log/{id}"
+func (c *SysLoginLogHTTPClientImpl) GetSysLoginLogPage(ctx context.Context, in *SysLoginLogPageReq, opts ...http.CallOption) (*SysLoginLogPageReply, error) {
+	var out SysLoginLogPageReply
+	pattern := "/v1/sys/login/log/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/GetSysLoginLog"))
+	opts = append(opts, http.Operation("/sysloginlog.v1.SysLoginLog/GetSysLoginLogPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

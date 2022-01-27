@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelBookshelfClient interface {
 	// 分页查询NovelBookshelf
-	GetPageNovelBookshelf(ctx context.Context, in *NovelBookshelfPageReq, opts ...grpc.CallOption) (*NovelBookshelfPageReply, error)
+	GetNovelBookshelfPage(ctx context.Context, in *NovelBookshelfPageReq, opts ...grpc.CallOption) (*NovelBookshelfPageReply, error)
 	// 获取NovelBookshelf
 	GetNovelBookshelf(ctx context.Context, in *NovelBookshelfReq, opts ...grpc.CallOption) (*NovelBookshelfReply, error)
 	// 更新NovelBookshelf
@@ -44,9 +44,9 @@ func NewNovelBookshelfClient(cc grpc.ClientConnInterface) NovelBookshelfClient {
 	return &novelBookshelfClient{cc}
 }
 
-func (c *novelBookshelfClient) GetPageNovelBookshelf(ctx context.Context, in *NovelBookshelfPageReq, opts ...grpc.CallOption) (*NovelBookshelfPageReply, error) {
+func (c *novelBookshelfClient) GetNovelBookshelfPage(ctx context.Context, in *NovelBookshelfPageReq, opts ...grpc.CallOption) (*NovelBookshelfPageReply, error) {
 	out := new(NovelBookshelfPageReply)
-	err := c.cc.Invoke(ctx, "/novelbookshelf.v1.NovelBookshelf/GetPageNovelBookshelf", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelbookshelf.v1.NovelBookshelf/GetNovelBookshelfPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelBookshelfClient) BatchDeleteNovelBookshelf(ctx context.Context, in
 // for forward compatibility
 type NovelBookshelfServer interface {
 	// 分页查询NovelBookshelf
-	GetPageNovelBookshelf(context.Context, *NovelBookshelfPageReq) (*NovelBookshelfPageReply, error)
+	GetNovelBookshelfPage(context.Context, *NovelBookshelfPageReq) (*NovelBookshelfPageReply, error)
 	// 获取NovelBookshelf
 	GetNovelBookshelf(context.Context, *NovelBookshelfReq) (*NovelBookshelfReply, error)
 	// 更新NovelBookshelf
@@ -121,8 +121,8 @@ type NovelBookshelfServer interface {
 type UnimplementedNovelBookshelfServer struct {
 }
 
-func (UnimplementedNovelBookshelfServer) GetPageNovelBookshelf(context.Context, *NovelBookshelfPageReq) (*NovelBookshelfPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelBookshelf not implemented")
+func (UnimplementedNovelBookshelfServer) GetNovelBookshelfPage(context.Context, *NovelBookshelfPageReq) (*NovelBookshelfPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelBookshelfPage not implemented")
 }
 func (UnimplementedNovelBookshelfServer) GetNovelBookshelf(context.Context, *NovelBookshelfReq) (*NovelBookshelfReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelBookshelf not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelBookshelfServer(s grpc.ServiceRegistrar, srv NovelBookshelfSer
 	s.RegisterService(&NovelBookshelf_ServiceDesc, srv)
 }
 
-func _NovelBookshelf_GetPageNovelBookshelf_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelBookshelf_GetNovelBookshelfPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelBookshelfPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelBookshelfServer).GetPageNovelBookshelf(ctx, in)
+		return srv.(NovelBookshelfServer).GetNovelBookshelfPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelbookshelf.v1.NovelBookshelf/GetPageNovelBookshelf",
+		FullMethod: "/novelbookshelf.v1.NovelBookshelf/GetNovelBookshelfPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelBookshelfServer).GetPageNovelBookshelf(ctx, req.(*NovelBookshelfPageReq))
+		return srv.(NovelBookshelfServer).GetNovelBookshelfPage(ctx, req.(*NovelBookshelfPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelBookshelf_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelBookshelfServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelBookshelf",
-			Handler:    _NovelBookshelf_GetPageNovelBookshelf_Handler,
+			MethodName: "GetNovelBookshelfPage",
+			Handler:    _NovelBookshelf_GetNovelBookshelfPage_Handler,
 		},
 		{
 			MethodName: "GetNovelBookshelf",

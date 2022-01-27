@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserAnalysisStatisticsClient interface {
 	// 分页查询UserAnalysisStatistics
-	GetPageUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsPageReq, opts ...grpc.CallOption) (*UserAnalysisStatisticsPageReply, error)
+	GetUserAnalysisStatisticsPage(ctx context.Context, in *UserAnalysisStatisticsPageReq, opts ...grpc.CallOption) (*UserAnalysisStatisticsPageReply, error)
 	// 获取UserAnalysisStatistics
 	GetUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsReq, opts ...grpc.CallOption) (*UserAnalysisStatisticsReply, error)
 	// 更新UserAnalysisStatistics
@@ -44,9 +44,9 @@ func NewUserAnalysisStatisticsClient(cc grpc.ClientConnInterface) UserAnalysisSt
 	return &userAnalysisStatisticsClient{cc}
 }
 
-func (c *userAnalysisStatisticsClient) GetPageUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsPageReq, opts ...grpc.CallOption) (*UserAnalysisStatisticsPageReply, error) {
+func (c *userAnalysisStatisticsClient) GetUserAnalysisStatisticsPage(ctx context.Context, in *UserAnalysisStatisticsPageReq, opts ...grpc.CallOption) (*UserAnalysisStatisticsPageReply, error) {
 	out := new(UserAnalysisStatisticsPageReply)
-	err := c.cc.Invoke(ctx, "/useranalysisstatistics.v1.UserAnalysisStatistics/GetPageUserAnalysisStatistics", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/useranalysisstatistics.v1.UserAnalysisStatistics/GetUserAnalysisStatisticsPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *userAnalysisStatisticsClient) BatchDeleteUserAnalysisStatistics(ctx con
 // for forward compatibility
 type UserAnalysisStatisticsServer interface {
 	// 分页查询UserAnalysisStatistics
-	GetPageUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsPageReq) (*UserAnalysisStatisticsPageReply, error)
+	GetUserAnalysisStatisticsPage(context.Context, *UserAnalysisStatisticsPageReq) (*UserAnalysisStatisticsPageReply, error)
 	// 获取UserAnalysisStatistics
 	GetUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsReq) (*UserAnalysisStatisticsReply, error)
 	// 更新UserAnalysisStatistics
@@ -121,8 +121,8 @@ type UserAnalysisStatisticsServer interface {
 type UnimplementedUserAnalysisStatisticsServer struct {
 }
 
-func (UnimplementedUserAnalysisStatisticsServer) GetPageUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsPageReq) (*UserAnalysisStatisticsPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageUserAnalysisStatistics not implemented")
+func (UnimplementedUserAnalysisStatisticsServer) GetUserAnalysisStatisticsPage(context.Context, *UserAnalysisStatisticsPageReq) (*UserAnalysisStatisticsPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAnalysisStatisticsPage not implemented")
 }
 func (UnimplementedUserAnalysisStatisticsServer) GetUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsReq) (*UserAnalysisStatisticsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserAnalysisStatistics not implemented")
@@ -153,20 +153,20 @@ func RegisterUserAnalysisStatisticsServer(s grpc.ServiceRegistrar, srv UserAnaly
 	s.RegisterService(&UserAnalysisStatistics_ServiceDesc, srv)
 }
 
-func _UserAnalysisStatistics_GetPageUserAnalysisStatistics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserAnalysisStatistics_GetUserAnalysisStatisticsPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserAnalysisStatisticsPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserAnalysisStatisticsServer).GetPageUserAnalysisStatistics(ctx, in)
+		return srv.(UserAnalysisStatisticsServer).GetUserAnalysisStatisticsPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/useranalysisstatistics.v1.UserAnalysisStatistics/GetPageUserAnalysisStatistics",
+		FullMethod: "/useranalysisstatistics.v1.UserAnalysisStatistics/GetUserAnalysisStatisticsPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserAnalysisStatisticsServer).GetPageUserAnalysisStatistics(ctx, req.(*UserAnalysisStatisticsPageReq))
+		return srv.(UserAnalysisStatisticsServer).GetUserAnalysisStatisticsPage(ctx, req.(*UserAnalysisStatisticsPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -269,8 +269,8 @@ var UserAnalysisStatistics_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserAnalysisStatisticsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageUserAnalysisStatistics",
-			Handler:    _UserAnalysisStatistics_GetPageUserAnalysisStatistics_Handler,
+			MethodName: "GetUserAnalysisStatisticsPage",
+			Handler:    _UserAnalysisStatistics_GetUserAnalysisStatisticsPage_Handler,
 		},
 		{
 			MethodName: "GetUserAnalysisStatistics",

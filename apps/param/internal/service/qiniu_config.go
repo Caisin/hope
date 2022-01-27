@@ -20,9 +20,9 @@ func NewQiniuConfigService(uc *biz.QiniuConfigUseCase, logger log.Logger) *Qiniu
 	return &QiniuConfigService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *QiniuConfigService) GetPageQiniuConfig(ctx context.Context, req *pb.QiniuConfigPageReq) (*pb.QiniuConfigPageReply, error) {
+func (s *QiniuConfigService) GetQiniuConfigPage(ctx context.Context, req *pb.QiniuConfigPageReq) (*pb.QiniuConfigPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageQiniuConfig")
+	ctx, span := tr.Start(ctx, "GetQiniuConfigPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

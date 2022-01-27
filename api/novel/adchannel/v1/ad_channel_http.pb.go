@@ -22,13 +22,13 @@ type AdChannelHTTPServer interface {
 	CreateAdChannel(context.Context, *AdChannelCreateReq) (*AdChannelCreateReply, error)
 	DeleteAdChannel(context.Context, *AdChannelDeleteReq) (*AdChannelDeleteReply, error)
 	GetAdChannel(context.Context, *AdChannelReq) (*AdChannelReply, error)
-	GetPageAdChannel(context.Context, *AdChannelPageReq) (*AdChannelPageReply, error)
+	GetAdChannelPage(context.Context, *AdChannelPageReq) (*AdChannelPageReply, error)
 	UpdateAdChannel(context.Context, *AdChannelUpdateReq) (*AdChannelUpdateReply, error)
 }
 
 func RegisterAdChannelHTTPServer(s *http.Server, srv AdChannelHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/ad/channel/page", _AdChannel_GetPageAdChannel0_HTTP_Handler(srv))
+	r.GET("/v1/ad/channel/page", _AdChannel_GetAdChannelPage0_HTTP_Handler(srv))
 	r.GET("/v1/ad/channel/{id}", _AdChannel_GetAdChannel0_HTTP_Handler(srv))
 	r.PUT("/v1/ad/channel/{id}", _AdChannel_UpdateAdChannel0_HTTP_Handler(srv))
 	r.POST("/v1/ad/channel", _AdChannel_CreateAdChannel0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterAdChannelHTTPServer(s *http.Server, srv AdChannelHTTPServer) {
 	r.DELETE("/v1/ad/channel", _AdChannel_BatchDeleteAdChannel0_HTTP_Handler(srv))
 }
 
-func _AdChannel_GetPageAdChannel0_HTTP_Handler(srv AdChannelHTTPServer) func(ctx http.Context) error {
+func _AdChannel_GetAdChannelPage0_HTTP_Handler(srv AdChannelHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in AdChannelPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/adchannel.v1.AdChannel/GetPageAdChannel")
+		http.SetOperation(ctx, "/adchannel.v1.AdChannel/GetAdChannelPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageAdChannel(ctx, req.(*AdChannelPageReq))
+			return srv.GetAdChannelPage(ctx, req.(*AdChannelPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type AdChannelHTTPClient interface {
 	CreateAdChannel(ctx context.Context, req *AdChannelCreateReq, opts ...http.CallOption) (rsp *AdChannelCreateReply, err error)
 	DeleteAdChannel(ctx context.Context, req *AdChannelDeleteReq, opts ...http.CallOption) (rsp *AdChannelDeleteReply, err error)
 	GetAdChannel(ctx context.Context, req *AdChannelReq, opts ...http.CallOption) (rsp *AdChannelReply, err error)
-	GetPageAdChannel(ctx context.Context, req *AdChannelPageReq, opts ...http.CallOption) (rsp *AdChannelPageReply, err error)
+	GetAdChannelPage(ctx context.Context, req *AdChannelPageReq, opts ...http.CallOption) (rsp *AdChannelPageReply, err error)
 	UpdateAdChannel(ctx context.Context, req *AdChannelUpdateReq, opts ...http.CallOption) (rsp *AdChannelUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *AdChannelHTTPClientImpl) GetAdChannel(ctx context.Context, in *AdChanne
 	return &out, err
 }
 
-func (c *AdChannelHTTPClientImpl) GetPageAdChannel(ctx context.Context, in *AdChannelPageReq, opts ...http.CallOption) (*AdChannelPageReply, error) {
+func (c *AdChannelHTTPClientImpl) GetAdChannelPage(ctx context.Context, in *AdChannelPageReq, opts ...http.CallOption) (*AdChannelPageReply, error) {
 	var out AdChannelPageReply
 	pattern := "/v1/ad/channel/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/GetPageAdChannel"))
+	opts = append(opts, http.Operation("/adchannel.v1.AdChannel/GetAdChannelPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

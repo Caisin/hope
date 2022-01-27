@@ -22,13 +22,13 @@ type ActivityHTTPServer interface {
 	CreateActivity(context.Context, *ActivityCreateReq) (*ActivityCreateReply, error)
 	DeleteActivity(context.Context, *ActivityDeleteReq) (*ActivityDeleteReply, error)
 	GetActivity(context.Context, *ActivityReq) (*ActivityReply, error)
-	GetPageActivity(context.Context, *ActivityPageReq) (*ActivityPageReply, error)
+	GetActivityPage(context.Context, *ActivityPageReq) (*ActivityPageReply, error)
 	UpdateActivity(context.Context, *ActivityUpdateReq) (*ActivityUpdateReply, error)
 }
 
 func RegisterActivityHTTPServer(s *http.Server, srv ActivityHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/activity/page", _Activity_GetPageActivity0_HTTP_Handler(srv))
+	r.GET("/v1/activity/page", _Activity_GetActivityPage0_HTTP_Handler(srv))
 	r.GET("/v1/activity/{id}", _Activity_GetActivity0_HTTP_Handler(srv))
 	r.PUT("/v1/activity/{id}", _Activity_UpdateActivity0_HTTP_Handler(srv))
 	r.POST("/v1/activity", _Activity_CreateActivity0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterActivityHTTPServer(s *http.Server, srv ActivityHTTPServer) {
 	r.DELETE("/v1/activity", _Activity_BatchDeleteActivity0_HTTP_Handler(srv))
 }
 
-func _Activity_GetPageActivity0_HTTP_Handler(srv ActivityHTTPServer) func(ctx http.Context) error {
+func _Activity_GetActivityPage0_HTTP_Handler(srv ActivityHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ActivityPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/activity.v1.Activity/GetPageActivity")
+		http.SetOperation(ctx, "/activity.v1.Activity/GetActivityPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageActivity(ctx, req.(*ActivityPageReq))
+			return srv.GetActivityPage(ctx, req.(*ActivityPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type ActivityHTTPClient interface {
 	CreateActivity(ctx context.Context, req *ActivityCreateReq, opts ...http.CallOption) (rsp *ActivityCreateReply, err error)
 	DeleteActivity(ctx context.Context, req *ActivityDeleteReq, opts ...http.CallOption) (rsp *ActivityDeleteReply, err error)
 	GetActivity(ctx context.Context, req *ActivityReq, opts ...http.CallOption) (rsp *ActivityReply, err error)
-	GetPageActivity(ctx context.Context, req *ActivityPageReq, opts ...http.CallOption) (rsp *ActivityPageReply, err error)
+	GetActivityPage(ctx context.Context, req *ActivityPageReq, opts ...http.CallOption) (rsp *ActivityPageReply, err error)
 	UpdateActivity(ctx context.Context, req *ActivityUpdateReq, opts ...http.CallOption) (rsp *ActivityUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *ActivityHTTPClientImpl) GetActivity(ctx context.Context, in *ActivityRe
 	return &out, err
 }
 
-func (c *ActivityHTTPClientImpl) GetPageActivity(ctx context.Context, in *ActivityPageReq, opts ...http.CallOption) (*ActivityPageReply, error) {
+func (c *ActivityHTTPClientImpl) GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...http.CallOption) (*ActivityPageReply, error) {
 	var out ActivityPageReply
 	pattern := "/v1/activity/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/activity.v1.Activity/GetPageActivity"))
+	opts = append(opts, http.Operation("/activity.v1.Activity/GetActivityPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

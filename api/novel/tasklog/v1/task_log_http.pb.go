@@ -21,14 +21,14 @@ type TaskLogHTTPServer interface {
 	BatchDeleteTaskLog(context.Context, *TaskLogBatchDeleteReq) (*TaskLogDeleteReply, error)
 	CreateTaskLog(context.Context, *TaskLogCreateReq) (*TaskLogCreateReply, error)
 	DeleteTaskLog(context.Context, *TaskLogDeleteReq) (*TaskLogDeleteReply, error)
-	GetPageTaskLog(context.Context, *TaskLogPageReq) (*TaskLogPageReply, error)
 	GetTaskLog(context.Context, *TaskLogReq) (*TaskLogReply, error)
+	GetTaskLogPage(context.Context, *TaskLogPageReq) (*TaskLogPageReply, error)
 	UpdateTaskLog(context.Context, *TaskLogUpdateReq) (*TaskLogUpdateReply, error)
 }
 
 func RegisterTaskLogHTTPServer(s *http.Server, srv TaskLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/task/log/page", _TaskLog_GetPageTaskLog0_HTTP_Handler(srv))
+	r.GET("/v1/task/log/page", _TaskLog_GetTaskLogPage0_HTTP_Handler(srv))
 	r.GET("/v1/task/log/{id}", _TaskLog_GetTaskLog0_HTTP_Handler(srv))
 	r.PUT("/v1/task/log/{id}", _TaskLog_UpdateTaskLog0_HTTP_Handler(srv))
 	r.POST("/v1/task/log", _TaskLog_CreateTaskLog0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterTaskLogHTTPServer(s *http.Server, srv TaskLogHTTPServer) {
 	r.DELETE("/v1/task/log", _TaskLog_BatchDeleteTaskLog0_HTTP_Handler(srv))
 }
 
-func _TaskLog_GetPageTaskLog0_HTTP_Handler(srv TaskLogHTTPServer) func(ctx http.Context) error {
+func _TaskLog_GetTaskLogPage0_HTTP_Handler(srv TaskLogHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in TaskLogPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/tasklog.v1.TaskLog/GetPageTaskLog")
+		http.SetOperation(ctx, "/tasklog.v1.TaskLog/GetTaskLogPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageTaskLog(ctx, req.(*TaskLogPageReq))
+			return srv.GetTaskLogPage(ctx, req.(*TaskLogPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type TaskLogHTTPClient interface {
 	BatchDeleteTaskLog(ctx context.Context, req *TaskLogBatchDeleteReq, opts ...http.CallOption) (rsp *TaskLogDeleteReply, err error)
 	CreateTaskLog(ctx context.Context, req *TaskLogCreateReq, opts ...http.CallOption) (rsp *TaskLogCreateReply, err error)
 	DeleteTaskLog(ctx context.Context, req *TaskLogDeleteReq, opts ...http.CallOption) (rsp *TaskLogDeleteReply, err error)
-	GetPageTaskLog(ctx context.Context, req *TaskLogPageReq, opts ...http.CallOption) (rsp *TaskLogPageReply, err error)
 	GetTaskLog(ctx context.Context, req *TaskLogReq, opts ...http.CallOption) (rsp *TaskLogReply, err error)
+	GetTaskLogPage(ctx context.Context, req *TaskLogPageReq, opts ...http.CallOption) (rsp *TaskLogPageReply, err error)
 	UpdateTaskLog(ctx context.Context, req *TaskLogUpdateReq, opts ...http.CallOption) (rsp *TaskLogUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *TaskLogHTTPClientImpl) DeleteTaskLog(ctx context.Context, in *TaskLogDe
 	return &out, err
 }
 
-func (c *TaskLogHTTPClientImpl) GetPageTaskLog(ctx context.Context, in *TaskLogPageReq, opts ...http.CallOption) (*TaskLogPageReply, error) {
-	var out TaskLogPageReply
-	pattern := "/v1/task/log/page"
+func (c *TaskLogHTTPClientImpl) GetTaskLog(ctx context.Context, in *TaskLogReq, opts ...http.CallOption) (*TaskLogReply, error) {
+	var out TaskLogReply
+	pattern := "/v1/task/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/GetPageTaskLog"))
+	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/GetTaskLog"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *TaskLogHTTPClientImpl) GetPageTaskLog(ctx context.Context, in *TaskLogP
 	return &out, err
 }
 
-func (c *TaskLogHTTPClientImpl) GetTaskLog(ctx context.Context, in *TaskLogReq, opts ...http.CallOption) (*TaskLogReply, error) {
-	var out TaskLogReply
-	pattern := "/v1/task/log/{id}"
+func (c *TaskLogHTTPClientImpl) GetTaskLogPage(ctx context.Context, in *TaskLogPageReq, opts ...http.CallOption) (*TaskLogPageReply, error) {
+	var out TaskLogPageReply
+	pattern := "/v1/task/log/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/GetTaskLog"))
+	opts = append(opts, http.Operation("/tasklog.v1.TaskLog/GetTaskLogPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

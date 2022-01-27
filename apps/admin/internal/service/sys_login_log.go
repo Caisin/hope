@@ -20,9 +20,9 @@ func NewSysLoginLogService(uc *biz.SysLoginLogUseCase, logger log.Logger) *SysLo
 	return &SysLoginLogService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysLoginLogService) GetPageSysLoginLog(ctx context.Context, req *pb.SysLoginLogPageReq) (*pb.SysLoginLogPageReply, error) {
+func (s *SysLoginLogService) GetSysLoginLogPage(ctx context.Context, req *pb.SysLoginLogPageReq) (*pb.SysLoginLogPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysLoginLog")
+	ctx, span := tr.Start(ctx, "GetSysLoginLogPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

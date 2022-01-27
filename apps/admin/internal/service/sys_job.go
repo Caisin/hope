@@ -20,9 +20,9 @@ func NewSysJobService(uc *biz.SysJobUseCase, logger log.Logger) *SysJobService {
 	return &SysJobService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysJobService) GetPageSysJob(ctx context.Context, req *pb.SysJobPageReq) (*pb.SysJobPageReply, error) {
+func (s *SysJobService) GetSysJobPage(ctx context.Context, req *pb.SysJobPageReq) (*pb.SysJobPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysJob")
+	ctx, span := tr.Start(ctx, "GetSysJobPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

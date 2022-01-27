@@ -21,14 +21,14 @@ type SysJobLogHTTPServer interface {
 	BatchDeleteSysJobLog(context.Context, *SysJobLogBatchDeleteReq) (*SysJobLogDeleteReply, error)
 	CreateSysJobLog(context.Context, *SysJobLogCreateReq) (*SysJobLogCreateReply, error)
 	DeleteSysJobLog(context.Context, *SysJobLogDeleteReq) (*SysJobLogDeleteReply, error)
-	GetPageSysJobLog(context.Context, *SysJobLogPageReq) (*SysJobLogPageReply, error)
 	GetSysJobLog(context.Context, *SysJobLogReq) (*SysJobLogReply, error)
+	GetSysJobLogPage(context.Context, *SysJobLogPageReq) (*SysJobLogPageReply, error)
 	UpdateSysJobLog(context.Context, *SysJobLogUpdateReq) (*SysJobLogUpdateReply, error)
 }
 
 func RegisterSysJobLogHTTPServer(s *http.Server, srv SysJobLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/job/log/page", _SysJobLog_GetPageSysJobLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/job/log/page", _SysJobLog_GetSysJobLogPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/job/log/{id}", _SysJobLog_GetSysJobLog0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/job/log/{id}", _SysJobLog_UpdateSysJobLog0_HTTP_Handler(srv))
 	r.POST("/v1/sys/job/log", _SysJobLog_CreateSysJobLog0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysJobLogHTTPServer(s *http.Server, srv SysJobLogHTTPServer) {
 	r.DELETE("/v1/sys/job/log", _SysJobLog_BatchDeleteSysJobLog0_HTTP_Handler(srv))
 }
 
-func _SysJobLog_GetPageSysJobLog0_HTTP_Handler(srv SysJobLogHTTPServer) func(ctx http.Context) error {
+func _SysJobLog_GetSysJobLogPage0_HTTP_Handler(srv SysJobLogHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysJobLogPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysjoblog.v1.SysJobLog/GetPageSysJobLog")
+		http.SetOperation(ctx, "/sysjoblog.v1.SysJobLog/GetSysJobLogPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysJobLog(ctx, req.(*SysJobLogPageReq))
+			return srv.GetSysJobLogPage(ctx, req.(*SysJobLogPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysJobLogHTTPClient interface {
 	BatchDeleteSysJobLog(ctx context.Context, req *SysJobLogBatchDeleteReq, opts ...http.CallOption) (rsp *SysJobLogDeleteReply, err error)
 	CreateSysJobLog(ctx context.Context, req *SysJobLogCreateReq, opts ...http.CallOption) (rsp *SysJobLogCreateReply, err error)
 	DeleteSysJobLog(ctx context.Context, req *SysJobLogDeleteReq, opts ...http.CallOption) (rsp *SysJobLogDeleteReply, err error)
-	GetPageSysJobLog(ctx context.Context, req *SysJobLogPageReq, opts ...http.CallOption) (rsp *SysJobLogPageReply, err error)
 	GetSysJobLog(ctx context.Context, req *SysJobLogReq, opts ...http.CallOption) (rsp *SysJobLogReply, err error)
+	GetSysJobLogPage(ctx context.Context, req *SysJobLogPageReq, opts ...http.CallOption) (rsp *SysJobLogPageReply, err error)
 	UpdateSysJobLog(ctx context.Context, req *SysJobLogUpdateReq, opts ...http.CallOption) (rsp *SysJobLogUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysJobLogHTTPClientImpl) DeleteSysJobLog(ctx context.Context, in *SysJo
 	return &out, err
 }
 
-func (c *SysJobLogHTTPClientImpl) GetPageSysJobLog(ctx context.Context, in *SysJobLogPageReq, opts ...http.CallOption) (*SysJobLogPageReply, error) {
-	var out SysJobLogPageReply
-	pattern := "/v1/sys/job/log/page"
+func (c *SysJobLogHTTPClientImpl) GetSysJobLog(ctx context.Context, in *SysJobLogReq, opts ...http.CallOption) (*SysJobLogReply, error) {
+	var out SysJobLogReply
+	pattern := "/v1/sys/job/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/GetPageSysJobLog"))
+	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/GetSysJobLog"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysJobLogHTTPClientImpl) GetPageSysJobLog(ctx context.Context, in *SysJ
 	return &out, err
 }
 
-func (c *SysJobLogHTTPClientImpl) GetSysJobLog(ctx context.Context, in *SysJobLogReq, opts ...http.CallOption) (*SysJobLogReply, error) {
-	var out SysJobLogReply
-	pattern := "/v1/sys/job/log/{id}"
+func (c *SysJobLogHTTPClientImpl) GetSysJobLogPage(ctx context.Context, in *SysJobLogPageReq, opts ...http.CallOption) (*SysJobLogPageReply, error) {
+	var out SysJobLogPageReply
+	pattern := "/v1/sys/job/log/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/GetSysJobLog"))
+	opts = append(opts, http.Operation("/sysjoblog.v1.SysJobLog/GetSysJobLogPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -21,14 +21,14 @@ type SysApiHTTPServer interface {
 	BatchDeleteSysApi(context.Context, *SysApiBatchDeleteReq) (*SysApiDeleteReply, error)
 	CreateSysApi(context.Context, *SysApiCreateReq) (*SysApiCreateReply, error)
 	DeleteSysApi(context.Context, *SysApiDeleteReq) (*SysApiDeleteReply, error)
-	GetPageSysApi(context.Context, *SysApiPageReq) (*SysApiPageReply, error)
 	GetSysApi(context.Context, *SysApiReq) (*SysApiReply, error)
+	GetSysApiPage(context.Context, *SysApiPageReq) (*SysApiPageReply, error)
 	UpdateSysApi(context.Context, *SysApiUpdateReq) (*SysApiUpdateReply, error)
 }
 
 func RegisterSysApiHTTPServer(s *http.Server, srv SysApiHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/api/page", _SysApi_GetPageSysApi0_HTTP_Handler(srv))
+	r.GET("/v1/sys/api/page", _SysApi_GetSysApiPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/api/{id}", _SysApi_GetSysApi0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/api/{id}", _SysApi_UpdateSysApi0_HTTP_Handler(srv))
 	r.POST("/v1/sys/api", _SysApi_CreateSysApi0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysApiHTTPServer(s *http.Server, srv SysApiHTTPServer) {
 	r.DELETE("/v1/sys/api", _SysApi_BatchDeleteSysApi0_HTTP_Handler(srv))
 }
 
-func _SysApi_GetPageSysApi0_HTTP_Handler(srv SysApiHTTPServer) func(ctx http.Context) error {
+func _SysApi_GetSysApiPage0_HTTP_Handler(srv SysApiHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysApiPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysapi.v1.SysApi/GetPageSysApi")
+		http.SetOperation(ctx, "/sysapi.v1.SysApi/GetSysApiPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysApi(ctx, req.(*SysApiPageReq))
+			return srv.GetSysApiPage(ctx, req.(*SysApiPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysApiHTTPClient interface {
 	BatchDeleteSysApi(ctx context.Context, req *SysApiBatchDeleteReq, opts ...http.CallOption) (rsp *SysApiDeleteReply, err error)
 	CreateSysApi(ctx context.Context, req *SysApiCreateReq, opts ...http.CallOption) (rsp *SysApiCreateReply, err error)
 	DeleteSysApi(ctx context.Context, req *SysApiDeleteReq, opts ...http.CallOption) (rsp *SysApiDeleteReply, err error)
-	GetPageSysApi(ctx context.Context, req *SysApiPageReq, opts ...http.CallOption) (rsp *SysApiPageReply, err error)
 	GetSysApi(ctx context.Context, req *SysApiReq, opts ...http.CallOption) (rsp *SysApiReply, err error)
+	GetSysApiPage(ctx context.Context, req *SysApiPageReq, opts ...http.CallOption) (rsp *SysApiPageReply, err error)
 	UpdateSysApi(ctx context.Context, req *SysApiUpdateReq, opts ...http.CallOption) (rsp *SysApiUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysApiHTTPClientImpl) DeleteSysApi(ctx context.Context, in *SysApiDelet
 	return &out, err
 }
 
-func (c *SysApiHTTPClientImpl) GetPageSysApi(ctx context.Context, in *SysApiPageReq, opts ...http.CallOption) (*SysApiPageReply, error) {
-	var out SysApiPageReply
-	pattern := "/v1/sys/api/page"
+func (c *SysApiHTTPClientImpl) GetSysApi(ctx context.Context, in *SysApiReq, opts ...http.CallOption) (*SysApiReply, error) {
+	var out SysApiReply
+	pattern := "/v1/sys/api/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysapi.v1.SysApi/GetPageSysApi"))
+	opts = append(opts, http.Operation("/sysapi.v1.SysApi/GetSysApi"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysApiHTTPClientImpl) GetPageSysApi(ctx context.Context, in *SysApiPage
 	return &out, err
 }
 
-func (c *SysApiHTTPClientImpl) GetSysApi(ctx context.Context, in *SysApiReq, opts ...http.CallOption) (*SysApiReply, error) {
-	var out SysApiReply
-	pattern := "/v1/sys/api/{id}"
+func (c *SysApiHTTPClientImpl) GetSysApiPage(ctx context.Context, in *SysApiPageReq, opts ...http.CallOption) (*SysApiPageReply, error) {
+	var out SysApiPageReply
+	pattern := "/v1/sys/api/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysapi.v1.SysApi/GetSysApi"))
+	opts = append(opts, http.Operation("/sysapi.v1.SysApi/GetSysApiPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

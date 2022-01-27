@@ -20,9 +20,9 @@ func NewNovelPayConfigService(uc *biz.NovelPayConfigUseCase, logger log.Logger) 
 	return &NovelPayConfigService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *NovelPayConfigService) GetPageNovelPayConfig(ctx context.Context, req *pb.NovelPayConfigPageReq) (*pb.NovelPayConfigPageReply, error) {
+func (s *NovelPayConfigService) GetNovelPayConfigPage(ctx context.Context, req *pb.NovelPayConfigPageReq) (*pb.NovelPayConfigPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageNovelPayConfig")
+	ctx, span := tr.Start(ctx, "GetNovelPayConfigPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

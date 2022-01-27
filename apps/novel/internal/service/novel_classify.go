@@ -20,9 +20,9 @@ func NewNovelClassifyService(uc *biz.NovelClassifyUseCase, logger log.Logger) *N
 	return &NovelClassifyService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *NovelClassifyService) GetPageNovelClassify(ctx context.Context, req *pb.NovelClassifyPageReq) (*pb.NovelClassifyPageReply, error) {
+func (s *NovelClassifyService) GetNovelClassifyPage(ctx context.Context, req *pb.NovelClassifyPageReq) (*pb.NovelClassifyPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageNovelClassify")
+	ctx, span := tr.Start(ctx, "GetNovelClassifyPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -20,9 +20,9 @@ func NewSysDeptService(uc *biz.SysDeptUseCase, logger log.Logger) *SysDeptServic
 	return &SysDeptService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysDeptService) GetPageSysDept(ctx context.Context, req *pb.SysDeptPageReq) (*pb.SysDeptPageReply, error) {
+func (s *SysDeptService) GetSysDeptPage(ctx context.Context, req *pb.SysDeptPageReq) (*pb.SysDeptPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysDept")
+	ctx, span := tr.Start(ctx, "GetSysDeptPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

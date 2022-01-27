@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SocialUserClient interface {
 	// 分页查询SocialUser
-	GetPageSocialUser(ctx context.Context, in *SocialUserPageReq, opts ...grpc.CallOption) (*SocialUserPageReply, error)
+	GetSocialUserPage(ctx context.Context, in *SocialUserPageReq, opts ...grpc.CallOption) (*SocialUserPageReply, error)
 	// 获取SocialUser
 	GetSocialUser(ctx context.Context, in *SocialUserReq, opts ...grpc.CallOption) (*SocialUserReply, error)
 	// 更新SocialUser
@@ -44,9 +44,9 @@ func NewSocialUserClient(cc grpc.ClientConnInterface) SocialUserClient {
 	return &socialUserClient{cc}
 }
 
-func (c *socialUserClient) GetPageSocialUser(ctx context.Context, in *SocialUserPageReq, opts ...grpc.CallOption) (*SocialUserPageReply, error) {
+func (c *socialUserClient) GetSocialUserPage(ctx context.Context, in *SocialUserPageReq, opts ...grpc.CallOption) (*SocialUserPageReply, error) {
 	out := new(SocialUserPageReply)
-	err := c.cc.Invoke(ctx, "/socialuser.v1.SocialUser/GetPageSocialUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/socialuser.v1.SocialUser/GetSocialUserPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *socialUserClient) BatchDeleteSocialUser(ctx context.Context, in *Social
 // for forward compatibility
 type SocialUserServer interface {
 	// 分页查询SocialUser
-	GetPageSocialUser(context.Context, *SocialUserPageReq) (*SocialUserPageReply, error)
+	GetSocialUserPage(context.Context, *SocialUserPageReq) (*SocialUserPageReply, error)
 	// 获取SocialUser
 	GetSocialUser(context.Context, *SocialUserReq) (*SocialUserReply, error)
 	// 更新SocialUser
@@ -121,8 +121,8 @@ type SocialUserServer interface {
 type UnimplementedSocialUserServer struct {
 }
 
-func (UnimplementedSocialUserServer) GetPageSocialUser(context.Context, *SocialUserPageReq) (*SocialUserPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSocialUser not implemented")
+func (UnimplementedSocialUserServer) GetSocialUserPage(context.Context, *SocialUserPageReq) (*SocialUserPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSocialUserPage not implemented")
 }
 func (UnimplementedSocialUserServer) GetSocialUser(context.Context, *SocialUserReq) (*SocialUserReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSocialUser not implemented")
@@ -152,20 +152,20 @@ func RegisterSocialUserServer(s grpc.ServiceRegistrar, srv SocialUserServer) {
 	s.RegisterService(&SocialUser_ServiceDesc, srv)
 }
 
-func _SocialUser_GetPageSocialUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SocialUser_GetSocialUserPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SocialUserPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SocialUserServer).GetPageSocialUser(ctx, in)
+		return srv.(SocialUserServer).GetSocialUserPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/socialuser.v1.SocialUser/GetPageSocialUser",
+		FullMethod: "/socialuser.v1.SocialUser/GetSocialUserPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SocialUserServer).GetPageSocialUser(ctx, req.(*SocialUserPageReq))
+		return srv.(SocialUserServer).GetSocialUserPage(ctx, req.(*SocialUserPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SocialUser_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SocialUserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSocialUser",
-			Handler:    _SocialUser_GetPageSocialUser_Handler,
+			MethodName: "GetSocialUserPage",
+			Handler:    _SocialUser_GetSocialUserPage_Handler,
 		},
 		{
 			MethodName: "GetSocialUser",

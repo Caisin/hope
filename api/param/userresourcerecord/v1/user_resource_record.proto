@@ -13,7 +13,7 @@ option go_package = "hope/api/param/userresourcerecord/v1;v1";
 service UserResourceRecord {
 
   // 分页查询UserResourceRecord
-  rpc GetPageUserResourceRecord (UserResourceRecordPageReq) returns (UserResourceRecordPageReply)  {
+  rpc GetUserResourceRecordPage (UserResourceRecordPageReq) returns (UserResourceRecordPageReply)  {
     option (google.api.http) = {
       get: "/v1/user/resource/record/page"
     };

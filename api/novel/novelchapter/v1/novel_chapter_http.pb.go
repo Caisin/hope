@@ -22,13 +22,13 @@ type NovelChapterHTTPServer interface {
 	CreateNovelChapter(context.Context, *NovelChapterCreateReq) (*NovelChapterCreateReply, error)
 	DeleteNovelChapter(context.Context, *NovelChapterDeleteReq) (*NovelChapterDeleteReply, error)
 	GetNovelChapter(context.Context, *NovelChapterReq) (*NovelChapterReply, error)
-	GetPageNovelChapter(context.Context, *NovelChapterPageReq) (*NovelChapterPageReply, error)
+	GetNovelChapterPage(context.Context, *NovelChapterPageReq) (*NovelChapterPageReply, error)
 	UpdateNovelChapter(context.Context, *NovelChapterUpdateReq) (*NovelChapterUpdateReply, error)
 }
 
 func RegisterNovelChapterHTTPServer(s *http.Server, srv NovelChapterHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/chapter/page", _NovelChapter_GetPageNovelChapter0_HTTP_Handler(srv))
+	r.GET("/v1/novel/chapter/page", _NovelChapter_GetNovelChapterPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/chapter/{id}", _NovelChapter_GetNovelChapter0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/chapter/{id}", _NovelChapter_UpdateNovelChapter0_HTTP_Handler(srv))
 	r.POST("/v1/novel/chapter", _NovelChapter_CreateNovelChapter0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelChapterHTTPServer(s *http.Server, srv NovelChapterHTTPServer) 
 	r.DELETE("/v1/novel/chapter", _NovelChapter_BatchDeleteNovelChapter0_HTTP_Handler(srv))
 }
 
-func _NovelChapter_GetPageNovelChapter0_HTTP_Handler(srv NovelChapterHTTPServer) func(ctx http.Context) error {
+func _NovelChapter_GetNovelChapterPage0_HTTP_Handler(srv NovelChapterHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelChapterPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelchapter.v1.NovelChapter/GetPageNovelChapter")
+		http.SetOperation(ctx, "/novelchapter.v1.NovelChapter/GetNovelChapterPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelChapter(ctx, req.(*NovelChapterPageReq))
+			return srv.GetNovelChapterPage(ctx, req.(*NovelChapterPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelChapterHTTPClient interface {
 	CreateNovelChapter(ctx context.Context, req *NovelChapterCreateReq, opts ...http.CallOption) (rsp *NovelChapterCreateReply, err error)
 	DeleteNovelChapter(ctx context.Context, req *NovelChapterDeleteReq, opts ...http.CallOption) (rsp *NovelChapterDeleteReply, err error)
 	GetNovelChapter(ctx context.Context, req *NovelChapterReq, opts ...http.CallOption) (rsp *NovelChapterReply, err error)
-	GetPageNovelChapter(ctx context.Context, req *NovelChapterPageReq, opts ...http.CallOption) (rsp *NovelChapterPageReply, err error)
+	GetNovelChapterPage(ctx context.Context, req *NovelChapterPageReq, opts ...http.CallOption) (rsp *NovelChapterPageReply, err error)
 	UpdateNovelChapter(ctx context.Context, req *NovelChapterUpdateReq, opts ...http.CallOption) (rsp *NovelChapterUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelChapterHTTPClientImpl) GetNovelChapter(ctx context.Context, in *No
 	return &out, err
 }
 
-func (c *NovelChapterHTTPClientImpl) GetPageNovelChapter(ctx context.Context, in *NovelChapterPageReq, opts ...http.CallOption) (*NovelChapterPageReply, error) {
+func (c *NovelChapterHTTPClientImpl) GetNovelChapterPage(ctx context.Context, in *NovelChapterPageReq, opts ...http.CallOption) (*NovelChapterPageReply, error) {
 	var out NovelChapterPageReply
 	pattern := "/v1/novel/chapter/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/GetPageNovelChapter"))
+	opts = append(opts, http.Operation("/novelchapter.v1.NovelChapter/GetNovelChapterPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

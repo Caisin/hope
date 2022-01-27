@@ -21,14 +21,14 @@ type UserResourceHTTPServer interface {
 	BatchDeleteUserResource(context.Context, *UserResourceBatchDeleteReq) (*UserResourceDeleteReply, error)
 	CreateUserResource(context.Context, *UserResourceCreateReq) (*UserResourceCreateReply, error)
 	DeleteUserResource(context.Context, *UserResourceDeleteReq) (*UserResourceDeleteReply, error)
-	GetPageUserResource(context.Context, *UserResourcePageReq) (*UserResourcePageReply, error)
 	GetUserResource(context.Context, *UserResourceReq) (*UserResourceReply, error)
+	GetUserResourcePage(context.Context, *UserResourcePageReq) (*UserResourcePageReply, error)
 	UpdateUserResource(context.Context, *UserResourceUpdateReq) (*UserResourceUpdateReply, error)
 }
 
 func RegisterUserResourceHTTPServer(s *http.Server, srv UserResourceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/user/resource/page", _UserResource_GetPageUserResource0_HTTP_Handler(srv))
+	r.GET("/v1/user/resource/page", _UserResource_GetUserResourcePage0_HTTP_Handler(srv))
 	r.GET("/v1/user/resource/{id}", _UserResource_GetUserResource0_HTTP_Handler(srv))
 	r.PUT("/v1/user/resource/{id}", _UserResource_UpdateUserResource0_HTTP_Handler(srv))
 	r.POST("/v1/user/resource", _UserResource_CreateUserResource0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterUserResourceHTTPServer(s *http.Server, srv UserResourceHTTPServer) 
 	r.DELETE("/v1/user/resource", _UserResource_BatchDeleteUserResource0_HTTP_Handler(srv))
 }
 
-func _UserResource_GetPageUserResource0_HTTP_Handler(srv UserResourceHTTPServer) func(ctx http.Context) error {
+func _UserResource_GetUserResourcePage0_HTTP_Handler(srv UserResourceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UserResourcePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/userresource.v1.UserResource/GetPageUserResource")
+		http.SetOperation(ctx, "/userresource.v1.UserResource/GetUserResourcePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageUserResource(ctx, req.(*UserResourcePageReq))
+			return srv.GetUserResourcePage(ctx, req.(*UserResourcePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type UserResourceHTTPClient interface {
 	BatchDeleteUserResource(ctx context.Context, req *UserResourceBatchDeleteReq, opts ...http.CallOption) (rsp *UserResourceDeleteReply, err error)
 	CreateUserResource(ctx context.Context, req *UserResourceCreateReq, opts ...http.CallOption) (rsp *UserResourceCreateReply, err error)
 	DeleteUserResource(ctx context.Context, req *UserResourceDeleteReq, opts ...http.CallOption) (rsp *UserResourceDeleteReply, err error)
-	GetPageUserResource(ctx context.Context, req *UserResourcePageReq, opts ...http.CallOption) (rsp *UserResourcePageReply, err error)
 	GetUserResource(ctx context.Context, req *UserResourceReq, opts ...http.CallOption) (rsp *UserResourceReply, err error)
+	GetUserResourcePage(ctx context.Context, req *UserResourcePageReq, opts ...http.CallOption) (rsp *UserResourcePageReply, err error)
 	UpdateUserResource(ctx context.Context, req *UserResourceUpdateReq, opts ...http.CallOption) (rsp *UserResourceUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *UserResourceHTTPClientImpl) DeleteUserResource(ctx context.Context, in 
 	return &out, err
 }
 
-func (c *UserResourceHTTPClientImpl) GetPageUserResource(ctx context.Context, in *UserResourcePageReq, opts ...http.CallOption) (*UserResourcePageReply, error) {
-	var out UserResourcePageReply
-	pattern := "/v1/user/resource/page"
+func (c *UserResourceHTTPClientImpl) GetUserResource(ctx context.Context, in *UserResourceReq, opts ...http.CallOption) (*UserResourceReply, error) {
+	var out UserResourceReply
+	pattern := "/v1/user/resource/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/userresource.v1.UserResource/GetPageUserResource"))
+	opts = append(opts, http.Operation("/userresource.v1.UserResource/GetUserResource"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *UserResourceHTTPClientImpl) GetPageUserResource(ctx context.Context, in
 	return &out, err
 }
 
-func (c *UserResourceHTTPClientImpl) GetUserResource(ctx context.Context, in *UserResourceReq, opts ...http.CallOption) (*UserResourceReply, error) {
-	var out UserResourceReply
-	pattern := "/v1/user/resource/{id}"
+func (c *UserResourceHTTPClientImpl) GetUserResourcePage(ctx context.Context, in *UserResourcePageReq, opts ...http.CallOption) (*UserResourcePageReply, error) {
+	var out UserResourcePageReply
+	pattern := "/v1/user/resource/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/userresource.v1.UserResource/GetUserResource"))
+	opts = append(opts, http.Operation("/userresource.v1.UserResource/GetUserResourcePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

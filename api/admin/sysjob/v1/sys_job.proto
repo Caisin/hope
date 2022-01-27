@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysjob/v1;v1";
 service SysJob {
 
   // 分页查询SysJob
-  rpc GetPageSysJob (SysJobPageReq) returns (SysJobPageReply)  {
+  rpc GetSysJobPage (SysJobPageReq) returns (SysJobPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/job/page"
     };

@@ -20,9 +20,9 @@ func NewSysConfigService(uc *biz.SysConfigUseCase, logger log.Logger) *SysConfig
 	return &SysConfigService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysConfigService) GetPageSysConfig(ctx context.Context, req *pb.SysConfigPageReq) (*pb.SysConfigPageReply, error) {
+func (s *SysConfigService) GetSysConfigPage(ctx context.Context, req *pb.SysConfigPageReq) (*pb.SysConfigPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysConfig")
+	ctx, span := tr.Start(ctx, "GetSysConfigPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

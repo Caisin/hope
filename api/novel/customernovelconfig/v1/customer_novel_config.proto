@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/customernovelconfig/v1;v1";
 service CustomerNovelConfig {
 
   // 分页查询CustomerNovelConfig
-  rpc GetPageCustomerNovelConfig (CustomerNovelConfigPageReq) returns (CustomerNovelConfigPageReply)  {
+  rpc GetCustomerNovelConfigPage (CustomerNovelConfigPageReq) returns (CustomerNovelConfigPageReply)  {
     option (google.api.http) = {
       get: "/v1/customer/novel/config/page"
     };

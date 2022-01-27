@@ -21,14 +21,14 @@ type QiniuConfigHTTPServer interface {
 	BatchDeleteQiniuConfig(context.Context, *QiniuConfigBatchDeleteReq) (*QiniuConfigDeleteReply, error)
 	CreateQiniuConfig(context.Context, *QiniuConfigCreateReq) (*QiniuConfigCreateReply, error)
 	DeleteQiniuConfig(context.Context, *QiniuConfigDeleteReq) (*QiniuConfigDeleteReply, error)
-	GetPageQiniuConfig(context.Context, *QiniuConfigPageReq) (*QiniuConfigPageReply, error)
 	GetQiniuConfig(context.Context, *QiniuConfigReq) (*QiniuConfigReply, error)
+	GetQiniuConfigPage(context.Context, *QiniuConfigPageReq) (*QiniuConfigPageReply, error)
 	UpdateQiniuConfig(context.Context, *QiniuConfigUpdateReq) (*QiniuConfigUpdateReply, error)
 }
 
 func RegisterQiniuConfigHTTPServer(s *http.Server, srv QiniuConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/qiniu/config/page", _QiniuConfig_GetPageQiniuConfig0_HTTP_Handler(srv))
+	r.GET("/v1/qiniu/config/page", _QiniuConfig_GetQiniuConfigPage0_HTTP_Handler(srv))
 	r.GET("/v1/qiniu/config/{id}", _QiniuConfig_GetQiniuConfig0_HTTP_Handler(srv))
 	r.PUT("/v1/qiniu/config/{id}", _QiniuConfig_UpdateQiniuConfig0_HTTP_Handler(srv))
 	r.POST("/v1/qiniu/config", _QiniuConfig_CreateQiniuConfig0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterQiniuConfigHTTPServer(s *http.Server, srv QiniuConfigHTTPServer) {
 	r.DELETE("/v1/qiniu/config", _QiniuConfig_BatchDeleteQiniuConfig0_HTTP_Handler(srv))
 }
 
-func _QiniuConfig_GetPageQiniuConfig0_HTTP_Handler(srv QiniuConfigHTTPServer) func(ctx http.Context) error {
+func _QiniuConfig_GetQiniuConfigPage0_HTTP_Handler(srv QiniuConfigHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in QiniuConfigPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/qiniuconfig.v1.QiniuConfig/GetPageQiniuConfig")
+		http.SetOperation(ctx, "/qiniuconfig.v1.QiniuConfig/GetQiniuConfigPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageQiniuConfig(ctx, req.(*QiniuConfigPageReq))
+			return srv.GetQiniuConfigPage(ctx, req.(*QiniuConfigPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type QiniuConfigHTTPClient interface {
 	BatchDeleteQiniuConfig(ctx context.Context, req *QiniuConfigBatchDeleteReq, opts ...http.CallOption) (rsp *QiniuConfigDeleteReply, err error)
 	CreateQiniuConfig(ctx context.Context, req *QiniuConfigCreateReq, opts ...http.CallOption) (rsp *QiniuConfigCreateReply, err error)
 	DeleteQiniuConfig(ctx context.Context, req *QiniuConfigDeleteReq, opts ...http.CallOption) (rsp *QiniuConfigDeleteReply, err error)
-	GetPageQiniuConfig(ctx context.Context, req *QiniuConfigPageReq, opts ...http.CallOption) (rsp *QiniuConfigPageReply, err error)
 	GetQiniuConfig(ctx context.Context, req *QiniuConfigReq, opts ...http.CallOption) (rsp *QiniuConfigReply, err error)
+	GetQiniuConfigPage(ctx context.Context, req *QiniuConfigPageReq, opts ...http.CallOption) (rsp *QiniuConfigPageReply, err error)
 	UpdateQiniuConfig(ctx context.Context, req *QiniuConfigUpdateReq, opts ...http.CallOption) (rsp *QiniuConfigUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *QiniuConfigHTTPClientImpl) DeleteQiniuConfig(ctx context.Context, in *Q
 	return &out, err
 }
 
-func (c *QiniuConfigHTTPClientImpl) GetPageQiniuConfig(ctx context.Context, in *QiniuConfigPageReq, opts ...http.CallOption) (*QiniuConfigPageReply, error) {
-	var out QiniuConfigPageReply
-	pattern := "/v1/qiniu/config/page"
+func (c *QiniuConfigHTTPClientImpl) GetQiniuConfig(ctx context.Context, in *QiniuConfigReq, opts ...http.CallOption) (*QiniuConfigReply, error) {
+	var out QiniuConfigReply
+	pattern := "/v1/qiniu/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/GetPageQiniuConfig"))
+	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/GetQiniuConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *QiniuConfigHTTPClientImpl) GetPageQiniuConfig(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *QiniuConfigHTTPClientImpl) GetQiniuConfig(ctx context.Context, in *QiniuConfigReq, opts ...http.CallOption) (*QiniuConfigReply, error) {
-	var out QiniuConfigReply
-	pattern := "/v1/qiniu/config/{id}"
+func (c *QiniuConfigHTTPClientImpl) GetQiniuConfigPage(ctx context.Context, in *QiniuConfigPageReq, opts ...http.CallOption) (*QiniuConfigPageReply, error) {
+	var out QiniuConfigPageReply
+	pattern := "/v1/qiniu/config/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/GetQiniuConfig"))
+	opts = append(opts, http.Operation("/qiniuconfig.v1.QiniuConfig/GetQiniuConfigPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

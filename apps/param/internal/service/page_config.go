@@ -20,9 +20,9 @@ func NewPageConfigService(uc *biz.PageConfigUseCase, logger log.Logger) *PageCon
 	return &PageConfigService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *PageConfigService) GetPagePageConfig(ctx context.Context, req *pb.PageConfigPageReq) (*pb.PageConfigPageReply, error) {
+func (s *PageConfigService) GetPageConfigPage(ctx context.Context, req *pb.PageConfigPageReq) (*pb.PageConfigPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPagePageConfig")
+	ctx, span := tr.Start(ctx, "GetPageConfigPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

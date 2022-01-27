@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CasbinRuleClient interface {
 	// 分页查询CasbinRule
-	GetPageCasbinRule(ctx context.Context, in *CasbinRulePageReq, opts ...grpc.CallOption) (*CasbinRulePageReply, error)
+	GetCasbinRulePage(ctx context.Context, in *CasbinRulePageReq, opts ...grpc.CallOption) (*CasbinRulePageReply, error)
 	// 获取CasbinRule
 	GetCasbinRule(ctx context.Context, in *CasbinRuleReq, opts ...grpc.CallOption) (*CasbinRuleReply, error)
 	// 更新CasbinRule
@@ -44,9 +44,9 @@ func NewCasbinRuleClient(cc grpc.ClientConnInterface) CasbinRuleClient {
 	return &casbinRuleClient{cc}
 }
 
-func (c *casbinRuleClient) GetPageCasbinRule(ctx context.Context, in *CasbinRulePageReq, opts ...grpc.CallOption) (*CasbinRulePageReply, error) {
+func (c *casbinRuleClient) GetCasbinRulePage(ctx context.Context, in *CasbinRulePageReq, opts ...grpc.CallOption) (*CasbinRulePageReply, error) {
 	out := new(CasbinRulePageReply)
-	err := c.cc.Invoke(ctx, "/casbinrule.v1.CasbinRule/GetPageCasbinRule", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/casbinrule.v1.CasbinRule/GetCasbinRulePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *casbinRuleClient) BatchDeleteCasbinRule(ctx context.Context, in *Casbin
 // for forward compatibility
 type CasbinRuleServer interface {
 	// 分页查询CasbinRule
-	GetPageCasbinRule(context.Context, *CasbinRulePageReq) (*CasbinRulePageReply, error)
+	GetCasbinRulePage(context.Context, *CasbinRulePageReq) (*CasbinRulePageReply, error)
 	// 获取CasbinRule
 	GetCasbinRule(context.Context, *CasbinRuleReq) (*CasbinRuleReply, error)
 	// 更新CasbinRule
@@ -121,8 +121,8 @@ type CasbinRuleServer interface {
 type UnimplementedCasbinRuleServer struct {
 }
 
-func (UnimplementedCasbinRuleServer) GetPageCasbinRule(context.Context, *CasbinRulePageReq) (*CasbinRulePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageCasbinRule not implemented")
+func (UnimplementedCasbinRuleServer) GetCasbinRulePage(context.Context, *CasbinRulePageReq) (*CasbinRulePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCasbinRulePage not implemented")
 }
 func (UnimplementedCasbinRuleServer) GetCasbinRule(context.Context, *CasbinRuleReq) (*CasbinRuleReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCasbinRule not implemented")
@@ -152,20 +152,20 @@ func RegisterCasbinRuleServer(s grpc.ServiceRegistrar, srv CasbinRuleServer) {
 	s.RegisterService(&CasbinRule_ServiceDesc, srv)
 }
 
-func _CasbinRule_GetPageCasbinRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CasbinRule_GetCasbinRulePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CasbinRulePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CasbinRuleServer).GetPageCasbinRule(ctx, in)
+		return srv.(CasbinRuleServer).GetCasbinRulePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/casbinrule.v1.CasbinRule/GetPageCasbinRule",
+		FullMethod: "/casbinrule.v1.CasbinRule/GetCasbinRulePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CasbinRuleServer).GetPageCasbinRule(ctx, req.(*CasbinRulePageReq))
+		return srv.(CasbinRuleServer).GetCasbinRulePage(ctx, req.(*CasbinRulePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var CasbinRule_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CasbinRuleServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageCasbinRule",
-			Handler:    _CasbinRule_GetPageCasbinRule_Handler,
+			MethodName: "GetCasbinRulePage",
+			Handler:    _CasbinRule_GetCasbinRulePage_Handler,
 		},
 		{
 			MethodName: "GetCasbinRule",

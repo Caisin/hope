@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ResourceStorageClient interface {
 	// 分页查询ResourceStorage
-	GetPageResourceStorage(ctx context.Context, in *ResourceStoragePageReq, opts ...grpc.CallOption) (*ResourceStoragePageReply, error)
+	GetResourceStoragePage(ctx context.Context, in *ResourceStoragePageReq, opts ...grpc.CallOption) (*ResourceStoragePageReply, error)
 	// 获取ResourceStorage
 	GetResourceStorage(ctx context.Context, in *ResourceStorageReq, opts ...grpc.CallOption) (*ResourceStorageReply, error)
 	// 更新ResourceStorage
@@ -44,9 +44,9 @@ func NewResourceStorageClient(cc grpc.ClientConnInterface) ResourceStorageClient
 	return &resourceStorageClient{cc}
 }
 
-func (c *resourceStorageClient) GetPageResourceStorage(ctx context.Context, in *ResourceStoragePageReq, opts ...grpc.CallOption) (*ResourceStoragePageReply, error) {
+func (c *resourceStorageClient) GetResourceStoragePage(ctx context.Context, in *ResourceStoragePageReq, opts ...grpc.CallOption) (*ResourceStoragePageReply, error) {
 	out := new(ResourceStoragePageReply)
-	err := c.cc.Invoke(ctx, "/resourcestorage.v1.ResourceStorage/GetPageResourceStorage", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/resourcestorage.v1.ResourceStorage/GetResourceStoragePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *resourceStorageClient) BatchDeleteResourceStorage(ctx context.Context, 
 // for forward compatibility
 type ResourceStorageServer interface {
 	// 分页查询ResourceStorage
-	GetPageResourceStorage(context.Context, *ResourceStoragePageReq) (*ResourceStoragePageReply, error)
+	GetResourceStoragePage(context.Context, *ResourceStoragePageReq) (*ResourceStoragePageReply, error)
 	// 获取ResourceStorage
 	GetResourceStorage(context.Context, *ResourceStorageReq) (*ResourceStorageReply, error)
 	// 更新ResourceStorage
@@ -121,8 +121,8 @@ type ResourceStorageServer interface {
 type UnimplementedResourceStorageServer struct {
 }
 
-func (UnimplementedResourceStorageServer) GetPageResourceStorage(context.Context, *ResourceStoragePageReq) (*ResourceStoragePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageResourceStorage not implemented")
+func (UnimplementedResourceStorageServer) GetResourceStoragePage(context.Context, *ResourceStoragePageReq) (*ResourceStoragePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetResourceStoragePage not implemented")
 }
 func (UnimplementedResourceStorageServer) GetResourceStorage(context.Context, *ResourceStorageReq) (*ResourceStorageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetResourceStorage not implemented")
@@ -152,20 +152,20 @@ func RegisterResourceStorageServer(s grpc.ServiceRegistrar, srv ResourceStorageS
 	s.RegisterService(&ResourceStorage_ServiceDesc, srv)
 }
 
-func _ResourceStorage_GetPageResourceStorage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ResourceStorage_GetResourceStoragePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ResourceStoragePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ResourceStorageServer).GetPageResourceStorage(ctx, in)
+		return srv.(ResourceStorageServer).GetResourceStoragePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/resourcestorage.v1.ResourceStorage/GetPageResourceStorage",
+		FullMethod: "/resourcestorage.v1.ResourceStorage/GetResourceStoragePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ResourceStorageServer).GetPageResourceStorage(ctx, req.(*ResourceStoragePageReq))
+		return srv.(ResourceStorageServer).GetResourceStoragePage(ctx, req.(*ResourceStoragePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var ResourceStorage_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ResourceStorageServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageResourceStorage",
-			Handler:    _ResourceStorage_GetPageResourceStorage_Handler,
+			MethodName: "GetResourceStoragePage",
+			Handler:    _ResourceStorage_GetResourceStoragePage_Handler,
 		},
 		{
 			MethodName: "GetResourceStorage",

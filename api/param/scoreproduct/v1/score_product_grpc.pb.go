@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ScoreProductClient interface {
 	// 分页查询ScoreProduct
-	GetPageScoreProduct(ctx context.Context, in *ScoreProductPageReq, opts ...grpc.CallOption) (*ScoreProductPageReply, error)
+	GetScoreProductPage(ctx context.Context, in *ScoreProductPageReq, opts ...grpc.CallOption) (*ScoreProductPageReply, error)
 	// 获取ScoreProduct
 	GetScoreProduct(ctx context.Context, in *ScoreProductReq, opts ...grpc.CallOption) (*ScoreProductReply, error)
 	// 更新ScoreProduct
@@ -44,9 +44,9 @@ func NewScoreProductClient(cc grpc.ClientConnInterface) ScoreProductClient {
 	return &scoreProductClient{cc}
 }
 
-func (c *scoreProductClient) GetPageScoreProduct(ctx context.Context, in *ScoreProductPageReq, opts ...grpc.CallOption) (*ScoreProductPageReply, error) {
+func (c *scoreProductClient) GetScoreProductPage(ctx context.Context, in *ScoreProductPageReq, opts ...grpc.CallOption) (*ScoreProductPageReply, error) {
 	out := new(ScoreProductPageReply)
-	err := c.cc.Invoke(ctx, "/scoreproduct.v1.ScoreProduct/GetPageScoreProduct", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scoreproduct.v1.ScoreProduct/GetScoreProductPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *scoreProductClient) BatchDeleteScoreProduct(ctx context.Context, in *Sc
 // for forward compatibility
 type ScoreProductServer interface {
 	// 分页查询ScoreProduct
-	GetPageScoreProduct(context.Context, *ScoreProductPageReq) (*ScoreProductPageReply, error)
+	GetScoreProductPage(context.Context, *ScoreProductPageReq) (*ScoreProductPageReply, error)
 	// 获取ScoreProduct
 	GetScoreProduct(context.Context, *ScoreProductReq) (*ScoreProductReply, error)
 	// 更新ScoreProduct
@@ -121,8 +121,8 @@ type ScoreProductServer interface {
 type UnimplementedScoreProductServer struct {
 }
 
-func (UnimplementedScoreProductServer) GetPageScoreProduct(context.Context, *ScoreProductPageReq) (*ScoreProductPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageScoreProduct not implemented")
+func (UnimplementedScoreProductServer) GetScoreProductPage(context.Context, *ScoreProductPageReq) (*ScoreProductPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetScoreProductPage not implemented")
 }
 func (UnimplementedScoreProductServer) GetScoreProduct(context.Context, *ScoreProductReq) (*ScoreProductReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetScoreProduct not implemented")
@@ -152,20 +152,20 @@ func RegisterScoreProductServer(s grpc.ServiceRegistrar, srv ScoreProductServer)
 	s.RegisterService(&ScoreProduct_ServiceDesc, srv)
 }
 
-func _ScoreProduct_GetPageScoreProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ScoreProduct_GetScoreProductPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ScoreProductPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScoreProductServer).GetPageScoreProduct(ctx, in)
+		return srv.(ScoreProductServer).GetScoreProductPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scoreproduct.v1.ScoreProduct/GetPageScoreProduct",
+		FullMethod: "/scoreproduct.v1.ScoreProduct/GetScoreProductPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScoreProductServer).GetPageScoreProduct(ctx, req.(*ScoreProductPageReq))
+		return srv.(ScoreProductServer).GetScoreProductPage(ctx, req.(*ScoreProductPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var ScoreProduct_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ScoreProductServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageScoreProduct",
-			Handler:    _ScoreProduct_GetPageScoreProduct_Handler,
+			MethodName: "GetScoreProductPage",
+			Handler:    _ScoreProduct_GetScoreProductPage_Handler,
 		},
 		{
 			MethodName: "GetScoreProduct",

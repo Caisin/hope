@@ -20,9 +20,9 @@ func NewSysRoleService(uc *biz.SysRoleUseCase, logger log.Logger) *SysRoleServic
 	return &SysRoleService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysRoleService) GetPageSysRole(ctx context.Context, req *pb.SysRolePageReq) (*pb.SysRolePageReply, error) {
+func (s *SysRoleService) GetSysRolePage(ctx context.Context, req *pb.SysRolePageReq) (*pb.SysRolePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysRole")
+	ctx, span := tr.Start(ctx, "GetSysRolePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

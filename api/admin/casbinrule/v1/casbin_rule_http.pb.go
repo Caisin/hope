@@ -22,13 +22,13 @@ type CasbinRuleHTTPServer interface {
 	CreateCasbinRule(context.Context, *CasbinRuleCreateReq) (*CasbinRuleCreateReply, error)
 	DeleteCasbinRule(context.Context, *CasbinRuleDeleteReq) (*CasbinRuleDeleteReply, error)
 	GetCasbinRule(context.Context, *CasbinRuleReq) (*CasbinRuleReply, error)
-	GetPageCasbinRule(context.Context, *CasbinRulePageReq) (*CasbinRulePageReply, error)
+	GetCasbinRulePage(context.Context, *CasbinRulePageReq) (*CasbinRulePageReply, error)
 	UpdateCasbinRule(context.Context, *CasbinRuleUpdateReq) (*CasbinRuleUpdateReply, error)
 }
 
 func RegisterCasbinRuleHTTPServer(s *http.Server, srv CasbinRuleHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/casbin/rule/page", _CasbinRule_GetPageCasbinRule0_HTTP_Handler(srv))
+	r.GET("/v1/casbin/rule/page", _CasbinRule_GetCasbinRulePage0_HTTP_Handler(srv))
 	r.GET("/v1/casbin/rule/{id}", _CasbinRule_GetCasbinRule0_HTTP_Handler(srv))
 	r.PUT("/v1/casbin/rule/{id}", _CasbinRule_UpdateCasbinRule0_HTTP_Handler(srv))
 	r.POST("/v1/casbin/rule", _CasbinRule_CreateCasbinRule0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterCasbinRuleHTTPServer(s *http.Server, srv CasbinRuleHTTPServer) {
 	r.DELETE("/v1/casbin/rule", _CasbinRule_BatchDeleteCasbinRule0_HTTP_Handler(srv))
 }
 
-func _CasbinRule_GetPageCasbinRule0_HTTP_Handler(srv CasbinRuleHTTPServer) func(ctx http.Context) error {
+func _CasbinRule_GetCasbinRulePage0_HTTP_Handler(srv CasbinRuleHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in CasbinRulePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/casbinrule.v1.CasbinRule/GetPageCasbinRule")
+		http.SetOperation(ctx, "/casbinrule.v1.CasbinRule/GetCasbinRulePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageCasbinRule(ctx, req.(*CasbinRulePageReq))
+			return srv.GetCasbinRulePage(ctx, req.(*CasbinRulePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type CasbinRuleHTTPClient interface {
 	CreateCasbinRule(ctx context.Context, req *CasbinRuleCreateReq, opts ...http.CallOption) (rsp *CasbinRuleCreateReply, err error)
 	DeleteCasbinRule(ctx context.Context, req *CasbinRuleDeleteReq, opts ...http.CallOption) (rsp *CasbinRuleDeleteReply, err error)
 	GetCasbinRule(ctx context.Context, req *CasbinRuleReq, opts ...http.CallOption) (rsp *CasbinRuleReply, err error)
-	GetPageCasbinRule(ctx context.Context, req *CasbinRulePageReq, opts ...http.CallOption) (rsp *CasbinRulePageReply, err error)
+	GetCasbinRulePage(ctx context.Context, req *CasbinRulePageReq, opts ...http.CallOption) (rsp *CasbinRulePageReply, err error)
 	UpdateCasbinRule(ctx context.Context, req *CasbinRuleUpdateReq, opts ...http.CallOption) (rsp *CasbinRuleUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *CasbinRuleHTTPClientImpl) GetCasbinRule(ctx context.Context, in *Casbin
 	return &out, err
 }
 
-func (c *CasbinRuleHTTPClientImpl) GetPageCasbinRule(ctx context.Context, in *CasbinRulePageReq, opts ...http.CallOption) (*CasbinRulePageReply, error) {
+func (c *CasbinRuleHTTPClientImpl) GetCasbinRulePage(ctx context.Context, in *CasbinRulePageReq, opts ...http.CallOption) (*CasbinRulePageReply, error) {
 	var out CasbinRulePageReply
 	pattern := "/v1/casbin/rule/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/GetPageCasbinRule"))
+	opts = append(opts, http.Operation("/casbinrule.v1.CasbinRule/GetCasbinRulePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

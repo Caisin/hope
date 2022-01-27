@@ -22,13 +22,13 @@ type CustomerNovelConfigHTTPServer interface {
 	CreateCustomerNovelConfig(context.Context, *CustomerNovelConfigCreateReq) (*CustomerNovelConfigCreateReply, error)
 	DeleteCustomerNovelConfig(context.Context, *CustomerNovelConfigDeleteReq) (*CustomerNovelConfigDeleteReply, error)
 	GetCustomerNovelConfig(context.Context, *CustomerNovelConfigReq) (*CustomerNovelConfigReply, error)
-	GetPageCustomerNovelConfig(context.Context, *CustomerNovelConfigPageReq) (*CustomerNovelConfigPageReply, error)
+	GetCustomerNovelConfigPage(context.Context, *CustomerNovelConfigPageReq) (*CustomerNovelConfigPageReply, error)
 	UpdateCustomerNovelConfig(context.Context, *CustomerNovelConfigUpdateReq) (*CustomerNovelConfigUpdateReply, error)
 }
 
 func RegisterCustomerNovelConfigHTTPServer(s *http.Server, srv CustomerNovelConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/customer/novel/config/page", _CustomerNovelConfig_GetPageCustomerNovelConfig0_HTTP_Handler(srv))
+	r.GET("/v1/customer/novel/config/page", _CustomerNovelConfig_GetCustomerNovelConfigPage0_HTTP_Handler(srv))
 	r.GET("/v1/customer/novel/config/{id}", _CustomerNovelConfig_GetCustomerNovelConfig0_HTTP_Handler(srv))
 	r.PUT("/v1/customer/novel/config/{id}", _CustomerNovelConfig_UpdateCustomerNovelConfig0_HTTP_Handler(srv))
 	r.POST("/v1/customer/novel/config", _CustomerNovelConfig_CreateCustomerNovelConfig0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterCustomerNovelConfigHTTPServer(s *http.Server, srv CustomerNovelConf
 	r.DELETE("/v1/customer/novel/config", _CustomerNovelConfig_BatchDeleteCustomerNovelConfig0_HTTP_Handler(srv))
 }
 
-func _CustomerNovelConfig_GetPageCustomerNovelConfig0_HTTP_Handler(srv CustomerNovelConfigHTTPServer) func(ctx http.Context) error {
+func _CustomerNovelConfig_GetCustomerNovelConfigPage0_HTTP_Handler(srv CustomerNovelConfigHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in CustomerNovelConfigPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/customernovelconfig.v1.CustomerNovelConfig/GetPageCustomerNovelConfig")
+		http.SetOperation(ctx, "/customernovelconfig.v1.CustomerNovelConfig/GetCustomerNovelConfigPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageCustomerNovelConfig(ctx, req.(*CustomerNovelConfigPageReq))
+			return srv.GetCustomerNovelConfigPage(ctx, req.(*CustomerNovelConfigPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type CustomerNovelConfigHTTPClient interface {
 	CreateCustomerNovelConfig(ctx context.Context, req *CustomerNovelConfigCreateReq, opts ...http.CallOption) (rsp *CustomerNovelConfigCreateReply, err error)
 	DeleteCustomerNovelConfig(ctx context.Context, req *CustomerNovelConfigDeleteReq, opts ...http.CallOption) (rsp *CustomerNovelConfigDeleteReply, err error)
 	GetCustomerNovelConfig(ctx context.Context, req *CustomerNovelConfigReq, opts ...http.CallOption) (rsp *CustomerNovelConfigReply, err error)
-	GetPageCustomerNovelConfig(ctx context.Context, req *CustomerNovelConfigPageReq, opts ...http.CallOption) (rsp *CustomerNovelConfigPageReply, err error)
+	GetCustomerNovelConfigPage(ctx context.Context, req *CustomerNovelConfigPageReq, opts ...http.CallOption) (rsp *CustomerNovelConfigPageReply, err error)
 	UpdateCustomerNovelConfig(ctx context.Context, req *CustomerNovelConfigUpdateReq, opts ...http.CallOption) (rsp *CustomerNovelConfigUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *CustomerNovelConfigHTTPClientImpl) GetCustomerNovelConfig(ctx context.C
 	return &out, err
 }
 
-func (c *CustomerNovelConfigHTTPClientImpl) GetPageCustomerNovelConfig(ctx context.Context, in *CustomerNovelConfigPageReq, opts ...http.CallOption) (*CustomerNovelConfigPageReply, error) {
+func (c *CustomerNovelConfigHTTPClientImpl) GetCustomerNovelConfigPage(ctx context.Context, in *CustomerNovelConfigPageReq, opts ...http.CallOption) (*CustomerNovelConfigPageReply, error) {
 	var out CustomerNovelConfigPageReply
 	pattern := "/v1/customer/novel/config/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/customernovelconfig.v1.CustomerNovelConfig/GetPageCustomerNovelConfig"))
+	opts = append(opts, http.Operation("/customernovelconfig.v1.CustomerNovelConfig/GetCustomerNovelConfigPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

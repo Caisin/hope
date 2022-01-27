@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysconfig/v1;v1";
 service SysConfig {
 
   // 分页查询SysConfig
-  rpc GetPageSysConfig (SysConfigPageReq) returns (SysConfigPageReply)  {
+  rpc GetSysConfigPage (SysConfigPageReq) returns (SysConfigPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/config/page"
     };

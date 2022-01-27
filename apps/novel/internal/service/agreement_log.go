@@ -20,9 +20,9 @@ func NewAgreementLogService(uc *biz.AgreementLogUseCase, logger log.Logger) *Agr
 	return &AgreementLogService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *AgreementLogService) GetPageAgreementLog(ctx context.Context, req *pb.AgreementLogPageReq) (*pb.AgreementLogPageReply, error) {
+func (s *AgreementLogService) GetAgreementLogPage(ctx context.Context, req *pb.AgreementLogPageReq) (*pb.AgreementLogPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageAgreementLog")
+	ctx, span := tr.Start(ctx, "GetAgreementLogPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -20,9 +20,9 @@ func NewSysOperaLogService(uc *biz.SysOperaLogUseCase, logger log.Logger) *SysOp
 	return &SysOperaLogService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysOperaLogService) GetPageSysOperaLog(ctx context.Context, req *pb.SysOperaLogPageReq) (*pb.SysOperaLogPageReply, error) {
+func (s *SysOperaLogService) GetSysOperaLogPage(ctx context.Context, req *pb.SysOperaLogPageReq) (*pb.SysOperaLogPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysOperaLog")
+	ctx, span := tr.Start(ctx, "GetSysOperaLogPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

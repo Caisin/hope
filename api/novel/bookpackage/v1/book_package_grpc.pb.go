@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BookPackageClient interface {
 	// 分页查询BookPackage
-	GetPageBookPackage(ctx context.Context, in *BookPackagePageReq, opts ...grpc.CallOption) (*BookPackagePageReply, error)
+	GetBookPackagePage(ctx context.Context, in *BookPackagePageReq, opts ...grpc.CallOption) (*BookPackagePageReply, error)
 	// 获取BookPackage
 	GetBookPackage(ctx context.Context, in *BookPackageReq, opts ...grpc.CallOption) (*BookPackageReply, error)
 	// 更新BookPackage
@@ -44,9 +44,9 @@ func NewBookPackageClient(cc grpc.ClientConnInterface) BookPackageClient {
 	return &bookPackageClient{cc}
 }
 
-func (c *bookPackageClient) GetPageBookPackage(ctx context.Context, in *BookPackagePageReq, opts ...grpc.CallOption) (*BookPackagePageReply, error) {
+func (c *bookPackageClient) GetBookPackagePage(ctx context.Context, in *BookPackagePageReq, opts ...grpc.CallOption) (*BookPackagePageReply, error) {
 	out := new(BookPackagePageReply)
-	err := c.cc.Invoke(ctx, "/bookpackage.v1.BookPackage/GetPageBookPackage", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/bookpackage.v1.BookPackage/GetBookPackagePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *bookPackageClient) BatchDeleteBookPackage(ctx context.Context, in *Book
 // for forward compatibility
 type BookPackageServer interface {
 	// 分页查询BookPackage
-	GetPageBookPackage(context.Context, *BookPackagePageReq) (*BookPackagePageReply, error)
+	GetBookPackagePage(context.Context, *BookPackagePageReq) (*BookPackagePageReply, error)
 	// 获取BookPackage
 	GetBookPackage(context.Context, *BookPackageReq) (*BookPackageReply, error)
 	// 更新BookPackage
@@ -121,8 +121,8 @@ type BookPackageServer interface {
 type UnimplementedBookPackageServer struct {
 }
 
-func (UnimplementedBookPackageServer) GetPageBookPackage(context.Context, *BookPackagePageReq) (*BookPackagePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageBookPackage not implemented")
+func (UnimplementedBookPackageServer) GetBookPackagePage(context.Context, *BookPackagePageReq) (*BookPackagePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBookPackagePage not implemented")
 }
 func (UnimplementedBookPackageServer) GetBookPackage(context.Context, *BookPackageReq) (*BookPackageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBookPackage not implemented")
@@ -152,20 +152,20 @@ func RegisterBookPackageServer(s grpc.ServiceRegistrar, srv BookPackageServer) {
 	s.RegisterService(&BookPackage_ServiceDesc, srv)
 }
 
-func _BookPackage_GetPageBookPackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _BookPackage_GetBookPackagePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BookPackagePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookPackageServer).GetPageBookPackage(ctx, in)
+		return srv.(BookPackageServer).GetBookPackagePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/bookpackage.v1.BookPackage/GetPageBookPackage",
+		FullMethod: "/bookpackage.v1.BookPackage/GetBookPackagePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookPackageServer).GetPageBookPackage(ctx, req.(*BookPackagePageReq))
+		return srv.(BookPackageServer).GetBookPackagePage(ctx, req.(*BookPackagePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var BookPackage_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*BookPackageServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageBookPackage",
-			Handler:    _BookPackage_GetPageBookPackage_Handler,
+			MethodName: "GetBookPackagePage",
+			Handler:    _BookPackage_GetBookPackagePage_Handler,
 		},
 		{
 			MethodName: "GetBookPackage",

@@ -22,13 +22,13 @@ type NovelMsgHTTPServer interface {
 	CreateNovelMsg(context.Context, *NovelMsgCreateReq) (*NovelMsgCreateReply, error)
 	DeleteNovelMsg(context.Context, *NovelMsgDeleteReq) (*NovelMsgDeleteReply, error)
 	GetNovelMsg(context.Context, *NovelMsgReq) (*NovelMsgReply, error)
-	GetPageNovelMsg(context.Context, *NovelMsgPageReq) (*NovelMsgPageReply, error)
+	GetNovelMsgPage(context.Context, *NovelMsgPageReq) (*NovelMsgPageReply, error)
 	UpdateNovelMsg(context.Context, *NovelMsgUpdateReq) (*NovelMsgUpdateReply, error)
 }
 
 func RegisterNovelMsgHTTPServer(s *http.Server, srv NovelMsgHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/msg/page", _NovelMsg_GetPageNovelMsg0_HTTP_Handler(srv))
+	r.GET("/v1/novel/msg/page", _NovelMsg_GetNovelMsgPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/msg/{id}", _NovelMsg_GetNovelMsg0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/msg/{id}", _NovelMsg_UpdateNovelMsg0_HTTP_Handler(srv))
 	r.POST("/v1/novel/msg", _NovelMsg_CreateNovelMsg0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelMsgHTTPServer(s *http.Server, srv NovelMsgHTTPServer) {
 	r.DELETE("/v1/novel/msg", _NovelMsg_BatchDeleteNovelMsg0_HTTP_Handler(srv))
 }
 
-func _NovelMsg_GetPageNovelMsg0_HTTP_Handler(srv NovelMsgHTTPServer) func(ctx http.Context) error {
+func _NovelMsg_GetNovelMsgPage0_HTTP_Handler(srv NovelMsgHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelMsgPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelmsg.v1.NovelMsg/GetPageNovelMsg")
+		http.SetOperation(ctx, "/novelmsg.v1.NovelMsg/GetNovelMsgPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelMsg(ctx, req.(*NovelMsgPageReq))
+			return srv.GetNovelMsgPage(ctx, req.(*NovelMsgPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelMsgHTTPClient interface {
 	CreateNovelMsg(ctx context.Context, req *NovelMsgCreateReq, opts ...http.CallOption) (rsp *NovelMsgCreateReply, err error)
 	DeleteNovelMsg(ctx context.Context, req *NovelMsgDeleteReq, opts ...http.CallOption) (rsp *NovelMsgDeleteReply, err error)
 	GetNovelMsg(ctx context.Context, req *NovelMsgReq, opts ...http.CallOption) (rsp *NovelMsgReply, err error)
-	GetPageNovelMsg(ctx context.Context, req *NovelMsgPageReq, opts ...http.CallOption) (rsp *NovelMsgPageReply, err error)
+	GetNovelMsgPage(ctx context.Context, req *NovelMsgPageReq, opts ...http.CallOption) (rsp *NovelMsgPageReply, err error)
 	UpdateNovelMsg(ctx context.Context, req *NovelMsgUpdateReq, opts ...http.CallOption) (rsp *NovelMsgUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelMsgHTTPClientImpl) GetNovelMsg(ctx context.Context, in *NovelMsgRe
 	return &out, err
 }
 
-func (c *NovelMsgHTTPClientImpl) GetPageNovelMsg(ctx context.Context, in *NovelMsgPageReq, opts ...http.CallOption) (*NovelMsgPageReply, error) {
+func (c *NovelMsgHTTPClientImpl) GetNovelMsgPage(ctx context.Context, in *NovelMsgPageReq, opts ...http.CallOption) (*NovelMsgPageReply, error) {
 	var out NovelMsgPageReply
 	pattern := "/v1/novel/msg/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/GetPageNovelMsg"))
+	opts = append(opts, http.Operation("/novelmsg.v1.NovelMsg/GetNovelMsgPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

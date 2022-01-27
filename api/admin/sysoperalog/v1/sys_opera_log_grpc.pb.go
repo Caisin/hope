@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysOperaLogClient interface {
 	// 分页查询SysOperaLog
-	GetPageSysOperaLog(ctx context.Context, in *SysOperaLogPageReq, opts ...grpc.CallOption) (*SysOperaLogPageReply, error)
+	GetSysOperaLogPage(ctx context.Context, in *SysOperaLogPageReq, opts ...grpc.CallOption) (*SysOperaLogPageReply, error)
 	// 获取SysOperaLog
 	GetSysOperaLog(ctx context.Context, in *SysOperaLogReq, opts ...grpc.CallOption) (*SysOperaLogReply, error)
 	// 更新SysOperaLog
@@ -44,9 +44,9 @@ func NewSysOperaLogClient(cc grpc.ClientConnInterface) SysOperaLogClient {
 	return &sysOperaLogClient{cc}
 }
 
-func (c *sysOperaLogClient) GetPageSysOperaLog(ctx context.Context, in *SysOperaLogPageReq, opts ...grpc.CallOption) (*SysOperaLogPageReply, error) {
+func (c *sysOperaLogClient) GetSysOperaLogPage(ctx context.Context, in *SysOperaLogPageReq, opts ...grpc.CallOption) (*SysOperaLogPageReply, error) {
 	out := new(SysOperaLogPageReply)
-	err := c.cc.Invoke(ctx, "/sysoperalog.v1.SysOperaLog/GetPageSysOperaLog", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysoperalog.v1.SysOperaLog/GetSysOperaLogPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysOperaLogClient) BatchDeleteSysOperaLog(ctx context.Context, in *SysO
 // for forward compatibility
 type SysOperaLogServer interface {
 	// 分页查询SysOperaLog
-	GetPageSysOperaLog(context.Context, *SysOperaLogPageReq) (*SysOperaLogPageReply, error)
+	GetSysOperaLogPage(context.Context, *SysOperaLogPageReq) (*SysOperaLogPageReply, error)
 	// 获取SysOperaLog
 	GetSysOperaLog(context.Context, *SysOperaLogReq) (*SysOperaLogReply, error)
 	// 更新SysOperaLog
@@ -121,8 +121,8 @@ type SysOperaLogServer interface {
 type UnimplementedSysOperaLogServer struct {
 }
 
-func (UnimplementedSysOperaLogServer) GetPageSysOperaLog(context.Context, *SysOperaLogPageReq) (*SysOperaLogPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysOperaLog not implemented")
+func (UnimplementedSysOperaLogServer) GetSysOperaLogPage(context.Context, *SysOperaLogPageReq) (*SysOperaLogPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysOperaLogPage not implemented")
 }
 func (UnimplementedSysOperaLogServer) GetSysOperaLog(context.Context, *SysOperaLogReq) (*SysOperaLogReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysOperaLog not implemented")
@@ -152,20 +152,20 @@ func RegisterSysOperaLogServer(s grpc.ServiceRegistrar, srv SysOperaLogServer) {
 	s.RegisterService(&SysOperaLog_ServiceDesc, srv)
 }
 
-func _SysOperaLog_GetPageSysOperaLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysOperaLog_GetSysOperaLogPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysOperaLogPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysOperaLogServer).GetPageSysOperaLog(ctx, in)
+		return srv.(SysOperaLogServer).GetSysOperaLogPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysoperalog.v1.SysOperaLog/GetPageSysOperaLog",
+		FullMethod: "/sysoperalog.v1.SysOperaLog/GetSysOperaLogPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysOperaLogServer).GetPageSysOperaLog(ctx, req.(*SysOperaLogPageReq))
+		return srv.(SysOperaLogServer).GetSysOperaLogPage(ctx, req.(*SysOperaLogPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysOperaLog_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysOperaLogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysOperaLog",
-			Handler:    _SysOperaLog_GetPageSysOperaLog_Handler,
+			MethodName: "GetSysOperaLogPage",
+			Handler:    _SysOperaLog_GetSysOperaLogPage_Handler,
 		},
 		{
 			MethodName: "GetSysOperaLog",

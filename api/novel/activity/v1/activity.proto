@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/activity/v1;v1";
 service Activity {
 
   // 分页查询Activity
-  rpc GetPageActivity (ActivityPageReq) returns (ActivityPageReply)  {
+  rpc GetActivityPage (ActivityPageReq) returns (ActivityPageReply)  {
     option (google.api.http) = {
       get: "/v1/activity/page"
     };

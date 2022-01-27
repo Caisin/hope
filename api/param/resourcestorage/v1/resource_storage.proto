@@ -13,7 +13,7 @@ option go_package = "hope/api/param/resourcestorage/v1;v1";
 service ResourceStorage {
 
   // 分页查询ResourceStorage
-  rpc GetPageResourceStorage (ResourceStoragePageReq) returns (ResourceStoragePageReply)  {
+  rpc GetResourceStoragePage (ResourceStoragePageReq) returns (ResourceStoragePageReply)  {
     option (google.api.http) = {
       get: "/v1/resource/storage/page"
     };

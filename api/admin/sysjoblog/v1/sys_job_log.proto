@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysjoblog/v1;v1";
 service SysJobLog {
 
   // 分页查询SysJobLog
-  rpc GetPageSysJobLog (SysJobLogPageReq) returns (SysJobLogPageReply)  {
+  rpc GetSysJobLogPage (SysJobLogPageReq) returns (SysJobLogPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/job/log/page"
     };

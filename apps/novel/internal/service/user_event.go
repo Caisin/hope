@@ -20,9 +20,9 @@ func NewUserEventService(uc *biz.UserEventUseCase, logger log.Logger) *UserEvent
 	return &UserEventService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *UserEventService) GetPageUserEvent(ctx context.Context, req *pb.UserEventPageReq) (*pb.UserEventPageReply, error) {
+func (s *UserEventService) GetUserEventPage(ctx context.Context, req *pb.UserEventPageReq) (*pb.UserEventPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageUserEvent")
+	ctx, span := tr.Start(ctx, "GetUserEventPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

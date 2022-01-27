@@ -20,9 +20,9 @@ func NewSysMenuService(uc *biz.SysMenuUseCase, logger log.Logger) *SysMenuServic
 	return &SysMenuService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysMenuService) GetPageSysMenu(ctx context.Context, req *pb.SysMenuPageReq) (*pb.SysMenuPageReply, error) {
+func (s *SysMenuService) GetSysMenuPage(ctx context.Context, req *pb.SysMenuPageReq) (*pb.SysMenuPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysMenu")
+	ctx, span := tr.Start(ctx, "GetSysMenuPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

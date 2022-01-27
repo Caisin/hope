@@ -20,9 +20,9 @@ func NewSysApiService(uc *biz.SysApiUseCase, logger log.Logger) *SysApiService {
 	return &SysApiService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysApiService) GetPageSysApi(ctx context.Context, req *pb.SysApiPageReq) (*pb.SysApiPageReply, error) {
+func (s *SysApiService) GetSysApiPage(ctx context.Context, req *pb.SysApiPageReq) (*pb.SysApiPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysApi")
+	ctx, span := tr.Start(ctx, "GetSysApiPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

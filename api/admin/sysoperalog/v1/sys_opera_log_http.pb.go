@@ -21,14 +21,14 @@ type SysOperaLogHTTPServer interface {
 	BatchDeleteSysOperaLog(context.Context, *SysOperaLogBatchDeleteReq) (*SysOperaLogDeleteReply, error)
 	CreateSysOperaLog(context.Context, *SysOperaLogCreateReq) (*SysOperaLogCreateReply, error)
 	DeleteSysOperaLog(context.Context, *SysOperaLogDeleteReq) (*SysOperaLogDeleteReply, error)
-	GetPageSysOperaLog(context.Context, *SysOperaLogPageReq) (*SysOperaLogPageReply, error)
 	GetSysOperaLog(context.Context, *SysOperaLogReq) (*SysOperaLogReply, error)
+	GetSysOperaLogPage(context.Context, *SysOperaLogPageReq) (*SysOperaLogPageReply, error)
 	UpdateSysOperaLog(context.Context, *SysOperaLogUpdateReq) (*SysOperaLogUpdateReply, error)
 }
 
 func RegisterSysOperaLogHTTPServer(s *http.Server, srv SysOperaLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/opera/log/page", _SysOperaLog_GetPageSysOperaLog0_HTTP_Handler(srv))
+	r.GET("/v1/sys/opera/log/page", _SysOperaLog_GetSysOperaLogPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/opera/log/{id}", _SysOperaLog_GetSysOperaLog0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/opera/log/{id}", _SysOperaLog_UpdateSysOperaLog0_HTTP_Handler(srv))
 	r.POST("/v1/sys/opera/log", _SysOperaLog_CreateSysOperaLog0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysOperaLogHTTPServer(s *http.Server, srv SysOperaLogHTTPServer) {
 	r.DELETE("/v1/sys/opera/log", _SysOperaLog_BatchDeleteSysOperaLog0_HTTP_Handler(srv))
 }
 
-func _SysOperaLog_GetPageSysOperaLog0_HTTP_Handler(srv SysOperaLogHTTPServer) func(ctx http.Context) error {
+func _SysOperaLog_GetSysOperaLogPage0_HTTP_Handler(srv SysOperaLogHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysOperaLogPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysoperalog.v1.SysOperaLog/GetPageSysOperaLog")
+		http.SetOperation(ctx, "/sysoperalog.v1.SysOperaLog/GetSysOperaLogPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysOperaLog(ctx, req.(*SysOperaLogPageReq))
+			return srv.GetSysOperaLogPage(ctx, req.(*SysOperaLogPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysOperaLogHTTPClient interface {
 	BatchDeleteSysOperaLog(ctx context.Context, req *SysOperaLogBatchDeleteReq, opts ...http.CallOption) (rsp *SysOperaLogDeleteReply, err error)
 	CreateSysOperaLog(ctx context.Context, req *SysOperaLogCreateReq, opts ...http.CallOption) (rsp *SysOperaLogCreateReply, err error)
 	DeleteSysOperaLog(ctx context.Context, req *SysOperaLogDeleteReq, opts ...http.CallOption) (rsp *SysOperaLogDeleteReply, err error)
-	GetPageSysOperaLog(ctx context.Context, req *SysOperaLogPageReq, opts ...http.CallOption) (rsp *SysOperaLogPageReply, err error)
 	GetSysOperaLog(ctx context.Context, req *SysOperaLogReq, opts ...http.CallOption) (rsp *SysOperaLogReply, err error)
+	GetSysOperaLogPage(ctx context.Context, req *SysOperaLogPageReq, opts ...http.CallOption) (rsp *SysOperaLogPageReply, err error)
 	UpdateSysOperaLog(ctx context.Context, req *SysOperaLogUpdateReq, opts ...http.CallOption) (rsp *SysOperaLogUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysOperaLogHTTPClientImpl) DeleteSysOperaLog(ctx context.Context, in *S
 	return &out, err
 }
 
-func (c *SysOperaLogHTTPClientImpl) GetPageSysOperaLog(ctx context.Context, in *SysOperaLogPageReq, opts ...http.CallOption) (*SysOperaLogPageReply, error) {
-	var out SysOperaLogPageReply
-	pattern := "/v1/sys/opera/log/page"
+func (c *SysOperaLogHTTPClientImpl) GetSysOperaLog(ctx context.Context, in *SysOperaLogReq, opts ...http.CallOption) (*SysOperaLogReply, error) {
+	var out SysOperaLogReply
+	pattern := "/v1/sys/opera/log/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/GetPageSysOperaLog"))
+	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/GetSysOperaLog"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysOperaLogHTTPClientImpl) GetPageSysOperaLog(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *SysOperaLogHTTPClientImpl) GetSysOperaLog(ctx context.Context, in *SysOperaLogReq, opts ...http.CallOption) (*SysOperaLogReply, error) {
-	var out SysOperaLogReply
-	pattern := "/v1/sys/opera/log/{id}"
+func (c *SysOperaLogHTTPClientImpl) GetSysOperaLogPage(ctx context.Context, in *SysOperaLogPageReq, opts ...http.CallOption) (*SysOperaLogPageReply, error) {
+	var out SysOperaLogPageReply
+	pattern := "/v1/sys/opera/log/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/GetSysOperaLog"))
+	opts = append(opts, http.Operation("/sysoperalog.v1.SysOperaLog/GetSysOperaLogPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

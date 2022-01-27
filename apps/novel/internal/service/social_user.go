@@ -20,9 +20,9 @@ func NewSocialUserService(uc *biz.SocialUserUseCase, logger log.Logger) *SocialU
 	return &SocialUserService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SocialUserService) GetPageSocialUser(ctx context.Context, req *pb.SocialUserPageReq) (*pb.SocialUserPageReply, error) {
+func (s *SocialUserService) GetSocialUserPage(ctx context.Context, req *pb.SocialUserPageReq) (*pb.SocialUserPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSocialUser")
+	ctx, span := tr.Start(ctx, "GetSocialUserPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

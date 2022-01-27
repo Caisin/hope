@@ -22,13 +22,13 @@ type AssetItemHTTPServer interface {
 	CreateAssetItem(context.Context, *AssetItemCreateReq) (*AssetItemCreateReply, error)
 	DeleteAssetItem(context.Context, *AssetItemDeleteReq) (*AssetItemDeleteReply, error)
 	GetAssetItem(context.Context, *AssetItemReq) (*AssetItemReply, error)
-	GetPageAssetItem(context.Context, *AssetItemPageReq) (*AssetItemPageReply, error)
+	GetAssetItemPage(context.Context, *AssetItemPageReq) (*AssetItemPageReply, error)
 	UpdateAssetItem(context.Context, *AssetItemUpdateReq) (*AssetItemUpdateReply, error)
 }
 
 func RegisterAssetItemHTTPServer(s *http.Server, srv AssetItemHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/asset/item/page", _AssetItem_GetPageAssetItem0_HTTP_Handler(srv))
+	r.GET("/v1/asset/item/page", _AssetItem_GetAssetItemPage0_HTTP_Handler(srv))
 	r.GET("/v1/asset/item/{id}", _AssetItem_GetAssetItem0_HTTP_Handler(srv))
 	r.PUT("/v1/asset/item/{id}", _AssetItem_UpdateAssetItem0_HTTP_Handler(srv))
 	r.POST("/v1/asset/item", _AssetItem_CreateAssetItem0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterAssetItemHTTPServer(s *http.Server, srv AssetItemHTTPServer) {
 	r.DELETE("/v1/asset/item", _AssetItem_BatchDeleteAssetItem0_HTTP_Handler(srv))
 }
 
-func _AssetItem_GetPageAssetItem0_HTTP_Handler(srv AssetItemHTTPServer) func(ctx http.Context) error {
+func _AssetItem_GetAssetItemPage0_HTTP_Handler(srv AssetItemHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in AssetItemPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/assetitem.v1.AssetItem/GetPageAssetItem")
+		http.SetOperation(ctx, "/assetitem.v1.AssetItem/GetAssetItemPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageAssetItem(ctx, req.(*AssetItemPageReq))
+			return srv.GetAssetItemPage(ctx, req.(*AssetItemPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type AssetItemHTTPClient interface {
 	CreateAssetItem(ctx context.Context, req *AssetItemCreateReq, opts ...http.CallOption) (rsp *AssetItemCreateReply, err error)
 	DeleteAssetItem(ctx context.Context, req *AssetItemDeleteReq, opts ...http.CallOption) (rsp *AssetItemDeleteReply, err error)
 	GetAssetItem(ctx context.Context, req *AssetItemReq, opts ...http.CallOption) (rsp *AssetItemReply, err error)
-	GetPageAssetItem(ctx context.Context, req *AssetItemPageReq, opts ...http.CallOption) (rsp *AssetItemPageReply, err error)
+	GetAssetItemPage(ctx context.Context, req *AssetItemPageReq, opts ...http.CallOption) (rsp *AssetItemPageReply, err error)
 	UpdateAssetItem(ctx context.Context, req *AssetItemUpdateReq, opts ...http.CallOption) (rsp *AssetItemUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *AssetItemHTTPClientImpl) GetAssetItem(ctx context.Context, in *AssetIte
 	return &out, err
 }
 
-func (c *AssetItemHTTPClientImpl) GetPageAssetItem(ctx context.Context, in *AssetItemPageReq, opts ...http.CallOption) (*AssetItemPageReply, error) {
+func (c *AssetItemHTTPClientImpl) GetAssetItemPage(ctx context.Context, in *AssetItemPageReq, opts ...http.CallOption) (*AssetItemPageReply, error) {
 	var out AssetItemPageReply
 	pattern := "/v1/asset/item/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/GetPageAssetItem"))
+	opts = append(opts, http.Operation("/assetitem.v1.AssetItem/GetAssetItemPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

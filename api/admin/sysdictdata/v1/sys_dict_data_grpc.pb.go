@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysDictDataClient interface {
 	// 分页查询SysDictData
-	GetPageSysDictData(ctx context.Context, in *SysDictDataPageReq, opts ...grpc.CallOption) (*SysDictDataPageReply, error)
+	GetSysDictDataPage(ctx context.Context, in *SysDictDataPageReq, opts ...grpc.CallOption) (*SysDictDataPageReply, error)
 	// 获取SysDictData
 	GetSysDictData(ctx context.Context, in *SysDictDataReq, opts ...grpc.CallOption) (*SysDictDataReply, error)
 	// 更新SysDictData
@@ -44,9 +44,9 @@ func NewSysDictDataClient(cc grpc.ClientConnInterface) SysDictDataClient {
 	return &sysDictDataClient{cc}
 }
 
-func (c *sysDictDataClient) GetPageSysDictData(ctx context.Context, in *SysDictDataPageReq, opts ...grpc.CallOption) (*SysDictDataPageReply, error) {
+func (c *sysDictDataClient) GetSysDictDataPage(ctx context.Context, in *SysDictDataPageReq, opts ...grpc.CallOption) (*SysDictDataPageReply, error) {
 	out := new(SysDictDataPageReply)
-	err := c.cc.Invoke(ctx, "/sysdictdata.v1.SysDictData/GetPageSysDictData", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysdictdata.v1.SysDictData/GetSysDictDataPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysDictDataClient) BatchDeleteSysDictData(ctx context.Context, in *SysD
 // for forward compatibility
 type SysDictDataServer interface {
 	// 分页查询SysDictData
-	GetPageSysDictData(context.Context, *SysDictDataPageReq) (*SysDictDataPageReply, error)
+	GetSysDictDataPage(context.Context, *SysDictDataPageReq) (*SysDictDataPageReply, error)
 	// 获取SysDictData
 	GetSysDictData(context.Context, *SysDictDataReq) (*SysDictDataReply, error)
 	// 更新SysDictData
@@ -121,8 +121,8 @@ type SysDictDataServer interface {
 type UnimplementedSysDictDataServer struct {
 }
 
-func (UnimplementedSysDictDataServer) GetPageSysDictData(context.Context, *SysDictDataPageReq) (*SysDictDataPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysDictData not implemented")
+func (UnimplementedSysDictDataServer) GetSysDictDataPage(context.Context, *SysDictDataPageReq) (*SysDictDataPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysDictDataPage not implemented")
 }
 func (UnimplementedSysDictDataServer) GetSysDictData(context.Context, *SysDictDataReq) (*SysDictDataReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysDictData not implemented")
@@ -152,20 +152,20 @@ func RegisterSysDictDataServer(s grpc.ServiceRegistrar, srv SysDictDataServer) {
 	s.RegisterService(&SysDictData_ServiceDesc, srv)
 }
 
-func _SysDictData_GetPageSysDictData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysDictData_GetSysDictDataPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysDictDataPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysDictDataServer).GetPageSysDictData(ctx, in)
+		return srv.(SysDictDataServer).GetSysDictDataPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysdictdata.v1.SysDictData/GetPageSysDictData",
+		FullMethod: "/sysdictdata.v1.SysDictData/GetSysDictDataPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysDictDataServer).GetPageSysDictData(ctx, req.(*SysDictDataPageReq))
+		return srv.(SysDictDataServer).GetSysDictDataPage(ctx, req.(*SysDictDataPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysDictData_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysDictDataServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysDictData",
-			Handler:    _SysDictData_GetPageSysDictData_Handler,
+			MethodName: "GetSysDictDataPage",
+			Handler:    _SysDictData_GetSysDictDataPage_Handler,
 		},
 		{
 			MethodName: "GetSysDictData",

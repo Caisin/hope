@@ -20,9 +20,9 @@ func NewBookPackageService(uc *biz.BookPackageUseCase, logger log.Logger) *BookP
 	return &BookPackageService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *BookPackageService) GetPageBookPackage(ctx context.Context, req *pb.BookPackagePageReq) (*pb.BookPackagePageReply, error) {
+func (s *BookPackageService) GetBookPackagePage(ctx context.Context, req *pb.BookPackagePageReq) (*pb.BookPackagePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageBookPackage")
+	ctx, span := tr.Start(ctx, "GetBookPackagePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

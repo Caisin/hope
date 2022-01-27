@@ -13,7 +13,7 @@ option go_package = "hope/api/param/userconsume/v1;v1";
 service UserConsume {
 
   // 分页查询UserConsume
-  rpc GetPageUserConsume (UserConsumePageReq) returns (UserConsumePageReply)  {
+  rpc GetUserConsumePage (UserConsumePageReq) returns (UserConsumePageReply)  {
     option (google.api.http) = {
       get: "/v1/user/consume/page"
     };

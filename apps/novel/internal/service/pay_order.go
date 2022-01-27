@@ -20,9 +20,9 @@ func NewPayOrderService(uc *biz.PayOrderUseCase, logger log.Logger) *PayOrderSer
 	return &PayOrderService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *PayOrderService) GetPagePayOrder(ctx context.Context, req *pb.PayOrderPageReq) (*pb.PayOrderPageReply, error) {
+func (s *PayOrderService) GetPayOrderPage(ctx context.Context, req *pb.PayOrderPageReq) (*pb.PayOrderPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPagePayOrder")
+	ctx, span := tr.Start(ctx, "GetPayOrderPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -20,9 +20,9 @@ func NewSysDictTypeService(uc *biz.SysDictTypeUseCase, logger log.Logger) *SysDi
 	return &SysDictTypeService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysDictTypeService) GetPageSysDictType(ctx context.Context, req *pb.SysDictTypePageReq) (*pb.SysDictTypePageReply, error) {
+func (s *SysDictTypeService) GetSysDictTypePage(ctx context.Context, req *pb.SysDictTypePageReq) (*pb.SysDictTypePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysDictType")
+	ctx, span := tr.Start(ctx, "GetSysDictTypePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

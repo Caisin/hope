@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VipTypeClient interface {
 	// 分页查询VipType
-	GetPageVipType(ctx context.Context, in *VipTypePageReq, opts ...grpc.CallOption) (*VipTypePageReply, error)
+	GetVipTypePage(ctx context.Context, in *VipTypePageReq, opts ...grpc.CallOption) (*VipTypePageReply, error)
 	// 获取VipType
 	GetVipType(ctx context.Context, in *VipTypeReq, opts ...grpc.CallOption) (*VipTypeReply, error)
 	// 更新VipType
@@ -44,9 +44,9 @@ func NewVipTypeClient(cc grpc.ClientConnInterface) VipTypeClient {
 	return &vipTypeClient{cc}
 }
 
-func (c *vipTypeClient) GetPageVipType(ctx context.Context, in *VipTypePageReq, opts ...grpc.CallOption) (*VipTypePageReply, error) {
+func (c *vipTypeClient) GetVipTypePage(ctx context.Context, in *VipTypePageReq, opts ...grpc.CallOption) (*VipTypePageReply, error) {
 	out := new(VipTypePageReply)
-	err := c.cc.Invoke(ctx, "/viptype.v1.VipType/GetPageVipType", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/viptype.v1.VipType/GetVipTypePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *vipTypeClient) BatchDeleteVipType(ctx context.Context, in *VipTypeBatch
 // for forward compatibility
 type VipTypeServer interface {
 	// 分页查询VipType
-	GetPageVipType(context.Context, *VipTypePageReq) (*VipTypePageReply, error)
+	GetVipTypePage(context.Context, *VipTypePageReq) (*VipTypePageReply, error)
 	// 获取VipType
 	GetVipType(context.Context, *VipTypeReq) (*VipTypeReply, error)
 	// 更新VipType
@@ -121,8 +121,8 @@ type VipTypeServer interface {
 type UnimplementedVipTypeServer struct {
 }
 
-func (UnimplementedVipTypeServer) GetPageVipType(context.Context, *VipTypePageReq) (*VipTypePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageVipType not implemented")
+func (UnimplementedVipTypeServer) GetVipTypePage(context.Context, *VipTypePageReq) (*VipTypePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVipTypePage not implemented")
 }
 func (UnimplementedVipTypeServer) GetVipType(context.Context, *VipTypeReq) (*VipTypeReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVipType not implemented")
@@ -152,20 +152,20 @@ func RegisterVipTypeServer(s grpc.ServiceRegistrar, srv VipTypeServer) {
 	s.RegisterService(&VipType_ServiceDesc, srv)
 }
 
-func _VipType_GetPageVipType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VipType_GetVipTypePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VipTypePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VipTypeServer).GetPageVipType(ctx, in)
+		return srv.(VipTypeServer).GetVipTypePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/viptype.v1.VipType/GetPageVipType",
+		FullMethod: "/viptype.v1.VipType/GetVipTypePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VipTypeServer).GetPageVipType(ctx, req.(*VipTypePageReq))
+		return srv.(VipTypeServer).GetVipTypePage(ctx, req.(*VipTypePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var VipType_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*VipTypeServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageVipType",
-			Handler:    _VipType_GetPageVipType_Handler,
+			MethodName: "GetVipTypePage",
+			Handler:    _VipType_GetVipTypePage_Handler,
 		},
 		{
 			MethodName: "GetVipType",

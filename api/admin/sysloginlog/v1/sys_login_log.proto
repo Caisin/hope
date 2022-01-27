@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysloginlog/v1;v1";
 service SysLoginLog {
 
   // 分页查询SysLoginLog
-  rpc GetPageSysLoginLog (SysLoginLogPageReq) returns (SysLoginLogPageReply)  {
+  rpc GetSysLoginLogPage (SysLoginLogPageReq) returns (SysLoginLogPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/login/log/page"
     };

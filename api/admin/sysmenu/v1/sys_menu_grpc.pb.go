@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysMenuClient interface {
 	// 分页查询SysMenu
-	GetPageSysMenu(ctx context.Context, in *SysMenuPageReq, opts ...grpc.CallOption) (*SysMenuPageReply, error)
+	GetSysMenuPage(ctx context.Context, in *SysMenuPageReq, opts ...grpc.CallOption) (*SysMenuPageReply, error)
 	// 获取SysMenu
 	GetSysMenu(ctx context.Context, in *SysMenuReq, opts ...grpc.CallOption) (*SysMenuReply, error)
 	// 更新SysMenu
@@ -44,9 +44,9 @@ func NewSysMenuClient(cc grpc.ClientConnInterface) SysMenuClient {
 	return &sysMenuClient{cc}
 }
 
-func (c *sysMenuClient) GetPageSysMenu(ctx context.Context, in *SysMenuPageReq, opts ...grpc.CallOption) (*SysMenuPageReply, error) {
+func (c *sysMenuClient) GetSysMenuPage(ctx context.Context, in *SysMenuPageReq, opts ...grpc.CallOption) (*SysMenuPageReply, error) {
 	out := new(SysMenuPageReply)
-	err := c.cc.Invoke(ctx, "/sysmenu.v1.SysMenu/GetPageSysMenu", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysmenu.v1.SysMenu/GetSysMenuPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysMenuClient) BatchDeleteSysMenu(ctx context.Context, in *SysMenuBatch
 // for forward compatibility
 type SysMenuServer interface {
 	// 分页查询SysMenu
-	GetPageSysMenu(context.Context, *SysMenuPageReq) (*SysMenuPageReply, error)
+	GetSysMenuPage(context.Context, *SysMenuPageReq) (*SysMenuPageReply, error)
 	// 获取SysMenu
 	GetSysMenu(context.Context, *SysMenuReq) (*SysMenuReply, error)
 	// 更新SysMenu
@@ -121,8 +121,8 @@ type SysMenuServer interface {
 type UnimplementedSysMenuServer struct {
 }
 
-func (UnimplementedSysMenuServer) GetPageSysMenu(context.Context, *SysMenuPageReq) (*SysMenuPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysMenu not implemented")
+func (UnimplementedSysMenuServer) GetSysMenuPage(context.Context, *SysMenuPageReq) (*SysMenuPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysMenuPage not implemented")
 }
 func (UnimplementedSysMenuServer) GetSysMenu(context.Context, *SysMenuReq) (*SysMenuReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysMenu not implemented")
@@ -152,20 +152,20 @@ func RegisterSysMenuServer(s grpc.ServiceRegistrar, srv SysMenuServer) {
 	s.RegisterService(&SysMenu_ServiceDesc, srv)
 }
 
-func _SysMenu_GetPageSysMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysMenu_GetSysMenuPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysMenuPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysMenuServer).GetPageSysMenu(ctx, in)
+		return srv.(SysMenuServer).GetSysMenuPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysmenu.v1.SysMenu/GetPageSysMenu",
+		FullMethod: "/sysmenu.v1.SysMenu/GetSysMenuPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysMenuServer).GetPageSysMenu(ctx, req.(*SysMenuPageReq))
+		return srv.(SysMenuServer).GetSysMenuPage(ctx, req.(*SysMenuPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysMenu_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysMenuServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysMenu",
-			Handler:    _SysMenu_GetPageSysMenu_Handler,
+			MethodName: "GetSysMenuPage",
+			Handler:    _SysMenu_GetSysMenuPage_Handler,
 		},
 		{
 			MethodName: "GetSysMenu",

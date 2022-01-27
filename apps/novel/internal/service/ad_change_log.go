@@ -20,9 +20,9 @@ func NewAdChangeLogService(uc *biz.AdChangeLogUseCase, logger log.Logger) *AdCha
 	return &AdChangeLogService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *AdChangeLogService) GetPageAdChangeLog(ctx context.Context, req *pb.AdChangeLogPageReq) (*pb.AdChangeLogPageReply, error) {
+func (s *AdChangeLogService) GetAdChangeLogPage(ctx context.Context, req *pb.AdChangeLogPageReq) (*pb.AdChangeLogPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageAdChangeLog")
+	ctx, span := tr.Start(ctx, "GetAdChangeLogPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

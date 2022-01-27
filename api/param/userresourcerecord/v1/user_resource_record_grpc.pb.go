@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserResourceRecordClient interface {
 	// 分页查询UserResourceRecord
-	GetPageUserResourceRecord(ctx context.Context, in *UserResourceRecordPageReq, opts ...grpc.CallOption) (*UserResourceRecordPageReply, error)
+	GetUserResourceRecordPage(ctx context.Context, in *UserResourceRecordPageReq, opts ...grpc.CallOption) (*UserResourceRecordPageReply, error)
 	// 获取UserResourceRecord
 	GetUserResourceRecord(ctx context.Context, in *UserResourceRecordReq, opts ...grpc.CallOption) (*UserResourceRecordReply, error)
 	// 更新UserResourceRecord
@@ -44,9 +44,9 @@ func NewUserResourceRecordClient(cc grpc.ClientConnInterface) UserResourceRecord
 	return &userResourceRecordClient{cc}
 }
 
-func (c *userResourceRecordClient) GetPageUserResourceRecord(ctx context.Context, in *UserResourceRecordPageReq, opts ...grpc.CallOption) (*UserResourceRecordPageReply, error) {
+func (c *userResourceRecordClient) GetUserResourceRecordPage(ctx context.Context, in *UserResourceRecordPageReq, opts ...grpc.CallOption) (*UserResourceRecordPageReply, error) {
 	out := new(UserResourceRecordPageReply)
-	err := c.cc.Invoke(ctx, "/userresourcerecord.v1.UserResourceRecord/GetPageUserResourceRecord", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/userresourcerecord.v1.UserResourceRecord/GetUserResourceRecordPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *userResourceRecordClient) BatchDeleteUserResourceRecord(ctx context.Con
 // for forward compatibility
 type UserResourceRecordServer interface {
 	// 分页查询UserResourceRecord
-	GetPageUserResourceRecord(context.Context, *UserResourceRecordPageReq) (*UserResourceRecordPageReply, error)
+	GetUserResourceRecordPage(context.Context, *UserResourceRecordPageReq) (*UserResourceRecordPageReply, error)
 	// 获取UserResourceRecord
 	GetUserResourceRecord(context.Context, *UserResourceRecordReq) (*UserResourceRecordReply, error)
 	// 更新UserResourceRecord
@@ -121,8 +121,8 @@ type UserResourceRecordServer interface {
 type UnimplementedUserResourceRecordServer struct {
 }
 
-func (UnimplementedUserResourceRecordServer) GetPageUserResourceRecord(context.Context, *UserResourceRecordPageReq) (*UserResourceRecordPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageUserResourceRecord not implemented")
+func (UnimplementedUserResourceRecordServer) GetUserResourceRecordPage(context.Context, *UserResourceRecordPageReq) (*UserResourceRecordPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserResourceRecordPage not implemented")
 }
 func (UnimplementedUserResourceRecordServer) GetUserResourceRecord(context.Context, *UserResourceRecordReq) (*UserResourceRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserResourceRecord not implemented")
@@ -152,20 +152,20 @@ func RegisterUserResourceRecordServer(s grpc.ServiceRegistrar, srv UserResourceR
 	s.RegisterService(&UserResourceRecord_ServiceDesc, srv)
 }
 
-func _UserResourceRecord_GetPageUserResourceRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserResourceRecord_GetUserResourceRecordPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserResourceRecordPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserResourceRecordServer).GetPageUserResourceRecord(ctx, in)
+		return srv.(UserResourceRecordServer).GetUserResourceRecordPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/userresourcerecord.v1.UserResourceRecord/GetPageUserResourceRecord",
+		FullMethod: "/userresourcerecord.v1.UserResourceRecord/GetUserResourceRecordPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserResourceRecordServer).GetPageUserResourceRecord(ctx, req.(*UserResourceRecordPageReq))
+		return srv.(UserResourceRecordServer).GetUserResourceRecordPage(ctx, req.(*UserResourceRecordPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var UserResourceRecord_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserResourceRecordServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageUserResourceRecord",
-			Handler:    _UserResourceRecord_GetPageUserResourceRecord_Handler,
+			MethodName: "GetUserResourceRecordPage",
+			Handler:    _UserResourceRecord_GetUserResourceRecordPage_Handler,
 		},
 		{
 			MethodName: "GetUserResourceRecord",

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysConfigClient interface {
 	// 分页查询SysConfig
-	GetPageSysConfig(ctx context.Context, in *SysConfigPageReq, opts ...grpc.CallOption) (*SysConfigPageReply, error)
+	GetSysConfigPage(ctx context.Context, in *SysConfigPageReq, opts ...grpc.CallOption) (*SysConfigPageReply, error)
 	// 获取SysConfig
 	GetSysConfig(ctx context.Context, in *SysConfigReq, opts ...grpc.CallOption) (*SysConfigReply, error)
 	// 更新SysConfig
@@ -44,9 +44,9 @@ func NewSysConfigClient(cc grpc.ClientConnInterface) SysConfigClient {
 	return &sysConfigClient{cc}
 }
 
-func (c *sysConfigClient) GetPageSysConfig(ctx context.Context, in *SysConfigPageReq, opts ...grpc.CallOption) (*SysConfigPageReply, error) {
+func (c *sysConfigClient) GetSysConfigPage(ctx context.Context, in *SysConfigPageReq, opts ...grpc.CallOption) (*SysConfigPageReply, error) {
 	out := new(SysConfigPageReply)
-	err := c.cc.Invoke(ctx, "/sysconfig.v1.SysConfig/GetPageSysConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysconfig.v1.SysConfig/GetSysConfigPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysConfigClient) BatchDeleteSysConfig(ctx context.Context, in *SysConfi
 // for forward compatibility
 type SysConfigServer interface {
 	// 分页查询SysConfig
-	GetPageSysConfig(context.Context, *SysConfigPageReq) (*SysConfigPageReply, error)
+	GetSysConfigPage(context.Context, *SysConfigPageReq) (*SysConfigPageReply, error)
 	// 获取SysConfig
 	GetSysConfig(context.Context, *SysConfigReq) (*SysConfigReply, error)
 	// 更新SysConfig
@@ -121,8 +121,8 @@ type SysConfigServer interface {
 type UnimplementedSysConfigServer struct {
 }
 
-func (UnimplementedSysConfigServer) GetPageSysConfig(context.Context, *SysConfigPageReq) (*SysConfigPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysConfig not implemented")
+func (UnimplementedSysConfigServer) GetSysConfigPage(context.Context, *SysConfigPageReq) (*SysConfigPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysConfigPage not implemented")
 }
 func (UnimplementedSysConfigServer) GetSysConfig(context.Context, *SysConfigReq) (*SysConfigReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysConfig not implemented")
@@ -152,20 +152,20 @@ func RegisterSysConfigServer(s grpc.ServiceRegistrar, srv SysConfigServer) {
 	s.RegisterService(&SysConfig_ServiceDesc, srv)
 }
 
-func _SysConfig_GetPageSysConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysConfig_GetSysConfigPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysConfigPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysConfigServer).GetPageSysConfig(ctx, in)
+		return srv.(SysConfigServer).GetSysConfigPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysconfig.v1.SysConfig/GetPageSysConfig",
+		FullMethod: "/sysconfig.v1.SysConfig/GetSysConfigPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysConfigServer).GetPageSysConfig(ctx, req.(*SysConfigPageReq))
+		return srv.(SysConfigServer).GetSysConfigPage(ctx, req.(*SysConfigPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysConfig_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysConfigServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysConfig",
-			Handler:    _SysConfig_GetPageSysConfig_Handler,
+			MethodName: "GetSysConfigPage",
+			Handler:    _SysConfig_GetSysConfigPage_Handler,
 		},
 		{
 			MethodName: "GetSysConfig",

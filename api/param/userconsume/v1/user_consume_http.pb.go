@@ -21,14 +21,14 @@ type UserConsumeHTTPServer interface {
 	BatchDeleteUserConsume(context.Context, *UserConsumeBatchDeleteReq) (*UserConsumeDeleteReply, error)
 	CreateUserConsume(context.Context, *UserConsumeCreateReq) (*UserConsumeCreateReply, error)
 	DeleteUserConsume(context.Context, *UserConsumeDeleteReq) (*UserConsumeDeleteReply, error)
-	GetPageUserConsume(context.Context, *UserConsumePageReq) (*UserConsumePageReply, error)
 	GetUserConsume(context.Context, *UserConsumeReq) (*UserConsumeReply, error)
+	GetUserConsumePage(context.Context, *UserConsumePageReq) (*UserConsumePageReply, error)
 	UpdateUserConsume(context.Context, *UserConsumeUpdateReq) (*UserConsumeUpdateReply, error)
 }
 
 func RegisterUserConsumeHTTPServer(s *http.Server, srv UserConsumeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/user/consume/page", _UserConsume_GetPageUserConsume0_HTTP_Handler(srv))
+	r.GET("/v1/user/consume/page", _UserConsume_GetUserConsumePage0_HTTP_Handler(srv))
 	r.GET("/v1/user/consume/{id}", _UserConsume_GetUserConsume0_HTTP_Handler(srv))
 	r.PUT("/v1/user/consume/{id}", _UserConsume_UpdateUserConsume0_HTTP_Handler(srv))
 	r.POST("/v1/user/consume", _UserConsume_CreateUserConsume0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterUserConsumeHTTPServer(s *http.Server, srv UserConsumeHTTPServer) {
 	r.DELETE("/v1/user/consume", _UserConsume_BatchDeleteUserConsume0_HTTP_Handler(srv))
 }
 
-func _UserConsume_GetPageUserConsume0_HTTP_Handler(srv UserConsumeHTTPServer) func(ctx http.Context) error {
+func _UserConsume_GetUserConsumePage0_HTTP_Handler(srv UserConsumeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UserConsumePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/userconsume.v1.UserConsume/GetPageUserConsume")
+		http.SetOperation(ctx, "/userconsume.v1.UserConsume/GetUserConsumePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageUserConsume(ctx, req.(*UserConsumePageReq))
+			return srv.GetUserConsumePage(ctx, req.(*UserConsumePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type UserConsumeHTTPClient interface {
 	BatchDeleteUserConsume(ctx context.Context, req *UserConsumeBatchDeleteReq, opts ...http.CallOption) (rsp *UserConsumeDeleteReply, err error)
 	CreateUserConsume(ctx context.Context, req *UserConsumeCreateReq, opts ...http.CallOption) (rsp *UserConsumeCreateReply, err error)
 	DeleteUserConsume(ctx context.Context, req *UserConsumeDeleteReq, opts ...http.CallOption) (rsp *UserConsumeDeleteReply, err error)
-	GetPageUserConsume(ctx context.Context, req *UserConsumePageReq, opts ...http.CallOption) (rsp *UserConsumePageReply, err error)
 	GetUserConsume(ctx context.Context, req *UserConsumeReq, opts ...http.CallOption) (rsp *UserConsumeReply, err error)
+	GetUserConsumePage(ctx context.Context, req *UserConsumePageReq, opts ...http.CallOption) (rsp *UserConsumePageReply, err error)
 	UpdateUserConsume(ctx context.Context, req *UserConsumeUpdateReq, opts ...http.CallOption) (rsp *UserConsumeUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *UserConsumeHTTPClientImpl) DeleteUserConsume(ctx context.Context, in *U
 	return &out, err
 }
 
-func (c *UserConsumeHTTPClientImpl) GetPageUserConsume(ctx context.Context, in *UserConsumePageReq, opts ...http.CallOption) (*UserConsumePageReply, error) {
-	var out UserConsumePageReply
-	pattern := "/v1/user/consume/page"
+func (c *UserConsumeHTTPClientImpl) GetUserConsume(ctx context.Context, in *UserConsumeReq, opts ...http.CallOption) (*UserConsumeReply, error) {
+	var out UserConsumeReply
+	pattern := "/v1/user/consume/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/GetPageUserConsume"))
+	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/GetUserConsume"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *UserConsumeHTTPClientImpl) GetPageUserConsume(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *UserConsumeHTTPClientImpl) GetUserConsume(ctx context.Context, in *UserConsumeReq, opts ...http.CallOption) (*UserConsumeReply, error) {
-	var out UserConsumeReply
-	pattern := "/v1/user/consume/{id}"
+func (c *UserConsumeHTTPClientImpl) GetUserConsumePage(ctx context.Context, in *UserConsumePageReq, opts ...http.CallOption) (*UserConsumePageReply, error) {
+	var out UserConsumePageReply
+	pattern := "/v1/user/consume/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/GetUserConsume"))
+	opts = append(opts, http.Operation("/userconsume.v1.UserConsume/GetUserConsumePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

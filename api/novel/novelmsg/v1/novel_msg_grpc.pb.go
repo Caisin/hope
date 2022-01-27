@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelMsgClient interface {
 	// 分页查询NovelMsg
-	GetPageNovelMsg(ctx context.Context, in *NovelMsgPageReq, opts ...grpc.CallOption) (*NovelMsgPageReply, error)
+	GetNovelMsgPage(ctx context.Context, in *NovelMsgPageReq, opts ...grpc.CallOption) (*NovelMsgPageReply, error)
 	// 获取NovelMsg
 	GetNovelMsg(ctx context.Context, in *NovelMsgReq, opts ...grpc.CallOption) (*NovelMsgReply, error)
 	// 更新NovelMsg
@@ -44,9 +44,9 @@ func NewNovelMsgClient(cc grpc.ClientConnInterface) NovelMsgClient {
 	return &novelMsgClient{cc}
 }
 
-func (c *novelMsgClient) GetPageNovelMsg(ctx context.Context, in *NovelMsgPageReq, opts ...grpc.CallOption) (*NovelMsgPageReply, error) {
+func (c *novelMsgClient) GetNovelMsgPage(ctx context.Context, in *NovelMsgPageReq, opts ...grpc.CallOption) (*NovelMsgPageReply, error) {
 	out := new(NovelMsgPageReply)
-	err := c.cc.Invoke(ctx, "/novelmsg.v1.NovelMsg/GetPageNovelMsg", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelmsg.v1.NovelMsg/GetNovelMsgPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelMsgClient) BatchDeleteNovelMsg(ctx context.Context, in *NovelMsgBa
 // for forward compatibility
 type NovelMsgServer interface {
 	// 分页查询NovelMsg
-	GetPageNovelMsg(context.Context, *NovelMsgPageReq) (*NovelMsgPageReply, error)
+	GetNovelMsgPage(context.Context, *NovelMsgPageReq) (*NovelMsgPageReply, error)
 	// 获取NovelMsg
 	GetNovelMsg(context.Context, *NovelMsgReq) (*NovelMsgReply, error)
 	// 更新NovelMsg
@@ -121,8 +121,8 @@ type NovelMsgServer interface {
 type UnimplementedNovelMsgServer struct {
 }
 
-func (UnimplementedNovelMsgServer) GetPageNovelMsg(context.Context, *NovelMsgPageReq) (*NovelMsgPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelMsg not implemented")
+func (UnimplementedNovelMsgServer) GetNovelMsgPage(context.Context, *NovelMsgPageReq) (*NovelMsgPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelMsgPage not implemented")
 }
 func (UnimplementedNovelMsgServer) GetNovelMsg(context.Context, *NovelMsgReq) (*NovelMsgReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelMsg not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelMsgServer(s grpc.ServiceRegistrar, srv NovelMsgServer) {
 	s.RegisterService(&NovelMsg_ServiceDesc, srv)
 }
 
-func _NovelMsg_GetPageNovelMsg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelMsg_GetNovelMsgPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelMsgPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelMsgServer).GetPageNovelMsg(ctx, in)
+		return srv.(NovelMsgServer).GetNovelMsgPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelmsg.v1.NovelMsg/GetPageNovelMsg",
+		FullMethod: "/novelmsg.v1.NovelMsg/GetNovelMsgPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelMsgServer).GetPageNovelMsg(ctx, req.(*NovelMsgPageReq))
+		return srv.(NovelMsgServer).GetNovelMsgPage(ctx, req.(*NovelMsgPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelMsg_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelMsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelMsg",
-			Handler:    _NovelMsg_GetPageNovelMsg_Handler,
+			MethodName: "GetNovelMsgPage",
+			Handler:    _NovelMsg_GetNovelMsgPage_Handler,
 		},
 		{
 			MethodName: "GetNovelMsg",

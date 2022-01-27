@@ -22,13 +22,13 @@ type AmBalanceHTTPServer interface {
 	CreateAmBalance(context.Context, *AmBalanceCreateReq) (*AmBalanceCreateReply, error)
 	DeleteAmBalance(context.Context, *AmBalanceDeleteReq) (*AmBalanceDeleteReply, error)
 	GetAmBalance(context.Context, *AmBalanceReq) (*AmBalanceReply, error)
-	GetPageAmBalance(context.Context, *AmBalancePageReq) (*AmBalancePageReply, error)
+	GetAmBalancePage(context.Context, *AmBalancePageReq) (*AmBalancePageReply, error)
 	UpdateAmBalance(context.Context, *AmBalanceUpdateReq) (*AmBalanceUpdateReply, error)
 }
 
 func RegisterAmBalanceHTTPServer(s *http.Server, srv AmBalanceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/am/balance/page", _AmBalance_GetPageAmBalance0_HTTP_Handler(srv))
+	r.GET("/v1/am/balance/page", _AmBalance_GetAmBalancePage0_HTTP_Handler(srv))
 	r.GET("/v1/am/balance/{id}", _AmBalance_GetAmBalance0_HTTP_Handler(srv))
 	r.PUT("/v1/am/balance/{id}", _AmBalance_UpdateAmBalance0_HTTP_Handler(srv))
 	r.POST("/v1/am/balance", _AmBalance_CreateAmBalance0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterAmBalanceHTTPServer(s *http.Server, srv AmBalanceHTTPServer) {
 	r.DELETE("/v1/am/balance", _AmBalance_BatchDeleteAmBalance0_HTTP_Handler(srv))
 }
 
-func _AmBalance_GetPageAmBalance0_HTTP_Handler(srv AmBalanceHTTPServer) func(ctx http.Context) error {
+func _AmBalance_GetAmBalancePage0_HTTP_Handler(srv AmBalanceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in AmBalancePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/ambalance.v1.AmBalance/GetPageAmBalance")
+		http.SetOperation(ctx, "/ambalance.v1.AmBalance/GetAmBalancePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageAmBalance(ctx, req.(*AmBalancePageReq))
+			return srv.GetAmBalancePage(ctx, req.(*AmBalancePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type AmBalanceHTTPClient interface {
 	CreateAmBalance(ctx context.Context, req *AmBalanceCreateReq, opts ...http.CallOption) (rsp *AmBalanceCreateReply, err error)
 	DeleteAmBalance(ctx context.Context, req *AmBalanceDeleteReq, opts ...http.CallOption) (rsp *AmBalanceDeleteReply, err error)
 	GetAmBalance(ctx context.Context, req *AmBalanceReq, opts ...http.CallOption) (rsp *AmBalanceReply, err error)
-	GetPageAmBalance(ctx context.Context, req *AmBalancePageReq, opts ...http.CallOption) (rsp *AmBalancePageReply, err error)
+	GetAmBalancePage(ctx context.Context, req *AmBalancePageReq, opts ...http.CallOption) (rsp *AmBalancePageReply, err error)
 	UpdateAmBalance(ctx context.Context, req *AmBalanceUpdateReq, opts ...http.CallOption) (rsp *AmBalanceUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *AmBalanceHTTPClientImpl) GetAmBalance(ctx context.Context, in *AmBalanc
 	return &out, err
 }
 
-func (c *AmBalanceHTTPClientImpl) GetPageAmBalance(ctx context.Context, in *AmBalancePageReq, opts ...http.CallOption) (*AmBalancePageReply, error) {
+func (c *AmBalanceHTTPClientImpl) GetAmBalancePage(ctx context.Context, in *AmBalancePageReq, opts ...http.CallOption) (*AmBalancePageReply, error) {
 	var out AmBalancePageReply
 	pattern := "/v1/am/balance/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/GetPageAmBalance"))
+	opts = append(opts, http.Operation("/ambalance.v1.AmBalance/GetAmBalancePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

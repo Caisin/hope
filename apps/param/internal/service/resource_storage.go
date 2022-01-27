@@ -20,9 +20,9 @@ func NewResourceStorageService(uc *biz.ResourceStorageUseCase, logger log.Logger
 	return &ResourceStorageService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *ResourceStorageService) GetPageResourceStorage(ctx context.Context, req *pb.ResourceStoragePageReq) (*pb.ResourceStoragePageReply, error) {
+func (s *ResourceStorageService) GetResourceStoragePage(ctx context.Context, req *pb.ResourceStoragePageReq) (*pb.ResourceStoragePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageResourceStorage")
+	ctx, span := tr.Start(ctx, "GetResourceStoragePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TaskClient interface {
 	// 分页查询Task
-	GetPageTask(ctx context.Context, in *TaskPageReq, opts ...grpc.CallOption) (*TaskPageReply, error)
+	GetTaskPage(ctx context.Context, in *TaskPageReq, opts ...grpc.CallOption) (*TaskPageReply, error)
 	// 获取Task
 	GetTask(ctx context.Context, in *TaskReq, opts ...grpc.CallOption) (*TaskReply, error)
 	// 更新Task
@@ -44,9 +44,9 @@ func NewTaskClient(cc grpc.ClientConnInterface) TaskClient {
 	return &taskClient{cc}
 }
 
-func (c *taskClient) GetPageTask(ctx context.Context, in *TaskPageReq, opts ...grpc.CallOption) (*TaskPageReply, error) {
+func (c *taskClient) GetTaskPage(ctx context.Context, in *TaskPageReq, opts ...grpc.CallOption) (*TaskPageReply, error) {
 	out := new(TaskPageReply)
-	err := c.cc.Invoke(ctx, "/task.v1.Task/GetPageTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/task.v1.Task/GetTaskPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *taskClient) BatchDeleteTask(ctx context.Context, in *TaskBatchDeleteReq
 // for forward compatibility
 type TaskServer interface {
 	// 分页查询Task
-	GetPageTask(context.Context, *TaskPageReq) (*TaskPageReply, error)
+	GetTaskPage(context.Context, *TaskPageReq) (*TaskPageReply, error)
 	// 获取Task
 	GetTask(context.Context, *TaskReq) (*TaskReply, error)
 	// 更新Task
@@ -121,8 +121,8 @@ type TaskServer interface {
 type UnimplementedTaskServer struct {
 }
 
-func (UnimplementedTaskServer) GetPageTask(context.Context, *TaskPageReq) (*TaskPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageTask not implemented")
+func (UnimplementedTaskServer) GetTaskPage(context.Context, *TaskPageReq) (*TaskPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTaskPage not implemented")
 }
 func (UnimplementedTaskServer) GetTask(context.Context, *TaskReq) (*TaskReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTask not implemented")
@@ -152,20 +152,20 @@ func RegisterTaskServer(s grpc.ServiceRegistrar, srv TaskServer) {
 	s.RegisterService(&Task_ServiceDesc, srv)
 }
 
-func _Task_GetPageTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Task_GetTaskPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TaskPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaskServer).GetPageTask(ctx, in)
+		return srv.(TaskServer).GetTaskPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/task.v1.Task/GetPageTask",
+		FullMethod: "/task.v1.Task/GetTaskPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskServer).GetPageTask(ctx, req.(*TaskPageReq))
+		return srv.(TaskServer).GetTaskPage(ctx, req.(*TaskPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var Task_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TaskServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageTask",
-			Handler:    _Task_GetPageTask_Handler,
+			MethodName: "GetTaskPage",
+			Handler:    _Task_GetTaskPage_Handler,
 		},
 		{
 			MethodName: "GetTask",

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TaskLogClient interface {
 	// 分页查询TaskLog
-	GetPageTaskLog(ctx context.Context, in *TaskLogPageReq, opts ...grpc.CallOption) (*TaskLogPageReply, error)
+	GetTaskLogPage(ctx context.Context, in *TaskLogPageReq, opts ...grpc.CallOption) (*TaskLogPageReply, error)
 	// 获取TaskLog
 	GetTaskLog(ctx context.Context, in *TaskLogReq, opts ...grpc.CallOption) (*TaskLogReply, error)
 	// 更新TaskLog
@@ -44,9 +44,9 @@ func NewTaskLogClient(cc grpc.ClientConnInterface) TaskLogClient {
 	return &taskLogClient{cc}
 }
 
-func (c *taskLogClient) GetPageTaskLog(ctx context.Context, in *TaskLogPageReq, opts ...grpc.CallOption) (*TaskLogPageReply, error) {
+func (c *taskLogClient) GetTaskLogPage(ctx context.Context, in *TaskLogPageReq, opts ...grpc.CallOption) (*TaskLogPageReply, error) {
 	out := new(TaskLogPageReply)
-	err := c.cc.Invoke(ctx, "/tasklog.v1.TaskLog/GetPageTaskLog", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tasklog.v1.TaskLog/GetTaskLogPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *taskLogClient) BatchDeleteTaskLog(ctx context.Context, in *TaskLogBatch
 // for forward compatibility
 type TaskLogServer interface {
 	// 分页查询TaskLog
-	GetPageTaskLog(context.Context, *TaskLogPageReq) (*TaskLogPageReply, error)
+	GetTaskLogPage(context.Context, *TaskLogPageReq) (*TaskLogPageReply, error)
 	// 获取TaskLog
 	GetTaskLog(context.Context, *TaskLogReq) (*TaskLogReply, error)
 	// 更新TaskLog
@@ -121,8 +121,8 @@ type TaskLogServer interface {
 type UnimplementedTaskLogServer struct {
 }
 
-func (UnimplementedTaskLogServer) GetPageTaskLog(context.Context, *TaskLogPageReq) (*TaskLogPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageTaskLog not implemented")
+func (UnimplementedTaskLogServer) GetTaskLogPage(context.Context, *TaskLogPageReq) (*TaskLogPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTaskLogPage not implemented")
 }
 func (UnimplementedTaskLogServer) GetTaskLog(context.Context, *TaskLogReq) (*TaskLogReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTaskLog not implemented")
@@ -152,20 +152,20 @@ func RegisterTaskLogServer(s grpc.ServiceRegistrar, srv TaskLogServer) {
 	s.RegisterService(&TaskLog_ServiceDesc, srv)
 }
 
-func _TaskLog_GetPageTaskLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TaskLog_GetTaskLogPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TaskLogPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaskLogServer).GetPageTaskLog(ctx, in)
+		return srv.(TaskLogServer).GetTaskLogPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tasklog.v1.TaskLog/GetPageTaskLog",
+		FullMethod: "/tasklog.v1.TaskLog/GetTaskLogPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskLogServer).GetPageTaskLog(ctx, req.(*TaskLogPageReq))
+		return srv.(TaskLogServer).GetTaskLogPage(ctx, req.(*TaskLogPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var TaskLog_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TaskLogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageTaskLog",
-			Handler:    _TaskLog_GetPageTaskLog_Handler,
+			MethodName: "GetTaskLogPage",
+			Handler:    _TaskLog_GetTaskLogPage_Handler,
 		},
 		{
 			MethodName: "GetTaskLog",

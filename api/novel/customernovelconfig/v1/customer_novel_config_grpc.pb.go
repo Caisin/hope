@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CustomerNovelConfigClient interface {
 	// 分页查询CustomerNovelConfig
-	GetPageCustomerNovelConfig(ctx context.Context, in *CustomerNovelConfigPageReq, opts ...grpc.CallOption) (*CustomerNovelConfigPageReply, error)
+	GetCustomerNovelConfigPage(ctx context.Context, in *CustomerNovelConfigPageReq, opts ...grpc.CallOption) (*CustomerNovelConfigPageReply, error)
 	// 获取CustomerNovelConfig
 	GetCustomerNovelConfig(ctx context.Context, in *CustomerNovelConfigReq, opts ...grpc.CallOption) (*CustomerNovelConfigReply, error)
 	// 更新CustomerNovelConfig
@@ -44,9 +44,9 @@ func NewCustomerNovelConfigClient(cc grpc.ClientConnInterface) CustomerNovelConf
 	return &customerNovelConfigClient{cc}
 }
 
-func (c *customerNovelConfigClient) GetPageCustomerNovelConfig(ctx context.Context, in *CustomerNovelConfigPageReq, opts ...grpc.CallOption) (*CustomerNovelConfigPageReply, error) {
+func (c *customerNovelConfigClient) GetCustomerNovelConfigPage(ctx context.Context, in *CustomerNovelConfigPageReq, opts ...grpc.CallOption) (*CustomerNovelConfigPageReply, error) {
 	out := new(CustomerNovelConfigPageReply)
-	err := c.cc.Invoke(ctx, "/customernovelconfig.v1.CustomerNovelConfig/GetPageCustomerNovelConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/customernovelconfig.v1.CustomerNovelConfig/GetCustomerNovelConfigPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *customerNovelConfigClient) BatchDeleteCustomerNovelConfig(ctx context.C
 // for forward compatibility
 type CustomerNovelConfigServer interface {
 	// 分页查询CustomerNovelConfig
-	GetPageCustomerNovelConfig(context.Context, *CustomerNovelConfigPageReq) (*CustomerNovelConfigPageReply, error)
+	GetCustomerNovelConfigPage(context.Context, *CustomerNovelConfigPageReq) (*CustomerNovelConfigPageReply, error)
 	// 获取CustomerNovelConfig
 	GetCustomerNovelConfig(context.Context, *CustomerNovelConfigReq) (*CustomerNovelConfigReply, error)
 	// 更新CustomerNovelConfig
@@ -121,8 +121,8 @@ type CustomerNovelConfigServer interface {
 type UnimplementedCustomerNovelConfigServer struct {
 }
 
-func (UnimplementedCustomerNovelConfigServer) GetPageCustomerNovelConfig(context.Context, *CustomerNovelConfigPageReq) (*CustomerNovelConfigPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageCustomerNovelConfig not implemented")
+func (UnimplementedCustomerNovelConfigServer) GetCustomerNovelConfigPage(context.Context, *CustomerNovelConfigPageReq) (*CustomerNovelConfigPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCustomerNovelConfigPage not implemented")
 }
 func (UnimplementedCustomerNovelConfigServer) GetCustomerNovelConfig(context.Context, *CustomerNovelConfigReq) (*CustomerNovelConfigReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCustomerNovelConfig not implemented")
@@ -152,20 +152,20 @@ func RegisterCustomerNovelConfigServer(s grpc.ServiceRegistrar, srv CustomerNove
 	s.RegisterService(&CustomerNovelConfig_ServiceDesc, srv)
 }
 
-func _CustomerNovelConfig_GetPageCustomerNovelConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomerNovelConfig_GetCustomerNovelConfigPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CustomerNovelConfigPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerNovelConfigServer).GetPageCustomerNovelConfig(ctx, in)
+		return srv.(CustomerNovelConfigServer).GetCustomerNovelConfigPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/customernovelconfig.v1.CustomerNovelConfig/GetPageCustomerNovelConfig",
+		FullMethod: "/customernovelconfig.v1.CustomerNovelConfig/GetCustomerNovelConfigPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerNovelConfigServer).GetPageCustomerNovelConfig(ctx, req.(*CustomerNovelConfigPageReq))
+		return srv.(CustomerNovelConfigServer).GetCustomerNovelConfigPage(ctx, req.(*CustomerNovelConfigPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var CustomerNovelConfig_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CustomerNovelConfigServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageCustomerNovelConfig",
-			Handler:    _CustomerNovelConfig_GetPageCustomerNovelConfig_Handler,
+			MethodName: "GetCustomerNovelConfigPage",
+			Handler:    _CustomerNovelConfig_GetCustomerNovelConfigPage_Handler,
 		},
 		{
 			MethodName: "GetCustomerNovelConfig",

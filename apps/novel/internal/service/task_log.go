@@ -20,9 +20,9 @@ func NewTaskLogService(uc *biz.TaskLogUseCase, logger log.Logger) *TaskLogServic
 	return &TaskLogService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *TaskLogService) GetPageTaskLog(ctx context.Context, req *pb.TaskLogPageReq) (*pb.TaskLogPageReply, error) {
+func (s *TaskLogService) GetTaskLogPage(ctx context.Context, req *pb.TaskLogPageReq) (*pb.TaskLogPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageTaskLog")
+	ctx, span := tr.Start(ctx, "GetTaskLogPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

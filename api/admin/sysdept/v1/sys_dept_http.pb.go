@@ -21,14 +21,14 @@ type SysDeptHTTPServer interface {
 	BatchDeleteSysDept(context.Context, *SysDeptBatchDeleteReq) (*SysDeptDeleteReply, error)
 	CreateSysDept(context.Context, *SysDeptCreateReq) (*SysDeptCreateReply, error)
 	DeleteSysDept(context.Context, *SysDeptDeleteReq) (*SysDeptDeleteReply, error)
-	GetPageSysDept(context.Context, *SysDeptPageReq) (*SysDeptPageReply, error)
 	GetSysDept(context.Context, *SysDeptReq) (*SysDeptReply, error)
+	GetSysDeptPage(context.Context, *SysDeptPageReq) (*SysDeptPageReply, error)
 	UpdateSysDept(context.Context, *SysDeptUpdateReq) (*SysDeptUpdateReply, error)
 }
 
 func RegisterSysDeptHTTPServer(s *http.Server, srv SysDeptHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/dept/page", _SysDept_GetPageSysDept0_HTTP_Handler(srv))
+	r.GET("/v1/sys/dept/page", _SysDept_GetSysDeptPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/dept/{id}", _SysDept_GetSysDept0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/dept/{id}", _SysDept_UpdateSysDept0_HTTP_Handler(srv))
 	r.POST("/v1/sys/dept", _SysDept_CreateSysDept0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysDeptHTTPServer(s *http.Server, srv SysDeptHTTPServer) {
 	r.DELETE("/v1/sys/dept", _SysDept_BatchDeleteSysDept0_HTTP_Handler(srv))
 }
 
-func _SysDept_GetPageSysDept0_HTTP_Handler(srv SysDeptHTTPServer) func(ctx http.Context) error {
+func _SysDept_GetSysDeptPage0_HTTP_Handler(srv SysDeptHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysDeptPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysdept.v1.SysDept/GetPageSysDept")
+		http.SetOperation(ctx, "/sysdept.v1.SysDept/GetSysDeptPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysDept(ctx, req.(*SysDeptPageReq))
+			return srv.GetSysDeptPage(ctx, req.(*SysDeptPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysDeptHTTPClient interface {
 	BatchDeleteSysDept(ctx context.Context, req *SysDeptBatchDeleteReq, opts ...http.CallOption) (rsp *SysDeptDeleteReply, err error)
 	CreateSysDept(ctx context.Context, req *SysDeptCreateReq, opts ...http.CallOption) (rsp *SysDeptCreateReply, err error)
 	DeleteSysDept(ctx context.Context, req *SysDeptDeleteReq, opts ...http.CallOption) (rsp *SysDeptDeleteReply, err error)
-	GetPageSysDept(ctx context.Context, req *SysDeptPageReq, opts ...http.CallOption) (rsp *SysDeptPageReply, err error)
 	GetSysDept(ctx context.Context, req *SysDeptReq, opts ...http.CallOption) (rsp *SysDeptReply, err error)
+	GetSysDeptPage(ctx context.Context, req *SysDeptPageReq, opts ...http.CallOption) (rsp *SysDeptPageReply, err error)
 	UpdateSysDept(ctx context.Context, req *SysDeptUpdateReq, opts ...http.CallOption) (rsp *SysDeptUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysDeptHTTPClientImpl) DeleteSysDept(ctx context.Context, in *SysDeptDe
 	return &out, err
 }
 
-func (c *SysDeptHTTPClientImpl) GetPageSysDept(ctx context.Context, in *SysDeptPageReq, opts ...http.CallOption) (*SysDeptPageReply, error) {
-	var out SysDeptPageReply
-	pattern := "/v1/sys/dept/page"
+func (c *SysDeptHTTPClientImpl) GetSysDept(ctx context.Context, in *SysDeptReq, opts ...http.CallOption) (*SysDeptReply, error) {
+	var out SysDeptReply
+	pattern := "/v1/sys/dept/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysdept.v1.SysDept/GetPageSysDept"))
+	opts = append(opts, http.Operation("/sysdept.v1.SysDept/GetSysDept"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysDeptHTTPClientImpl) GetPageSysDept(ctx context.Context, in *SysDeptP
 	return &out, err
 }
 
-func (c *SysDeptHTTPClientImpl) GetSysDept(ctx context.Context, in *SysDeptReq, opts ...http.CallOption) (*SysDeptReply, error) {
-	var out SysDeptReply
-	pattern := "/v1/sys/dept/{id}"
+func (c *SysDeptHTTPClientImpl) GetSysDeptPage(ctx context.Context, in *SysDeptPageReq, opts ...http.CallOption) (*SysDeptPageReply, error) {
+	var out SysDeptPageReply
+	pattern := "/v1/sys/dept/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysdept.v1.SysDept/GetSysDept"))
+	opts = append(opts, http.Operation("/sysdept.v1.SysDept/GetSysDeptPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

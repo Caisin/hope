@@ -22,13 +22,13 @@ type ActivityComponentHTTPServer interface {
 	CreateActivityComponent(context.Context, *ActivityComponentCreateReq) (*ActivityComponentCreateReply, error)
 	DeleteActivityComponent(context.Context, *ActivityComponentDeleteReq) (*ActivityComponentDeleteReply, error)
 	GetActivityComponent(context.Context, *ActivityComponentReq) (*ActivityComponentReply, error)
-	GetPageActivityComponent(context.Context, *ActivityComponentPageReq) (*ActivityComponentPageReply, error)
+	GetActivityComponentPage(context.Context, *ActivityComponentPageReq) (*ActivityComponentPageReply, error)
 	UpdateActivityComponent(context.Context, *ActivityComponentUpdateReq) (*ActivityComponentUpdateReply, error)
 }
 
 func RegisterActivityComponentHTTPServer(s *http.Server, srv ActivityComponentHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/activity/component/page", _ActivityComponent_GetPageActivityComponent0_HTTP_Handler(srv))
+	r.GET("/v1/activity/component/page", _ActivityComponent_GetActivityComponentPage0_HTTP_Handler(srv))
 	r.GET("/v1/activity/component/{id}", _ActivityComponent_GetActivityComponent0_HTTP_Handler(srv))
 	r.PUT("/v1/activity/component/{id}", _ActivityComponent_UpdateActivityComponent0_HTTP_Handler(srv))
 	r.POST("/v1/activity/component", _ActivityComponent_CreateActivityComponent0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterActivityComponentHTTPServer(s *http.Server, srv ActivityComponentHT
 	r.DELETE("/v1/activity/component", _ActivityComponent_BatchDeleteActivityComponent0_HTTP_Handler(srv))
 }
 
-func _ActivityComponent_GetPageActivityComponent0_HTTP_Handler(srv ActivityComponentHTTPServer) func(ctx http.Context) error {
+func _ActivityComponent_GetActivityComponentPage0_HTTP_Handler(srv ActivityComponentHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ActivityComponentPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/activitycomponent.v1.ActivityComponent/GetPageActivityComponent")
+		http.SetOperation(ctx, "/activitycomponent.v1.ActivityComponent/GetActivityComponentPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageActivityComponent(ctx, req.(*ActivityComponentPageReq))
+			return srv.GetActivityComponentPage(ctx, req.(*ActivityComponentPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type ActivityComponentHTTPClient interface {
 	CreateActivityComponent(ctx context.Context, req *ActivityComponentCreateReq, opts ...http.CallOption) (rsp *ActivityComponentCreateReply, err error)
 	DeleteActivityComponent(ctx context.Context, req *ActivityComponentDeleteReq, opts ...http.CallOption) (rsp *ActivityComponentDeleteReply, err error)
 	GetActivityComponent(ctx context.Context, req *ActivityComponentReq, opts ...http.CallOption) (rsp *ActivityComponentReply, err error)
-	GetPageActivityComponent(ctx context.Context, req *ActivityComponentPageReq, opts ...http.CallOption) (rsp *ActivityComponentPageReply, err error)
+	GetActivityComponentPage(ctx context.Context, req *ActivityComponentPageReq, opts ...http.CallOption) (rsp *ActivityComponentPageReply, err error)
 	UpdateActivityComponent(ctx context.Context, req *ActivityComponentUpdateReq, opts ...http.CallOption) (rsp *ActivityComponentUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *ActivityComponentHTTPClientImpl) GetActivityComponent(ctx context.Conte
 	return &out, err
 }
 
-func (c *ActivityComponentHTTPClientImpl) GetPageActivityComponent(ctx context.Context, in *ActivityComponentPageReq, opts ...http.CallOption) (*ActivityComponentPageReply, error) {
+func (c *ActivityComponentHTTPClientImpl) GetActivityComponentPage(ctx context.Context, in *ActivityComponentPageReq, opts ...http.CallOption) (*ActivityComponentPageReply, error) {
 	var out ActivityComponentPageReply
 	pattern := "/v1/activity/component/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/activitycomponent.v1.ActivityComponent/GetPageActivityComponent"))
+	opts = append(opts, http.Operation("/activitycomponent.v1.ActivityComponent/GetActivityComponentPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

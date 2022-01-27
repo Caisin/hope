@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/listenrecord/v1;v1";
 service ListenRecord {
 
   // 分页查询ListenRecord
-  rpc GetPageListenRecord (ListenRecordPageReq) returns (ListenRecordPageReply)  {
+  rpc GetListenRecordPage (ListenRecordPageReq) returns (ListenRecordPageReply)  {
     option (google.api.http) = {
       get: "/v1/listen/record/page"
     };

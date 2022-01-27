@@ -20,9 +20,9 @@ func NewNovelAutoBuyService(uc *biz.NovelAutoBuyUseCase, logger log.Logger) *Nov
 	return &NovelAutoBuyService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *NovelAutoBuyService) GetPageNovelAutoBuy(ctx context.Context, req *pb.NovelAutoBuyPageReq) (*pb.NovelAutoBuyPageReply, error) {
+func (s *NovelAutoBuyService) GetNovelAutoBuyPage(ctx context.Context, req *pb.NovelAutoBuyPageReq) (*pb.NovelAutoBuyPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageNovelAutoBuy")
+	ctx, span := tr.Start(ctx, "GetNovelAutoBuyPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

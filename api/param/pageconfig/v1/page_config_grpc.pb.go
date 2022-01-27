@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PageConfigClient interface {
 	// 分页查询PageConfig
-	GetPagePageConfig(ctx context.Context, in *PageConfigPageReq, opts ...grpc.CallOption) (*PageConfigPageReply, error)
+	GetPageConfigPage(ctx context.Context, in *PageConfigPageReq, opts ...grpc.CallOption) (*PageConfigPageReply, error)
 	// 获取PageConfig
 	GetPageConfig(ctx context.Context, in *PageConfigReq, opts ...grpc.CallOption) (*PageConfigReply, error)
 	// 更新PageConfig
@@ -44,9 +44,9 @@ func NewPageConfigClient(cc grpc.ClientConnInterface) PageConfigClient {
 	return &pageConfigClient{cc}
 }
 
-func (c *pageConfigClient) GetPagePageConfig(ctx context.Context, in *PageConfigPageReq, opts ...grpc.CallOption) (*PageConfigPageReply, error) {
+func (c *pageConfigClient) GetPageConfigPage(ctx context.Context, in *PageConfigPageReq, opts ...grpc.CallOption) (*PageConfigPageReply, error) {
 	out := new(PageConfigPageReply)
-	err := c.cc.Invoke(ctx, "/pageconfig.v1.PageConfig/GetPagePageConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pageconfig.v1.PageConfig/GetPageConfigPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *pageConfigClient) BatchDeletePageConfig(ctx context.Context, in *PageCo
 // for forward compatibility
 type PageConfigServer interface {
 	// 分页查询PageConfig
-	GetPagePageConfig(context.Context, *PageConfigPageReq) (*PageConfigPageReply, error)
+	GetPageConfigPage(context.Context, *PageConfigPageReq) (*PageConfigPageReply, error)
 	// 获取PageConfig
 	GetPageConfig(context.Context, *PageConfigReq) (*PageConfigReply, error)
 	// 更新PageConfig
@@ -121,8 +121,8 @@ type PageConfigServer interface {
 type UnimplementedPageConfigServer struct {
 }
 
-func (UnimplementedPageConfigServer) GetPagePageConfig(context.Context, *PageConfigPageReq) (*PageConfigPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPagePageConfig not implemented")
+func (UnimplementedPageConfigServer) GetPageConfigPage(context.Context, *PageConfigPageReq) (*PageConfigPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPageConfigPage not implemented")
 }
 func (UnimplementedPageConfigServer) GetPageConfig(context.Context, *PageConfigReq) (*PageConfigReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPageConfig not implemented")
@@ -152,20 +152,20 @@ func RegisterPageConfigServer(s grpc.ServiceRegistrar, srv PageConfigServer) {
 	s.RegisterService(&PageConfig_ServiceDesc, srv)
 }
 
-func _PageConfig_GetPagePageConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PageConfig_GetPageConfigPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PageConfigPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PageConfigServer).GetPagePageConfig(ctx, in)
+		return srv.(PageConfigServer).GetPageConfigPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pageconfig.v1.PageConfig/GetPagePageConfig",
+		FullMethod: "/pageconfig.v1.PageConfig/GetPageConfigPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PageConfigServer).GetPagePageConfig(ctx, req.(*PageConfigPageReq))
+		return srv.(PageConfigServer).GetPageConfigPage(ctx, req.(*PageConfigPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var PageConfig_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PageConfigServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPagePageConfig",
-			Handler:    _PageConfig_GetPagePageConfig_Handler,
+			MethodName: "GetPageConfigPage",
+			Handler:    _PageConfig_GetPageConfigPage_Handler,
 		},
 		{
 			MethodName: "GetPageConfig",

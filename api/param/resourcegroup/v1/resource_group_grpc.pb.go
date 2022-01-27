@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ResourceGroupClient interface {
 	// 分页查询ResourceGroup
-	GetPageResourceGroup(ctx context.Context, in *ResourceGroupPageReq, opts ...grpc.CallOption) (*ResourceGroupPageReply, error)
+	GetResourceGroupPage(ctx context.Context, in *ResourceGroupPageReq, opts ...grpc.CallOption) (*ResourceGroupPageReply, error)
 	// 获取ResourceGroup
 	GetResourceGroup(ctx context.Context, in *ResourceGroupReq, opts ...grpc.CallOption) (*ResourceGroupReply, error)
 	// 更新ResourceGroup
@@ -44,9 +44,9 @@ func NewResourceGroupClient(cc grpc.ClientConnInterface) ResourceGroupClient {
 	return &resourceGroupClient{cc}
 }
 
-func (c *resourceGroupClient) GetPageResourceGroup(ctx context.Context, in *ResourceGroupPageReq, opts ...grpc.CallOption) (*ResourceGroupPageReply, error) {
+func (c *resourceGroupClient) GetResourceGroupPage(ctx context.Context, in *ResourceGroupPageReq, opts ...grpc.CallOption) (*ResourceGroupPageReply, error) {
 	out := new(ResourceGroupPageReply)
-	err := c.cc.Invoke(ctx, "/resourcegroup.v1.ResourceGroup/GetPageResourceGroup", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/resourcegroup.v1.ResourceGroup/GetResourceGroupPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *resourceGroupClient) BatchDeleteResourceGroup(ctx context.Context, in *
 // for forward compatibility
 type ResourceGroupServer interface {
 	// 分页查询ResourceGroup
-	GetPageResourceGroup(context.Context, *ResourceGroupPageReq) (*ResourceGroupPageReply, error)
+	GetResourceGroupPage(context.Context, *ResourceGroupPageReq) (*ResourceGroupPageReply, error)
 	// 获取ResourceGroup
 	GetResourceGroup(context.Context, *ResourceGroupReq) (*ResourceGroupReply, error)
 	// 更新ResourceGroup
@@ -121,8 +121,8 @@ type ResourceGroupServer interface {
 type UnimplementedResourceGroupServer struct {
 }
 
-func (UnimplementedResourceGroupServer) GetPageResourceGroup(context.Context, *ResourceGroupPageReq) (*ResourceGroupPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageResourceGroup not implemented")
+func (UnimplementedResourceGroupServer) GetResourceGroupPage(context.Context, *ResourceGroupPageReq) (*ResourceGroupPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetResourceGroupPage not implemented")
 }
 func (UnimplementedResourceGroupServer) GetResourceGroup(context.Context, *ResourceGroupReq) (*ResourceGroupReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetResourceGroup not implemented")
@@ -152,20 +152,20 @@ func RegisterResourceGroupServer(s grpc.ServiceRegistrar, srv ResourceGroupServe
 	s.RegisterService(&ResourceGroup_ServiceDesc, srv)
 }
 
-func _ResourceGroup_GetPageResourceGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ResourceGroup_GetResourceGroupPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ResourceGroupPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ResourceGroupServer).GetPageResourceGroup(ctx, in)
+		return srv.(ResourceGroupServer).GetResourceGroupPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/resourcegroup.v1.ResourceGroup/GetPageResourceGroup",
+		FullMethod: "/resourcegroup.v1.ResourceGroup/GetResourceGroupPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ResourceGroupServer).GetPageResourceGroup(ctx, req.(*ResourceGroupPageReq))
+		return srv.(ResourceGroupServer).GetResourceGroupPage(ctx, req.(*ResourceGroupPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var ResourceGroup_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ResourceGroupServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageResourceGroup",
-			Handler:    _ResourceGroup_GetPageResourceGroup_Handler,
+			MethodName: "GetResourceGroupPage",
+			Handler:    _ResourceGroup_GetResourceGroupPage_Handler,
 		},
 		{
 			MethodName: "GetResourceGroup",

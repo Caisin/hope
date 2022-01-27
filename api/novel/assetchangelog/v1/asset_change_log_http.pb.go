@@ -22,13 +22,13 @@ type AssetChangeLogHTTPServer interface {
 	CreateAssetChangeLog(context.Context, *AssetChangeLogCreateReq) (*AssetChangeLogCreateReply, error)
 	DeleteAssetChangeLog(context.Context, *AssetChangeLogDeleteReq) (*AssetChangeLogDeleteReply, error)
 	GetAssetChangeLog(context.Context, *AssetChangeLogReq) (*AssetChangeLogReply, error)
-	GetPageAssetChangeLog(context.Context, *AssetChangeLogPageReq) (*AssetChangeLogPageReply, error)
+	GetAssetChangeLogPage(context.Context, *AssetChangeLogPageReq) (*AssetChangeLogPageReply, error)
 	UpdateAssetChangeLog(context.Context, *AssetChangeLogUpdateReq) (*AssetChangeLogUpdateReply, error)
 }
 
 func RegisterAssetChangeLogHTTPServer(s *http.Server, srv AssetChangeLogHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/asset/change/log/page", _AssetChangeLog_GetPageAssetChangeLog0_HTTP_Handler(srv))
+	r.GET("/v1/asset/change/log/page", _AssetChangeLog_GetAssetChangeLogPage0_HTTP_Handler(srv))
 	r.GET("/v1/asset/change/log/{id}", _AssetChangeLog_GetAssetChangeLog0_HTTP_Handler(srv))
 	r.PUT("/v1/asset/change/log/{id}", _AssetChangeLog_UpdateAssetChangeLog0_HTTP_Handler(srv))
 	r.POST("/v1/asset/change/log", _AssetChangeLog_CreateAssetChangeLog0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterAssetChangeLogHTTPServer(s *http.Server, srv AssetChangeLogHTTPServ
 	r.DELETE("/v1/asset/change/log", _AssetChangeLog_BatchDeleteAssetChangeLog0_HTTP_Handler(srv))
 }
 
-func _AssetChangeLog_GetPageAssetChangeLog0_HTTP_Handler(srv AssetChangeLogHTTPServer) func(ctx http.Context) error {
+func _AssetChangeLog_GetAssetChangeLogPage0_HTTP_Handler(srv AssetChangeLogHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in AssetChangeLogPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/assetchangelog.v1.AssetChangeLog/GetPageAssetChangeLog")
+		http.SetOperation(ctx, "/assetchangelog.v1.AssetChangeLog/GetAssetChangeLogPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageAssetChangeLog(ctx, req.(*AssetChangeLogPageReq))
+			return srv.GetAssetChangeLogPage(ctx, req.(*AssetChangeLogPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type AssetChangeLogHTTPClient interface {
 	CreateAssetChangeLog(ctx context.Context, req *AssetChangeLogCreateReq, opts ...http.CallOption) (rsp *AssetChangeLogCreateReply, err error)
 	DeleteAssetChangeLog(ctx context.Context, req *AssetChangeLogDeleteReq, opts ...http.CallOption) (rsp *AssetChangeLogDeleteReply, err error)
 	GetAssetChangeLog(ctx context.Context, req *AssetChangeLogReq, opts ...http.CallOption) (rsp *AssetChangeLogReply, err error)
-	GetPageAssetChangeLog(ctx context.Context, req *AssetChangeLogPageReq, opts ...http.CallOption) (rsp *AssetChangeLogPageReply, err error)
+	GetAssetChangeLogPage(ctx context.Context, req *AssetChangeLogPageReq, opts ...http.CallOption) (rsp *AssetChangeLogPageReply, err error)
 	UpdateAssetChangeLog(ctx context.Context, req *AssetChangeLogUpdateReq, opts ...http.CallOption) (rsp *AssetChangeLogUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *AssetChangeLogHTTPClientImpl) GetAssetChangeLog(ctx context.Context, in
 	return &out, err
 }
 
-func (c *AssetChangeLogHTTPClientImpl) GetPageAssetChangeLog(ctx context.Context, in *AssetChangeLogPageReq, opts ...http.CallOption) (*AssetChangeLogPageReply, error) {
+func (c *AssetChangeLogHTTPClientImpl) GetAssetChangeLogPage(ctx context.Context, in *AssetChangeLogPageReq, opts ...http.CallOption) (*AssetChangeLogPageReply, error) {
 	var out AssetChangeLogPageReply
 	pattern := "/v1/asset/change/log/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/GetPageAssetChangeLog"))
+	opts = append(opts, http.Operation("/assetchangelog.v1.AssetChangeLog/GetAssetChangeLogPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

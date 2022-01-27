@@ -22,13 +22,13 @@ type NovelClassifyHTTPServer interface {
 	CreateNovelClassify(context.Context, *NovelClassifyCreateReq) (*NovelClassifyCreateReply, error)
 	DeleteNovelClassify(context.Context, *NovelClassifyDeleteReq) (*NovelClassifyDeleteReply, error)
 	GetNovelClassify(context.Context, *NovelClassifyReq) (*NovelClassifyReply, error)
-	GetPageNovelClassify(context.Context, *NovelClassifyPageReq) (*NovelClassifyPageReply, error)
+	GetNovelClassifyPage(context.Context, *NovelClassifyPageReq) (*NovelClassifyPageReply, error)
 	UpdateNovelClassify(context.Context, *NovelClassifyUpdateReq) (*NovelClassifyUpdateReply, error)
 }
 
 func RegisterNovelClassifyHTTPServer(s *http.Server, srv NovelClassifyHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/classify/page", _NovelClassify_GetPageNovelClassify0_HTTP_Handler(srv))
+	r.GET("/v1/novel/classify/page", _NovelClassify_GetNovelClassifyPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/classify/{id}", _NovelClassify_GetNovelClassify0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/classify/{id}", _NovelClassify_UpdateNovelClassify0_HTTP_Handler(srv))
 	r.POST("/v1/novel/classify", _NovelClassify_CreateNovelClassify0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelClassifyHTTPServer(s *http.Server, srv NovelClassifyHTTPServer
 	r.DELETE("/v1/novel/classify", _NovelClassify_BatchDeleteNovelClassify0_HTTP_Handler(srv))
 }
 
-func _NovelClassify_GetPageNovelClassify0_HTTP_Handler(srv NovelClassifyHTTPServer) func(ctx http.Context) error {
+func _NovelClassify_GetNovelClassifyPage0_HTTP_Handler(srv NovelClassifyHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelClassifyPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelclassify.v1.NovelClassify/GetPageNovelClassify")
+		http.SetOperation(ctx, "/novelclassify.v1.NovelClassify/GetNovelClassifyPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelClassify(ctx, req.(*NovelClassifyPageReq))
+			return srv.GetNovelClassifyPage(ctx, req.(*NovelClassifyPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelClassifyHTTPClient interface {
 	CreateNovelClassify(ctx context.Context, req *NovelClassifyCreateReq, opts ...http.CallOption) (rsp *NovelClassifyCreateReply, err error)
 	DeleteNovelClassify(ctx context.Context, req *NovelClassifyDeleteReq, opts ...http.CallOption) (rsp *NovelClassifyDeleteReply, err error)
 	GetNovelClassify(ctx context.Context, req *NovelClassifyReq, opts ...http.CallOption) (rsp *NovelClassifyReply, err error)
-	GetPageNovelClassify(ctx context.Context, req *NovelClassifyPageReq, opts ...http.CallOption) (rsp *NovelClassifyPageReply, err error)
+	GetNovelClassifyPage(ctx context.Context, req *NovelClassifyPageReq, opts ...http.CallOption) (rsp *NovelClassifyPageReply, err error)
 	UpdateNovelClassify(ctx context.Context, req *NovelClassifyUpdateReq, opts ...http.CallOption) (rsp *NovelClassifyUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelClassifyHTTPClientImpl) GetNovelClassify(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *NovelClassifyHTTPClientImpl) GetPageNovelClassify(ctx context.Context, in *NovelClassifyPageReq, opts ...http.CallOption) (*NovelClassifyPageReply, error) {
+func (c *NovelClassifyHTTPClientImpl) GetNovelClassifyPage(ctx context.Context, in *NovelClassifyPageReq, opts ...http.CallOption) (*NovelClassifyPageReply, error) {
 	var out NovelClassifyPageReply
 	pattern := "/v1/novel/classify/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelclassify.v1.NovelClassify/GetPageNovelClassify"))
+	opts = append(opts, http.Operation("/novelclassify.v1.NovelClassify/GetNovelClassifyPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

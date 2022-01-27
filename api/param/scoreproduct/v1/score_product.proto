@@ -13,7 +13,7 @@ option go_package = "hope/api/param/scoreproduct/v1;v1";
 service ScoreProduct {
 
   // 分页查询ScoreProduct
-  rpc GetPageScoreProduct (ScoreProductPageReq) returns (ScoreProductPageReply)  {
+  rpc GetScoreProductPage (ScoreProductPageReq) returns (ScoreProductPageReply)  {
     option (google.api.http) = {
       get: "/v1/score/product/page"
     };

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelCommentClient interface {
 	// 分页查询NovelComment
-	GetPageNovelComment(ctx context.Context, in *NovelCommentPageReq, opts ...grpc.CallOption) (*NovelCommentPageReply, error)
+	GetNovelCommentPage(ctx context.Context, in *NovelCommentPageReq, opts ...grpc.CallOption) (*NovelCommentPageReply, error)
 	// 获取NovelComment
 	GetNovelComment(ctx context.Context, in *NovelCommentReq, opts ...grpc.CallOption) (*NovelCommentReply, error)
 	// 更新NovelComment
@@ -44,9 +44,9 @@ func NewNovelCommentClient(cc grpc.ClientConnInterface) NovelCommentClient {
 	return &novelCommentClient{cc}
 }
 
-func (c *novelCommentClient) GetPageNovelComment(ctx context.Context, in *NovelCommentPageReq, opts ...grpc.CallOption) (*NovelCommentPageReply, error) {
+func (c *novelCommentClient) GetNovelCommentPage(ctx context.Context, in *NovelCommentPageReq, opts ...grpc.CallOption) (*NovelCommentPageReply, error) {
 	out := new(NovelCommentPageReply)
-	err := c.cc.Invoke(ctx, "/novelcomment.v1.NovelComment/GetPageNovelComment", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelcomment.v1.NovelComment/GetNovelCommentPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelCommentClient) BatchDeleteNovelComment(ctx context.Context, in *No
 // for forward compatibility
 type NovelCommentServer interface {
 	// 分页查询NovelComment
-	GetPageNovelComment(context.Context, *NovelCommentPageReq) (*NovelCommentPageReply, error)
+	GetNovelCommentPage(context.Context, *NovelCommentPageReq) (*NovelCommentPageReply, error)
 	// 获取NovelComment
 	GetNovelComment(context.Context, *NovelCommentReq) (*NovelCommentReply, error)
 	// 更新NovelComment
@@ -121,8 +121,8 @@ type NovelCommentServer interface {
 type UnimplementedNovelCommentServer struct {
 }
 
-func (UnimplementedNovelCommentServer) GetPageNovelComment(context.Context, *NovelCommentPageReq) (*NovelCommentPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelComment not implemented")
+func (UnimplementedNovelCommentServer) GetNovelCommentPage(context.Context, *NovelCommentPageReq) (*NovelCommentPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelCommentPage not implemented")
 }
 func (UnimplementedNovelCommentServer) GetNovelComment(context.Context, *NovelCommentReq) (*NovelCommentReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelComment not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelCommentServer(s grpc.ServiceRegistrar, srv NovelCommentServer)
 	s.RegisterService(&NovelComment_ServiceDesc, srv)
 }
 
-func _NovelComment_GetPageNovelComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelComment_GetNovelCommentPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelCommentPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelCommentServer).GetPageNovelComment(ctx, in)
+		return srv.(NovelCommentServer).GetNovelCommentPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelcomment.v1.NovelComment/GetPageNovelComment",
+		FullMethod: "/novelcomment.v1.NovelComment/GetNovelCommentPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelCommentServer).GetPageNovelComment(ctx, req.(*NovelCommentPageReq))
+		return srv.(NovelCommentServer).GetNovelCommentPage(ctx, req.(*NovelCommentPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelComment_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelCommentServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelComment",
-			Handler:    _NovelComment_GetPageNovelComment_Handler,
+			MethodName: "GetNovelCommentPage",
+			Handler:    _NovelComment_GetNovelCommentPage_Handler,
 		},
 		{
 			MethodName: "GetNovelComment",

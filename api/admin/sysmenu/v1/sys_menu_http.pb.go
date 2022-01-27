@@ -21,14 +21,14 @@ type SysMenuHTTPServer interface {
 	BatchDeleteSysMenu(context.Context, *SysMenuBatchDeleteReq) (*SysMenuDeleteReply, error)
 	CreateSysMenu(context.Context, *SysMenuCreateReq) (*SysMenuCreateReply, error)
 	DeleteSysMenu(context.Context, *SysMenuDeleteReq) (*SysMenuDeleteReply, error)
-	GetPageSysMenu(context.Context, *SysMenuPageReq) (*SysMenuPageReply, error)
 	GetSysMenu(context.Context, *SysMenuReq) (*SysMenuReply, error)
+	GetSysMenuPage(context.Context, *SysMenuPageReq) (*SysMenuPageReply, error)
 	UpdateSysMenu(context.Context, *SysMenuUpdateReq) (*SysMenuUpdateReply, error)
 }
 
 func RegisterSysMenuHTTPServer(s *http.Server, srv SysMenuHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/menu/page", _SysMenu_GetPageSysMenu0_HTTP_Handler(srv))
+	r.GET("/v1/sys/menu/page", _SysMenu_GetSysMenuPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/menu/{id}", _SysMenu_GetSysMenu0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/menu/{id}", _SysMenu_UpdateSysMenu0_HTTP_Handler(srv))
 	r.POST("/v1/sys/menu", _SysMenu_CreateSysMenu0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysMenuHTTPServer(s *http.Server, srv SysMenuHTTPServer) {
 	r.DELETE("/v1/sys/menu", _SysMenu_BatchDeleteSysMenu0_HTTP_Handler(srv))
 }
 
-func _SysMenu_GetPageSysMenu0_HTTP_Handler(srv SysMenuHTTPServer) func(ctx http.Context) error {
+func _SysMenu_GetSysMenuPage0_HTTP_Handler(srv SysMenuHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysMenuPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysmenu.v1.SysMenu/GetPageSysMenu")
+		http.SetOperation(ctx, "/sysmenu.v1.SysMenu/GetSysMenuPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysMenu(ctx, req.(*SysMenuPageReq))
+			return srv.GetSysMenuPage(ctx, req.(*SysMenuPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysMenuHTTPClient interface {
 	BatchDeleteSysMenu(ctx context.Context, req *SysMenuBatchDeleteReq, opts ...http.CallOption) (rsp *SysMenuDeleteReply, err error)
 	CreateSysMenu(ctx context.Context, req *SysMenuCreateReq, opts ...http.CallOption) (rsp *SysMenuCreateReply, err error)
 	DeleteSysMenu(ctx context.Context, req *SysMenuDeleteReq, opts ...http.CallOption) (rsp *SysMenuDeleteReply, err error)
-	GetPageSysMenu(ctx context.Context, req *SysMenuPageReq, opts ...http.CallOption) (rsp *SysMenuPageReply, err error)
 	GetSysMenu(ctx context.Context, req *SysMenuReq, opts ...http.CallOption) (rsp *SysMenuReply, err error)
+	GetSysMenuPage(ctx context.Context, req *SysMenuPageReq, opts ...http.CallOption) (rsp *SysMenuPageReply, err error)
 	UpdateSysMenu(ctx context.Context, req *SysMenuUpdateReq, opts ...http.CallOption) (rsp *SysMenuUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysMenuHTTPClientImpl) DeleteSysMenu(ctx context.Context, in *SysMenuDe
 	return &out, err
 }
 
-func (c *SysMenuHTTPClientImpl) GetPageSysMenu(ctx context.Context, in *SysMenuPageReq, opts ...http.CallOption) (*SysMenuPageReply, error) {
-	var out SysMenuPageReply
-	pattern := "/v1/sys/menu/page"
+func (c *SysMenuHTTPClientImpl) GetSysMenu(ctx context.Context, in *SysMenuReq, opts ...http.CallOption) (*SysMenuReply, error) {
+	var out SysMenuReply
+	pattern := "/v1/sys/menu/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/GetPageSysMenu"))
+	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/GetSysMenu"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysMenuHTTPClientImpl) GetPageSysMenu(ctx context.Context, in *SysMenuP
 	return &out, err
 }
 
-func (c *SysMenuHTTPClientImpl) GetSysMenu(ctx context.Context, in *SysMenuReq, opts ...http.CallOption) (*SysMenuReply, error) {
-	var out SysMenuReply
-	pattern := "/v1/sys/menu/{id}"
+func (c *SysMenuHTTPClientImpl) GetSysMenuPage(ctx context.Context, in *SysMenuPageReq, opts ...http.CallOption) (*SysMenuPageReply, error) {
+	var out SysMenuPageReply
+	pattern := "/v1/sys/menu/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/GetSysMenu"))
+	opts = append(opts, http.Operation("/sysmenu.v1.SysMenu/GetSysMenuPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

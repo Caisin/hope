@@ -21,14 +21,14 @@ type SysUserHTTPServer interface {
 	BatchDeleteSysUser(context.Context, *SysUserBatchDeleteReq) (*SysUserDeleteReply, error)
 	CreateSysUser(context.Context, *SysUserCreateReq) (*SysUserCreateReply, error)
 	DeleteSysUser(context.Context, *SysUserDeleteReq) (*SysUserDeleteReply, error)
-	GetPageSysUser(context.Context, *SysUserPageReq) (*SysUserPageReply, error)
 	GetSysUser(context.Context, *SysUserReq) (*SysUserReply, error)
+	GetSysUserPage(context.Context, *SysUserPageReq) (*SysUserPageReply, error)
 	UpdateSysUser(context.Context, *SysUserUpdateReq) (*SysUserUpdateReply, error)
 }
 
 func RegisterSysUserHTTPServer(s *http.Server, srv SysUserHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/user/page", _SysUser_GetPageSysUser0_HTTP_Handler(srv))
+	r.GET("/v1/sys/user/page", _SysUser_GetSysUserPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/user/{id}", _SysUser_GetSysUser0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/user/{id}", _SysUser_UpdateSysUser0_HTTP_Handler(srv))
 	r.POST("/v1/sys/user", _SysUser_CreateSysUser0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysUserHTTPServer(s *http.Server, srv SysUserHTTPServer) {
 	r.DELETE("/v1/sys/user", _SysUser_BatchDeleteSysUser0_HTTP_Handler(srv))
 }
 
-func _SysUser_GetPageSysUser0_HTTP_Handler(srv SysUserHTTPServer) func(ctx http.Context) error {
+func _SysUser_GetSysUserPage0_HTTP_Handler(srv SysUserHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysUserPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysuser.v1.SysUser/GetPageSysUser")
+		http.SetOperation(ctx, "/sysuser.v1.SysUser/GetSysUserPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysUser(ctx, req.(*SysUserPageReq))
+			return srv.GetSysUserPage(ctx, req.(*SysUserPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysUserHTTPClient interface {
 	BatchDeleteSysUser(ctx context.Context, req *SysUserBatchDeleteReq, opts ...http.CallOption) (rsp *SysUserDeleteReply, err error)
 	CreateSysUser(ctx context.Context, req *SysUserCreateReq, opts ...http.CallOption) (rsp *SysUserCreateReply, err error)
 	DeleteSysUser(ctx context.Context, req *SysUserDeleteReq, opts ...http.CallOption) (rsp *SysUserDeleteReply, err error)
-	GetPageSysUser(ctx context.Context, req *SysUserPageReq, opts ...http.CallOption) (rsp *SysUserPageReply, err error)
 	GetSysUser(ctx context.Context, req *SysUserReq, opts ...http.CallOption) (rsp *SysUserReply, err error)
+	GetSysUserPage(ctx context.Context, req *SysUserPageReq, opts ...http.CallOption) (rsp *SysUserPageReply, err error)
 	UpdateSysUser(ctx context.Context, req *SysUserUpdateReq, opts ...http.CallOption) (rsp *SysUserUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysUserHTTPClientImpl) DeleteSysUser(ctx context.Context, in *SysUserDe
 	return &out, err
 }
 
-func (c *SysUserHTTPClientImpl) GetPageSysUser(ctx context.Context, in *SysUserPageReq, opts ...http.CallOption) (*SysUserPageReply, error) {
-	var out SysUserPageReply
-	pattern := "/v1/sys/user/page"
+func (c *SysUserHTTPClientImpl) GetSysUser(ctx context.Context, in *SysUserReq, opts ...http.CallOption) (*SysUserReply, error) {
+	var out SysUserReply
+	pattern := "/v1/sys/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysuser.v1.SysUser/GetPageSysUser"))
+	opts = append(opts, http.Operation("/sysuser.v1.SysUser/GetSysUser"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysUserHTTPClientImpl) GetPageSysUser(ctx context.Context, in *SysUserP
 	return &out, err
 }
 
-func (c *SysUserHTTPClientImpl) GetSysUser(ctx context.Context, in *SysUserReq, opts ...http.CallOption) (*SysUserReply, error) {
-	var out SysUserReply
-	pattern := "/v1/sys/user/{id}"
+func (c *SysUserHTTPClientImpl) GetSysUserPage(ctx context.Context, in *SysUserPageReq, opts ...http.CallOption) (*SysUserPageReply, error) {
+	var out SysUserPageReply
+	pattern := "/v1/sys/user/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysuser.v1.SysUser/GetSysUser"))
+	opts = append(opts, http.Operation("/sysuser.v1.SysUser/GetSysUserPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

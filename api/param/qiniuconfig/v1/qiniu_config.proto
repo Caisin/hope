@@ -13,7 +13,7 @@ option go_package = "hope/api/param/qiniuconfig/v1;v1";
 service QiniuConfig {
 
   // 分页查询QiniuConfig
-  rpc GetPageQiniuConfig (QiniuConfigPageReq) returns (QiniuConfigPageReply)  {
+  rpc GetQiniuConfigPage (QiniuConfigPageReq) returns (QiniuConfigPageReply)  {
     option (google.api.http) = {
       get: "/v1/qiniu/config/page"
     };

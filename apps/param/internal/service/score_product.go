@@ -20,9 +20,9 @@ func NewScoreProductService(uc *biz.ScoreProductUseCase, logger log.Logger) *Sco
 	return &ScoreProductService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *ScoreProductService) GetPageScoreProduct(ctx context.Context, req *pb.ScoreProductPageReq) (*pb.ScoreProductPageReply, error) {
+func (s *ScoreProductService) GetScoreProductPage(ctx context.Context, req *pb.ScoreProductPageReq) (*pb.ScoreProductPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageScoreProduct")
+	ctx, span := tr.Start(ctx, "GetScoreProductPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

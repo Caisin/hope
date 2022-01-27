@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/novelbuychapterrecord/v1;v1";
 service NovelBuyChapterRecord {
 
   // 分页查询NovelBuyChapterRecord
-  rpc GetPageNovelBuyChapterRecord (NovelBuyChapterRecordPageReq) returns (NovelBuyChapterRecordPageReply)  {
+  rpc GetNovelBuyChapterRecordPage (NovelBuyChapterRecordPageReq) returns (NovelBuyChapterRecordPageReply)  {
     option (google.api.http) = {
       get: "/v1/novel/buy/chapter/record/page"
     };

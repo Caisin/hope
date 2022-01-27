@@ -20,9 +20,9 @@ func NewSysUserService(uc *biz.SysUserUseCase, logger log.Logger) *SysUserServic
 	return &SysUserService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *SysUserService) GetPageSysUser(ctx context.Context, req *pb.SysUserPageReq) (*pb.SysUserPageReply, error) {
+func (s *SysUserService) GetSysUserPage(ctx context.Context, req *pb.SysUserPageReq) (*pb.SysUserPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageSysUser")
+	ctx, span := tr.Start(ctx, "GetSysUserPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

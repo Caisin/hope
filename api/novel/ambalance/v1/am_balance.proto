@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/ambalance/v1;v1";
 service AmBalance {
 
   // 分页查询AmBalance
-  rpc GetPageAmBalance (AmBalancePageReq) returns (AmBalancePageReply)  {
+  rpc GetAmBalancePage (AmBalancePageReq) returns (AmBalancePageReply)  {
     option (google.api.http) = {
       get: "/v1/am/balance/page"
     };

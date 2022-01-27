@@ -21,14 +21,14 @@ type ResourceGroupHTTPServer interface {
 	BatchDeleteResourceGroup(context.Context, *ResourceGroupBatchDeleteReq) (*ResourceGroupDeleteReply, error)
 	CreateResourceGroup(context.Context, *ResourceGroupCreateReq) (*ResourceGroupCreateReply, error)
 	DeleteResourceGroup(context.Context, *ResourceGroupDeleteReq) (*ResourceGroupDeleteReply, error)
-	GetPageResourceGroup(context.Context, *ResourceGroupPageReq) (*ResourceGroupPageReply, error)
 	GetResourceGroup(context.Context, *ResourceGroupReq) (*ResourceGroupReply, error)
+	GetResourceGroupPage(context.Context, *ResourceGroupPageReq) (*ResourceGroupPageReply, error)
 	UpdateResourceGroup(context.Context, *ResourceGroupUpdateReq) (*ResourceGroupUpdateReply, error)
 }
 
 func RegisterResourceGroupHTTPServer(s *http.Server, srv ResourceGroupHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/resource/group/page", _ResourceGroup_GetPageResourceGroup0_HTTP_Handler(srv))
+	r.GET("/v1/resource/group/page", _ResourceGroup_GetResourceGroupPage0_HTTP_Handler(srv))
 	r.GET("/v1/resource/group/{id}", _ResourceGroup_GetResourceGroup0_HTTP_Handler(srv))
 	r.PUT("/v1/resource/group/{id}", _ResourceGroup_UpdateResourceGroup0_HTTP_Handler(srv))
 	r.POST("/v1/resource/group", _ResourceGroup_CreateResourceGroup0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterResourceGroupHTTPServer(s *http.Server, srv ResourceGroupHTTPServer
 	r.DELETE("/v1/resource/group", _ResourceGroup_BatchDeleteResourceGroup0_HTTP_Handler(srv))
 }
 
-func _ResourceGroup_GetPageResourceGroup0_HTTP_Handler(srv ResourceGroupHTTPServer) func(ctx http.Context) error {
+func _ResourceGroup_GetResourceGroupPage0_HTTP_Handler(srv ResourceGroupHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ResourceGroupPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/resourcegroup.v1.ResourceGroup/GetPageResourceGroup")
+		http.SetOperation(ctx, "/resourcegroup.v1.ResourceGroup/GetResourceGroupPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageResourceGroup(ctx, req.(*ResourceGroupPageReq))
+			return srv.GetResourceGroupPage(ctx, req.(*ResourceGroupPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type ResourceGroupHTTPClient interface {
 	BatchDeleteResourceGroup(ctx context.Context, req *ResourceGroupBatchDeleteReq, opts ...http.CallOption) (rsp *ResourceGroupDeleteReply, err error)
 	CreateResourceGroup(ctx context.Context, req *ResourceGroupCreateReq, opts ...http.CallOption) (rsp *ResourceGroupCreateReply, err error)
 	DeleteResourceGroup(ctx context.Context, req *ResourceGroupDeleteReq, opts ...http.CallOption) (rsp *ResourceGroupDeleteReply, err error)
-	GetPageResourceGroup(ctx context.Context, req *ResourceGroupPageReq, opts ...http.CallOption) (rsp *ResourceGroupPageReply, err error)
 	GetResourceGroup(ctx context.Context, req *ResourceGroupReq, opts ...http.CallOption) (rsp *ResourceGroupReply, err error)
+	GetResourceGroupPage(ctx context.Context, req *ResourceGroupPageReq, opts ...http.CallOption) (rsp *ResourceGroupPageReply, err error)
 	UpdateResourceGroup(ctx context.Context, req *ResourceGroupUpdateReq, opts ...http.CallOption) (rsp *ResourceGroupUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *ResourceGroupHTTPClientImpl) DeleteResourceGroup(ctx context.Context, i
 	return &out, err
 }
 
-func (c *ResourceGroupHTTPClientImpl) GetPageResourceGroup(ctx context.Context, in *ResourceGroupPageReq, opts ...http.CallOption) (*ResourceGroupPageReply, error) {
-	var out ResourceGroupPageReply
-	pattern := "/v1/resource/group/page"
+func (c *ResourceGroupHTTPClientImpl) GetResourceGroup(ctx context.Context, in *ResourceGroupReq, opts ...http.CallOption) (*ResourceGroupReply, error) {
+	var out ResourceGroupReply
+	pattern := "/v1/resource/group/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/resourcegroup.v1.ResourceGroup/GetPageResourceGroup"))
+	opts = append(opts, http.Operation("/resourcegroup.v1.ResourceGroup/GetResourceGroup"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *ResourceGroupHTTPClientImpl) GetPageResourceGroup(ctx context.Context, 
 	return &out, err
 }
 
-func (c *ResourceGroupHTTPClientImpl) GetResourceGroup(ctx context.Context, in *ResourceGroupReq, opts ...http.CallOption) (*ResourceGroupReply, error) {
-	var out ResourceGroupReply
-	pattern := "/v1/resource/group/{id}"
+func (c *ResourceGroupHTTPClientImpl) GetResourceGroupPage(ctx context.Context, in *ResourceGroupPageReq, opts ...http.CallOption) (*ResourceGroupPageReply, error) {
+	var out ResourceGroupPageReply
+	pattern := "/v1/resource/group/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/resourcegroup.v1.ResourceGroup/GetResourceGroup"))
+	opts = append(opts, http.Operation("/resourcegroup.v1.ResourceGroup/GetResourceGroupPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

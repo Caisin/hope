@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/userevent/v1;v1";
 service UserEvent {
 
   // 分页查询UserEvent
-  rpc GetPageUserEvent (UserEventPageReq) returns (UserEventPageReply)  {
+  rpc GetUserEventPage (UserEventPageReq) returns (UserEventPageReply)  {
     option (google.api.http) = {
       get: "/v1/user/event/page"
     };

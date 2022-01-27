@@ -21,14 +21,14 @@ type PayOrderHTTPServer interface {
 	BatchDeletePayOrder(context.Context, *PayOrderBatchDeleteReq) (*PayOrderDeleteReply, error)
 	CreatePayOrder(context.Context, *PayOrderCreateReq) (*PayOrderCreateReply, error)
 	DeletePayOrder(context.Context, *PayOrderDeleteReq) (*PayOrderDeleteReply, error)
-	GetPagePayOrder(context.Context, *PayOrderPageReq) (*PayOrderPageReply, error)
 	GetPayOrder(context.Context, *PayOrderReq) (*PayOrderReply, error)
+	GetPayOrderPage(context.Context, *PayOrderPageReq) (*PayOrderPageReply, error)
 	UpdatePayOrder(context.Context, *PayOrderUpdateReq) (*PayOrderUpdateReply, error)
 }
 
 func RegisterPayOrderHTTPServer(s *http.Server, srv PayOrderHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/pay/order/page", _PayOrder_GetPagePayOrder0_HTTP_Handler(srv))
+	r.GET("/v1/pay/order/page", _PayOrder_GetPayOrderPage0_HTTP_Handler(srv))
 	r.GET("/v1/pay/order/{id}", _PayOrder_GetPayOrder0_HTTP_Handler(srv))
 	r.PUT("/v1/pay/order/{id}", _PayOrder_UpdatePayOrder0_HTTP_Handler(srv))
 	r.POST("/v1/pay/order", _PayOrder_CreatePayOrder0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterPayOrderHTTPServer(s *http.Server, srv PayOrderHTTPServer) {
 	r.DELETE("/v1/pay/order", _PayOrder_BatchDeletePayOrder0_HTTP_Handler(srv))
 }
 
-func _PayOrder_GetPagePayOrder0_HTTP_Handler(srv PayOrderHTTPServer) func(ctx http.Context) error {
+func _PayOrder_GetPayOrderPage0_HTTP_Handler(srv PayOrderHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in PayOrderPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/payorder.v1.PayOrder/GetPagePayOrder")
+		http.SetOperation(ctx, "/payorder.v1.PayOrder/GetPayOrderPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPagePayOrder(ctx, req.(*PayOrderPageReq))
+			return srv.GetPayOrderPage(ctx, req.(*PayOrderPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type PayOrderHTTPClient interface {
 	BatchDeletePayOrder(ctx context.Context, req *PayOrderBatchDeleteReq, opts ...http.CallOption) (rsp *PayOrderDeleteReply, err error)
 	CreatePayOrder(ctx context.Context, req *PayOrderCreateReq, opts ...http.CallOption) (rsp *PayOrderCreateReply, err error)
 	DeletePayOrder(ctx context.Context, req *PayOrderDeleteReq, opts ...http.CallOption) (rsp *PayOrderDeleteReply, err error)
-	GetPagePayOrder(ctx context.Context, req *PayOrderPageReq, opts ...http.CallOption) (rsp *PayOrderPageReply, err error)
 	GetPayOrder(ctx context.Context, req *PayOrderReq, opts ...http.CallOption) (rsp *PayOrderReply, err error)
+	GetPayOrderPage(ctx context.Context, req *PayOrderPageReq, opts ...http.CallOption) (rsp *PayOrderPageReply, err error)
 	UpdatePayOrder(ctx context.Context, req *PayOrderUpdateReq, opts ...http.CallOption) (rsp *PayOrderUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *PayOrderHTTPClientImpl) DeletePayOrder(ctx context.Context, in *PayOrde
 	return &out, err
 }
 
-func (c *PayOrderHTTPClientImpl) GetPagePayOrder(ctx context.Context, in *PayOrderPageReq, opts ...http.CallOption) (*PayOrderPageReply, error) {
-	var out PayOrderPageReply
-	pattern := "/v1/pay/order/page"
+func (c *PayOrderHTTPClientImpl) GetPayOrder(ctx context.Context, in *PayOrderReq, opts ...http.CallOption) (*PayOrderReply, error) {
+	var out PayOrderReply
+	pattern := "/v1/pay/order/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/payorder.v1.PayOrder/GetPagePayOrder"))
+	opts = append(opts, http.Operation("/payorder.v1.PayOrder/GetPayOrder"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *PayOrderHTTPClientImpl) GetPagePayOrder(ctx context.Context, in *PayOrd
 	return &out, err
 }
 
-func (c *PayOrderHTTPClientImpl) GetPayOrder(ctx context.Context, in *PayOrderReq, opts ...http.CallOption) (*PayOrderReply, error) {
-	var out PayOrderReply
-	pattern := "/v1/pay/order/{id}"
+func (c *PayOrderHTTPClientImpl) GetPayOrderPage(ctx context.Context, in *PayOrderPageReq, opts ...http.CallOption) (*PayOrderPageReply, error) {
+	var out PayOrderPageReply
+	pattern := "/v1/pay/order/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/payorder.v1.PayOrder/GetPayOrder"))
+	opts = append(opts, http.Operation("/payorder.v1.PayOrder/GetPayOrderPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -19,7 +19,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"hope/apps/admin/internal/conf"
 	"hope/pkg/auth"
-	"hope/pkg/middleware"
 	"strings"
 )
 
@@ -55,7 +54,7 @@ func NewHTTPServer(c *conf.Server,
 				return true
 			}).Build(),
 			//权限校验
-			middleware.PermissionCheck(rdc),
+			//middleware.PermissionCheck(rdc),
 		),
 		//cors
 		http.Filter(handlers.CORS(

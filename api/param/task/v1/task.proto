@@ -13,7 +13,7 @@ option go_package = "hope/api/param/task/v1;v1";
 service Task {
 
   // 分页查询Task
-  rpc GetPageTask (TaskPageReq) returns (TaskPageReply)  {
+  rpc GetTaskPage (TaskPageReq) returns (TaskPageReply)  {
     option (google.api.http) = {
       get: "/v1/task/page"
     };

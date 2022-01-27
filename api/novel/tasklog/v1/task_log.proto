@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/tasklog/v1;v1";
 service TaskLog {
 
   // 分页查询TaskLog
-  rpc GetPageTaskLog (TaskLogPageReq) returns (TaskLogPageReply)  {
+  rpc GetTaskLogPage (TaskLogPageReq) returns (TaskLogPageReply)  {
     option (google.api.http) = {
       get: "/v1/task/log/page"
     };

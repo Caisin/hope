@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AmBalanceClient interface {
 	// 分页查询AmBalance
-	GetPageAmBalance(ctx context.Context, in *AmBalancePageReq, opts ...grpc.CallOption) (*AmBalancePageReply, error)
+	GetAmBalancePage(ctx context.Context, in *AmBalancePageReq, opts ...grpc.CallOption) (*AmBalancePageReply, error)
 	// 获取AmBalance
 	GetAmBalance(ctx context.Context, in *AmBalanceReq, opts ...grpc.CallOption) (*AmBalanceReply, error)
 	// 更新AmBalance
@@ -44,9 +44,9 @@ func NewAmBalanceClient(cc grpc.ClientConnInterface) AmBalanceClient {
 	return &amBalanceClient{cc}
 }
 
-func (c *amBalanceClient) GetPageAmBalance(ctx context.Context, in *AmBalancePageReq, opts ...grpc.CallOption) (*AmBalancePageReply, error) {
+func (c *amBalanceClient) GetAmBalancePage(ctx context.Context, in *AmBalancePageReq, opts ...grpc.CallOption) (*AmBalancePageReply, error) {
 	out := new(AmBalancePageReply)
-	err := c.cc.Invoke(ctx, "/ambalance.v1.AmBalance/GetPageAmBalance", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ambalance.v1.AmBalance/GetAmBalancePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *amBalanceClient) BatchDeleteAmBalance(ctx context.Context, in *AmBalanc
 // for forward compatibility
 type AmBalanceServer interface {
 	// 分页查询AmBalance
-	GetPageAmBalance(context.Context, *AmBalancePageReq) (*AmBalancePageReply, error)
+	GetAmBalancePage(context.Context, *AmBalancePageReq) (*AmBalancePageReply, error)
 	// 获取AmBalance
 	GetAmBalance(context.Context, *AmBalanceReq) (*AmBalanceReply, error)
 	// 更新AmBalance
@@ -121,8 +121,8 @@ type AmBalanceServer interface {
 type UnimplementedAmBalanceServer struct {
 }
 
-func (UnimplementedAmBalanceServer) GetPageAmBalance(context.Context, *AmBalancePageReq) (*AmBalancePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageAmBalance not implemented")
+func (UnimplementedAmBalanceServer) GetAmBalancePage(context.Context, *AmBalancePageReq) (*AmBalancePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAmBalancePage not implemented")
 }
 func (UnimplementedAmBalanceServer) GetAmBalance(context.Context, *AmBalanceReq) (*AmBalanceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAmBalance not implemented")
@@ -152,20 +152,20 @@ func RegisterAmBalanceServer(s grpc.ServiceRegistrar, srv AmBalanceServer) {
 	s.RegisterService(&AmBalance_ServiceDesc, srv)
 }
 
-func _AmBalance_GetPageAmBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AmBalance_GetAmBalancePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AmBalancePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AmBalanceServer).GetPageAmBalance(ctx, in)
+		return srv.(AmBalanceServer).GetAmBalancePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ambalance.v1.AmBalance/GetPageAmBalance",
+		FullMethod: "/ambalance.v1.AmBalance/GetAmBalancePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AmBalanceServer).GetPageAmBalance(ctx, req.(*AmBalancePageReq))
+		return srv.(AmBalanceServer).GetAmBalancePage(ctx, req.(*AmBalancePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var AmBalance_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AmBalanceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageAmBalance",
-			Handler:    _AmBalance_GetPageAmBalance_Handler,
+			MethodName: "GetAmBalancePage",
+			Handler:    _AmBalance_GetAmBalancePage_Handler,
 		},
 		{
 			MethodName: "GetAmBalance",

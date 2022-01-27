@@ -1177,7 +1177,7 @@ var file_api_novel_bookpackage_v1_book_package_proto_rawDesc = []byte{
 	0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
 	0x08, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0x90, 0x06, 0x0a, 0x0b, 0x42, 0x6f,
 	0x6f, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x12, 0x7d, 0x0a, 0x12, 0x47, 0x65, 0x74,
-	0x50, 0x61, 0x67, 0x65, 0x42, 0x6f, 0x6f, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x12,
+	0x42, 0x6f, 0x6f, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x50, 0x61, 0x67, 0x65, 0x12,
 	0x22, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x70, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31,
 	0x2e, 0x42, 0x6f, 0x6f, 0x6b, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x50, 0x61, 0x67, 0x65,
 	0x52, 0x65, 0x71, 0x1a, 0x24, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x70, 0x61, 0x63, 0x6b, 0x61, 0x67,
@@ -1278,13 +1278,13 @@ var file_api_novel_bookpackage_v1_book_package_proto_depIdxs = []int32{
 	12, // 15: bookpackage.v1.BookPackageUpdateReq.effectTime:type_name -> google.protobuf.Timestamp
 	12, // 16: bookpackage.v1.BookPackageUpdateReq.expiredTime:type_name -> google.protobuf.Timestamp
 	0,  // 17: bookpackage.v1.BookPackageUpdateReply.result:type_name -> bookpackage.v1.BookPackageData
-	1,  // 18: bookpackage.v1.BookPackage.GetPageBookPackage:input_type -> bookpackage.v1.BookPackagePageReq
+	1,  // 18: bookpackage.v1.BookPackage.GetBookPackagePage:input_type -> bookpackage.v1.BookPackagePageReq
 	3,  // 19: bookpackage.v1.BookPackage.GetBookPackage:input_type -> bookpackage.v1.BookPackageReq
 	7,  // 20: bookpackage.v1.BookPackage.UpdateBookPackage:input_type -> bookpackage.v1.BookPackageUpdateReq
 	5,  // 21: bookpackage.v1.BookPackage.CreateBookPackage:input_type -> bookpackage.v1.BookPackageCreateReq
 	9,  // 22: bookpackage.v1.BookPackage.DeleteBookPackage:input_type -> bookpackage.v1.BookPackageDeleteReq
 	10, // 23: bookpackage.v1.BookPackage.BatchDeleteBookPackage:input_type -> bookpackage.v1.BookPackageBatchDeleteReq
-	2,  // 24: bookpackage.v1.BookPackage.GetPageBookPackage:output_type -> bookpackage.v1.BookPackagePageReply
+	2,  // 24: bookpackage.v1.BookPackage.GetBookPackagePage:output_type -> bookpackage.v1.BookPackagePageReply
 	4,  // 25: bookpackage.v1.BookPackage.GetBookPackage:output_type -> bookpackage.v1.BookPackageReply
 	8,  // 26: bookpackage.v1.BookPackage.UpdateBookPackage:output_type -> bookpackage.v1.BookPackageUpdateReply
 	6,  // 27: bookpackage.v1.BookPackage.CreateBookPackage:output_type -> bookpackage.v1.BookPackageCreateReply

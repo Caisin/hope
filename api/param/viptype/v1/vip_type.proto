@@ -13,7 +13,7 @@ option go_package = "hope/api/param/viptype/v1;v1";
 service VipType {
 
   // 分页查询VipType
-  rpc GetPageVipType (VipTypePageReq) returns (VipTypePageReply)  {
+  rpc GetVipTypePage (VipTypePageReq) returns (VipTypePageReply)  {
     option (google.api.http) = {
       get: "/v1/vip/type/page"
     };

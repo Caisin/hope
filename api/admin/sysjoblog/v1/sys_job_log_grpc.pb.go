@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysJobLogClient interface {
 	// 分页查询SysJobLog
-	GetPageSysJobLog(ctx context.Context, in *SysJobLogPageReq, opts ...grpc.CallOption) (*SysJobLogPageReply, error)
+	GetSysJobLogPage(ctx context.Context, in *SysJobLogPageReq, opts ...grpc.CallOption) (*SysJobLogPageReply, error)
 	// 获取SysJobLog
 	GetSysJobLog(ctx context.Context, in *SysJobLogReq, opts ...grpc.CallOption) (*SysJobLogReply, error)
 	// 更新SysJobLog
@@ -44,9 +44,9 @@ func NewSysJobLogClient(cc grpc.ClientConnInterface) SysJobLogClient {
 	return &sysJobLogClient{cc}
 }
 
-func (c *sysJobLogClient) GetPageSysJobLog(ctx context.Context, in *SysJobLogPageReq, opts ...grpc.CallOption) (*SysJobLogPageReply, error) {
+func (c *sysJobLogClient) GetSysJobLogPage(ctx context.Context, in *SysJobLogPageReq, opts ...grpc.CallOption) (*SysJobLogPageReply, error) {
 	out := new(SysJobLogPageReply)
-	err := c.cc.Invoke(ctx, "/sysjoblog.v1.SysJobLog/GetPageSysJobLog", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysjoblog.v1.SysJobLog/GetSysJobLogPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysJobLogClient) BatchDeleteSysJobLog(ctx context.Context, in *SysJobLo
 // for forward compatibility
 type SysJobLogServer interface {
 	// 分页查询SysJobLog
-	GetPageSysJobLog(context.Context, *SysJobLogPageReq) (*SysJobLogPageReply, error)
+	GetSysJobLogPage(context.Context, *SysJobLogPageReq) (*SysJobLogPageReply, error)
 	// 获取SysJobLog
 	GetSysJobLog(context.Context, *SysJobLogReq) (*SysJobLogReply, error)
 	// 更新SysJobLog
@@ -121,8 +121,8 @@ type SysJobLogServer interface {
 type UnimplementedSysJobLogServer struct {
 }
 
-func (UnimplementedSysJobLogServer) GetPageSysJobLog(context.Context, *SysJobLogPageReq) (*SysJobLogPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysJobLog not implemented")
+func (UnimplementedSysJobLogServer) GetSysJobLogPage(context.Context, *SysJobLogPageReq) (*SysJobLogPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysJobLogPage not implemented")
 }
 func (UnimplementedSysJobLogServer) GetSysJobLog(context.Context, *SysJobLogReq) (*SysJobLogReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysJobLog not implemented")
@@ -152,20 +152,20 @@ func RegisterSysJobLogServer(s grpc.ServiceRegistrar, srv SysJobLogServer) {
 	s.RegisterService(&SysJobLog_ServiceDesc, srv)
 }
 
-func _SysJobLog_GetPageSysJobLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysJobLog_GetSysJobLogPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysJobLogPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysJobLogServer).GetPageSysJobLog(ctx, in)
+		return srv.(SysJobLogServer).GetSysJobLogPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysjoblog.v1.SysJobLog/GetPageSysJobLog",
+		FullMethod: "/sysjoblog.v1.SysJobLog/GetSysJobLogPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysJobLogServer).GetPageSysJobLog(ctx, req.(*SysJobLogPageReq))
+		return srv.(SysJobLogServer).GetSysJobLogPage(ctx, req.(*SysJobLogPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysJobLog_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysJobLogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysJobLog",
-			Handler:    _SysJobLog_GetPageSysJobLog_Handler,
+			MethodName: "GetSysJobLogPage",
+			Handler:    _SysJobLog_GetSysJobLogPage_Handler,
 		},
 		{
 			MethodName: "GetSysJobLog",

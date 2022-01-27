@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/novelbookshelf/v1;v1";
 service NovelBookshelf {
 
   // 分页查询NovelBookshelf
-  rpc GetPageNovelBookshelf (NovelBookshelfPageReq) returns (NovelBookshelfPageReply)  {
+  rpc GetNovelBookshelfPage (NovelBookshelfPageReq) returns (NovelBookshelfPageReply)  {
     option (google.api.http) = {
       get: "/v1/novel/bookshelf/page"
     };

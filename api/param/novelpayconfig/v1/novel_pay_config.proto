@@ -13,7 +13,7 @@ option go_package = "hope/api/param/novelpayconfig/v1;v1";
 service NovelPayConfig {
 
   // 分页查询NovelPayConfig
-  rpc GetPageNovelPayConfig (NovelPayConfigPageReq) returns (NovelPayConfigPageReply)  {
+  rpc GetNovelPayConfigPage (NovelPayConfigPageReq) returns (NovelPayConfigPageReply)  {
     option (google.api.http) = {
       get: "/v1/novel/pay/config/page"
     };

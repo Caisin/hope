@@ -20,9 +20,9 @@ func NewAmBalanceService(uc *biz.AmBalanceUseCase, logger log.Logger) *AmBalance
 	return &AmBalanceService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *AmBalanceService) GetPageAmBalance(ctx context.Context, req *pb.AmBalancePageReq) (*pb.AmBalancePageReply, error) {
+func (s *AmBalanceService) GetAmBalancePage(ctx context.Context, req *pb.AmBalancePageReq) (*pb.AmBalancePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageAmBalance")
+	ctx, span := tr.Start(ctx, "GetAmBalancePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

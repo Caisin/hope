@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysApiClient interface {
 	// 分页查询SysApi
-	GetPageSysApi(ctx context.Context, in *SysApiPageReq, opts ...grpc.CallOption) (*SysApiPageReply, error)
+	GetSysApiPage(ctx context.Context, in *SysApiPageReq, opts ...grpc.CallOption) (*SysApiPageReply, error)
 	// 获取SysApi
 	GetSysApi(ctx context.Context, in *SysApiReq, opts ...grpc.CallOption) (*SysApiReply, error)
 	// 更新SysApi
@@ -44,9 +44,9 @@ func NewSysApiClient(cc grpc.ClientConnInterface) SysApiClient {
 	return &sysApiClient{cc}
 }
 
-func (c *sysApiClient) GetPageSysApi(ctx context.Context, in *SysApiPageReq, opts ...grpc.CallOption) (*SysApiPageReply, error) {
+func (c *sysApiClient) GetSysApiPage(ctx context.Context, in *SysApiPageReq, opts ...grpc.CallOption) (*SysApiPageReply, error) {
 	out := new(SysApiPageReply)
-	err := c.cc.Invoke(ctx, "/sysapi.v1.SysApi/GetPageSysApi", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysapi.v1.SysApi/GetSysApiPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysApiClient) BatchDeleteSysApi(ctx context.Context, in *SysApiBatchDel
 // for forward compatibility
 type SysApiServer interface {
 	// 分页查询SysApi
-	GetPageSysApi(context.Context, *SysApiPageReq) (*SysApiPageReply, error)
+	GetSysApiPage(context.Context, *SysApiPageReq) (*SysApiPageReply, error)
 	// 获取SysApi
 	GetSysApi(context.Context, *SysApiReq) (*SysApiReply, error)
 	// 更新SysApi
@@ -121,8 +121,8 @@ type SysApiServer interface {
 type UnimplementedSysApiServer struct {
 }
 
-func (UnimplementedSysApiServer) GetPageSysApi(context.Context, *SysApiPageReq) (*SysApiPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysApi not implemented")
+func (UnimplementedSysApiServer) GetSysApiPage(context.Context, *SysApiPageReq) (*SysApiPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysApiPage not implemented")
 }
 func (UnimplementedSysApiServer) GetSysApi(context.Context, *SysApiReq) (*SysApiReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysApi not implemented")
@@ -152,20 +152,20 @@ func RegisterSysApiServer(s grpc.ServiceRegistrar, srv SysApiServer) {
 	s.RegisterService(&SysApi_ServiceDesc, srv)
 }
 
-func _SysApi_GetPageSysApi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysApi_GetSysApiPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysApiPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysApiServer).GetPageSysApi(ctx, in)
+		return srv.(SysApiServer).GetSysApiPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysapi.v1.SysApi/GetPageSysApi",
+		FullMethod: "/sysapi.v1.SysApi/GetSysApiPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysApiServer).GetPageSysApi(ctx, req.(*SysApiPageReq))
+		return srv.(SysApiServer).GetSysApiPage(ctx, req.(*SysApiPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysApi_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysApiServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysApi",
-			Handler:    _SysApi_GetPageSysApi_Handler,
+			MethodName: "GetSysApiPage",
+			Handler:    _SysApi_GetSysApiPage_Handler,
 		},
 		{
 			MethodName: "GetSysApi",

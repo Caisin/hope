@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AppVersionClient interface {
 	// 分页查询AppVersion
-	GetPageAppVersion(ctx context.Context, in *AppVersionPageReq, opts ...grpc.CallOption) (*AppVersionPageReply, error)
+	GetAppVersionPage(ctx context.Context, in *AppVersionPageReq, opts ...grpc.CallOption) (*AppVersionPageReply, error)
 	// 获取AppVersion
 	GetAppVersion(ctx context.Context, in *AppVersionReq, opts ...grpc.CallOption) (*AppVersionReply, error)
 	// 更新AppVersion
@@ -44,9 +44,9 @@ func NewAppVersionClient(cc grpc.ClientConnInterface) AppVersionClient {
 	return &appVersionClient{cc}
 }
 
-func (c *appVersionClient) GetPageAppVersion(ctx context.Context, in *AppVersionPageReq, opts ...grpc.CallOption) (*AppVersionPageReply, error) {
+func (c *appVersionClient) GetAppVersionPage(ctx context.Context, in *AppVersionPageReq, opts ...grpc.CallOption) (*AppVersionPageReply, error) {
 	out := new(AppVersionPageReply)
-	err := c.cc.Invoke(ctx, "/appversion.v1.AppVersion/GetPageAppVersion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/appversion.v1.AppVersion/GetAppVersionPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *appVersionClient) BatchDeleteAppVersion(ctx context.Context, in *AppVer
 // for forward compatibility
 type AppVersionServer interface {
 	// 分页查询AppVersion
-	GetPageAppVersion(context.Context, *AppVersionPageReq) (*AppVersionPageReply, error)
+	GetAppVersionPage(context.Context, *AppVersionPageReq) (*AppVersionPageReply, error)
 	// 获取AppVersion
 	GetAppVersion(context.Context, *AppVersionReq) (*AppVersionReply, error)
 	// 更新AppVersion
@@ -121,8 +121,8 @@ type AppVersionServer interface {
 type UnimplementedAppVersionServer struct {
 }
 
-func (UnimplementedAppVersionServer) GetPageAppVersion(context.Context, *AppVersionPageReq) (*AppVersionPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageAppVersion not implemented")
+func (UnimplementedAppVersionServer) GetAppVersionPage(context.Context, *AppVersionPageReq) (*AppVersionPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAppVersionPage not implemented")
 }
 func (UnimplementedAppVersionServer) GetAppVersion(context.Context, *AppVersionReq) (*AppVersionReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppVersion not implemented")
@@ -152,20 +152,20 @@ func RegisterAppVersionServer(s grpc.ServiceRegistrar, srv AppVersionServer) {
 	s.RegisterService(&AppVersion_ServiceDesc, srv)
 }
 
-func _AppVersion_GetPageAppVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AppVersion_GetAppVersionPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AppVersionPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppVersionServer).GetPageAppVersion(ctx, in)
+		return srv.(AppVersionServer).GetAppVersionPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/appversion.v1.AppVersion/GetPageAppVersion",
+		FullMethod: "/appversion.v1.AppVersion/GetAppVersionPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppVersionServer).GetPageAppVersion(ctx, req.(*AppVersionPageReq))
+		return srv.(AppVersionServer).GetAppVersionPage(ctx, req.(*AppVersionPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var AppVersion_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AppVersionServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageAppVersion",
-			Handler:    _AppVersion_GetPageAppVersion_Handler,
+			MethodName: "GetAppVersionPage",
+			Handler:    _AppVersion_GetAppVersionPage_Handler,
 		},
 		{
 			MethodName: "GetAppVersion",

@@ -20,9 +20,9 @@ func NewCasbinRuleService(uc *biz.CasbinRuleUseCase, logger log.Logger) *CasbinR
 	return &CasbinRuleService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *CasbinRuleService) GetPageCasbinRule(ctx context.Context, req *pb.CasbinRulePageReq) (*pb.CasbinRulePageReply, error) {
+func (s *CasbinRuleService) GetCasbinRulePage(ctx context.Context, req *pb.CasbinRulePageReq) (*pb.CasbinRulePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageCasbinRule")
+	ctx, span := tr.Start(ctx, "GetCasbinRulePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

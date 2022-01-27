@@ -22,13 +22,13 @@ type BookPackageHTTPServer interface {
 	CreateBookPackage(context.Context, *BookPackageCreateReq) (*BookPackageCreateReply, error)
 	DeleteBookPackage(context.Context, *BookPackageDeleteReq) (*BookPackageDeleteReply, error)
 	GetBookPackage(context.Context, *BookPackageReq) (*BookPackageReply, error)
-	GetPageBookPackage(context.Context, *BookPackagePageReq) (*BookPackagePageReply, error)
+	GetBookPackagePage(context.Context, *BookPackagePageReq) (*BookPackagePageReply, error)
 	UpdateBookPackage(context.Context, *BookPackageUpdateReq) (*BookPackageUpdateReply, error)
 }
 
 func RegisterBookPackageHTTPServer(s *http.Server, srv BookPackageHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/book/package/page", _BookPackage_GetPageBookPackage0_HTTP_Handler(srv))
+	r.GET("/v1/book/package/page", _BookPackage_GetBookPackagePage0_HTTP_Handler(srv))
 	r.GET("/v1/book/package/{id}", _BookPackage_GetBookPackage0_HTTP_Handler(srv))
 	r.PUT("/v1/book/package/{id}", _BookPackage_UpdateBookPackage0_HTTP_Handler(srv))
 	r.POST("/v1/book/package", _BookPackage_CreateBookPackage0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterBookPackageHTTPServer(s *http.Server, srv BookPackageHTTPServer) {
 	r.DELETE("/v1/book/package", _BookPackage_BatchDeleteBookPackage0_HTTP_Handler(srv))
 }
 
-func _BookPackage_GetPageBookPackage0_HTTP_Handler(srv BookPackageHTTPServer) func(ctx http.Context) error {
+func _BookPackage_GetBookPackagePage0_HTTP_Handler(srv BookPackageHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in BookPackagePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/bookpackage.v1.BookPackage/GetPageBookPackage")
+		http.SetOperation(ctx, "/bookpackage.v1.BookPackage/GetBookPackagePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageBookPackage(ctx, req.(*BookPackagePageReq))
+			return srv.GetBookPackagePage(ctx, req.(*BookPackagePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type BookPackageHTTPClient interface {
 	CreateBookPackage(ctx context.Context, req *BookPackageCreateReq, opts ...http.CallOption) (rsp *BookPackageCreateReply, err error)
 	DeleteBookPackage(ctx context.Context, req *BookPackageDeleteReq, opts ...http.CallOption) (rsp *BookPackageDeleteReply, err error)
 	GetBookPackage(ctx context.Context, req *BookPackageReq, opts ...http.CallOption) (rsp *BookPackageReply, err error)
-	GetPageBookPackage(ctx context.Context, req *BookPackagePageReq, opts ...http.CallOption) (rsp *BookPackagePageReply, err error)
+	GetBookPackagePage(ctx context.Context, req *BookPackagePageReq, opts ...http.CallOption) (rsp *BookPackagePageReply, err error)
 	UpdateBookPackage(ctx context.Context, req *BookPackageUpdateReq, opts ...http.CallOption) (rsp *BookPackageUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *BookPackageHTTPClientImpl) GetBookPackage(ctx context.Context, in *Book
 	return &out, err
 }
 
-func (c *BookPackageHTTPClientImpl) GetPageBookPackage(ctx context.Context, in *BookPackagePageReq, opts ...http.CallOption) (*BookPackagePageReply, error) {
+func (c *BookPackageHTTPClientImpl) GetBookPackagePage(ctx context.Context, in *BookPackagePageReq, opts ...http.CallOption) (*BookPackagePageReply, error) {
 	var out BookPackagePageReply
 	pattern := "/v1/book/package/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/GetPageBookPackage"))
+	opts = append(opts, http.Operation("/bookpackage.v1.BookPackage/GetBookPackagePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

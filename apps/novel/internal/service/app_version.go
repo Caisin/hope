@@ -20,9 +20,9 @@ func NewAppVersionService(uc *biz.AppVersionUseCase, logger log.Logger) *AppVers
 	return &AppVersionService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *AppVersionService) GetPageAppVersion(ctx context.Context, req *pb.AppVersionPageReq) (*pb.AppVersionPageReply, error) {
+func (s *AppVersionService) GetAppVersionPage(ctx context.Context, req *pb.AppVersionPageReq) (*pb.AppVersionPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageAppVersion")
+	ctx, span := tr.Start(ctx, "GetAppVersionPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

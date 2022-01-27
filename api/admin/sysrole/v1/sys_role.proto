@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysrole/v1;v1";
 service SysRole {
 
   // 分页查询SysRole
-  rpc GetPageSysRole (SysRolePageReq) returns (SysRolePageReply)  {
+  rpc GetSysRolePage (SysRolePageReq) returns (SysRolePageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/role/page"
     };

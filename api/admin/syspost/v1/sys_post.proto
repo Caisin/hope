@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/syspost/v1;v1";
 service SysPost {
 
   // 分页查询SysPost
-  rpc GetPageSysPost (SysPostPageReq) returns (SysPostPageReply)  {
+  rpc GetSysPostPage (SysPostPageReq) returns (SysPostPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/post/page"
     };

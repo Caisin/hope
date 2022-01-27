@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/novelcomment/v1;v1";
 service NovelComment {
 
   // 分页查询NovelComment
-  rpc GetPageNovelComment (NovelCommentPageReq) returns (NovelCommentPageReply)  {
+  rpc GetNovelCommentPage (NovelCommentPageReq) returns (NovelCommentPageReply)  {
     option (google.api.http) = {
       get: "/v1/novel/comment/page"
     };

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserConsumeClient interface {
 	// 分页查询UserConsume
-	GetPageUserConsume(ctx context.Context, in *UserConsumePageReq, opts ...grpc.CallOption) (*UserConsumePageReply, error)
+	GetUserConsumePage(ctx context.Context, in *UserConsumePageReq, opts ...grpc.CallOption) (*UserConsumePageReply, error)
 	// 获取UserConsume
 	GetUserConsume(ctx context.Context, in *UserConsumeReq, opts ...grpc.CallOption) (*UserConsumeReply, error)
 	// 更新UserConsume
@@ -44,9 +44,9 @@ func NewUserConsumeClient(cc grpc.ClientConnInterface) UserConsumeClient {
 	return &userConsumeClient{cc}
 }
 
-func (c *userConsumeClient) GetPageUserConsume(ctx context.Context, in *UserConsumePageReq, opts ...grpc.CallOption) (*UserConsumePageReply, error) {
+func (c *userConsumeClient) GetUserConsumePage(ctx context.Context, in *UserConsumePageReq, opts ...grpc.CallOption) (*UserConsumePageReply, error) {
 	out := new(UserConsumePageReply)
-	err := c.cc.Invoke(ctx, "/userconsume.v1.UserConsume/GetPageUserConsume", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/userconsume.v1.UserConsume/GetUserConsumePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *userConsumeClient) BatchDeleteUserConsume(ctx context.Context, in *User
 // for forward compatibility
 type UserConsumeServer interface {
 	// 分页查询UserConsume
-	GetPageUserConsume(context.Context, *UserConsumePageReq) (*UserConsumePageReply, error)
+	GetUserConsumePage(context.Context, *UserConsumePageReq) (*UserConsumePageReply, error)
 	// 获取UserConsume
 	GetUserConsume(context.Context, *UserConsumeReq) (*UserConsumeReply, error)
 	// 更新UserConsume
@@ -121,8 +121,8 @@ type UserConsumeServer interface {
 type UnimplementedUserConsumeServer struct {
 }
 
-func (UnimplementedUserConsumeServer) GetPageUserConsume(context.Context, *UserConsumePageReq) (*UserConsumePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageUserConsume not implemented")
+func (UnimplementedUserConsumeServer) GetUserConsumePage(context.Context, *UserConsumePageReq) (*UserConsumePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserConsumePage not implemented")
 }
 func (UnimplementedUserConsumeServer) GetUserConsume(context.Context, *UserConsumeReq) (*UserConsumeReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserConsume not implemented")
@@ -152,20 +152,20 @@ func RegisterUserConsumeServer(s grpc.ServiceRegistrar, srv UserConsumeServer) {
 	s.RegisterService(&UserConsume_ServiceDesc, srv)
 }
 
-func _UserConsume_GetPageUserConsume_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserConsume_GetUserConsumePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserConsumePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserConsumeServer).GetPageUserConsume(ctx, in)
+		return srv.(UserConsumeServer).GetUserConsumePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/userconsume.v1.UserConsume/GetPageUserConsume",
+		FullMethod: "/userconsume.v1.UserConsume/GetUserConsumePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserConsumeServer).GetPageUserConsume(ctx, req.(*UserConsumePageReq))
+		return srv.(UserConsumeServer).GetUserConsumePage(ctx, req.(*UserConsumePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var UserConsume_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserConsumeServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageUserConsume",
-			Handler:    _UserConsume_GetPageUserConsume_Handler,
+			MethodName: "GetUserConsumePage",
+			Handler:    _UserConsume_GetUserConsumePage_Handler,
 		},
 		{
 			MethodName: "GetUserConsume",

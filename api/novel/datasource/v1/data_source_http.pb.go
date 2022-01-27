@@ -22,13 +22,13 @@ type DataSourceHTTPServer interface {
 	CreateDataSource(context.Context, *DataSourceCreateReq) (*DataSourceCreateReply, error)
 	DeleteDataSource(context.Context, *DataSourceDeleteReq) (*DataSourceDeleteReply, error)
 	GetDataSource(context.Context, *DataSourceReq) (*DataSourceReply, error)
-	GetPageDataSource(context.Context, *DataSourcePageReq) (*DataSourcePageReply, error)
+	GetDataSourcePage(context.Context, *DataSourcePageReq) (*DataSourcePageReply, error)
 	UpdateDataSource(context.Context, *DataSourceUpdateReq) (*DataSourceUpdateReply, error)
 }
 
 func RegisterDataSourceHTTPServer(s *http.Server, srv DataSourceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/data/source/page", _DataSource_GetPageDataSource0_HTTP_Handler(srv))
+	r.GET("/v1/data/source/page", _DataSource_GetDataSourcePage0_HTTP_Handler(srv))
 	r.GET("/v1/data/source/{id}", _DataSource_GetDataSource0_HTTP_Handler(srv))
 	r.PUT("/v1/data/source/{id}", _DataSource_UpdateDataSource0_HTTP_Handler(srv))
 	r.POST("/v1/data/source", _DataSource_CreateDataSource0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterDataSourceHTTPServer(s *http.Server, srv DataSourceHTTPServer) {
 	r.DELETE("/v1/data/source", _DataSource_BatchDeleteDataSource0_HTTP_Handler(srv))
 }
 
-func _DataSource_GetPageDataSource0_HTTP_Handler(srv DataSourceHTTPServer) func(ctx http.Context) error {
+func _DataSource_GetDataSourcePage0_HTTP_Handler(srv DataSourceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in DataSourcePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/datasource.v1.DataSource/GetPageDataSource")
+		http.SetOperation(ctx, "/datasource.v1.DataSource/GetDataSourcePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageDataSource(ctx, req.(*DataSourcePageReq))
+			return srv.GetDataSourcePage(ctx, req.(*DataSourcePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type DataSourceHTTPClient interface {
 	CreateDataSource(ctx context.Context, req *DataSourceCreateReq, opts ...http.CallOption) (rsp *DataSourceCreateReply, err error)
 	DeleteDataSource(ctx context.Context, req *DataSourceDeleteReq, opts ...http.CallOption) (rsp *DataSourceDeleteReply, err error)
 	GetDataSource(ctx context.Context, req *DataSourceReq, opts ...http.CallOption) (rsp *DataSourceReply, err error)
-	GetPageDataSource(ctx context.Context, req *DataSourcePageReq, opts ...http.CallOption) (rsp *DataSourcePageReply, err error)
+	GetDataSourcePage(ctx context.Context, req *DataSourcePageReq, opts ...http.CallOption) (rsp *DataSourcePageReply, err error)
 	UpdateDataSource(ctx context.Context, req *DataSourceUpdateReq, opts ...http.CallOption) (rsp *DataSourceUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *DataSourceHTTPClientImpl) GetDataSource(ctx context.Context, in *DataSo
 	return &out, err
 }
 
-func (c *DataSourceHTTPClientImpl) GetPageDataSource(ctx context.Context, in *DataSourcePageReq, opts ...http.CallOption) (*DataSourcePageReply, error) {
+func (c *DataSourceHTTPClientImpl) GetDataSourcePage(ctx context.Context, in *DataSourcePageReq, opts ...http.CallOption) (*DataSourcePageReply, error) {
 	var out DataSourcePageReply
 	pattern := "/v1/data/source/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/datasource.v1.DataSource/GetPageDataSource"))
+	opts = append(opts, http.Operation("/datasource.v1.DataSource/GetDataSourcePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

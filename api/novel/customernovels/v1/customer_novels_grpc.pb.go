@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CustomerNovelsClient interface {
 	// 分页查询CustomerNovels
-	GetPageCustomerNovels(ctx context.Context, in *CustomerNovelsPageReq, opts ...grpc.CallOption) (*CustomerNovelsPageReply, error)
+	GetCustomerNovelsPage(ctx context.Context, in *CustomerNovelsPageReq, opts ...grpc.CallOption) (*CustomerNovelsPageReply, error)
 	// 获取CustomerNovels
 	GetCustomerNovels(ctx context.Context, in *CustomerNovelsReq, opts ...grpc.CallOption) (*CustomerNovelsReply, error)
 	// 更新CustomerNovels
@@ -44,9 +44,9 @@ func NewCustomerNovelsClient(cc grpc.ClientConnInterface) CustomerNovelsClient {
 	return &customerNovelsClient{cc}
 }
 
-func (c *customerNovelsClient) GetPageCustomerNovels(ctx context.Context, in *CustomerNovelsPageReq, opts ...grpc.CallOption) (*CustomerNovelsPageReply, error) {
+func (c *customerNovelsClient) GetCustomerNovelsPage(ctx context.Context, in *CustomerNovelsPageReq, opts ...grpc.CallOption) (*CustomerNovelsPageReply, error) {
 	out := new(CustomerNovelsPageReply)
-	err := c.cc.Invoke(ctx, "/customernovels.v1.CustomerNovels/GetPageCustomerNovels", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/customernovels.v1.CustomerNovels/GetCustomerNovelsPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *customerNovelsClient) BatchDeleteCustomerNovels(ctx context.Context, in
 // for forward compatibility
 type CustomerNovelsServer interface {
 	// 分页查询CustomerNovels
-	GetPageCustomerNovels(context.Context, *CustomerNovelsPageReq) (*CustomerNovelsPageReply, error)
+	GetCustomerNovelsPage(context.Context, *CustomerNovelsPageReq) (*CustomerNovelsPageReply, error)
 	// 获取CustomerNovels
 	GetCustomerNovels(context.Context, *CustomerNovelsReq) (*CustomerNovelsReply, error)
 	// 更新CustomerNovels
@@ -121,8 +121,8 @@ type CustomerNovelsServer interface {
 type UnimplementedCustomerNovelsServer struct {
 }
 
-func (UnimplementedCustomerNovelsServer) GetPageCustomerNovels(context.Context, *CustomerNovelsPageReq) (*CustomerNovelsPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageCustomerNovels not implemented")
+func (UnimplementedCustomerNovelsServer) GetCustomerNovelsPage(context.Context, *CustomerNovelsPageReq) (*CustomerNovelsPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCustomerNovelsPage not implemented")
 }
 func (UnimplementedCustomerNovelsServer) GetCustomerNovels(context.Context, *CustomerNovelsReq) (*CustomerNovelsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCustomerNovels not implemented")
@@ -152,20 +152,20 @@ func RegisterCustomerNovelsServer(s grpc.ServiceRegistrar, srv CustomerNovelsSer
 	s.RegisterService(&CustomerNovels_ServiceDesc, srv)
 }
 
-func _CustomerNovels_GetPageCustomerNovels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomerNovels_GetCustomerNovelsPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CustomerNovelsPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerNovelsServer).GetPageCustomerNovels(ctx, in)
+		return srv.(CustomerNovelsServer).GetCustomerNovelsPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/customernovels.v1.CustomerNovels/GetPageCustomerNovels",
+		FullMethod: "/customernovels.v1.CustomerNovels/GetCustomerNovelsPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerNovelsServer).GetPageCustomerNovels(ctx, req.(*CustomerNovelsPageReq))
+		return srv.(CustomerNovelsServer).GetCustomerNovelsPage(ctx, req.(*CustomerNovelsPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var CustomerNovels_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CustomerNovelsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageCustomerNovels",
-			Handler:    _CustomerNovels_GetPageCustomerNovels_Handler,
+			MethodName: "GetCustomerNovelsPage",
+			Handler:    _CustomerNovels_GetCustomerNovelsPage_Handler,
 		},
 		{
 			MethodName: "GetCustomerNovels",

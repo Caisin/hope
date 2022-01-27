@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ActivityClient interface {
 	// 分页查询Activity
-	GetPageActivity(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*ActivityPageReply, error)
+	GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*ActivityPageReply, error)
 	// 获取Activity
 	GetActivity(ctx context.Context, in *ActivityReq, opts ...grpc.CallOption) (*ActivityReply, error)
 	// 更新Activity
@@ -44,9 +44,9 @@ func NewActivityClient(cc grpc.ClientConnInterface) ActivityClient {
 	return &activityClient{cc}
 }
 
-func (c *activityClient) GetPageActivity(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*ActivityPageReply, error) {
+func (c *activityClient) GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*ActivityPageReply, error) {
 	out := new(ActivityPageReply)
-	err := c.cc.Invoke(ctx, "/activity.v1.Activity/GetPageActivity", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/activity.v1.Activity/GetActivityPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *activityClient) BatchDeleteActivity(ctx context.Context, in *ActivityBa
 // for forward compatibility
 type ActivityServer interface {
 	// 分页查询Activity
-	GetPageActivity(context.Context, *ActivityPageReq) (*ActivityPageReply, error)
+	GetActivityPage(context.Context, *ActivityPageReq) (*ActivityPageReply, error)
 	// 获取Activity
 	GetActivity(context.Context, *ActivityReq) (*ActivityReply, error)
 	// 更新Activity
@@ -121,8 +121,8 @@ type ActivityServer interface {
 type UnimplementedActivityServer struct {
 }
 
-func (UnimplementedActivityServer) GetPageActivity(context.Context, *ActivityPageReq) (*ActivityPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageActivity not implemented")
+func (UnimplementedActivityServer) GetActivityPage(context.Context, *ActivityPageReq) (*ActivityPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActivityPage not implemented")
 }
 func (UnimplementedActivityServer) GetActivity(context.Context, *ActivityReq) (*ActivityReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActivity not implemented")
@@ -152,20 +152,20 @@ func RegisterActivityServer(s grpc.ServiceRegistrar, srv ActivityServer) {
 	s.RegisterService(&Activity_ServiceDesc, srv)
 }
 
-func _Activity_GetPageActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Activity_GetActivityPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ActivityPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ActivityServer).GetPageActivity(ctx, in)
+		return srv.(ActivityServer).GetActivityPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/activity.v1.Activity/GetPageActivity",
+		FullMethod: "/activity.v1.Activity/GetActivityPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ActivityServer).GetPageActivity(ctx, req.(*ActivityPageReq))
+		return srv.(ActivityServer).GetActivityPage(ctx, req.(*ActivityPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var Activity_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ActivityServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageActivity",
-			Handler:    _Activity_GetPageActivity_Handler,
+			MethodName: "GetActivityPage",
+			Handler:    _Activity_GetActivityPage_Handler,
 		},
 		{
 			MethodName: "GetActivity",

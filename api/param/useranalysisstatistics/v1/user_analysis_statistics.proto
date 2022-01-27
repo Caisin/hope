@@ -13,7 +13,7 @@ option go_package = "hope/api/param/useranalysisstatistics/v1;v1";
 service UserAnalysisStatistics {
 
   // 分页查询UserAnalysisStatistics
-  rpc GetPageUserAnalysisStatistics (UserAnalysisStatisticsPageReq) returns (UserAnalysisStatisticsPageReply)  {
+  rpc GetUserAnalysisStatisticsPage (UserAnalysisStatisticsPageReq) returns (UserAnalysisStatisticsPageReply)  {
     option (google.api.http) = {
       get: "/v1/user/analysis/statistics/page"
     };

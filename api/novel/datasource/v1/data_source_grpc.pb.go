@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DataSourceClient interface {
 	// 分页查询DataSource
-	GetPageDataSource(ctx context.Context, in *DataSourcePageReq, opts ...grpc.CallOption) (*DataSourcePageReply, error)
+	GetDataSourcePage(ctx context.Context, in *DataSourcePageReq, opts ...grpc.CallOption) (*DataSourcePageReply, error)
 	// 获取DataSource
 	GetDataSource(ctx context.Context, in *DataSourceReq, opts ...grpc.CallOption) (*DataSourceReply, error)
 	// 更新DataSource
@@ -44,9 +44,9 @@ func NewDataSourceClient(cc grpc.ClientConnInterface) DataSourceClient {
 	return &dataSourceClient{cc}
 }
 
-func (c *dataSourceClient) GetPageDataSource(ctx context.Context, in *DataSourcePageReq, opts ...grpc.CallOption) (*DataSourcePageReply, error) {
+func (c *dataSourceClient) GetDataSourcePage(ctx context.Context, in *DataSourcePageReq, opts ...grpc.CallOption) (*DataSourcePageReply, error) {
 	out := new(DataSourcePageReply)
-	err := c.cc.Invoke(ctx, "/datasource.v1.DataSource/GetPageDataSource", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/datasource.v1.DataSource/GetDataSourcePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *dataSourceClient) BatchDeleteDataSource(ctx context.Context, in *DataSo
 // for forward compatibility
 type DataSourceServer interface {
 	// 分页查询DataSource
-	GetPageDataSource(context.Context, *DataSourcePageReq) (*DataSourcePageReply, error)
+	GetDataSourcePage(context.Context, *DataSourcePageReq) (*DataSourcePageReply, error)
 	// 获取DataSource
 	GetDataSource(context.Context, *DataSourceReq) (*DataSourceReply, error)
 	// 更新DataSource
@@ -121,8 +121,8 @@ type DataSourceServer interface {
 type UnimplementedDataSourceServer struct {
 }
 
-func (UnimplementedDataSourceServer) GetPageDataSource(context.Context, *DataSourcePageReq) (*DataSourcePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageDataSource not implemented")
+func (UnimplementedDataSourceServer) GetDataSourcePage(context.Context, *DataSourcePageReq) (*DataSourcePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDataSourcePage not implemented")
 }
 func (UnimplementedDataSourceServer) GetDataSource(context.Context, *DataSourceReq) (*DataSourceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDataSource not implemented")
@@ -152,20 +152,20 @@ func RegisterDataSourceServer(s grpc.ServiceRegistrar, srv DataSourceServer) {
 	s.RegisterService(&DataSource_ServiceDesc, srv)
 }
 
-func _DataSource_GetPageDataSource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DataSource_GetDataSourcePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DataSourcePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DataSourceServer).GetPageDataSource(ctx, in)
+		return srv.(DataSourceServer).GetDataSourcePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/datasource.v1.DataSource/GetPageDataSource",
+		FullMethod: "/datasource.v1.DataSource/GetDataSourcePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DataSourceServer).GetPageDataSource(ctx, req.(*DataSourcePageReq))
+		return srv.(DataSourceServer).GetDataSourcePage(ctx, req.(*DataSourcePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var DataSource_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DataSourceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageDataSource",
-			Handler:    _DataSource_GetPageDataSource_Handler,
+			MethodName: "GetDataSourcePage",
+			Handler:    _DataSource_GetDataSourcePage_Handler,
 		},
 		{
 			MethodName: "GetDataSource",

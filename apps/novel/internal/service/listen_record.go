@@ -20,9 +20,9 @@ func NewListenRecordService(uc *biz.ListenRecordUseCase, logger log.Logger) *Lis
 	return &ListenRecordService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *ListenRecordService) GetPageListenRecord(ctx context.Context, req *pb.ListenRecordPageReq) (*pb.ListenRecordPageReply, error) {
+func (s *ListenRecordService) GetListenRecordPage(ctx context.Context, req *pb.ListenRecordPageReq) (*pb.ListenRecordPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageListenRecord")
+	ctx, span := tr.Start(ctx, "GetListenRecordPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

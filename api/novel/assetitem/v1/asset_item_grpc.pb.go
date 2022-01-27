@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AssetItemClient interface {
 	// 分页查询AssetItem
-	GetPageAssetItem(ctx context.Context, in *AssetItemPageReq, opts ...grpc.CallOption) (*AssetItemPageReply, error)
+	GetAssetItemPage(ctx context.Context, in *AssetItemPageReq, opts ...grpc.CallOption) (*AssetItemPageReply, error)
 	// 获取AssetItem
 	GetAssetItem(ctx context.Context, in *AssetItemReq, opts ...grpc.CallOption) (*AssetItemReply, error)
 	// 更新AssetItem
@@ -44,9 +44,9 @@ func NewAssetItemClient(cc grpc.ClientConnInterface) AssetItemClient {
 	return &assetItemClient{cc}
 }
 
-func (c *assetItemClient) GetPageAssetItem(ctx context.Context, in *AssetItemPageReq, opts ...grpc.CallOption) (*AssetItemPageReply, error) {
+func (c *assetItemClient) GetAssetItemPage(ctx context.Context, in *AssetItemPageReq, opts ...grpc.CallOption) (*AssetItemPageReply, error) {
 	out := new(AssetItemPageReply)
-	err := c.cc.Invoke(ctx, "/assetitem.v1.AssetItem/GetPageAssetItem", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/assetitem.v1.AssetItem/GetAssetItemPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *assetItemClient) BatchDeleteAssetItem(ctx context.Context, in *AssetIte
 // for forward compatibility
 type AssetItemServer interface {
 	// 分页查询AssetItem
-	GetPageAssetItem(context.Context, *AssetItemPageReq) (*AssetItemPageReply, error)
+	GetAssetItemPage(context.Context, *AssetItemPageReq) (*AssetItemPageReply, error)
 	// 获取AssetItem
 	GetAssetItem(context.Context, *AssetItemReq) (*AssetItemReply, error)
 	// 更新AssetItem
@@ -121,8 +121,8 @@ type AssetItemServer interface {
 type UnimplementedAssetItemServer struct {
 }
 
-func (UnimplementedAssetItemServer) GetPageAssetItem(context.Context, *AssetItemPageReq) (*AssetItemPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageAssetItem not implemented")
+func (UnimplementedAssetItemServer) GetAssetItemPage(context.Context, *AssetItemPageReq) (*AssetItemPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAssetItemPage not implemented")
 }
 func (UnimplementedAssetItemServer) GetAssetItem(context.Context, *AssetItemReq) (*AssetItemReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAssetItem not implemented")
@@ -152,20 +152,20 @@ func RegisterAssetItemServer(s grpc.ServiceRegistrar, srv AssetItemServer) {
 	s.RegisterService(&AssetItem_ServiceDesc, srv)
 }
 
-func _AssetItem_GetPageAssetItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AssetItem_GetAssetItemPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AssetItemPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AssetItemServer).GetPageAssetItem(ctx, in)
+		return srv.(AssetItemServer).GetAssetItemPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/assetitem.v1.AssetItem/GetPageAssetItem",
+		FullMethod: "/assetitem.v1.AssetItem/GetAssetItemPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetItemServer).GetPageAssetItem(ctx, req.(*AssetItemPageReq))
+		return srv.(AssetItemServer).GetAssetItemPage(ctx, req.(*AssetItemPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var AssetItem_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AssetItemServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageAssetItem",
-			Handler:    _AssetItem_GetPageAssetItem_Handler,
+			MethodName: "GetAssetItemPage",
+			Handler:    _AssetItem_GetAssetItemPage_Handler,
 		},
 		{
 			MethodName: "GetAssetItem",

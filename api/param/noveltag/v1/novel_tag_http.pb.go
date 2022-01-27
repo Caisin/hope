@@ -22,13 +22,13 @@ type NovelTagHTTPServer interface {
 	CreateNovelTag(context.Context, *NovelTagCreateReq) (*NovelTagCreateReply, error)
 	DeleteNovelTag(context.Context, *NovelTagDeleteReq) (*NovelTagDeleteReply, error)
 	GetNovelTag(context.Context, *NovelTagReq) (*NovelTagReply, error)
-	GetPageNovelTag(context.Context, *NovelTagPageReq) (*NovelTagPageReply, error)
+	GetNovelTagPage(context.Context, *NovelTagPageReq) (*NovelTagPageReply, error)
 	UpdateNovelTag(context.Context, *NovelTagUpdateReq) (*NovelTagUpdateReply, error)
 }
 
 func RegisterNovelTagHTTPServer(s *http.Server, srv NovelTagHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/tag/page", _NovelTag_GetPageNovelTag0_HTTP_Handler(srv))
+	r.GET("/v1/novel/tag/page", _NovelTag_GetNovelTagPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/tag/{id}", _NovelTag_GetNovelTag0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/tag/{id}", _NovelTag_UpdateNovelTag0_HTTP_Handler(srv))
 	r.POST("/v1/novel/tag", _NovelTag_CreateNovelTag0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelTagHTTPServer(s *http.Server, srv NovelTagHTTPServer) {
 	r.DELETE("/v1/novel/tag", _NovelTag_BatchDeleteNovelTag0_HTTP_Handler(srv))
 }
 
-func _NovelTag_GetPageNovelTag0_HTTP_Handler(srv NovelTagHTTPServer) func(ctx http.Context) error {
+func _NovelTag_GetNovelTagPage0_HTTP_Handler(srv NovelTagHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelTagPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/noveltag.v1.NovelTag/GetPageNovelTag")
+		http.SetOperation(ctx, "/noveltag.v1.NovelTag/GetNovelTagPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelTag(ctx, req.(*NovelTagPageReq))
+			return srv.GetNovelTagPage(ctx, req.(*NovelTagPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelTagHTTPClient interface {
 	CreateNovelTag(ctx context.Context, req *NovelTagCreateReq, opts ...http.CallOption) (rsp *NovelTagCreateReply, err error)
 	DeleteNovelTag(ctx context.Context, req *NovelTagDeleteReq, opts ...http.CallOption) (rsp *NovelTagDeleteReply, err error)
 	GetNovelTag(ctx context.Context, req *NovelTagReq, opts ...http.CallOption) (rsp *NovelTagReply, err error)
-	GetPageNovelTag(ctx context.Context, req *NovelTagPageReq, opts ...http.CallOption) (rsp *NovelTagPageReply, err error)
+	GetNovelTagPage(ctx context.Context, req *NovelTagPageReq, opts ...http.CallOption) (rsp *NovelTagPageReply, err error)
 	UpdateNovelTag(ctx context.Context, req *NovelTagUpdateReq, opts ...http.CallOption) (rsp *NovelTagUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelTagHTTPClientImpl) GetNovelTag(ctx context.Context, in *NovelTagRe
 	return &out, err
 }
 
-func (c *NovelTagHTTPClientImpl) GetPageNovelTag(ctx context.Context, in *NovelTagPageReq, opts ...http.CallOption) (*NovelTagPageReply, error) {
+func (c *NovelTagHTTPClientImpl) GetNovelTagPage(ctx context.Context, in *NovelTagPageReq, opts ...http.CallOption) (*NovelTagPageReply, error) {
 	var out NovelTagPageReply
 	pattern := "/v1/novel/tag/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/GetPageNovelTag"))
+	opts = append(opts, http.Operation("/noveltag.v1.NovelTag/GetNovelTagPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

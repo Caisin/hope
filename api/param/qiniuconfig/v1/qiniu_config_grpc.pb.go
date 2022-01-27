@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QiniuConfigClient interface {
 	// 分页查询QiniuConfig
-	GetPageQiniuConfig(ctx context.Context, in *QiniuConfigPageReq, opts ...grpc.CallOption) (*QiniuConfigPageReply, error)
+	GetQiniuConfigPage(ctx context.Context, in *QiniuConfigPageReq, opts ...grpc.CallOption) (*QiniuConfigPageReply, error)
 	// 获取QiniuConfig
 	GetQiniuConfig(ctx context.Context, in *QiniuConfigReq, opts ...grpc.CallOption) (*QiniuConfigReply, error)
 	// 更新QiniuConfig
@@ -44,9 +44,9 @@ func NewQiniuConfigClient(cc grpc.ClientConnInterface) QiniuConfigClient {
 	return &qiniuConfigClient{cc}
 }
 
-func (c *qiniuConfigClient) GetPageQiniuConfig(ctx context.Context, in *QiniuConfigPageReq, opts ...grpc.CallOption) (*QiniuConfigPageReply, error) {
+func (c *qiniuConfigClient) GetQiniuConfigPage(ctx context.Context, in *QiniuConfigPageReq, opts ...grpc.CallOption) (*QiniuConfigPageReply, error) {
 	out := new(QiniuConfigPageReply)
-	err := c.cc.Invoke(ctx, "/qiniuconfig.v1.QiniuConfig/GetPageQiniuConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/qiniuconfig.v1.QiniuConfig/GetQiniuConfigPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *qiniuConfigClient) BatchDeleteQiniuConfig(ctx context.Context, in *Qini
 // for forward compatibility
 type QiniuConfigServer interface {
 	// 分页查询QiniuConfig
-	GetPageQiniuConfig(context.Context, *QiniuConfigPageReq) (*QiniuConfigPageReply, error)
+	GetQiniuConfigPage(context.Context, *QiniuConfigPageReq) (*QiniuConfigPageReply, error)
 	// 获取QiniuConfig
 	GetQiniuConfig(context.Context, *QiniuConfigReq) (*QiniuConfigReply, error)
 	// 更新QiniuConfig
@@ -121,8 +121,8 @@ type QiniuConfigServer interface {
 type UnimplementedQiniuConfigServer struct {
 }
 
-func (UnimplementedQiniuConfigServer) GetPageQiniuConfig(context.Context, *QiniuConfigPageReq) (*QiniuConfigPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageQiniuConfig not implemented")
+func (UnimplementedQiniuConfigServer) GetQiniuConfigPage(context.Context, *QiniuConfigPageReq) (*QiniuConfigPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQiniuConfigPage not implemented")
 }
 func (UnimplementedQiniuConfigServer) GetQiniuConfig(context.Context, *QiniuConfigReq) (*QiniuConfigReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQiniuConfig not implemented")
@@ -152,20 +152,20 @@ func RegisterQiniuConfigServer(s grpc.ServiceRegistrar, srv QiniuConfigServer) {
 	s.RegisterService(&QiniuConfig_ServiceDesc, srv)
 }
 
-func _QiniuConfig_GetPageQiniuConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _QiniuConfig_GetQiniuConfigPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QiniuConfigPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QiniuConfigServer).GetPageQiniuConfig(ctx, in)
+		return srv.(QiniuConfigServer).GetQiniuConfigPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/qiniuconfig.v1.QiniuConfig/GetPageQiniuConfig",
+		FullMethod: "/qiniuconfig.v1.QiniuConfig/GetQiniuConfigPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QiniuConfigServer).GetPageQiniuConfig(ctx, req.(*QiniuConfigPageReq))
+		return srv.(QiniuConfigServer).GetQiniuConfigPage(ctx, req.(*QiniuConfigPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var QiniuConfig_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*QiniuConfigServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageQiniuConfig",
-			Handler:    _QiniuConfig_GetPageQiniuConfig_Handler,
+			MethodName: "GetQiniuConfigPage",
+			Handler:    _QiniuConfig_GetQiniuConfigPage_Handler,
 		},
 		{
 			MethodName: "GetQiniuConfig",

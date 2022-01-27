@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelBuyRecordClient interface {
 	// 分页查询NovelBuyRecord
-	GetPageNovelBuyRecord(ctx context.Context, in *NovelBuyRecordPageReq, opts ...grpc.CallOption) (*NovelBuyRecordPageReply, error)
+	GetNovelBuyRecordPage(ctx context.Context, in *NovelBuyRecordPageReq, opts ...grpc.CallOption) (*NovelBuyRecordPageReply, error)
 	// 获取NovelBuyRecord
 	GetNovelBuyRecord(ctx context.Context, in *NovelBuyRecordReq, opts ...grpc.CallOption) (*NovelBuyRecordReply, error)
 	// 更新NovelBuyRecord
@@ -44,9 +44,9 @@ func NewNovelBuyRecordClient(cc grpc.ClientConnInterface) NovelBuyRecordClient {
 	return &novelBuyRecordClient{cc}
 }
 
-func (c *novelBuyRecordClient) GetPageNovelBuyRecord(ctx context.Context, in *NovelBuyRecordPageReq, opts ...grpc.CallOption) (*NovelBuyRecordPageReply, error) {
+func (c *novelBuyRecordClient) GetNovelBuyRecordPage(ctx context.Context, in *NovelBuyRecordPageReq, opts ...grpc.CallOption) (*NovelBuyRecordPageReply, error) {
 	out := new(NovelBuyRecordPageReply)
-	err := c.cc.Invoke(ctx, "/novelbuyrecord.v1.NovelBuyRecord/GetPageNovelBuyRecord", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelbuyrecord.v1.NovelBuyRecord/GetNovelBuyRecordPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelBuyRecordClient) BatchDeleteNovelBuyRecord(ctx context.Context, in
 // for forward compatibility
 type NovelBuyRecordServer interface {
 	// 分页查询NovelBuyRecord
-	GetPageNovelBuyRecord(context.Context, *NovelBuyRecordPageReq) (*NovelBuyRecordPageReply, error)
+	GetNovelBuyRecordPage(context.Context, *NovelBuyRecordPageReq) (*NovelBuyRecordPageReply, error)
 	// 获取NovelBuyRecord
 	GetNovelBuyRecord(context.Context, *NovelBuyRecordReq) (*NovelBuyRecordReply, error)
 	// 更新NovelBuyRecord
@@ -121,8 +121,8 @@ type NovelBuyRecordServer interface {
 type UnimplementedNovelBuyRecordServer struct {
 }
 
-func (UnimplementedNovelBuyRecordServer) GetPageNovelBuyRecord(context.Context, *NovelBuyRecordPageReq) (*NovelBuyRecordPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelBuyRecord not implemented")
+func (UnimplementedNovelBuyRecordServer) GetNovelBuyRecordPage(context.Context, *NovelBuyRecordPageReq) (*NovelBuyRecordPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelBuyRecordPage not implemented")
 }
 func (UnimplementedNovelBuyRecordServer) GetNovelBuyRecord(context.Context, *NovelBuyRecordReq) (*NovelBuyRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelBuyRecord not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelBuyRecordServer(s grpc.ServiceRegistrar, srv NovelBuyRecordSer
 	s.RegisterService(&NovelBuyRecord_ServiceDesc, srv)
 }
 
-func _NovelBuyRecord_GetPageNovelBuyRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelBuyRecord_GetNovelBuyRecordPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelBuyRecordPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelBuyRecordServer).GetPageNovelBuyRecord(ctx, in)
+		return srv.(NovelBuyRecordServer).GetNovelBuyRecordPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelbuyrecord.v1.NovelBuyRecord/GetPageNovelBuyRecord",
+		FullMethod: "/novelbuyrecord.v1.NovelBuyRecord/GetNovelBuyRecordPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelBuyRecordServer).GetPageNovelBuyRecord(ctx, req.(*NovelBuyRecordPageReq))
+		return srv.(NovelBuyRecordServer).GetNovelBuyRecordPage(ctx, req.(*NovelBuyRecordPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelBuyRecord_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelBuyRecordServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelBuyRecord",
-			Handler:    _NovelBuyRecord_GetPageNovelBuyRecord_Handler,
+			MethodName: "GetNovelBuyRecordPage",
+			Handler:    _NovelBuyRecord_GetNovelBuyRecordPage_Handler,
 		},
 		{
 			MethodName: "GetNovelBuyRecord",

@@ -21,14 +21,14 @@ type SysDictTypeHTTPServer interface {
 	BatchDeleteSysDictType(context.Context, *SysDictTypeBatchDeleteReq) (*SysDictTypeDeleteReply, error)
 	CreateSysDictType(context.Context, *SysDictTypeCreateReq) (*SysDictTypeCreateReply, error)
 	DeleteSysDictType(context.Context, *SysDictTypeDeleteReq) (*SysDictTypeDeleteReply, error)
-	GetPageSysDictType(context.Context, *SysDictTypePageReq) (*SysDictTypePageReply, error)
 	GetSysDictType(context.Context, *SysDictTypeReq) (*SysDictTypeReply, error)
+	GetSysDictTypePage(context.Context, *SysDictTypePageReq) (*SysDictTypePageReply, error)
 	UpdateSysDictType(context.Context, *SysDictTypeUpdateReq) (*SysDictTypeUpdateReply, error)
 }
 
 func RegisterSysDictTypeHTTPServer(s *http.Server, srv SysDictTypeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/dict/type/page", _SysDictType_GetPageSysDictType0_HTTP_Handler(srv))
+	r.GET("/v1/sys/dict/type/page", _SysDictType_GetSysDictTypePage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/dict/type/{id}", _SysDictType_GetSysDictType0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/dict/type/{id}", _SysDictType_UpdateSysDictType0_HTTP_Handler(srv))
 	r.POST("/v1/sys/dict/type", _SysDictType_CreateSysDictType0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysDictTypeHTTPServer(s *http.Server, srv SysDictTypeHTTPServer) {
 	r.DELETE("/v1/sys/dict/type", _SysDictType_BatchDeleteSysDictType0_HTTP_Handler(srv))
 }
 
-func _SysDictType_GetPageSysDictType0_HTTP_Handler(srv SysDictTypeHTTPServer) func(ctx http.Context) error {
+func _SysDictType_GetSysDictTypePage0_HTTP_Handler(srv SysDictTypeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysDictTypePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysdicttype.v1.SysDictType/GetPageSysDictType")
+		http.SetOperation(ctx, "/sysdicttype.v1.SysDictType/GetSysDictTypePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysDictType(ctx, req.(*SysDictTypePageReq))
+			return srv.GetSysDictTypePage(ctx, req.(*SysDictTypePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysDictTypeHTTPClient interface {
 	BatchDeleteSysDictType(ctx context.Context, req *SysDictTypeBatchDeleteReq, opts ...http.CallOption) (rsp *SysDictTypeDeleteReply, err error)
 	CreateSysDictType(ctx context.Context, req *SysDictTypeCreateReq, opts ...http.CallOption) (rsp *SysDictTypeCreateReply, err error)
 	DeleteSysDictType(ctx context.Context, req *SysDictTypeDeleteReq, opts ...http.CallOption) (rsp *SysDictTypeDeleteReply, err error)
-	GetPageSysDictType(ctx context.Context, req *SysDictTypePageReq, opts ...http.CallOption) (rsp *SysDictTypePageReply, err error)
 	GetSysDictType(ctx context.Context, req *SysDictTypeReq, opts ...http.CallOption) (rsp *SysDictTypeReply, err error)
+	GetSysDictTypePage(ctx context.Context, req *SysDictTypePageReq, opts ...http.CallOption) (rsp *SysDictTypePageReply, err error)
 	UpdateSysDictType(ctx context.Context, req *SysDictTypeUpdateReq, opts ...http.CallOption) (rsp *SysDictTypeUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysDictTypeHTTPClientImpl) DeleteSysDictType(ctx context.Context, in *S
 	return &out, err
 }
 
-func (c *SysDictTypeHTTPClientImpl) GetPageSysDictType(ctx context.Context, in *SysDictTypePageReq, opts ...http.CallOption) (*SysDictTypePageReply, error) {
-	var out SysDictTypePageReply
-	pattern := "/v1/sys/dict/type/page"
+func (c *SysDictTypeHTTPClientImpl) GetSysDictType(ctx context.Context, in *SysDictTypeReq, opts ...http.CallOption) (*SysDictTypeReply, error) {
+	var out SysDictTypeReply
+	pattern := "/v1/sys/dict/type/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysdicttype.v1.SysDictType/GetPageSysDictType"))
+	opts = append(opts, http.Operation("/sysdicttype.v1.SysDictType/GetSysDictType"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysDictTypeHTTPClientImpl) GetPageSysDictType(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *SysDictTypeHTTPClientImpl) GetSysDictType(ctx context.Context, in *SysDictTypeReq, opts ...http.CallOption) (*SysDictTypeReply, error) {
-	var out SysDictTypeReply
-	pattern := "/v1/sys/dict/type/{id}"
+func (c *SysDictTypeHTTPClientImpl) GetSysDictTypePage(ctx context.Context, in *SysDictTypePageReq, opts ...http.CallOption) (*SysDictTypePageReply, error) {
+	var out SysDictTypePageReply
+	pattern := "/v1/sys/dict/type/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysdicttype.v1.SysDictType/GetSysDictType"))
+	opts = append(opts, http.Operation("/sysdicttype.v1.SysDictType/GetSysDictTypePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

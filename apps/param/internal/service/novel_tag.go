@@ -20,9 +20,9 @@ func NewNovelTagService(uc *biz.NovelTagUseCase, logger log.Logger) *NovelTagSer
 	return &NovelTagService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *NovelTagService) GetPageNovelTag(ctx context.Context, req *pb.NovelTagPageReq) (*pb.NovelTagPageReply, error) {
+func (s *NovelTagService) GetNovelTagPage(ctx context.Context, req *pb.NovelTagPageReq) (*pb.NovelTagPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageNovelTag")
+	ctx, span := tr.Start(ctx, "GetNovelTagPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

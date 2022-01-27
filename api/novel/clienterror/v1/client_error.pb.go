@@ -1115,7 +1115,7 @@ var file_api_novel_clienterror_v1_client_error_proto_rawDesc = []byte{
 	0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
 	0x08, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0x90, 0x06, 0x0a, 0x0b, 0x43, 0x6c,
 	0x69, 0x65, 0x6e, 0x74, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x7d, 0x0a, 0x12, 0x47, 0x65, 0x74,
-	0x50, 0x61, 0x67, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12,
+	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x50, 0x61, 0x67, 0x65, 0x12,
 	0x22, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x2e, 0x76, 0x31,
 	0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x50, 0x61, 0x67, 0x65,
 	0x52, 0x65, 0x71, 0x1a, 0x24, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x72, 0x6f,
@@ -1208,13 +1208,13 @@ var file_api_novel_clienterror_v1_client_error_proto_depIdxs = []int32{
 	0,  // 7: clienterror.v1.ClientErrorReply.result:type_name -> clienterror.v1.ClientErrorData
 	0,  // 8: clienterror.v1.ClientErrorCreateReply.result:type_name -> clienterror.v1.ClientErrorData
 	0,  // 9: clienterror.v1.ClientErrorUpdateReply.result:type_name -> clienterror.v1.ClientErrorData
-	1,  // 10: clienterror.v1.ClientError.GetPageClientError:input_type -> clienterror.v1.ClientErrorPageReq
+	1,  // 10: clienterror.v1.ClientError.GetClientErrorPage:input_type -> clienterror.v1.ClientErrorPageReq
 	3,  // 11: clienterror.v1.ClientError.GetClientError:input_type -> clienterror.v1.ClientErrorReq
 	7,  // 12: clienterror.v1.ClientError.UpdateClientError:input_type -> clienterror.v1.ClientErrorUpdateReq
 	5,  // 13: clienterror.v1.ClientError.CreateClientError:input_type -> clienterror.v1.ClientErrorCreateReq
 	9,  // 14: clienterror.v1.ClientError.DeleteClientError:input_type -> clienterror.v1.ClientErrorDeleteReq
 	10, // 15: clienterror.v1.ClientError.BatchDeleteClientError:input_type -> clienterror.v1.ClientErrorBatchDeleteReq
-	2,  // 16: clienterror.v1.ClientError.GetPageClientError:output_type -> clienterror.v1.ClientErrorPageReply
+	2,  // 16: clienterror.v1.ClientError.GetClientErrorPage:output_type -> clienterror.v1.ClientErrorPageReply
 	4,  // 17: clienterror.v1.ClientError.GetClientError:output_type -> clienterror.v1.ClientErrorReply
 	8,  // 18: clienterror.v1.ClientError.UpdateClientError:output_type -> clienterror.v1.ClientErrorUpdateReply
 	6,  // 19: clienterror.v1.ClientError.CreateClientError:output_type -> clienterror.v1.ClientErrorCreateReply

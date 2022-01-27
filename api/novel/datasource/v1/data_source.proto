@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/datasource/v1;v1";
 service DataSource {
 
   // 分页查询DataSource
-  rpc GetPageDataSource (DataSourcePageReq) returns (DataSourcePageReply)  {
+  rpc GetDataSourcePage (DataSourcePageReq) returns (DataSourcePageReply)  {
     option (google.api.http) = {
       get: "/v1/data/source/page"
     };

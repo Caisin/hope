@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserEventClient interface {
 	// 分页查询UserEvent
-	GetPageUserEvent(ctx context.Context, in *UserEventPageReq, opts ...grpc.CallOption) (*UserEventPageReply, error)
+	GetUserEventPage(ctx context.Context, in *UserEventPageReq, opts ...grpc.CallOption) (*UserEventPageReply, error)
 	// 获取UserEvent
 	GetUserEvent(ctx context.Context, in *UserEventReq, opts ...grpc.CallOption) (*UserEventReply, error)
 	// 更新UserEvent
@@ -44,9 +44,9 @@ func NewUserEventClient(cc grpc.ClientConnInterface) UserEventClient {
 	return &userEventClient{cc}
 }
 
-func (c *userEventClient) GetPageUserEvent(ctx context.Context, in *UserEventPageReq, opts ...grpc.CallOption) (*UserEventPageReply, error) {
+func (c *userEventClient) GetUserEventPage(ctx context.Context, in *UserEventPageReq, opts ...grpc.CallOption) (*UserEventPageReply, error) {
 	out := new(UserEventPageReply)
-	err := c.cc.Invoke(ctx, "/userevent.v1.UserEvent/GetPageUserEvent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/userevent.v1.UserEvent/GetUserEventPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *userEventClient) BatchDeleteUserEvent(ctx context.Context, in *UserEven
 // for forward compatibility
 type UserEventServer interface {
 	// 分页查询UserEvent
-	GetPageUserEvent(context.Context, *UserEventPageReq) (*UserEventPageReply, error)
+	GetUserEventPage(context.Context, *UserEventPageReq) (*UserEventPageReply, error)
 	// 获取UserEvent
 	GetUserEvent(context.Context, *UserEventReq) (*UserEventReply, error)
 	// 更新UserEvent
@@ -121,8 +121,8 @@ type UserEventServer interface {
 type UnimplementedUserEventServer struct {
 }
 
-func (UnimplementedUserEventServer) GetPageUserEvent(context.Context, *UserEventPageReq) (*UserEventPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageUserEvent not implemented")
+func (UnimplementedUserEventServer) GetUserEventPage(context.Context, *UserEventPageReq) (*UserEventPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserEventPage not implemented")
 }
 func (UnimplementedUserEventServer) GetUserEvent(context.Context, *UserEventReq) (*UserEventReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserEvent not implemented")
@@ -152,20 +152,20 @@ func RegisterUserEventServer(s grpc.ServiceRegistrar, srv UserEventServer) {
 	s.RegisterService(&UserEvent_ServiceDesc, srv)
 }
 
-func _UserEvent_GetPageUserEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserEvent_GetUserEventPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserEventPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserEventServer).GetPageUserEvent(ctx, in)
+		return srv.(UserEventServer).GetUserEventPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/userevent.v1.UserEvent/GetPageUserEvent",
+		FullMethod: "/userevent.v1.UserEvent/GetUserEventPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserEventServer).GetPageUserEvent(ctx, req.(*UserEventPageReq))
+		return srv.(UserEventServer).GetUserEventPage(ctx, req.(*UserEventPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var UserEvent_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserEventServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageUserEvent",
-			Handler:    _UserEvent_GetPageUserEvent_Handler,
+			MethodName: "GetUserEventPage",
+			Handler:    _UserEvent_GetUserEventPage_Handler,
 		},
 		{
 			MethodName: "GetUserEvent",

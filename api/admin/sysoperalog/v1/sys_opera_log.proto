@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysoperalog/v1;v1";
 service SysOperaLog {
 
   // 分页查询SysOperaLog
-  rpc GetPageSysOperaLog (SysOperaLogPageReq) returns (SysOperaLogPageReply)  {
+  rpc GetSysOperaLogPage (SysOperaLogPageReq) returns (SysOperaLogPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/opera/log/page"
     };

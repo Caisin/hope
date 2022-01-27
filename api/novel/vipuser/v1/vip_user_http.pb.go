@@ -21,14 +21,14 @@ type VipUserHTTPServer interface {
 	BatchDeleteVipUser(context.Context, *VipUserBatchDeleteReq) (*VipUserDeleteReply, error)
 	CreateVipUser(context.Context, *VipUserCreateReq) (*VipUserCreateReply, error)
 	DeleteVipUser(context.Context, *VipUserDeleteReq) (*VipUserDeleteReply, error)
-	GetPageVipUser(context.Context, *VipUserPageReq) (*VipUserPageReply, error)
 	GetVipUser(context.Context, *VipUserReq) (*VipUserReply, error)
+	GetVipUserPage(context.Context, *VipUserPageReq) (*VipUserPageReply, error)
 	UpdateVipUser(context.Context, *VipUserUpdateReq) (*VipUserUpdateReply, error)
 }
 
 func RegisterVipUserHTTPServer(s *http.Server, srv VipUserHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/vip/user/page", _VipUser_GetPageVipUser0_HTTP_Handler(srv))
+	r.GET("/v1/vip/user/page", _VipUser_GetVipUserPage0_HTTP_Handler(srv))
 	r.GET("/v1/vip/user/{id}", _VipUser_GetVipUser0_HTTP_Handler(srv))
 	r.PUT("/v1/vip/user/{id}", _VipUser_UpdateVipUser0_HTTP_Handler(srv))
 	r.POST("/v1/vip/user", _VipUser_CreateVipUser0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterVipUserHTTPServer(s *http.Server, srv VipUserHTTPServer) {
 	r.DELETE("/v1/vip/user", _VipUser_BatchDeleteVipUser0_HTTP_Handler(srv))
 }
 
-func _VipUser_GetPageVipUser0_HTTP_Handler(srv VipUserHTTPServer) func(ctx http.Context) error {
+func _VipUser_GetVipUserPage0_HTTP_Handler(srv VipUserHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in VipUserPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/vipuser.v1.VipUser/GetPageVipUser")
+		http.SetOperation(ctx, "/vipuser.v1.VipUser/GetVipUserPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageVipUser(ctx, req.(*VipUserPageReq))
+			return srv.GetVipUserPage(ctx, req.(*VipUserPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type VipUserHTTPClient interface {
 	BatchDeleteVipUser(ctx context.Context, req *VipUserBatchDeleteReq, opts ...http.CallOption) (rsp *VipUserDeleteReply, err error)
 	CreateVipUser(ctx context.Context, req *VipUserCreateReq, opts ...http.CallOption) (rsp *VipUserCreateReply, err error)
 	DeleteVipUser(ctx context.Context, req *VipUserDeleteReq, opts ...http.CallOption) (rsp *VipUserDeleteReply, err error)
-	GetPageVipUser(ctx context.Context, req *VipUserPageReq, opts ...http.CallOption) (rsp *VipUserPageReply, err error)
 	GetVipUser(ctx context.Context, req *VipUserReq, opts ...http.CallOption) (rsp *VipUserReply, err error)
+	GetVipUserPage(ctx context.Context, req *VipUserPageReq, opts ...http.CallOption) (rsp *VipUserPageReply, err error)
 	UpdateVipUser(ctx context.Context, req *VipUserUpdateReq, opts ...http.CallOption) (rsp *VipUserUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *VipUserHTTPClientImpl) DeleteVipUser(ctx context.Context, in *VipUserDe
 	return &out, err
 }
 
-func (c *VipUserHTTPClientImpl) GetPageVipUser(ctx context.Context, in *VipUserPageReq, opts ...http.CallOption) (*VipUserPageReply, error) {
-	var out VipUserPageReply
-	pattern := "/v1/vip/user/page"
+func (c *VipUserHTTPClientImpl) GetVipUser(ctx context.Context, in *VipUserReq, opts ...http.CallOption) (*VipUserReply, error) {
+	var out VipUserReply
+	pattern := "/v1/vip/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/vipuser.v1.VipUser/GetPageVipUser"))
+	opts = append(opts, http.Operation("/vipuser.v1.VipUser/GetVipUser"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *VipUserHTTPClientImpl) GetPageVipUser(ctx context.Context, in *VipUserP
 	return &out, err
 }
 
-func (c *VipUserHTTPClientImpl) GetVipUser(ctx context.Context, in *VipUserReq, opts ...http.CallOption) (*VipUserReply, error) {
-	var out VipUserReply
-	pattern := "/v1/vip/user/{id}"
+func (c *VipUserHTTPClientImpl) GetVipUserPage(ctx context.Context, in *VipUserPageReq, opts ...http.CallOption) (*VipUserPageReply, error) {
+	var out VipUserPageReply
+	pattern := "/v1/vip/user/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/vipuser.v1.VipUser/GetVipUser"))
+	opts = append(opts, http.Operation("/vipuser.v1.VipUser/GetVipUserPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdChangeLogClient interface {
 	// 分页查询AdChangeLog
-	GetPageAdChangeLog(ctx context.Context, in *AdChangeLogPageReq, opts ...grpc.CallOption) (*AdChangeLogPageReply, error)
+	GetAdChangeLogPage(ctx context.Context, in *AdChangeLogPageReq, opts ...grpc.CallOption) (*AdChangeLogPageReply, error)
 	// 获取AdChangeLog
 	GetAdChangeLog(ctx context.Context, in *AdChangeLogReq, opts ...grpc.CallOption) (*AdChangeLogReply, error)
 	// 更新AdChangeLog
@@ -44,9 +44,9 @@ func NewAdChangeLogClient(cc grpc.ClientConnInterface) AdChangeLogClient {
 	return &adChangeLogClient{cc}
 }
 
-func (c *adChangeLogClient) GetPageAdChangeLog(ctx context.Context, in *AdChangeLogPageReq, opts ...grpc.CallOption) (*AdChangeLogPageReply, error) {
+func (c *adChangeLogClient) GetAdChangeLogPage(ctx context.Context, in *AdChangeLogPageReq, opts ...grpc.CallOption) (*AdChangeLogPageReply, error) {
 	out := new(AdChangeLogPageReply)
-	err := c.cc.Invoke(ctx, "/adchangelog.v1.AdChangeLog/GetPageAdChangeLog", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/adchangelog.v1.AdChangeLog/GetAdChangeLogPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *adChangeLogClient) BatchDeleteAdChangeLog(ctx context.Context, in *AdCh
 // for forward compatibility
 type AdChangeLogServer interface {
 	// 分页查询AdChangeLog
-	GetPageAdChangeLog(context.Context, *AdChangeLogPageReq) (*AdChangeLogPageReply, error)
+	GetAdChangeLogPage(context.Context, *AdChangeLogPageReq) (*AdChangeLogPageReply, error)
 	// 获取AdChangeLog
 	GetAdChangeLog(context.Context, *AdChangeLogReq) (*AdChangeLogReply, error)
 	// 更新AdChangeLog
@@ -121,8 +121,8 @@ type AdChangeLogServer interface {
 type UnimplementedAdChangeLogServer struct {
 }
 
-func (UnimplementedAdChangeLogServer) GetPageAdChangeLog(context.Context, *AdChangeLogPageReq) (*AdChangeLogPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageAdChangeLog not implemented")
+func (UnimplementedAdChangeLogServer) GetAdChangeLogPage(context.Context, *AdChangeLogPageReq) (*AdChangeLogPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAdChangeLogPage not implemented")
 }
 func (UnimplementedAdChangeLogServer) GetAdChangeLog(context.Context, *AdChangeLogReq) (*AdChangeLogReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAdChangeLog not implemented")
@@ -152,20 +152,20 @@ func RegisterAdChangeLogServer(s grpc.ServiceRegistrar, srv AdChangeLogServer) {
 	s.RegisterService(&AdChangeLog_ServiceDesc, srv)
 }
 
-func _AdChangeLog_GetPageAdChangeLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AdChangeLog_GetAdChangeLogPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AdChangeLogPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdChangeLogServer).GetPageAdChangeLog(ctx, in)
+		return srv.(AdChangeLogServer).GetAdChangeLogPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/adchangelog.v1.AdChangeLog/GetPageAdChangeLog",
+		FullMethod: "/adchangelog.v1.AdChangeLog/GetAdChangeLogPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdChangeLogServer).GetPageAdChangeLog(ctx, req.(*AdChangeLogPageReq))
+		return srv.(AdChangeLogServer).GetAdChangeLogPage(ctx, req.(*AdChangeLogPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var AdChangeLog_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AdChangeLogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageAdChangeLog",
-			Handler:    _AdChangeLog_GetPageAdChangeLog_Handler,
+			MethodName: "GetAdChangeLogPage",
+			Handler:    _AdChangeLog_GetAdChangeLogPage_Handler,
 		},
 		{
 			MethodName: "GetAdChangeLog",

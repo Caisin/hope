@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelPayConfigClient interface {
 	// 分页查询NovelPayConfig
-	GetPageNovelPayConfig(ctx context.Context, in *NovelPayConfigPageReq, opts ...grpc.CallOption) (*NovelPayConfigPageReply, error)
+	GetNovelPayConfigPage(ctx context.Context, in *NovelPayConfigPageReq, opts ...grpc.CallOption) (*NovelPayConfigPageReply, error)
 	// 获取NovelPayConfig
 	GetNovelPayConfig(ctx context.Context, in *NovelPayConfigReq, opts ...grpc.CallOption) (*NovelPayConfigReply, error)
 	// 更新NovelPayConfig
@@ -44,9 +44,9 @@ func NewNovelPayConfigClient(cc grpc.ClientConnInterface) NovelPayConfigClient {
 	return &novelPayConfigClient{cc}
 }
 
-func (c *novelPayConfigClient) GetPageNovelPayConfig(ctx context.Context, in *NovelPayConfigPageReq, opts ...grpc.CallOption) (*NovelPayConfigPageReply, error) {
+func (c *novelPayConfigClient) GetNovelPayConfigPage(ctx context.Context, in *NovelPayConfigPageReq, opts ...grpc.CallOption) (*NovelPayConfigPageReply, error) {
 	out := new(NovelPayConfigPageReply)
-	err := c.cc.Invoke(ctx, "/novelpayconfig.v1.NovelPayConfig/GetPageNovelPayConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelpayconfig.v1.NovelPayConfig/GetNovelPayConfigPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelPayConfigClient) BatchDeleteNovelPayConfig(ctx context.Context, in
 // for forward compatibility
 type NovelPayConfigServer interface {
 	// 分页查询NovelPayConfig
-	GetPageNovelPayConfig(context.Context, *NovelPayConfigPageReq) (*NovelPayConfigPageReply, error)
+	GetNovelPayConfigPage(context.Context, *NovelPayConfigPageReq) (*NovelPayConfigPageReply, error)
 	// 获取NovelPayConfig
 	GetNovelPayConfig(context.Context, *NovelPayConfigReq) (*NovelPayConfigReply, error)
 	// 更新NovelPayConfig
@@ -121,8 +121,8 @@ type NovelPayConfigServer interface {
 type UnimplementedNovelPayConfigServer struct {
 }
 
-func (UnimplementedNovelPayConfigServer) GetPageNovelPayConfig(context.Context, *NovelPayConfigPageReq) (*NovelPayConfigPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelPayConfig not implemented")
+func (UnimplementedNovelPayConfigServer) GetNovelPayConfigPage(context.Context, *NovelPayConfigPageReq) (*NovelPayConfigPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelPayConfigPage not implemented")
 }
 func (UnimplementedNovelPayConfigServer) GetNovelPayConfig(context.Context, *NovelPayConfigReq) (*NovelPayConfigReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelPayConfig not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelPayConfigServer(s grpc.ServiceRegistrar, srv NovelPayConfigSer
 	s.RegisterService(&NovelPayConfig_ServiceDesc, srv)
 }
 
-func _NovelPayConfig_GetPageNovelPayConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelPayConfig_GetNovelPayConfigPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelPayConfigPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelPayConfigServer).GetPageNovelPayConfig(ctx, in)
+		return srv.(NovelPayConfigServer).GetNovelPayConfigPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelpayconfig.v1.NovelPayConfig/GetPageNovelPayConfig",
+		FullMethod: "/novelpayconfig.v1.NovelPayConfig/GetNovelPayConfigPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelPayConfigServer).GetPageNovelPayConfig(ctx, req.(*NovelPayConfigPageReq))
+		return srv.(NovelPayConfigServer).GetNovelPayConfigPage(ctx, req.(*NovelPayConfigPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelPayConfig_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelPayConfigServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelPayConfig",
-			Handler:    _NovelPayConfig_GetPageNovelPayConfig_Handler,
+			MethodName: "GetNovelPayConfigPage",
+			Handler:    _NovelPayConfig_GetNovelPayConfigPage_Handler,
 		},
 		{
 			MethodName: "GetNovelPayConfig",

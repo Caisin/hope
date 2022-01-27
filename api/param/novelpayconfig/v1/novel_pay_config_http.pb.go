@@ -22,13 +22,13 @@ type NovelPayConfigHTTPServer interface {
 	CreateNovelPayConfig(context.Context, *NovelPayConfigCreateReq) (*NovelPayConfigCreateReply, error)
 	DeleteNovelPayConfig(context.Context, *NovelPayConfigDeleteReq) (*NovelPayConfigDeleteReply, error)
 	GetNovelPayConfig(context.Context, *NovelPayConfigReq) (*NovelPayConfigReply, error)
-	GetPageNovelPayConfig(context.Context, *NovelPayConfigPageReq) (*NovelPayConfigPageReply, error)
+	GetNovelPayConfigPage(context.Context, *NovelPayConfigPageReq) (*NovelPayConfigPageReply, error)
 	UpdateNovelPayConfig(context.Context, *NovelPayConfigUpdateReq) (*NovelPayConfigUpdateReply, error)
 }
 
 func RegisterNovelPayConfigHTTPServer(s *http.Server, srv NovelPayConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/pay/config/page", _NovelPayConfig_GetPageNovelPayConfig0_HTTP_Handler(srv))
+	r.GET("/v1/novel/pay/config/page", _NovelPayConfig_GetNovelPayConfigPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/pay/config/{id}", _NovelPayConfig_GetNovelPayConfig0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/pay/config/{id}", _NovelPayConfig_UpdateNovelPayConfig0_HTTP_Handler(srv))
 	r.POST("/v1/novel/pay/config", _NovelPayConfig_CreateNovelPayConfig0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelPayConfigHTTPServer(s *http.Server, srv NovelPayConfigHTTPServ
 	r.DELETE("/v1/novel/pay/config", _NovelPayConfig_BatchDeleteNovelPayConfig0_HTTP_Handler(srv))
 }
 
-func _NovelPayConfig_GetPageNovelPayConfig0_HTTP_Handler(srv NovelPayConfigHTTPServer) func(ctx http.Context) error {
+func _NovelPayConfig_GetNovelPayConfigPage0_HTTP_Handler(srv NovelPayConfigHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelPayConfigPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelpayconfig.v1.NovelPayConfig/GetPageNovelPayConfig")
+		http.SetOperation(ctx, "/novelpayconfig.v1.NovelPayConfig/GetNovelPayConfigPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelPayConfig(ctx, req.(*NovelPayConfigPageReq))
+			return srv.GetNovelPayConfigPage(ctx, req.(*NovelPayConfigPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelPayConfigHTTPClient interface {
 	CreateNovelPayConfig(ctx context.Context, req *NovelPayConfigCreateReq, opts ...http.CallOption) (rsp *NovelPayConfigCreateReply, err error)
 	DeleteNovelPayConfig(ctx context.Context, req *NovelPayConfigDeleteReq, opts ...http.CallOption) (rsp *NovelPayConfigDeleteReply, err error)
 	GetNovelPayConfig(ctx context.Context, req *NovelPayConfigReq, opts ...http.CallOption) (rsp *NovelPayConfigReply, err error)
-	GetPageNovelPayConfig(ctx context.Context, req *NovelPayConfigPageReq, opts ...http.CallOption) (rsp *NovelPayConfigPageReply, err error)
+	GetNovelPayConfigPage(ctx context.Context, req *NovelPayConfigPageReq, opts ...http.CallOption) (rsp *NovelPayConfigPageReply, err error)
 	UpdateNovelPayConfig(ctx context.Context, req *NovelPayConfigUpdateReq, opts ...http.CallOption) (rsp *NovelPayConfigUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelPayConfigHTTPClientImpl) GetNovelPayConfig(ctx context.Context, in
 	return &out, err
 }
 
-func (c *NovelPayConfigHTTPClientImpl) GetPageNovelPayConfig(ctx context.Context, in *NovelPayConfigPageReq, opts ...http.CallOption) (*NovelPayConfigPageReply, error) {
+func (c *NovelPayConfigHTTPClientImpl) GetNovelPayConfigPage(ctx context.Context, in *NovelPayConfigPageReq, opts ...http.CallOption) (*NovelPayConfigPageReply, error) {
 	var out NovelPayConfigPageReply
 	pattern := "/v1/novel/pay/config/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/GetPageNovelPayConfig"))
+	opts = append(opts, http.Operation("/novelpayconfig.v1.NovelPayConfig/GetNovelPayConfigPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

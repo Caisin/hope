@@ -20,9 +20,9 @@ func NewDataSourceService(uc *biz.DataSourceUseCase, logger log.Logger) *DataSou
 	return &DataSourceService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *DataSourceService) GetPageDataSource(ctx context.Context, req *pb.DataSourcePageReq) (*pb.DataSourcePageReply, error) {
+func (s *DataSourceService) GetDataSourcePage(ctx context.Context, req *pb.DataSourcePageReq) (*pb.DataSourcePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageDataSource")
+	ctx, span := tr.Start(ctx, "GetDataSourcePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

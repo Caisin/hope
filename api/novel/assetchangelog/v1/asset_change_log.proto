@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/assetchangelog/v1;v1";
 service AssetChangeLog {
 
   // 分页查询AssetChangeLog
-  rpc GetPageAssetChangeLog (AssetChangeLogPageReq) returns (AssetChangeLogPageReply)  {
+  rpc GetAssetChangeLogPage (AssetChangeLogPageReq) returns (AssetChangeLogPageReply)  {
     option (google.api.http) = {
       get: "/v1/asset/change/log/page"
     };

@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/payorder/v1;v1";
 service PayOrder {
 
   // 分页查询PayOrder
-  rpc GetPagePayOrder (PayOrderPageReq) returns (PayOrderPageReply)  {
+  rpc GetPayOrderPage (PayOrderPageReq) returns (PayOrderPageReply)  {
     option (google.api.http) = {
       get: "/v1/pay/order/page"
     };

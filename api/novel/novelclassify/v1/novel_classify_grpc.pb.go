@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelClassifyClient interface {
 	// 分页查询NovelClassify
-	GetPageNovelClassify(ctx context.Context, in *NovelClassifyPageReq, opts ...grpc.CallOption) (*NovelClassifyPageReply, error)
+	GetNovelClassifyPage(ctx context.Context, in *NovelClassifyPageReq, opts ...grpc.CallOption) (*NovelClassifyPageReply, error)
 	// 获取NovelClassify
 	GetNovelClassify(ctx context.Context, in *NovelClassifyReq, opts ...grpc.CallOption) (*NovelClassifyReply, error)
 	// 更新NovelClassify
@@ -44,9 +44,9 @@ func NewNovelClassifyClient(cc grpc.ClientConnInterface) NovelClassifyClient {
 	return &novelClassifyClient{cc}
 }
 
-func (c *novelClassifyClient) GetPageNovelClassify(ctx context.Context, in *NovelClassifyPageReq, opts ...grpc.CallOption) (*NovelClassifyPageReply, error) {
+func (c *novelClassifyClient) GetNovelClassifyPage(ctx context.Context, in *NovelClassifyPageReq, opts ...grpc.CallOption) (*NovelClassifyPageReply, error) {
 	out := new(NovelClassifyPageReply)
-	err := c.cc.Invoke(ctx, "/novelclassify.v1.NovelClassify/GetPageNovelClassify", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelclassify.v1.NovelClassify/GetNovelClassifyPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelClassifyClient) BatchDeleteNovelClassify(ctx context.Context, in *
 // for forward compatibility
 type NovelClassifyServer interface {
 	// 分页查询NovelClassify
-	GetPageNovelClassify(context.Context, *NovelClassifyPageReq) (*NovelClassifyPageReply, error)
+	GetNovelClassifyPage(context.Context, *NovelClassifyPageReq) (*NovelClassifyPageReply, error)
 	// 获取NovelClassify
 	GetNovelClassify(context.Context, *NovelClassifyReq) (*NovelClassifyReply, error)
 	// 更新NovelClassify
@@ -121,8 +121,8 @@ type NovelClassifyServer interface {
 type UnimplementedNovelClassifyServer struct {
 }
 
-func (UnimplementedNovelClassifyServer) GetPageNovelClassify(context.Context, *NovelClassifyPageReq) (*NovelClassifyPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelClassify not implemented")
+func (UnimplementedNovelClassifyServer) GetNovelClassifyPage(context.Context, *NovelClassifyPageReq) (*NovelClassifyPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelClassifyPage not implemented")
 }
 func (UnimplementedNovelClassifyServer) GetNovelClassify(context.Context, *NovelClassifyReq) (*NovelClassifyReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelClassify not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelClassifyServer(s grpc.ServiceRegistrar, srv NovelClassifyServe
 	s.RegisterService(&NovelClassify_ServiceDesc, srv)
 }
 
-func _NovelClassify_GetPageNovelClassify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelClassify_GetNovelClassifyPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelClassifyPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelClassifyServer).GetPageNovelClassify(ctx, in)
+		return srv.(NovelClassifyServer).GetNovelClassifyPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelclassify.v1.NovelClassify/GetPageNovelClassify",
+		FullMethod: "/novelclassify.v1.NovelClassify/GetNovelClassifyPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelClassifyServer).GetPageNovelClassify(ctx, req.(*NovelClassifyPageReq))
+		return srv.(NovelClassifyServer).GetNovelClassifyPage(ctx, req.(*NovelClassifyPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelClassify_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelClassifyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelClassify",
-			Handler:    _NovelClassify_GetPageNovelClassify_Handler,
+			MethodName: "GetNovelClassifyPage",
+			Handler:    _NovelClassify_GetNovelClassifyPage_Handler,
 		},
 		{
 			MethodName: "GetNovelClassify",

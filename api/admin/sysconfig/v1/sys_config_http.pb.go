@@ -21,14 +21,14 @@ type SysConfigHTTPServer interface {
 	BatchDeleteSysConfig(context.Context, *SysConfigBatchDeleteReq) (*SysConfigDeleteReply, error)
 	CreateSysConfig(context.Context, *SysConfigCreateReq) (*SysConfigCreateReply, error)
 	DeleteSysConfig(context.Context, *SysConfigDeleteReq) (*SysConfigDeleteReply, error)
-	GetPageSysConfig(context.Context, *SysConfigPageReq) (*SysConfigPageReply, error)
 	GetSysConfig(context.Context, *SysConfigReq) (*SysConfigReply, error)
+	GetSysConfigPage(context.Context, *SysConfigPageReq) (*SysConfigPageReply, error)
 	UpdateSysConfig(context.Context, *SysConfigUpdateReq) (*SysConfigUpdateReply, error)
 }
 
 func RegisterSysConfigHTTPServer(s *http.Server, srv SysConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/config/page", _SysConfig_GetPageSysConfig0_HTTP_Handler(srv))
+	r.GET("/v1/sys/config/page", _SysConfig_GetSysConfigPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/config/{id}", _SysConfig_GetSysConfig0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/config/{id}", _SysConfig_UpdateSysConfig0_HTTP_Handler(srv))
 	r.POST("/v1/sys/config", _SysConfig_CreateSysConfig0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysConfigHTTPServer(s *http.Server, srv SysConfigHTTPServer) {
 	r.DELETE("/v1/sys/config", _SysConfig_BatchDeleteSysConfig0_HTTP_Handler(srv))
 }
 
-func _SysConfig_GetPageSysConfig0_HTTP_Handler(srv SysConfigHTTPServer) func(ctx http.Context) error {
+func _SysConfig_GetSysConfigPage0_HTTP_Handler(srv SysConfigHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysConfigPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysconfig.v1.SysConfig/GetPageSysConfig")
+		http.SetOperation(ctx, "/sysconfig.v1.SysConfig/GetSysConfigPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysConfig(ctx, req.(*SysConfigPageReq))
+			return srv.GetSysConfigPage(ctx, req.(*SysConfigPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysConfigHTTPClient interface {
 	BatchDeleteSysConfig(ctx context.Context, req *SysConfigBatchDeleteReq, opts ...http.CallOption) (rsp *SysConfigDeleteReply, err error)
 	CreateSysConfig(ctx context.Context, req *SysConfigCreateReq, opts ...http.CallOption) (rsp *SysConfigCreateReply, err error)
 	DeleteSysConfig(ctx context.Context, req *SysConfigDeleteReq, opts ...http.CallOption) (rsp *SysConfigDeleteReply, err error)
-	GetPageSysConfig(ctx context.Context, req *SysConfigPageReq, opts ...http.CallOption) (rsp *SysConfigPageReply, err error)
 	GetSysConfig(ctx context.Context, req *SysConfigReq, opts ...http.CallOption) (rsp *SysConfigReply, err error)
+	GetSysConfigPage(ctx context.Context, req *SysConfigPageReq, opts ...http.CallOption) (rsp *SysConfigPageReply, err error)
 	UpdateSysConfig(ctx context.Context, req *SysConfigUpdateReq, opts ...http.CallOption) (rsp *SysConfigUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysConfigHTTPClientImpl) DeleteSysConfig(ctx context.Context, in *SysCo
 	return &out, err
 }
 
-func (c *SysConfigHTTPClientImpl) GetPageSysConfig(ctx context.Context, in *SysConfigPageReq, opts ...http.CallOption) (*SysConfigPageReply, error) {
-	var out SysConfigPageReply
-	pattern := "/v1/sys/config/page"
+func (c *SysConfigHTTPClientImpl) GetSysConfig(ctx context.Context, in *SysConfigReq, opts ...http.CallOption) (*SysConfigReply, error) {
+	var out SysConfigReply
+	pattern := "/v1/sys/config/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/GetPageSysConfig"))
+	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/GetSysConfig"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysConfigHTTPClientImpl) GetPageSysConfig(ctx context.Context, in *SysC
 	return &out, err
 }
 
-func (c *SysConfigHTTPClientImpl) GetSysConfig(ctx context.Context, in *SysConfigReq, opts ...http.CallOption) (*SysConfigReply, error) {
-	var out SysConfigReply
-	pattern := "/v1/sys/config/{id}"
+func (c *SysConfigHTTPClientImpl) GetSysConfigPage(ctx context.Context, in *SysConfigPageReq, opts ...http.CallOption) (*SysConfigPageReply, error) {
+	var out SysConfigPageReply
+	pattern := "/v1/sys/config/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/GetSysConfig"))
+	opts = append(opts, http.Operation("/sysconfig.v1.SysConfig/GetSysConfigPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

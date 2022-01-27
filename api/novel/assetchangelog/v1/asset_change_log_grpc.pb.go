@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AssetChangeLogClient interface {
 	// 分页查询AssetChangeLog
-	GetPageAssetChangeLog(ctx context.Context, in *AssetChangeLogPageReq, opts ...grpc.CallOption) (*AssetChangeLogPageReply, error)
+	GetAssetChangeLogPage(ctx context.Context, in *AssetChangeLogPageReq, opts ...grpc.CallOption) (*AssetChangeLogPageReply, error)
 	// 获取AssetChangeLog
 	GetAssetChangeLog(ctx context.Context, in *AssetChangeLogReq, opts ...grpc.CallOption) (*AssetChangeLogReply, error)
 	// 更新AssetChangeLog
@@ -44,9 +44,9 @@ func NewAssetChangeLogClient(cc grpc.ClientConnInterface) AssetChangeLogClient {
 	return &assetChangeLogClient{cc}
 }
 
-func (c *assetChangeLogClient) GetPageAssetChangeLog(ctx context.Context, in *AssetChangeLogPageReq, opts ...grpc.CallOption) (*AssetChangeLogPageReply, error) {
+func (c *assetChangeLogClient) GetAssetChangeLogPage(ctx context.Context, in *AssetChangeLogPageReq, opts ...grpc.CallOption) (*AssetChangeLogPageReply, error) {
 	out := new(AssetChangeLogPageReply)
-	err := c.cc.Invoke(ctx, "/assetchangelog.v1.AssetChangeLog/GetPageAssetChangeLog", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/assetchangelog.v1.AssetChangeLog/GetAssetChangeLogPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *assetChangeLogClient) BatchDeleteAssetChangeLog(ctx context.Context, in
 // for forward compatibility
 type AssetChangeLogServer interface {
 	// 分页查询AssetChangeLog
-	GetPageAssetChangeLog(context.Context, *AssetChangeLogPageReq) (*AssetChangeLogPageReply, error)
+	GetAssetChangeLogPage(context.Context, *AssetChangeLogPageReq) (*AssetChangeLogPageReply, error)
 	// 获取AssetChangeLog
 	GetAssetChangeLog(context.Context, *AssetChangeLogReq) (*AssetChangeLogReply, error)
 	// 更新AssetChangeLog
@@ -121,8 +121,8 @@ type AssetChangeLogServer interface {
 type UnimplementedAssetChangeLogServer struct {
 }
 
-func (UnimplementedAssetChangeLogServer) GetPageAssetChangeLog(context.Context, *AssetChangeLogPageReq) (*AssetChangeLogPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageAssetChangeLog not implemented")
+func (UnimplementedAssetChangeLogServer) GetAssetChangeLogPage(context.Context, *AssetChangeLogPageReq) (*AssetChangeLogPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAssetChangeLogPage not implemented")
 }
 func (UnimplementedAssetChangeLogServer) GetAssetChangeLog(context.Context, *AssetChangeLogReq) (*AssetChangeLogReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAssetChangeLog not implemented")
@@ -152,20 +152,20 @@ func RegisterAssetChangeLogServer(s grpc.ServiceRegistrar, srv AssetChangeLogSer
 	s.RegisterService(&AssetChangeLog_ServiceDesc, srv)
 }
 
-func _AssetChangeLog_GetPageAssetChangeLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AssetChangeLog_GetAssetChangeLogPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AssetChangeLogPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AssetChangeLogServer).GetPageAssetChangeLog(ctx, in)
+		return srv.(AssetChangeLogServer).GetAssetChangeLogPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/assetchangelog.v1.AssetChangeLog/GetPageAssetChangeLog",
+		FullMethod: "/assetchangelog.v1.AssetChangeLog/GetAssetChangeLogPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetChangeLogServer).GetPageAssetChangeLog(ctx, req.(*AssetChangeLogPageReq))
+		return srv.(AssetChangeLogServer).GetAssetChangeLogPage(ctx, req.(*AssetChangeLogPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var AssetChangeLog_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AssetChangeLogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageAssetChangeLog",
-			Handler:    _AssetChangeLog_GetPageAssetChangeLog_Handler,
+			MethodName: "GetAssetChangeLogPage",
+			Handler:    _AssetChangeLog_GetAssetChangeLogPage_Handler,
 		},
 		{
 			MethodName: "GetAssetChangeLog",

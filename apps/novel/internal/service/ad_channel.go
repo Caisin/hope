@@ -20,9 +20,9 @@ func NewAdChannelService(uc *biz.AdChannelUseCase, logger log.Logger) *AdChannel
 	return &AdChannelService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *AdChannelService) GetPageAdChannel(ctx context.Context, req *pb.AdChannelPageReq) (*pb.AdChannelPageReply, error) {
+func (s *AdChannelService) GetAdChannelPage(ctx context.Context, req *pb.AdChannelPageReq) (*pb.AdChannelPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageAdChannel")
+	ctx, span := tr.Start(ctx, "GetAdChannelPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

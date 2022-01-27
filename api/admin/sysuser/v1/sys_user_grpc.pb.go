@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysUserClient interface {
 	// 分页查询SysUser
-	GetPageSysUser(ctx context.Context, in *SysUserPageReq, opts ...grpc.CallOption) (*SysUserPageReply, error)
+	GetSysUserPage(ctx context.Context, in *SysUserPageReq, opts ...grpc.CallOption) (*SysUserPageReply, error)
 	// 获取SysUser
 	GetSysUser(ctx context.Context, in *SysUserReq, opts ...grpc.CallOption) (*SysUserReply, error)
 	// 更新SysUser
@@ -44,9 +44,9 @@ func NewSysUserClient(cc grpc.ClientConnInterface) SysUserClient {
 	return &sysUserClient{cc}
 }
 
-func (c *sysUserClient) GetPageSysUser(ctx context.Context, in *SysUserPageReq, opts ...grpc.CallOption) (*SysUserPageReply, error) {
+func (c *sysUserClient) GetSysUserPage(ctx context.Context, in *SysUserPageReq, opts ...grpc.CallOption) (*SysUserPageReply, error) {
 	out := new(SysUserPageReply)
-	err := c.cc.Invoke(ctx, "/sysuser.v1.SysUser/GetPageSysUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysuser.v1.SysUser/GetSysUserPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysUserClient) BatchDeleteSysUser(ctx context.Context, in *SysUserBatch
 // for forward compatibility
 type SysUserServer interface {
 	// 分页查询SysUser
-	GetPageSysUser(context.Context, *SysUserPageReq) (*SysUserPageReply, error)
+	GetSysUserPage(context.Context, *SysUserPageReq) (*SysUserPageReply, error)
 	// 获取SysUser
 	GetSysUser(context.Context, *SysUserReq) (*SysUserReply, error)
 	// 更新SysUser
@@ -121,8 +121,8 @@ type SysUserServer interface {
 type UnimplementedSysUserServer struct {
 }
 
-func (UnimplementedSysUserServer) GetPageSysUser(context.Context, *SysUserPageReq) (*SysUserPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysUser not implemented")
+func (UnimplementedSysUserServer) GetSysUserPage(context.Context, *SysUserPageReq) (*SysUserPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysUserPage not implemented")
 }
 func (UnimplementedSysUserServer) GetSysUser(context.Context, *SysUserReq) (*SysUserReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysUser not implemented")
@@ -152,20 +152,20 @@ func RegisterSysUserServer(s grpc.ServiceRegistrar, srv SysUserServer) {
 	s.RegisterService(&SysUser_ServiceDesc, srv)
 }
 
-func _SysUser_GetPageSysUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysUser_GetSysUserPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysUserPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysUserServer).GetPageSysUser(ctx, in)
+		return srv.(SysUserServer).GetSysUserPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysuser.v1.SysUser/GetPageSysUser",
+		FullMethod: "/sysuser.v1.SysUser/GetSysUserPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysUserServer).GetPageSysUser(ctx, req.(*SysUserPageReq))
+		return srv.(SysUserServer).GetSysUserPage(ctx, req.(*SysUserPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysUser_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysUserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysUser",
-			Handler:    _SysUser_GetPageSysUser_Handler,
+			MethodName: "GetSysUserPage",
+			Handler:    _SysUser_GetSysUserPage_Handler,
 		},
 		{
 			MethodName: "GetSysUser",

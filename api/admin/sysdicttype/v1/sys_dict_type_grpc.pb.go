@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysDictTypeClient interface {
 	// 分页查询SysDictType
-	GetPageSysDictType(ctx context.Context, in *SysDictTypePageReq, opts ...grpc.CallOption) (*SysDictTypePageReply, error)
+	GetSysDictTypePage(ctx context.Context, in *SysDictTypePageReq, opts ...grpc.CallOption) (*SysDictTypePageReply, error)
 	// 获取SysDictType
 	GetSysDictType(ctx context.Context, in *SysDictTypeReq, opts ...grpc.CallOption) (*SysDictTypeReply, error)
 	// 更新SysDictType
@@ -44,9 +44,9 @@ func NewSysDictTypeClient(cc grpc.ClientConnInterface) SysDictTypeClient {
 	return &sysDictTypeClient{cc}
 }
 
-func (c *sysDictTypeClient) GetPageSysDictType(ctx context.Context, in *SysDictTypePageReq, opts ...grpc.CallOption) (*SysDictTypePageReply, error) {
+func (c *sysDictTypeClient) GetSysDictTypePage(ctx context.Context, in *SysDictTypePageReq, opts ...grpc.CallOption) (*SysDictTypePageReply, error) {
 	out := new(SysDictTypePageReply)
-	err := c.cc.Invoke(ctx, "/sysdicttype.v1.SysDictType/GetPageSysDictType", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysdicttype.v1.SysDictType/GetSysDictTypePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysDictTypeClient) BatchDeleteSysDictType(ctx context.Context, in *SysD
 // for forward compatibility
 type SysDictTypeServer interface {
 	// 分页查询SysDictType
-	GetPageSysDictType(context.Context, *SysDictTypePageReq) (*SysDictTypePageReply, error)
+	GetSysDictTypePage(context.Context, *SysDictTypePageReq) (*SysDictTypePageReply, error)
 	// 获取SysDictType
 	GetSysDictType(context.Context, *SysDictTypeReq) (*SysDictTypeReply, error)
 	// 更新SysDictType
@@ -121,8 +121,8 @@ type SysDictTypeServer interface {
 type UnimplementedSysDictTypeServer struct {
 }
 
-func (UnimplementedSysDictTypeServer) GetPageSysDictType(context.Context, *SysDictTypePageReq) (*SysDictTypePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysDictType not implemented")
+func (UnimplementedSysDictTypeServer) GetSysDictTypePage(context.Context, *SysDictTypePageReq) (*SysDictTypePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysDictTypePage not implemented")
 }
 func (UnimplementedSysDictTypeServer) GetSysDictType(context.Context, *SysDictTypeReq) (*SysDictTypeReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysDictType not implemented")
@@ -152,20 +152,20 @@ func RegisterSysDictTypeServer(s grpc.ServiceRegistrar, srv SysDictTypeServer) {
 	s.RegisterService(&SysDictType_ServiceDesc, srv)
 }
 
-func _SysDictType_GetPageSysDictType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysDictType_GetSysDictTypePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysDictTypePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysDictTypeServer).GetPageSysDictType(ctx, in)
+		return srv.(SysDictTypeServer).GetSysDictTypePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysdicttype.v1.SysDictType/GetPageSysDictType",
+		FullMethod: "/sysdicttype.v1.SysDictType/GetSysDictTypePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysDictTypeServer).GetPageSysDictType(ctx, req.(*SysDictTypePageReq))
+		return srv.(SysDictTypeServer).GetSysDictTypePage(ctx, req.(*SysDictTypePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysDictType_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysDictTypeServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysDictType",
-			Handler:    _SysDictType_GetPageSysDictType_Handler,
+			MethodName: "GetSysDictTypePage",
+			Handler:    _SysDictType_GetSysDictTypePage_Handler,
 		},
 		{
 			MethodName: "GetSysDictType",

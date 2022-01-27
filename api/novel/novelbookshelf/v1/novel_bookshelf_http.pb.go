@@ -22,13 +22,13 @@ type NovelBookshelfHTTPServer interface {
 	CreateNovelBookshelf(context.Context, *NovelBookshelfCreateReq) (*NovelBookshelfCreateReply, error)
 	DeleteNovelBookshelf(context.Context, *NovelBookshelfDeleteReq) (*NovelBookshelfDeleteReply, error)
 	GetNovelBookshelf(context.Context, *NovelBookshelfReq) (*NovelBookshelfReply, error)
-	GetPageNovelBookshelf(context.Context, *NovelBookshelfPageReq) (*NovelBookshelfPageReply, error)
+	GetNovelBookshelfPage(context.Context, *NovelBookshelfPageReq) (*NovelBookshelfPageReply, error)
 	UpdateNovelBookshelf(context.Context, *NovelBookshelfUpdateReq) (*NovelBookshelfUpdateReply, error)
 }
 
 func RegisterNovelBookshelfHTTPServer(s *http.Server, srv NovelBookshelfHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/bookshelf/page", _NovelBookshelf_GetPageNovelBookshelf0_HTTP_Handler(srv))
+	r.GET("/v1/novel/bookshelf/page", _NovelBookshelf_GetNovelBookshelfPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/bookshelf/{id}", _NovelBookshelf_GetNovelBookshelf0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/bookshelf/{id}", _NovelBookshelf_UpdateNovelBookshelf0_HTTP_Handler(srv))
 	r.POST("/v1/novel/bookshelf", _NovelBookshelf_CreateNovelBookshelf0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelBookshelfHTTPServer(s *http.Server, srv NovelBookshelfHTTPServ
 	r.DELETE("/v1/novel/bookshelf", _NovelBookshelf_BatchDeleteNovelBookshelf0_HTTP_Handler(srv))
 }
 
-func _NovelBookshelf_GetPageNovelBookshelf0_HTTP_Handler(srv NovelBookshelfHTTPServer) func(ctx http.Context) error {
+func _NovelBookshelf_GetNovelBookshelfPage0_HTTP_Handler(srv NovelBookshelfHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelBookshelfPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelbookshelf.v1.NovelBookshelf/GetPageNovelBookshelf")
+		http.SetOperation(ctx, "/novelbookshelf.v1.NovelBookshelf/GetNovelBookshelfPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelBookshelf(ctx, req.(*NovelBookshelfPageReq))
+			return srv.GetNovelBookshelfPage(ctx, req.(*NovelBookshelfPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelBookshelfHTTPClient interface {
 	CreateNovelBookshelf(ctx context.Context, req *NovelBookshelfCreateReq, opts ...http.CallOption) (rsp *NovelBookshelfCreateReply, err error)
 	DeleteNovelBookshelf(ctx context.Context, req *NovelBookshelfDeleteReq, opts ...http.CallOption) (rsp *NovelBookshelfDeleteReply, err error)
 	GetNovelBookshelf(ctx context.Context, req *NovelBookshelfReq, opts ...http.CallOption) (rsp *NovelBookshelfReply, err error)
-	GetPageNovelBookshelf(ctx context.Context, req *NovelBookshelfPageReq, opts ...http.CallOption) (rsp *NovelBookshelfPageReply, err error)
+	GetNovelBookshelfPage(ctx context.Context, req *NovelBookshelfPageReq, opts ...http.CallOption) (rsp *NovelBookshelfPageReply, err error)
 	UpdateNovelBookshelf(ctx context.Context, req *NovelBookshelfUpdateReq, opts ...http.CallOption) (rsp *NovelBookshelfUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelBookshelfHTTPClientImpl) GetNovelBookshelf(ctx context.Context, in
 	return &out, err
 }
 
-func (c *NovelBookshelfHTTPClientImpl) GetPageNovelBookshelf(ctx context.Context, in *NovelBookshelfPageReq, opts ...http.CallOption) (*NovelBookshelfPageReply, error) {
+func (c *NovelBookshelfHTTPClientImpl) GetNovelBookshelfPage(ctx context.Context, in *NovelBookshelfPageReq, opts ...http.CallOption) (*NovelBookshelfPageReply, error) {
 	var out NovelBookshelfPageReply
 	pattern := "/v1/novel/bookshelf/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/GetPageNovelBookshelf"))
+	opts = append(opts, http.Operation("/novelbookshelf.v1.NovelBookshelf/GetNovelBookshelfPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

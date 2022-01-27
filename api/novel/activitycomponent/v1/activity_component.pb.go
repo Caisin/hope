@@ -1558,8 +1558,8 @@ var file_api_novel_activitycomponent_v1_activity_component_proto_rawDesc = []byt
 	0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x73,
 	0x75, 0x6c, 0x74, 0x32, 0xf1, 0x07, 0x0a, 0x11, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79,
 	0x43, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65, 0x6e, 0x74, 0x12, 0xa1, 0x01, 0x0a, 0x18, 0x47, 0x65,
-	0x74, 0x50, 0x61, 0x67, 0x65, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x43, 0x6f, 0x6d,
-	0x70, 0x6f, 0x6e, 0x65, 0x6e, 0x74, 0x12, 0x2e, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
+	0x74, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x43, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65,
+	0x6e, 0x74, 0x50, 0x61, 0x67, 0x65, 0x12, 0x2e, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
 	0x79, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65, 0x6e, 0x74, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x63,
 	0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x43, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65, 0x6e, 0x74, 0x50,
 	0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x30, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
@@ -1665,13 +1665,13 @@ var file_api_novel_activitycomponent_v1_activity_component_proto_depIdxs = []int
 	0,  // 7: activitycomponent.v1.ActivityComponentReply.result:type_name -> activitycomponent.v1.ActivityComponentData
 	0,  // 8: activitycomponent.v1.ActivityComponentCreateReply.result:type_name -> activitycomponent.v1.ActivityComponentData
 	0,  // 9: activitycomponent.v1.ActivityComponentUpdateReply.result:type_name -> activitycomponent.v1.ActivityComponentData
-	1,  // 10: activitycomponent.v1.ActivityComponent.GetPageActivityComponent:input_type -> activitycomponent.v1.ActivityComponentPageReq
+	1,  // 10: activitycomponent.v1.ActivityComponent.GetActivityComponentPage:input_type -> activitycomponent.v1.ActivityComponentPageReq
 	3,  // 11: activitycomponent.v1.ActivityComponent.GetActivityComponent:input_type -> activitycomponent.v1.ActivityComponentReq
 	7,  // 12: activitycomponent.v1.ActivityComponent.UpdateActivityComponent:input_type -> activitycomponent.v1.ActivityComponentUpdateReq
 	5,  // 13: activitycomponent.v1.ActivityComponent.CreateActivityComponent:input_type -> activitycomponent.v1.ActivityComponentCreateReq
 	9,  // 14: activitycomponent.v1.ActivityComponent.DeleteActivityComponent:input_type -> activitycomponent.v1.ActivityComponentDeleteReq
 	10, // 15: activitycomponent.v1.ActivityComponent.BatchDeleteActivityComponent:input_type -> activitycomponent.v1.ActivityComponentBatchDeleteReq
-	2,  // 16: activitycomponent.v1.ActivityComponent.GetPageActivityComponent:output_type -> activitycomponent.v1.ActivityComponentPageReply
+	2,  // 16: activitycomponent.v1.ActivityComponent.GetActivityComponentPage:output_type -> activitycomponent.v1.ActivityComponentPageReply
 	4,  // 17: activitycomponent.v1.ActivityComponent.GetActivityComponent:output_type -> activitycomponent.v1.ActivityComponentReply
 	8,  // 18: activitycomponent.v1.ActivityComponent.UpdateActivityComponent:output_type -> activitycomponent.v1.ActivityComponentUpdateReply
 	6,  // 19: activitycomponent.v1.ActivityComponent.CreateActivityComponent:output_type -> activitycomponent.v1.ActivityComponentCreateReply

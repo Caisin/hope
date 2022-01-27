@@ -21,14 +21,14 @@ type UserMsgHTTPServer interface {
 	BatchDeleteUserMsg(context.Context, *UserMsgBatchDeleteReq) (*UserMsgDeleteReply, error)
 	CreateUserMsg(context.Context, *UserMsgCreateReq) (*UserMsgCreateReply, error)
 	DeleteUserMsg(context.Context, *UserMsgDeleteReq) (*UserMsgDeleteReply, error)
-	GetPageUserMsg(context.Context, *UserMsgPageReq) (*UserMsgPageReply, error)
 	GetUserMsg(context.Context, *UserMsgReq) (*UserMsgReply, error)
+	GetUserMsgPage(context.Context, *UserMsgPageReq) (*UserMsgPageReply, error)
 	UpdateUserMsg(context.Context, *UserMsgUpdateReq) (*UserMsgUpdateReply, error)
 }
 
 func RegisterUserMsgHTTPServer(s *http.Server, srv UserMsgHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/user/msg/page", _UserMsg_GetPageUserMsg0_HTTP_Handler(srv))
+	r.GET("/v1/user/msg/page", _UserMsg_GetUserMsgPage0_HTTP_Handler(srv))
 	r.GET("/v1/user/msg/{id}", _UserMsg_GetUserMsg0_HTTP_Handler(srv))
 	r.PUT("/v1/user/msg/{id}", _UserMsg_UpdateUserMsg0_HTTP_Handler(srv))
 	r.POST("/v1/user/msg", _UserMsg_CreateUserMsg0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterUserMsgHTTPServer(s *http.Server, srv UserMsgHTTPServer) {
 	r.DELETE("/v1/user/msg", _UserMsg_BatchDeleteUserMsg0_HTTP_Handler(srv))
 }
 
-func _UserMsg_GetPageUserMsg0_HTTP_Handler(srv UserMsgHTTPServer) func(ctx http.Context) error {
+func _UserMsg_GetUserMsgPage0_HTTP_Handler(srv UserMsgHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UserMsgPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/usermsg.v1.UserMsg/GetPageUserMsg")
+		http.SetOperation(ctx, "/usermsg.v1.UserMsg/GetUserMsgPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageUserMsg(ctx, req.(*UserMsgPageReq))
+			return srv.GetUserMsgPage(ctx, req.(*UserMsgPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type UserMsgHTTPClient interface {
 	BatchDeleteUserMsg(ctx context.Context, req *UserMsgBatchDeleteReq, opts ...http.CallOption) (rsp *UserMsgDeleteReply, err error)
 	CreateUserMsg(ctx context.Context, req *UserMsgCreateReq, opts ...http.CallOption) (rsp *UserMsgCreateReply, err error)
 	DeleteUserMsg(ctx context.Context, req *UserMsgDeleteReq, opts ...http.CallOption) (rsp *UserMsgDeleteReply, err error)
-	GetPageUserMsg(ctx context.Context, req *UserMsgPageReq, opts ...http.CallOption) (rsp *UserMsgPageReply, err error)
 	GetUserMsg(ctx context.Context, req *UserMsgReq, opts ...http.CallOption) (rsp *UserMsgReply, err error)
+	GetUserMsgPage(ctx context.Context, req *UserMsgPageReq, opts ...http.CallOption) (rsp *UserMsgPageReply, err error)
 	UpdateUserMsg(ctx context.Context, req *UserMsgUpdateReq, opts ...http.CallOption) (rsp *UserMsgUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *UserMsgHTTPClientImpl) DeleteUserMsg(ctx context.Context, in *UserMsgDe
 	return &out, err
 }
 
-func (c *UserMsgHTTPClientImpl) GetPageUserMsg(ctx context.Context, in *UserMsgPageReq, opts ...http.CallOption) (*UserMsgPageReply, error) {
-	var out UserMsgPageReply
-	pattern := "/v1/user/msg/page"
+func (c *UserMsgHTTPClientImpl) GetUserMsg(ctx context.Context, in *UserMsgReq, opts ...http.CallOption) (*UserMsgReply, error) {
+	var out UserMsgReply
+	pattern := "/v1/user/msg/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/GetPageUserMsg"))
+	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/GetUserMsg"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *UserMsgHTTPClientImpl) GetPageUserMsg(ctx context.Context, in *UserMsgP
 	return &out, err
 }
 
-func (c *UserMsgHTTPClientImpl) GetUserMsg(ctx context.Context, in *UserMsgReq, opts ...http.CallOption) (*UserMsgReply, error) {
-	var out UserMsgReply
-	pattern := "/v1/user/msg/{id}"
+func (c *UserMsgHTTPClientImpl) GetUserMsgPage(ctx context.Context, in *UserMsgPageReq, opts ...http.CallOption) (*UserMsgPageReply, error) {
+	var out UserMsgPageReply
+	pattern := "/v1/user/msg/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/GetUserMsg"))
+	opts = append(opts, http.Operation("/usermsg.v1.UserMsg/GetUserMsgPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

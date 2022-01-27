@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysuser/v1;v1";
 service SysUser {
 
   // 分页查询SysUser
-  rpc GetPageSysUser (SysUserPageReq) returns (SysUserPageReply)  {
+  rpc GetSysUserPage (SysUserPageReq) returns (SysUserPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/user/page"
     };

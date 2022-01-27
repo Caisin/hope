@@ -21,14 +21,14 @@ type SysPostHTTPServer interface {
 	BatchDeleteSysPost(context.Context, *SysPostBatchDeleteReq) (*SysPostDeleteReply, error)
 	CreateSysPost(context.Context, *SysPostCreateReq) (*SysPostCreateReply, error)
 	DeleteSysPost(context.Context, *SysPostDeleteReq) (*SysPostDeleteReply, error)
-	GetPageSysPost(context.Context, *SysPostPageReq) (*SysPostPageReply, error)
 	GetSysPost(context.Context, *SysPostReq) (*SysPostReply, error)
+	GetSysPostPage(context.Context, *SysPostPageReq) (*SysPostPageReply, error)
 	UpdateSysPost(context.Context, *SysPostUpdateReq) (*SysPostUpdateReply, error)
 }
 
 func RegisterSysPostHTTPServer(s *http.Server, srv SysPostHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/post/page", _SysPost_GetPageSysPost0_HTTP_Handler(srv))
+	r.GET("/v1/sys/post/page", _SysPost_GetSysPostPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/post/{id}", _SysPost_GetSysPost0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/post/{id}", _SysPost_UpdateSysPost0_HTTP_Handler(srv))
 	r.POST("/v1/sys/post", _SysPost_CreateSysPost0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysPostHTTPServer(s *http.Server, srv SysPostHTTPServer) {
 	r.DELETE("/v1/sys/post", _SysPost_BatchDeleteSysPost0_HTTP_Handler(srv))
 }
 
-func _SysPost_GetPageSysPost0_HTTP_Handler(srv SysPostHTTPServer) func(ctx http.Context) error {
+func _SysPost_GetSysPostPage0_HTTP_Handler(srv SysPostHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysPostPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/syspost.v1.SysPost/GetPageSysPost")
+		http.SetOperation(ctx, "/syspost.v1.SysPost/GetSysPostPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysPost(ctx, req.(*SysPostPageReq))
+			return srv.GetSysPostPage(ctx, req.(*SysPostPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysPostHTTPClient interface {
 	BatchDeleteSysPost(ctx context.Context, req *SysPostBatchDeleteReq, opts ...http.CallOption) (rsp *SysPostDeleteReply, err error)
 	CreateSysPost(ctx context.Context, req *SysPostCreateReq, opts ...http.CallOption) (rsp *SysPostCreateReply, err error)
 	DeleteSysPost(ctx context.Context, req *SysPostDeleteReq, opts ...http.CallOption) (rsp *SysPostDeleteReply, err error)
-	GetPageSysPost(ctx context.Context, req *SysPostPageReq, opts ...http.CallOption) (rsp *SysPostPageReply, err error)
 	GetSysPost(ctx context.Context, req *SysPostReq, opts ...http.CallOption) (rsp *SysPostReply, err error)
+	GetSysPostPage(ctx context.Context, req *SysPostPageReq, opts ...http.CallOption) (rsp *SysPostPageReply, err error)
 	UpdateSysPost(ctx context.Context, req *SysPostUpdateReq, opts ...http.CallOption) (rsp *SysPostUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysPostHTTPClientImpl) DeleteSysPost(ctx context.Context, in *SysPostDe
 	return &out, err
 }
 
-func (c *SysPostHTTPClientImpl) GetPageSysPost(ctx context.Context, in *SysPostPageReq, opts ...http.CallOption) (*SysPostPageReply, error) {
-	var out SysPostPageReply
-	pattern := "/v1/sys/post/page"
+func (c *SysPostHTTPClientImpl) GetSysPost(ctx context.Context, in *SysPostReq, opts ...http.CallOption) (*SysPostReply, error) {
+	var out SysPostReply
+	pattern := "/v1/sys/post/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/syspost.v1.SysPost/GetPageSysPost"))
+	opts = append(opts, http.Operation("/syspost.v1.SysPost/GetSysPost"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysPostHTTPClientImpl) GetPageSysPost(ctx context.Context, in *SysPostP
 	return &out, err
 }
 
-func (c *SysPostHTTPClientImpl) GetSysPost(ctx context.Context, in *SysPostReq, opts ...http.CallOption) (*SysPostReply, error) {
-	var out SysPostReply
-	pattern := "/v1/sys/post/{id}"
+func (c *SysPostHTTPClientImpl) GetSysPostPage(ctx context.Context, in *SysPostPageReq, opts ...http.CallOption) (*SysPostPageReply, error) {
+	var out SysPostPageReply
+	pattern := "/v1/sys/post/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/syspost.v1.SysPost/GetSysPost"))
+	opts = append(opts, http.Operation("/syspost.v1.SysPost/GetSysPostPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelTagClient interface {
 	// 分页查询NovelTag
-	GetPageNovelTag(ctx context.Context, in *NovelTagPageReq, opts ...grpc.CallOption) (*NovelTagPageReply, error)
+	GetNovelTagPage(ctx context.Context, in *NovelTagPageReq, opts ...grpc.CallOption) (*NovelTagPageReply, error)
 	// 获取NovelTag
 	GetNovelTag(ctx context.Context, in *NovelTagReq, opts ...grpc.CallOption) (*NovelTagReply, error)
 	// 更新NovelTag
@@ -44,9 +44,9 @@ func NewNovelTagClient(cc grpc.ClientConnInterface) NovelTagClient {
 	return &novelTagClient{cc}
 }
 
-func (c *novelTagClient) GetPageNovelTag(ctx context.Context, in *NovelTagPageReq, opts ...grpc.CallOption) (*NovelTagPageReply, error) {
+func (c *novelTagClient) GetNovelTagPage(ctx context.Context, in *NovelTagPageReq, opts ...grpc.CallOption) (*NovelTagPageReply, error) {
 	out := new(NovelTagPageReply)
-	err := c.cc.Invoke(ctx, "/noveltag.v1.NovelTag/GetPageNovelTag", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/noveltag.v1.NovelTag/GetNovelTagPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelTagClient) BatchDeleteNovelTag(ctx context.Context, in *NovelTagBa
 // for forward compatibility
 type NovelTagServer interface {
 	// 分页查询NovelTag
-	GetPageNovelTag(context.Context, *NovelTagPageReq) (*NovelTagPageReply, error)
+	GetNovelTagPage(context.Context, *NovelTagPageReq) (*NovelTagPageReply, error)
 	// 获取NovelTag
 	GetNovelTag(context.Context, *NovelTagReq) (*NovelTagReply, error)
 	// 更新NovelTag
@@ -121,8 +121,8 @@ type NovelTagServer interface {
 type UnimplementedNovelTagServer struct {
 }
 
-func (UnimplementedNovelTagServer) GetPageNovelTag(context.Context, *NovelTagPageReq) (*NovelTagPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelTag not implemented")
+func (UnimplementedNovelTagServer) GetNovelTagPage(context.Context, *NovelTagPageReq) (*NovelTagPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelTagPage not implemented")
 }
 func (UnimplementedNovelTagServer) GetNovelTag(context.Context, *NovelTagReq) (*NovelTagReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelTag not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelTagServer(s grpc.ServiceRegistrar, srv NovelTagServer) {
 	s.RegisterService(&NovelTag_ServiceDesc, srv)
 }
 
-func _NovelTag_GetPageNovelTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelTag_GetNovelTagPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelTagPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelTagServer).GetPageNovelTag(ctx, in)
+		return srv.(NovelTagServer).GetNovelTagPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/noveltag.v1.NovelTag/GetPageNovelTag",
+		FullMethod: "/noveltag.v1.NovelTag/GetNovelTagPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelTagServer).GetPageNovelTag(ctx, req.(*NovelTagPageReq))
+		return srv.(NovelTagServer).GetNovelTagPage(ctx, req.(*NovelTagPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelTag_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelTagServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelTag",
-			Handler:    _NovelTag_GetPageNovelTag_Handler,
+			MethodName: "GetNovelTagPage",
+			Handler:    _NovelTag_GetNovelTagPage_Handler,
 		},
 		{
 			MethodName: "GetNovelTag",

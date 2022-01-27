@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserMsgClient interface {
 	// 分页查询UserMsg
-	GetPageUserMsg(ctx context.Context, in *UserMsgPageReq, opts ...grpc.CallOption) (*UserMsgPageReply, error)
+	GetUserMsgPage(ctx context.Context, in *UserMsgPageReq, opts ...grpc.CallOption) (*UserMsgPageReply, error)
 	// 获取UserMsg
 	GetUserMsg(ctx context.Context, in *UserMsgReq, opts ...grpc.CallOption) (*UserMsgReply, error)
 	// 更新UserMsg
@@ -44,9 +44,9 @@ func NewUserMsgClient(cc grpc.ClientConnInterface) UserMsgClient {
 	return &userMsgClient{cc}
 }
 
-func (c *userMsgClient) GetPageUserMsg(ctx context.Context, in *UserMsgPageReq, opts ...grpc.CallOption) (*UserMsgPageReply, error) {
+func (c *userMsgClient) GetUserMsgPage(ctx context.Context, in *UserMsgPageReq, opts ...grpc.CallOption) (*UserMsgPageReply, error) {
 	out := new(UserMsgPageReply)
-	err := c.cc.Invoke(ctx, "/usermsg.v1.UserMsg/GetPageUserMsg", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/usermsg.v1.UserMsg/GetUserMsgPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *userMsgClient) BatchDeleteUserMsg(ctx context.Context, in *UserMsgBatch
 // for forward compatibility
 type UserMsgServer interface {
 	// 分页查询UserMsg
-	GetPageUserMsg(context.Context, *UserMsgPageReq) (*UserMsgPageReply, error)
+	GetUserMsgPage(context.Context, *UserMsgPageReq) (*UserMsgPageReply, error)
 	// 获取UserMsg
 	GetUserMsg(context.Context, *UserMsgReq) (*UserMsgReply, error)
 	// 更新UserMsg
@@ -121,8 +121,8 @@ type UserMsgServer interface {
 type UnimplementedUserMsgServer struct {
 }
 
-func (UnimplementedUserMsgServer) GetPageUserMsg(context.Context, *UserMsgPageReq) (*UserMsgPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageUserMsg not implemented")
+func (UnimplementedUserMsgServer) GetUserMsgPage(context.Context, *UserMsgPageReq) (*UserMsgPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserMsgPage not implemented")
 }
 func (UnimplementedUserMsgServer) GetUserMsg(context.Context, *UserMsgReq) (*UserMsgReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserMsg not implemented")
@@ -152,20 +152,20 @@ func RegisterUserMsgServer(s grpc.ServiceRegistrar, srv UserMsgServer) {
 	s.RegisterService(&UserMsg_ServiceDesc, srv)
 }
 
-func _UserMsg_GetPageUserMsg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserMsg_GetUserMsgPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserMsgPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserMsgServer).GetPageUserMsg(ctx, in)
+		return srv.(UserMsgServer).GetUserMsgPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/usermsg.v1.UserMsg/GetPageUserMsg",
+		FullMethod: "/usermsg.v1.UserMsg/GetUserMsgPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserMsgServer).GetPageUserMsg(ctx, req.(*UserMsgPageReq))
+		return srv.(UserMsgServer).GetUserMsgPage(ctx, req.(*UserMsgPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var UserMsg_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserMsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageUserMsg",
-			Handler:    _UserMsg_GetPageUserMsg_Handler,
+			MethodName: "GetUserMsgPage",
+			Handler:    _UserMsg_GetUserMsgPage_Handler,
 		},
 		{
 			MethodName: "GetUserMsg",

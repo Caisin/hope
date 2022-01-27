@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysRoleClient interface {
 	// 分页查询SysRole
-	GetPageSysRole(ctx context.Context, in *SysRolePageReq, opts ...grpc.CallOption) (*SysRolePageReply, error)
+	GetSysRolePage(ctx context.Context, in *SysRolePageReq, opts ...grpc.CallOption) (*SysRolePageReply, error)
 	// 获取SysRole
 	GetSysRole(ctx context.Context, in *SysRoleReq, opts ...grpc.CallOption) (*SysRoleReply, error)
 	// 更新SysRole
@@ -44,9 +44,9 @@ func NewSysRoleClient(cc grpc.ClientConnInterface) SysRoleClient {
 	return &sysRoleClient{cc}
 }
 
-func (c *sysRoleClient) GetPageSysRole(ctx context.Context, in *SysRolePageReq, opts ...grpc.CallOption) (*SysRolePageReply, error) {
+func (c *sysRoleClient) GetSysRolePage(ctx context.Context, in *SysRolePageReq, opts ...grpc.CallOption) (*SysRolePageReply, error) {
 	out := new(SysRolePageReply)
-	err := c.cc.Invoke(ctx, "/sysrole.v1.SysRole/GetPageSysRole", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysrole.v1.SysRole/GetSysRolePage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysRoleClient) BatchDeleteSysRole(ctx context.Context, in *SysRoleBatch
 // for forward compatibility
 type SysRoleServer interface {
 	// 分页查询SysRole
-	GetPageSysRole(context.Context, *SysRolePageReq) (*SysRolePageReply, error)
+	GetSysRolePage(context.Context, *SysRolePageReq) (*SysRolePageReply, error)
 	// 获取SysRole
 	GetSysRole(context.Context, *SysRoleReq) (*SysRoleReply, error)
 	// 更新SysRole
@@ -121,8 +121,8 @@ type SysRoleServer interface {
 type UnimplementedSysRoleServer struct {
 }
 
-func (UnimplementedSysRoleServer) GetPageSysRole(context.Context, *SysRolePageReq) (*SysRolePageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysRole not implemented")
+func (UnimplementedSysRoleServer) GetSysRolePage(context.Context, *SysRolePageReq) (*SysRolePageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysRolePage not implemented")
 }
 func (UnimplementedSysRoleServer) GetSysRole(context.Context, *SysRoleReq) (*SysRoleReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysRole not implemented")
@@ -152,20 +152,20 @@ func RegisterSysRoleServer(s grpc.ServiceRegistrar, srv SysRoleServer) {
 	s.RegisterService(&SysRole_ServiceDesc, srv)
 }
 
-func _SysRole_GetPageSysRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysRole_GetSysRolePage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysRolePageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysRoleServer).GetPageSysRole(ctx, in)
+		return srv.(SysRoleServer).GetSysRolePage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysrole.v1.SysRole/GetPageSysRole",
+		FullMethod: "/sysrole.v1.SysRole/GetSysRolePage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysRoleServer).GetPageSysRole(ctx, req.(*SysRolePageReq))
+		return srv.(SysRoleServer).GetSysRolePage(ctx, req.(*SysRolePageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysRole_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysRoleServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysRole",
-			Handler:    _SysRole_GetPageSysRole_Handler,
+			MethodName: "GetSysRolePage",
+			Handler:    _SysRole_GetSysRolePage_Handler,
 		},
 		{
 			MethodName: "GetSysRole",

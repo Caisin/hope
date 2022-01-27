@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/adchannel/v1;v1";
 service AdChannel {
 
   // 分页查询AdChannel
-  rpc GetPageAdChannel (AdChannelPageReq) returns (AdChannelPageReply)  {
+  rpc GetAdChannelPage (AdChannelPageReq) returns (AdChannelPageReply)  {
     option (google.api.http) = {
       get: "/v1/ad/channel/page"
     };

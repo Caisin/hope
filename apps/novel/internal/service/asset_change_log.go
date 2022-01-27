@@ -20,9 +20,9 @@ func NewAssetChangeLogService(uc *biz.AssetChangeLogUseCase, logger log.Logger) 
 	return &AssetChangeLogService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *AssetChangeLogService) GetPageAssetChangeLog(ctx context.Context, req *pb.AssetChangeLogPageReq) (*pb.AssetChangeLogPageReply, error) {
+func (s *AssetChangeLogService) GetAssetChangeLogPage(ctx context.Context, req *pb.AssetChangeLogPageReq) (*pb.AssetChangeLogPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageAssetChangeLog")
+	ctx, span := tr.Start(ctx, "GetAssetChangeLogPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

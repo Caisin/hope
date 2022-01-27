@@ -21,14 +21,14 @@ type UserAnalysisStatisticsHTTPServer interface {
 	BatchDeleteUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsBatchDeleteReq) (*UserAnalysisStatisticsDeleteReply, error)
 	CreateUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsCreateReq) (*UserAnalysisStatisticsCreateReply, error)
 	DeleteUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsDeleteReq) (*UserAnalysisStatisticsDeleteReply, error)
-	GetPageUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsPageReq) (*UserAnalysisStatisticsPageReply, error)
 	GetUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsReq) (*UserAnalysisStatisticsReply, error)
+	GetUserAnalysisStatisticsPage(context.Context, *UserAnalysisStatisticsPageReq) (*UserAnalysisStatisticsPageReply, error)
 	UpdateUserAnalysisStatistics(context.Context, *UserAnalysisStatisticsUpdateReq) (*UserAnalysisStatisticsUpdateReply, error)
 }
 
 func RegisterUserAnalysisStatisticsHTTPServer(s *http.Server, srv UserAnalysisStatisticsHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/user/analysis/statistics/page", _UserAnalysisStatistics_GetPageUserAnalysisStatistics0_HTTP_Handler(srv))
+	r.GET("/v1/user/analysis/statistics/page", _UserAnalysisStatistics_GetUserAnalysisStatisticsPage0_HTTP_Handler(srv))
 	r.GET("/v1/user/analysis/statistics/{id}", _UserAnalysisStatistics_GetUserAnalysisStatistics0_HTTP_Handler(srv))
 	r.PUT("/v1/user/analysis/statistics/{id}", _UserAnalysisStatistics_UpdateUserAnalysisStatistics0_HTTP_Handler(srv))
 	r.POST("/v1/user/analysis/statistics", _UserAnalysisStatistics_CreateUserAnalysisStatistics0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterUserAnalysisStatisticsHTTPServer(s *http.Server, srv UserAnalysisSt
 	r.DELETE("/v1/user/analysis/statistics", _UserAnalysisStatistics_BatchDeleteUserAnalysisStatistics0_HTTP_Handler(srv))
 }
 
-func _UserAnalysisStatistics_GetPageUserAnalysisStatistics0_HTTP_Handler(srv UserAnalysisStatisticsHTTPServer) func(ctx http.Context) error {
+func _UserAnalysisStatistics_GetUserAnalysisStatisticsPage0_HTTP_Handler(srv UserAnalysisStatisticsHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UserAnalysisStatisticsPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/useranalysisstatistics.v1.UserAnalysisStatistics/GetPageUserAnalysisStatistics")
+		http.SetOperation(ctx, "/useranalysisstatistics.v1.UserAnalysisStatistics/GetUserAnalysisStatisticsPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageUserAnalysisStatistics(ctx, req.(*UserAnalysisStatisticsPageReq))
+			return srv.GetUserAnalysisStatisticsPage(ctx, req.(*UserAnalysisStatisticsPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type UserAnalysisStatisticsHTTPClient interface {
 	BatchDeleteUserAnalysisStatistics(ctx context.Context, req *UserAnalysisStatisticsBatchDeleteReq, opts ...http.CallOption) (rsp *UserAnalysisStatisticsDeleteReply, err error)
 	CreateUserAnalysisStatistics(ctx context.Context, req *UserAnalysisStatisticsCreateReq, opts ...http.CallOption) (rsp *UserAnalysisStatisticsCreateReply, err error)
 	DeleteUserAnalysisStatistics(ctx context.Context, req *UserAnalysisStatisticsDeleteReq, opts ...http.CallOption) (rsp *UserAnalysisStatisticsDeleteReply, err error)
-	GetPageUserAnalysisStatistics(ctx context.Context, req *UserAnalysisStatisticsPageReq, opts ...http.CallOption) (rsp *UserAnalysisStatisticsPageReply, err error)
 	GetUserAnalysisStatistics(ctx context.Context, req *UserAnalysisStatisticsReq, opts ...http.CallOption) (rsp *UserAnalysisStatisticsReply, err error)
+	GetUserAnalysisStatisticsPage(ctx context.Context, req *UserAnalysisStatisticsPageReq, opts ...http.CallOption) (rsp *UserAnalysisStatisticsPageReply, err error)
 	UpdateUserAnalysisStatistics(ctx context.Context, req *UserAnalysisStatisticsUpdateReq, opts ...http.CallOption) (rsp *UserAnalysisStatisticsUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *UserAnalysisStatisticsHTTPClientImpl) DeleteUserAnalysisStatistics(ctx 
 	return &out, err
 }
 
-func (c *UserAnalysisStatisticsHTTPClientImpl) GetPageUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsPageReq, opts ...http.CallOption) (*UserAnalysisStatisticsPageReply, error) {
-	var out UserAnalysisStatisticsPageReply
-	pattern := "/v1/user/analysis/statistics/page"
+func (c *UserAnalysisStatisticsHTTPClientImpl) GetUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsReq, opts ...http.CallOption) (*UserAnalysisStatisticsReply, error) {
+	var out UserAnalysisStatisticsReply
+	pattern := "/v1/user/analysis/statistics/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/GetPageUserAnalysisStatistics"))
+	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/GetUserAnalysisStatistics"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *UserAnalysisStatisticsHTTPClientImpl) GetPageUserAnalysisStatistics(ctx
 	return &out, err
 }
 
-func (c *UserAnalysisStatisticsHTTPClientImpl) GetUserAnalysisStatistics(ctx context.Context, in *UserAnalysisStatisticsReq, opts ...http.CallOption) (*UserAnalysisStatisticsReply, error) {
-	var out UserAnalysisStatisticsReply
-	pattern := "/v1/user/analysis/statistics/{id}"
+func (c *UserAnalysisStatisticsHTTPClientImpl) GetUserAnalysisStatisticsPage(ctx context.Context, in *UserAnalysisStatisticsPageReq, opts ...http.CallOption) (*UserAnalysisStatisticsPageReply, error) {
+	var out UserAnalysisStatisticsPageReply
+	pattern := "/v1/user/analysis/statistics/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/GetUserAnalysisStatistics"))
+	opts = append(opts, http.Operation("/useranalysisstatistics.v1.UserAnalysisStatistics/GetUserAnalysisStatisticsPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

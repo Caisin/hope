@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysPostClient interface {
 	// 分页查询SysPost
-	GetPageSysPost(ctx context.Context, in *SysPostPageReq, opts ...grpc.CallOption) (*SysPostPageReply, error)
+	GetSysPostPage(ctx context.Context, in *SysPostPageReq, opts ...grpc.CallOption) (*SysPostPageReply, error)
 	// 获取SysPost
 	GetSysPost(ctx context.Context, in *SysPostReq, opts ...grpc.CallOption) (*SysPostReply, error)
 	// 更新SysPost
@@ -44,9 +44,9 @@ func NewSysPostClient(cc grpc.ClientConnInterface) SysPostClient {
 	return &sysPostClient{cc}
 }
 
-func (c *sysPostClient) GetPageSysPost(ctx context.Context, in *SysPostPageReq, opts ...grpc.CallOption) (*SysPostPageReply, error) {
+func (c *sysPostClient) GetSysPostPage(ctx context.Context, in *SysPostPageReq, opts ...grpc.CallOption) (*SysPostPageReply, error) {
 	out := new(SysPostPageReply)
-	err := c.cc.Invoke(ctx, "/syspost.v1.SysPost/GetPageSysPost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/syspost.v1.SysPost/GetSysPostPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysPostClient) BatchDeleteSysPost(ctx context.Context, in *SysPostBatch
 // for forward compatibility
 type SysPostServer interface {
 	// 分页查询SysPost
-	GetPageSysPost(context.Context, *SysPostPageReq) (*SysPostPageReply, error)
+	GetSysPostPage(context.Context, *SysPostPageReq) (*SysPostPageReply, error)
 	// 获取SysPost
 	GetSysPost(context.Context, *SysPostReq) (*SysPostReply, error)
 	// 更新SysPost
@@ -121,8 +121,8 @@ type SysPostServer interface {
 type UnimplementedSysPostServer struct {
 }
 
-func (UnimplementedSysPostServer) GetPageSysPost(context.Context, *SysPostPageReq) (*SysPostPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysPost not implemented")
+func (UnimplementedSysPostServer) GetSysPostPage(context.Context, *SysPostPageReq) (*SysPostPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysPostPage not implemented")
 }
 func (UnimplementedSysPostServer) GetSysPost(context.Context, *SysPostReq) (*SysPostReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysPost not implemented")
@@ -152,20 +152,20 @@ func RegisterSysPostServer(s grpc.ServiceRegistrar, srv SysPostServer) {
 	s.RegisterService(&SysPost_ServiceDesc, srv)
 }
 
-func _SysPost_GetPageSysPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysPost_GetSysPostPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysPostPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysPostServer).GetPageSysPost(ctx, in)
+		return srv.(SysPostServer).GetSysPostPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/syspost.v1.SysPost/GetPageSysPost",
+		FullMethod: "/syspost.v1.SysPost/GetSysPostPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysPostServer).GetPageSysPost(ctx, req.(*SysPostPageReq))
+		return srv.(SysPostServer).GetSysPostPage(ctx, req.(*SysPostPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysPost_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysPostServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysPost",
-			Handler:    _SysPost_GetPageSysPost_Handler,
+			MethodName: "GetSysPostPage",
+			Handler:    _SysPost_GetSysPostPage_Handler,
 		},
 		{
 			MethodName: "GetSysPost",

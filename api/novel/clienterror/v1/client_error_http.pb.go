@@ -22,13 +22,13 @@ type ClientErrorHTTPServer interface {
 	CreateClientError(context.Context, *ClientErrorCreateReq) (*ClientErrorCreateReply, error)
 	DeleteClientError(context.Context, *ClientErrorDeleteReq) (*ClientErrorDeleteReply, error)
 	GetClientError(context.Context, *ClientErrorReq) (*ClientErrorReply, error)
-	GetPageClientError(context.Context, *ClientErrorPageReq) (*ClientErrorPageReply, error)
+	GetClientErrorPage(context.Context, *ClientErrorPageReq) (*ClientErrorPageReply, error)
 	UpdateClientError(context.Context, *ClientErrorUpdateReq) (*ClientErrorUpdateReply, error)
 }
 
 func RegisterClientErrorHTTPServer(s *http.Server, srv ClientErrorHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/client/error/page", _ClientError_GetPageClientError0_HTTP_Handler(srv))
+	r.GET("/v1/client/error/page", _ClientError_GetClientErrorPage0_HTTP_Handler(srv))
 	r.GET("/v1/client/error/{id}", _ClientError_GetClientError0_HTTP_Handler(srv))
 	r.PUT("/v1/client/error/{id}", _ClientError_UpdateClientError0_HTTP_Handler(srv))
 	r.POST("/v1/client/error", _ClientError_CreateClientError0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterClientErrorHTTPServer(s *http.Server, srv ClientErrorHTTPServer) {
 	r.DELETE("/v1/client/error", _ClientError_BatchDeleteClientError0_HTTP_Handler(srv))
 }
 
-func _ClientError_GetPageClientError0_HTTP_Handler(srv ClientErrorHTTPServer) func(ctx http.Context) error {
+func _ClientError_GetClientErrorPage0_HTTP_Handler(srv ClientErrorHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ClientErrorPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/clienterror.v1.ClientError/GetPageClientError")
+		http.SetOperation(ctx, "/clienterror.v1.ClientError/GetClientErrorPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageClientError(ctx, req.(*ClientErrorPageReq))
+			return srv.GetClientErrorPage(ctx, req.(*ClientErrorPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type ClientErrorHTTPClient interface {
 	CreateClientError(ctx context.Context, req *ClientErrorCreateReq, opts ...http.CallOption) (rsp *ClientErrorCreateReply, err error)
 	DeleteClientError(ctx context.Context, req *ClientErrorDeleteReq, opts ...http.CallOption) (rsp *ClientErrorDeleteReply, err error)
 	GetClientError(ctx context.Context, req *ClientErrorReq, opts ...http.CallOption) (rsp *ClientErrorReply, err error)
-	GetPageClientError(ctx context.Context, req *ClientErrorPageReq, opts ...http.CallOption) (rsp *ClientErrorPageReply, err error)
+	GetClientErrorPage(ctx context.Context, req *ClientErrorPageReq, opts ...http.CallOption) (rsp *ClientErrorPageReply, err error)
 	UpdateClientError(ctx context.Context, req *ClientErrorUpdateReq, opts ...http.CallOption) (rsp *ClientErrorUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *ClientErrorHTTPClientImpl) GetClientError(ctx context.Context, in *Clie
 	return &out, err
 }
 
-func (c *ClientErrorHTTPClientImpl) GetPageClientError(ctx context.Context, in *ClientErrorPageReq, opts ...http.CallOption) (*ClientErrorPageReply, error) {
+func (c *ClientErrorHTTPClientImpl) GetClientErrorPage(ctx context.Context, in *ClientErrorPageReq, opts ...http.CallOption) (*ClientErrorPageReply, error) {
 	var out ClientErrorPageReply
 	pattern := "/v1/client/error/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/clienterror.v1.ClientError/GetPageClientError"))
+	opts = append(opts, http.Operation("/clienterror.v1.ClientError/GetClientErrorPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysdept/v1;v1";
 service SysDept {
 
   // 分页查询SysDept
-  rpc GetPageSysDept (SysDeptPageReq) returns (SysDeptPageReply)  {
+  rpc GetSysDeptPage (SysDeptPageReq) returns (SysDeptPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/dept/page"
     };

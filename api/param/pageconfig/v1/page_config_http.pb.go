@@ -22,13 +22,13 @@ type PageConfigHTTPServer interface {
 	CreatePageConfig(context.Context, *PageConfigCreateReq) (*PageConfigCreateReply, error)
 	DeletePageConfig(context.Context, *PageConfigDeleteReq) (*PageConfigDeleteReply, error)
 	GetPageConfig(context.Context, *PageConfigReq) (*PageConfigReply, error)
-	GetPagePageConfig(context.Context, *PageConfigPageReq) (*PageConfigPageReply, error)
+	GetPageConfigPage(context.Context, *PageConfigPageReq) (*PageConfigPageReply, error)
 	UpdatePageConfig(context.Context, *PageConfigUpdateReq) (*PageConfigUpdateReply, error)
 }
 
 func RegisterPageConfigHTTPServer(s *http.Server, srv PageConfigHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/page/config/page", _PageConfig_GetPagePageConfig0_HTTP_Handler(srv))
+	r.GET("/v1/page/config/page", _PageConfig_GetPageConfigPage0_HTTP_Handler(srv))
 	r.GET("/v1/page/config/{id}", _PageConfig_GetPageConfig0_HTTP_Handler(srv))
 	r.PUT("/v1/page/config/{id}", _PageConfig_UpdatePageConfig0_HTTP_Handler(srv))
 	r.POST("/v1/page/config", _PageConfig_CreatePageConfig0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterPageConfigHTTPServer(s *http.Server, srv PageConfigHTTPServer) {
 	r.DELETE("/v1/page/config", _PageConfig_BatchDeletePageConfig0_HTTP_Handler(srv))
 }
 
-func _PageConfig_GetPagePageConfig0_HTTP_Handler(srv PageConfigHTTPServer) func(ctx http.Context) error {
+func _PageConfig_GetPageConfigPage0_HTTP_Handler(srv PageConfigHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in PageConfigPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/pageconfig.v1.PageConfig/GetPagePageConfig")
+		http.SetOperation(ctx, "/pageconfig.v1.PageConfig/GetPageConfigPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPagePageConfig(ctx, req.(*PageConfigPageReq))
+			return srv.GetPageConfigPage(ctx, req.(*PageConfigPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type PageConfigHTTPClient interface {
 	CreatePageConfig(ctx context.Context, req *PageConfigCreateReq, opts ...http.CallOption) (rsp *PageConfigCreateReply, err error)
 	DeletePageConfig(ctx context.Context, req *PageConfigDeleteReq, opts ...http.CallOption) (rsp *PageConfigDeleteReply, err error)
 	GetPageConfig(ctx context.Context, req *PageConfigReq, opts ...http.CallOption) (rsp *PageConfigReply, err error)
-	GetPagePageConfig(ctx context.Context, req *PageConfigPageReq, opts ...http.CallOption) (rsp *PageConfigPageReply, err error)
+	GetPageConfigPage(ctx context.Context, req *PageConfigPageReq, opts ...http.CallOption) (rsp *PageConfigPageReply, err error)
 	UpdatePageConfig(ctx context.Context, req *PageConfigUpdateReq, opts ...http.CallOption) (rsp *PageConfigUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *PageConfigHTTPClientImpl) GetPageConfig(ctx context.Context, in *PageCo
 	return &out, err
 }
 
-func (c *PageConfigHTTPClientImpl) GetPagePageConfig(ctx context.Context, in *PageConfigPageReq, opts ...http.CallOption) (*PageConfigPageReply, error) {
+func (c *PageConfigHTTPClientImpl) GetPageConfigPage(ctx context.Context, in *PageConfigPageReq, opts ...http.CallOption) (*PageConfigPageReply, error) {
 	var out PageConfigPageReply
 	pattern := "/v1/page/config/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/GetPagePageConfig"))
+	opts = append(opts, http.Operation("/pageconfig.v1.PageConfig/GetPageConfigPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

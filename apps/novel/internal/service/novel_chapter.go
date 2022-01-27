@@ -20,9 +20,9 @@ func NewNovelChapterService(uc *biz.NovelChapterUseCase, logger log.Logger) *Nov
 	return &NovelChapterService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *NovelChapterService) GetPageNovelChapter(ctx context.Context, req *pb.NovelChapterPageReq) (*pb.NovelChapterPageReply, error) {
+func (s *NovelChapterService) GetNovelChapterPage(ctx context.Context, req *pb.NovelChapterPageReq) (*pb.NovelChapterPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageNovelChapter")
+	ctx, span := tr.Start(ctx, "GetNovelChapterPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

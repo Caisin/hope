@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelChapterClient interface {
 	// 分页查询NovelChapter
-	GetPageNovelChapter(ctx context.Context, in *NovelChapterPageReq, opts ...grpc.CallOption) (*NovelChapterPageReply, error)
+	GetNovelChapterPage(ctx context.Context, in *NovelChapterPageReq, opts ...grpc.CallOption) (*NovelChapterPageReply, error)
 	// 获取NovelChapter
 	GetNovelChapter(ctx context.Context, in *NovelChapterReq, opts ...grpc.CallOption) (*NovelChapterReply, error)
 	// 更新NovelChapter
@@ -44,9 +44,9 @@ func NewNovelChapterClient(cc grpc.ClientConnInterface) NovelChapterClient {
 	return &novelChapterClient{cc}
 }
 
-func (c *novelChapterClient) GetPageNovelChapter(ctx context.Context, in *NovelChapterPageReq, opts ...grpc.CallOption) (*NovelChapterPageReply, error) {
+func (c *novelChapterClient) GetNovelChapterPage(ctx context.Context, in *NovelChapterPageReq, opts ...grpc.CallOption) (*NovelChapterPageReply, error) {
 	out := new(NovelChapterPageReply)
-	err := c.cc.Invoke(ctx, "/novelchapter.v1.NovelChapter/GetPageNovelChapter", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelchapter.v1.NovelChapter/GetNovelChapterPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelChapterClient) BatchDeleteNovelChapter(ctx context.Context, in *No
 // for forward compatibility
 type NovelChapterServer interface {
 	// 分页查询NovelChapter
-	GetPageNovelChapter(context.Context, *NovelChapterPageReq) (*NovelChapterPageReply, error)
+	GetNovelChapterPage(context.Context, *NovelChapterPageReq) (*NovelChapterPageReply, error)
 	// 获取NovelChapter
 	GetNovelChapter(context.Context, *NovelChapterReq) (*NovelChapterReply, error)
 	// 更新NovelChapter
@@ -121,8 +121,8 @@ type NovelChapterServer interface {
 type UnimplementedNovelChapterServer struct {
 }
 
-func (UnimplementedNovelChapterServer) GetPageNovelChapter(context.Context, *NovelChapterPageReq) (*NovelChapterPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelChapter not implemented")
+func (UnimplementedNovelChapterServer) GetNovelChapterPage(context.Context, *NovelChapterPageReq) (*NovelChapterPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelChapterPage not implemented")
 }
 func (UnimplementedNovelChapterServer) GetNovelChapter(context.Context, *NovelChapterReq) (*NovelChapterReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelChapter not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelChapterServer(s grpc.ServiceRegistrar, srv NovelChapterServer)
 	s.RegisterService(&NovelChapter_ServiceDesc, srv)
 }
 
-func _NovelChapter_GetPageNovelChapter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelChapter_GetNovelChapterPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelChapterPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelChapterServer).GetPageNovelChapter(ctx, in)
+		return srv.(NovelChapterServer).GetNovelChapterPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelchapter.v1.NovelChapter/GetPageNovelChapter",
+		FullMethod: "/novelchapter.v1.NovelChapter/GetNovelChapterPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelChapterServer).GetPageNovelChapter(ctx, req.(*NovelChapterPageReq))
+		return srv.(NovelChapterServer).GetNovelChapterPage(ctx, req.(*NovelChapterPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelChapter_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelChapterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelChapter",
-			Handler:    _NovelChapter_GetPageNovelChapter_Handler,
+			MethodName: "GetNovelChapterPage",
+			Handler:    _NovelChapter_GetNovelChapterPage_Handler,
 		},
 		{
 			MethodName: "GetNovelChapter",

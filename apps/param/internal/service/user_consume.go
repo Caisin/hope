@@ -20,9 +20,9 @@ func NewUserConsumeService(uc *biz.UserConsumeUseCase, logger log.Logger) *UserC
 	return &UserConsumeService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *UserConsumeService) GetPageUserConsume(ctx context.Context, req *pb.UserConsumePageReq) (*pb.UserConsumePageReply, error) {
+func (s *UserConsumeService) GetUserConsumePage(ctx context.Context, req *pb.UserConsumePageReq) (*pb.UserConsumePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageUserConsume")
+	ctx, span := tr.Start(ctx, "GetUserConsumePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -22,13 +22,13 @@ type NovelCommentHTTPServer interface {
 	CreateNovelComment(context.Context, *NovelCommentCreateReq) (*NovelCommentCreateReply, error)
 	DeleteNovelComment(context.Context, *NovelCommentDeleteReq) (*NovelCommentDeleteReply, error)
 	GetNovelComment(context.Context, *NovelCommentReq) (*NovelCommentReply, error)
-	GetPageNovelComment(context.Context, *NovelCommentPageReq) (*NovelCommentPageReply, error)
+	GetNovelCommentPage(context.Context, *NovelCommentPageReq) (*NovelCommentPageReply, error)
 	UpdateNovelComment(context.Context, *NovelCommentUpdateReq) (*NovelCommentUpdateReply, error)
 }
 
 func RegisterNovelCommentHTTPServer(s *http.Server, srv NovelCommentHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/comment/page", _NovelComment_GetPageNovelComment0_HTTP_Handler(srv))
+	r.GET("/v1/novel/comment/page", _NovelComment_GetNovelCommentPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/comment/{id}", _NovelComment_GetNovelComment0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/comment/{id}", _NovelComment_UpdateNovelComment0_HTTP_Handler(srv))
 	r.POST("/v1/novel/comment", _NovelComment_CreateNovelComment0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelCommentHTTPServer(s *http.Server, srv NovelCommentHTTPServer) 
 	r.DELETE("/v1/novel/comment", _NovelComment_BatchDeleteNovelComment0_HTTP_Handler(srv))
 }
 
-func _NovelComment_GetPageNovelComment0_HTTP_Handler(srv NovelCommentHTTPServer) func(ctx http.Context) error {
+func _NovelComment_GetNovelCommentPage0_HTTP_Handler(srv NovelCommentHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelCommentPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelcomment.v1.NovelComment/GetPageNovelComment")
+		http.SetOperation(ctx, "/novelcomment.v1.NovelComment/GetNovelCommentPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelComment(ctx, req.(*NovelCommentPageReq))
+			return srv.GetNovelCommentPage(ctx, req.(*NovelCommentPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelCommentHTTPClient interface {
 	CreateNovelComment(ctx context.Context, req *NovelCommentCreateReq, opts ...http.CallOption) (rsp *NovelCommentCreateReply, err error)
 	DeleteNovelComment(ctx context.Context, req *NovelCommentDeleteReq, opts ...http.CallOption) (rsp *NovelCommentDeleteReply, err error)
 	GetNovelComment(ctx context.Context, req *NovelCommentReq, opts ...http.CallOption) (rsp *NovelCommentReply, err error)
-	GetPageNovelComment(ctx context.Context, req *NovelCommentPageReq, opts ...http.CallOption) (rsp *NovelCommentPageReply, err error)
+	GetNovelCommentPage(ctx context.Context, req *NovelCommentPageReq, opts ...http.CallOption) (rsp *NovelCommentPageReply, err error)
 	UpdateNovelComment(ctx context.Context, req *NovelCommentUpdateReq, opts ...http.CallOption) (rsp *NovelCommentUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelCommentHTTPClientImpl) GetNovelComment(ctx context.Context, in *No
 	return &out, err
 }
 
-func (c *NovelCommentHTTPClientImpl) GetPageNovelComment(ctx context.Context, in *NovelCommentPageReq, opts ...http.CallOption) (*NovelCommentPageReply, error) {
+func (c *NovelCommentHTTPClientImpl) GetNovelCommentPage(ctx context.Context, in *NovelCommentPageReq, opts ...http.CallOption) (*NovelCommentPageReply, error) {
 	var out NovelCommentPageReply
 	pattern := "/v1/novel/comment/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/GetPageNovelComment"))
+	opts = append(opts, http.Operation("/novelcomment.v1.NovelComment/GetNovelCommentPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -22,13 +22,13 @@ type NovelConsumeHTTPServer interface {
 	CreateNovelConsume(context.Context, *NovelConsumeCreateReq) (*NovelConsumeCreateReply, error)
 	DeleteNovelConsume(context.Context, *NovelConsumeDeleteReq) (*NovelConsumeDeleteReply, error)
 	GetNovelConsume(context.Context, *NovelConsumeReq) (*NovelConsumeReply, error)
-	GetPageNovelConsume(context.Context, *NovelConsumePageReq) (*NovelConsumePageReply, error)
+	GetNovelConsumePage(context.Context, *NovelConsumePageReq) (*NovelConsumePageReply, error)
 	UpdateNovelConsume(context.Context, *NovelConsumeUpdateReq) (*NovelConsumeUpdateReply, error)
 }
 
 func RegisterNovelConsumeHTTPServer(s *http.Server, srv NovelConsumeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/consume/page", _NovelConsume_GetPageNovelConsume0_HTTP_Handler(srv))
+	r.GET("/v1/novel/consume/page", _NovelConsume_GetNovelConsumePage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/consume/{id}", _NovelConsume_GetNovelConsume0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/consume/{id}", _NovelConsume_UpdateNovelConsume0_HTTP_Handler(srv))
 	r.POST("/v1/novel/consume", _NovelConsume_CreateNovelConsume0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelConsumeHTTPServer(s *http.Server, srv NovelConsumeHTTPServer) 
 	r.DELETE("/v1/novel/consume", _NovelConsume_BatchDeleteNovelConsume0_HTTP_Handler(srv))
 }
 
-func _NovelConsume_GetPageNovelConsume0_HTTP_Handler(srv NovelConsumeHTTPServer) func(ctx http.Context) error {
+func _NovelConsume_GetNovelConsumePage0_HTTP_Handler(srv NovelConsumeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelConsumePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelconsume.v1.NovelConsume/GetPageNovelConsume")
+		http.SetOperation(ctx, "/novelconsume.v1.NovelConsume/GetNovelConsumePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelConsume(ctx, req.(*NovelConsumePageReq))
+			return srv.GetNovelConsumePage(ctx, req.(*NovelConsumePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelConsumeHTTPClient interface {
 	CreateNovelConsume(ctx context.Context, req *NovelConsumeCreateReq, opts ...http.CallOption) (rsp *NovelConsumeCreateReply, err error)
 	DeleteNovelConsume(ctx context.Context, req *NovelConsumeDeleteReq, opts ...http.CallOption) (rsp *NovelConsumeDeleteReply, err error)
 	GetNovelConsume(ctx context.Context, req *NovelConsumeReq, opts ...http.CallOption) (rsp *NovelConsumeReply, err error)
-	GetPageNovelConsume(ctx context.Context, req *NovelConsumePageReq, opts ...http.CallOption) (rsp *NovelConsumePageReply, err error)
+	GetNovelConsumePage(ctx context.Context, req *NovelConsumePageReq, opts ...http.CallOption) (rsp *NovelConsumePageReply, err error)
 	UpdateNovelConsume(ctx context.Context, req *NovelConsumeUpdateReq, opts ...http.CallOption) (rsp *NovelConsumeUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelConsumeHTTPClientImpl) GetNovelConsume(ctx context.Context, in *No
 	return &out, err
 }
 
-func (c *NovelConsumeHTTPClientImpl) GetPageNovelConsume(ctx context.Context, in *NovelConsumePageReq, opts ...http.CallOption) (*NovelConsumePageReply, error) {
+func (c *NovelConsumeHTTPClientImpl) GetNovelConsumePage(ctx context.Context, in *NovelConsumePageReq, opts ...http.CallOption) (*NovelConsumePageReply, error) {
 	var out NovelConsumePageReply
 	pattern := "/v1/novel/consume/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/GetPageNovelConsume"))
+	opts = append(opts, http.Operation("/novelconsume.v1.NovelConsume/GetNovelConsumePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdChannelClient interface {
 	// 分页查询AdChannel
-	GetPageAdChannel(ctx context.Context, in *AdChannelPageReq, opts ...grpc.CallOption) (*AdChannelPageReply, error)
+	GetAdChannelPage(ctx context.Context, in *AdChannelPageReq, opts ...grpc.CallOption) (*AdChannelPageReply, error)
 	// 获取AdChannel
 	GetAdChannel(ctx context.Context, in *AdChannelReq, opts ...grpc.CallOption) (*AdChannelReply, error)
 	// 更新AdChannel
@@ -44,9 +44,9 @@ func NewAdChannelClient(cc grpc.ClientConnInterface) AdChannelClient {
 	return &adChannelClient{cc}
 }
 
-func (c *adChannelClient) GetPageAdChannel(ctx context.Context, in *AdChannelPageReq, opts ...grpc.CallOption) (*AdChannelPageReply, error) {
+func (c *adChannelClient) GetAdChannelPage(ctx context.Context, in *AdChannelPageReq, opts ...grpc.CallOption) (*AdChannelPageReply, error) {
 	out := new(AdChannelPageReply)
-	err := c.cc.Invoke(ctx, "/adchannel.v1.AdChannel/GetPageAdChannel", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/adchannel.v1.AdChannel/GetAdChannelPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *adChannelClient) BatchDeleteAdChannel(ctx context.Context, in *AdChanne
 // for forward compatibility
 type AdChannelServer interface {
 	// 分页查询AdChannel
-	GetPageAdChannel(context.Context, *AdChannelPageReq) (*AdChannelPageReply, error)
+	GetAdChannelPage(context.Context, *AdChannelPageReq) (*AdChannelPageReply, error)
 	// 获取AdChannel
 	GetAdChannel(context.Context, *AdChannelReq) (*AdChannelReply, error)
 	// 更新AdChannel
@@ -121,8 +121,8 @@ type AdChannelServer interface {
 type UnimplementedAdChannelServer struct {
 }
 
-func (UnimplementedAdChannelServer) GetPageAdChannel(context.Context, *AdChannelPageReq) (*AdChannelPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageAdChannel not implemented")
+func (UnimplementedAdChannelServer) GetAdChannelPage(context.Context, *AdChannelPageReq) (*AdChannelPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAdChannelPage not implemented")
 }
 func (UnimplementedAdChannelServer) GetAdChannel(context.Context, *AdChannelReq) (*AdChannelReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAdChannel not implemented")
@@ -152,20 +152,20 @@ func RegisterAdChannelServer(s grpc.ServiceRegistrar, srv AdChannelServer) {
 	s.RegisterService(&AdChannel_ServiceDesc, srv)
 }
 
-func _AdChannel_GetPageAdChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AdChannel_GetAdChannelPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AdChannelPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdChannelServer).GetPageAdChannel(ctx, in)
+		return srv.(AdChannelServer).GetAdChannelPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/adchannel.v1.AdChannel/GetPageAdChannel",
+		FullMethod: "/adchannel.v1.AdChannel/GetAdChannelPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdChannelServer).GetPageAdChannel(ctx, req.(*AdChannelPageReq))
+		return srv.(AdChannelServer).GetAdChannelPage(ctx, req.(*AdChannelPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var AdChannel_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AdChannelServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageAdChannel",
-			Handler:    _AdChannel_GetPageAdChannel_Handler,
+			MethodName: "GetAdChannelPage",
+			Handler:    _AdChannel_GetAdChannelPage_Handler,
 		},
 		{
 			MethodName: "GetAdChannel",

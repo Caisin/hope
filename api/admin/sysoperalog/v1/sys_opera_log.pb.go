@@ -1900,7 +1900,7 @@ var file_api_admin_sysoperalog_v1_sys_opera_log_proto_rawDesc = []byte{
 	0x67, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01,
 	0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0x96, 0x06, 0x0a, 0x0b, 0x53,
 	0x79, 0x73, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x4c, 0x6f, 0x67, 0x12, 0x7e, 0x0a, 0x12, 0x47, 0x65,
-	0x74, 0x50, 0x61, 0x67, 0x65, 0x53, 0x79, 0x73, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x4c, 0x6f, 0x67,
+	0x74, 0x53, 0x79, 0x73, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x4c, 0x6f, 0x67, 0x50, 0x61, 0x67, 0x65,
 	0x12, 0x22, 0x2e, 0x73, 0x79, 0x73, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x6c, 0x6f, 0x67, 0x2e, 0x76,
 	0x31, 0x2e, 0x53, 0x79, 0x73, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x4c, 0x6f, 0x67, 0x50, 0x61, 0x67,
 	0x65, 0x52, 0x65, 0x71, 0x1a, 0x24, 0x2e, 0x73, 0x79, 0x73, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x6c,
@@ -1997,13 +1997,13 @@ var file_api_admin_sysoperalog_v1_sys_opera_log_proto_depIdxs = []int32{
 	0,  // 11: sysoperalog.v1.SysOperaLogCreateReply.result:type_name -> sysoperalog.v1.SysOperaLogData
 	12, // 12: sysoperalog.v1.SysOperaLogUpdateReq.operTime:type_name -> google.protobuf.Timestamp
 	0,  // 13: sysoperalog.v1.SysOperaLogUpdateReply.result:type_name -> sysoperalog.v1.SysOperaLogData
-	1,  // 14: sysoperalog.v1.SysOperaLog.GetPageSysOperaLog:input_type -> sysoperalog.v1.SysOperaLogPageReq
+	1,  // 14: sysoperalog.v1.SysOperaLog.GetSysOperaLogPage:input_type -> sysoperalog.v1.SysOperaLogPageReq
 	3,  // 15: sysoperalog.v1.SysOperaLog.GetSysOperaLog:input_type -> sysoperalog.v1.SysOperaLogReq
 	7,  // 16: sysoperalog.v1.SysOperaLog.UpdateSysOperaLog:input_type -> sysoperalog.v1.SysOperaLogUpdateReq
 	5,  // 17: sysoperalog.v1.SysOperaLog.CreateSysOperaLog:input_type -> sysoperalog.v1.SysOperaLogCreateReq
 	9,  // 18: sysoperalog.v1.SysOperaLog.DeleteSysOperaLog:input_type -> sysoperalog.v1.SysOperaLogDeleteReq
 	10, // 19: sysoperalog.v1.SysOperaLog.BatchDeleteSysOperaLog:input_type -> sysoperalog.v1.SysOperaLogBatchDeleteReq
-	2,  // 20: sysoperalog.v1.SysOperaLog.GetPageSysOperaLog:output_type -> sysoperalog.v1.SysOperaLogPageReply
+	2,  // 20: sysoperalog.v1.SysOperaLog.GetSysOperaLogPage:output_type -> sysoperalog.v1.SysOperaLogPageReply
 	4,  // 21: sysoperalog.v1.SysOperaLog.GetSysOperaLog:output_type -> sysoperalog.v1.SysOperaLogReply
 	8,  // 22: sysoperalog.v1.SysOperaLog.UpdateSysOperaLog:output_type -> sysoperalog.v1.SysOperaLogUpdateReply
 	6,  // 23: sysoperalog.v1.SysOperaLog.CreateSysOperaLog:output_type -> sysoperalog.v1.SysOperaLogCreateReply

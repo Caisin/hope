@@ -20,9 +20,9 @@ func NewAssetItemService(uc *biz.AssetItemUseCase, logger log.Logger) *AssetItem
 	return &AssetItemService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *AssetItemService) GetPageAssetItem(ctx context.Context, req *pb.AssetItemPageReq) (*pb.AssetItemPageReply, error) {
+func (s *AssetItemService) GetAssetItemPage(ctx context.Context, req *pb.AssetItemPageReq) (*pb.AssetItemPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageAssetItem")
+	ctx, span := tr.Start(ctx, "GetAssetItemPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

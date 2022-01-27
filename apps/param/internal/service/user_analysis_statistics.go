@@ -20,9 +20,9 @@ func NewUserAnalysisStatisticsService(uc *biz.UserAnalysisStatisticsUseCase, log
 	return &UserAnalysisStatisticsService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *UserAnalysisStatisticsService) GetPageUserAnalysisStatistics(ctx context.Context, req *pb.UserAnalysisStatisticsPageReq) (*pb.UserAnalysisStatisticsPageReply, error) {
+func (s *UserAnalysisStatisticsService) GetUserAnalysisStatisticsPage(ctx context.Context, req *pb.UserAnalysisStatisticsPageReq) (*pb.UserAnalysisStatisticsPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageUserAnalysisStatistics")
+	ctx, span := tr.Start(ctx, "GetUserAnalysisStatisticsPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

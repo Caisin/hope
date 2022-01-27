@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ListenRecordClient interface {
 	// 分页查询ListenRecord
-	GetPageListenRecord(ctx context.Context, in *ListenRecordPageReq, opts ...grpc.CallOption) (*ListenRecordPageReply, error)
+	GetListenRecordPage(ctx context.Context, in *ListenRecordPageReq, opts ...grpc.CallOption) (*ListenRecordPageReply, error)
 	// 获取ListenRecord
 	GetListenRecord(ctx context.Context, in *ListenRecordReq, opts ...grpc.CallOption) (*ListenRecordReply, error)
 	// 更新ListenRecord
@@ -44,9 +44,9 @@ func NewListenRecordClient(cc grpc.ClientConnInterface) ListenRecordClient {
 	return &listenRecordClient{cc}
 }
 
-func (c *listenRecordClient) GetPageListenRecord(ctx context.Context, in *ListenRecordPageReq, opts ...grpc.CallOption) (*ListenRecordPageReply, error) {
+func (c *listenRecordClient) GetListenRecordPage(ctx context.Context, in *ListenRecordPageReq, opts ...grpc.CallOption) (*ListenRecordPageReply, error) {
 	out := new(ListenRecordPageReply)
-	err := c.cc.Invoke(ctx, "/listenrecord.v1.ListenRecord/GetPageListenRecord", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/listenrecord.v1.ListenRecord/GetListenRecordPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *listenRecordClient) BatchDeleteListenRecord(ctx context.Context, in *Li
 // for forward compatibility
 type ListenRecordServer interface {
 	// 分页查询ListenRecord
-	GetPageListenRecord(context.Context, *ListenRecordPageReq) (*ListenRecordPageReply, error)
+	GetListenRecordPage(context.Context, *ListenRecordPageReq) (*ListenRecordPageReply, error)
 	// 获取ListenRecord
 	GetListenRecord(context.Context, *ListenRecordReq) (*ListenRecordReply, error)
 	// 更新ListenRecord
@@ -121,8 +121,8 @@ type ListenRecordServer interface {
 type UnimplementedListenRecordServer struct {
 }
 
-func (UnimplementedListenRecordServer) GetPageListenRecord(context.Context, *ListenRecordPageReq) (*ListenRecordPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageListenRecord not implemented")
+func (UnimplementedListenRecordServer) GetListenRecordPage(context.Context, *ListenRecordPageReq) (*ListenRecordPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetListenRecordPage not implemented")
 }
 func (UnimplementedListenRecordServer) GetListenRecord(context.Context, *ListenRecordReq) (*ListenRecordReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetListenRecord not implemented")
@@ -152,20 +152,20 @@ func RegisterListenRecordServer(s grpc.ServiceRegistrar, srv ListenRecordServer)
 	s.RegisterService(&ListenRecord_ServiceDesc, srv)
 }
 
-func _ListenRecord_GetPageListenRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ListenRecord_GetListenRecordPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListenRecordPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ListenRecordServer).GetPageListenRecord(ctx, in)
+		return srv.(ListenRecordServer).GetListenRecordPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/listenrecord.v1.ListenRecord/GetPageListenRecord",
+		FullMethod: "/listenrecord.v1.ListenRecord/GetListenRecordPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListenRecordServer).GetPageListenRecord(ctx, req.(*ListenRecordPageReq))
+		return srv.(ListenRecordServer).GetListenRecordPage(ctx, req.(*ListenRecordPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var ListenRecord_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ListenRecordServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageListenRecord",
-			Handler:    _ListenRecord_GetPageListenRecord_Handler,
+			MethodName: "GetListenRecordPage",
+			Handler:    _ListenRecord_GetListenRecordPage_Handler,
 		},
 		{
 			MethodName: "GetListenRecord",

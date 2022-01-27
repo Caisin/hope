@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NovelAutoBuyClient interface {
 	// 分页查询NovelAutoBuy
-	GetPageNovelAutoBuy(ctx context.Context, in *NovelAutoBuyPageReq, opts ...grpc.CallOption) (*NovelAutoBuyPageReply, error)
+	GetNovelAutoBuyPage(ctx context.Context, in *NovelAutoBuyPageReq, opts ...grpc.CallOption) (*NovelAutoBuyPageReply, error)
 	// 获取NovelAutoBuy
 	GetNovelAutoBuy(ctx context.Context, in *NovelAutoBuyReq, opts ...grpc.CallOption) (*NovelAutoBuyReply, error)
 	// 更新NovelAutoBuy
@@ -44,9 +44,9 @@ func NewNovelAutoBuyClient(cc grpc.ClientConnInterface) NovelAutoBuyClient {
 	return &novelAutoBuyClient{cc}
 }
 
-func (c *novelAutoBuyClient) GetPageNovelAutoBuy(ctx context.Context, in *NovelAutoBuyPageReq, opts ...grpc.CallOption) (*NovelAutoBuyPageReply, error) {
+func (c *novelAutoBuyClient) GetNovelAutoBuyPage(ctx context.Context, in *NovelAutoBuyPageReq, opts ...grpc.CallOption) (*NovelAutoBuyPageReply, error) {
 	out := new(NovelAutoBuyPageReply)
-	err := c.cc.Invoke(ctx, "/novelautobuy.v1.NovelAutoBuy/GetPageNovelAutoBuy", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/novelautobuy.v1.NovelAutoBuy/GetNovelAutoBuyPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *novelAutoBuyClient) BatchDeleteNovelAutoBuy(ctx context.Context, in *No
 // for forward compatibility
 type NovelAutoBuyServer interface {
 	// 分页查询NovelAutoBuy
-	GetPageNovelAutoBuy(context.Context, *NovelAutoBuyPageReq) (*NovelAutoBuyPageReply, error)
+	GetNovelAutoBuyPage(context.Context, *NovelAutoBuyPageReq) (*NovelAutoBuyPageReply, error)
 	// 获取NovelAutoBuy
 	GetNovelAutoBuy(context.Context, *NovelAutoBuyReq) (*NovelAutoBuyReply, error)
 	// 更新NovelAutoBuy
@@ -121,8 +121,8 @@ type NovelAutoBuyServer interface {
 type UnimplementedNovelAutoBuyServer struct {
 }
 
-func (UnimplementedNovelAutoBuyServer) GetPageNovelAutoBuy(context.Context, *NovelAutoBuyPageReq) (*NovelAutoBuyPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageNovelAutoBuy not implemented")
+func (UnimplementedNovelAutoBuyServer) GetNovelAutoBuyPage(context.Context, *NovelAutoBuyPageReq) (*NovelAutoBuyPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNovelAutoBuyPage not implemented")
 }
 func (UnimplementedNovelAutoBuyServer) GetNovelAutoBuy(context.Context, *NovelAutoBuyReq) (*NovelAutoBuyReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNovelAutoBuy not implemented")
@@ -152,20 +152,20 @@ func RegisterNovelAutoBuyServer(s grpc.ServiceRegistrar, srv NovelAutoBuyServer)
 	s.RegisterService(&NovelAutoBuy_ServiceDesc, srv)
 }
 
-func _NovelAutoBuy_GetPageNovelAutoBuy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _NovelAutoBuy_GetNovelAutoBuyPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NovelAutoBuyPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NovelAutoBuyServer).GetPageNovelAutoBuy(ctx, in)
+		return srv.(NovelAutoBuyServer).GetNovelAutoBuyPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novelautobuy.v1.NovelAutoBuy/GetPageNovelAutoBuy",
+		FullMethod: "/novelautobuy.v1.NovelAutoBuy/GetNovelAutoBuyPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NovelAutoBuyServer).GetPageNovelAutoBuy(ctx, req.(*NovelAutoBuyPageReq))
+		return srv.(NovelAutoBuyServer).GetNovelAutoBuyPage(ctx, req.(*NovelAutoBuyPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var NovelAutoBuy_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NovelAutoBuyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageNovelAutoBuy",
-			Handler:    _NovelAutoBuy_GetPageNovelAutoBuy_Handler,
+			MethodName: "GetNovelAutoBuyPage",
+			Handler:    _NovelAutoBuy_GetNovelAutoBuyPage_Handler,
 		},
 		{
 			MethodName: "GetNovelAutoBuy",

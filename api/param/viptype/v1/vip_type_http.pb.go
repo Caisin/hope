@@ -21,14 +21,14 @@ type VipTypeHTTPServer interface {
 	BatchDeleteVipType(context.Context, *VipTypeBatchDeleteReq) (*VipTypeDeleteReply, error)
 	CreateVipType(context.Context, *VipTypeCreateReq) (*VipTypeCreateReply, error)
 	DeleteVipType(context.Context, *VipTypeDeleteReq) (*VipTypeDeleteReply, error)
-	GetPageVipType(context.Context, *VipTypePageReq) (*VipTypePageReply, error)
 	GetVipType(context.Context, *VipTypeReq) (*VipTypeReply, error)
+	GetVipTypePage(context.Context, *VipTypePageReq) (*VipTypePageReply, error)
 	UpdateVipType(context.Context, *VipTypeUpdateReq) (*VipTypeUpdateReply, error)
 }
 
 func RegisterVipTypeHTTPServer(s *http.Server, srv VipTypeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/vip/type/page", _VipType_GetPageVipType0_HTTP_Handler(srv))
+	r.GET("/v1/vip/type/page", _VipType_GetVipTypePage0_HTTP_Handler(srv))
 	r.GET("/v1/vip/type/{id}", _VipType_GetVipType0_HTTP_Handler(srv))
 	r.PUT("/v1/vip/type/{id}", _VipType_UpdateVipType0_HTTP_Handler(srv))
 	r.POST("/v1/vip/type", _VipType_CreateVipType0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterVipTypeHTTPServer(s *http.Server, srv VipTypeHTTPServer) {
 	r.DELETE("/v1/vip/type", _VipType_BatchDeleteVipType0_HTTP_Handler(srv))
 }
 
-func _VipType_GetPageVipType0_HTTP_Handler(srv VipTypeHTTPServer) func(ctx http.Context) error {
+func _VipType_GetVipTypePage0_HTTP_Handler(srv VipTypeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in VipTypePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/viptype.v1.VipType/GetPageVipType")
+		http.SetOperation(ctx, "/viptype.v1.VipType/GetVipTypePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageVipType(ctx, req.(*VipTypePageReq))
+			return srv.GetVipTypePage(ctx, req.(*VipTypePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type VipTypeHTTPClient interface {
 	BatchDeleteVipType(ctx context.Context, req *VipTypeBatchDeleteReq, opts ...http.CallOption) (rsp *VipTypeDeleteReply, err error)
 	CreateVipType(ctx context.Context, req *VipTypeCreateReq, opts ...http.CallOption) (rsp *VipTypeCreateReply, err error)
 	DeleteVipType(ctx context.Context, req *VipTypeDeleteReq, opts ...http.CallOption) (rsp *VipTypeDeleteReply, err error)
-	GetPageVipType(ctx context.Context, req *VipTypePageReq, opts ...http.CallOption) (rsp *VipTypePageReply, err error)
 	GetVipType(ctx context.Context, req *VipTypeReq, opts ...http.CallOption) (rsp *VipTypeReply, err error)
+	GetVipTypePage(ctx context.Context, req *VipTypePageReq, opts ...http.CallOption) (rsp *VipTypePageReply, err error)
 	UpdateVipType(ctx context.Context, req *VipTypeUpdateReq, opts ...http.CallOption) (rsp *VipTypeUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *VipTypeHTTPClientImpl) DeleteVipType(ctx context.Context, in *VipTypeDe
 	return &out, err
 }
 
-func (c *VipTypeHTTPClientImpl) GetPageVipType(ctx context.Context, in *VipTypePageReq, opts ...http.CallOption) (*VipTypePageReply, error) {
-	var out VipTypePageReply
-	pattern := "/v1/vip/type/page"
+func (c *VipTypeHTTPClientImpl) GetVipType(ctx context.Context, in *VipTypeReq, opts ...http.CallOption) (*VipTypeReply, error) {
+	var out VipTypeReply
+	pattern := "/v1/vip/type/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/viptype.v1.VipType/GetPageVipType"))
+	opts = append(opts, http.Operation("/viptype.v1.VipType/GetVipType"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *VipTypeHTTPClientImpl) GetPageVipType(ctx context.Context, in *VipTypeP
 	return &out, err
 }
 
-func (c *VipTypeHTTPClientImpl) GetVipType(ctx context.Context, in *VipTypeReq, opts ...http.CallOption) (*VipTypeReply, error) {
-	var out VipTypeReply
-	pattern := "/v1/vip/type/{id}"
+func (c *VipTypeHTTPClientImpl) GetVipTypePage(ctx context.Context, in *VipTypePageReq, opts ...http.CallOption) (*VipTypePageReply, error) {
+	var out VipTypePageReply
+	pattern := "/v1/vip/type/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/viptype.v1.VipType/GetVipType"))
+	opts = append(opts, http.Operation("/viptype.v1.VipType/GetVipTypePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

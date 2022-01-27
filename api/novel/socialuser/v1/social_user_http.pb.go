@@ -21,14 +21,14 @@ type SocialUserHTTPServer interface {
 	BatchDeleteSocialUser(context.Context, *SocialUserBatchDeleteReq) (*SocialUserDeleteReply, error)
 	CreateSocialUser(context.Context, *SocialUserCreateReq) (*SocialUserCreateReply, error)
 	DeleteSocialUser(context.Context, *SocialUserDeleteReq) (*SocialUserDeleteReply, error)
-	GetPageSocialUser(context.Context, *SocialUserPageReq) (*SocialUserPageReply, error)
 	GetSocialUser(context.Context, *SocialUserReq) (*SocialUserReply, error)
+	GetSocialUserPage(context.Context, *SocialUserPageReq) (*SocialUserPageReply, error)
 	UpdateSocialUser(context.Context, *SocialUserUpdateReq) (*SocialUserUpdateReply, error)
 }
 
 func RegisterSocialUserHTTPServer(s *http.Server, srv SocialUserHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/social/user/page", _SocialUser_GetPageSocialUser0_HTTP_Handler(srv))
+	r.GET("/v1/social/user/page", _SocialUser_GetSocialUserPage0_HTTP_Handler(srv))
 	r.GET("/v1/social/user/{id}", _SocialUser_GetSocialUser0_HTTP_Handler(srv))
 	r.PUT("/v1/social/user/{id}", _SocialUser_UpdateSocialUser0_HTTP_Handler(srv))
 	r.POST("/v1/social/user", _SocialUser_CreateSocialUser0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSocialUserHTTPServer(s *http.Server, srv SocialUserHTTPServer) {
 	r.DELETE("/v1/social/user", _SocialUser_BatchDeleteSocialUser0_HTTP_Handler(srv))
 }
 
-func _SocialUser_GetPageSocialUser0_HTTP_Handler(srv SocialUserHTTPServer) func(ctx http.Context) error {
+func _SocialUser_GetSocialUserPage0_HTTP_Handler(srv SocialUserHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SocialUserPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/socialuser.v1.SocialUser/GetPageSocialUser")
+		http.SetOperation(ctx, "/socialuser.v1.SocialUser/GetSocialUserPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSocialUser(ctx, req.(*SocialUserPageReq))
+			return srv.GetSocialUserPage(ctx, req.(*SocialUserPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SocialUserHTTPClient interface {
 	BatchDeleteSocialUser(ctx context.Context, req *SocialUserBatchDeleteReq, opts ...http.CallOption) (rsp *SocialUserDeleteReply, err error)
 	CreateSocialUser(ctx context.Context, req *SocialUserCreateReq, opts ...http.CallOption) (rsp *SocialUserCreateReply, err error)
 	DeleteSocialUser(ctx context.Context, req *SocialUserDeleteReq, opts ...http.CallOption) (rsp *SocialUserDeleteReply, err error)
-	GetPageSocialUser(ctx context.Context, req *SocialUserPageReq, opts ...http.CallOption) (rsp *SocialUserPageReply, err error)
 	GetSocialUser(ctx context.Context, req *SocialUserReq, opts ...http.CallOption) (rsp *SocialUserReply, err error)
+	GetSocialUserPage(ctx context.Context, req *SocialUserPageReq, opts ...http.CallOption) (rsp *SocialUserPageReply, err error)
 	UpdateSocialUser(ctx context.Context, req *SocialUserUpdateReq, opts ...http.CallOption) (rsp *SocialUserUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SocialUserHTTPClientImpl) DeleteSocialUser(ctx context.Context, in *Soc
 	return &out, err
 }
 
-func (c *SocialUserHTTPClientImpl) GetPageSocialUser(ctx context.Context, in *SocialUserPageReq, opts ...http.CallOption) (*SocialUserPageReply, error) {
-	var out SocialUserPageReply
-	pattern := "/v1/social/user/page"
+func (c *SocialUserHTTPClientImpl) GetSocialUser(ctx context.Context, in *SocialUserReq, opts ...http.CallOption) (*SocialUserReply, error) {
+	var out SocialUserReply
+	pattern := "/v1/social/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/GetPageSocialUser"))
+	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/GetSocialUser"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SocialUserHTTPClientImpl) GetPageSocialUser(ctx context.Context, in *So
 	return &out, err
 }
 
-func (c *SocialUserHTTPClientImpl) GetSocialUser(ctx context.Context, in *SocialUserReq, opts ...http.CallOption) (*SocialUserReply, error) {
-	var out SocialUserReply
-	pattern := "/v1/social/user/{id}"
+func (c *SocialUserHTTPClientImpl) GetSocialUserPage(ctx context.Context, in *SocialUserPageReq, opts ...http.CallOption) (*SocialUserPageReply, error) {
+	var out SocialUserPageReply
+	pattern := "/v1/social/user/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/GetSocialUser"))
+	opts = append(opts, http.Operation("/socialuser.v1.SocialUser/GetSocialUserPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

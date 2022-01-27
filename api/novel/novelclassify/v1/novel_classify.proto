@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/novelclassify/v1;v1";
 service NovelClassify {
 
   // 分页查询NovelClassify
-  rpc GetPageNovelClassify (NovelClassifyPageReq) returns (NovelClassifyPageReply)  {
+  rpc GetNovelClassifyPage (NovelClassifyPageReq) returns (NovelClassifyPageReply)  {
     option (google.api.http) = {
       get: "/v1/novel/classify/page"
     };

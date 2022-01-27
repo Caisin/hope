@@ -22,13 +22,13 @@ type AppVersionHTTPServer interface {
 	CreateAppVersion(context.Context, *AppVersionCreateReq) (*AppVersionCreateReply, error)
 	DeleteAppVersion(context.Context, *AppVersionDeleteReq) (*AppVersionDeleteReply, error)
 	GetAppVersion(context.Context, *AppVersionReq) (*AppVersionReply, error)
-	GetPageAppVersion(context.Context, *AppVersionPageReq) (*AppVersionPageReply, error)
+	GetAppVersionPage(context.Context, *AppVersionPageReq) (*AppVersionPageReply, error)
 	UpdateAppVersion(context.Context, *AppVersionUpdateReq) (*AppVersionUpdateReply, error)
 }
 
 func RegisterAppVersionHTTPServer(s *http.Server, srv AppVersionHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/app/version/page", _AppVersion_GetPageAppVersion0_HTTP_Handler(srv))
+	r.GET("/v1/app/version/page", _AppVersion_GetAppVersionPage0_HTTP_Handler(srv))
 	r.GET("/v1/app/version/{id}", _AppVersion_GetAppVersion0_HTTP_Handler(srv))
 	r.PUT("/v1/app/version/{id}", _AppVersion_UpdateAppVersion0_HTTP_Handler(srv))
 	r.POST("/v1/app/version", _AppVersion_CreateAppVersion0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterAppVersionHTTPServer(s *http.Server, srv AppVersionHTTPServer) {
 	r.DELETE("/v1/app/version", _AppVersion_BatchDeleteAppVersion0_HTTP_Handler(srv))
 }
 
-func _AppVersion_GetPageAppVersion0_HTTP_Handler(srv AppVersionHTTPServer) func(ctx http.Context) error {
+func _AppVersion_GetAppVersionPage0_HTTP_Handler(srv AppVersionHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in AppVersionPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/appversion.v1.AppVersion/GetPageAppVersion")
+		http.SetOperation(ctx, "/appversion.v1.AppVersion/GetAppVersionPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageAppVersion(ctx, req.(*AppVersionPageReq))
+			return srv.GetAppVersionPage(ctx, req.(*AppVersionPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type AppVersionHTTPClient interface {
 	CreateAppVersion(ctx context.Context, req *AppVersionCreateReq, opts ...http.CallOption) (rsp *AppVersionCreateReply, err error)
 	DeleteAppVersion(ctx context.Context, req *AppVersionDeleteReq, opts ...http.CallOption) (rsp *AppVersionDeleteReply, err error)
 	GetAppVersion(ctx context.Context, req *AppVersionReq, opts ...http.CallOption) (rsp *AppVersionReply, err error)
-	GetPageAppVersion(ctx context.Context, req *AppVersionPageReq, opts ...http.CallOption) (rsp *AppVersionPageReply, err error)
+	GetAppVersionPage(ctx context.Context, req *AppVersionPageReq, opts ...http.CallOption) (rsp *AppVersionPageReply, err error)
 	UpdateAppVersion(ctx context.Context, req *AppVersionUpdateReq, opts ...http.CallOption) (rsp *AppVersionUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *AppVersionHTTPClientImpl) GetAppVersion(ctx context.Context, in *AppVer
 	return &out, err
 }
 
-func (c *AppVersionHTTPClientImpl) GetPageAppVersion(ctx context.Context, in *AppVersionPageReq, opts ...http.CallOption) (*AppVersionPageReply, error) {
+func (c *AppVersionHTTPClientImpl) GetAppVersionPage(ctx context.Context, in *AppVersionPageReq, opts ...http.CallOption) (*AppVersionPageReply, error) {
 	var out AppVersionPageReply
 	pattern := "/v1/app/version/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/appversion.v1.AppVersion/GetPageAppVersion"))
+	opts = append(opts, http.Operation("/appversion.v1.AppVersion/GetAppVersionPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

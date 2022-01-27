@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysLoginLogClient interface {
 	// 分页查询SysLoginLog
-	GetPageSysLoginLog(ctx context.Context, in *SysLoginLogPageReq, opts ...grpc.CallOption) (*SysLoginLogPageReply, error)
+	GetSysLoginLogPage(ctx context.Context, in *SysLoginLogPageReq, opts ...grpc.CallOption) (*SysLoginLogPageReply, error)
 	// 获取SysLoginLog
 	GetSysLoginLog(ctx context.Context, in *SysLoginLogReq, opts ...grpc.CallOption) (*SysLoginLogReply, error)
 	// 更新SysLoginLog
@@ -44,9 +44,9 @@ func NewSysLoginLogClient(cc grpc.ClientConnInterface) SysLoginLogClient {
 	return &sysLoginLogClient{cc}
 }
 
-func (c *sysLoginLogClient) GetPageSysLoginLog(ctx context.Context, in *SysLoginLogPageReq, opts ...grpc.CallOption) (*SysLoginLogPageReply, error) {
+func (c *sysLoginLogClient) GetSysLoginLogPage(ctx context.Context, in *SysLoginLogPageReq, opts ...grpc.CallOption) (*SysLoginLogPageReply, error) {
 	out := new(SysLoginLogPageReply)
-	err := c.cc.Invoke(ctx, "/sysloginlog.v1.SysLoginLog/GetPageSysLoginLog", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysloginlog.v1.SysLoginLog/GetSysLoginLogPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysLoginLogClient) BatchDeleteSysLoginLog(ctx context.Context, in *SysL
 // for forward compatibility
 type SysLoginLogServer interface {
 	// 分页查询SysLoginLog
-	GetPageSysLoginLog(context.Context, *SysLoginLogPageReq) (*SysLoginLogPageReply, error)
+	GetSysLoginLogPage(context.Context, *SysLoginLogPageReq) (*SysLoginLogPageReply, error)
 	// 获取SysLoginLog
 	GetSysLoginLog(context.Context, *SysLoginLogReq) (*SysLoginLogReply, error)
 	// 更新SysLoginLog
@@ -121,8 +121,8 @@ type SysLoginLogServer interface {
 type UnimplementedSysLoginLogServer struct {
 }
 
-func (UnimplementedSysLoginLogServer) GetPageSysLoginLog(context.Context, *SysLoginLogPageReq) (*SysLoginLogPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysLoginLog not implemented")
+func (UnimplementedSysLoginLogServer) GetSysLoginLogPage(context.Context, *SysLoginLogPageReq) (*SysLoginLogPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysLoginLogPage not implemented")
 }
 func (UnimplementedSysLoginLogServer) GetSysLoginLog(context.Context, *SysLoginLogReq) (*SysLoginLogReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysLoginLog not implemented")
@@ -152,20 +152,20 @@ func RegisterSysLoginLogServer(s grpc.ServiceRegistrar, srv SysLoginLogServer) {
 	s.RegisterService(&SysLoginLog_ServiceDesc, srv)
 }
 
-func _SysLoginLog_GetPageSysLoginLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysLoginLog_GetSysLoginLogPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysLoginLogPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysLoginLogServer).GetPageSysLoginLog(ctx, in)
+		return srv.(SysLoginLogServer).GetSysLoginLogPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysloginlog.v1.SysLoginLog/GetPageSysLoginLog",
+		FullMethod: "/sysloginlog.v1.SysLoginLog/GetSysLoginLogPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysLoginLogServer).GetPageSysLoginLog(ctx, req.(*SysLoginLogPageReq))
+		return srv.(SysLoginLogServer).GetSysLoginLogPage(ctx, req.(*SysLoginLogPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysLoginLog_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysLoginLogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysLoginLog",
-			Handler:    _SysLoginLog_GetPageSysLoginLog_Handler,
+			MethodName: "GetSysLoginLogPage",
+			Handler:    _SysLoginLog_GetSysLoginLogPage_Handler,
 		},
 		{
 			MethodName: "GetSysLoginLog",

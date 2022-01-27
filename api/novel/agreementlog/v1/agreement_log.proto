@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/agreementlog/v1;v1";
 service AgreementLog {
 
   // 分页查询AgreementLog
-  rpc GetPageAgreementLog (AgreementLogPageReq) returns (AgreementLogPageReply)  {
+  rpc GetAgreementLogPage (AgreementLogPageReq) returns (AgreementLogPageReply)  {
     option (google.api.http) = {
       get: "/v1/agreement/log/page"
     };

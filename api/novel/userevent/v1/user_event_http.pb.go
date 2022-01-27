@@ -21,14 +21,14 @@ type UserEventHTTPServer interface {
 	BatchDeleteUserEvent(context.Context, *UserEventBatchDeleteReq) (*UserEventDeleteReply, error)
 	CreateUserEvent(context.Context, *UserEventCreateReq) (*UserEventCreateReply, error)
 	DeleteUserEvent(context.Context, *UserEventDeleteReq) (*UserEventDeleteReply, error)
-	GetPageUserEvent(context.Context, *UserEventPageReq) (*UserEventPageReply, error)
 	GetUserEvent(context.Context, *UserEventReq) (*UserEventReply, error)
+	GetUserEventPage(context.Context, *UserEventPageReq) (*UserEventPageReply, error)
 	UpdateUserEvent(context.Context, *UserEventUpdateReq) (*UserEventUpdateReply, error)
 }
 
 func RegisterUserEventHTTPServer(s *http.Server, srv UserEventHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/user/event/page", _UserEvent_GetPageUserEvent0_HTTP_Handler(srv))
+	r.GET("/v1/user/event/page", _UserEvent_GetUserEventPage0_HTTP_Handler(srv))
 	r.GET("/v1/user/event/{id}", _UserEvent_GetUserEvent0_HTTP_Handler(srv))
 	r.PUT("/v1/user/event/{id}", _UserEvent_UpdateUserEvent0_HTTP_Handler(srv))
 	r.POST("/v1/user/event", _UserEvent_CreateUserEvent0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterUserEventHTTPServer(s *http.Server, srv UserEventHTTPServer) {
 	r.DELETE("/v1/user/event", _UserEvent_BatchDeleteUserEvent0_HTTP_Handler(srv))
 }
 
-func _UserEvent_GetPageUserEvent0_HTTP_Handler(srv UserEventHTTPServer) func(ctx http.Context) error {
+func _UserEvent_GetUserEventPage0_HTTP_Handler(srv UserEventHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UserEventPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/userevent.v1.UserEvent/GetPageUserEvent")
+		http.SetOperation(ctx, "/userevent.v1.UserEvent/GetUserEventPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageUserEvent(ctx, req.(*UserEventPageReq))
+			return srv.GetUserEventPage(ctx, req.(*UserEventPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type UserEventHTTPClient interface {
 	BatchDeleteUserEvent(ctx context.Context, req *UserEventBatchDeleteReq, opts ...http.CallOption) (rsp *UserEventDeleteReply, err error)
 	CreateUserEvent(ctx context.Context, req *UserEventCreateReq, opts ...http.CallOption) (rsp *UserEventCreateReply, err error)
 	DeleteUserEvent(ctx context.Context, req *UserEventDeleteReq, opts ...http.CallOption) (rsp *UserEventDeleteReply, err error)
-	GetPageUserEvent(ctx context.Context, req *UserEventPageReq, opts ...http.CallOption) (rsp *UserEventPageReply, err error)
 	GetUserEvent(ctx context.Context, req *UserEventReq, opts ...http.CallOption) (rsp *UserEventReply, err error)
+	GetUserEventPage(ctx context.Context, req *UserEventPageReq, opts ...http.CallOption) (rsp *UserEventPageReply, err error)
 	UpdateUserEvent(ctx context.Context, req *UserEventUpdateReq, opts ...http.CallOption) (rsp *UserEventUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *UserEventHTTPClientImpl) DeleteUserEvent(ctx context.Context, in *UserE
 	return &out, err
 }
 
-func (c *UserEventHTTPClientImpl) GetPageUserEvent(ctx context.Context, in *UserEventPageReq, opts ...http.CallOption) (*UserEventPageReply, error) {
-	var out UserEventPageReply
-	pattern := "/v1/user/event/page"
+func (c *UserEventHTTPClientImpl) GetUserEvent(ctx context.Context, in *UserEventReq, opts ...http.CallOption) (*UserEventReply, error) {
+	var out UserEventReply
+	pattern := "/v1/user/event/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/userevent.v1.UserEvent/GetPageUserEvent"))
+	opts = append(opts, http.Operation("/userevent.v1.UserEvent/GetUserEvent"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *UserEventHTTPClientImpl) GetPageUserEvent(ctx context.Context, in *User
 	return &out, err
 }
 
-func (c *UserEventHTTPClientImpl) GetUserEvent(ctx context.Context, in *UserEventReq, opts ...http.CallOption) (*UserEventReply, error) {
-	var out UserEventReply
-	pattern := "/v1/user/event/{id}"
+func (c *UserEventHTTPClientImpl) GetUserEventPage(ctx context.Context, in *UserEventPageReq, opts ...http.CallOption) (*UserEventPageReply, error) {
+	var out UserEventPageReply
+	pattern := "/v1/user/event/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/userevent.v1.UserEvent/GetUserEvent"))
+	opts = append(opts, http.Operation("/userevent.v1.UserEvent/GetUserEventPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

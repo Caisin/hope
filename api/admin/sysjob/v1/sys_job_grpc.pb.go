@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysJobClient interface {
 	// 分页查询SysJob
-	GetPageSysJob(ctx context.Context, in *SysJobPageReq, opts ...grpc.CallOption) (*SysJobPageReply, error)
+	GetSysJobPage(ctx context.Context, in *SysJobPageReq, opts ...grpc.CallOption) (*SysJobPageReply, error)
 	// 获取SysJob
 	GetSysJob(ctx context.Context, in *SysJobReq, opts ...grpc.CallOption) (*SysJobReply, error)
 	// 更新SysJob
@@ -44,9 +44,9 @@ func NewSysJobClient(cc grpc.ClientConnInterface) SysJobClient {
 	return &sysJobClient{cc}
 }
 
-func (c *sysJobClient) GetPageSysJob(ctx context.Context, in *SysJobPageReq, opts ...grpc.CallOption) (*SysJobPageReply, error) {
+func (c *sysJobClient) GetSysJobPage(ctx context.Context, in *SysJobPageReq, opts ...grpc.CallOption) (*SysJobPageReply, error) {
 	out := new(SysJobPageReply)
-	err := c.cc.Invoke(ctx, "/sysjob.v1.SysJob/GetPageSysJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysjob.v1.SysJob/GetSysJobPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysJobClient) BatchDeleteSysJob(ctx context.Context, in *SysJobBatchDel
 // for forward compatibility
 type SysJobServer interface {
 	// 分页查询SysJob
-	GetPageSysJob(context.Context, *SysJobPageReq) (*SysJobPageReply, error)
+	GetSysJobPage(context.Context, *SysJobPageReq) (*SysJobPageReply, error)
 	// 获取SysJob
 	GetSysJob(context.Context, *SysJobReq) (*SysJobReply, error)
 	// 更新SysJob
@@ -121,8 +121,8 @@ type SysJobServer interface {
 type UnimplementedSysJobServer struct {
 }
 
-func (UnimplementedSysJobServer) GetPageSysJob(context.Context, *SysJobPageReq) (*SysJobPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysJob not implemented")
+func (UnimplementedSysJobServer) GetSysJobPage(context.Context, *SysJobPageReq) (*SysJobPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysJobPage not implemented")
 }
 func (UnimplementedSysJobServer) GetSysJob(context.Context, *SysJobReq) (*SysJobReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysJob not implemented")
@@ -152,20 +152,20 @@ func RegisterSysJobServer(s grpc.ServiceRegistrar, srv SysJobServer) {
 	s.RegisterService(&SysJob_ServiceDesc, srv)
 }
 
-func _SysJob_GetPageSysJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysJob_GetSysJobPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysJobPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysJobServer).GetPageSysJob(ctx, in)
+		return srv.(SysJobServer).GetSysJobPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysjob.v1.SysJob/GetPageSysJob",
+		FullMethod: "/sysjob.v1.SysJob/GetSysJobPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysJobServer).GetPageSysJob(ctx, req.(*SysJobPageReq))
+		return srv.(SysJobServer).GetSysJobPage(ctx, req.(*SysJobPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysJob_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysJobServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysJob",
-			Handler:    _SysJob_GetPageSysJob_Handler,
+			MethodName: "GetSysJobPage",
+			Handler:    _SysJob_GetSysJobPage_Handler,
 		},
 		{
 			MethodName: "GetSysJob",

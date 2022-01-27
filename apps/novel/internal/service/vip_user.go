@@ -20,9 +20,9 @@ func NewVipUserService(uc *biz.VipUserUseCase, logger log.Logger) *VipUserServic
 	return &VipUserService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *VipUserService) GetPageVipUser(ctx context.Context, req *pb.VipUserPageReq) (*pb.VipUserPageReply, error) {
+func (s *VipUserService) GetVipUserPage(ctx context.Context, req *pb.VipUserPageReq) (*pb.VipUserPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageVipUser")
+	ctx, span := tr.Start(ctx, "GetVipUserPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -21,14 +21,14 @@ type SysRoleHTTPServer interface {
 	BatchDeleteSysRole(context.Context, *SysRoleBatchDeleteReq) (*SysRoleDeleteReply, error)
 	CreateSysRole(context.Context, *SysRoleCreateReq) (*SysRoleCreateReply, error)
 	DeleteSysRole(context.Context, *SysRoleDeleteReq) (*SysRoleDeleteReply, error)
-	GetPageSysRole(context.Context, *SysRolePageReq) (*SysRolePageReply, error)
 	GetSysRole(context.Context, *SysRoleReq) (*SysRoleReply, error)
+	GetSysRolePage(context.Context, *SysRolePageReq) (*SysRolePageReply, error)
 	UpdateSysRole(context.Context, *SysRoleUpdateReq) (*SysRoleUpdateReply, error)
 }
 
 func RegisterSysRoleHTTPServer(s *http.Server, srv SysRoleHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/sys/role/page", _SysRole_GetPageSysRole0_HTTP_Handler(srv))
+	r.GET("/v1/sys/role/page", _SysRole_GetSysRolePage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/role/{id}", _SysRole_GetSysRole0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/role/{id}", _SysRole_UpdateSysRole0_HTTP_Handler(srv))
 	r.POST("/v1/sys/role", _SysRole_CreateSysRole0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterSysRoleHTTPServer(s *http.Server, srv SysRoleHTTPServer) {
 	r.DELETE("/v1/sys/role", _SysRole_BatchDeleteSysRole0_HTTP_Handler(srv))
 }
 
-func _SysRole_GetPageSysRole0_HTTP_Handler(srv SysRoleHTTPServer) func(ctx http.Context) error {
+func _SysRole_GetSysRolePage0_HTTP_Handler(srv SysRoleHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in SysRolePageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/sysrole.v1.SysRole/GetPageSysRole")
+		http.SetOperation(ctx, "/sysrole.v1.SysRole/GetSysRolePage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageSysRole(ctx, req.(*SysRolePageReq))
+			return srv.GetSysRolePage(ctx, req.(*SysRolePageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type SysRoleHTTPClient interface {
 	BatchDeleteSysRole(ctx context.Context, req *SysRoleBatchDeleteReq, opts ...http.CallOption) (rsp *SysRoleDeleteReply, err error)
 	CreateSysRole(ctx context.Context, req *SysRoleCreateReq, opts ...http.CallOption) (rsp *SysRoleCreateReply, err error)
 	DeleteSysRole(ctx context.Context, req *SysRoleDeleteReq, opts ...http.CallOption) (rsp *SysRoleDeleteReply, err error)
-	GetPageSysRole(ctx context.Context, req *SysRolePageReq, opts ...http.CallOption) (rsp *SysRolePageReply, err error)
 	GetSysRole(ctx context.Context, req *SysRoleReq, opts ...http.CallOption) (rsp *SysRoleReply, err error)
+	GetSysRolePage(ctx context.Context, req *SysRolePageReq, opts ...http.CallOption) (rsp *SysRolePageReply, err error)
 	UpdateSysRole(ctx context.Context, req *SysRoleUpdateReq, opts ...http.CallOption) (rsp *SysRoleUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *SysRoleHTTPClientImpl) DeleteSysRole(ctx context.Context, in *SysRoleDe
 	return &out, err
 }
 
-func (c *SysRoleHTTPClientImpl) GetPageSysRole(ctx context.Context, in *SysRolePageReq, opts ...http.CallOption) (*SysRolePageReply, error) {
-	var out SysRolePageReply
-	pattern := "/v1/sys/role/page"
+func (c *SysRoleHTTPClientImpl) GetSysRole(ctx context.Context, in *SysRoleReq, opts ...http.CallOption) (*SysRoleReply, error) {
+	var out SysRoleReply
+	pattern := "/v1/sys/role/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysrole.v1.SysRole/GetPageSysRole"))
+	opts = append(opts, http.Operation("/sysrole.v1.SysRole/GetSysRole"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *SysRoleHTTPClientImpl) GetPageSysRole(ctx context.Context, in *SysRoleP
 	return &out, err
 }
 
-func (c *SysRoleHTTPClientImpl) GetSysRole(ctx context.Context, in *SysRoleReq, opts ...http.CallOption) (*SysRoleReply, error) {
-	var out SysRoleReply
-	pattern := "/v1/sys/role/{id}"
+func (c *SysRoleHTTPClientImpl) GetSysRolePage(ctx context.Context, in *SysRolePageReq, opts ...http.CallOption) (*SysRolePageReply, error) {
+	var out SysRolePageReply
+	pattern := "/v1/sys/role/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/sysrole.v1.SysRole/GetSysRole"))
+	opts = append(opts, http.Operation("/sysrole.v1.SysRole/GetSysRolePage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

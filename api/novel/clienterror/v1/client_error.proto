@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/clienterror/v1;v1";
 service ClientError {
 
   // 分页查询ClientError
-  rpc GetPageClientError (ClientErrorPageReq) returns (ClientErrorPageReply)  {
+  rpc GetClientErrorPage (ClientErrorPageReq) returns (ClientErrorPageReply)  {
     option (google.api.http) = {
       get: "/v1/client/error/page"
     };

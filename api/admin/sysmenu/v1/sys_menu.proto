@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysmenu/v1;v1";
 service SysMenu {
 
   // 分页查询SysMenu
-  rpc GetPageSysMenu (SysMenuPageReq) returns (SysMenuPageReply)  {
+  rpc GetSysMenuPage (SysMenuPageReq) returns (SysMenuPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/menu/page"
     };

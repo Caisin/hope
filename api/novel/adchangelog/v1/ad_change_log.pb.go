@@ -1109,7 +1109,7 @@ var file_api_novel_adchangelog_v1_ad_change_log_proto_rawDesc = []byte{
 	0x67, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01,
 	0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0x96, 0x06, 0x0a, 0x0b, 0x41,
 	0x64, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x4c, 0x6f, 0x67, 0x12, 0x7e, 0x0a, 0x12, 0x47, 0x65,
-	0x74, 0x50, 0x61, 0x67, 0x65, 0x41, 0x64, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x4c, 0x6f, 0x67,
+	0x74, 0x41, 0x64, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x4c, 0x6f, 0x67, 0x50, 0x61, 0x67, 0x65,
 	0x12, 0x22, 0x2e, 0x61, 0x64, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x6c, 0x6f, 0x67, 0x2e, 0x76,
 	0x31, 0x2e, 0x41, 0x64, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x4c, 0x6f, 0x67, 0x50, 0x61, 0x67,
 	0x65, 0x52, 0x65, 0x71, 0x1a, 0x24, 0x2e, 0x61, 0x64, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x6c,
@@ -1202,13 +1202,13 @@ var file_api_novel_adchangelog_v1_ad_change_log_proto_depIdxs = []int32{
 	0,  // 7: adchangelog.v1.AdChangeLogReply.result:type_name -> adchangelog.v1.AdChangeLogData
 	0,  // 8: adchangelog.v1.AdChangeLogCreateReply.result:type_name -> adchangelog.v1.AdChangeLogData
 	0,  // 9: adchangelog.v1.AdChangeLogUpdateReply.result:type_name -> adchangelog.v1.AdChangeLogData
-	1,  // 10: adchangelog.v1.AdChangeLog.GetPageAdChangeLog:input_type -> adchangelog.v1.AdChangeLogPageReq
+	1,  // 10: adchangelog.v1.AdChangeLog.GetAdChangeLogPage:input_type -> adchangelog.v1.AdChangeLogPageReq
 	3,  // 11: adchangelog.v1.AdChangeLog.GetAdChangeLog:input_type -> adchangelog.v1.AdChangeLogReq
 	7,  // 12: adchangelog.v1.AdChangeLog.UpdateAdChangeLog:input_type -> adchangelog.v1.AdChangeLogUpdateReq
 	5,  // 13: adchangelog.v1.AdChangeLog.CreateAdChangeLog:input_type -> adchangelog.v1.AdChangeLogCreateReq
 	9,  // 14: adchangelog.v1.AdChangeLog.DeleteAdChangeLog:input_type -> adchangelog.v1.AdChangeLogDeleteReq
 	10, // 15: adchangelog.v1.AdChangeLog.BatchDeleteAdChangeLog:input_type -> adchangelog.v1.AdChangeLogBatchDeleteReq
-	2,  // 16: adchangelog.v1.AdChangeLog.GetPageAdChangeLog:output_type -> adchangelog.v1.AdChangeLogPageReply
+	2,  // 16: adchangelog.v1.AdChangeLog.GetAdChangeLogPage:output_type -> adchangelog.v1.AdChangeLogPageReply
 	4,  // 17: adchangelog.v1.AdChangeLog.GetAdChangeLog:output_type -> adchangelog.v1.AdChangeLogReply
 	8,  // 18: adchangelog.v1.AdChangeLog.UpdateAdChangeLog:output_type -> adchangelog.v1.AdChangeLogUpdateReply
 	6,  // 19: adchangelog.v1.AdChangeLog.CreateAdChangeLog:output_type -> adchangelog.v1.AdChangeLogCreateReply

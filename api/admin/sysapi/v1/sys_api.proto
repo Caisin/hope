@@ -13,7 +13,7 @@ option go_package = "hope/api/admin/sysapi/v1;v1";
 service SysApi {
 
   // 分页查询SysApi
-  rpc GetPageSysApi (SysApiPageReq) returns (SysApiPageReply)  {
+  rpc GetSysApiPage (SysApiPageReq) returns (SysApiPageReply)  {
     option (google.api.http) = {
       get: "/v1/sys/api/page"
     };

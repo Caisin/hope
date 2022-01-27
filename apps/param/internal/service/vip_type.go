@@ -20,9 +20,9 @@ func NewVipTypeService(uc *biz.VipTypeUseCase, logger log.Logger) *VipTypeServic
 	return &VipTypeService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *VipTypeService) GetPageVipType(ctx context.Context, req *pb.VipTypePageReq) (*pb.VipTypePageReply, error) {
+func (s *VipTypeService) GetVipTypePage(ctx context.Context, req *pb.VipTypePageReq) (*pb.VipTypePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageVipType")
+	ctx, span := tr.Start(ctx, "GetVipTypePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -13,7 +13,7 @@ option go_package = "hope/api/param/resourcegroup/v1;v1";
 service ResourceGroup {
 
   // 分页查询ResourceGroup
-  rpc GetPageResourceGroup (ResourceGroupPageReq) returns (ResourceGroupPageReply)  {
+  rpc GetResourceGroupPage (ResourceGroupPageReq) returns (ResourceGroupPageReply)  {
     option (google.api.http) = {
       get: "/v1/resource/group/page"
     };

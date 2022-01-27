@@ -20,9 +20,9 @@ func NewResourceGroupService(uc *biz.ResourceGroupUseCase, logger log.Logger) *R
 	return &ResourceGroupService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *ResourceGroupService) GetPageResourceGroup(ctx context.Context, req *pb.ResourceGroupPageReq) (*pb.ResourceGroupPageReply, error) {
+func (s *ResourceGroupService) GetResourceGroupPage(ctx context.Context, req *pb.ResourceGroupPageReq) (*pb.ResourceGroupPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageResourceGroup")
+	ctx, span := tr.Start(ctx, "GetResourceGroupPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/appversion/v1;v1";
 service AppVersion {
 
   // 分页查询AppVersion
-  rpc GetPageAppVersion (AppVersionPageReq) returns (AppVersionPageReply)  {
+  rpc GetAppVersionPage (AppVersionPageReq) returns (AppVersionPageReply)  {
     option (google.api.http) = {
       get: "/v1/app/version/page"
     };

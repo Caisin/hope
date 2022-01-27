@@ -22,13 +22,13 @@ type NovelBuyChapterRecordHTTPServer interface {
 	CreateNovelBuyChapterRecord(context.Context, *NovelBuyChapterRecordCreateReq) (*NovelBuyChapterRecordCreateReply, error)
 	DeleteNovelBuyChapterRecord(context.Context, *NovelBuyChapterRecordDeleteReq) (*NovelBuyChapterRecordDeleteReply, error)
 	GetNovelBuyChapterRecord(context.Context, *NovelBuyChapterRecordReq) (*NovelBuyChapterRecordReply, error)
-	GetPageNovelBuyChapterRecord(context.Context, *NovelBuyChapterRecordPageReq) (*NovelBuyChapterRecordPageReply, error)
+	GetNovelBuyChapterRecordPage(context.Context, *NovelBuyChapterRecordPageReq) (*NovelBuyChapterRecordPageReply, error)
 	UpdateNovelBuyChapterRecord(context.Context, *NovelBuyChapterRecordUpdateReq) (*NovelBuyChapterRecordUpdateReply, error)
 }
 
 func RegisterNovelBuyChapterRecordHTTPServer(s *http.Server, srv NovelBuyChapterRecordHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/novel/buy/chapter/record/page", _NovelBuyChapterRecord_GetPageNovelBuyChapterRecord0_HTTP_Handler(srv))
+	r.GET("/v1/novel/buy/chapter/record/page", _NovelBuyChapterRecord_GetNovelBuyChapterRecordPage0_HTTP_Handler(srv))
 	r.GET("/v1/novel/buy/chapter/record/{id}", _NovelBuyChapterRecord_GetNovelBuyChapterRecord0_HTTP_Handler(srv))
 	r.PUT("/v1/novel/buy/chapter/record/{id}", _NovelBuyChapterRecord_UpdateNovelBuyChapterRecord0_HTTP_Handler(srv))
 	r.POST("/v1/novel/buy/chapter/record", _NovelBuyChapterRecord_CreateNovelBuyChapterRecord0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterNovelBuyChapterRecordHTTPServer(s *http.Server, srv NovelBuyChapter
 	r.DELETE("/v1/novel/buy/chapter/record", _NovelBuyChapterRecord_BatchDeleteNovelBuyChapterRecord0_HTTP_Handler(srv))
 }
 
-func _NovelBuyChapterRecord_GetPageNovelBuyChapterRecord0_HTTP_Handler(srv NovelBuyChapterRecordHTTPServer) func(ctx http.Context) error {
+func _NovelBuyChapterRecord_GetNovelBuyChapterRecordPage0_HTTP_Handler(srv NovelBuyChapterRecordHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in NovelBuyChapterRecordPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/novelbuychapterrecord.v1.NovelBuyChapterRecord/GetPageNovelBuyChapterRecord")
+		http.SetOperation(ctx, "/novelbuychapterrecord.v1.NovelBuyChapterRecord/GetNovelBuyChapterRecordPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageNovelBuyChapterRecord(ctx, req.(*NovelBuyChapterRecordPageReq))
+			return srv.GetNovelBuyChapterRecordPage(ctx, req.(*NovelBuyChapterRecordPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -164,7 +164,7 @@ type NovelBuyChapterRecordHTTPClient interface {
 	CreateNovelBuyChapterRecord(ctx context.Context, req *NovelBuyChapterRecordCreateReq, opts ...http.CallOption) (rsp *NovelBuyChapterRecordCreateReply, err error)
 	DeleteNovelBuyChapterRecord(ctx context.Context, req *NovelBuyChapterRecordDeleteReq, opts ...http.CallOption) (rsp *NovelBuyChapterRecordDeleteReply, err error)
 	GetNovelBuyChapterRecord(ctx context.Context, req *NovelBuyChapterRecordReq, opts ...http.CallOption) (rsp *NovelBuyChapterRecordReply, err error)
-	GetPageNovelBuyChapterRecord(ctx context.Context, req *NovelBuyChapterRecordPageReq, opts ...http.CallOption) (rsp *NovelBuyChapterRecordPageReply, err error)
+	GetNovelBuyChapterRecordPage(ctx context.Context, req *NovelBuyChapterRecordPageReq, opts ...http.CallOption) (rsp *NovelBuyChapterRecordPageReply, err error)
 	UpdateNovelBuyChapterRecord(ctx context.Context, req *NovelBuyChapterRecordUpdateReq, opts ...http.CallOption) (rsp *NovelBuyChapterRecordUpdateReply, err error)
 }
 
@@ -228,11 +228,11 @@ func (c *NovelBuyChapterRecordHTTPClientImpl) GetNovelBuyChapterRecord(ctx conte
 	return &out, err
 }
 
-func (c *NovelBuyChapterRecordHTTPClientImpl) GetPageNovelBuyChapterRecord(ctx context.Context, in *NovelBuyChapterRecordPageReq, opts ...http.CallOption) (*NovelBuyChapterRecordPageReply, error) {
+func (c *NovelBuyChapterRecordHTTPClientImpl) GetNovelBuyChapterRecordPage(ctx context.Context, in *NovelBuyChapterRecordPageReq, opts ...http.CallOption) (*NovelBuyChapterRecordPageReply, error) {
 	var out NovelBuyChapterRecordPageReply
 	pattern := "/v1/novel/buy/chapter/record/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/GetPageNovelBuyChapterRecord"))
+	opts = append(opts, http.Operation("/novelbuychapterrecord.v1.NovelBuyChapterRecord/GetNovelBuyChapterRecordPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

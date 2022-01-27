@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ActivityComponentClient interface {
 	// 分页查询ActivityComponent
-	GetPageActivityComponent(ctx context.Context, in *ActivityComponentPageReq, opts ...grpc.CallOption) (*ActivityComponentPageReply, error)
+	GetActivityComponentPage(ctx context.Context, in *ActivityComponentPageReq, opts ...grpc.CallOption) (*ActivityComponentPageReply, error)
 	// 获取ActivityComponent
 	GetActivityComponent(ctx context.Context, in *ActivityComponentReq, opts ...grpc.CallOption) (*ActivityComponentReply, error)
 	// 更新ActivityComponent
@@ -44,9 +44,9 @@ func NewActivityComponentClient(cc grpc.ClientConnInterface) ActivityComponentCl
 	return &activityComponentClient{cc}
 }
 
-func (c *activityComponentClient) GetPageActivityComponent(ctx context.Context, in *ActivityComponentPageReq, opts ...grpc.CallOption) (*ActivityComponentPageReply, error) {
+func (c *activityComponentClient) GetActivityComponentPage(ctx context.Context, in *ActivityComponentPageReq, opts ...grpc.CallOption) (*ActivityComponentPageReply, error) {
 	out := new(ActivityComponentPageReply)
-	err := c.cc.Invoke(ctx, "/activitycomponent.v1.ActivityComponent/GetPageActivityComponent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/activitycomponent.v1.ActivityComponent/GetActivityComponentPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *activityComponentClient) BatchDeleteActivityComponent(ctx context.Conte
 // for forward compatibility
 type ActivityComponentServer interface {
 	// 分页查询ActivityComponent
-	GetPageActivityComponent(context.Context, *ActivityComponentPageReq) (*ActivityComponentPageReply, error)
+	GetActivityComponentPage(context.Context, *ActivityComponentPageReq) (*ActivityComponentPageReply, error)
 	// 获取ActivityComponent
 	GetActivityComponent(context.Context, *ActivityComponentReq) (*ActivityComponentReply, error)
 	// 更新ActivityComponent
@@ -121,8 +121,8 @@ type ActivityComponentServer interface {
 type UnimplementedActivityComponentServer struct {
 }
 
-func (UnimplementedActivityComponentServer) GetPageActivityComponent(context.Context, *ActivityComponentPageReq) (*ActivityComponentPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageActivityComponent not implemented")
+func (UnimplementedActivityComponentServer) GetActivityComponentPage(context.Context, *ActivityComponentPageReq) (*ActivityComponentPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActivityComponentPage not implemented")
 }
 func (UnimplementedActivityComponentServer) GetActivityComponent(context.Context, *ActivityComponentReq) (*ActivityComponentReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActivityComponent not implemented")
@@ -152,20 +152,20 @@ func RegisterActivityComponentServer(s grpc.ServiceRegistrar, srv ActivityCompon
 	s.RegisterService(&ActivityComponent_ServiceDesc, srv)
 }
 
-func _ActivityComponent_GetPageActivityComponent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ActivityComponent_GetActivityComponentPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ActivityComponentPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ActivityComponentServer).GetPageActivityComponent(ctx, in)
+		return srv.(ActivityComponentServer).GetActivityComponentPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/activitycomponent.v1.ActivityComponent/GetPageActivityComponent",
+		FullMethod: "/activitycomponent.v1.ActivityComponent/GetActivityComponentPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ActivityComponentServer).GetPageActivityComponent(ctx, req.(*ActivityComponentPageReq))
+		return srv.(ActivityComponentServer).GetActivityComponentPage(ctx, req.(*ActivityComponentPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var ActivityComponent_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ActivityComponentServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageActivityComponent",
-			Handler:    _ActivityComponent_GetPageActivityComponent_Handler,
+			MethodName: "GetActivityComponentPage",
+			Handler:    _ActivityComponent_GetActivityComponentPage_Handler,
 		},
 		{
 			MethodName: "GetActivityComponent",

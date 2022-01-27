@@ -13,7 +13,7 @@ option go_package = "hope/api/novel/vipuser/v1;v1";
 service VipUser {
 
   // 分页查询VipUser
-  rpc GetPageVipUser (VipUserPageReq) returns (VipUserPageReply)  {
+  rpc GetVipUserPage (VipUserPageReq) returns (VipUserPageReply)  {
     option (google.api.http) = {
       get: "/v1/vip/user/page"
     };

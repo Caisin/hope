@@ -20,9 +20,9 @@ func NewActivityService(uc *biz.ActivityUseCase, logger log.Logger) *ActivitySer
 	return &ActivityService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *ActivityService) GetPageActivity(ctx context.Context, req *pb.ActivityPageReq) (*pb.ActivityPageReply, error) {
+func (s *ActivityService) GetActivityPage(ctx context.Context, req *pb.ActivityPageReq) (*pb.ActivityPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageActivity")
+	ctx, span := tr.Start(ctx, "GetActivityPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

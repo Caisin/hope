@@ -21,14 +21,14 @@ type TaskHTTPServer interface {
 	BatchDeleteTask(context.Context, *TaskBatchDeleteReq) (*TaskDeleteReply, error)
 	CreateTask(context.Context, *TaskCreateReq) (*TaskCreateReply, error)
 	DeleteTask(context.Context, *TaskDeleteReq) (*TaskDeleteReply, error)
-	GetPageTask(context.Context, *TaskPageReq) (*TaskPageReply, error)
 	GetTask(context.Context, *TaskReq) (*TaskReply, error)
+	GetTaskPage(context.Context, *TaskPageReq) (*TaskPageReply, error)
 	UpdateTask(context.Context, *TaskUpdateReq) (*TaskUpdateReply, error)
 }
 
 func RegisterTaskHTTPServer(s *http.Server, srv TaskHTTPServer) {
 	r := s.Route("/")
-	r.GET("/v1/task/page", _Task_GetPageTask0_HTTP_Handler(srv))
+	r.GET("/v1/task/page", _Task_GetTaskPage0_HTTP_Handler(srv))
 	r.GET("/v1/task/{id}", _Task_GetTask0_HTTP_Handler(srv))
 	r.PUT("/v1/task/{id}", _Task_UpdateTask0_HTTP_Handler(srv))
 	r.POST("/v1/task", _Task_CreateTask0_HTTP_Handler(srv))
@@ -36,15 +36,15 @@ func RegisterTaskHTTPServer(s *http.Server, srv TaskHTTPServer) {
 	r.DELETE("/v1/task", _Task_BatchDeleteTask0_HTTP_Handler(srv))
 }
 
-func _Task_GetPageTask0_HTTP_Handler(srv TaskHTTPServer) func(ctx http.Context) error {
+func _Task_GetTaskPage0_HTTP_Handler(srv TaskHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in TaskPageReq
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/task.v1.Task/GetPageTask")
+		http.SetOperation(ctx, "/task.v1.Task/GetTaskPage")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPageTask(ctx, req.(*TaskPageReq))
+			return srv.GetTaskPage(ctx, req.(*TaskPageReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,8 +163,8 @@ type TaskHTTPClient interface {
 	BatchDeleteTask(ctx context.Context, req *TaskBatchDeleteReq, opts ...http.CallOption) (rsp *TaskDeleteReply, err error)
 	CreateTask(ctx context.Context, req *TaskCreateReq, opts ...http.CallOption) (rsp *TaskCreateReply, err error)
 	DeleteTask(ctx context.Context, req *TaskDeleteReq, opts ...http.CallOption) (rsp *TaskDeleteReply, err error)
-	GetPageTask(ctx context.Context, req *TaskPageReq, opts ...http.CallOption) (rsp *TaskPageReply, err error)
 	GetTask(ctx context.Context, req *TaskReq, opts ...http.CallOption) (rsp *TaskReply, err error)
+	GetTaskPage(ctx context.Context, req *TaskPageReq, opts ...http.CallOption) (rsp *TaskPageReply, err error)
 	UpdateTask(ctx context.Context, req *TaskUpdateReq, opts ...http.CallOption) (rsp *TaskUpdateReply, err error)
 }
 
@@ -215,11 +215,11 @@ func (c *TaskHTTPClientImpl) DeleteTask(ctx context.Context, in *TaskDeleteReq, 
 	return &out, err
 }
 
-func (c *TaskHTTPClientImpl) GetPageTask(ctx context.Context, in *TaskPageReq, opts ...http.CallOption) (*TaskPageReply, error) {
-	var out TaskPageReply
-	pattern := "/v1/task/page"
+func (c *TaskHTTPClientImpl) GetTask(ctx context.Context, in *TaskReq, opts ...http.CallOption) (*TaskReply, error) {
+	var out TaskReply
+	pattern := "/v1/task/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/task.v1.Task/GetPageTask"))
+	opts = append(opts, http.Operation("/task.v1.Task/GetTask"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -228,11 +228,11 @@ func (c *TaskHTTPClientImpl) GetPageTask(ctx context.Context, in *TaskPageReq, o
 	return &out, err
 }
 
-func (c *TaskHTTPClientImpl) GetTask(ctx context.Context, in *TaskReq, opts ...http.CallOption) (*TaskReply, error) {
-	var out TaskReply
-	pattern := "/v1/task/{id}"
+func (c *TaskHTTPClientImpl) GetTaskPage(ctx context.Context, in *TaskPageReq, opts ...http.CallOption) (*TaskPageReply, error) {
+	var out TaskPageReply
+	pattern := "/v1/task/page"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/task.v1.Task/GetTask"))
+	opts = append(opts, http.Operation("/task.v1.Task/GetTaskPage"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

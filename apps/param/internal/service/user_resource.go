@@ -20,9 +20,9 @@ func NewUserResourceService(uc *biz.UserResourceUseCase, logger log.Logger) *Use
 	return &UserResourceService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *UserResourceService) GetPageUserResource(ctx context.Context, req *pb.UserResourcePageReq) (*pb.UserResourcePageReply, error) {
+func (s *UserResourceService) GetUserResourcePage(ctx context.Context, req *pb.UserResourcePageReq) (*pb.UserResourcePageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageUserResource")
+	ctx, span := tr.Start(ctx, "GetUserResourcePage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

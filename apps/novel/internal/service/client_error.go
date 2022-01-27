@@ -20,9 +20,9 @@ func NewClientErrorService(uc *biz.ClientErrorUseCase, logger log.Logger) *Clien
 	return &ClientErrorService{uc: uc, log: log.NewHelper(logger)}
 }
 
-func (s *ClientErrorService) GetPageClientError(ctx context.Context, req *pb.ClientErrorPageReq) (*pb.ClientErrorPageReply, error) {
+func (s *ClientErrorService) GetClientErrorPage(ctx context.Context, req *pb.ClientErrorPageReq) (*pb.ClientErrorPageReply, error) {
 	tr := otel.Tracer("api")
-	ctx, span := tr.Start(ctx, "GetPageClientError")
+	ctx, span := tr.Start(ctx, "GetClientErrorPage")
 	defer span.End()
 	datas, err := s.uc.Page(ctx, req)
 	if err != nil {

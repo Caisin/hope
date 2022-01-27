@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysDeptClient interface {
 	// 分页查询SysDept
-	GetPageSysDept(ctx context.Context, in *SysDeptPageReq, opts ...grpc.CallOption) (*SysDeptPageReply, error)
+	GetSysDeptPage(ctx context.Context, in *SysDeptPageReq, opts ...grpc.CallOption) (*SysDeptPageReply, error)
 	// 获取SysDept
 	GetSysDept(ctx context.Context, in *SysDeptReq, opts ...grpc.CallOption) (*SysDeptReply, error)
 	// 更新SysDept
@@ -44,9 +44,9 @@ func NewSysDeptClient(cc grpc.ClientConnInterface) SysDeptClient {
 	return &sysDeptClient{cc}
 }
 
-func (c *sysDeptClient) GetPageSysDept(ctx context.Context, in *SysDeptPageReq, opts ...grpc.CallOption) (*SysDeptPageReply, error) {
+func (c *sysDeptClient) GetSysDeptPage(ctx context.Context, in *SysDeptPageReq, opts ...grpc.CallOption) (*SysDeptPageReply, error) {
 	out := new(SysDeptPageReply)
-	err := c.cc.Invoke(ctx, "/sysdept.v1.SysDept/GetPageSysDept", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/sysdept.v1.SysDept/GetSysDeptPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *sysDeptClient) BatchDeleteSysDept(ctx context.Context, in *SysDeptBatch
 // for forward compatibility
 type SysDeptServer interface {
 	// 分页查询SysDept
-	GetPageSysDept(context.Context, *SysDeptPageReq) (*SysDeptPageReply, error)
+	GetSysDeptPage(context.Context, *SysDeptPageReq) (*SysDeptPageReply, error)
 	// 获取SysDept
 	GetSysDept(context.Context, *SysDeptReq) (*SysDeptReply, error)
 	// 更新SysDept
@@ -121,8 +121,8 @@ type SysDeptServer interface {
 type UnimplementedSysDeptServer struct {
 }
 
-func (UnimplementedSysDeptServer) GetPageSysDept(context.Context, *SysDeptPageReq) (*SysDeptPageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPageSysDept not implemented")
+func (UnimplementedSysDeptServer) GetSysDeptPage(context.Context, *SysDeptPageReq) (*SysDeptPageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysDeptPage not implemented")
 }
 func (UnimplementedSysDeptServer) GetSysDept(context.Context, *SysDeptReq) (*SysDeptReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysDept not implemented")
@@ -152,20 +152,20 @@ func RegisterSysDeptServer(s grpc.ServiceRegistrar, srv SysDeptServer) {
 	s.RegisterService(&SysDept_ServiceDesc, srv)
 }
 
-func _SysDept_GetPageSysDept_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SysDept_GetSysDeptPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysDeptPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SysDeptServer).GetPageSysDept(ctx, in)
+		return srv.(SysDeptServer).GetSysDeptPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sysdept.v1.SysDept/GetPageSysDept",
+		FullMethod: "/sysdept.v1.SysDept/GetSysDeptPage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SysDeptServer).GetPageSysDept(ctx, req.(*SysDeptPageReq))
+		return srv.(SysDeptServer).GetSysDeptPage(ctx, req.(*SysDeptPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,8 +268,8 @@ var SysDept_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SysDeptServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPageSysDept",
-			Handler:    _SysDept_GetPageSysDept_Handler,
+			MethodName: "GetSysDeptPage",
+			Handler:    _SysDept_GetSysDeptPage_Handler,
 		},
 		{
 			MethodName: "GetSysDept",

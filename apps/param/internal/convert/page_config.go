@@ -14,9 +14,10 @@ func PageConfigUpdateReq2Data(v *v1.PageConfigUpdateReq) *ent.PageConfig {
 		return nil
 	}
 	return &ent.PageConfig{
-		ID:       v.Id,
-		PageCode: v.PageCode,
-		PageName: v.PageName,
+		ID:         v.Id,
+		PageCode:   v.PageCode,
+		PageName:   v.PageName,
+		GroupCodes: v.GroupCodes,
 	}
 }
 
@@ -25,9 +26,10 @@ func PageConfigData2UpdateReq(v *ent.PageConfig) *v1.PageConfigUpdateReq {
 		return nil
 	}
 	return &v1.PageConfigUpdateReq{
-		Id:       v.ID,
-		PageCode: v.PageCode,
-		PageName: v.PageName,
+		Id:         v.ID,
+		PageCode:   v.PageCode,
+		PageName:   v.PageName,
+		GroupCodes: v.GroupCodes,
 	}
 }
 
@@ -36,8 +38,9 @@ func PageConfigCreateReq2Data(v *v1.PageConfigCreateReq) *ent.PageConfig {
 		return nil
 	}
 	return &ent.PageConfig{
-		PageCode: v.PageCode,
-		PageName: v.PageName,
+		PageCode:   v.PageCode,
+		PageName:   v.PageName,
+		GroupCodes: v.GroupCodes,
 	}
 }
 
@@ -46,8 +49,9 @@ func PageConfigData2CreateReq(v *ent.PageConfig) *v1.PageConfigCreateReq {
 		return nil
 	}
 	return &v1.PageConfigCreateReq{
-		PageCode: v.PageCode,
-		PageName: v.PageName,
+		PageCode:   v.PageCode,
+		PageName:   v.PageName,
+		GroupCodes: v.GroupCodes,
 	}
 }
 
@@ -56,8 +60,9 @@ func PageConfigReq2Data(v *v1.PageConfigReq) *ent.PageConfig {
 		return nil
 	}
 	return &ent.PageConfig{
-		PageCode: v.PageCode,
-		PageName: v.PageName,
+		PageCode:   v.PageCode,
+		PageName:   v.PageName,
+		GroupCodes: v.GroupCodes,
 	}
 }
 
@@ -66,8 +71,9 @@ func PageConfigData2Req(v *ent.PageConfig) *v1.PageConfigReq {
 		return nil
 	}
 	return &v1.PageConfigReq{
-		PageCode: v.PageCode,
-		PageName: v.PageName,
+		PageCode:   v.PageCode,
+		PageName:   v.PageName,
+		GroupCodes: v.GroupCodes,
 	}
 }
 

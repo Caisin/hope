@@ -24,6 +24,7 @@ func AmBalanceUpdateReq2Data(v *v1.AmBalanceUpdateReq) *ent.AmBalance {
 		Balance:     v.Balance,
 		Remark:      v.Remark,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -42,6 +43,7 @@ func AmBalanceData2UpdateReq(v *ent.AmBalance) *v1.AmBalanceUpdateReq {
 		Balance:     v.Balance,
 		Remark:      v.Remark,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -59,6 +61,7 @@ func AmBalanceCreateReq2Data(v *v1.AmBalanceCreateReq) *ent.AmBalance {
 		Balance:     v.Balance,
 		Remark:      v.Remark,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -76,6 +79,7 @@ func AmBalanceData2CreateReq(v *ent.AmBalance) *v1.AmBalanceCreateReq {
 		Balance:     v.Balance,
 		Remark:      v.Remark,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -93,6 +97,7 @@ func AmBalanceReq2Data(v *v1.AmBalanceReq) *ent.AmBalance {
 		Balance:     v.Balance,
 		Remark:      v.Remark,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -110,6 +115,7 @@ func AmBalanceData2Req(v *ent.AmBalance) *v1.AmBalanceReq {
 		Balance:     v.Balance,
 		Remark:      v.Remark,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 

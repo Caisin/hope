@@ -24,6 +24,7 @@ func SysLoginLogUpdateReq2Data(v *v1.SysLoginLogUpdateReq) *ent.SysLoginLog {
 		Platform:      v.Platform,
 		LoginTime:     v.LoginTime.AsTime(),
 		Remark:        v.Remark,
+		Msg:           v.Msg,
 	}
 }
 
@@ -42,6 +43,7 @@ func SysLoginLogData2UpdateReq(v *ent.SysLoginLog) *v1.SysLoginLogUpdateReq {
 		Platform:      v.Platform,
 		LoginTime:     timestamppb.New(v.LoginTime),
 		Remark:        v.Remark,
+		Msg:           v.Msg,
 	}
 }
 
@@ -59,6 +61,7 @@ func SysLoginLogCreateReq2Data(v *v1.SysLoginLogCreateReq) *ent.SysLoginLog {
 		Platform:      v.Platform,
 		LoginTime:     v.LoginTime.AsTime(),
 		Remark:        v.Remark,
+		Msg:           v.Msg,
 	}
 }
 
@@ -76,6 +79,7 @@ func SysLoginLogData2CreateReq(v *ent.SysLoginLog) *v1.SysLoginLogCreateReq {
 		Platform:      v.Platform,
 		LoginTime:     timestamppb.New(v.LoginTime),
 		Remark:        v.Remark,
+		Msg:           v.Msg,
 	}
 }
 
@@ -93,6 +97,7 @@ func SysLoginLogReq2Data(v *v1.SysLoginLogReq) *ent.SysLoginLog {
 		Platform:      v.Platform,
 		LoginTime:     v.LoginTime.AsTime(),
 		Remark:        v.Remark,
+		Msg:           v.Msg,
 	}
 }
 
@@ -110,6 +115,7 @@ func SysLoginLogData2Req(v *ent.SysLoginLog) *v1.SysLoginLogReq {
 		Platform:      v.Platform,
 		LoginTime:     timestamppb.New(v.LoginTime),
 		Remark:        v.Remark,
+		Msg:           v.Msg,
 	}
 }
 

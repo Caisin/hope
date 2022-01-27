@@ -257,6 +257,26 @@ func (smc *SysMenuCreate) SetNillableState(s *sysmenu.State) *SysMenuCreate {
 	return smc
 }
 
+// SetCheckPermission sets the "checkPermission" field.
+func (smc *SysMenuCreate) SetCheckPermission(b bool) *SysMenuCreate {
+	smc.mutation.SetCheckPermission(b)
+	return smc
+}
+
+// SetNillableCheckPermission sets the "checkPermission" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableCheckPermission(b *bool) *SysMenuCreate {
+	if b != nil {
+		smc.SetCheckPermission(*b)
+	}
+	return smc
+}
+
+// SetOperation sets the "operation" field.
+func (smc *SysMenuCreate) SetOperation(s string) *SysMenuCreate {
+	smc.mutation.SetOperation(s)
+	return smc
+}
+
 // SetCreatedAt sets the "createdAt" field.
 func (smc *SysMenuCreate) SetCreatedAt(t time.Time) *SysMenuCreate {
 	smc.mutation.SetCreatedAt(t)
@@ -447,6 +467,10 @@ func (smc *SysMenuCreate) defaults() {
 		v := sysmenu.DefaultState
 		smc.mutation.SetState(v)
 	}
+	if _, ok := smc.mutation.CheckPermission(); !ok {
+		v := sysmenu.DefaultCheckPermission
+		smc.mutation.SetCheckPermission(v)
+	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
 		v := sysmenu.DefaultCreatedAt()
 		smc.mutation.SetCreatedAt(v)
@@ -487,6 +511,12 @@ func (smc *SysMenuCreate) check() error {
 		if err := sysmenu.StateValidator(v); err != nil {
 			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
 		}
+	}
+	if _, ok := smc.mutation.CheckPermission(); !ok {
+		return &ValidationError{Name: "checkPermission", err: errors.New(`ent: missing required field "checkPermission"`)}
+	}
+	if _, ok := smc.mutation.Operation(); !ok {
+		return &ValidationError{Name: "operation", err: errors.New(`ent: missing required field "operation"`)}
 	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
@@ -668,6 +698,22 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 			Column: sysmenu.FieldState,
 		})
 		_node.State = value
+	}
+	if value, ok := smc.mutation.CheckPermission(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldCheckPermission,
+		})
+		_node.CheckPermission = value
+	}
+	if value, ok := smc.mutation.Operation(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysmenu.FieldOperation,
+		})
+		_node.Operation = value
 	}
 	if value, ok := smc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

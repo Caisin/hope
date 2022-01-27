@@ -34,6 +34,7 @@ func UserAnalysisStatisticsUpdateReq2Data(v *v1.UserAnalysisStatisticsUpdateReq)
 		Arpu:           v.Arpu,
 		DayRegArpu:     v.DayRegArpu,
 		DayArpu:        v.DayArpu,
+		DayOldArpu:     v.DayOldArpu,
 	}
 }
 
@@ -62,6 +63,7 @@ func UserAnalysisStatisticsData2UpdateReq(v *ent.UserAnalysisStatistics) *v1.Use
 		Arpu:           v.Arpu,
 		DayRegArpu:     v.DayRegArpu,
 		DayArpu:        v.DayArpu,
+		DayOldArpu:     v.DayOldArpu,
 	}
 }
 
@@ -89,6 +91,7 @@ func UserAnalysisStatisticsCreateReq2Data(v *v1.UserAnalysisStatisticsCreateReq)
 		Arpu:           v.Arpu,
 		DayRegArpu:     v.DayRegArpu,
 		DayArpu:        v.DayArpu,
+		DayOldArpu:     v.DayOldArpu,
 	}
 }
 
@@ -116,6 +119,7 @@ func UserAnalysisStatisticsData2CreateReq(v *ent.UserAnalysisStatistics) *v1.Use
 		Arpu:           v.Arpu,
 		DayRegArpu:     v.DayRegArpu,
 		DayArpu:        v.DayArpu,
+		DayOldArpu:     v.DayOldArpu,
 	}
 }
 
@@ -143,6 +147,7 @@ func UserAnalysisStatisticsReq2Data(v *v1.UserAnalysisStatisticsReq) *ent.UserAn
 		Arpu:           v.Arpu,
 		DayRegArpu:     v.DayRegArpu,
 		DayArpu:        v.DayArpu,
+		DayOldArpu:     v.DayOldArpu,
 	}
 }
 
@@ -170,6 +175,7 @@ func UserAnalysisStatisticsData2Req(v *ent.UserAnalysisStatistics) *v1.UserAnaly
 		Arpu:           v.Arpu,
 		DayRegArpu:     v.DayRegArpu,
 		DayArpu:        v.DayArpu,
+		DayOldArpu:     v.DayOldArpu,
 	}
 }
 

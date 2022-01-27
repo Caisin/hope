@@ -19,6 +19,7 @@ func SysApiUpdateReq2Data(v *v1.SysApiUpdateReq) *ent.SysApi {
 		Title:  v.Title,
 		Path:   v.Path,
 		Action: v.Action,
+		Type:   v.Type,
 	}
 }
 
@@ -32,6 +33,7 @@ func SysApiData2UpdateReq(v *ent.SysApi) *v1.SysApiUpdateReq {
 		Title:  v.Title,
 		Path:   v.Path,
 		Action: v.Action,
+		Type:   v.Type,
 	}
 }
 
@@ -44,6 +46,7 @@ func SysApiCreateReq2Data(v *v1.SysApiCreateReq) *ent.SysApi {
 		Title:  v.Title,
 		Path:   v.Path,
 		Action: v.Action,
+		Type:   v.Type,
 	}
 }
 
@@ -56,6 +59,7 @@ func SysApiData2CreateReq(v *ent.SysApi) *v1.SysApiCreateReq {
 		Title:  v.Title,
 		Path:   v.Path,
 		Action: v.Action,
+		Type:   v.Type,
 	}
 }
 
@@ -68,6 +72,7 @@ func SysApiReq2Data(v *v1.SysApiReq) *ent.SysApi {
 		Title:  v.Title,
 		Path:   v.Path,
 		Action: v.Action,
+		Type:   v.Type,
 	}
 }
 
@@ -80,6 +85,7 @@ func SysApiData2Req(v *ent.SysApi) *v1.SysApiReq {
 		Title:  v.Title,
 		Path:   v.Path,
 		Action: v.Action,
+		Type:   v.Type,
 	}
 }
 

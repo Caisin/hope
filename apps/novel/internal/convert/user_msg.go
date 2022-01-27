@@ -17,6 +17,7 @@ func UserMsgUpdateReq2Data(v *v1.UserMsgUpdateReq) *ent.UserMsg {
 		ID:     v.Id,
 		UserId: v.UserId,
 		MsgId:  v.MsgId,
+		IsRead: v.IsRead,
 	}
 }
 
@@ -28,6 +29,7 @@ func UserMsgData2UpdateReq(v *ent.UserMsg) *v1.UserMsgUpdateReq {
 		Id:     v.ID,
 		UserId: v.UserId,
 		MsgId:  v.MsgId,
+		IsRead: v.IsRead,
 	}
 }
 
@@ -38,6 +40,7 @@ func UserMsgCreateReq2Data(v *v1.UserMsgCreateReq) *ent.UserMsg {
 	return &ent.UserMsg{
 		UserId: v.UserId,
 		MsgId:  v.MsgId,
+		IsRead: v.IsRead,
 	}
 }
 
@@ -48,6 +51,7 @@ func UserMsgData2CreateReq(v *ent.UserMsg) *v1.UserMsgCreateReq {
 	return &v1.UserMsgCreateReq{
 		UserId: v.UserId,
 		MsgId:  v.MsgId,
+		IsRead: v.IsRead,
 	}
 }
 
@@ -58,6 +62,7 @@ func UserMsgReq2Data(v *v1.UserMsgReq) *ent.UserMsg {
 	return &ent.UserMsg{
 		UserId: v.UserId,
 		MsgId:  v.MsgId,
+		IsRead: v.IsRead,
 	}
 }
 
@@ -68,6 +73,7 @@ func UserMsgData2Req(v *ent.UserMsg) *v1.UserMsgReq {
 	return &v1.UserMsgReq{
 		UserId: v.UserId,
 		MsgId:  v.MsgId,
+		IsRead: v.IsRead,
 	}
 }
 

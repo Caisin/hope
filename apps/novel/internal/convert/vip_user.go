@@ -22,6 +22,7 @@ func VipUserUpdateReq2Data(v *v1.VipUserUpdateReq) *ent.VipUser {
 		SvipExpiredTime: v.SvipExpiredTime.AsTime(),
 		Remark:          v.Remark,
 		EffectTime:      v.EffectTime.AsTime(),
+		ExpiredTime:     v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -38,6 +39,7 @@ func VipUserData2UpdateReq(v *ent.VipUser) *v1.VipUserUpdateReq {
 		SvipExpiredTime: timestamppb.New(v.SvipExpiredTime),
 		Remark:          v.Remark,
 		EffectTime:      timestamppb.New(v.EffectTime),
+		ExpiredTime:     timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -53,6 +55,7 @@ func VipUserCreateReq2Data(v *v1.VipUserCreateReq) *ent.VipUser {
 		SvipExpiredTime: v.SvipExpiredTime.AsTime(),
 		Remark:          v.Remark,
 		EffectTime:      v.EffectTime.AsTime(),
+		ExpiredTime:     v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -68,6 +71,7 @@ func VipUserData2CreateReq(v *ent.VipUser) *v1.VipUserCreateReq {
 		SvipExpiredTime: timestamppb.New(v.SvipExpiredTime),
 		Remark:          v.Remark,
 		EffectTime:      timestamppb.New(v.EffectTime),
+		ExpiredTime:     timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -83,6 +87,7 @@ func VipUserReq2Data(v *v1.VipUserReq) *ent.VipUser {
 		SvipExpiredTime: v.SvipExpiredTime.AsTime(),
 		Remark:          v.Remark,
 		EffectTime:      v.EffectTime.AsTime(),
+		ExpiredTime:     v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -98,6 +103,7 @@ func VipUserData2Req(v *ent.VipUser) *v1.VipUserReq {
 		SvipExpiredTime: timestamppb.New(v.SvipExpiredTime),
 		Remark:          v.Remark,
 		EffectTime:      timestamppb.New(v.EffectTime),
+		ExpiredTime:     timestamppb.New(v.ExpiredTime),
 	}
 }
 

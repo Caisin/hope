@@ -22,6 +22,7 @@ func ListenRecordUpdateReq2Data(v *v1.ListenRecordUpdateReq) *ent.ListenRecord {
 		ListenTimes: v.ListenTimes,
 		Duration:    v.Duration.AsDuration(),
 		AllDuration: v.AllDuration.AsDuration(),
+		DayDuration: v.DayDuration.AsDuration(),
 	}
 }
 
@@ -37,6 +38,7 @@ func ListenRecordData2UpdateReq(v *ent.ListenRecord) *v1.ListenRecordUpdateReq {
 		ListenTimes: v.ListenTimes,
 		Duration:    durationpb.New(v.Duration),
 		AllDuration: durationpb.New(v.AllDuration),
+		DayDuration: durationpb.New(v.DayDuration),
 	}
 }
 
@@ -51,6 +53,7 @@ func ListenRecordCreateReq2Data(v *v1.ListenRecordCreateReq) *ent.ListenRecord {
 		ListenTimes: v.ListenTimes,
 		Duration:    v.Duration.AsDuration(),
 		AllDuration: v.AllDuration.AsDuration(),
+		DayDuration: v.DayDuration.AsDuration(),
 	}
 }
 
@@ -65,6 +68,7 @@ func ListenRecordData2CreateReq(v *ent.ListenRecord) *v1.ListenRecordCreateReq {
 		ListenTimes: v.ListenTimes,
 		Duration:    durationpb.New(v.Duration),
 		AllDuration: durationpb.New(v.AllDuration),
+		DayDuration: durationpb.New(v.DayDuration),
 	}
 }
 
@@ -79,6 +83,7 @@ func ListenRecordReq2Data(v *v1.ListenRecordReq) *ent.ListenRecord {
 		ListenTimes: v.ListenTimes,
 		Duration:    v.Duration.AsDuration(),
 		AllDuration: v.AllDuration.AsDuration(),
+		DayDuration: v.DayDuration.AsDuration(),
 	}
 }
 
@@ -93,6 +98,7 @@ func ListenRecordData2Req(v *ent.ListenRecord) *v1.ListenRecordReq {
 		ListenTimes: v.ListenTimes,
 		Duration:    durationpb.New(v.Duration),
 		AllDuration: durationpb.New(v.AllDuration),
+		DayDuration: durationpb.New(v.DayDuration),
 	}
 }
 

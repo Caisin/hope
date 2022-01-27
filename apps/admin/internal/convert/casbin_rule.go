@@ -21,6 +21,7 @@ func CasbinRuleUpdateReq2Data(v *v1.CasbinRuleUpdateReq) *ent.CasbinRule {
 		V2:    v.V2,
 		V3:    v.V3,
 		V4:    v.V4,
+		V5:    v.V5,
 	}
 }
 
@@ -36,6 +37,7 @@ func CasbinRuleData2UpdateReq(v *ent.CasbinRule) *v1.CasbinRuleUpdateReq {
 		V2:    v.V2,
 		V3:    v.V3,
 		V4:    v.V4,
+		V5:    v.V5,
 	}
 }
 
@@ -50,6 +52,7 @@ func CasbinRuleCreateReq2Data(v *v1.CasbinRuleCreateReq) *ent.CasbinRule {
 		V2:    v.V2,
 		V3:    v.V3,
 		V4:    v.V4,
+		V5:    v.V5,
 	}
 }
 
@@ -64,6 +67,7 @@ func CasbinRuleData2CreateReq(v *ent.CasbinRule) *v1.CasbinRuleCreateReq {
 		V2:    v.V2,
 		V3:    v.V3,
 		V4:    v.V4,
+		V5:    v.V5,
 	}
 }
 
@@ -78,6 +82,7 @@ func CasbinRuleReq2Data(v *v1.CasbinRuleReq) *ent.CasbinRule {
 		V2:    v.V2,
 		V3:    v.V3,
 		V4:    v.V4,
+		V5:    v.V5,
 	}
 }
 
@@ -92,6 +97,7 @@ func CasbinRuleData2Req(v *ent.CasbinRule) *v1.CasbinRuleReq {
 		V2:    v.V2,
 		V3:    v.V3,
 		V4:    v.V4,
+		V5:    v.V5,
 	}
 }
 

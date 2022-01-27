@@ -36,6 +36,7 @@ func NovelPayConfigUpdateReq2Data(v *v1.NovelPayConfigUpdateReq) *ent.NovelPayCo
 		Summary:       v.Summary,
 		Remark:        v.Remark,
 		EffectTime:    v.EffectTime.AsTime(),
+		ExpiredTime:   v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -66,6 +67,7 @@ func NovelPayConfigData2UpdateReq(v *ent.NovelPayConfig) *v1.NovelPayConfigUpdat
 		Summary:       v.Summary,
 		Remark:        v.Remark,
 		EffectTime:    timestamppb.New(v.EffectTime),
+		ExpiredTime:   timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -95,6 +97,7 @@ func NovelPayConfigCreateReq2Data(v *v1.NovelPayConfigCreateReq) *ent.NovelPayCo
 		Summary:       v.Summary,
 		Remark:        v.Remark,
 		EffectTime:    v.EffectTime.AsTime(),
+		ExpiredTime:   v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -124,6 +127,7 @@ func NovelPayConfigData2CreateReq(v *ent.NovelPayConfig) *v1.NovelPayConfigCreat
 		Summary:       v.Summary,
 		Remark:        v.Remark,
 		EffectTime:    timestamppb.New(v.EffectTime),
+		ExpiredTime:   timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -153,6 +157,7 @@ func NovelPayConfigReq2Data(v *v1.NovelPayConfigReq) *ent.NovelPayConfig {
 		Summary:       v.Summary,
 		Remark:        v.Remark,
 		EffectTime:    v.EffectTime.AsTime(),
+		ExpiredTime:   v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -182,6 +187,7 @@ func NovelPayConfigData2Req(v *ent.NovelPayConfig) *v1.NovelPayConfigReq {
 		Summary:       v.Summary,
 		Remark:        v.Remark,
 		EffectTime:    timestamppb.New(v.EffectTime),
+		ExpiredTime:   timestamppb.New(v.ExpiredTime),
 	}
 }
 

@@ -37,6 +37,7 @@ func SysOperaLogUpdateReq2Data(v *v1.SysOperaLogUpdateReq) *ent.SysOperaLog {
 		JsonResult:    v.JsonResult,
 		Remark:        v.Remark,
 		LatencyTime:   v.LatencyTime,
+		UserAgent:     v.UserAgent,
 	}
 }
 
@@ -68,6 +69,7 @@ func SysOperaLogData2UpdateReq(v *ent.SysOperaLog) *v1.SysOperaLogUpdateReq {
 		JsonResult:    v.JsonResult,
 		Remark:        v.Remark,
 		LatencyTime:   v.LatencyTime,
+		UserAgent:     v.UserAgent,
 	}
 }
 
@@ -98,6 +100,7 @@ func SysOperaLogCreateReq2Data(v *v1.SysOperaLogCreateReq) *ent.SysOperaLog {
 		JsonResult:    v.JsonResult,
 		Remark:        v.Remark,
 		LatencyTime:   v.LatencyTime,
+		UserAgent:     v.UserAgent,
 	}
 }
 
@@ -128,6 +131,7 @@ func SysOperaLogData2CreateReq(v *ent.SysOperaLog) *v1.SysOperaLogCreateReq {
 		JsonResult:    v.JsonResult,
 		Remark:        v.Remark,
 		LatencyTime:   v.LatencyTime,
+		UserAgent:     v.UserAgent,
 	}
 }
 
@@ -158,6 +162,7 @@ func SysOperaLogReq2Data(v *v1.SysOperaLogReq) *ent.SysOperaLog {
 		JsonResult:    v.JsonResult,
 		Remark:        v.Remark,
 		LatencyTime:   v.LatencyTime,
+		UserAgent:     v.UserAgent,
 	}
 }
 
@@ -188,6 +193,7 @@ func SysOperaLogData2Req(v *ent.SysOperaLog) *v1.SysOperaLogReq {
 		JsonResult:    v.JsonResult,
 		Remark:        v.Remark,
 		LatencyTime:   v.LatencyTime,
+		UserAgent:     v.UserAgent,
 	}
 }
 

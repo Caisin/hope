@@ -21,6 +21,7 @@ func ScoreProductUpdateReq2Data(v *v1.ScoreProductUpdateReq) *ent.ScoreProduct {
 		Score:       v.Score,
 		VipType:     v.VipType,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -36,6 +37,7 @@ func ScoreProductData2UpdateReq(v *ent.ScoreProduct) *v1.ScoreProductUpdateReq {
 		Score:       v.Score,
 		VipType:     v.VipType,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -50,6 +52,7 @@ func ScoreProductCreateReq2Data(v *v1.ScoreProductCreateReq) *ent.ScoreProduct {
 		Score:       v.Score,
 		VipType:     v.VipType,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -64,6 +67,7 @@ func ScoreProductData2CreateReq(v *ent.ScoreProduct) *v1.ScoreProductCreateReq {
 		Score:       v.Score,
 		VipType:     v.VipType,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -78,6 +82,7 @@ func ScoreProductReq2Data(v *v1.ScoreProductReq) *ent.ScoreProduct {
 		Score:       v.Score,
 		VipType:     v.VipType,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -92,6 +97,7 @@ func ScoreProductData2Req(v *ent.ScoreProduct) *v1.ScoreProductReq {
 		Score:       v.Score,
 		VipType:     v.VipType,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 

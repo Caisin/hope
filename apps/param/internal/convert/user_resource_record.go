@@ -14,16 +14,17 @@ func UserResourceRecordUpdateReq2Data(v *v1.UserResourceRecordUpdateReq) *ent.Us
 		return nil
 	}
 	return &ent.UserResourceRecord{
-		ID:         v.Id,
-		UserId:     v.UserId,
-		ResId:      v.ResId,
-		Def:        v.Def,
-		Name:       v.Name,
-		URL:        v.Url,
-		ResType:    v.ResType,
-		Remark:     v.Remark,
-		State:      v.State,
-		EffectTime: v.EffectTime.AsTime(),
+		ID:          v.Id,
+		UserId:      v.UserId,
+		ResId:       v.ResId,
+		Def:         v.Def,
+		Name:        v.Name,
+		URL:         v.Url,
+		ResType:     v.ResType,
+		Remark:      v.Remark,
+		State:       v.State,
+		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -32,16 +33,17 @@ func UserResourceRecordData2UpdateReq(v *ent.UserResourceRecord) *v1.UserResourc
 		return nil
 	}
 	return &v1.UserResourceRecordUpdateReq{
-		Id:         v.ID,
-		UserId:     v.UserId,
-		ResId:      v.ResId,
-		Def:        v.Def,
-		Name:       v.Name,
-		Url:        v.URL,
-		ResType:    v.ResType,
-		Remark:     v.Remark,
-		State:      v.State,
-		EffectTime: timestamppb.New(v.EffectTime),
+		Id:          v.ID,
+		UserId:      v.UserId,
+		ResId:       v.ResId,
+		Def:         v.Def,
+		Name:        v.Name,
+		Url:         v.URL,
+		ResType:     v.ResType,
+		Remark:      v.Remark,
+		State:       v.State,
+		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -50,15 +52,16 @@ func UserResourceRecordCreateReq2Data(v *v1.UserResourceRecordCreateReq) *ent.Us
 		return nil
 	}
 	return &ent.UserResourceRecord{
-		UserId:     v.UserId,
-		ResId:      v.ResId,
-		Def:        v.Def,
-		Name:       v.Name,
-		URL:        v.Url,
-		ResType:    v.ResType,
-		Remark:     v.Remark,
-		State:      v.State,
-		EffectTime: v.EffectTime.AsTime(),
+		UserId:      v.UserId,
+		ResId:       v.ResId,
+		Def:         v.Def,
+		Name:        v.Name,
+		URL:         v.Url,
+		ResType:     v.ResType,
+		Remark:      v.Remark,
+		State:       v.State,
+		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -67,15 +70,16 @@ func UserResourceRecordData2CreateReq(v *ent.UserResourceRecord) *v1.UserResourc
 		return nil
 	}
 	return &v1.UserResourceRecordCreateReq{
-		UserId:     v.UserId,
-		ResId:      v.ResId,
-		Def:        v.Def,
-		Name:       v.Name,
-		Url:        v.URL,
-		ResType:    v.ResType,
-		Remark:     v.Remark,
-		State:      v.State,
-		EffectTime: timestamppb.New(v.EffectTime),
+		UserId:      v.UserId,
+		ResId:       v.ResId,
+		Def:         v.Def,
+		Name:        v.Name,
+		Url:         v.URL,
+		ResType:     v.ResType,
+		Remark:      v.Remark,
+		State:       v.State,
+		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -84,15 +88,16 @@ func UserResourceRecordReq2Data(v *v1.UserResourceRecordReq) *ent.UserResourceRe
 		return nil
 	}
 	return &ent.UserResourceRecord{
-		UserId:     v.UserId,
-		ResId:      v.ResId,
-		Def:        v.Def,
-		Name:       v.Name,
-		URL:        v.Url,
-		ResType:    v.ResType,
-		Remark:     v.Remark,
-		State:      v.State,
-		EffectTime: v.EffectTime.AsTime(),
+		UserId:      v.UserId,
+		ResId:       v.ResId,
+		Def:         v.Def,
+		Name:        v.Name,
+		URL:         v.Url,
+		ResType:     v.ResType,
+		Remark:      v.Remark,
+		State:       v.State,
+		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -101,15 +106,16 @@ func UserResourceRecordData2Req(v *ent.UserResourceRecord) *v1.UserResourceRecor
 		return nil
 	}
 	return &v1.UserResourceRecordReq{
-		UserId:     v.UserId,
-		ResId:      v.ResId,
-		Def:        v.Def,
-		Name:       v.Name,
-		Url:        v.URL,
-		ResType:    v.ResType,
-		Remark:     v.Remark,
-		State:      v.State,
-		EffectTime: timestamppb.New(v.EffectTime),
+		UserId:      v.UserId,
+		ResId:       v.ResId,
+		Def:         v.Def,
+		Name:        v.Name,
+		Url:         v.URL,
+		ResType:     v.ResType,
+		Remark:      v.Remark,
+		State:       v.State,
+		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 

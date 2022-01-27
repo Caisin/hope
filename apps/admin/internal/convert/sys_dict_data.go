@@ -23,6 +23,7 @@ func SysDictDataUpdateReq2Data(v *v1.SysDictDataUpdateReq) *ent.SysDictData {
 		IsDefault: v.IsDefault,
 		Status:    v.Status,
 		Default:   v.Default,
+		Remark:    v.Remark,
 	}
 }
 
@@ -40,6 +41,7 @@ func SysDictDataData2UpdateReq(v *ent.SysDictData) *v1.SysDictDataUpdateReq {
 		IsDefault: v.IsDefault,
 		Status:    v.Status,
 		Default:   v.Default,
+		Remark:    v.Remark,
 	}
 }
 
@@ -56,6 +58,7 @@ func SysDictDataCreateReq2Data(v *v1.SysDictDataCreateReq) *ent.SysDictData {
 		IsDefault: v.IsDefault,
 		Status:    v.Status,
 		Default:   v.Default,
+		Remark:    v.Remark,
 	}
 }
 
@@ -72,6 +75,7 @@ func SysDictDataData2CreateReq(v *ent.SysDictData) *v1.SysDictDataCreateReq {
 		IsDefault: v.IsDefault,
 		Status:    v.Status,
 		Default:   v.Default,
+		Remark:    v.Remark,
 	}
 }
 
@@ -88,6 +92,7 @@ func SysDictDataReq2Data(v *v1.SysDictDataReq) *ent.SysDictData {
 		IsDefault: v.IsDefault,
 		Status:    v.Status,
 		Default:   v.Default,
+		Remark:    v.Remark,
 	}
 }
 
@@ -104,6 +109,7 @@ func SysDictDataData2Req(v *ent.SysDictData) *v1.SysDictDataReq {
 		IsDefault: v.IsDefault,
 		Status:    v.Status,
 		Default:   v.Default,
+		Remark:    v.Remark,
 	}
 }
 

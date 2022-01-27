@@ -19,6 +19,7 @@ func SysPostUpdateReq2Data(v *v1.SysPostUpdateReq) *ent.SysPost {
 		PostCode: v.PostCode,
 		Sort:     v.Sort,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -32,6 +33,7 @@ func SysPostData2UpdateReq(v *ent.SysPost) *v1.SysPostUpdateReq {
 		PostCode: v.PostCode,
 		Sort:     v.Sort,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -44,6 +46,7 @@ func SysPostCreateReq2Data(v *v1.SysPostCreateReq) *ent.SysPost {
 		PostCode: v.PostCode,
 		Sort:     v.Sort,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -56,6 +59,7 @@ func SysPostData2CreateReq(v *ent.SysPost) *v1.SysPostCreateReq {
 		PostCode: v.PostCode,
 		Sort:     v.Sort,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -68,6 +72,7 @@ func SysPostReq2Data(v *v1.SysPostReq) *ent.SysPost {
 		PostCode: v.PostCode,
 		Sort:     v.Sort,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -80,6 +85,7 @@ func SysPostData2Req(v *ent.SysPost) *v1.SysPostReq {
 		PostCode: v.PostCode,
 		Sort:     v.Sort,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 

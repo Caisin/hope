@@ -32,6 +32,7 @@ func ResourceStorageUpdateReq2Data(v *v1.ResourceStorageUpdateReq) *ent.Resource
 		Username:    v.Username,
 		Width:       v.Width,
 		Md5code:     v.Md5Code,
+		Remark:      v.Remark,
 	}
 }
 
@@ -58,6 +59,7 @@ func ResourceStorageData2UpdateReq(v *ent.ResourceStorage) *v1.ResourceStorageUp
 		Username:    v.Username,
 		Width:       v.Width,
 		Md5Code:     v.Md5code,
+		Remark:      v.Remark,
 	}
 }
 
@@ -83,6 +85,7 @@ func ResourceStorageCreateReq2Data(v *v1.ResourceStorageCreateReq) *ent.Resource
 		Username:    v.Username,
 		Width:       v.Width,
 		Md5code:     v.Md5Code,
+		Remark:      v.Remark,
 	}
 }
 
@@ -108,6 +111,7 @@ func ResourceStorageData2CreateReq(v *ent.ResourceStorage) *v1.ResourceStorageCr
 		Username:    v.Username,
 		Width:       v.Width,
 		Md5Code:     v.Md5code,
+		Remark:      v.Remark,
 	}
 }
 
@@ -133,6 +137,7 @@ func ResourceStorageReq2Data(v *v1.ResourceStorageReq) *ent.ResourceStorage {
 		Username:    v.Username,
 		Width:       v.Width,
 		Md5code:     v.Md5Code,
+		Remark:      v.Remark,
 	}
 }
 
@@ -158,6 +163,7 @@ func ResourceStorageData2Req(v *ent.ResourceStorage) *v1.ResourceStorageReq {
 		Username:    v.Username,
 		Width:       v.Width,
 		Md5Code:     v.Md5code,
+		Remark:      v.Remark,
 	}
 }
 

@@ -54,6 +54,8 @@ func (r *sysMenuRepo) CreateSysMenu(ctx context.Context, req *v1.SysMenuCreateRe
 		SetHideMenu(req.HideMenu).
 		SetFrameSrc(req.FrameSrc).
 		SetState(sysmenu.State(req.State)).
+		SetCheckPermission(req.CheckPermission).
+		SetOperation(req.Operation).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		SetCreateBy(claims.UserId).
@@ -97,6 +99,8 @@ func (r *sysMenuRepo) UpdateSysMenu(ctx context.Context, req *v1.SysMenuUpdateRe
 		SetHideMenu(req.HideMenu).
 		SetFrameSrc(req.FrameSrc).
 		SetState(sysmenu.State(req.State)).
+		SetCheckPermission(req.CheckPermission).
+		SetOperation(req.Operation).
 		SetUpdateBy(claims.UserId).
 		Save(ctx)
 }
@@ -196,6 +200,10 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 	state := sysmenu.State(req.State)
 	if sysmenu.StateValidator(state) == nil {
 		list = append(list, sysmenu.StateEQ(state))
+	}
+	list = append(list, sysmenu.CheckPermission(req.CheckPermission))
+	if str.IsBlank(req.Operation) {
+		list = append(list, sysmenu.OperationContains(req.Operation))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, sysmenu.CreatedAtGTE(req.CreatedAt.AsTime()))

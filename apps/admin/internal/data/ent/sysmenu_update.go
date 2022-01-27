@@ -356,6 +356,26 @@ func (smu *SysMenuUpdate) SetNillableState(s *sysmenu.State) *SysMenuUpdate {
 	return smu
 }
 
+// SetCheckPermission sets the "checkPermission" field.
+func (smu *SysMenuUpdate) SetCheckPermission(b bool) *SysMenuUpdate {
+	smu.mutation.SetCheckPermission(b)
+	return smu
+}
+
+// SetNillableCheckPermission sets the "checkPermission" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableCheckPermission(b *bool) *SysMenuUpdate {
+	if b != nil {
+		smu.SetCheckPermission(*b)
+	}
+	return smu
+}
+
+// SetOperation sets the "operation" field.
+func (smu *SysMenuUpdate) SetOperation(s string) *SysMenuUpdate {
+	smu.mutation.SetOperation(s)
+	return smu
+}
+
 // SetUpdatedAt sets the "updatedAt" field.
 func (smu *SysMenuUpdate) SetUpdatedAt(t time.Time) *SysMenuUpdate {
 	smu.mutation.SetUpdatedAt(t)
@@ -827,6 +847,20 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeEnum,
 			Value:  value,
 			Column: sysmenu.FieldState,
+		})
+	}
+	if value, ok := smu.mutation.CheckPermission(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldCheckPermission,
+		})
+	}
+	if value, ok := smu.mutation.Operation(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysmenu.FieldOperation,
 		})
 	}
 	if value, ok := smu.mutation.UpdatedAt(); ok {
@@ -1367,6 +1401,26 @@ func (smuo *SysMenuUpdateOne) SetNillableState(s *sysmenu.State) *SysMenuUpdateO
 	return smuo
 }
 
+// SetCheckPermission sets the "checkPermission" field.
+func (smuo *SysMenuUpdateOne) SetCheckPermission(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetCheckPermission(b)
+	return smuo
+}
+
+// SetNillableCheckPermission sets the "checkPermission" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableCheckPermission(b *bool) *SysMenuUpdateOne {
+	if b != nil {
+		smuo.SetCheckPermission(*b)
+	}
+	return smuo
+}
+
+// SetOperation sets the "operation" field.
+func (smuo *SysMenuUpdateOne) SetOperation(s string) *SysMenuUpdateOne {
+	smuo.mutation.SetOperation(s)
+	return smuo
+}
+
 // SetUpdatedAt sets the "updatedAt" field.
 func (smuo *SysMenuUpdateOne) SetUpdatedAt(t time.Time) *SysMenuUpdateOne {
 	smuo.mutation.SetUpdatedAt(t)
@@ -1862,6 +1916,20 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 			Type:   field.TypeEnum,
 			Value:  value,
 			Column: sysmenu.FieldState,
+		})
+	}
+	if value, ok := smuo.mutation.CheckPermission(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldCheckPermission,
+		})
+	}
+	if value, ok := smuo.mutation.Operation(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysmenu.FieldOperation,
 		})
 	}
 	if value, ok := smuo.mutation.UpdatedAt(); ok {

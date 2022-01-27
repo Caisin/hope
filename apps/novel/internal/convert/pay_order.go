@@ -37,6 +37,7 @@ func PayOrderUpdateReq2Data(v *v1.PayOrderUpdateReq) *ent.PayOrder {
 		VipName:      v.VipName,
 		Times:        v.Times,
 		OtherOrderId: v.OtherOrderId,
+		Remark:       v.Remark,
 	}
 }
 
@@ -66,6 +67,7 @@ func PayOrderData2UpdateReq(v *ent.PayOrder) *v1.PayOrderUpdateReq {
 		VipName:      v.VipName,
 		Times:        v.Times,
 		OtherOrderId: v.OtherOrderId,
+		Remark:       v.Remark,
 	}
 }
 
@@ -94,6 +96,7 @@ func PayOrderCreateReq2Data(v *v1.PayOrderCreateReq) *ent.PayOrder {
 		VipName:      v.VipName,
 		Times:        v.Times,
 		OtherOrderId: v.OtherOrderId,
+		Remark:       v.Remark,
 	}
 }
 
@@ -122,6 +125,7 @@ func PayOrderData2CreateReq(v *ent.PayOrder) *v1.PayOrderCreateReq {
 		VipName:      v.VipName,
 		Times:        v.Times,
 		OtherOrderId: v.OtherOrderId,
+		Remark:       v.Remark,
 	}
 }
 
@@ -150,6 +154,7 @@ func PayOrderReq2Data(v *v1.PayOrderReq) *ent.PayOrder {
 		VipName:      v.VipName,
 		Times:        v.Times,
 		OtherOrderId: v.OtherOrderId,
+		Remark:       v.Remark,
 	}
 }
 
@@ -178,6 +183,7 @@ func PayOrderData2Req(v *ent.PayOrder) *v1.PayOrderReq {
 		VipName:      v.VipName,
 		Times:        v.Times,
 		OtherOrderId: v.OtherOrderId,
+		Remark:       v.Remark,
 	}
 }
 

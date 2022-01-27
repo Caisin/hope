@@ -28,6 +28,7 @@ func SysUserUpdateReq2Data(v *v1.SysUserUpdateReq) *ent.SysUser {
 		Remark:   v.Remark,
 		Desc:     v.Desc,
 		HomePath: v.HomePath,
+		Status:   v.Status,
 	}
 }
 
@@ -50,6 +51,7 @@ func SysUserData2UpdateReq(v *ent.SysUser) *v1.SysUserUpdateReq {
 		Remark:   v.Remark,
 		Desc:     v.Desc,
 		HomePath: v.HomePath,
+		Status:   v.Status,
 	}
 }
 
@@ -71,6 +73,7 @@ func SysUserCreateReq2Data(v *v1.SysUserCreateReq) *ent.SysUser {
 		Remark:   v.Remark,
 		Desc:     v.Desc,
 		HomePath: v.HomePath,
+		Status:   v.Status,
 	}
 }
 
@@ -92,6 +95,7 @@ func SysUserData2CreateReq(v *ent.SysUser) *v1.SysUserCreateReq {
 		Remark:   v.Remark,
 		Desc:     v.Desc,
 		HomePath: v.HomePath,
+		Status:   v.Status,
 	}
 }
 
@@ -113,6 +117,7 @@ func SysUserReq2Data(v *v1.SysUserReq) *ent.SysUser {
 		Remark:   v.Remark,
 		Desc:     v.Desc,
 		HomePath: v.HomePath,
+		Status:   v.Status,
 	}
 }
 
@@ -134,6 +139,7 @@ func SysUserData2Req(v *ent.SysUser) *v1.SysUserReq {
 		Remark:   v.Remark,
 		Desc:     v.Desc,
 		HomePath: v.HomePath,
+		Status:   v.Status,
 	}
 }
 

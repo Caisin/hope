@@ -19,6 +19,7 @@ func NovelClassifyUpdateReq2Data(v *v1.NovelClassifyUpdateReq) *ent.NovelClassif
 		ClassifyName: v.ClassifyName,
 		Status:       v.Status,
 		OrderNum:     v.OrderNum,
+		Remark:       v.Remark,
 	}
 }
 
@@ -32,6 +33,7 @@ func NovelClassifyData2UpdateReq(v *ent.NovelClassify) *v1.NovelClassifyUpdateRe
 		ClassifyName: v.ClassifyName,
 		Status:       v.Status,
 		OrderNum:     v.OrderNum,
+		Remark:       v.Remark,
 	}
 }
 
@@ -44,6 +46,7 @@ func NovelClassifyCreateReq2Data(v *v1.NovelClassifyCreateReq) *ent.NovelClassif
 		ClassifyName: v.ClassifyName,
 		Status:       v.Status,
 		OrderNum:     v.OrderNum,
+		Remark:       v.Remark,
 	}
 }
 
@@ -56,6 +59,7 @@ func NovelClassifyData2CreateReq(v *ent.NovelClassify) *v1.NovelClassifyCreateRe
 		ClassifyName: v.ClassifyName,
 		Status:       v.Status,
 		OrderNum:     v.OrderNum,
+		Remark:       v.Remark,
 	}
 }
 
@@ -68,6 +72,7 @@ func NovelClassifyReq2Data(v *v1.NovelClassifyReq) *ent.NovelClassify {
 		ClassifyName: v.ClassifyName,
 		Status:       v.Status,
 		OrderNum:     v.OrderNum,
+		Remark:       v.Remark,
 	}
 }
 
@@ -80,6 +85,7 @@ func NovelClassifyData2Req(v *ent.NovelClassify) *v1.NovelClassifyReq {
 		ClassifyName: v.ClassifyName,
 		Status:       v.Status,
 		OrderNum:     v.OrderNum,
+		Remark:       v.Remark,
 	}
 }
 

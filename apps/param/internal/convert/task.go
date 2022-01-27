@@ -35,6 +35,7 @@ func TaskUpdateReq2Data(v *v1.TaskUpdateReq) *ent.Task {
 		SortNum:       v.SortNum,
 		ActionType:    v.ActionType,
 		EffectTime:    v.EffectTime.AsTime(),
+		ExpiredTime:   v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -64,6 +65,7 @@ func TaskData2UpdateReq(v *ent.Task) *v1.TaskUpdateReq {
 		SortNum:       v.SortNum,
 		ActionType:    v.ActionType,
 		EffectTime:    timestamppb.New(v.EffectTime),
+		ExpiredTime:   timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -92,6 +94,7 @@ func TaskCreateReq2Data(v *v1.TaskCreateReq) *ent.Task {
 		SortNum:       v.SortNum,
 		ActionType:    v.ActionType,
 		EffectTime:    v.EffectTime.AsTime(),
+		ExpiredTime:   v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -120,6 +123,7 @@ func TaskData2CreateReq(v *ent.Task) *v1.TaskCreateReq {
 		SortNum:       v.SortNum,
 		ActionType:    v.ActionType,
 		EffectTime:    timestamppb.New(v.EffectTime),
+		ExpiredTime:   timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -148,6 +152,7 @@ func TaskReq2Data(v *v1.TaskReq) *ent.Task {
 		SortNum:       v.SortNum,
 		ActionType:    v.ActionType,
 		EffectTime:    v.EffectTime.AsTime(),
+		ExpiredTime:   v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -176,6 +181,7 @@ func TaskData2Req(v *ent.Task) *v1.TaskReq {
 		SortNum:       v.SortNum,
 		ActionType:    v.ActionType,
 		EffectTime:    timestamppb.New(v.EffectTime),
+		ExpiredTime:   timestamppb.New(v.ExpiredTime),
 	}
 }
 

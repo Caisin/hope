@@ -17,6 +17,7 @@ func NovelTagUpdateReq2Data(v *v1.NovelTagUpdateReq) *ent.NovelTag {
 		ID:      v.Id,
 		TagId:   v.TagId,
 		TagName: v.TagName,
+		Remark:  v.Remark,
 	}
 }
 
@@ -28,6 +29,7 @@ func NovelTagData2UpdateReq(v *ent.NovelTag) *v1.NovelTagUpdateReq {
 		Id:      v.ID,
 		TagId:   v.TagId,
 		TagName: v.TagName,
+		Remark:  v.Remark,
 	}
 }
 
@@ -38,6 +40,7 @@ func NovelTagCreateReq2Data(v *v1.NovelTagCreateReq) *ent.NovelTag {
 	return &ent.NovelTag{
 		TagId:   v.TagId,
 		TagName: v.TagName,
+		Remark:  v.Remark,
 	}
 }
 
@@ -48,6 +51,7 @@ func NovelTagData2CreateReq(v *ent.NovelTag) *v1.NovelTagCreateReq {
 	return &v1.NovelTagCreateReq{
 		TagId:   v.TagId,
 		TagName: v.TagName,
+		Remark:  v.Remark,
 	}
 }
 
@@ -58,6 +62,7 @@ func NovelTagReq2Data(v *v1.NovelTagReq) *ent.NovelTag {
 	return &ent.NovelTag{
 		TagId:   v.TagId,
 		TagName: v.TagName,
+		Remark:  v.Remark,
 	}
 }
 
@@ -68,6 +73,7 @@ func NovelTagData2Req(v *ent.NovelTag) *v1.NovelTagReq {
 	return &v1.NovelTagReq{
 		TagId:   v.TagId,
 		TagName: v.TagName,
+		Remark:  v.Remark,
 	}
 }
 

@@ -23,6 +23,7 @@ func AdChannelUpdateReq2Data(v *v1.AdChannelUpdateReq) *ent.AdChannel {
 		ChapterId:   v.ChapterId,
 		ChapterNum:  v.ChapterNum,
 		AdType:      v.AdType,
+		Img:         v.Img,
 	}
 }
 
@@ -40,6 +41,7 @@ func AdChannelData2UpdateReq(v *ent.AdChannel) *v1.AdChannelUpdateReq {
 		ChapterId:   v.ChapterId,
 		ChapterNum:  v.ChapterNum,
 		AdType:      v.AdType,
+		Img:         v.Img,
 	}
 }
 
@@ -56,6 +58,7 @@ func AdChannelCreateReq2Data(v *v1.AdChannelCreateReq) *ent.AdChannel {
 		ChapterId:   v.ChapterId,
 		ChapterNum:  v.ChapterNum,
 		AdType:      v.AdType,
+		Img:         v.Img,
 	}
 }
 
@@ -72,6 +75,7 @@ func AdChannelData2CreateReq(v *ent.AdChannel) *v1.AdChannelCreateReq {
 		ChapterId:   v.ChapterId,
 		ChapterNum:  v.ChapterNum,
 		AdType:      v.AdType,
+		Img:         v.Img,
 	}
 }
 
@@ -88,6 +92,7 @@ func AdChannelReq2Data(v *v1.AdChannelReq) *ent.AdChannel {
 		ChapterId:   v.ChapterId,
 		ChapterNum:  v.ChapterNum,
 		AdType:      v.AdType,
+		Img:         v.Img,
 	}
 }
 
@@ -104,6 +109,7 @@ func AdChannelData2Req(v *ent.AdChannel) *v1.AdChannelReq {
 		ChapterId:   v.ChapterId,
 		ChapterNum:  v.ChapterNum,
 		AdType:      v.AdType,
+		Img:         v.Img,
 	}
 }
 

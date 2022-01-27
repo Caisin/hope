@@ -20,6 +20,7 @@ func BookPackageUpdateReq2Data(v *v1.BookPackageUpdateReq) *ent.BookPackage {
 		Price:        v.Price,
 		DailyPrice:   v.DailyPrice,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -34,6 +35,7 @@ func BookPackageData2UpdateReq(v *ent.BookPackage) *v1.BookPackageUpdateReq {
 		Price:        v.Price,
 		DailyPrice:   v.DailyPrice,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -47,6 +49,7 @@ func BookPackageCreateReq2Data(v *v1.BookPackageCreateReq) *ent.BookPackage {
 		Price:        v.Price,
 		DailyPrice:   v.DailyPrice,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -60,6 +63,7 @@ func BookPackageData2CreateReq(v *ent.BookPackage) *v1.BookPackageCreateReq {
 		Price:        v.Price,
 		DailyPrice:   v.DailyPrice,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -73,6 +77,7 @@ func BookPackageReq2Data(v *v1.BookPackageReq) *ent.BookPackage {
 		Price:        v.Price,
 		DailyPrice:   v.DailyPrice,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -86,6 +91,7 @@ func BookPackageData2Req(v *ent.BookPackage) *v1.BookPackageReq {
 		Price:        v.Price,
 		DailyPrice:   v.DailyPrice,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 

@@ -18,6 +18,7 @@ func NovelMsgUpdateReq2Data(v *v1.NovelMsgUpdateReq) *ent.NovelMsg {
 		Title:   v.Title,
 		Msg:     v.Msg,
 		MsgType: v.MsgType,
+		Status:  v.Status,
 	}
 }
 
@@ -30,6 +31,7 @@ func NovelMsgData2UpdateReq(v *ent.NovelMsg) *v1.NovelMsgUpdateReq {
 		Title:   v.Title,
 		Msg:     v.Msg,
 		MsgType: v.MsgType,
+		Status:  v.Status,
 	}
 }
 
@@ -41,6 +43,7 @@ func NovelMsgCreateReq2Data(v *v1.NovelMsgCreateReq) *ent.NovelMsg {
 		Title:   v.Title,
 		Msg:     v.Msg,
 		MsgType: v.MsgType,
+		Status:  v.Status,
 	}
 }
 
@@ -52,6 +55,7 @@ func NovelMsgData2CreateReq(v *ent.NovelMsg) *v1.NovelMsgCreateReq {
 		Title:   v.Title,
 		Msg:     v.Msg,
 		MsgType: v.MsgType,
+		Status:  v.Status,
 	}
 }
 
@@ -63,6 +67,7 @@ func NovelMsgReq2Data(v *v1.NovelMsgReq) *ent.NovelMsg {
 		Title:   v.Title,
 		Msg:     v.Msg,
 		MsgType: v.MsgType,
+		Status:  v.Status,
 	}
 }
 
@@ -74,6 +79,7 @@ func NovelMsgData2Req(v *ent.NovelMsg) *v1.NovelMsgReq {
 		Title:   v.Title,
 		Msg:     v.Msg,
 		MsgType: v.MsgType,
+		Status:  v.Status,
 	}
 }
 

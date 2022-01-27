@@ -247,26 +247,30 @@ func init() {
 	sysmenuDescParentId := sysmenuFields[0].Descriptor()
 	// sysmenu.DefaultParentId holds the default value on creation for the parentId field.
 	sysmenu.DefaultParentId = sysmenuDescParentId.Default.(int64)
+	// sysmenuDescCheckPermission is the schema descriptor for checkPermission field.
+	sysmenuDescCheckPermission := sysmenuFields[18].Descriptor()
+	// sysmenu.DefaultCheckPermission holds the default value on creation for the checkPermission field.
+	sysmenu.DefaultCheckPermission = sysmenuDescCheckPermission.Default.(bool)
 	// sysmenuDescCreatedAt is the schema descriptor for createdAt field.
-	sysmenuDescCreatedAt := sysmenuFields[18].Descriptor()
+	sysmenuDescCreatedAt := sysmenuFields[20].Descriptor()
 	// sysmenu.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	sysmenu.DefaultCreatedAt = sysmenuDescCreatedAt.Default.(func() time.Time)
 	// sysmenuDescUpdatedAt is the schema descriptor for updatedAt field.
-	sysmenuDescUpdatedAt := sysmenuFields[19].Descriptor()
+	sysmenuDescUpdatedAt := sysmenuFields[21].Descriptor()
 	// sysmenu.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	sysmenu.DefaultUpdatedAt = sysmenuDescUpdatedAt.Default.(func() time.Time)
 	// sysmenu.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	sysmenu.UpdateDefaultUpdatedAt = sysmenuDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysmenuDescCreateBy is the schema descriptor for createBy field.
-	sysmenuDescCreateBy := sysmenuFields[20].Descriptor()
+	sysmenuDescCreateBy := sysmenuFields[22].Descriptor()
 	// sysmenu.DefaultCreateBy holds the default value on creation for the createBy field.
 	sysmenu.DefaultCreateBy = sysmenuDescCreateBy.Default.(int64)
 	// sysmenuDescUpdateBy is the schema descriptor for updateBy field.
-	sysmenuDescUpdateBy := sysmenuFields[21].Descriptor()
+	sysmenuDescUpdateBy := sysmenuFields[23].Descriptor()
 	// sysmenu.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	sysmenu.DefaultUpdateBy = sysmenuDescUpdateBy.Default.(int64)
 	// sysmenuDescTenantId is the schema descriptor for tenantId field.
-	sysmenuDescTenantId := sysmenuFields[22].Descriptor()
+	sysmenuDescTenantId := sysmenuFields[24].Descriptor()
 	// sysmenu.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysmenu.DefaultTenantId = sysmenuDescTenantId.Default.(int64)
 	sysoperalogFields := schema.SysOperaLog{}.Fields()

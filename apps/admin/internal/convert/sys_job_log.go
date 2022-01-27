@@ -21,6 +21,7 @@ func SysJobLogUpdateReq2Data(v *v1.SysJobLogUpdateReq) *ent.SysJobLog {
 		EntryId:  v.EntryId,
 		Status:   v.Status,
 		Duration: v.Duration.AsDuration(),
+		Info:     v.Info,
 	}
 }
 
@@ -35,6 +36,7 @@ func SysJobLogData2UpdateReq(v *ent.SysJobLog) *v1.SysJobLogUpdateReq {
 		EntryId:  v.EntryId,
 		Status:   v.Status,
 		Duration: durationpb.New(v.Duration),
+		Info:     v.Info,
 	}
 }
 
@@ -48,6 +50,7 @@ func SysJobLogCreateReq2Data(v *v1.SysJobLogCreateReq) *ent.SysJobLog {
 		EntryId:  v.EntryId,
 		Status:   v.Status,
 		Duration: v.Duration.AsDuration(),
+		Info:     v.Info,
 	}
 }
 
@@ -61,6 +64,7 @@ func SysJobLogData2CreateReq(v *ent.SysJobLog) *v1.SysJobLogCreateReq {
 		EntryId:  v.EntryId,
 		Status:   v.Status,
 		Duration: durationpb.New(v.Duration),
+		Info:     v.Info,
 	}
 }
 
@@ -74,6 +78,7 @@ func SysJobLogReq2Data(v *v1.SysJobLogReq) *ent.SysJobLog {
 		EntryId:  v.EntryId,
 		Status:   v.Status,
 		Duration: v.Duration.AsDuration(),
+		Info:     v.Info,
 	}
 }
 
@@ -87,6 +92,7 @@ func SysJobLogData2Req(v *ent.SysJobLog) *v1.SysJobLogReq {
 		EntryId:  v.EntryId,
 		Status:   v.Status,
 		Duration: durationpb.New(v.Duration),
+		Info:     v.Info,
 	}
 }
 

@@ -20,6 +20,7 @@ func VipTypeUpdateReq2Data(v *v1.VipTypeUpdateReq) *ent.VipType {
 		ValidDays:    v.ValidDays,
 		DiscountRate: v.DiscountRate,
 		AvatarId:     v.AvatarId,
+		Summary:      v.Summary,
 	}
 }
 
@@ -34,6 +35,7 @@ func VipTypeData2UpdateReq(v *ent.VipType) *v1.VipTypeUpdateReq {
 		ValidDays:    v.ValidDays,
 		DiscountRate: v.DiscountRate,
 		AvatarId:     v.AvatarId,
+		Summary:      v.Summary,
 	}
 }
 
@@ -47,6 +49,7 @@ func VipTypeCreateReq2Data(v *v1.VipTypeCreateReq) *ent.VipType {
 		ValidDays:    v.ValidDays,
 		DiscountRate: v.DiscountRate,
 		AvatarId:     v.AvatarId,
+		Summary:      v.Summary,
 	}
 }
 
@@ -60,6 +63,7 @@ func VipTypeData2CreateReq(v *ent.VipType) *v1.VipTypeCreateReq {
 		ValidDays:    v.ValidDays,
 		DiscountRate: v.DiscountRate,
 		AvatarId:     v.AvatarId,
+		Summary:      v.Summary,
 	}
 }
 
@@ -73,6 +77,7 @@ func VipTypeReq2Data(v *v1.VipTypeReq) *ent.VipType {
 		ValidDays:    v.ValidDays,
 		DiscountRate: v.DiscountRate,
 		AvatarId:     v.AvatarId,
+		Summary:      v.Summary,
 	}
 }
 
@@ -86,6 +91,7 @@ func VipTypeData2Req(v *ent.VipType) *v1.VipTypeReq {
 		ValidDays:    v.ValidDays,
 		DiscountRate: v.DiscountRate,
 		AvatarId:     v.AvatarId,
+		Summary:      v.Summary,
 	}
 }
 

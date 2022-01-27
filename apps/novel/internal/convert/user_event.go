@@ -22,6 +22,7 @@ func UserEventUpdateReq2Data(v *v1.UserEventUpdateReq) *ent.UserEvent {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Money:     v.Money,
+		Keyword:   v.Keyword,
 	}
 }
 
@@ -38,6 +39,7 @@ func UserEventData2UpdateReq(v *ent.UserEvent) *v1.UserEventUpdateReq {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Money:     v.Money,
+		Keyword:   v.Keyword,
 	}
 }
 
@@ -53,6 +55,7 @@ func UserEventCreateReq2Data(v *v1.UserEventCreateReq) *ent.UserEvent {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Money:     v.Money,
+		Keyword:   v.Keyword,
 	}
 }
 
@@ -68,6 +71,7 @@ func UserEventData2CreateReq(v *ent.UserEvent) *v1.UserEventCreateReq {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Money:     v.Money,
+		Keyword:   v.Keyword,
 	}
 }
 
@@ -83,6 +87,7 @@ func UserEventReq2Data(v *v1.UserEventReq) *ent.UserEvent {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Money:     v.Money,
+		Keyword:   v.Keyword,
 	}
 }
 
@@ -98,6 +103,7 @@ func UserEventData2Req(v *ent.UserEvent) *v1.UserEventReq {
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
 		Money:     v.Money,
+		Keyword:   v.Keyword,
 	}
 }
 

@@ -30,6 +30,7 @@ func AgreementLogUpdateReq2Data(v *v1.AgreementLogUpdateReq) *ent.AgreementLog {
 		Times:            v.Times,
 		CycleDays:        v.CycleDays,
 		NextExecTime:     v.NextExecTime.AsTime(),
+		Remark:           v.Remark,
 	}
 }
 
@@ -53,6 +54,7 @@ func AgreementLogData2UpdateReq(v *ent.AgreementLog) *v1.AgreementLogUpdateReq {
 		Times:            v.Times,
 		CycleDays:        v.CycleDays,
 		NextExecTime:     timestamppb.New(v.NextExecTime),
+		Remark:           v.Remark,
 	}
 }
 
@@ -75,6 +77,7 @@ func AgreementLogCreateReq2Data(v *v1.AgreementLogCreateReq) *ent.AgreementLog {
 		Times:            v.Times,
 		CycleDays:        v.CycleDays,
 		NextExecTime:     v.NextExecTime.AsTime(),
+		Remark:           v.Remark,
 	}
 }
 
@@ -97,6 +100,7 @@ func AgreementLogData2CreateReq(v *ent.AgreementLog) *v1.AgreementLogCreateReq {
 		Times:            v.Times,
 		CycleDays:        v.CycleDays,
 		NextExecTime:     timestamppb.New(v.NextExecTime),
+		Remark:           v.Remark,
 	}
 }
 
@@ -119,6 +123,7 @@ func AgreementLogReq2Data(v *v1.AgreementLogReq) *ent.AgreementLog {
 		Times:            v.Times,
 		CycleDays:        v.CycleDays,
 		NextExecTime:     v.NextExecTime.AsTime(),
+		Remark:           v.Remark,
 	}
 }
 
@@ -141,6 +146,7 @@ func AgreementLogData2Req(v *ent.AgreementLog) *v1.AgreementLogReq {
 		Times:            v.Times,
 		CycleDays:        v.CycleDays,
 		NextExecTime:     timestamppb.New(v.NextExecTime),
+		Remark:           v.Remark,
 	}
 }
 

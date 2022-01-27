@@ -40,6 +40,7 @@ func SocialUserUpdateReq2Data(v *v1.SocialUserUpdateReq) *ent.SocialUser {
 		Subscribe:     v.Subscribe,
 		SubscribeTime: v.SubscribeTime,
 		SessionKey:    v.SessionKey,
+		UserType:      v.UserType,
 	}
 }
 
@@ -74,6 +75,7 @@ func SocialUserData2UpdateReq(v *ent.SocialUser) *v1.SocialUserUpdateReq {
 		Subscribe:     v.Subscribe,
 		SubscribeTime: v.SubscribeTime,
 		SessionKey:    v.SessionKey,
+		UserType:      v.UserType,
 	}
 }
 
@@ -107,6 +109,7 @@ func SocialUserCreateReq2Data(v *v1.SocialUserCreateReq) *ent.SocialUser {
 		Subscribe:     v.Subscribe,
 		SubscribeTime: v.SubscribeTime,
 		SessionKey:    v.SessionKey,
+		UserType:      v.UserType,
 	}
 }
 
@@ -140,6 +143,7 @@ func SocialUserData2CreateReq(v *ent.SocialUser) *v1.SocialUserCreateReq {
 		Subscribe:     v.Subscribe,
 		SubscribeTime: v.SubscribeTime,
 		SessionKey:    v.SessionKey,
+		UserType:      v.UserType,
 	}
 }
 
@@ -173,6 +177,7 @@ func SocialUserReq2Data(v *v1.SocialUserReq) *ent.SocialUser {
 		Subscribe:     v.Subscribe,
 		SubscribeTime: v.SubscribeTime,
 		SessionKey:    v.SessionKey,
+		UserType:      v.UserType,
 	}
 }
 
@@ -206,6 +211,7 @@ func SocialUserData2Req(v *ent.SocialUser) *v1.SocialUserReq {
 		Subscribe:     v.Subscribe,
 		SubscribeTime: v.SubscribeTime,
 		SessionKey:    v.SessionKey,
+		UserType:      v.UserType,
 	}
 }
 

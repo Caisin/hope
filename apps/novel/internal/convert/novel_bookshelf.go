@@ -22,6 +22,7 @@ func NovelBookshelfUpdateReq2Data(v *v1.NovelBookshelfUpdateReq) *ent.NovelBooks
 		LastChapterOrder: v.LastChapterOrder,
 		LastChapterId:    v.LastChapterId,
 		LastChapterName:  v.LastChapterName,
+		Remark:           v.Remark,
 	}
 }
 
@@ -38,6 +39,7 @@ func NovelBookshelfData2UpdateReq(v *ent.NovelBookshelf) *v1.NovelBookshelfUpdat
 		LastChapterOrder: v.LastChapterOrder,
 		LastChapterId:    v.LastChapterId,
 		LastChapterName:  v.LastChapterName,
+		Remark:           v.Remark,
 	}
 }
 
@@ -53,6 +55,7 @@ func NovelBookshelfCreateReq2Data(v *v1.NovelBookshelfCreateReq) *ent.NovelBooks
 		LastChapterOrder: v.LastChapterOrder,
 		LastChapterId:    v.LastChapterId,
 		LastChapterName:  v.LastChapterName,
+		Remark:           v.Remark,
 	}
 }
 
@@ -68,6 +71,7 @@ func NovelBookshelfData2CreateReq(v *ent.NovelBookshelf) *v1.NovelBookshelfCreat
 		LastChapterOrder: v.LastChapterOrder,
 		LastChapterId:    v.LastChapterId,
 		LastChapterName:  v.LastChapterName,
+		Remark:           v.Remark,
 	}
 }
 
@@ -83,6 +87,7 @@ func NovelBookshelfReq2Data(v *v1.NovelBookshelfReq) *ent.NovelBookshelf {
 		LastChapterOrder: v.LastChapterOrder,
 		LastChapterId:    v.LastChapterId,
 		LastChapterName:  v.LastChapterName,
+		Remark:           v.Remark,
 	}
 }
 
@@ -98,6 +103,7 @@ func NovelBookshelfData2Req(v *ent.NovelBookshelf) *v1.NovelBookshelfReq {
 		LastChapterOrder: v.LastChapterOrder,
 		LastChapterId:    v.LastChapterId,
 		LastChapterName:  v.LastChapterName,
+		Remark:           v.Remark,
 	}
 }
 

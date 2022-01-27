@@ -11275,6 +11275,8 @@ type SysMenuMutation struct {
 	hideMenu           *bool
 	frameSrc           *string
 	state              *sysmenu.State
+	checkPermission    *bool
+	operation          *string
 	createdAt          *time.Time
 	updatedAt          *time.Time
 	createBy           *int64
@@ -12227,6 +12229,78 @@ func (m *SysMenuMutation) ResetState() {
 	m.state = nil
 }
 
+// SetCheckPermission sets the "checkPermission" field.
+func (m *SysMenuMutation) SetCheckPermission(b bool) {
+	m.checkPermission = &b
+}
+
+// CheckPermission returns the value of the "checkPermission" field in the mutation.
+func (m *SysMenuMutation) CheckPermission() (r bool, exists bool) {
+	v := m.checkPermission
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCheckPermission returns the old "checkPermission" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldCheckPermission(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCheckPermission is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCheckPermission requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCheckPermission: %w", err)
+	}
+	return oldValue.CheckPermission, nil
+}
+
+// ResetCheckPermission resets all changes to the "checkPermission" field.
+func (m *SysMenuMutation) ResetCheckPermission() {
+	m.checkPermission = nil
+}
+
+// SetOperation sets the "operation" field.
+func (m *SysMenuMutation) SetOperation(s string) {
+	m.operation = &s
+}
+
+// Operation returns the value of the "operation" field in the mutation.
+func (m *SysMenuMutation) Operation() (r string, exists bool) {
+	v := m.operation
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOperation returns the old "operation" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldOperation(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldOperation is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldOperation requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOperation: %w", err)
+	}
+	return oldValue.Operation, nil
+}
+
+// ResetOperation resets all changes to the "operation" field.
+func (m *SysMenuMutation) ResetOperation() {
+	m.operation = nil
+}
+
 // SetCreatedAt sets the "createdAt" field.
 func (m *SysMenuMutation) SetCreatedAt(t time.Time) {
 	m.createdAt = &t
@@ -12633,7 +12707,7 @@ func (m *SysMenuMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysMenuMutation) Fields() []string {
-	fields := make([]string, 0, 23)
+	fields := make([]string, 0, 25)
 	if m.parent != nil {
 		fields = append(fields, sysmenu.FieldParentId)
 	}
@@ -12687,6 +12761,12 @@ func (m *SysMenuMutation) Fields() []string {
 	}
 	if m.state != nil {
 		fields = append(fields, sysmenu.FieldState)
+	}
+	if m.checkPermission != nil {
+		fields = append(fields, sysmenu.FieldCheckPermission)
+	}
+	if m.operation != nil {
+		fields = append(fields, sysmenu.FieldOperation)
 	}
 	if m.createdAt != nil {
 		fields = append(fields, sysmenu.FieldCreatedAt)
@@ -12747,6 +12827,10 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 		return m.FrameSrc()
 	case sysmenu.FieldState:
 		return m.State()
+	case sysmenu.FieldCheckPermission:
+		return m.CheckPermission()
+	case sysmenu.FieldOperation:
+		return m.Operation()
 	case sysmenu.FieldCreatedAt:
 		return m.CreatedAt()
 	case sysmenu.FieldUpdatedAt:
@@ -12802,6 +12886,10 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldFrameSrc(ctx)
 	case sysmenu.FieldState:
 		return m.OldState(ctx)
+	case sysmenu.FieldCheckPermission:
+		return m.OldCheckPermission(ctx)
+	case sysmenu.FieldOperation:
+		return m.OldOperation(ctx)
 	case sysmenu.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case sysmenu.FieldUpdatedAt:
@@ -12946,6 +13034,20 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetState(v)
+		return nil
+	case sysmenu.FieldCheckPermission:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCheckPermission(v)
+		return nil
+	case sysmenu.FieldOperation:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOperation(v)
 		return nil
 	case sysmenu.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -13222,6 +13324,12 @@ func (m *SysMenuMutation) ResetField(name string) error {
 		return nil
 	case sysmenu.FieldState:
 		m.ResetState()
+		return nil
+	case sysmenu.FieldCheckPermission:
+		m.ResetCheckPermission()
+		return nil
+	case sysmenu.FieldOperation:
+		m.ResetOperation()
 		return nil
 	case sysmenu.FieldCreatedAt:
 		m.ResetCreatedAt()

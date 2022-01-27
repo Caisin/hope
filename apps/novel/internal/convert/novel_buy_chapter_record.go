@@ -26,6 +26,7 @@ func NovelBuyChapterRecordUpdateReq2Data(v *v1.NovelBuyChapterRecordUpdateReq) *
 		Coin:            v.Coin,
 		Coupon:          v.Coupon,
 		Discount:        v.Discount,
+		Remark:          v.Remark,
 	}
 }
 
@@ -46,6 +47,7 @@ func NovelBuyChapterRecordData2UpdateReq(v *ent.NovelBuyChapterRecord) *v1.Novel
 		Coin:            v.Coin,
 		Coupon:          v.Coupon,
 		Discount:        v.Discount,
+		Remark:          v.Remark,
 	}
 }
 
@@ -65,6 +67,7 @@ func NovelBuyChapterRecordCreateReq2Data(v *v1.NovelBuyChapterRecordCreateReq) *
 		Coin:            v.Coin,
 		Coupon:          v.Coupon,
 		Discount:        v.Discount,
+		Remark:          v.Remark,
 	}
 }
 
@@ -84,6 +87,7 @@ func NovelBuyChapterRecordData2CreateReq(v *ent.NovelBuyChapterRecord) *v1.Novel
 		Coin:            v.Coin,
 		Coupon:          v.Coupon,
 		Discount:        v.Discount,
+		Remark:          v.Remark,
 	}
 }
 
@@ -103,6 +107,7 @@ func NovelBuyChapterRecordReq2Data(v *v1.NovelBuyChapterRecordReq) *ent.NovelBuy
 		Coin:            v.Coin,
 		Coupon:          v.Coupon,
 		Discount:        v.Discount,
+		Remark:          v.Remark,
 	}
 }
 
@@ -122,6 +127,7 @@ func NovelBuyChapterRecordData2Req(v *ent.NovelBuyChapterRecord) *v1.NovelBuyCha
 		Coin:            v.Coin,
 		Coupon:          v.Coupon,
 		Discount:        v.Discount,
+		Remark:          v.Remark,
 	}
 }
 

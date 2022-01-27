@@ -14,16 +14,17 @@ func CustomerNovelsUpdateReq2Data(v *v1.CustomerNovelsUpdateReq) *ent.CustomerNo
 		return nil
 	}
 	return &ent.CustomerNovels{
-		ID:         v.Id,
-		NovelId:    v.NovelId,
-		TypeId:     v.TypeId,
-		TypeCode:   v.TypeCode,
-		GroupCode:  v.GroupCode,
-		FieldName:  v.FieldName,
-		Cover:      v.Cover,
-		OrderNum:   v.OrderNum,
-		Remark:     v.Remark,
-		EffectTime: v.EffectTime.AsTime(),
+		ID:          v.Id,
+		NovelId:     v.NovelId,
+		TypeId:      v.TypeId,
+		TypeCode:    v.TypeCode,
+		GroupCode:   v.GroupCode,
+		FieldName:   v.FieldName,
+		Cover:       v.Cover,
+		OrderNum:    v.OrderNum,
+		Remark:      v.Remark,
+		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -32,16 +33,17 @@ func CustomerNovelsData2UpdateReq(v *ent.CustomerNovels) *v1.CustomerNovelsUpdat
 		return nil
 	}
 	return &v1.CustomerNovelsUpdateReq{
-		Id:         v.ID,
-		NovelId:    v.NovelId,
-		TypeId:     v.TypeId,
-		TypeCode:   v.TypeCode,
-		GroupCode:  v.GroupCode,
-		FieldName:  v.FieldName,
-		Cover:      v.Cover,
-		OrderNum:   v.OrderNum,
-		Remark:     v.Remark,
-		EffectTime: timestamppb.New(v.EffectTime),
+		Id:          v.ID,
+		NovelId:     v.NovelId,
+		TypeId:      v.TypeId,
+		TypeCode:    v.TypeCode,
+		GroupCode:   v.GroupCode,
+		FieldName:   v.FieldName,
+		Cover:       v.Cover,
+		OrderNum:    v.OrderNum,
+		Remark:      v.Remark,
+		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -50,15 +52,16 @@ func CustomerNovelsCreateReq2Data(v *v1.CustomerNovelsCreateReq) *ent.CustomerNo
 		return nil
 	}
 	return &ent.CustomerNovels{
-		NovelId:    v.NovelId,
-		TypeId:     v.TypeId,
-		TypeCode:   v.TypeCode,
-		GroupCode:  v.GroupCode,
-		FieldName:  v.FieldName,
-		Cover:      v.Cover,
-		OrderNum:   v.OrderNum,
-		Remark:     v.Remark,
-		EffectTime: v.EffectTime.AsTime(),
+		NovelId:     v.NovelId,
+		TypeId:      v.TypeId,
+		TypeCode:    v.TypeCode,
+		GroupCode:   v.GroupCode,
+		FieldName:   v.FieldName,
+		Cover:       v.Cover,
+		OrderNum:    v.OrderNum,
+		Remark:      v.Remark,
+		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -67,15 +70,16 @@ func CustomerNovelsData2CreateReq(v *ent.CustomerNovels) *v1.CustomerNovelsCreat
 		return nil
 	}
 	return &v1.CustomerNovelsCreateReq{
-		NovelId:    v.NovelId,
-		TypeId:     v.TypeId,
-		TypeCode:   v.TypeCode,
-		GroupCode:  v.GroupCode,
-		FieldName:  v.FieldName,
-		Cover:      v.Cover,
-		OrderNum:   v.OrderNum,
-		Remark:     v.Remark,
-		EffectTime: timestamppb.New(v.EffectTime),
+		NovelId:     v.NovelId,
+		TypeId:      v.TypeId,
+		TypeCode:    v.TypeCode,
+		GroupCode:   v.GroupCode,
+		FieldName:   v.FieldName,
+		Cover:       v.Cover,
+		OrderNum:    v.OrderNum,
+		Remark:      v.Remark,
+		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -84,15 +88,16 @@ func CustomerNovelsReq2Data(v *v1.CustomerNovelsReq) *ent.CustomerNovels {
 		return nil
 	}
 	return &ent.CustomerNovels{
-		NovelId:    v.NovelId,
-		TypeId:     v.TypeId,
-		TypeCode:   v.TypeCode,
-		GroupCode:  v.GroupCode,
-		FieldName:  v.FieldName,
-		Cover:      v.Cover,
-		OrderNum:   v.OrderNum,
-		Remark:     v.Remark,
-		EffectTime: v.EffectTime.AsTime(),
+		NovelId:     v.NovelId,
+		TypeId:      v.TypeId,
+		TypeCode:    v.TypeCode,
+		GroupCode:   v.GroupCode,
+		FieldName:   v.FieldName,
+		Cover:       v.Cover,
+		OrderNum:    v.OrderNum,
+		Remark:      v.Remark,
+		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -101,15 +106,16 @@ func CustomerNovelsData2Req(v *ent.CustomerNovels) *v1.CustomerNovelsReq {
 		return nil
 	}
 	return &v1.CustomerNovelsReq{
-		NovelId:    v.NovelId,
-		TypeId:     v.TypeId,
-		TypeCode:   v.TypeCode,
-		GroupCode:  v.GroupCode,
-		FieldName:  v.FieldName,
-		Cover:      v.Cover,
-		OrderNum:   v.OrderNum,
-		Remark:     v.Remark,
-		EffectTime: timestamppb.New(v.EffectTime),
+		NovelId:     v.NovelId,
+		TypeId:      v.TypeId,
+		TypeCode:    v.TypeCode,
+		GroupCode:   v.GroupCode,
+		FieldName:   v.FieldName,
+		Cover:       v.Cover,
+		OrderNum:    v.OrderNum,
+		Remark:      v.Remark,
+		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 

@@ -23,6 +23,7 @@ func AssetChangeLogUpdateReq2Data(v *v1.AssetChangeLogUpdateReq) *ent.AssetChang
 		Amount:      v.Amount,
 		OldBalance:  v.OldBalance,
 		NewBalance:  v.NewBalance,
+		Remark:      v.Remark,
 	}
 }
 
@@ -40,6 +41,7 @@ func AssetChangeLogData2UpdateReq(v *ent.AssetChangeLog) *v1.AssetChangeLogUpdat
 		Amount:      v.Amount,
 		OldBalance:  v.OldBalance,
 		NewBalance:  v.NewBalance,
+		Remark:      v.Remark,
 	}
 }
 
@@ -56,6 +58,7 @@ func AssetChangeLogCreateReq2Data(v *v1.AssetChangeLogCreateReq) *ent.AssetChang
 		Amount:      v.Amount,
 		OldBalance:  v.OldBalance,
 		NewBalance:  v.NewBalance,
+		Remark:      v.Remark,
 	}
 }
 
@@ -72,6 +75,7 @@ func AssetChangeLogData2CreateReq(v *ent.AssetChangeLog) *v1.AssetChangeLogCreat
 		Amount:      v.Amount,
 		OldBalance:  v.OldBalance,
 		NewBalance:  v.NewBalance,
+		Remark:      v.Remark,
 	}
 }
 
@@ -88,6 +92,7 @@ func AssetChangeLogReq2Data(v *v1.AssetChangeLogReq) *ent.AssetChangeLog {
 		Amount:      v.Amount,
 		OldBalance:  v.OldBalance,
 		NewBalance:  v.NewBalance,
+		Remark:      v.Remark,
 	}
 }
 
@@ -104,6 +109,7 @@ func AssetChangeLogData2Req(v *ent.AssetChangeLog) *v1.AssetChangeLogReq {
 		Amount:      v.Amount,
 		OldBalance:  v.OldBalance,
 		NewBalance:  v.NewBalance,
+		Remark:      v.Remark,
 	}
 }
 

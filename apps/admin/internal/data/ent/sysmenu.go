@@ -69,6 +69,12 @@ type SysMenu struct {
 	// State holds the value of the "state" field.
 	// 状态:U:使用,E:失效
 	State sysmenu.State `json:"state,omitempty"`
+	// CheckPermission holds the value of the "checkPermission" field.
+	// 是否校验权限
+	CheckPermission bool `json:"checkPermission,omitempty"`
+	// Operation holds the value of the "operation" field.
+	// 操作资源
+	Operation string `json:"operation,omitempty"`
 	// CreatedAt holds the value of the "createdAt" field.
 	// 创建时间
 	CreatedAt time.Time `json:"createdAt,omitempty"`
@@ -139,11 +145,11 @@ func (*SysMenu) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysmenu.FieldIgnoreKeepAlive, sysmenu.FieldHideBreadcrumb, sysmenu.FieldHideChildrenInMenu, sysmenu.FieldHideMenu:
+		case sysmenu.FieldIgnoreKeepAlive, sysmenu.FieldHideBreadcrumb, sysmenu.FieldHideChildrenInMenu, sysmenu.FieldHideMenu, sysmenu.FieldCheckPermission:
 			values[i] = new(sql.NullBool)
 		case sysmenu.FieldID, sysmenu.FieldParentId, sysmenu.FieldSort, sysmenu.FieldCreateBy, sysmenu.FieldUpdateBy, sysmenu.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysmenu.FieldName, sysmenu.FieldTitle, sysmenu.FieldRedirect, sysmenu.FieldIcon, sysmenu.FieldPath, sysmenu.FieldPaths, sysmenu.FieldMenuType, sysmenu.FieldAction, sysmenu.FieldPermission, sysmenu.FieldComponent, sysmenu.FieldFrameSrc, sysmenu.FieldState:
+		case sysmenu.FieldName, sysmenu.FieldTitle, sysmenu.FieldRedirect, sysmenu.FieldIcon, sysmenu.FieldPath, sysmenu.FieldPaths, sysmenu.FieldMenuType, sysmenu.FieldAction, sysmenu.FieldPermission, sysmenu.FieldComponent, sysmenu.FieldFrameSrc, sysmenu.FieldState, sysmenu.FieldOperation:
 			values[i] = new(sql.NullString)
 		case sysmenu.FieldCreatedAt, sysmenu.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -276,6 +282,18 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				sm.State = sysmenu.State(value.String)
 			}
+		case sysmenu.FieldCheckPermission:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field checkPermission", values[i])
+			} else if value.Valid {
+				sm.CheckPermission = value.Bool
+			}
+		case sysmenu.FieldOperation:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field operation", values[i])
+			} else if value.Valid {
+				sm.Operation = value.String
+			}
 		case sysmenu.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field createdAt", values[i])
@@ -385,6 +403,10 @@ func (sm *SysMenu) String() string {
 	builder.WriteString(sm.FrameSrc)
 	builder.WriteString(", state=")
 	builder.WriteString(fmt.Sprintf("%v", sm.State))
+	builder.WriteString(", checkPermission=")
+	builder.WriteString(fmt.Sprintf("%v", sm.CheckPermission))
+	builder.WriteString(", operation=")
+	builder.WriteString(sm.Operation)
 	builder.WriteString(", createdAt=")
 	builder.WriteString(sm.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", updatedAt=")

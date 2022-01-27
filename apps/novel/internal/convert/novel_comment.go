@@ -29,6 +29,7 @@ func NovelCommentUpdateReq2Data(v *v1.NovelCommentUpdateReq) *ent.NovelComment {
 		State:       novelcomment.State(v.State),
 		IsHighlight: v.IsHighlight,
 		IsHot:       v.IsHot,
+		Remark:      v.Remark,
 	}
 }
 
@@ -51,6 +52,7 @@ func NovelCommentData2UpdateReq(v *ent.NovelComment) *v1.NovelCommentUpdateReq {
 		State:       string(v.State),
 		IsHighlight: v.IsHighlight,
 		IsHot:       v.IsHot,
+		Remark:      v.Remark,
 	}
 }
 
@@ -72,6 +74,7 @@ func NovelCommentCreateReq2Data(v *v1.NovelCommentCreateReq) *ent.NovelComment {
 		State:       novelcomment.State(v.State),
 		IsHighlight: v.IsHighlight,
 		IsHot:       v.IsHot,
+		Remark:      v.Remark,
 	}
 }
 
@@ -93,6 +96,7 @@ func NovelCommentData2CreateReq(v *ent.NovelComment) *v1.NovelCommentCreateReq {
 		State:       string(v.State),
 		IsHighlight: v.IsHighlight,
 		IsHot:       v.IsHot,
+		Remark:      v.Remark,
 	}
 }
 
@@ -114,6 +118,7 @@ func NovelCommentReq2Data(v *v1.NovelCommentReq) *ent.NovelComment {
 		State:       novelcomment.State(v.State),
 		IsHighlight: v.IsHighlight,
 		IsHot:       v.IsHot,
+		Remark:      v.Remark,
 	}
 }
 
@@ -135,6 +140,7 @@ func NovelCommentData2Req(v *ent.NovelComment) *v1.NovelCommentReq {
 		State:       string(v.State),
 		IsHighlight: v.IsHighlight,
 		IsHot:       v.IsHot,
+		Remark:      v.Remark,
 	}
 }
 

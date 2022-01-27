@@ -26,6 +26,7 @@ func NovelChapterUpdateReq2Data(v *v1.NovelChapterUpdateReq) *ent.NovelChapter {
 		IsFree:      v.IsFree,
 		Price:       v.Price,
 		WordNum:     v.WordNum,
+		Remark:      v.Remark,
 	}
 }
 
@@ -46,6 +47,7 @@ func NovelChapterData2UpdateReq(v *ent.NovelChapter) *v1.NovelChapterUpdateReq {
 		IsFree:      v.IsFree,
 		Price:       v.Price,
 		WordNum:     v.WordNum,
+		Remark:      v.Remark,
 	}
 }
 
@@ -65,6 +67,7 @@ func NovelChapterCreateReq2Data(v *v1.NovelChapterCreateReq) *ent.NovelChapter {
 		IsFree:      v.IsFree,
 		Price:       v.Price,
 		WordNum:     v.WordNum,
+		Remark:      v.Remark,
 	}
 }
 
@@ -84,6 +87,7 @@ func NovelChapterData2CreateReq(v *ent.NovelChapter) *v1.NovelChapterCreateReq {
 		IsFree:      v.IsFree,
 		Price:       v.Price,
 		WordNum:     v.WordNum,
+		Remark:      v.Remark,
 	}
 }
 
@@ -103,6 +107,7 @@ func NovelChapterReq2Data(v *v1.NovelChapterReq) *ent.NovelChapter {
 		IsFree:      v.IsFree,
 		Price:       v.Price,
 		WordNum:     v.WordNum,
+		Remark:      v.Remark,
 	}
 }
 
@@ -122,6 +127,7 @@ func NovelChapterData2Req(v *ent.NovelChapter) *v1.NovelChapterReq {
 		IsFree:      v.IsFree,
 		Price:       v.Price,
 		WordNum:     v.WordNum,
+		Remark:      v.Remark,
 	}
 }
 

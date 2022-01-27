@@ -23,6 +23,7 @@ func CustomerNovelConfigUpdateReq2Data(v *v1.CustomerNovelConfigUpdateReq) *ent.
 		TypeName:       v.TypeName,
 		FieldName:      v.FieldName,
 		DefaultNum:     v.DefaultNum,
+		State:          v.State,
 	}
 }
 
@@ -40,6 +41,7 @@ func CustomerNovelConfigData2UpdateReq(v *ent.CustomerNovelConfig) *v1.CustomerN
 		TypeName:       v.TypeName,
 		FieldName:      v.FieldName,
 		DefaultNum:     v.DefaultNum,
+		State:          v.State,
 	}
 }
 
@@ -56,6 +58,7 @@ func CustomerNovelConfigCreateReq2Data(v *v1.CustomerNovelConfigCreateReq) *ent.
 		TypeName:       v.TypeName,
 		FieldName:      v.FieldName,
 		DefaultNum:     v.DefaultNum,
+		State:          v.State,
 	}
 }
 
@@ -72,6 +75,7 @@ func CustomerNovelConfigData2CreateReq(v *ent.CustomerNovelConfig) *v1.CustomerN
 		TypeName:       v.TypeName,
 		FieldName:      v.FieldName,
 		DefaultNum:     v.DefaultNum,
+		State:          v.State,
 	}
 }
 
@@ -88,6 +92,7 @@ func CustomerNovelConfigReq2Data(v *v1.CustomerNovelConfigReq) *ent.CustomerNove
 		TypeName:       v.TypeName,
 		FieldName:      v.FieldName,
 		DefaultNum:     v.DefaultNum,
+		State:          v.State,
 	}
 }
 
@@ -104,6 +109,7 @@ func CustomerNovelConfigData2Req(v *ent.CustomerNovelConfig) *v1.CustomerNovelCo
 		TypeName:       v.TypeName,
 		FieldName:      v.FieldName,
 		DefaultNum:     v.DefaultNum,
+		State:          v.State,
 	}
 }
 

@@ -25,6 +25,7 @@ func SysJobUpdateReq2Data(v *v1.SysJobUpdateReq) *ent.SysJob {
 		ExecPolicy:     v.ExecPolicy,
 		Concurrent:     v.Concurrent,
 		State:          sysjob.State(v.State),
+		EntryId:        v.EntryId,
 	}
 }
 
@@ -43,6 +44,7 @@ func SysJobData2UpdateReq(v *ent.SysJob) *v1.SysJobUpdateReq {
 		ExecPolicy:     v.ExecPolicy,
 		Concurrent:     v.Concurrent,
 		State:          string(v.State),
+		EntryId:        v.EntryId,
 	}
 }
 
@@ -60,6 +62,7 @@ func SysJobCreateReq2Data(v *v1.SysJobCreateReq) *ent.SysJob {
 		ExecPolicy:     v.ExecPolicy,
 		Concurrent:     v.Concurrent,
 		State:          sysjob.State(v.State),
+		EntryId:        v.EntryId,
 	}
 }
 
@@ -77,6 +80,7 @@ func SysJobData2CreateReq(v *ent.SysJob) *v1.SysJobCreateReq {
 		ExecPolicy:     v.ExecPolicy,
 		Concurrent:     v.Concurrent,
 		State:          string(v.State),
+		EntryId:        v.EntryId,
 	}
 }
 
@@ -94,6 +98,7 @@ func SysJobReq2Data(v *v1.SysJobReq) *ent.SysJob {
 		ExecPolicy:     v.ExecPolicy,
 		Concurrent:     v.Concurrent,
 		State:          sysjob.State(v.State),
+		EntryId:        v.EntryId,
 	}
 }
 
@@ -111,6 +116,7 @@ func SysJobData2Req(v *ent.SysJob) *v1.SysJobReq {
 		ExecPolicy:     v.ExecPolicy,
 		Concurrent:     v.Concurrent,
 		State:          string(v.State),
+		EntryId:        v.EntryId,
 	}
 }
 

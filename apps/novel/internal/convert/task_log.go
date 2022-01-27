@@ -32,6 +32,7 @@ func TaskLogUpdateReq2Data(v *v1.TaskLogUpdateReq) *ent.TaskLog {
 		DoneTimes:    v.DoneTimes,
 		AllTimes:     v.AllTimes,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -58,6 +59,7 @@ func TaskLogData2UpdateReq(v *ent.TaskLog) *v1.TaskLogUpdateReq {
 		DoneTimes:    v.DoneTimes,
 		AllTimes:     v.AllTimes,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -83,6 +85,7 @@ func TaskLogCreateReq2Data(v *v1.TaskLogCreateReq) *ent.TaskLog {
 		DoneTimes:    v.DoneTimes,
 		AllTimes:     v.AllTimes,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -108,6 +111,7 @@ func TaskLogData2CreateReq(v *ent.TaskLog) *v1.TaskLogCreateReq {
 		DoneTimes:    v.DoneTimes,
 		AllTimes:     v.AllTimes,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -133,6 +137,7 @@ func TaskLogReq2Data(v *v1.TaskLogReq) *ent.TaskLog {
 		DoneTimes:    v.DoneTimes,
 		AllTimes:     v.AllTimes,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -158,6 +163,7 @@ func TaskLogData2Req(v *ent.TaskLog) *v1.TaskLogReq {
 		DoneTimes:    v.DoneTimes,
 		AllTimes:     v.AllTimes,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 

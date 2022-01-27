@@ -416,7 +416,7 @@ func %s(v *%s) *%s {
 
 		}
 		data2Reply.Append(toProto)
-		if l-i > 6 {
+		if l-i > 5 {
 			create2Data.Append(toEnt)
 			data2Create.Append(toProto)
 			update2Data.Append(toEnt)

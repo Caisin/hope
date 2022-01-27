@@ -21,6 +21,7 @@ func SysDeptUpdateReq2Data(v *v1.SysDeptUpdateReq) *ent.SysDept {
 		Leader:   v.Leader,
 		Phone:    v.Phone,
 		Email:    v.Email,
+		Status:   v.Status,
 	}
 }
 
@@ -36,6 +37,7 @@ func SysDeptData2UpdateReq(v *ent.SysDept) *v1.SysDeptUpdateReq {
 		Leader:   v.Leader,
 		Phone:    v.Phone,
 		Email:    v.Email,
+		Status:   v.Status,
 	}
 }
 
@@ -50,6 +52,7 @@ func SysDeptCreateReq2Data(v *v1.SysDeptCreateReq) *ent.SysDept {
 		Leader:   v.Leader,
 		Phone:    v.Phone,
 		Email:    v.Email,
+		Status:   v.Status,
 	}
 }
 
@@ -64,6 +67,7 @@ func SysDeptData2CreateReq(v *ent.SysDept) *v1.SysDeptCreateReq {
 		Leader:   v.Leader,
 		Phone:    v.Phone,
 		Email:    v.Email,
+		Status:   v.Status,
 	}
 }
 
@@ -78,6 +82,7 @@ func SysDeptReq2Data(v *v1.SysDeptReq) *ent.SysDept {
 		Leader:   v.Leader,
 		Phone:    v.Phone,
 		Email:    v.Email,
+		Status:   v.Status,
 	}
 }
 
@@ -92,6 +97,7 @@ func SysDeptData2Req(v *ent.SysDept) *v1.SysDeptReq {
 		Leader:   v.Leader,
 		Phone:    v.Phone,
 		Email:    v.Email,
+		Status:   v.Status,
 	}
 }
 

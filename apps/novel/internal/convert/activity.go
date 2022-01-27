@@ -24,6 +24,7 @@ func ActivityUpdateReq2Data(v *v1.ActivityUpdateReq) *ent.Activity {
 		RegDays:      v.RegDays,
 		CycleType:    v.CycleType,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -42,6 +43,7 @@ func ActivityData2UpdateReq(v *ent.Activity) *v1.ActivityUpdateReq {
 		RegDays:      v.RegDays,
 		CycleType:    v.CycleType,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -59,6 +61,7 @@ func ActivityCreateReq2Data(v *v1.ActivityCreateReq) *ent.Activity {
 		RegDays:      v.RegDays,
 		CycleType:    v.CycleType,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -76,6 +79,7 @@ func ActivityData2CreateReq(v *ent.Activity) *v1.ActivityCreateReq {
 		RegDays:      v.RegDays,
 		CycleType:    v.CycleType,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -93,6 +97,7 @@ func ActivityReq2Data(v *v1.ActivityReq) *ent.Activity {
 		RegDays:      v.RegDays,
 		CycleType:    v.CycleType,
 		EffectTime:   v.EffectTime.AsTime(),
+		ExpiredTime:  v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -110,6 +115,7 @@ func ActivityData2Req(v *ent.Activity) *v1.ActivityReq {
 		RegDays:      v.RegDays,
 		CycleType:    v.CycleType,
 		EffectTime:   timestamppb.New(v.EffectTime),
+		ExpiredTime:  timestamppb.New(v.ExpiredTime),
 	}
 }
 

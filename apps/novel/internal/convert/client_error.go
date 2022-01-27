@@ -19,6 +19,7 @@ func ClientErrorUpdateReq2Data(v *v1.ClientErrorUpdateReq) *ent.ClientError {
 		DeviceName: v.DeviceName,
 		OsName:     v.OsName,
 		ErrorInfo:  v.ErrorInfo,
+		UserId:     v.UserId,
 	}
 }
 
@@ -32,6 +33,7 @@ func ClientErrorData2UpdateReq(v *ent.ClientError) *v1.ClientErrorUpdateReq {
 		DeviceName: v.DeviceName,
 		OsName:     v.OsName,
 		ErrorInfo:  v.ErrorInfo,
+		UserId:     v.UserId,
 	}
 }
 
@@ -44,6 +46,7 @@ func ClientErrorCreateReq2Data(v *v1.ClientErrorCreateReq) *ent.ClientError {
 		DeviceName: v.DeviceName,
 		OsName:     v.OsName,
 		ErrorInfo:  v.ErrorInfo,
+		UserId:     v.UserId,
 	}
 }
 
@@ -56,6 +59,7 @@ func ClientErrorData2CreateReq(v *ent.ClientError) *v1.ClientErrorCreateReq {
 		DeviceName: v.DeviceName,
 		OsName:     v.OsName,
 		ErrorInfo:  v.ErrorInfo,
+		UserId:     v.UserId,
 	}
 }
 
@@ -68,6 +72,7 @@ func ClientErrorReq2Data(v *v1.ClientErrorReq) *ent.ClientError {
 		DeviceName: v.DeviceName,
 		OsName:     v.OsName,
 		ErrorInfo:  v.ErrorInfo,
+		UserId:     v.UserId,
 	}
 }
 
@@ -80,6 +85,7 @@ func ClientErrorData2Req(v *ent.ClientError) *v1.ClientErrorReq {
 		DeviceName: v.DeviceName,
 		OsName:     v.OsName,
 		ErrorInfo:  v.ErrorInfo,
+		UserId:     v.UserId,
 	}
 }
 

@@ -19,6 +19,7 @@ func NovelConsumeUpdateReq2Data(v *v1.NovelConsumeUpdateReq) *ent.NovelConsume {
 		Coin:     v.Coin,
 		Coupon:   v.Coupon,
 		Discount: v.Discount,
+		Reward:   v.Reward,
 	}
 }
 
@@ -32,6 +33,7 @@ func NovelConsumeData2UpdateReq(v *ent.NovelConsume) *v1.NovelConsumeUpdateReq {
 		Coin:     v.Coin,
 		Coupon:   v.Coupon,
 		Discount: v.Discount,
+		Reward:   v.Reward,
 	}
 }
 
@@ -44,6 +46,7 @@ func NovelConsumeCreateReq2Data(v *v1.NovelConsumeCreateReq) *ent.NovelConsume {
 		Coin:     v.Coin,
 		Coupon:   v.Coupon,
 		Discount: v.Discount,
+		Reward:   v.Reward,
 	}
 }
 
@@ -56,6 +59,7 @@ func NovelConsumeData2CreateReq(v *ent.NovelConsume) *v1.NovelConsumeCreateReq {
 		Coin:     v.Coin,
 		Coupon:   v.Coupon,
 		Discount: v.Discount,
+		Reward:   v.Reward,
 	}
 }
 
@@ -68,6 +72,7 @@ func NovelConsumeReq2Data(v *v1.NovelConsumeReq) *ent.NovelConsume {
 		Coin:     v.Coin,
 		Coupon:   v.Coupon,
 		Discount: v.Discount,
+		Reward:   v.Reward,
 	}
 }
 
@@ -80,6 +85,7 @@ func NovelConsumeData2Req(v *ent.NovelConsume) *v1.NovelConsumeReq {
 		Coin:     v.Coin,
 		Coupon:   v.Coupon,
 		Discount: v.Discount,
+		Reward:   v.Reward,
 	}
 }
 

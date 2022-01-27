@@ -14,7 +14,8 @@ func ResourceGroupUpdateReq2Data(v *v1.ResourceGroupUpdateReq) *ent.ResourceGrou
 		return nil
 	}
 	return &ent.ResourceGroup{
-		ID: v.Id,
+		ID:   v.Id,
+		Name: v.Name,
 	}
 }
 
@@ -23,7 +24,8 @@ func ResourceGroupData2UpdateReq(v *ent.ResourceGroup) *v1.ResourceGroupUpdateRe
 		return nil
 	}
 	return &v1.ResourceGroupUpdateReq{
-		Id: v.ID,
+		Id:   v.ID,
+		Name: v.Name,
 	}
 }
 
@@ -31,28 +33,36 @@ func ResourceGroupCreateReq2Data(v *v1.ResourceGroupCreateReq) *ent.ResourceGrou
 	if v == nil {
 		return nil
 	}
-	return &ent.ResourceGroup{}
+	return &ent.ResourceGroup{
+		Name: v.Name,
+	}
 }
 
 func ResourceGroupData2CreateReq(v *ent.ResourceGroup) *v1.ResourceGroupCreateReq {
 	if v == nil {
 		return nil
 	}
-	return &v1.ResourceGroupCreateReq{}
+	return &v1.ResourceGroupCreateReq{
+		Name: v.Name,
+	}
 }
 
 func ResourceGroupReq2Data(v *v1.ResourceGroupReq) *ent.ResourceGroup {
 	if v == nil {
 		return nil
 	}
-	return &ent.ResourceGroup{}
+	return &ent.ResourceGroup{
+		Name: v.Name,
+	}
 }
 
 func ResourceGroupData2Req(v *ent.ResourceGroup) *v1.ResourceGroupReq {
 	if v == nil {
 		return nil
 	}
-	return &v1.ResourceGroupReq{}
+	return &v1.ResourceGroupReq{
+		Name: v.Name,
+	}
 }
 
 func ResourceGroupData2Reply(v *ent.ResourceGroup) *v1.ResourceGroupData {

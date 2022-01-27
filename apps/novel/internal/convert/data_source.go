@@ -28,6 +28,7 @@ func DataSourceUpdateReq2Data(v *v1.DataSourceUpdateReq) *ent.DataSource {
 		ConnMaxLifeTime: v.ConnMaxLifeTime,
 		MaxIdleConns:    v.MaxIdleConns,
 		MaxOpenConns:    v.MaxOpenConns,
+		Remark:          v.Remark,
 	}
 }
 
@@ -49,6 +50,7 @@ func DataSourceData2UpdateReq(v *ent.DataSource) *v1.DataSourceUpdateReq {
 		ConnMaxLifeTime: v.ConnMaxLifeTime,
 		MaxIdleConns:    v.MaxIdleConns,
 		MaxOpenConns:    v.MaxOpenConns,
+		Remark:          v.Remark,
 	}
 }
 
@@ -69,6 +71,7 @@ func DataSourceCreateReq2Data(v *v1.DataSourceCreateReq) *ent.DataSource {
 		ConnMaxLifeTime: v.ConnMaxLifeTime,
 		MaxIdleConns:    v.MaxIdleConns,
 		MaxOpenConns:    v.MaxOpenConns,
+		Remark:          v.Remark,
 	}
 }
 
@@ -89,6 +92,7 @@ func DataSourceData2CreateReq(v *ent.DataSource) *v1.DataSourceCreateReq {
 		ConnMaxLifeTime: v.ConnMaxLifeTime,
 		MaxIdleConns:    v.MaxIdleConns,
 		MaxOpenConns:    v.MaxOpenConns,
+		Remark:          v.Remark,
 	}
 }
 
@@ -109,6 +113,7 @@ func DataSourceReq2Data(v *v1.DataSourceReq) *ent.DataSource {
 		ConnMaxLifeTime: v.ConnMaxLifeTime,
 		MaxIdleConns:    v.MaxIdleConns,
 		MaxOpenConns:    v.MaxOpenConns,
+		Remark:          v.Remark,
 	}
 }
 
@@ -129,6 +134,7 @@ func DataSourceData2Req(v *ent.DataSource) *v1.DataSourceReq {
 		ConnMaxLifeTime: v.ConnMaxLifeTime,
 		MaxIdleConns:    v.MaxIdleConns,
 		MaxOpenConns:    v.MaxOpenConns,
+		Remark:          v.Remark,
 	}
 }
 

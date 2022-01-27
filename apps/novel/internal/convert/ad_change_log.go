@@ -19,6 +19,7 @@ func AdChangeLogUpdateReq2Data(v *v1.AdChangeLogUpdateReq) *ent.AdChangeLog {
 		AdId:     v.AdId,
 		ChId:     v.ChId,
 		DeviceId: v.DeviceId,
+		ExtInfo:  v.ExtInfo,
 	}
 }
 
@@ -32,6 +33,7 @@ func AdChangeLogData2UpdateReq(v *ent.AdChangeLog) *v1.AdChangeLogUpdateReq {
 		AdId:     v.AdId,
 		ChId:     v.ChId,
 		DeviceId: v.DeviceId,
+		ExtInfo:  v.ExtInfo,
 	}
 }
 
@@ -44,6 +46,7 @@ func AdChangeLogCreateReq2Data(v *v1.AdChangeLogCreateReq) *ent.AdChangeLog {
 		AdId:     v.AdId,
 		ChId:     v.ChId,
 		DeviceId: v.DeviceId,
+		ExtInfo:  v.ExtInfo,
 	}
 }
 
@@ -56,6 +59,7 @@ func AdChangeLogData2CreateReq(v *ent.AdChangeLog) *v1.AdChangeLogCreateReq {
 		AdId:     v.AdId,
 		ChId:     v.ChId,
 		DeviceId: v.DeviceId,
+		ExtInfo:  v.ExtInfo,
 	}
 }
 
@@ -68,6 +72,7 @@ func AdChangeLogReq2Data(v *v1.AdChangeLogReq) *ent.AdChangeLog {
 		AdId:     v.AdId,
 		ChId:     v.ChId,
 		DeviceId: v.DeviceId,
+		ExtInfo:  v.ExtInfo,
 	}
 }
 
@@ -80,6 +85,7 @@ func AdChangeLogData2Req(v *ent.AdChangeLog) *v1.AdChangeLogReq {
 		AdId:     v.AdId,
 		ChId:     v.ChId,
 		DeviceId: v.DeviceId,
+		ExtInfo:  v.ExtInfo,
 	}
 }
 

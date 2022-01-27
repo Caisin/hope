@@ -29,6 +29,7 @@ func ActivityComponentUpdateReq2Data(v *v1.ActivityComponentUpdateReq) *ent.Acti
 		AssetItemId:   v.AssetItemId,
 		Amount:        v.Amount,
 		ResId:         v.ResId,
+		ResDays:       v.ResDays,
 	}
 }
 
@@ -52,6 +53,7 @@ func ActivityComponentData2UpdateReq(v *ent.ActivityComponent) *v1.ActivityCompo
 		AssetItemId:   v.AssetItemId,
 		Amount:        v.Amount,
 		ResId:         v.ResId,
+		ResDays:       v.ResDays,
 	}
 }
 
@@ -74,6 +76,7 @@ func ActivityComponentCreateReq2Data(v *v1.ActivityComponentCreateReq) *ent.Acti
 		AssetItemId:   v.AssetItemId,
 		Amount:        v.Amount,
 		ResId:         v.ResId,
+		ResDays:       v.ResDays,
 	}
 }
 
@@ -96,6 +99,7 @@ func ActivityComponentData2CreateReq(v *ent.ActivityComponent) *v1.ActivityCompo
 		AssetItemId:   v.AssetItemId,
 		Amount:        v.Amount,
 		ResId:         v.ResId,
+		ResDays:       v.ResDays,
 	}
 }
 
@@ -118,6 +122,7 @@ func ActivityComponentReq2Data(v *v1.ActivityComponentReq) *ent.ActivityComponen
 		AssetItemId:   v.AssetItemId,
 		Amount:        v.Amount,
 		ResId:         v.ResId,
+		ResDays:       v.ResDays,
 	}
 }
 
@@ -140,6 +145,7 @@ func ActivityComponentData2Req(v *ent.ActivityComponent) *v1.ActivityComponentRe
 		AssetItemId:   v.AssetItemId,
 		Amount:        v.Amount,
 		ResId:         v.ResId,
+		ResDays:       v.ResDays,
 	}
 }
 

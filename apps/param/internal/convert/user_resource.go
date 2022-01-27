@@ -18,6 +18,7 @@ func UserResourceUpdateReq2Data(v *v1.UserResourceUpdateReq) *ent.UserResource {
 		ResType: v.ResType,
 		Name:    v.Name,
 		URL:     v.Url,
+		Summary: v.Summary,
 	}
 }
 
@@ -30,6 +31,7 @@ func UserResourceData2UpdateReq(v *ent.UserResource) *v1.UserResourceUpdateReq {
 		ResType: v.ResType,
 		Name:    v.Name,
 		Url:     v.URL,
+		Summary: v.Summary,
 	}
 }
 
@@ -41,6 +43,7 @@ func UserResourceCreateReq2Data(v *v1.UserResourceCreateReq) *ent.UserResource {
 		ResType: v.ResType,
 		Name:    v.Name,
 		URL:     v.Url,
+		Summary: v.Summary,
 	}
 }
 
@@ -52,6 +55,7 @@ func UserResourceData2CreateReq(v *ent.UserResource) *v1.UserResourceCreateReq {
 		ResType: v.ResType,
 		Name:    v.Name,
 		Url:     v.URL,
+		Summary: v.Summary,
 	}
 }
 
@@ -63,6 +67,7 @@ func UserResourceReq2Data(v *v1.UserResourceReq) *ent.UserResource {
 		ResType: v.ResType,
 		Name:    v.Name,
 		URL:     v.Url,
+		Summary: v.Summary,
 	}
 }
 
@@ -74,6 +79,7 @@ func UserResourceData2Req(v *ent.UserResource) *v1.UserResourceReq {
 		ResType: v.ResType,
 		Name:    v.Name,
 		Url:     v.URL,
+		Summary: v.Summary,
 	}
 }
 

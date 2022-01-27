@@ -18,6 +18,7 @@ func SysDictTypeUpdateReq2Data(v *v1.SysDictTypeUpdateReq) *ent.SysDictType {
 		DictName: v.DictName,
 		TypeCode: v.TypeCode,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -30,6 +31,7 @@ func SysDictTypeData2UpdateReq(v *ent.SysDictType) *v1.SysDictTypeUpdateReq {
 		DictName: v.DictName,
 		TypeCode: v.TypeCode,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -41,6 +43,7 @@ func SysDictTypeCreateReq2Data(v *v1.SysDictTypeCreateReq) *ent.SysDictType {
 		DictName: v.DictName,
 		TypeCode: v.TypeCode,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -52,6 +55,7 @@ func SysDictTypeData2CreateReq(v *ent.SysDictType) *v1.SysDictTypeCreateReq {
 		DictName: v.DictName,
 		TypeCode: v.TypeCode,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -63,6 +67,7 @@ func SysDictTypeReq2Data(v *v1.SysDictTypeReq) *ent.SysDictType {
 		DictName: v.DictName,
 		TypeCode: v.TypeCode,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 
@@ -74,6 +79,7 @@ func SysDictTypeData2Req(v *ent.SysDictType) *v1.SysDictTypeReq {
 		DictName: v.DictName,
 		TypeCode: v.TypeCode,
 		Status:   v.Status,
+		Remark:   v.Remark,
 	}
 }
 

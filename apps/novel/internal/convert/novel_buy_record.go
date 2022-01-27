@@ -23,6 +23,7 @@ func NovelBuyRecordUpdateReq2Data(v *v1.NovelBuyRecordUpdateReq) *ent.NovelBuyRe
 		Cover:     v.Cover,
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
+		Remark:    v.Remark,
 	}
 }
 
@@ -40,6 +41,7 @@ func NovelBuyRecordData2UpdateReq(v *ent.NovelBuyRecord) *v1.NovelBuyRecordUpdat
 		Cover:     v.Cover,
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
+		Remark:    v.Remark,
 	}
 }
 
@@ -56,6 +58,7 @@ func NovelBuyRecordCreateReq2Data(v *v1.NovelBuyRecordCreateReq) *ent.NovelBuyRe
 		Cover:     v.Cover,
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
+		Remark:    v.Remark,
 	}
 }
 
@@ -72,6 +75,7 @@ func NovelBuyRecordData2CreateReq(v *ent.NovelBuyRecord) *v1.NovelBuyRecordCreat
 		Cover:     v.Cover,
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
+		Remark:    v.Remark,
 	}
 }
 
@@ -88,6 +92,7 @@ func NovelBuyRecordReq2Data(v *v1.NovelBuyRecordReq) *ent.NovelBuyRecord {
 		Cover:     v.Cover,
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
+		Remark:    v.Remark,
 	}
 }
 
@@ -104,6 +109,7 @@ func NovelBuyRecordData2Req(v *ent.NovelBuyRecord) *v1.NovelBuyRecordReq {
 		Cover:     v.Cover,
 		Coin:      v.Coin,
 		Coupon:    v.Coupon,
+		Remark:    v.Remark,
 	}
 }
 

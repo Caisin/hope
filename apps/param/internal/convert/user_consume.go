@@ -14,10 +14,11 @@ func UserConsumeUpdateReq2Data(v *v1.UserConsumeUpdateReq) *ent.UserConsume {
 		return nil
 	}
 	return &ent.UserConsume{
-		ID:      v.Id,
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
+		ID:       v.Id,
+		NovelId:  v.NovelId,
+		Coin:     v.Coin,
+		Coupon:   v.Coupon,
+		Discount: v.Discount,
 	}
 }
 
@@ -26,10 +27,11 @@ func UserConsumeData2UpdateReq(v *ent.UserConsume) *v1.UserConsumeUpdateReq {
 		return nil
 	}
 	return &v1.UserConsumeUpdateReq{
-		Id:      v.ID,
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
+		Id:       v.ID,
+		NovelId:  v.NovelId,
+		Coin:     v.Coin,
+		Coupon:   v.Coupon,
+		Discount: v.Discount,
 	}
 }
 
@@ -38,9 +40,10 @@ func UserConsumeCreateReq2Data(v *v1.UserConsumeCreateReq) *ent.UserConsume {
 		return nil
 	}
 	return &ent.UserConsume{
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
+		NovelId:  v.NovelId,
+		Coin:     v.Coin,
+		Coupon:   v.Coupon,
+		Discount: v.Discount,
 	}
 }
 
@@ -49,9 +52,10 @@ func UserConsumeData2CreateReq(v *ent.UserConsume) *v1.UserConsumeCreateReq {
 		return nil
 	}
 	return &v1.UserConsumeCreateReq{
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
+		NovelId:  v.NovelId,
+		Coin:     v.Coin,
+		Coupon:   v.Coupon,
+		Discount: v.Discount,
 	}
 }
 
@@ -60,9 +64,10 @@ func UserConsumeReq2Data(v *v1.UserConsumeReq) *ent.UserConsume {
 		return nil
 	}
 	return &ent.UserConsume{
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
+		NovelId:  v.NovelId,
+		Coin:     v.Coin,
+		Coupon:   v.Coupon,
+		Discount: v.Discount,
 	}
 }
 
@@ -71,9 +76,10 @@ func UserConsumeData2Req(v *ent.UserConsume) *v1.UserConsumeReq {
 		return nil
 	}
 	return &v1.UserConsumeReq{
-		NovelId: v.NovelId,
-		Coin:    v.Coin,
-		Coupon:  v.Coupon,
+		NovelId:  v.NovelId,
+		Coin:     v.Coin,
+		Coupon:   v.Coupon,
+		Discount: v.Discount,
 	}
 }
 

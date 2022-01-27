@@ -41,6 +41,7 @@ func NovelUpdateReq2Data(v *v1.NovelUpdateReq) *ent.Novel {
 		LeadingMan:    v.LeadingMan,
 		LeadingLady:   v.LeadingLady,
 		Remark:        v.Remark,
+		MediaKey:      v.MediaKey,
 	}
 }
 
@@ -76,6 +77,7 @@ func NovelData2UpdateReq(v *ent.Novel) *v1.NovelUpdateReq {
 		LeadingMan:    v.LeadingMan,
 		LeadingLady:   v.LeadingLady,
 		Remark:        v.Remark,
+		MediaKey:      v.MediaKey,
 	}
 }
 
@@ -110,6 +112,7 @@ func NovelCreateReq2Data(v *v1.NovelCreateReq) *ent.Novel {
 		LeadingMan:    v.LeadingMan,
 		LeadingLady:   v.LeadingLady,
 		Remark:        v.Remark,
+		MediaKey:      v.MediaKey,
 	}
 }
 
@@ -144,6 +147,7 @@ func NovelData2CreateReq(v *ent.Novel) *v1.NovelCreateReq {
 		LeadingMan:    v.LeadingMan,
 		LeadingLady:   v.LeadingLady,
 		Remark:        v.Remark,
+		MediaKey:      v.MediaKey,
 	}
 }
 
@@ -178,6 +182,7 @@ func NovelReq2Data(v *v1.NovelReq) *ent.Novel {
 		LeadingMan:    v.LeadingMan,
 		LeadingLady:   v.LeadingLady,
 		Remark:        v.Remark,
+		MediaKey:      v.MediaKey,
 	}
 }
 
@@ -212,6 +217,7 @@ func NovelData2Req(v *ent.Novel) *v1.NovelReq {
 		LeadingMan:    v.LeadingMan,
 		LeadingLady:   v.LeadingLady,
 		Remark:        v.Remark,
+		MediaKey:      v.MediaKey,
 	}
 }
 

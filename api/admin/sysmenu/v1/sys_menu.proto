@@ -97,16 +97,20 @@ message SysMenuData {
     string frameSrc = 18;
     //状态:U:使用,E:失效
     string state = 19;
+    //是否校验权限
+    bool checkPermission = 20;
+    //操作资源
+    string operation = 21;
     //创建时间
-    google.protobuf.Timestamp createdAt = 20;
+    google.protobuf.Timestamp createdAt = 22;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 21;
+    google.protobuf.Timestamp updatedAt = 23;
     //创建者
-    int64 createBy = 22;
+    int64 createBy = 24;
     //更新者
-    int64 updateBy = 23;
+    int64 updateBy = 25;
     //租户
-    int64 tenantId = 24;
+    int64 tenantId = 26;
 
 }
 
@@ -170,16 +174,20 @@ message SysMenuReq {
     string frameSrc = 18;
     //状态:U:使用,E:失效
     string state = 19;
+    //是否校验权限
+    bool checkPermission = 20;
+    //操作资源
+    string operation = 21;
     //创建时间
-    google.protobuf.Timestamp createdAt = 20;
+    google.protobuf.Timestamp createdAt = 22;
     //更新时间
-    google.protobuf.Timestamp updatedAt = 21;
+    google.protobuf.Timestamp updatedAt = 23;
     //创建者
-    int64 createBy = 22;
+    int64 createBy = 24;
     //更新者
-    int64 updateBy = 23;
+    int64 updateBy = 25;
     //租户
-    int64 tenantId = 24;
+    int64 tenantId = 26;
 
 }
 
@@ -231,6 +239,10 @@ message SysMenuCreateReq {
     string frameSrc = 17;
     //状态:U:使用,E:失效
     string state = 18;
+    //是否校验权限
+    bool checkPermission = 19;
+    //操作资源
+    string operation = 20;
 
 }
 
@@ -283,6 +295,10 @@ message SysMenuUpdateReq {
     string frameSrc = 18;
     //状态:U:使用,E:失效
     string state = 19;
+    //是否校验权限
+    bool checkPermission = 20;
+    //操作资源
+    string operation = 21;
 
 }
 

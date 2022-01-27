@@ -11,6 +11,7 @@ import (
 	"hope/pkg/util/str"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"text/template"
 	"time"
@@ -278,12 +279,12 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
                        menu_type, action, permission, component, sort,
                        created_at, updated_at, create_by, update_by, tenant_id,
                        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
-                       hide_children_in_menu, hide_menu, frame_src)
+                       hide_children_in_menu, hide_menu, frame_src, operation)
 VALUES (%d, '%s', null, '/%s', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
         %d, '%s', null, null, null,
-        null, null, null);
+        null, null, null, '');
 `,
 		id, mod+"管理", mod,
 		"D", "", "Layout",
@@ -303,6 +304,13 @@ VALUES (%d, '%s', null, '/%s', '/',
 		path := str.LeftLower(sc.Name)
 		basePerm := str.Camel2Split(name, ":")
 		component := fmt.Sprintf("/%s/%s/index", mod, lwName)
+		pkg := strings.ToLower(name)
+		delOpera := fmt.Sprintf("/%s.v1.%s/Delete%s", pkg, name, name)
+		batchDelOpera := fmt.Sprintf("/%s.v1.%s/BatchDelete%s", pkg, name, name)
+		updateOpera := fmt.Sprintf("/%s.v1.%s/Update%s", pkg, name, name)
+		pageOpera := fmt.Sprintf("/%s.v1.%s/Get%sPage", pkg, name, name)
+		getOpera := fmt.Sprintf("/%s.v1.%s/Get%s", pkg, name, name)
+		createOpera := fmt.Sprintf("/%s.v1.%s/Create%s", pkg, name, name)
 		id++
 		fpId := id
 		query := fmt.Sprintf(`
@@ -310,17 +318,17 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
                        menu_type, action, permission, component, sort,
                        created_at, updated_at, create_by, update_by, tenant_id,
                        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
-                       hide_children_in_menu, hide_menu, frame_src)
+                       hide_children_in_menu, hide_menu, frame_src, operation)
 VALUES (%d, '%s', null, '/%s/%s', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
         %d, '%s', '', null, null,
-        null, null, null);
+        null, null, null, '%s');
 `,
 			id, title+"管理", mod, path,
 			"M", basePerm+":query", component,
 			now, now,
-			pId, name,
+			pId, name, pageOpera,
 		)
 		bf.WriteString(query)
 		id++
@@ -329,17 +337,17 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
                        menu_type, action, permission, component, sort,
                        created_at, updated_at, create_by, update_by, tenant_id,
                        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
-                       hide_children_in_menu, hide_menu, frame_src)
+                       hide_children_in_menu, hide_menu, frame_src, operation)
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
         %d, '%s', '', null, null,
-        null, null, null);
+        null, null, null, '%s');
 `,
 			id, title+"新增",
 			"F", basePerm+":create", "",
 			now, now,
-			fpId, "",
+			fpId, "", createOpera,
 		)
 		bf.WriteString(create)
 		id++
@@ -348,17 +356,18 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
                        menu_type, action, permission, component, sort,
                        created_at, updated_at, create_by, update_by, tenant_id,
                        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
-                       hide_children_in_menu, hide_menu, frame_src)
+                       hide_children_in_menu, hide_menu, frame_src, operation)
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
         %d, '', '', null, null,
-        null, null, null);
+        null, null, null, '%s');
 `,
 			id, title+"删除",
 			"F", basePerm+":delete", "",
 			now, now,
 			fpId,
+			delOpera,
 		)
 		bf.WriteString(del)
 		id++
@@ -367,17 +376,18 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
                        menu_type, action, permission, component, sort,
                        created_at, updated_at, create_by, update_by, tenant_id,
                        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
-                       hide_children_in_menu, hide_menu, frame_src)
+                       hide_children_in_menu, hide_menu, frame_src, operation)
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
         %d, '', '', null, null,
-        null, null, null);
+        null, null, null,'%s');
 `,
 			id, title+"批量删除",
 			"F", basePerm+":batchDelete", "",
 			now, now,
 			fpId,
+			batchDelOpera,
 		)
 		bf.WriteString(batchDelete)
 		id++
@@ -386,20 +396,40 @@ INSERT INTO sys_menus (id, title, icon, path, paths,
                        menu_type, action, permission, component, sort,
                        created_at, updated_at, create_by, update_by, tenant_id,
                        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
-                       hide_children_in_menu, hide_menu, frame_src)
+                       hide_children_in_menu, hide_menu, frame_src, operation)
 VALUES (%d, '%s', null, '', '/',
         '%s', null, '%s', '%s', null,
         '%s', '%s', 1, 1, 1,
         %d, '', '', null, null,
-        null, null, null);
+        null, null, null, '%s');
 `,
 			id, title+"修改",
 			"F", basePerm+":update", "",
 			now, now,
 			fpId,
+			updateOpera,
 		)
 		bf.WriteString(update)
-
+		id++
+		get := fmt.Sprintf(`
+INSERT INTO sys_menus (id, title, icon, path, paths,
+                       menu_type, action, permission, component, sort,
+                       created_at, updated_at, create_by, update_by, tenant_id,
+                       parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
+                       hide_children_in_menu, hide_menu, frame_src, operation)
+VALUES (%d, '%s', null, '', '/',
+        '%s', null, '%s', '%s', null,
+        '%s', '%s', 1, 1, 1,
+        %d, '', '', null, null,
+        null, null, null, '%s');
+`,
+			id, title+"详情",
+			"F", basePerm+":get", "",
+			now, now,
+			fpId,
+			getOpera,
+		)
+		bf.WriteString(get)
 	}
 	return id
 }

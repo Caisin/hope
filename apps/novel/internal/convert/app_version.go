@@ -19,6 +19,7 @@ func AppVersionUpdateReq2Data(v *v1.AppVersionUpdateReq) *ent.AppVersion {
 		Version:     v.Version,
 		UpdateInfo:  v.UpdateInfo,
 		DownloadUrl: v.DownloadUrl,
+		Platform:    v.Platform,
 	}
 }
 
@@ -32,6 +33,7 @@ func AppVersionData2UpdateReq(v *ent.AppVersion) *v1.AppVersionUpdateReq {
 		Version:     v.Version,
 		UpdateInfo:  v.UpdateInfo,
 		DownloadUrl: v.DownloadUrl,
+		Platform:    v.Platform,
 	}
 }
 
@@ -44,6 +46,7 @@ func AppVersionCreateReq2Data(v *v1.AppVersionCreateReq) *ent.AppVersion {
 		Version:     v.Version,
 		UpdateInfo:  v.UpdateInfo,
 		DownloadUrl: v.DownloadUrl,
+		Platform:    v.Platform,
 	}
 }
 
@@ -56,6 +59,7 @@ func AppVersionData2CreateReq(v *ent.AppVersion) *v1.AppVersionCreateReq {
 		Version:     v.Version,
 		UpdateInfo:  v.UpdateInfo,
 		DownloadUrl: v.DownloadUrl,
+		Platform:    v.Platform,
 	}
 }
 
@@ -68,6 +72,7 @@ func AppVersionReq2Data(v *v1.AppVersionReq) *ent.AppVersion {
 		Version:     v.Version,
 		UpdateInfo:  v.UpdateInfo,
 		DownloadUrl: v.DownloadUrl,
+		Platform:    v.Platform,
 	}
 }
 
@@ -80,6 +85,7 @@ func AppVersionData2Req(v *ent.AppVersion) *v1.AppVersionReq {
 		Version:     v.Version,
 		UpdateInfo:  v.UpdateInfo,
 		DownloadUrl: v.DownloadUrl,
+		Platform:    v.Platform,
 	}
 }
 

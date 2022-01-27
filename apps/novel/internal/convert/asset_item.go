@@ -20,6 +20,7 @@ func AssetItemUpdateReq2Data(v *v1.AssetItemUpdateReq) *ent.AssetItem {
 		CashTag:     v.CashTag,
 		ValidDays:   v.ValidDays,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -34,6 +35,7 @@ func AssetItemData2UpdateReq(v *ent.AssetItem) *v1.AssetItemUpdateReq {
 		CashTag:     v.CashTag,
 		ValidDays:   v.ValidDays,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -47,6 +49,7 @@ func AssetItemCreateReq2Data(v *v1.AssetItemCreateReq) *ent.AssetItem {
 		CashTag:     v.CashTag,
 		ValidDays:   v.ValidDays,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -60,6 +63,7 @@ func AssetItemData2CreateReq(v *ent.AssetItem) *v1.AssetItemCreateReq {
 		CashTag:     v.CashTag,
 		ValidDays:   v.ValidDays,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 
@@ -73,6 +77,7 @@ func AssetItemReq2Data(v *v1.AssetItemReq) *ent.AssetItem {
 		CashTag:     v.CashTag,
 		ValidDays:   v.ValidDays,
 		EffectTime:  v.EffectTime.AsTime(),
+		ExpiredTime: v.ExpiredTime.AsTime(),
 	}
 }
 
@@ -86,6 +91,7 @@ func AssetItemData2Req(v *ent.AssetItem) *v1.AssetItemReq {
 		CashTag:     v.CashTag,
 		ValidDays:   v.ValidDays,
 		EffectTime:  timestamppb.New(v.EffectTime),
+		ExpiredTime: timestamppb.New(v.ExpiredTime),
 	}
 }
 

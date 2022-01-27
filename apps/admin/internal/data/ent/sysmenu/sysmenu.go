@@ -48,6 +48,10 @@ const (
 	FieldFrameSrc = "frame_src"
 	// FieldState holds the string denoting the state field in the database.
 	FieldState = "state"
+	// FieldCheckPermission holds the string denoting the checkpermission field in the database.
+	FieldCheckPermission = "check_permission"
+	// FieldOperation holds the string denoting the operation field in the database.
+	FieldOperation = "operation"
 	// FieldCreatedAt holds the string denoting the createdat field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updatedat field in the database.
@@ -102,6 +106,8 @@ var Columns = []string{
 	FieldHideMenu,
 	FieldFrameSrc,
 	FieldState,
+	FieldCheckPermission,
+	FieldOperation,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldCreateBy,
@@ -128,6 +134,8 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultParentId holds the default value on creation for the "parentId" field.
 	DefaultParentId int64
+	// DefaultCheckPermission holds the default value on creation for the "checkPermission" field.
+	DefaultCheckPermission bool
 	// DefaultCreatedAt holds the default value on creation for the "createdAt" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updatedAt" field.

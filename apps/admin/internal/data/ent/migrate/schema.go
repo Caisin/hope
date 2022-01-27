@@ -261,6 +261,8 @@ var (
 		{Name: "hide_menu", Type: field.TypeBool, Nullable: true},
 		{Name: "frame_src", Type: field.TypeString, Nullable: true},
 		{Name: "state", Type: field.TypeEnum, Enums: []string{"U", "E"}, Default: "U"},
+		{Name: "check_permission", Type: field.TypeBool, Default: true},
+		{Name: "operation", Type: field.TypeString},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},
@@ -276,7 +278,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_menus_sys_menus_children",
-				Columns:    []*schema.Column{SysMenusColumns[23]},
+				Columns:    []*schema.Column{SysMenusColumns[25]},
 				RefColumns: []*schema.Column{SysMenusColumns[0]},
 				OnDelete:   schema.SetNull,
 			},

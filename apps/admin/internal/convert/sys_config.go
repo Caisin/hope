@@ -22,6 +22,7 @@ func SysConfigUpdateReq2Data(v *v1.SysConfigUpdateReq) *ent.SysConfig {
 		ConfigType:  v.ConfigType,
 		IsFrontend:  v.IsFrontend,
 		State:       sysconfig.State(v.State),
+		Remark:      v.Remark,
 	}
 }
 
@@ -37,6 +38,7 @@ func SysConfigData2UpdateReq(v *ent.SysConfig) *v1.SysConfigUpdateReq {
 		ConfigType:  v.ConfigType,
 		IsFrontend:  v.IsFrontend,
 		State:       string(v.State),
+		Remark:      v.Remark,
 	}
 }
 
@@ -51,6 +53,7 @@ func SysConfigCreateReq2Data(v *v1.SysConfigCreateReq) *ent.SysConfig {
 		ConfigType:  v.ConfigType,
 		IsFrontend:  v.IsFrontend,
 		State:       sysconfig.State(v.State),
+		Remark:      v.Remark,
 	}
 }
 
@@ -65,6 +68,7 @@ func SysConfigData2CreateReq(v *ent.SysConfig) *v1.SysConfigCreateReq {
 		ConfigType:  v.ConfigType,
 		IsFrontend:  v.IsFrontend,
 		State:       string(v.State),
+		Remark:      v.Remark,
 	}
 }
 
@@ -79,6 +83,7 @@ func SysConfigReq2Data(v *v1.SysConfigReq) *ent.SysConfig {
 		ConfigType:  v.ConfigType,
 		IsFrontend:  v.IsFrontend,
 		State:       sysconfig.State(v.State),
+		Remark:      v.Remark,
 	}
 }
 
@@ -93,6 +98,7 @@ func SysConfigData2Req(v *ent.SysConfig) *v1.SysConfigReq {
 		ConfigType:  v.ConfigType,
 		IsFrontend:  v.IsFrontend,
 		State:       string(v.State),
+		Remark:      v.Remark,
 	}
 }
 

@@ -20,6 +20,7 @@ func QiniuConfigUpdateReq2Data(v *v1.QiniuConfigUpdateReq) *ent.QiniuConfig {
 		Host:      v.Host,
 		SecretKey: v.SecretKey,
 		Type:      v.Type,
+		Zone:      v.Zone,
 	}
 }
 
@@ -34,6 +35,7 @@ func QiniuConfigData2UpdateReq(v *ent.QiniuConfig) *v1.QiniuConfigUpdateReq {
 		Host:      v.Host,
 		SecretKey: v.SecretKey,
 		Type:      v.Type,
+		Zone:      v.Zone,
 	}
 }
 
@@ -47,6 +49,7 @@ func QiniuConfigCreateReq2Data(v *v1.QiniuConfigCreateReq) *ent.QiniuConfig {
 		Host:      v.Host,
 		SecretKey: v.SecretKey,
 		Type:      v.Type,
+		Zone:      v.Zone,
 	}
 }
 
@@ -60,6 +63,7 @@ func QiniuConfigData2CreateReq(v *ent.QiniuConfig) *v1.QiniuConfigCreateReq {
 		Host:      v.Host,
 		SecretKey: v.SecretKey,
 		Type:      v.Type,
+		Zone:      v.Zone,
 	}
 }
 
@@ -73,6 +77,7 @@ func QiniuConfigReq2Data(v *v1.QiniuConfigReq) *ent.QiniuConfig {
 		Host:      v.Host,
 		SecretKey: v.SecretKey,
 		Type:      v.Type,
+		Zone:      v.Zone,
 	}
 }
 
@@ -86,6 +91,7 @@ func QiniuConfigData2Req(v *ent.QiniuConfig) *v1.QiniuConfigReq {
 		Host:      v.Host,
 		SecretKey: v.SecretKey,
 		Type:      v.Type,
+		Zone:      v.Zone,
 	}
 }
 

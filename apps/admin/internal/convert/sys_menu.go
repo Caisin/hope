@@ -7,6 +7,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	v1 "hope/api/admin/sysmenu/v1"
 	"hope/apps/admin/internal/data/ent"
+	"hope/apps/admin/internal/data/ent/sysmenu"
 )
 
 func SysMenuUpdateReq2Data(v *v1.SysMenuUpdateReq) *ent.SysMenu {
@@ -32,6 +33,9 @@ func SysMenuUpdateReq2Data(v *v1.SysMenuUpdateReq) *ent.SysMenu {
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
+		State:              sysmenu.State(v.State),
+		CheckPermission:    v.CheckPermission,
+		Operation:          v.Operation,
 	}
 }
 
@@ -58,6 +62,9 @@ func SysMenuData2UpdateReq(v *ent.SysMenu) *v1.SysMenuUpdateReq {
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
+		State:              string(v.State),
+		CheckPermission:    v.CheckPermission,
+		Operation:          v.Operation,
 	}
 }
 
@@ -83,6 +90,9 @@ func SysMenuCreateReq2Data(v *v1.SysMenuCreateReq) *ent.SysMenu {
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
+		State:              sysmenu.State(v.State),
+		CheckPermission:    v.CheckPermission,
+		Operation:          v.Operation,
 	}
 }
 
@@ -108,6 +118,9 @@ func SysMenuData2CreateReq(v *ent.SysMenu) *v1.SysMenuCreateReq {
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
+		State:              string(v.State),
+		CheckPermission:    v.CheckPermission,
+		Operation:          v.Operation,
 	}
 }
 
@@ -133,6 +146,9 @@ func SysMenuReq2Data(v *v1.SysMenuReq) *ent.SysMenu {
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
+		State:              sysmenu.State(v.State),
+		CheckPermission:    v.CheckPermission,
+		Operation:          v.Operation,
 	}
 }
 
@@ -158,6 +174,9 @@ func SysMenuData2Req(v *ent.SysMenu) *v1.SysMenuReq {
 		Sort:               v.Sort,
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
+		State:              string(v.State),
+		CheckPermission:    v.CheckPermission,
+		Operation:          v.Operation,
 	}
 }
 
@@ -185,6 +204,8 @@ func SysMenuData2Reply(v *ent.SysMenu) *v1.SysMenuData {
 		HideMenu:           v.HideMenu,
 		FrameSrc:           v.FrameSrc,
 		State:              string(v.State),
+		CheckPermission:    v.CheckPermission,
+		Operation:          v.Operation,
 		CreatedAt:          timestamppb.New(v.CreatedAt),
 		UpdatedAt:          timestamppb.New(v.UpdatedAt),
 		CreateBy:           v.CreateBy,

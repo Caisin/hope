@@ -14,8 +14,9 @@ func NovelAutoBuyUpdateReq2Data(v *v1.NovelAutoBuyUpdateReq) *ent.NovelAutoBuy {
 		return nil
 	}
 	return &ent.NovelAutoBuy{
-		ID:     v.Id,
-		UserId: v.UserId,
+		ID:      v.Id,
+		UserId:  v.UserId,
+		NovelId: v.NovelId,
 	}
 }
 
@@ -24,8 +25,9 @@ func NovelAutoBuyData2UpdateReq(v *ent.NovelAutoBuy) *v1.NovelAutoBuyUpdateReq {
 		return nil
 	}
 	return &v1.NovelAutoBuyUpdateReq{
-		Id:     v.ID,
-		UserId: v.UserId,
+		Id:      v.ID,
+		UserId:  v.UserId,
+		NovelId: v.NovelId,
 	}
 }
 
@@ -34,7 +36,8 @@ func NovelAutoBuyCreateReq2Data(v *v1.NovelAutoBuyCreateReq) *ent.NovelAutoBuy {
 		return nil
 	}
 	return &ent.NovelAutoBuy{
-		UserId: v.UserId,
+		UserId:  v.UserId,
+		NovelId: v.NovelId,
 	}
 }
 
@@ -43,7 +46,8 @@ func NovelAutoBuyData2CreateReq(v *ent.NovelAutoBuy) *v1.NovelAutoBuyCreateReq {
 		return nil
 	}
 	return &v1.NovelAutoBuyCreateReq{
-		UserId: v.UserId,
+		UserId:  v.UserId,
+		NovelId: v.NovelId,
 	}
 }
 
@@ -52,7 +56,8 @@ func NovelAutoBuyReq2Data(v *v1.NovelAutoBuyReq) *ent.NovelAutoBuy {
 		return nil
 	}
 	return &ent.NovelAutoBuy{
-		UserId: v.UserId,
+		UserId:  v.UserId,
+		NovelId: v.NovelId,
 	}
 }
 
@@ -61,7 +66,8 @@ func NovelAutoBuyData2Req(v *ent.NovelAutoBuy) *v1.NovelAutoBuyReq {
 		return nil
 	}
 	return &v1.NovelAutoBuyReq{
-		UserId: v.UserId,
+		UserId:  v.UserId,
+		NovelId: v.NovelId,
 	}
 }
 

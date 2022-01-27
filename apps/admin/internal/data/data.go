@@ -11,6 +11,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
+	"hope/apps/admin/internal/cache"
 	"hope/apps/admin/internal/conf"
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/migrate"
@@ -85,6 +86,12 @@ func NewData(entClient *ent.Client, rdb *redis.Client, logger log.Logger) (*Data
 		db:  entClient,
 		log: helper,
 		rdb: rdb,
+	}
+	//初始化缓存
+	err := cache.InitPermission(context.Background(), rdb, entClient)
+	if err != nil {
+		helper.Error(err)
+		return nil, nil, err
 	}
 	return d, func() {
 		if err := d.db.Close(); err != nil {

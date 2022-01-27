@@ -142,6 +142,8 @@ func (r *authRepo) GetPermCode(ctx context.Context, req *v1.GetPermReq) (*v1.Get
 			}
 			for _, menu := range menus {
 				set.Add(menu.Permission)
+				//设置用户权限
+				auth.SetPer(ctx, r.data.rdb, user.ID, menu.ID)
 			}
 		}
 	}

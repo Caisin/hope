@@ -40,6 +40,9 @@ func MatchPer(hasPerms []string, target string) bool {
 // 1.系统启动,加载operation和权限编码的映射
 // 2.用户登陆,刷新和设置用户权限编码是否有权限,通过Redis setBit方法实现
 // 3.根据operation渠道权限编码,通过Redis getBit 去对应编码的值,判断是否有当前权限
+func genPermKeyByUser(userId int64) string {
+	return fmt.Sprintf("user_perm:%d", userId)
+}
 
 // HasOperationPer 根据operation判断权限
 func HasOperationPer(ctx context.Context, rdc *redis.Client, opera string) bool {
@@ -54,7 +57,15 @@ func HasOperationPer(ctx context.Context, rdc *redis.Client, opera string) bool 
 		return false
 	}
 	userId := claims.UserId
-	return bitop.GetBit(ctx, rdc, fmt.Sprintf("user_perm:%d", userId), id) == 1
+	if userId == 1 {
+		return true
+	}
+	return bitop.GetBit(ctx, rdc, genPermKeyByUser(userId), id) == 1
+}
+
+// SetPer 设置用权限缓存
+func SetPer(ctx context.Context, rdc *redis.Client, userId, perId int64) int64 {
+	return bitop.SetBit(ctx, rdc, genPermKeyByUser(userId), perId, 1)
 }
 
 func GetIdByOper(oper string) int64 {
@@ -77,7 +88,14 @@ func RefreshFromRedis(ctx context.Context, rdc *redis.Client) {
 
 }
 
-func SetPermissionMappingToRedis(ctx context.Context, rdc *redis.Client, permMapping, operMapping map[string]int64) {
+// SetPermissionMappingToRedis 设置权限到缓存
+func SetPermissionMappingToRedis(
+	ctx context.Context,
+	rdc *redis.Client,
+	permMapping,
+	operMapping map[string]int64,
+	whiteList map[int64]bool,
+) {
 	mutex.Lock()
 	defer mutex.Unlock()
 	rediscache.SetJson(ctx, rdc, permMappingKey, permMapping, -1)

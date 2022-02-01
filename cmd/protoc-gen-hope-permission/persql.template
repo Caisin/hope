@@ -1,0 +1,18 @@
+{{range .Services}}
+    {{$srvName :=.Desc.FullName}}
+    {{.Desc}}
+    {{.GoName}}
+    {{ range .Methods}}
+        Desc:{{.Desc}}
+        GoName:{{.GoName}}
+        Parent:{{.Parent}}
+        Input:{{.Input}}
+        Output:{{.Output}}
+        Location:{{.Location}}
+        Comments:{{tc .Comments.Leading}} {{tc .Comments.Trailing}}
+        Operation:/{{$srvName}}/{{.GoName}}
+    {{end}}
+    {{.Location}}
+    {{.Comments.Leading}} {{.Comments.Trailing}}
+{{end}}
+

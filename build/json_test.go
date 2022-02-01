@@ -92,8 +92,8 @@ func TestAdmin(t *testing.T) {
 	os.MkdirAll(target, os.ModePerm)
 	defer os.RemoveAll(target)
 	storage, _ := gen.NewStorage("sql")
-	projectPath := "D:/work/code/go/hope"
-	admPath := "D:/work/code/vue/vue-vben-admin"
+	projectPath := "/Users/caisin/study/code/go/hope"
+	admPath := "/Users/caisin/study/code/vue/hope-admin"
 	prods := []string{"admin", "param", "novel"}
 	funcMap := template.FuncMap{
 		"tsType":             tsType,

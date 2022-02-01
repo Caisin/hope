@@ -1,10 +1,11 @@
 module hope
 
-go 1.17
+go 1.18
 
 //直接依赖
 require (
 	entgo.io/ent v0.9.1
+	github.com/deckarep/golang-set v1.8.0
 	github.com/go-kratos/kratos/contrib/metrics/prometheus/v2 v2.0.0-20220121075225-a87abe223c18
 	github.com/go-kratos/kratos/v2 v2.1.5
 	github.com/go-kratos/swagger-api v1.0.1
@@ -16,8 +17,10 @@ require (
 	github.com/gorilla/handlers v1.5.1
 	github.com/prometheus/client_golang v1.9.0
 	github.com/shamsher31/goimgext v1.0.0
+	github.com/spf13/cast v1.3.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.3.0
 	go.opentelemetry.io/otel/sdk v1.3.0
+	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	google.golang.org/genproto v0.0.0-20220118154757-00ab72f36ad5
 	google.golang.org/grpc v1.43.0
 	google.golang.org/protobuf v1.27.1
@@ -67,10 +70,4 @@ require (
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
-)
-
-require (
-	github.com/deckarep/golang-set v1.8.0
-	github.com/spf13/cast v1.3.0
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 )

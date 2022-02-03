@@ -13,18 +13,20 @@ import (
 )
 
 var (
-	tmpPath string
+	tmpPath     string
+	outFileName string
 )
 
 //--hope-permission_out=./out
 //protoc 通过 --foo_out 搜索插件 可执行文件 protoc-gen-hope-permission，
 //也可使用参数 protoc --plugin=protoc-gen-hope-permission=D:/work/code/go/hope/cmd/protoc-gen-hope-permission/protoc-gen-hope-permission 指定插件位置
 //示例参数 protoc  -I .  auth.proto --hope-permission_out=.  --proto_path=D:\work\code\go\hope\api\admin\auth\v1 --proto_path=D:\work\code\go\hope\third_party
-//示例参数 protoc --plugin=protoc-gen-hope-permission -I .  auth.proto --hope-permission_out=tmpPath=persql.template:.  --proto_path=/Users/caisin/study/code/go/hope/api/admin/auth/v1 --proto_path=/Users/caisin/study/code/go/hope/third_party
+//示例参数 protoc --plugin=protoc-gen-hope-permission -I .  auth.proto --hope-permission_out=tmpPath=persql.gohtml:.  --proto_path=/Users/caisin/study/code/go/hope/api/admin/auth/v1 --proto_path=/Users/caisin/study/code/go/hope/third_party
 func main() {
 
 	var flags flag.FlagSet
-	flags.StringVar(&tmpPath, "tmpPath", "tp.template", "模板文件路径")
+	flags.StringVar(&tmpPath, "tmpPath", "tp.gohtml", "模板文件路径")
+	flags.StringVar(&outFileName, "outFileName", "out.txt", "模板文件路径")
 
 	protogen.Options{
 		ParamFunc: flags.Set,
@@ -32,7 +34,7 @@ func main() {
 		p := tmpPath
 		println(tmpPath)
 		if str.IsBlank(p) {
-			return errors.New("template path is empty!")
+			return errors.New("template path is empty")
 		}
 		if !file.FileIsExisted(p) {
 			return errors.New(fmt.Sprintf("template file [%s] is not exits!\n", p))
@@ -49,7 +51,7 @@ func main() {
 			if len(f.Services) == 0 {
 				continue
 			}
-			g := gen.NewGeneratedFile(f.GeneratedFilenamePrefix+"/permission.txt", f.GoImportPath)
+			g := gen.NewGeneratedFile(f.GeneratedFilenamePrefix+"/"+outFileName, f.GoImportPath)
 			err = parse.Execute(g, f)
 			if err != nil {
 				return err

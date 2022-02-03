@@ -1,0 +1,16 @@
+{{- range .Services}}
+    {{- $srvName :=.Desc.FullName}}
+    {{-  range .Methods}}
+        INSERT INTO sys_menus (title, icon, path, paths,
+        menu_type, action, permission, component, sort,
+        created_at, updated_at, create_by, update_by, tenant_id,
+        parent_id, name, redirect, ignore_keep_alive, hide_breadcrumb,
+        hide_children_in_menu, hide_menu, frame_src, operation)
+        VALUES ('{{tc .Comments.Leading}}', null, '', '',
+        'F', null, '', '', null,
+        sysdate(), sysdate(), 1, 1, 1,
+        0, '', '', null, null,
+        null, null, null, '/{{$srvName}}/{{.GoName}}');
+    {{end}}
+{{end}}
+

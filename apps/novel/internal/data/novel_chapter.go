@@ -144,16 +144,16 @@ func (r *novelChapterRepo) genCondition(req *v1.NovelChapterReq) []predicate.Nov
 	if req.OrderNum > 0 {
 		list = append(list, novelchapter.OrderNum(req.OrderNum))
 	}
-	if str.IsBlank(req.ChapterName) {
+	if str.IsNotBlank(req.ChapterName) {
 		list = append(list, novelchapter.ChapterNameContains(req.ChapterName))
 	}
-	if str.IsBlank(req.Content) {
+	if str.IsNotBlank(req.Content) {
 		list = append(list, novelchapter.ContentContains(req.Content))
 	}
-	if str.IsBlank(req.MediaKey) {
+	if str.IsNotBlank(req.MediaKey) {
 		list = append(list, novelchapter.MediaKeyContains(req.MediaKey))
 	}
-	if str.IsBlank(req.Duration) {
+	if str.IsNotBlank(req.Duration) {
 		list = append(list, novelchapter.DurationContains(req.Duration))
 	}
 	if req.PublishTime.IsValid() && !req.PublishTime.AsTime().IsZero() {
@@ -169,7 +169,7 @@ func (r *novelChapterRepo) genCondition(req *v1.NovelChapterReq) []predicate.Nov
 	if req.WordNum > 0 {
 		list = append(list, novelchapter.WordNum(req.WordNum))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novelchapter.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

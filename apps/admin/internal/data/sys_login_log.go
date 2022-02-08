@@ -137,31 +137,31 @@ func (r *sysLoginLogRepo) genCondition(req *v1.SysLoginLogReq) []predicate.SysLo
 	if req.UserId > 0 {
 		list = append(list, sysloginlog.UserId(req.UserId))
 	}
-	if str.IsBlank(req.Status) {
+	if str.IsNotBlank(req.Status) {
 		list = append(list, sysloginlog.StatusContains(req.Status))
 	}
-	if str.IsBlank(req.Ipaddr) {
+	if str.IsNotBlank(req.Ipaddr) {
 		list = append(list, sysloginlog.IpaddrContains(req.Ipaddr))
 	}
-	if str.IsBlank(req.LoginLocation) {
+	if str.IsNotBlank(req.LoginLocation) {
 		list = append(list, sysloginlog.LoginLocationContains(req.LoginLocation))
 	}
-	if str.IsBlank(req.Browser) {
+	if str.IsNotBlank(req.Browser) {
 		list = append(list, sysloginlog.BrowserContains(req.Browser))
 	}
-	if str.IsBlank(req.Os) {
+	if str.IsNotBlank(req.Os) {
 		list = append(list, sysloginlog.OsContains(req.Os))
 	}
-	if str.IsBlank(req.Platform) {
+	if str.IsNotBlank(req.Platform) {
 		list = append(list, sysloginlog.PlatformContains(req.Platform))
 	}
 	if req.LoginTime.IsValid() && !req.LoginTime.AsTime().IsZero() {
 		list = append(list, sysloginlog.LoginTimeGTE(req.LoginTime.AsTime()))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, sysloginlog.RemarkContains(req.Remark))
 	}
-	if str.IsBlank(req.Msg) {
+	if str.IsNotBlank(req.Msg) {
 		list = append(list, sysloginlog.MsgContains(req.Msg))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

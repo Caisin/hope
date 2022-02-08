@@ -144,13 +144,13 @@ func (r *activityComponentRepo) genCondition(req *v1.ActivityComponentReq) []pre
 	if req.Id > 0 {
 		list = append(list, activitycomponent.ID(req.Id))
 	}
-	if str.IsBlank(req.ActivityCode) {
+	if str.IsNotBlank(req.ActivityCode) {
 		list = append(list, activitycomponent.ActivityCodeContains(req.ActivityCode))
 	}
-	if str.IsBlank(req.ComponentType) {
+	if str.IsNotBlank(req.ComponentType) {
 		list = append(list, activitycomponent.ComponentTypeContains(req.ComponentType))
 	}
-	if str.IsBlank(req.Policy) {
+	if str.IsNotBlank(req.Policy) {
 		list = append(list, activitycomponent.PolicyContains(req.Policy))
 	}
 	list = append(list, activitycomponent.VipDays(req.VipDays))
@@ -172,7 +172,7 @@ func (r *activityComponentRepo) genCondition(req *v1.ActivityComponentReq) []pre
 	if req.RegDays > 0 {
 		list = append(list, activitycomponent.RegDays(req.RegDays))
 	}
-	if str.IsBlank(req.Summary) {
+	if str.IsNotBlank(req.Summary) {
 		list = append(list, activitycomponent.SummaryContains(req.Summary))
 	}
 	if req.AssetItemId > 0 {

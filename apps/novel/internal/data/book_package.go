@@ -126,10 +126,10 @@ func (r *bookPackageRepo) genCondition(req *v1.BookPackageReq) []predicate.BookP
 	if req.Id > 0 {
 		list = append(list, bookpackage.ID(req.Id))
 	}
-	if str.IsBlank(req.ActivityCode) {
+	if str.IsNotBlank(req.ActivityCode) {
 		list = append(list, bookpackage.ActivityCodeContains(req.ActivityCode))
 	}
-	if str.IsBlank(req.PackageName) {
+	if str.IsNotBlank(req.PackageName) {
 		list = append(list, bookpackage.PackageNameContains(req.PackageName))
 	}
 	if req.Price > 0 {

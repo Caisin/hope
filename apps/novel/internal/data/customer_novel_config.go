@@ -132,25 +132,25 @@ func (r *customerNovelConfigRepo) genCondition(req *v1.CustomerNovelConfigReq) [
 	if req.Id > 0 {
 		list = append(list, customernovelconfig.ID(req.Id))
 	}
-	if str.IsBlank(req.GroupCode) {
+	if str.IsNotBlank(req.GroupCode) {
 		list = append(list, customernovelconfig.GroupCodeContains(req.GroupCode))
 	}
-	if str.IsBlank(req.InnerGroupCode) {
+	if str.IsNotBlank(req.InnerGroupCode) {
 		list = append(list, customernovelconfig.InnerGroupCodeContains(req.InnerGroupCode))
 	}
-	if str.IsBlank(req.GroupName) {
+	if str.IsNotBlank(req.GroupName) {
 		list = append(list, customernovelconfig.GroupNameContains(req.GroupName))
 	}
 	if req.TypeId > 0 {
 		list = append(list, customernovelconfig.TypeId(req.TypeId))
 	}
-	if str.IsBlank(req.TypeCode) {
+	if str.IsNotBlank(req.TypeCode) {
 		list = append(list, customernovelconfig.TypeCodeContains(req.TypeCode))
 	}
-	if str.IsBlank(req.TypeName) {
+	if str.IsNotBlank(req.TypeName) {
 		list = append(list, customernovelconfig.TypeNameContains(req.TypeName))
 	}
-	if str.IsBlank(req.FieldName) {
+	if str.IsNotBlank(req.FieldName) {
 		list = append(list, customernovelconfig.FieldNameContains(req.FieldName))
 	}
 	if req.DefaultNum > 0 {

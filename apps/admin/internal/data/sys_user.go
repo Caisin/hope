@@ -153,16 +153,16 @@ func (r *sysUserRepo) genCondition(req *v1.SysUserReq) []predicate.SysUser {
 	if req.Id > 0 {
 		list = append(list, sysuser.ID(req.Id))
 	}
-	if str.IsBlank(req.Username) {
+	if str.IsNotBlank(req.Username) {
 		list = append(list, sysuser.UsernameContains(req.Username))
 	}
-	if str.IsBlank(req.Password) {
+	if str.IsNotBlank(req.Password) {
 		list = append(list, sysuser.PasswordContains(req.Password))
 	}
-	if str.IsBlank(req.NickName) {
+	if str.IsNotBlank(req.NickName) {
 		list = append(list, sysuser.NickNameContains(req.NickName))
 	}
-	if str.IsBlank(req.Phone) {
+	if str.IsNotBlank(req.Phone) {
 		list = append(list, sysuser.PhoneContains(req.Phone))
 	}
 	if req.DeptId > 0 {
@@ -171,25 +171,25 @@ func (r *sysUserRepo) genCondition(req *v1.SysUserReq) []predicate.SysUser {
 	if req.PostId > 0 {
 		list = append(list, sysuser.PostId(req.PostId))
 	}
-	if str.IsBlank(req.Avatar) {
+	if str.IsNotBlank(req.Avatar) {
 		list = append(list, sysuser.AvatarContains(req.Avatar))
 	}
 	if req.Sex > 0 {
 		list = append(list, sysuser.Sex(req.Sex))
 	}
-	if str.IsBlank(req.Email) {
+	if str.IsNotBlank(req.Email) {
 		list = append(list, sysuser.EmailContains(req.Email))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, sysuser.RemarkContains(req.Remark))
 	}
-	if str.IsBlank(req.Desc) {
+	if str.IsNotBlank(req.Desc) {
 		list = append(list, sysuser.DescContains(req.Desc))
 	}
-	if str.IsBlank(req.HomePath) {
+	if str.IsNotBlank(req.HomePath) {
 		list = append(list, sysuser.HomePathContains(req.HomePath))
 	}
-	if str.IsBlank(req.Status) {
+	if str.IsNotBlank(req.Status) {
 		list = append(list, sysuser.StatusContains(req.Status))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

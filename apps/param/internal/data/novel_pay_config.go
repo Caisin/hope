@@ -158,10 +158,10 @@ func (r *novelPayConfigRepo) genCondition(req *v1.NovelPayConfigReq) []predicate
 	if req.Id > 0 {
 		list = append(list, novelpayconfig.ID(req.Id))
 	}
-	if str.IsBlank(req.ProductId) {
+	if str.IsNotBlank(req.ProductId) {
 		list = append(list, novelpayconfig.ProductIdContains(req.ProductId))
 	}
-	if str.IsBlank(req.PaymentName) {
+	if str.IsNotBlank(req.PaymentName) {
 		list = append(list, novelpayconfig.PaymentNameContains(req.PaymentName))
 	}
 	if req.FirstPayment > 0 {
@@ -173,13 +173,13 @@ func (r *novelPayConfigRepo) genCondition(req *v1.NovelPayConfigReq) []predicate
 	if req.OriginalPrice > 0 {
 		list = append(list, novelpayconfig.OriginalPrice(req.OriginalPrice))
 	}
-	if str.IsBlank(req.CfgType) {
+	if str.IsNotBlank(req.CfgType) {
 		list = append(list, novelpayconfig.CfgTypeContains(req.CfgType))
 	}
 	if req.Coin > 0 {
 		list = append(list, novelpayconfig.Coin(req.Coin))
 	}
-	if str.IsBlank(req.Currency) {
+	if str.IsNotBlank(req.Currency) {
 		list = append(list, novelpayconfig.CurrencyContains(req.Currency))
 	}
 	if req.Coupon > 0 {
@@ -208,10 +208,10 @@ func (r *novelPayConfigRepo) genCondition(req *v1.NovelPayConfigReq) []predicate
 	if req.CycleDay > 0 {
 		list = append(list, novelpayconfig.CycleDay(req.CycleDay))
 	}
-	if str.IsBlank(req.Summary) {
+	if str.IsNotBlank(req.Summary) {
 		list = append(list, novelpayconfig.SummaryContains(req.Summary))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novelpayconfig.RemarkContains(req.Remark))
 	}
 	if req.EffectTime.IsValid() && !req.EffectTime.AsTime().IsZero() {

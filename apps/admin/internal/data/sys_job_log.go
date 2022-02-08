@@ -129,7 +129,7 @@ func (r *sysJobLogRepo) genCondition(req *v1.SysJobLogReq) []predicate.SysJobLog
 	if req.JobId > 0 {
 		list = append(list, sysjoblog.JobId(req.JobId))
 	}
-	if str.IsBlank(req.JobName) {
+	if str.IsNotBlank(req.JobName) {
 		list = append(list, sysjoblog.JobNameContains(req.JobName))
 	}
 	if req.EntryId > 0 {
@@ -139,7 +139,7 @@ func (r *sysJobLogRepo) genCondition(req *v1.SysJobLogReq) []predicate.SysJobLog
 	if req.Duration.AsDuration() > 0 {
 		list = append(list, sysjoblog.Duration(req.Duration.AsDuration()))
 	}
-	if str.IsBlank(req.Info) {
+	if str.IsNotBlank(req.Info) {
 		list = append(list, sysjoblog.InfoContains(req.Info))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

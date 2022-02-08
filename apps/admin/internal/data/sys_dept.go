@@ -128,22 +128,22 @@ func (r *sysDeptRepo) genCondition(req *v1.SysDeptReq) []predicate.SysDept {
 	if req.Id > 0 {
 		list = append(list, sysdept.ID(req.Id))
 	}
-	if str.IsBlank(req.DeptPath) {
+	if str.IsNotBlank(req.DeptPath) {
 		list = append(list, sysdept.DeptPathContains(req.DeptPath))
 	}
-	if str.IsBlank(req.DeptName) {
+	if str.IsNotBlank(req.DeptName) {
 		list = append(list, sysdept.DeptNameContains(req.DeptName))
 	}
 	if req.Sort > 0 {
 		list = append(list, sysdept.Sort(req.Sort))
 	}
-	if str.IsBlank(req.Leader) {
+	if str.IsNotBlank(req.Leader) {
 		list = append(list, sysdept.LeaderContains(req.Leader))
 	}
-	if str.IsBlank(req.Phone) {
+	if str.IsNotBlank(req.Phone) {
 		list = append(list, sysdept.PhoneContains(req.Phone))
 	}
-	if str.IsBlank(req.Email) {
+	if str.IsNotBlank(req.Email) {
 		list = append(list, sysdept.EmailContains(req.Email))
 	}
 	if req.Status > 0 {

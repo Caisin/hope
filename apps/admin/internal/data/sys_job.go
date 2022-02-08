@@ -134,22 +134,22 @@ func (r *sysJobRepo) genCondition(req *v1.SysJobReq) []predicate.SysJob {
 	if req.Id > 0 {
 		list = append(list, sysjob.ID(req.Id))
 	}
-	if str.IsBlank(req.JobName) {
+	if str.IsNotBlank(req.JobName) {
 		list = append(list, sysjob.JobNameContains(req.JobName))
 	}
-	if str.IsBlank(req.JobGroup) {
+	if str.IsNotBlank(req.JobGroup) {
 		list = append(list, sysjob.JobGroupContains(req.JobGroup))
 	}
 	if req.JobType > 0 {
 		list = append(list, sysjob.JobType(req.JobType))
 	}
-	if str.IsBlank(req.CronExpression) {
+	if str.IsNotBlank(req.CronExpression) {
 		list = append(list, sysjob.CronExpressionContains(req.CronExpression))
 	}
-	if str.IsBlank(req.InvokeTarget) {
+	if str.IsNotBlank(req.InvokeTarget) {
 		list = append(list, sysjob.InvokeTargetContains(req.InvokeTarget))
 	}
-	if str.IsBlank(req.Args) {
+	if str.IsNotBlank(req.Args) {
 		list = append(list, sysjob.ArgsContains(req.Args))
 	}
 	if req.ExecPolicy > 0 {

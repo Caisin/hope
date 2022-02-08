@@ -126,22 +126,22 @@ func (r *qiniuConfigRepo) genCondition(req *v1.QiniuConfigReq) []predicate.Qiniu
 	if req.Id > 0 {
 		list = append(list, qiniuconfig.ID(req.Id))
 	}
-	if str.IsBlank(req.AccessKey) {
+	if str.IsNotBlank(req.AccessKey) {
 		list = append(list, qiniuconfig.AccessKeyContains(req.AccessKey))
 	}
-	if str.IsBlank(req.Bucket) {
+	if str.IsNotBlank(req.Bucket) {
 		list = append(list, qiniuconfig.BucketContains(req.Bucket))
 	}
-	if str.IsBlank(req.Host) {
+	if str.IsNotBlank(req.Host) {
 		list = append(list, qiniuconfig.HostContains(req.Host))
 	}
-	if str.IsBlank(req.SecretKey) {
+	if str.IsNotBlank(req.SecretKey) {
 		list = append(list, qiniuconfig.SecretKeyContains(req.SecretKey))
 	}
-	if str.IsBlank(req.Type) {
+	if str.IsNotBlank(req.Type) {
 		list = append(list, qiniuconfig.TypeContains(req.Type))
 	}
-	if str.IsBlank(req.Zone) {
+	if str.IsNotBlank(req.Zone) {
 		list = append(list, qiniuconfig.ZoneContains(req.Zone))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

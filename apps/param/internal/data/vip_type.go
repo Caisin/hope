@@ -126,7 +126,7 @@ func (r *vipTypeRepo) genCondition(req *v1.VipTypeReq) []predicate.VipType {
 	if req.Id > 0 {
 		list = append(list, viptype.ID(req.Id))
 	}
-	if str.IsBlank(req.VipName) {
+	if str.IsNotBlank(req.VipName) {
 		list = append(list, viptype.VipNameContains(req.VipName))
 	}
 	list = append(list, viptype.IsSuper(req.IsSuper))
@@ -139,7 +139,7 @@ func (r *vipTypeRepo) genCondition(req *v1.VipTypeReq) []predicate.VipType {
 	if req.AvatarId > 0 {
 		list = append(list, viptype.AvatarId(req.AvatarId))
 	}
-	if str.IsBlank(req.Summary) {
+	if str.IsNotBlank(req.Summary) {
 		list = append(list, viptype.SummaryContains(req.Summary))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

@@ -128,25 +128,25 @@ func (r *casbinRuleRepo) genCondition(req *v1.CasbinRuleReq) []predicate.CasbinR
 	if req.Id > 0 {
 		list = append(list, casbinrule.ID(req.Id))
 	}
-	if str.IsBlank(req.PType) {
+	if str.IsNotBlank(req.PType) {
 		list = append(list, casbinrule.PTypeContains(req.PType))
 	}
-	if str.IsBlank(req.V0) {
+	if str.IsNotBlank(req.V0) {
 		list = append(list, casbinrule.V0Contains(req.V0))
 	}
-	if str.IsBlank(req.V1) {
+	if str.IsNotBlank(req.V1) {
 		list = append(list, casbinrule.V1Contains(req.V1))
 	}
-	if str.IsBlank(req.V2) {
+	if str.IsNotBlank(req.V2) {
 		list = append(list, casbinrule.V2Contains(req.V2))
 	}
-	if str.IsBlank(req.V3) {
+	if str.IsNotBlank(req.V3) {
 		list = append(list, casbinrule.V3Contains(req.V3))
 	}
-	if str.IsBlank(req.V4) {
+	if str.IsNotBlank(req.V4) {
 		list = append(list, casbinrule.V4Contains(req.V4))
 	}
-	if str.IsBlank(req.V5) {
+	if str.IsNotBlank(req.V5) {
 		list = append(list, casbinrule.V5Contains(req.V5))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

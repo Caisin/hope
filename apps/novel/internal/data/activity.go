@@ -134,28 +134,28 @@ func (r *activityRepo) genCondition(req *v1.ActivityReq) []predicate.Activity {
 	if req.Id > 0 {
 		list = append(list, activity.ID(req.Id))
 	}
-	if str.IsBlank(req.ActivityCode) {
+	if str.IsNotBlank(req.ActivityCode) {
 		list = append(list, activity.ActivityCodeContains(req.ActivityCode))
 	}
-	if str.IsBlank(req.ActivityName) {
+	if str.IsNotBlank(req.ActivityName) {
 		list = append(list, activity.ActivityNameContains(req.ActivityName))
 	}
-	if str.IsBlank(req.Summary) {
+	if str.IsNotBlank(req.Summary) {
 		list = append(list, activity.SummaryContains(req.Summary))
 	}
-	if str.IsBlank(req.RuleImgSc) {
+	if str.IsNotBlank(req.RuleImgSc) {
 		list = append(list, activity.RuleImgScContains(req.RuleImgSc))
 	}
-	if str.IsBlank(req.RuleImgTc) {
+	if str.IsNotBlank(req.RuleImgTc) {
 		list = append(list, activity.RuleImgTcContains(req.RuleImgTc))
 	}
-	if str.IsBlank(req.PopupImg) {
+	if str.IsNotBlank(req.PopupImg) {
 		list = append(list, activity.PopupImgContains(req.PopupImg))
 	}
 	if req.RegDays > 0 {
 		list = append(list, activity.RegDays(req.RegDays))
 	}
-	if str.IsBlank(req.CycleType) {
+	if str.IsNotBlank(req.CycleType) {
 		list = append(list, activity.CycleTypeContains(req.CycleType))
 	}
 	if req.EffectTime.IsValid() && !req.EffectTime.AsTime().IsZero() {

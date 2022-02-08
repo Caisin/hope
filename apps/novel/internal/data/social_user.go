@@ -169,67 +169,67 @@ func (r *socialUserRepo) genCondition(req *v1.SocialUserReq) []predicate.SocialU
 	if req.ChId > 0 {
 		list = append(list, socialuser.ChId(req.ChId))
 	}
-	if str.IsBlank(req.Unionid) {
+	if str.IsNotBlank(req.Unionid) {
 		list = append(list, socialuser.UnionidContains(req.Unionid))
 	}
-	if str.IsBlank(req.Token) {
+	if str.IsNotBlank(req.Token) {
 		list = append(list, socialuser.TokenContains(req.Token))
 	}
-	if str.IsBlank(req.Openid) {
+	if str.IsNotBlank(req.Openid) {
 		list = append(list, socialuser.OpenidContains(req.Openid))
 	}
-	if str.IsBlank(req.RoutineOpenid) {
+	if str.IsNotBlank(req.RoutineOpenid) {
 		list = append(list, socialuser.RoutineOpenidContains(req.RoutineOpenid))
 	}
-	if str.IsBlank(req.UserName) {
+	if str.IsNotBlank(req.UserName) {
 		list = append(list, socialuser.UserNameContains(req.UserName))
 	}
-	if str.IsBlank(req.NickName) {
+	if str.IsNotBlank(req.NickName) {
 		list = append(list, socialuser.NickNameContains(req.NickName))
 	}
 	if req.Birthday.IsValid() && !req.Birthday.AsTime().IsZero() {
 		list = append(list, socialuser.BirthdayGTE(req.Birthday.AsTime()))
 	}
-	if str.IsBlank(req.Phone) {
+	if str.IsNotBlank(req.Phone) {
 		list = append(list, socialuser.PhoneContains(req.Phone))
 	}
-	if str.IsBlank(req.Email) {
+	if str.IsNotBlank(req.Email) {
 		list = append(list, socialuser.EmailContains(req.Email))
 	}
-	if str.IsBlank(req.Password) {
+	if str.IsNotBlank(req.Password) {
 		list = append(list, socialuser.PasswordContains(req.Password))
 	}
-	if str.IsBlank(req.Avatar) {
+	if str.IsNotBlank(req.Avatar) {
 		list = append(list, socialuser.AvatarContains(req.Avatar))
 	}
 	if req.Sex > 0 {
 		list = append(list, socialuser.Sex(req.Sex))
 	}
-	if str.IsBlank(req.Region) {
+	if str.IsNotBlank(req.Region) {
 		list = append(list, socialuser.RegionContains(req.Region))
 	}
-	if str.IsBlank(req.City) {
+	if str.IsNotBlank(req.City) {
 		list = append(list, socialuser.CityContains(req.City))
 	}
-	if str.IsBlank(req.Language) {
+	if str.IsNotBlank(req.Language) {
 		list = append(list, socialuser.LanguageContains(req.Language))
 	}
-	if str.IsBlank(req.Province) {
+	if str.IsNotBlank(req.Province) {
 		list = append(list, socialuser.ProvinceContains(req.Province))
 	}
-	if str.IsBlank(req.Country) {
+	if str.IsNotBlank(req.Country) {
 		list = append(list, socialuser.CountryContains(req.Country))
 	}
-	if str.IsBlank(req.Signature) {
+	if str.IsNotBlank(req.Signature) {
 		list = append(list, socialuser.SignatureContains(req.Signature))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, socialuser.RemarkContains(req.Remark))
 	}
 	if req.Groupid > 0 {
 		list = append(list, socialuser.Groupid(req.Groupid))
 	}
-	if str.IsBlank(req.TagidList) {
+	if str.IsNotBlank(req.TagidList) {
 		list = append(list, socialuser.TagidListContains(req.TagidList))
 	}
 	if req.Subscribe > 0 {
@@ -238,10 +238,10 @@ func (r *socialUserRepo) genCondition(req *v1.SocialUserReq) []predicate.SocialU
 	if req.SubscribeTime > 0 {
 		list = append(list, socialuser.SubscribeTime(req.SubscribeTime))
 	}
-	if str.IsBlank(req.SessionKey) {
+	if str.IsNotBlank(req.SessionKey) {
 		list = append(list, socialuser.SessionKeyContains(req.SessionKey))
 	}
-	if str.IsBlank(req.UserType) {
+	if str.IsNotBlank(req.UserType) {
 		list = append(list, socialuser.UserTypeContains(req.UserType))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

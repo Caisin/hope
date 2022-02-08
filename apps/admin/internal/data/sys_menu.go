@@ -157,44 +157,44 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 	if req.ParentId > 0 {
 		list = append(list, sysmenu.ParentId(req.ParentId))
 	}
-	if str.IsBlank(req.Name) {
+	if str.IsNotBlank(req.Name) {
 		list = append(list, sysmenu.NameContains(req.Name))
 	}
-	if str.IsBlank(req.Title) {
+	if str.IsNotBlank(req.Title) {
 		list = append(list, sysmenu.TitleContains(req.Title))
 	}
-	if str.IsBlank(req.Redirect) {
+	if str.IsNotBlank(req.Redirect) {
 		list = append(list, sysmenu.RedirectContains(req.Redirect))
 	}
-	if str.IsBlank(req.Icon) {
+	if str.IsNotBlank(req.Icon) {
 		list = append(list, sysmenu.IconContains(req.Icon))
 	}
-	if str.IsBlank(req.Path) {
+	if str.IsNotBlank(req.Path) {
 		list = append(list, sysmenu.PathContains(req.Path))
 	}
-	if str.IsBlank(req.Paths) {
+	if str.IsNotBlank(req.Paths) {
 		list = append(list, sysmenu.PathsContains(req.Paths))
 	}
-	if str.IsBlank(req.MenuType) {
+	if str.IsNotBlank(req.MenuType) {
 		list = append(list, sysmenu.MenuTypeContains(req.MenuType))
 	}
-	if str.IsBlank(req.Action) {
+	if str.IsNotBlank(req.Action) {
 		list = append(list, sysmenu.ActionContains(req.Action))
 	}
-	if str.IsBlank(req.Permission) {
+	if str.IsNotBlank(req.Permission) {
 		list = append(list, sysmenu.PermissionContains(req.Permission))
 	}
 	list = append(list, sysmenu.IgnoreKeepAlive(req.IgnoreKeepAlive))
 	list = append(list, sysmenu.HideBreadcrumb(req.HideBreadcrumb))
 	list = append(list, sysmenu.HideChildrenInMenu(req.HideChildrenInMenu))
-	if str.IsBlank(req.Component) {
+	if str.IsNotBlank(req.Component) {
 		list = append(list, sysmenu.ComponentContains(req.Component))
 	}
 	if req.Sort > 0 {
 		list = append(list, sysmenu.Sort(req.Sort))
 	}
 	list = append(list, sysmenu.HideMenu(req.HideMenu))
-	if str.IsBlank(req.FrameSrc) {
+	if str.IsNotBlank(req.FrameSrc) {
 		list = append(list, sysmenu.FrameSrcContains(req.FrameSrc))
 	}
 	state := sysmenu.State(req.State)
@@ -202,7 +202,7 @@ func (r *sysMenuRepo) genCondition(req *v1.SysMenuReq) []predicate.SysMenu {
 		list = append(list, sysmenu.StateEQ(state))
 	}
 	list = append(list, sysmenu.CheckPermission(req.CheckPermission))
-	if str.IsBlank(req.Operation) {
+	if str.IsNotBlank(req.Operation) {
 		list = append(list, sysmenu.OperationContains(req.Operation))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

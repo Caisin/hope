@@ -127,7 +127,7 @@ func (r *novelClassifyRepo) genCondition(req *v1.NovelClassifyReq) []predicate.N
 	if req.Pid > 0 {
 		list = append(list, novelclassify.Pid(req.Pid))
 	}
-	if str.IsBlank(req.ClassifyName) {
+	if str.IsNotBlank(req.ClassifyName) {
 		list = append(list, novelclassify.ClassifyNameContains(req.ClassifyName))
 	}
 	if req.Status > 0 {
@@ -136,7 +136,7 @@ func (r *novelClassifyRepo) genCondition(req *v1.NovelClassifyReq) []predicate.N
 	if req.OrderNum > 0 {
 		list = append(list, novelclassify.OrderNum(req.OrderNum))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novelclassify.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

@@ -153,16 +153,16 @@ func (r *taskLogRepo) genCondition(req *v1.TaskLogReq) []predicate.TaskLog {
 	if req.UserId > 0 {
 		list = append(list, tasklog.UserId(req.UserId))
 	}
-	if str.IsBlank(req.TaskGroup) {
+	if str.IsNotBlank(req.TaskGroup) {
 		list = append(list, tasklog.TaskGroupContains(req.TaskGroup))
 	}
-	if str.IsBlank(req.TaskCode) {
+	if str.IsNotBlank(req.TaskCode) {
 		list = append(list, tasklog.TaskCodeContains(req.TaskCode))
 	}
 	if req.TaskId > 0 {
 		list = append(list, tasklog.TaskId(req.TaskId))
 	}
-	if str.IsBlank(req.TaskName) {
+	if str.IsNotBlank(req.TaskName) {
 		list = append(list, tasklog.TaskNameContains(req.TaskName))
 	}
 	if req.Amount > 0 {

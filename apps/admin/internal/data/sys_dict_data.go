@@ -135,28 +135,28 @@ func (r *sysDictDataRepo) genCondition(req *v1.SysDictDataReq) []predicate.SysDi
 	if req.TypeId > 0 {
 		list = append(list, sysdictdata.TypeId(req.TypeId))
 	}
-	if str.IsBlank(req.TypeCode) {
+	if str.IsNotBlank(req.TypeCode) {
 		list = append(list, sysdictdata.TypeCodeContains(req.TypeCode))
 	}
 	if req.DictSort > 0 {
 		list = append(list, sysdictdata.DictSort(req.DictSort))
 	}
-	if str.IsBlank(req.DictLabel) {
+	if str.IsNotBlank(req.DictLabel) {
 		list = append(list, sysdictdata.DictLabelContains(req.DictLabel))
 	}
-	if str.IsBlank(req.DictValue) {
+	if str.IsNotBlank(req.DictValue) {
 		list = append(list, sysdictdata.DictValueContains(req.DictValue))
 	}
-	if str.IsBlank(req.IsDefault) {
+	if str.IsNotBlank(req.IsDefault) {
 		list = append(list, sysdictdata.IsDefaultContains(req.IsDefault))
 	}
 	if req.Status > 0 {
 		list = append(list, sysdictdata.Status(req.Status))
 	}
-	if str.IsBlank(req.Default) {
+	if str.IsNotBlank(req.Default) {
 		list = append(list, sysdictdata.DefaultContains(req.Default))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, sysdictdata.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

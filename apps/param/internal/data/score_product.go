@@ -128,13 +128,13 @@ func (r *scoreProductRepo) genCondition(req *v1.ScoreProductReq) []predicate.Sco
 	if req.Id > 0 {
 		list = append(list, scoreproduct.ID(req.Id))
 	}
-	if str.IsBlank(req.ProductName) {
+	if str.IsNotBlank(req.ProductName) {
 		list = append(list, scoreproduct.ProductNameContains(req.ProductName))
 	}
-	if str.IsBlank(req.Summary) {
+	if str.IsNotBlank(req.Summary) {
 		list = append(list, scoreproduct.SummaryContains(req.Summary))
 	}
-	if str.IsBlank(req.CardUrl) {
+	if str.IsNotBlank(req.CardUrl) {
 		list = append(list, scoreproduct.CardUrlContains(req.CardUrl))
 	}
 	if req.Score > 0 {

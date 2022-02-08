@@ -140,22 +140,22 @@ func (r *dataSourceRepo) genCondition(req *v1.DataSourceReq) []predicate.DataSou
 	if req.Id > 0 {
 		list = append(list, datasource.ID(req.Id))
 	}
-	if str.IsBlank(req.DbName) {
+	if str.IsNotBlank(req.DbName) {
 		list = append(list, datasource.DbNameContains(req.DbName))
 	}
-	if str.IsBlank(req.Host) {
+	if str.IsNotBlank(req.Host) {
 		list = append(list, datasource.HostContains(req.Host))
 	}
 	if req.Port > 0 {
 		list = append(list, datasource.Port(req.Port))
 	}
-	if str.IsBlank(req.Database) {
+	if str.IsNotBlank(req.Database) {
 		list = append(list, datasource.DatabaseContains(req.Database))
 	}
-	if str.IsBlank(req.UserName) {
+	if str.IsNotBlank(req.UserName) {
 		list = append(list, datasource.UserNameContains(req.UserName))
 	}
-	if str.IsBlank(req.Pwd) {
+	if str.IsNotBlank(req.Pwd) {
 		list = append(list, datasource.PwdContains(req.Pwd))
 	}
 	list = append(list, datasource.Status(req.Status))
@@ -175,7 +175,7 @@ func (r *dataSourceRepo) genCondition(req *v1.DataSourceReq) []predicate.DataSou
 	if req.MaxOpenConns > 0 {
 		list = append(list, datasource.MaxOpenConns(req.MaxOpenConns))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, datasource.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

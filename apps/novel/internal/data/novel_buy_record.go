@@ -135,19 +135,19 @@ func (r *novelBuyRecordRepo) genCondition(req *v1.NovelBuyRecordReq) []predicate
 	if req.UserId > 0 {
 		list = append(list, novelbuyrecord.UserId(req.UserId))
 	}
-	if str.IsBlank(req.UserName) {
+	if str.IsNotBlank(req.UserName) {
 		list = append(list, novelbuyrecord.UserNameContains(req.UserName))
 	}
 	if req.NovelId > 0 {
 		list = append(list, novelbuyrecord.NovelId(req.NovelId))
 	}
-	if str.IsBlank(req.NovelName) {
+	if str.IsNotBlank(req.NovelName) {
 		list = append(list, novelbuyrecord.NovelNameContains(req.NovelName))
 	}
 	if req.PackageId > 0 {
 		list = append(list, novelbuyrecord.PackageId(req.PackageId))
 	}
-	if str.IsBlank(req.Cover) {
+	if str.IsNotBlank(req.Cover) {
 		list = append(list, novelbuyrecord.CoverContains(req.Cover))
 	}
 	if req.Coin > 0 {
@@ -156,7 +156,7 @@ func (r *novelBuyRecordRepo) genCondition(req *v1.NovelBuyRecordReq) []predicate
 	if req.Coupon > 0 {
 		list = append(list, novelbuyrecord.Coupon(req.Coupon))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novelbuyrecord.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

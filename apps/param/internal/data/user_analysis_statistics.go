@@ -154,7 +154,7 @@ func (r *userAnalysisStatisticsRepo) genCondition(req *v1.UserAnalysisStatistics
 	if req.Id > 0 {
 		list = append(list, useranalysisstatistics.ID(req.Id))
 	}
-	if str.IsBlank(req.StatisticsDate) {
+	if str.IsNotBlank(req.StatisticsDate) {
 		list = append(list, useranalysisstatistics.StatisticsDateContains(req.StatisticsDate))
 	}
 	if req.AllUserNum > 0 {

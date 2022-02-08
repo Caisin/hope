@@ -133,7 +133,7 @@ func (r *novelBookshelfRepo) genCondition(req *v1.NovelBookshelfReq) []predicate
 	if req.UserId > 0 {
 		list = append(list, novelbookshelf.UserId(req.UserId))
 	}
-	if str.IsBlank(req.UserName) {
+	if str.IsNotBlank(req.UserName) {
 		list = append(list, novelbookshelf.UserNameContains(req.UserName))
 	}
 	if req.NovelId > 0 {
@@ -148,10 +148,10 @@ func (r *novelBookshelfRepo) genCondition(req *v1.NovelBookshelfReq) []predicate
 	if req.LastChapterId > 0 {
 		list = append(list, novelbookshelf.LastChapterId(req.LastChapterId))
 	}
-	if str.IsBlank(req.LastChapterName) {
+	if str.IsNotBlank(req.LastChapterName) {
 		list = append(list, novelbookshelf.LastChapterNameContains(req.LastChapterName))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novelbookshelf.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

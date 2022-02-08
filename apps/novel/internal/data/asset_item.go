@@ -129,7 +129,7 @@ func (r *assetItemRepo) genCondition(req *v1.AssetItemReq) []predicate.AssetItem
 	if req.AssetItemId > 0 {
 		list = append(list, assetitem.AssetItemId(req.AssetItemId))
 	}
-	if str.IsBlank(req.AssetName) {
+	if str.IsNotBlank(req.AssetName) {
 		list = append(list, assetitem.AssetNameContains(req.AssetName))
 	}
 	if req.CashTag > 0 {

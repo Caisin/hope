@@ -132,7 +132,7 @@ func (r *assetChangeLogRepo) genCondition(req *v1.AssetChangeLogReq) []predicate
 	if req.Id > 0 {
 		list = append(list, assetchangelog.ID(req.Id))
 	}
-	if str.IsBlank(req.OrderId) {
+	if str.IsNotBlank(req.OrderId) {
 		list = append(list, assetchangelog.OrderIdContains(req.OrderId))
 	}
 	if req.BalanceId > 0 {
@@ -156,7 +156,7 @@ func (r *assetChangeLogRepo) genCondition(req *v1.AssetChangeLogReq) []predicate
 	if req.NewBalance > 0 {
 		list = append(list, assetchangelog.NewBalance(req.NewBalance))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, assetchangelog.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

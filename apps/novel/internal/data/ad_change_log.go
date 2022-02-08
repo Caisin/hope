@@ -127,16 +127,16 @@ func (r *adChangeLogRepo) genCondition(req *v1.AdChangeLogReq) []predicate.AdCha
 	if req.UserId > 0 {
 		list = append(list, adchangelog.UserId(req.UserId))
 	}
-	if str.IsBlank(req.AdId) {
+	if str.IsNotBlank(req.AdId) {
 		list = append(list, adchangelog.AdIdContains(req.AdId))
 	}
 	if req.ChId > 0 {
 		list = append(list, adchangelog.ChId(req.ChId))
 	}
-	if str.IsBlank(req.DeviceId) {
+	if str.IsNotBlank(req.DeviceId) {
 		list = append(list, adchangelog.DeviceIdContains(req.DeviceId))
 	}
-	if str.IsBlank(req.ExtInfo) {
+	if str.IsNotBlank(req.ExtInfo) {
 		list = append(list, adchangelog.ExtInfoContains(req.ExtInfo))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

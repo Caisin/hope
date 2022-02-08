@@ -133,7 +133,7 @@ func (r *userEventRepo) genCondition(req *v1.UserEventReq) []predicate.UserEvent
 	if req.UserId > 0 {
 		list = append(list, userevent.UserId(req.UserId))
 	}
-	if str.IsBlank(req.EventType) {
+	if str.IsNotBlank(req.EventType) {
 		list = append(list, userevent.EventTypeContains(req.EventType))
 	}
 	if req.NovelId > 0 {
@@ -151,7 +151,7 @@ func (r *userEventRepo) genCondition(req *v1.UserEventReq) []predicate.UserEvent
 	if req.Money > 0 {
 		list = append(list, userevent.Money(req.Money))
 	}
-	if str.IsBlank(req.Keyword) {
+	if str.IsNotBlank(req.Keyword) {
 		list = append(list, userevent.KeywordContains(req.Keyword))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

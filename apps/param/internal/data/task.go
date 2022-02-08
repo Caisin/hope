@@ -156,22 +156,22 @@ func (r *taskRepo) genCondition(req *v1.TaskReq) []predicate.Task {
 	if req.Id > 0 {
 		list = append(list, task.ID(req.Id))
 	}
-	if str.IsBlank(req.TaskName) {
+	if str.IsNotBlank(req.TaskName) {
 		list = append(list, task.TaskNameContains(req.TaskName))
 	}
-	if str.IsBlank(req.TaskGroup) {
+	if str.IsNotBlank(req.TaskGroup) {
 		list = append(list, task.TaskGroupContains(req.TaskGroup))
 	}
-	if str.IsBlank(req.Unit) {
+	if str.IsNotBlank(req.Unit) {
 		list = append(list, task.UnitContains(req.Unit))
 	}
-	if str.IsBlank(req.Topic) {
+	if str.IsNotBlank(req.Topic) {
 		list = append(list, task.TopicContains(req.Topic))
 	}
-	if str.IsBlank(req.Function) {
+	if str.IsNotBlank(req.Function) {
 		list = append(list, task.FunctionContains(req.Function))
 	}
-	if str.IsBlank(req.TaskCode) {
+	if str.IsNotBlank(req.TaskCode) {
 		list = append(list, task.TaskCodeContains(req.TaskCode))
 	}
 	if req.PreTask > 0 {
@@ -180,10 +180,10 @@ func (r *taskRepo) genCondition(req *v1.TaskReq) []predicate.Task {
 	if req.NovelId > 0 {
 		list = append(list, task.NovelId(req.NovelId))
 	}
-	if str.IsBlank(req.CycleType) {
+	if str.IsNotBlank(req.CycleType) {
 		list = append(list, task.CycleTypeContains(req.CycleType))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, task.RemarkContains(req.Remark))
 	}
 	if req.Amount > 0 {
@@ -198,17 +198,17 @@ func (r *taskRepo) genCondition(req *v1.TaskReq) []predicate.Task {
 	if req.RewardItem > 0 {
 		list = append(list, task.RewardItem(req.RewardItem))
 	}
-	if str.IsBlank(req.TargetNames) {
+	if str.IsNotBlank(req.TargetNames) {
 		list = append(list, task.TargetNamesContains(req.TargetNames))
 	}
-	if str.IsBlank(req.TargetAmounts) {
+	if str.IsNotBlank(req.TargetAmounts) {
 		list = append(list, task.TargetAmountsContains(req.TargetAmounts))
 	}
 	list = append(list, task.Status(req.Status))
 	if req.SortNum > 0 {
 		list = append(list, task.SortNum(req.SortNum))
 	}
-	if str.IsBlank(req.ActionType) {
+	if str.IsNotBlank(req.ActionType) {
 		list = append(list, task.ActionTypeContains(req.ActionType))
 	}
 	if req.EffectTime.IsValid() && !req.EffectTime.AsTime().IsZero() {

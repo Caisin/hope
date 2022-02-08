@@ -120,13 +120,13 @@ func (r *pageConfigRepo) genCondition(req *v1.PageConfigReq) []predicate.PageCon
 	if req.Id > 0 {
 		list = append(list, pageconfig.ID(req.Id))
 	}
-	if str.IsBlank(req.PageCode) {
+	if str.IsNotBlank(req.PageCode) {
 		list = append(list, pageconfig.PageCodeContains(req.PageCode))
 	}
-	if str.IsBlank(req.PageName) {
+	if str.IsNotBlank(req.PageName) {
 		list = append(list, pageconfig.PageNameContains(req.PageName))
 	}
-	if str.IsBlank(req.GroupCodes) {
+	if str.IsNotBlank(req.GroupCodes) {
 		list = append(list, pageconfig.GroupCodesContains(req.GroupCodes))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

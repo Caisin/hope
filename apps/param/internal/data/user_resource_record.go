@@ -141,16 +141,16 @@ func (r *userResourceRecordRepo) genCondition(req *v1.UserResourceRecordReq) []p
 		list = append(list, userresourcerecord.ResId(req.ResId))
 	}
 	list = append(list, userresourcerecord.Def(req.Def))
-	if str.IsBlank(req.Name) {
+	if str.IsNotBlank(req.Name) {
 		list = append(list, userresourcerecord.NameContains(req.Name))
 	}
-	if str.IsBlank(req.Url) {
+	if str.IsNotBlank(req.Url) {
 		list = append(list, userresourcerecord.URLContains(req.Url))
 	}
-	if str.IsBlank(req.ResType) {
+	if str.IsNotBlank(req.ResType) {
 		list = append(list, userresourcerecord.ResTypeContains(req.ResType))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, userresourcerecord.RemarkContains(req.Remark))
 	}
 	if req.State > 0 {

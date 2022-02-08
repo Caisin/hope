@@ -123,10 +123,10 @@ func (r *novelTagRepo) genCondition(req *v1.NovelTagReq) []predicate.NovelTag {
 	if req.TagId > 0 {
 		list = append(list, noveltag.TagId(req.TagId))
 	}
-	if str.IsBlank(req.TagName) {
+	if str.IsNotBlank(req.TagName) {
 		list = append(list, noveltag.TagNameContains(req.TagName))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, noveltag.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

@@ -144,10 +144,10 @@ func (r *agreementLogRepo) genCondition(req *v1.AgreementLogReq) []predicate.Agr
 	if req.Id > 0 {
 		list = append(list, agreementlog.ID(req.Id))
 	}
-	if str.IsBlank(req.OuterAgreementNo) {
+	if str.IsNotBlank(req.OuterAgreementNo) {
 		list = append(list, agreementlog.OuterAgreementNoContains(req.OuterAgreementNo))
 	}
-	if str.IsBlank(req.OrderId) {
+	if str.IsNotBlank(req.OrderId) {
 		list = append(list, agreementlog.OrderIdContains(req.OrderId))
 	}
 	if req.UserId > 0 {
@@ -156,10 +156,10 @@ func (r *agreementLogRepo) genCondition(req *v1.AgreementLogReq) []predicate.Agr
 	if req.ChId > 0 {
 		list = append(list, agreementlog.ChId(req.ChId))
 	}
-	if str.IsBlank(req.UserName) {
+	if str.IsNotBlank(req.UserName) {
 		list = append(list, agreementlog.UserNameContains(req.UserName))
 	}
-	if str.IsBlank(req.PaymentName) {
+	if str.IsNotBlank(req.PaymentName) {
 		list = append(list, agreementlog.PaymentNameContains(req.PaymentName))
 	}
 	if req.PaymentId > 0 {
@@ -187,7 +187,7 @@ func (r *agreementLogRepo) genCondition(req *v1.AgreementLogReq) []predicate.Agr
 	if req.NextExecTime.IsValid() && !req.NextExecTime.AsTime().IsZero() {
 		list = append(list, agreementlog.NextExecTimeGTE(req.NextExecTime.AsTime()))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, agreementlog.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

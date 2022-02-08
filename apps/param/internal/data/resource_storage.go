@@ -156,52 +156,52 @@ func (r *resourceStorageRepo) genCondition(req *v1.ResourceStorageReq) []predica
 	if req.StorageType > 0 {
 		list = append(list, resourcestorage.StorageType(req.StorageType))
 	}
-	if str.IsBlank(req.RealName) {
+	if str.IsNotBlank(req.RealName) {
 		list = append(list, resourcestorage.RealNameContains(req.RealName))
 	}
-	if str.IsBlank(req.Bucket) {
+	if str.IsNotBlank(req.Bucket) {
 		list = append(list, resourcestorage.BucketContains(req.Bucket))
 	}
-	if str.IsBlank(req.Name) {
+	if str.IsNotBlank(req.Name) {
 		list = append(list, resourcestorage.NameContains(req.Name))
 	}
-	if str.IsBlank(req.Suffix) {
+	if str.IsNotBlank(req.Suffix) {
 		list = append(list, resourcestorage.SuffixContains(req.Suffix))
 	}
-	if str.IsBlank(req.Path) {
+	if str.IsNotBlank(req.Path) {
 		list = append(list, resourcestorage.PathContains(req.Path))
 	}
-	if str.IsBlank(req.Type) {
+	if str.IsNotBlank(req.Type) {
 		list = append(list, resourcestorage.TypeContains(req.Type))
 	}
-	if str.IsBlank(req.Size) {
+	if str.IsNotBlank(req.Size) {
 		list = append(list, resourcestorage.SizeContains(req.Size))
 	}
-	if str.IsBlank(req.DeleteUrl) {
+	if str.IsNotBlank(req.DeleteUrl) {
 		list = append(list, resourcestorage.DeleteUrlContains(req.DeleteUrl))
 	}
-	if str.IsBlank(req.Filename) {
+	if str.IsNotBlank(req.Filename) {
 		list = append(list, resourcestorage.FilenameContains(req.Filename))
 	}
-	if str.IsBlank(req.Key) {
+	if str.IsNotBlank(req.Key) {
 		list = append(list, resourcestorage.KeyContains(req.Key))
 	}
-	if str.IsBlank(req.Height) {
+	if str.IsNotBlank(req.Height) {
 		list = append(list, resourcestorage.HeightContains(req.Height))
 	}
-	if str.IsBlank(req.Url) {
+	if str.IsNotBlank(req.Url) {
 		list = append(list, resourcestorage.URLContains(req.Url))
 	}
-	if str.IsBlank(req.Username) {
+	if str.IsNotBlank(req.Username) {
 		list = append(list, resourcestorage.UsernameContains(req.Username))
 	}
-	if str.IsBlank(req.Width) {
+	if str.IsNotBlank(req.Width) {
 		list = append(list, resourcestorage.WidthContains(req.Width))
 	}
-	if str.IsBlank(req.Md5Code) {
+	if str.IsNotBlank(req.Md5Code) {
 		list = append(list, resourcestorage.Md5codeContains(req.Md5Code))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, resourcestorage.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

@@ -148,19 +148,19 @@ func (r *novelCommentRepo) genCondition(req *v1.NovelCommentReq) []predicate.Nov
 	if req.UserId > 0 {
 		list = append(list, novelcomment.UserId(req.UserId))
 	}
-	if str.IsBlank(req.Avatar) {
+	if str.IsNotBlank(req.Avatar) {
 		list = append(list, novelcomment.AvatarContains(req.Avatar))
 	}
-	if str.IsBlank(req.UserName) {
+	if str.IsNotBlank(req.UserName) {
 		list = append(list, novelcomment.UserNameContains(req.UserName))
 	}
 	if req.RepUserId > 0 {
 		list = append(list, novelcomment.RepUserId(req.RepUserId))
 	}
-	if str.IsBlank(req.RepUserName) {
+	if str.IsNotBlank(req.RepUserName) {
 		list = append(list, novelcomment.RepUserNameContains(req.RepUserName))
 	}
-	if str.IsBlank(req.Content) {
+	if str.IsNotBlank(req.Content) {
 		list = append(list, novelcomment.ContentContains(req.Content))
 	}
 	if req.Score > 0 {
@@ -176,7 +176,7 @@ func (r *novelCommentRepo) genCondition(req *v1.NovelCommentReq) []predicate.Nov
 	}
 	list = append(list, novelcomment.IsHighlight(req.IsHighlight))
 	list = append(list, novelcomment.IsHot(req.IsHot))
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novelcomment.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

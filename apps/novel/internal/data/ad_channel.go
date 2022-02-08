@@ -132,7 +132,7 @@ func (r *adChannelRepo) genCondition(req *v1.AdChannelReq) []predicate.AdChannel
 	if req.Id > 0 {
 		list = append(list, adchannel.ID(req.Id))
 	}
-	if str.IsBlank(req.ChannelName) {
+	if str.IsNotBlank(req.ChannelName) {
 		list = append(list, adchannel.ChannelNameContains(req.ChannelName))
 	}
 	if req.NovelId > 0 {
@@ -144,7 +144,7 @@ func (r *adChannelRepo) genCondition(req *v1.AdChannelReq) []predicate.AdChannel
 	if req.Pay > 0 {
 		list = append(list, adchannel.Pay(req.Pay))
 	}
-	if str.IsBlank(req.NovelName) {
+	if str.IsNotBlank(req.NovelName) {
 		list = append(list, adchannel.NovelNameContains(req.NovelName))
 	}
 	if req.ChapterId > 0 {
@@ -153,10 +153,10 @@ func (r *adChannelRepo) genCondition(req *v1.AdChannelReq) []predicate.AdChannel
 	if req.ChapterNum > 0 {
 		list = append(list, adchannel.ChapterNum(req.ChapterNum))
 	}
-	if str.IsBlank(req.AdType) {
+	if str.IsNotBlank(req.AdType) {
 		list = append(list, adchannel.AdTypeContains(req.AdType))
 	}
-	if str.IsBlank(req.Img) {
+	if str.IsNotBlank(req.Img) {
 		list = append(list, adchannel.ImgContains(req.Img))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

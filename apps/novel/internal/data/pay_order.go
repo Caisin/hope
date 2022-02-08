@@ -156,7 +156,7 @@ func (r *payOrderRepo) genCondition(req *v1.PayOrderReq) []predicate.PayOrder {
 	if req.Id > 0 {
 		list = append(list, payorder.ID(req.Id))
 	}
-	if str.IsBlank(req.OrderId) {
+	if str.IsNotBlank(req.OrderId) {
 		list = append(list, payorder.OrderIdContains(req.OrderId))
 	}
 	if req.UserId > 0 {
@@ -168,16 +168,16 @@ func (r *payOrderRepo) genCondition(req *v1.PayOrderReq) []predicate.PayOrder {
 	if req.AgreementId > 0 {
 		list = append(list, payorder.AgreementId(req.AgreementId))
 	}
-	if str.IsBlank(req.LastRead) {
+	if str.IsNotBlank(req.LastRead) {
 		list = append(list, payorder.LastReadContains(req.LastRead))
 	}
-	if str.IsBlank(req.LastChapter) {
+	if str.IsNotBlank(req.LastChapter) {
 		list = append(list, payorder.LastChapterContains(req.LastChapter))
 	}
-	if str.IsBlank(req.PaymentName) {
+	if str.IsNotBlank(req.PaymentName) {
 		list = append(list, payorder.PaymentNameContains(req.PaymentName))
 	}
-	if str.IsBlank(req.PaymentId) {
+	if str.IsNotBlank(req.PaymentId) {
 		list = append(list, payorder.PaymentIdContains(req.PaymentId))
 	}
 	if schema.OrderState(req.State) > 0 {
@@ -202,22 +202,22 @@ func (r *payOrderRepo) genCondition(req *v1.PayOrderReq) []predicate.PayOrder {
 	if req.Coupon > 0 {
 		list = append(list, payorder.Coupon(req.Coupon))
 	}
-	if str.IsBlank(req.VipDays) {
+	if str.IsNotBlank(req.VipDays) {
 		list = append(list, payorder.VipDaysContains(req.VipDays))
 	}
 	if req.VipType > 0 {
 		list = append(list, payorder.VipType(req.VipType))
 	}
-	if str.IsBlank(req.VipName) {
+	if str.IsNotBlank(req.VipName) {
 		list = append(list, payorder.VipNameContains(req.VipName))
 	}
 	if req.Times > 0 {
 		list = append(list, payorder.Times(req.Times))
 	}
-	if str.IsBlank(req.OtherOrderId) {
+	if str.IsNotBlank(req.OtherOrderId) {
 		list = append(list, payorder.OtherOrderIdContains(req.OtherOrderId))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, payorder.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

@@ -124,19 +124,19 @@ func (r *sysApiRepo) genCondition(req *v1.SysApiReq) []predicate.SysApi {
 	if req.Id > 0 {
 		list = append(list, sysapi.ID(req.Id))
 	}
-	if str.IsBlank(req.Handle) {
+	if str.IsNotBlank(req.Handle) {
 		list = append(list, sysapi.HandleContains(req.Handle))
 	}
-	if str.IsBlank(req.Title) {
+	if str.IsNotBlank(req.Title) {
 		list = append(list, sysapi.TitleContains(req.Title))
 	}
-	if str.IsBlank(req.Path) {
+	if str.IsNotBlank(req.Path) {
 		list = append(list, sysapi.PathContains(req.Path))
 	}
-	if str.IsBlank(req.Action) {
+	if str.IsNotBlank(req.Action) {
 		list = append(list, sysapi.ActionContains(req.Action))
 	}
-	if str.IsBlank(req.Type) {
+	if str.IsNotBlank(req.Type) {
 		list = append(list, sysapi.TypeContains(req.Type))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

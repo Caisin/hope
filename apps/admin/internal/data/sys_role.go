@@ -135,26 +135,26 @@ func (r *sysRoleRepo) genCondition(req *v1.SysRoleReq) []predicate.SysRole {
 	if req.Id > 0 {
 		list = append(list, sysrole.ID(req.Id))
 	}
-	if str.IsBlank(req.RoleName) {
+	if str.IsNotBlank(req.RoleName) {
 		list = append(list, sysrole.RoleNameContains(req.RoleName))
 	}
-	if str.IsBlank(req.Status) {
+	if str.IsNotBlank(req.Status) {
 		list = append(list, sysrole.StatusContains(req.Status))
 	}
-	if str.IsBlank(req.RoleKey) {
+	if str.IsNotBlank(req.RoleKey) {
 		list = append(list, sysrole.RoleKeyContains(req.RoleKey))
 	}
 	if req.RoleSort > 0 {
 		list = append(list, sysrole.RoleSort(req.RoleSort))
 	}
-	if str.IsBlank(req.Flag) {
+	if str.IsNotBlank(req.Flag) {
 		list = append(list, sysrole.FlagContains(req.Flag))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, sysrole.RemarkContains(req.Remark))
 	}
 	list = append(list, sysrole.Admin(req.Admin))
-	if str.IsBlank(req.DataScope) {
+	if str.IsNotBlank(req.DataScope) {
 		list = append(list, sysrole.DataScopeContains(req.DataScope))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

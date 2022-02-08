@@ -116,7 +116,7 @@ func (r *resourceGroupRepo) genCondition(req *v1.ResourceGroupReq) []predicate.R
 	if req.Id > 0 {
 		list = append(list, resourcegroup.ID(req.Id))
 	}
-	if str.IsBlank(req.Name) {
+	if str.IsNotBlank(req.Name) {
 		list = append(list, resourcegroup.NameContains(req.Name))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

@@ -171,40 +171,40 @@ func (r *novelRepo) genCondition(req *v1.NovelReq) []predicate.Novel {
 	if req.ClassifyId > 0 {
 		list = append(list, novel.ClassifyId(req.ClassifyId))
 	}
-	if str.IsBlank(req.ClassifyName) {
+	if str.IsNotBlank(req.ClassifyName) {
 		list = append(list, novel.ClassifyNameContains(req.ClassifyName))
 	}
-	if str.IsBlank(req.AuthorId) {
+	if str.IsNotBlank(req.AuthorId) {
 		list = append(list, novel.AuthorIdContains(req.AuthorId))
 	}
-	if str.IsBlank(req.Title) {
+	if str.IsNotBlank(req.Title) {
 		list = append(list, novel.TitleContains(req.Title))
 	}
-	if str.IsBlank(req.Summary) {
+	if str.IsNotBlank(req.Summary) {
 		list = append(list, novel.SummaryContains(req.Summary))
 	}
-	if str.IsBlank(req.Author) {
+	if str.IsNotBlank(req.Author) {
 		list = append(list, novel.AuthorContains(req.Author))
 	}
-	if str.IsBlank(req.Anchor) {
+	if str.IsNotBlank(req.Anchor) {
 		list = append(list, novel.AnchorContains(req.Anchor))
 	}
 	if req.Hits > 0 {
 		list = append(list, novel.Hits(req.Hits))
 	}
-	if str.IsBlank(req.Keywords) {
+	if str.IsNotBlank(req.Keywords) {
 		list = append(list, novel.KeywordsContains(req.Keywords))
 	}
-	if str.IsBlank(req.Source) {
+	if str.IsNotBlank(req.Source) {
 		list = append(list, novel.SourceContains(req.Source))
 	}
 	if req.Score > 0 {
 		list = append(list, novel.Score(req.Score))
 	}
-	if str.IsBlank(req.Cover) {
+	if str.IsNotBlank(req.Cover) {
 		list = append(list, novel.CoverContains(req.Cover))
 	}
-	if str.IsBlank(req.TagIds) {
+	if str.IsNotBlank(req.TagIds) {
 		list = append(list, novel.TagIdsContains(req.TagIds))
 	}
 	if req.WordNum > 0 {
@@ -237,16 +237,16 @@ func (r *novelRepo) genCondition(req *v1.NovelReq) []predicate.Novel {
 	if req.SignDate.IsValid() && !req.SignDate.AsTime().IsZero() {
 		list = append(list, novel.SignDateGTE(req.SignDate.AsTime()))
 	}
-	if str.IsBlank(req.LeadingMan) {
+	if str.IsNotBlank(req.LeadingMan) {
 		list = append(list, novel.LeadingManContains(req.LeadingMan))
 	}
-	if str.IsBlank(req.LeadingLady) {
+	if str.IsNotBlank(req.LeadingLady) {
 		list = append(list, novel.LeadingLadyContains(req.LeadingLady))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novel.RemarkContains(req.Remark))
 	}
-	if str.IsBlank(req.MediaKey) {
+	if str.IsNotBlank(req.MediaKey) {
 		list = append(list, novel.MediaKeyContains(req.MediaKey))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

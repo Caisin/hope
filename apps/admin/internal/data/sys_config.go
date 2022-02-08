@@ -128,16 +128,16 @@ func (r *sysConfigRepo) genCondition(req *v1.SysConfigReq) []predicate.SysConfig
 	if req.Id > 0 {
 		list = append(list, sysconfig.ID(req.Id))
 	}
-	if str.IsBlank(req.ConfigName) {
+	if str.IsNotBlank(req.ConfigName) {
 		list = append(list, sysconfig.ConfigNameContains(req.ConfigName))
 	}
-	if str.IsBlank(req.ConfigKey) {
+	if str.IsNotBlank(req.ConfigKey) {
 		list = append(list, sysconfig.ConfigKeyContains(req.ConfigKey))
 	}
-	if str.IsBlank(req.ConfigValue) {
+	if str.IsNotBlank(req.ConfigValue) {
 		list = append(list, sysconfig.ConfigValueContains(req.ConfigValue))
 	}
-	if str.IsBlank(req.ConfigType) {
+	if str.IsNotBlank(req.ConfigType) {
 		list = append(list, sysconfig.ConfigTypeContains(req.ConfigType))
 	}
 	if req.IsFrontend > 0 {
@@ -147,7 +147,7 @@ func (r *sysConfigRepo) genCondition(req *v1.SysConfigReq) []predicate.SysConfig
 	if sysconfig.StateValidator(state) == nil {
 		list = append(list, sysconfig.StateEQ(state))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, sysconfig.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

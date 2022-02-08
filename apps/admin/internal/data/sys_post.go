@@ -124,10 +124,10 @@ func (r *sysPostRepo) genCondition(req *v1.SysPostReq) []predicate.SysPost {
 	if req.Id > 0 {
 		list = append(list, syspost.ID(req.Id))
 	}
-	if str.IsBlank(req.PostName) {
+	if str.IsNotBlank(req.PostName) {
 		list = append(list, syspost.PostNameContains(req.PostName))
 	}
-	if str.IsBlank(req.PostCode) {
+	if str.IsNotBlank(req.PostCode) {
 		list = append(list, syspost.PostCodeContains(req.PostCode))
 	}
 	if req.Sort > 0 {
@@ -136,7 +136,7 @@ func (r *sysPostRepo) genCondition(req *v1.SysPostReq) []predicate.SysPost {
 	if req.Status > 0 {
 		list = append(list, syspost.Status(req.Status))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, syspost.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

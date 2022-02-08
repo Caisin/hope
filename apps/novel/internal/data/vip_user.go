@@ -145,7 +145,7 @@ func (r *vipUserRepo) genCondition(req *v1.VipUserReq) []predicate.VipUser {
 	if req.SvipExpiredTime.IsValid() && !req.SvipExpiredTime.AsTime().IsZero() {
 		list = append(list, vipuser.SvipExpiredTimeGTE(req.SvipExpiredTime.AsTime()))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, vipuser.RemarkContains(req.Remark))
 	}
 	if req.EffectTime.IsValid() && !req.EffectTime.AsTime().IsZero() {

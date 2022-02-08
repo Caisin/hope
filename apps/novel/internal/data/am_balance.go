@@ -137,7 +137,7 @@ func (r *amBalanceRepo) genCondition(req *v1.AmBalanceReq) []predicate.AmBalance
 	if req.UserId > 0 {
 		list = append(list, ambalance.UserId(req.UserId))
 	}
-	if str.IsBlank(req.OrderId) {
+	if str.IsNotBlank(req.OrderId) {
 		list = append(list, ambalance.OrderIdContains(req.OrderId))
 	}
 	if req.EventId > 0 {
@@ -155,7 +155,7 @@ func (r *amBalanceRepo) genCondition(req *v1.AmBalanceReq) []predicate.AmBalance
 	if req.Balance > 0 {
 		list = append(list, ambalance.Balance(req.Balance))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, ambalance.RemarkContains(req.Remark))
 	}
 	if req.EffectTime.IsValid() && !req.EffectTime.AsTime().IsZero() {

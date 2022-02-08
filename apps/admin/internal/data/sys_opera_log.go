@@ -163,70 +163,70 @@ func (r *sysOperaLogRepo) genCondition(req *v1.SysOperaLogReq) []predicate.SysOp
 	if req.UserId > 0 {
 		list = append(list, sysoperalog.UserId(req.UserId))
 	}
-	if str.IsBlank(req.Title) {
+	if str.IsNotBlank(req.Title) {
 		list = append(list, sysoperalog.TitleContains(req.Title))
 	}
-	if str.IsBlank(req.RequestId) {
+	if str.IsNotBlank(req.RequestId) {
 		list = append(list, sysoperalog.RequestIdContains(req.RequestId))
 	}
-	if str.IsBlank(req.BusinessType) {
+	if str.IsNotBlank(req.BusinessType) {
 		list = append(list, sysoperalog.BusinessTypeContains(req.BusinessType))
 	}
-	if str.IsBlank(req.BusinessTypes) {
+	if str.IsNotBlank(req.BusinessTypes) {
 		list = append(list, sysoperalog.BusinessTypesContains(req.BusinessTypes))
 	}
-	if str.IsBlank(req.Method) {
+	if str.IsNotBlank(req.Method) {
 		list = append(list, sysoperalog.MethodContains(req.Method))
 	}
-	if str.IsBlank(req.RequestMethod) {
+	if str.IsNotBlank(req.RequestMethod) {
 		list = append(list, sysoperalog.RequestMethodContains(req.RequestMethod))
 	}
-	if str.IsBlank(req.OperatorType) {
+	if str.IsNotBlank(req.OperatorType) {
 		list = append(list, sysoperalog.OperatorTypeContains(req.OperatorType))
 	}
-	if str.IsBlank(req.OperName) {
+	if str.IsNotBlank(req.OperName) {
 		list = append(list, sysoperalog.OperNameContains(req.OperName))
 	}
-	if str.IsBlank(req.DeptName) {
+	if str.IsNotBlank(req.DeptName) {
 		list = append(list, sysoperalog.DeptNameContains(req.DeptName))
 	}
-	if str.IsBlank(req.OperUrl) {
+	if str.IsNotBlank(req.OperUrl) {
 		list = append(list, sysoperalog.OperUrlContains(req.OperUrl))
 	}
-	if str.IsBlank(req.OperIp) {
+	if str.IsNotBlank(req.OperIp) {
 		list = append(list, sysoperalog.OperIpContains(req.OperIp))
 	}
-	if str.IsBlank(req.Browser) {
+	if str.IsNotBlank(req.Browser) {
 		list = append(list, sysoperalog.BrowserContains(req.Browser))
 	}
-	if str.IsBlank(req.Os) {
+	if str.IsNotBlank(req.Os) {
 		list = append(list, sysoperalog.OsContains(req.Os))
 	}
-	if str.IsBlank(req.Platform) {
+	if str.IsNotBlank(req.Platform) {
 		list = append(list, sysoperalog.PlatformContains(req.Platform))
 	}
-	if str.IsBlank(req.OperLocation) {
+	if str.IsNotBlank(req.OperLocation) {
 		list = append(list, sysoperalog.OperLocationContains(req.OperLocation))
 	}
-	if str.IsBlank(req.OperParam) {
+	if str.IsNotBlank(req.OperParam) {
 		list = append(list, sysoperalog.OperParamContains(req.OperParam))
 	}
-	if str.IsBlank(req.Status) {
+	if str.IsNotBlank(req.Status) {
 		list = append(list, sysoperalog.StatusContains(req.Status))
 	}
 	if req.OperTime.IsValid() && !req.OperTime.AsTime().IsZero() {
 		list = append(list, sysoperalog.OperTimeGTE(req.OperTime.AsTime()))
 	}
-	if str.IsBlank(req.JsonResult) {
+	if str.IsNotBlank(req.JsonResult) {
 		list = append(list, sysoperalog.JsonResultContains(req.JsonResult))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, sysoperalog.RemarkContains(req.Remark))
 	}
-	if str.IsBlank(req.LatencyTime) {
+	if str.IsNotBlank(req.LatencyTime) {
 		list = append(list, sysoperalog.LatencyTimeContains(req.LatencyTime))
 	}
-	if str.IsBlank(req.UserAgent) {
+	if str.IsNotBlank(req.UserAgent) {
 		list = append(list, sysoperalog.UserAgentContains(req.UserAgent))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

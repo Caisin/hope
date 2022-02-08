@@ -1,6 +1,6 @@
 module hope
 
-go 1.18
+go 1.17
 
 //直接依赖
 require (

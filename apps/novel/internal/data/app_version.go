@@ -124,19 +124,19 @@ func (r *appVersionRepo) genCondition(req *v1.AppVersionReq) []predicate.AppVers
 	if req.Id > 0 {
 		list = append(list, appversion.ID(req.Id))
 	}
-	if str.IsBlank(req.Title) {
+	if str.IsNotBlank(req.Title) {
 		list = append(list, appversion.TitleContains(req.Title))
 	}
 	if req.Version > 0 {
 		list = append(list, appversion.Version(req.Version))
 	}
-	if str.IsBlank(req.UpdateInfo) {
+	if str.IsNotBlank(req.UpdateInfo) {
 		list = append(list, appversion.UpdateInfoContains(req.UpdateInfo))
 	}
-	if str.IsBlank(req.DownloadUrl) {
+	if str.IsNotBlank(req.DownloadUrl) {
 		list = append(list, appversion.DownloadUrlContains(req.DownloadUrl))
 	}
-	if str.IsBlank(req.Platform) {
+	if str.IsNotBlank(req.Platform) {
 		list = append(list, appversion.PlatformContains(req.Platform))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

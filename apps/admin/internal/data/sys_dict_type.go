@@ -122,16 +122,16 @@ func (r *sysDictTypeRepo) genCondition(req *v1.SysDictTypeReq) []predicate.SysDi
 	if req.Id > 0 {
 		list = append(list, sysdicttype.ID(req.Id))
 	}
-	if str.IsBlank(req.DictName) {
+	if str.IsNotBlank(req.DictName) {
 		list = append(list, sysdicttype.DictNameContains(req.DictName))
 	}
-	if str.IsBlank(req.TypeCode) {
+	if str.IsNotBlank(req.TypeCode) {
 		list = append(list, sysdicttype.TypeCodeContains(req.TypeCode))
 	}
 	if req.Status > 0 {
 		list = append(list, sysdicttype.Status(req.Status))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, sysdicttype.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

@@ -275,7 +275,7 @@ func hasSchema(fields []*load.Field) bool {
 //生成查询条件
 func genCondition(pkg string, fields []*load.Field) string {
 	bf := str.NewBuffer()
-	strTmp := `if str.IsBlank(req.%s) {
+	strTmp := `if str.IsNotBlank(req.%s) {
 		list = append(list, %s.%sContains(req.%s))
 	}
 	`

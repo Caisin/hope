@@ -122,16 +122,16 @@ func (r *userResourceRepo) genCondition(req *v1.UserResourceReq) []predicate.Use
 	if req.Id > 0 {
 		list = append(list, userresource.ID(req.Id))
 	}
-	if str.IsBlank(req.ResType) {
+	if str.IsNotBlank(req.ResType) {
 		list = append(list, userresource.ResTypeContains(req.ResType))
 	}
-	if str.IsBlank(req.Name) {
+	if str.IsNotBlank(req.Name) {
 		list = append(list, userresource.NameContains(req.Name))
 	}
-	if str.IsBlank(req.Url) {
+	if str.IsNotBlank(req.Url) {
 		list = append(list, userresource.URLContains(req.Url))
 	}
-	if str.IsBlank(req.Summary) {
+	if str.IsNotBlank(req.Summary) {
 		list = append(list, userresource.SummaryContains(req.Summary))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

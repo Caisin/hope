@@ -122,13 +122,13 @@ func (r *novelMsgRepo) genCondition(req *v1.NovelMsgReq) []predicate.NovelMsg {
 	if req.Id > 0 {
 		list = append(list, novelmsg.ID(req.Id))
 	}
-	if str.IsBlank(req.Title) {
+	if str.IsNotBlank(req.Title) {
 		list = append(list, novelmsg.TitleContains(req.Title))
 	}
-	if str.IsBlank(req.Msg) {
+	if str.IsNotBlank(req.Msg) {
 		list = append(list, novelmsg.MsgContains(req.Msg))
 	}
-	if str.IsBlank(req.MsgType) {
+	if str.IsNotBlank(req.MsgType) {
 		list = append(list, novelmsg.MsgTypeContains(req.MsgType))
 	}
 	list = append(list, novelmsg.Status(req.Status))

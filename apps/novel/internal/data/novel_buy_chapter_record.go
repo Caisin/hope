@@ -141,7 +141,7 @@ func (r *novelBuyChapterRecordRepo) genCondition(req *v1.NovelBuyChapterRecordRe
 	if req.UserId > 0 {
 		list = append(list, novelbuychapterrecord.UserId(req.UserId))
 	}
-	if str.IsBlank(req.UserName) {
+	if str.IsNotBlank(req.UserName) {
 		list = append(list, novelbuychapterrecord.UserNameContains(req.UserName))
 	}
 	if req.ChapterId > 0 {
@@ -153,10 +153,10 @@ func (r *novelBuyChapterRecordRepo) genCondition(req *v1.NovelBuyChapterRecordRe
 	if req.NovelId > 0 {
 		list = append(list, novelbuychapterrecord.NovelId(req.NovelId))
 	}
-	if str.IsBlank(req.NovelName) {
+	if str.IsNotBlank(req.NovelName) {
 		list = append(list, novelbuychapterrecord.NovelNameContains(req.NovelName))
 	}
-	if str.IsBlank(req.ChapterName) {
+	if str.IsNotBlank(req.ChapterName) {
 		list = append(list, novelbuychapterrecord.ChapterNameContains(req.ChapterName))
 	}
 	list = append(list, novelbuychapterrecord.IsSvip(req.IsSvip))
@@ -169,7 +169,7 @@ func (r *novelBuyChapterRecordRepo) genCondition(req *v1.NovelBuyChapterRecordRe
 	if req.Discount > 0 {
 		list = append(list, novelbuychapterrecord.Discount(req.Discount))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, novelbuychapterrecord.RemarkContains(req.Remark))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {

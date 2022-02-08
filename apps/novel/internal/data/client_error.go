@@ -124,16 +124,16 @@ func (r *clientErrorRepo) genCondition(req *v1.ClientErrorReq) []predicate.Clien
 	if req.Id > 0 {
 		list = append(list, clienterror.ID(req.Id))
 	}
-	if str.IsBlank(req.AppVersion) {
+	if str.IsNotBlank(req.AppVersion) {
 		list = append(list, clienterror.AppVersionContains(req.AppVersion))
 	}
-	if str.IsBlank(req.DeviceName) {
+	if str.IsNotBlank(req.DeviceName) {
 		list = append(list, clienterror.DeviceNameContains(req.DeviceName))
 	}
-	if str.IsBlank(req.OsName) {
+	if str.IsNotBlank(req.OsName) {
 		list = append(list, clienterror.OsNameContains(req.OsName))
 	}
-	if str.IsBlank(req.ErrorInfo) {
+	if str.IsNotBlank(req.ErrorInfo) {
 		list = append(list, clienterror.ErrorInfoContains(req.ErrorInfo))
 	}
 	if req.UserId > 0 {

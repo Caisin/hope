@@ -140,22 +140,22 @@ func (r *customerNovelsRepo) genCondition(req *v1.CustomerNovelsReq) []predicate
 	if req.TypeId > 0 {
 		list = append(list, customernovels.TypeId(req.TypeId))
 	}
-	if str.IsBlank(req.TypeCode) {
+	if str.IsNotBlank(req.TypeCode) {
 		list = append(list, customernovels.TypeCodeContains(req.TypeCode))
 	}
-	if str.IsBlank(req.GroupCode) {
+	if str.IsNotBlank(req.GroupCode) {
 		list = append(list, customernovels.GroupCodeContains(req.GroupCode))
 	}
-	if str.IsBlank(req.FieldName) {
+	if str.IsNotBlank(req.FieldName) {
 		list = append(list, customernovels.FieldNameContains(req.FieldName))
 	}
-	if str.IsBlank(req.Cover) {
+	if str.IsNotBlank(req.Cover) {
 		list = append(list, customernovels.CoverContains(req.Cover))
 	}
 	if req.OrderNum > 0 {
 		list = append(list, customernovels.OrderNum(req.OrderNum))
 	}
-	if str.IsBlank(req.Remark) {
+	if str.IsNotBlank(req.Remark) {
 		list = append(list, customernovels.RemarkContains(req.Remark))
 	}
 	if req.EffectTime.IsValid() && !req.EffectTime.AsTime().IsZero() {

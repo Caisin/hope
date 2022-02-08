@@ -856,34 +856,6 @@ func RoleIdNotIn(vs ...int64) predicate.SysUser {
 	})
 }
 
-// RoleIdGT applies the GT predicate on the "roleId" field.
-func RoleIdGT(v int64) predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldRoleId), v))
-	})
-}
-
-// RoleIdGTE applies the GTE predicate on the "roleId" field.
-func RoleIdGTE(v int64) predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldRoleId), v))
-	})
-}
-
-// RoleIdLT applies the LT predicate on the "roleId" field.
-func RoleIdLT(v int64) predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldRoleId), v))
-	})
-}
-
-// RoleIdLTE applies the LTE predicate on the "roleId" field.
-func RoleIdLTE(v int64) predicate.SysUser {
-	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldRoleId), v))
-	})
-}
-
 // RoleIdIsNil applies the IsNil predicate on the "roleId" field.
 func RoleIdIsNil() predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
@@ -2180,7 +2152,7 @@ func HasRole() predicate.SysUser {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(RoleTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, true, RoleTable, RolePrimaryKey...),
+			sqlgraph.Edge(sqlgraph.M2O, true, RoleTable, RoleColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
@@ -2192,7 +2164,7 @@ func HasRoleWith(preds ...predicate.SysRole) predicate.SysUser {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(RoleInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, true, RoleTable, RolePrimaryKey...),
+			sqlgraph.Edge(sqlgraph.M2O, true, RoleTable, RoleColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

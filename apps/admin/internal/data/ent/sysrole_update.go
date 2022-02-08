@@ -639,10 +639,10 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if sru.mutation.UsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   sysrole.UsersTable,
-			Columns: sysrole.UsersPrimaryKey,
+			Columns: []string{sysrole.UsersColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -655,10 +655,10 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if nodes := sru.mutation.RemovedUsersIDs(); len(nodes) > 0 && !sru.mutation.UsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   sysrole.UsersTable,
-			Columns: sysrole.UsersPrimaryKey,
+			Columns: []string{sysrole.UsersColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -674,10 +674,10 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if nodes := sru.mutation.UsersIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   sysrole.UsersTable,
-			Columns: sysrole.UsersPrimaryKey,
+			Columns: []string{sysrole.UsersColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -1344,10 +1344,10 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 	}
 	if sruo.mutation.UsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   sysrole.UsersTable,
-			Columns: sysrole.UsersPrimaryKey,
+			Columns: []string{sysrole.UsersColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -1360,10 +1360,10 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 	}
 	if nodes := sruo.mutation.RemovedUsersIDs(); len(nodes) > 0 && !sruo.mutation.UsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   sysrole.UsersTable,
-			Columns: sysrole.UsersPrimaryKey,
+			Columns: []string{sysrole.UsersColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -1379,10 +1379,10 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 	}
 	if nodes := sruo.mutation.UsersIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   sysrole.UsersTable,
-			Columns: sysrole.UsersPrimaryKey,
+			Columns: []string{sysrole.UsersColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{

@@ -35,9 +35,13 @@ func (r *sysUserRepo) CreateSysUser(ctx context.Context, req *v1.SysUserCreateRe
 		return nil, err
 	}
 	now := time.Now()
+	encrypt, err := auth.Encrypt(req.Password)
+	if err != nil {
+		return nil, err
+	}
 	return r.data.db.SysUser.Create().
 		SetUsername(req.Username).
-		SetPassword(req.Password).
+		SetPassword(encrypt).
 		SetNickName(req.NickName).
 		SetPhone(req.Phone).
 		SetDeptId(req.DeptId).
@@ -74,9 +78,9 @@ func (r *sysUserRepo) UpdateSysUser(ctx context.Context, req *v1.SysUserUpdateRe
 	if err != nil {
 		return nil, err
 	}
-	return r.data.db.SysUser.UpdateOneID(req.Id).
+
+	updateBy := r.data.db.SysUser.UpdateOneID(req.Id).
 		SetUsername(req.Username).
-		SetPassword(req.Password).
 		SetNickName(req.NickName).
 		SetPhone(req.Phone).
 		SetDeptId(req.DeptId).
@@ -89,8 +93,15 @@ func (r *sysUserRepo) UpdateSysUser(ctx context.Context, req *v1.SysUserUpdateRe
 		SetDesc(req.Desc).
 		SetHomePath(req.HomePath).
 		SetStatus(req.Status).
-		SetUpdateBy(claims.UserId).
-		Save(ctx)
+		SetUpdateBy(claims.UserId)
+	if str.IsNotBlank(req.Password) {
+		encrypt, err := auth.Encrypt(req.Password)
+		if err != nil {
+			return nil, err
+		}
+		updateBy.SetPassword(encrypt)
+	}
+	return updateBy.Save(ctx)
 }
 
 // GetSysUser 根据Id查询
@@ -159,9 +170,6 @@ func (r *sysUserRepo) genCondition(req *v1.SysUserReq) []predicate.SysUser {
 	}
 	if req.PostId > 0 {
 		list = append(list, sysuser.PostId(req.PostId))
-	}
-	if req.RoleId > 0 {
-		list = append(list, sysuser.RoleId(req.RoleId))
 	}
 	if str.IsBlank(req.Avatar) {
 		list = append(list, sysuser.AvatarContains(req.Avatar))

@@ -75,11 +75,13 @@ const (
 	PostInverseTable = "sys_posts"
 	// PostColumn is the table column denoting the post relation/edge.
 	PostColumn = "post_id"
-	// RoleTable is the table that holds the role relation/edge. The primary key declared below.
-	RoleTable = "sys_role_users"
+	// RoleTable is the table that holds the role relation/edge.
+	RoleTable = "sys_users"
 	// RoleInverseTable is the table name for the SysRole entity.
 	// It exists in this package in order to avoid circular dependency with the "sysrole" package.
 	RoleInverseTable = "sys_roles"
+	// RoleColumn is the table column denoting the role relation/edge.
+	RoleColumn = "role_id"
 	// LoginLogsTable is the table that holds the loginLogs relation/edge.
 	LoginLogsTable = "sys_login_logs"
 	// LoginLogsInverseTable is the table name for the SysLoginLog entity.
@@ -119,12 +121,6 @@ var Columns = []string{
 	FieldUpdateBy,
 	FieldTenantId,
 }
-
-var (
-	// RolePrimaryKey and RoleColumn2 are the table columns denoting the
-	// primary key for the role relation (M2M).
-	RolePrimaryKey = []string{"sys_role_id", "sys_user_id"}
-)
 
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {

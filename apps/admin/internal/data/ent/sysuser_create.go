@@ -305,19 +305,23 @@ func (suc *SysUserCreate) SetPost(s *SysPost) *SysUserCreate {
 	return suc.SetPostID(s.ID)
 }
 
-// AddRoleIDs adds the "role" edge to the SysRole entity by IDs.
-func (suc *SysUserCreate) AddRoleIDs(ids ...int64) *SysUserCreate {
-	suc.mutation.AddRoleIDs(ids...)
+// SetRoleID sets the "role" edge to the SysRole entity by ID.
+func (suc *SysUserCreate) SetRoleID(id int64) *SysUserCreate {
+	suc.mutation.SetRoleID(id)
 	return suc
 }
 
-// AddRole adds the "role" edges to the SysRole entity.
-func (suc *SysUserCreate) AddRole(s ...*SysRole) *SysUserCreate {
-	ids := make([]int64, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+// SetNillableRoleID sets the "role" edge to the SysRole entity by ID if the given value is not nil.
+func (suc *SysUserCreate) SetNillableRoleID(id *int64) *SysUserCreate {
+	if id != nil {
+		suc = suc.SetRoleID(*id)
 	}
-	return suc.AddRoleIDs(ids...)
+	return suc
+}
+
+// SetRole sets the "role" edge to the SysRole entity.
+func (suc *SysUserCreate) SetRole(s *SysRole) *SysUserCreate {
+	return suc.SetRoleID(s.ID)
 }
 
 // AddLoginLogIDs adds the "loginLogs" edge to the SysLoginLog entity by IDs.
@@ -528,14 +532,6 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		})
 		_node.Phone = value
 	}
-	if value, ok := suc.mutation.RoleId(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysuser.FieldRoleId,
-		})
-		_node.RoleId = value
-	}
 	if value, ok := suc.mutation.Avatar(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -674,10 +670,10 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 	}
 	if nodes := suc.mutation.RoleIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
+			Rel:     sqlgraph.M2O,
 			Inverse: true,
 			Table:   sysuser.RoleTable,
-			Columns: sysuser.RolePrimaryKey,
+			Columns: []string{sysuser.RoleColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -689,6 +685,7 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
+		_node.RoleId = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := suc.mutation.LoginLogsIDs(); len(nodes) > 0 {

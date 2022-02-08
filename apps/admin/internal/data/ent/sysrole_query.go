@@ -102,7 +102,7 @@ func (srq *SysRoleQuery) QueryUsers() *SysUserQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysrole.Table, sysrole.FieldID, selector),
 			sqlgraph.To(sysuser.Table, sysuser.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, sysrole.UsersTable, sysrole.UsersPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysrole.UsersTable, sysrole.UsersColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(srq.driver.Dialect(), step)
 		return fromU, nil
@@ -478,66 +478,26 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context) ([]*SysRole, error) {
 
 	if query := srq.withUsers; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
-		ids := make(map[int64]*SysRole, len(nodes))
-		for _, node := range nodes {
-			ids[node.ID] = node
-			fks = append(fks, node.ID)
-			node.Edges.Users = []*SysUser{}
+		nodeids := make(map[int64]*SysRole)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.Users = []*SysUser{}
 		}
-		var (
-			edgeids []int64
-			edges   = make(map[int64][]*SysRole)
-		)
-		_spec := &sqlgraph.EdgeQuerySpec{
-			Edge: &sqlgraph.EdgeSpec{
-				Inverse: false,
-				Table:   sysrole.UsersTable,
-				Columns: sysrole.UsersPrimaryKey,
-			},
-			Predicate: func(s *sql.Selector) {
-				s.Where(sql.InValues(sysrole.UsersPrimaryKey[0], fks...))
-			},
-			ScanValues: func() [2]interface{} {
-				return [2]interface{}{new(sql.NullInt64), new(sql.NullInt64)}
-			},
-			Assign: func(out, in interface{}) error {
-				eout, ok := out.(*sql.NullInt64)
-				if !ok || eout == nil {
-					return fmt.Errorf("unexpected id value for edge-out")
-				}
-				ein, ok := in.(*sql.NullInt64)
-				if !ok || ein == nil {
-					return fmt.Errorf("unexpected id value for edge-in")
-				}
-				outValue := eout.Int64
-				inValue := ein.Int64
-				node, ok := ids[outValue]
-				if !ok {
-					return fmt.Errorf("unexpected node id in edges: %v", outValue)
-				}
-				if _, ok := edges[inValue]; !ok {
-					edgeids = append(edgeids, inValue)
-				}
-				edges[inValue] = append(edges[inValue], node)
-				return nil
-			},
-		}
-		if err := sqlgraph.QueryEdges(ctx, srq.driver, _spec); err != nil {
-			return nil, fmt.Errorf(`query edges "users": %w`, err)
-		}
-		query.Where(sysuser.IDIn(edgeids...))
+		query.Where(predicate.SysUser(func(s *sql.Selector) {
+			s.Where(sql.InValues(sysrole.UsersColumn, fks...))
+		}))
 		neighbors, err := query.All(ctx)
 		if err != nil {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			nodes, ok := edges[n.ID]
+			fk := n.RoleId
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected "users" node returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "roleId" returned %v for node %v`, fk, n.ID)
 			}
-			for i := range nodes {
-				nodes[i].Edges.Users = append(nodes[i].Edges.Users, n)
-			}
+			node.Edges.Users = append(node.Edges.Users, n)
 		}
 	}
 

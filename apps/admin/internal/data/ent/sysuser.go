@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"hope/apps/admin/internal/data/ent/sysdept"
 	"hope/apps/admin/internal/data/ent/syspost"
+	"hope/apps/admin/internal/data/ent/sysrole"
 	"hope/apps/admin/internal/data/ent/sysuser"
 	"strings"
 	"time"
@@ -87,7 +88,7 @@ type SysUserEdges struct {
 	// Post holds the value of the post edge.
 	Post *SysPost `json:"post,omitempty"`
 	// Role holds the value of the role edge.
-	Role []*SysRole `json:"role,omitempty"`
+	Role *SysRole `json:"role,omitempty"`
 	// LoginLogs holds the value of the loginLogs edge.
 	LoginLogs []*SysLoginLog `json:"loginLogs,omitempty"`
 	// OperaLogs holds the value of the operaLogs edge.
@@ -126,9 +127,14 @@ func (e SysUserEdges) PostOrErr() (*SysPost, error) {
 }
 
 // RoleOrErr returns the Role value or an error if the edge
-// was not loaded in eager-loading.
-func (e SysUserEdges) RoleOrErr() ([]*SysRole, error) {
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysUserEdges) RoleOrErr() (*SysRole, error) {
 	if e.loadedTypes[2] {
+		if e.Role == nil {
+			// The edge role was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: sysrole.Label}
+		}
 		return e.Role, nil
 	}
 	return nil, &NotLoadedError{edge: "role"}

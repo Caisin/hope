@@ -179,7 +179,7 @@ func (r *authRepo) GetMenuList(ctx context.Context, req *v1.GetMenuReq) (*v1.Get
 			return nil, err
 		}
 		for _, role := range roles {
-			sysMenus, err := role.QueryMenus().All(ctx)
+			sysMenus, err := role.QueryMenus().Where(sysmenu.StateEQ(sysmenu.StateU), sysmenu.MenuTypeIn("D", "M")).All(ctx)
 			if err != nil {
 				continue
 			}

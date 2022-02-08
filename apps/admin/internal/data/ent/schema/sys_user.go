@@ -53,7 +53,7 @@ func (SysUser) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("dept", SysDept.Type).Field("deptId").Comment("部门").Ref("users").Unique(),
 		edge.From("post", SysPost.Type).Field("postId").Comment("岗位").Ref("users").Unique(),
-		edge.From("role", SysRole.Type).Comment("角色").Ref("users"),
+		edge.From("role", SysRole.Type).Field("roleId").Comment("角色").Ref("users").Unique(),
 		edge.To("loginLogs", SysLoginLog.Type).Comment("登陆日志"),
 		edge.To("operaLogs", SysOperaLog.Type).Comment("操作日志"),
 	}

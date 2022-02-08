@@ -18394,8 +18394,6 @@ type SysUserMutation struct {
 	password         *string
 	nickName         *string
 	phone            *string
-	roleId           *int64
-	addroleId        *int64
 	avatar           *string
 	sex              *int32
 	addsex           *int32
@@ -18417,8 +18415,7 @@ type SysUserMutation struct {
 	cleareddept      bool
 	post             *int64
 	clearedpost      bool
-	role             map[int64]struct{}
-	removedrole      map[int64]struct{}
+	role             *int64
 	clearedrole      bool
 	loginLogs        map[int64]struct{}
 	removedloginLogs map[int64]struct{}
@@ -18767,13 +18764,12 @@ func (m *SysUserMutation) ResetPostId() {
 
 // SetRoleId sets the "roleId" field.
 func (m *SysUserMutation) SetRoleId(i int64) {
-	m.roleId = &i
-	m.addroleId = nil
+	m.role = &i
 }
 
 // RoleId returns the value of the "roleId" field in the mutation.
 func (m *SysUserMutation) RoleId() (r int64, exists bool) {
-	v := m.roleId
+	v := m.role
 	if v == nil {
 		return
 	}
@@ -18797,28 +18793,9 @@ func (m *SysUserMutation) OldRoleId(ctx context.Context) (v int64, err error) {
 	return oldValue.RoleId, nil
 }
 
-// AddRoleId adds i to the "roleId" field.
-func (m *SysUserMutation) AddRoleId(i int64) {
-	if m.addroleId != nil {
-		*m.addroleId += i
-	} else {
-		m.addroleId = &i
-	}
-}
-
-// AddedRoleId returns the value that was added to the "roleId" field in this mutation.
-func (m *SysUserMutation) AddedRoleId() (r int64, exists bool) {
-	v := m.addroleId
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
 // ClearRoleId clears the value of the "roleId" field.
 func (m *SysUserMutation) ClearRoleId() {
-	m.roleId = nil
-	m.addroleId = nil
+	m.role = nil
 	m.clearedFields[sysuser.FieldRoleId] = struct{}{}
 }
 
@@ -18830,8 +18807,7 @@ func (m *SysUserMutation) RoleIdCleared() bool {
 
 // ResetRoleId resets all changes to the "roleId" field.
 func (m *SysUserMutation) ResetRoleId() {
-	m.roleId = nil
-	m.addroleId = nil
+	m.role = nil
 	delete(m.clearedFields, sysuser.FieldRoleId)
 }
 
@@ -19517,14 +19493,9 @@ func (m *SysUserMutation) ResetPost() {
 	m.clearedpost = false
 }
 
-// AddRoleIDs adds the "role" edge to the SysRole entity by ids.
-func (m *SysUserMutation) AddRoleIDs(ids ...int64) {
-	if m.role == nil {
-		m.role = make(map[int64]struct{})
-	}
-	for i := range ids {
-		m.role[ids[i]] = struct{}{}
-	}
+// SetRoleID sets the "role" edge to the SysRole entity by id.
+func (m *SysUserMutation) SetRoleID(id int64) {
+	m.role = &id
 }
 
 // ClearRole clears the "role" edge to the SysRole entity.
@@ -19534,32 +19505,23 @@ func (m *SysUserMutation) ClearRole() {
 
 // RoleCleared reports if the "role" edge to the SysRole entity was cleared.
 func (m *SysUserMutation) RoleCleared() bool {
-	return m.clearedrole
+	return m.RoleIdCleared() || m.clearedrole
 }
 
-// RemoveRoleIDs removes the "role" edge to the SysRole entity by IDs.
-func (m *SysUserMutation) RemoveRoleIDs(ids ...int64) {
-	if m.removedrole == nil {
-		m.removedrole = make(map[int64]struct{})
-	}
-	for i := range ids {
-		delete(m.role, ids[i])
-		m.removedrole[ids[i]] = struct{}{}
-	}
-}
-
-// RemovedRole returns the removed IDs of the "role" edge to the SysRole entity.
-func (m *SysUserMutation) RemovedRoleIDs() (ids []int64) {
-	for id := range m.removedrole {
-		ids = append(ids, id)
+// RoleID returns the "role" edge ID in the mutation.
+func (m *SysUserMutation) RoleID() (id int64, exists bool) {
+	if m.role != nil {
+		return *m.role, true
 	}
 	return
 }
 
 // RoleIDs returns the "role" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// RoleID instead. It exists only for internal usage by the builders.
 func (m *SysUserMutation) RoleIDs() (ids []int64) {
-	for id := range m.role {
-		ids = append(ids, id)
+	if id := m.role; id != nil {
+		ids = append(ids, *id)
 	}
 	return
 }
@@ -19568,7 +19530,6 @@ func (m *SysUserMutation) RoleIDs() (ids []int64) {
 func (m *SysUserMutation) ResetRole() {
 	m.role = nil
 	m.clearedrole = false
-	m.removedrole = nil
 }
 
 // AddLoginLogIDs adds the "loginLogs" edge to the SysLoginLog entity by ids.
@@ -19717,7 +19678,7 @@ func (m *SysUserMutation) Fields() []string {
 	if m.post != nil {
 		fields = append(fields, sysuser.FieldPostId)
 	}
-	if m.roleId != nil {
+	if m.role != nil {
 		fields = append(fields, sysuser.FieldRoleId)
 	}
 	if m.avatar != nil {
@@ -19999,9 +19960,6 @@ func (m *SysUserMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *SysUserMutation) AddedFields() []string {
 	var fields []string
-	if m.addroleId != nil {
-		fields = append(fields, sysuser.FieldRoleId)
-	}
 	if m.addsex != nil {
 		fields = append(fields, sysuser.FieldSex)
 	}
@@ -20022,8 +19980,6 @@ func (m *SysUserMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *SysUserMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case sysuser.FieldRoleId:
-		return m.AddedRoleId()
 	case sysuser.FieldSex:
 		return m.AddedSex()
 	case sysuser.FieldCreateBy:
@@ -20041,13 +19997,6 @@ func (m *SysUserMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *SysUserMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case sysuser.FieldRoleId:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddRoleId(v)
-		return nil
 	case sysuser.FieldSex:
 		v, ok := value.(int32)
 		if !ok {
@@ -20267,11 +20216,9 @@ func (m *SysUserMutation) AddedIDs(name string) []ent.Value {
 			return []ent.Value{*id}
 		}
 	case sysuser.EdgeRole:
-		ids := make([]ent.Value, 0, len(m.role))
-		for id := range m.role {
-			ids = append(ids, id)
+		if id := m.role; id != nil {
+			return []ent.Value{*id}
 		}
-		return ids
 	case sysuser.EdgeLoginLogs:
 		ids := make([]ent.Value, 0, len(m.loginLogs))
 		for id := range m.loginLogs {
@@ -20291,9 +20238,6 @@ func (m *SysUserMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *SysUserMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 5)
-	if m.removedrole != nil {
-		edges = append(edges, sysuser.EdgeRole)
-	}
 	if m.removedloginLogs != nil {
 		edges = append(edges, sysuser.EdgeLoginLogs)
 	}
@@ -20307,12 +20251,6 @@ func (m *SysUserMutation) RemovedEdges() []string {
 // the given name in this mutation.
 func (m *SysUserMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
-	case sysuser.EdgeRole:
-		ids := make([]ent.Value, 0, len(m.removedrole))
-		for id := range m.removedrole {
-			ids = append(ids, id)
-		}
-		return ids
 	case sysuser.EdgeLoginLogs:
 		ids := make([]ent.Value, 0, len(m.removedloginLogs))
 		for id := range m.removedloginLogs {
@@ -20377,6 +20315,9 @@ func (m *SysUserMutation) ClearEdge(name string) error {
 		return nil
 	case sysuser.EdgePost:
 		m.ClearPost()
+		return nil
+	case sysuser.EdgeRole:
+		m.ClearRole()
 		return nil
 	}
 	return fmt.Errorf("unknown SysUser unique edge %s", name)

@@ -380,7 +380,6 @@ var (
 		{Name: "password", Type: field.TypeString},
 		{Name: "nick_name", Type: field.TypeString},
 		{Name: "phone", Type: field.TypeString, Nullable: true},
-		{Name: "role_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "avatar", Type: field.TypeString, Nullable: true},
 		{Name: "sex", Type: field.TypeInt32, Nullable: true},
 		{Name: "email", Type: field.TypeString, Nullable: true},
@@ -395,6 +394,7 @@ var (
 		{Name: "tenant_id", Type: field.TypeInt64, Default: 0},
 		{Name: "dept_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "post_id", Type: field.TypeInt64, Nullable: true},
+		{Name: "role_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// SysUsersTable holds the schema information for the "sys_users" table.
 	SysUsersTable = &schema.Table{
@@ -404,14 +404,20 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_users_sys_depts_users",
-				Columns:    []*schema.Column{SysUsersColumns[18]},
+				Columns:    []*schema.Column{SysUsersColumns[17]},
 				RefColumns: []*schema.Column{SysDeptsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "sys_users_sys_posts_users",
-				Columns:    []*schema.Column{SysUsersColumns[19]},
+				Columns:    []*schema.Column{SysUsersColumns[18]},
 				RefColumns: []*schema.Column{SysPostsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "sys_users_sys_roles_users",
+				Columns:    []*schema.Column{SysUsersColumns[19]},
+				RefColumns: []*schema.Column{SysRolesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -441,31 +447,6 @@ var (
 			},
 		},
 	}
-	// SysRoleUsersColumns holds the columns for the "sys_role_users" table.
-	SysRoleUsersColumns = []*schema.Column{
-		{Name: "sys_role_id", Type: field.TypeInt},
-		{Name: "sys_user_id", Type: field.TypeInt},
-	}
-	// SysRoleUsersTable holds the schema information for the "sys_role_users" table.
-	SysRoleUsersTable = &schema.Table{
-		Name:       "sys_role_users",
-		Columns:    SysRoleUsersColumns,
-		PrimaryKey: []*schema.Column{SysRoleUsersColumns[0], SysRoleUsersColumns[1]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "sys_role_users_sys_role_id",
-				Columns:    []*schema.Column{SysRoleUsersColumns[0]},
-				RefColumns: []*schema.Column{SysRolesColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-			{
-				Symbol:     "sys_role_users_sys_user_id",
-				Columns:    []*schema.Column{SysRoleUsersColumns[1]},
-				RefColumns: []*schema.Column{SysUsersColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-		},
-	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		CasbinRulesTable,
@@ -483,7 +464,6 @@ var (
 		SysRolesTable,
 		SysUsersTable,
 		SysRoleMenusTable,
-		SysRoleUsersTable,
 	}
 )
 
@@ -496,8 +476,7 @@ func init() {
 	SysOperaLogsTable.ForeignKeys[0].RefTable = SysUsersTable
 	SysUsersTable.ForeignKeys[0].RefTable = SysDeptsTable
 	SysUsersTable.ForeignKeys[1].RefTable = SysPostsTable
+	SysUsersTable.ForeignKeys[2].RefTable = SysRolesTable
 	SysRoleMenusTable.ForeignKeys[0].RefTable = SysRolesTable
 	SysRoleMenusTable.ForeignKeys[1].RefTable = SysMenusTable
-	SysRoleUsersTable.ForeignKeys[0].RefTable = SysRolesTable
-	SysRoleUsersTable.ForeignKeys[1].RefTable = SysUsersTable
 }

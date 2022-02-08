@@ -1610,7 +1610,7 @@ func (c *SysRoleClient) QueryUsers(sr *SysRole) *SysUserQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysrole.Table, sysrole.FieldID, id),
 			sqlgraph.To(sysuser.Table, sysuser.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, sysrole.UsersTable, sysrole.UsersPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysrole.UsersTable, sysrole.UsersColumn),
 		)
 		fromV = sqlgraph.Neighbors(sr.driver.Dialect(), step)
 		return fromV, nil
@@ -1748,7 +1748,7 @@ func (c *SysUserClient) QueryRole(su *SysUser) *SysRoleQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysuser.Table, sysuser.FieldID, id),
 			sqlgraph.To(sysrole.Table, sysrole.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, true, sysuser.RoleTable, sysuser.RolePrimaryKey...),
+			sqlgraph.Edge(sqlgraph.M2O, true, sysuser.RoleTable, sysuser.RoleColumn),
 		)
 		fromV = sqlgraph.Neighbors(su.driver.Dialect(), step)
 		return fromV, nil

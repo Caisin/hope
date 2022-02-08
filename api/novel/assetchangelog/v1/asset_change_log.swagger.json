@@ -86,7 +86,7 @@
     "/v1/asset/change/log/page": {
       "get": {
         "summary": "分页查询AssetChangeLog",
-        "operationId": "AssetChangeLog_GetPageAssetChangeLog",
+        "operationId": "AssetChangeLog_GetAssetChangeLogPage",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -581,8 +581,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -727,8 +727,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -746,8 +746,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -773,8 +773,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -870,8 +870,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {

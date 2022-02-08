@@ -86,7 +86,7 @@
     "/v1/user/analysis/statistics/page": {
       "get": {
         "summary": "分页查询UserAnalysisStatistics",
-        "operationId": "UserAnalysisStatistics_GetPageUserAnalysisStatistics",
+        "operationId": "UserAnalysisStatistics_GetUserAnalysisStatisticsPage",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -815,8 +815,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -1073,8 +1073,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -1092,8 +1092,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -1119,8 +1119,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -1272,8 +1272,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {

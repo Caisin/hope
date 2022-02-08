@@ -51,7 +51,7 @@ type ReplaceHelper struct {
 	NewText string //新的文本
 }
 
-func (h *ReplaceHelper) DoWrok() error {
+func (h *ReplaceHelper) DoWalk() error {
 
 	return filepath.Walk(h.Root, h.walkCallback)
 
@@ -78,16 +78,11 @@ func (h ReplaceHelper) walkCallback(path string, f os.FileInfo, err error) error
 		return err
 	}
 	content := string(buf)
-	log.Printf("h.OldText: %s \n", h.OldText)
-	log.Printf("h.NewText: %s \n", h.NewText)
-
 	//替换
 	newContent := strings.Replace(content, h.OldText, h.NewText, -1)
 
 	//重新写入
-	ioutil.WriteFile(path, []byte(newContent), 0)
-
-	return err
+	return ioutil.WriteFile(path, []byte(newContent), 0)
 }
 
 func FileMonitoringById(ctx context.Context, filePth string, id string, group string, hookfn func(context.Context, string, string, []byte)) {

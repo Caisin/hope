@@ -86,7 +86,7 @@
     "/v1/sys/menu/page": {
       "get": {
         "summary": "分页查询SysMenu",
-        "operationId": "SysMenu_GetPageSysMenu",
+        "operationId": "SysMenu_GetSysMenuPage",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -263,6 +263,27 @@
           {
             "name": "param.frameSrc",
             "description": "外链地址.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.state",
+            "description": "状态:U:使用,E:失效.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "param.checkPermission",
+            "description": "是否校验权限.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "param.operation",
+            "description": "操作资源.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -460,6 +481,27 @@
             "type": "string"
           },
           {
+            "name": "state",
+            "description": "状态:U:使用,E:失效.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "checkPermission",
+            "description": "是否校验权限.",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "operation",
+            "description": "操作资源.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "createdAt",
             "description": "创建时间.",
             "in": "query",
@@ -634,6 +676,18 @@
                 "frameSrc": {
                   "type": "string",
                   "title": "外链地址"
+                },
+                "state": {
+                  "type": "string",
+                  "title": "状态:U:使用,E:失效"
+                },
+                "checkPermission": {
+                  "type": "boolean",
+                  "title": "是否校验权限"
+                },
+                "operation": {
+                  "type": "string",
+                  "title": "操作资源"
                 }
               },
               "title": "更新SysMenu请求"
@@ -707,8 +761,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -793,6 +847,18 @@
         "frameSrc": {
           "type": "string",
           "title": "外链地址"
+        },
+        "state": {
+          "type": "string",
+          "title": "状态:U:使用,E:失效"
+        },
+        "checkPermission": {
+          "type": "boolean",
+          "title": "是否校验权限"
+        },
+        "operation": {
+          "type": "string",
+          "title": "操作资源"
         }
       },
       "title": "创建SysMenu请求"
@@ -873,6 +939,18 @@
           "type": "string",
           "title": "外链地址"
         },
+        "state": {
+          "type": "string",
+          "title": "状态:U:使用,E:失效"
+        },
+        "checkPermission": {
+          "type": "boolean",
+          "title": "是否校验权限"
+        },
+        "operation": {
+          "type": "string",
+          "title": "操作资源"
+        },
         "createdAt": {
           "type": "string",
           "format": "date-time",
@@ -905,8 +983,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -924,8 +1002,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -951,8 +1029,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -1042,6 +1120,18 @@
           "type": "string",
           "title": "外链地址"
         },
+        "state": {
+          "type": "string",
+          "title": "状态:U:使用,E:失效"
+        },
+        "checkPermission": {
+          "type": "boolean",
+          "title": "是否校验权限"
+        },
+        "operation": {
+          "type": "string",
+          "title": "操作资源"
+        },
         "createdAt": {
           "type": "string",
           "format": "date-time",
@@ -1074,8 +1164,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {

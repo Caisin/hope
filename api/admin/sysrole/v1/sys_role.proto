@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package sysrole.v1;
 
 import "google/api/annotations.proto";
@@ -60,198 +61,190 @@ service SysRole {
 
 // 实体数据
 message SysRoleData {
-    int64 id = 1;
-    //角色名称
-    string roleName = 2;
-    //状态
-    string status = 3;
-    //角色代码
-    string roleKey = 4;
-    //角色排序
-    int32 roleSort = 5;
-    //标记
-    string flag = 6;
-    //备注
-    string remark = 7;
-    //是否管理员
-    bool admin = 8;
-    //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
-    string dataScope = 9;
-    //
-    string sysDept = 10;
-    //
-    string sysMenu = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
+  int64 id = 1;
+  //角色名称
+  string roleName = 2;
+  //状态
+  string status = 3;
+  //角色代码
+  string roleKey = 4;
+  //角色排序
+  int32 roleSort = 5;
+  //标记
+  string flag = 6;
+  //备注
+  string remark = 7;
+  //是否管理员
+  bool admin = 8;
+  //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
+  string dataScope = 9;
+  //菜单ID
+  repeated int64 menuIds = 10;
+  //创建时间
+  google.protobuf.Timestamp createdAt = 11;
+  //更新时间
+  google.protobuf.Timestamp updatedAt = 12;
+  //创建者
+  int64 createBy = 13;
+  //更新者
+  int64 updateBy = 14;
+  //租户
+  int64 tenantId = 15;
 
 }
 
 // 查询搜索请求
 message SysRolePageReq {
-    //分页查询参数
-    pagin.Pagination pagin = 1;
-    //查询条件参数
-    SysRoleReq param = 2;
+  //分页查询参数
+  pagin.Pagination pagin = 1;
+  //查询条件参数
+  SysRoleReq param = 2;
 }
 
 // 查询搜索返回
 message SysRolePageReply {
-    // 返回码
-    int32 code = 1;
-    // 消息
-    string message = 2;
-    // 总条数
-    int64 total = 3;
-    // 查询数据
-    repeated SysRoleData items = 4;
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 总条数
+  int64 total = 3;
+  // 查询数据
+  repeated SysRoleData items = 4;
 }
 
 
 // 查询搜索请求
 message SysRoleReq {
-    int64 id = 1;
-    //角色名称
-    string roleName = 2;
-    //状态
-    string status = 3;
-    //角色代码
-    string roleKey = 4;
-    //角色排序
-    int32 roleSort = 5;
-    //标记
-    string flag = 6;
-    //备注
-    string remark = 7;
-    //是否管理员
-    bool admin = 8;
-    //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
-    string dataScope = 9;
-    //
-    string sysDept = 10;
-    //
-    string sysMenu = 11;
-    //创建时间
-    google.protobuf.Timestamp createdAt = 12;
-    //更新时间
-    google.protobuf.Timestamp updatedAt = 13;
-    //创建者
-    int64 createBy = 14;
-    //更新者
-    int64 updateBy = 15;
-    //租户
-    int64 tenantId = 16;
+  int64 id = 1;
+  //角色名称
+  string roleName = 2;
+  //状态
+  string status = 3;
+  //角色代码
+  string roleKey = 4;
+  //角色排序
+  int32 roleSort = 5;
+  //标记
+  string flag = 6;
+  //备注
+  string remark = 7;
+  //是否管理员
+  bool admin = 8;
+  //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
+  string dataScope = 9;
+  //菜单ID
+  repeated int64 menuIds = 10;
+  //创建时间
+  google.protobuf.Timestamp createdAt = 11;
+  //更新时间
+  google.protobuf.Timestamp updatedAt = 12;
+  //创建者
+  int64 createBy = 13;
+  //更新者
+  int64 updateBy = 14;
+  //租户
+  int64 tenantId = 15;
 
 }
 
 // 查询返回
 message SysRoleReply {
-    // 返回码
-    int32 code = 1;
-    // 消息
-    string message = 2;
-    // 结果数据
-    SysRoleData result = 3;
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 结果数据
+  SysRoleData result = 3;
 }
 
 // 创建SysRole请求
 message SysRoleCreateReq {
-    //角色名称
-    string roleName = 1;
-    //状态
-    string status = 2;
-    //角色代码
-    string roleKey = 3;
-    //角色排序
-    int32 roleSort = 4;
-    //标记
-    string flag = 5;
-    //备注
-    string remark = 6;
-    //是否管理员
-    bool admin = 7;
-    //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
-    string dataScope = 8;
-    //
-    string sysDept = 9;
-    //
-    string sysMenu = 10;
+  //角色名称
+  string roleName = 1;
+  //状态
+  string status = 2;
+  //角色代码
+  string roleKey = 3;
+  //角色排序
+  int32 roleSort = 4;
+  //标记
+  string flag = 5;
+  //备注
+  string remark = 6;
+  //是否管理员
+  bool admin = 7;
+  //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
+  string dataScope = 8;
+  //菜单ID
+  repeated int64 menuIds = 9;
 
 }
 
 // 创建SysRole返回
 message SysRoleCreateReply {
-    // 返回码
-    int32 code = 1;
-    // 消息
-    string message = 2;
-    // 结果数据
-    SysRoleData result = 3;
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 结果数据
+  SysRoleData result = 3;
 }
 
 // 更新SysRole请求
 message SysRoleUpdateReq {
-    int64 id = 1;
-    //角色名称
-    string roleName = 2;
-    //状态
-    string status = 3;
-    //角色代码
-    string roleKey = 4;
-    //角色排序
-    int32 roleSort = 5;
-    //标记
-    string flag = 6;
-    //备注
-    string remark = 7;
-    //是否管理员
-    bool admin = 8;
-    //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
-    string dataScope = 9;
-    //
-    string sysDept = 10;
-    //
-    string sysMenu = 11;
+  int64 id = 1;
+  //角色名称
+  string roleName = 2;
+  //状态
+  string status = 3;
+  //角色代码
+  string roleKey = 4;
+  //角色排序
+  int32 roleSort = 5;
+  //标记
+  string flag = 6;
+  //备注
+  string remark = 7;
+  //是否管理员
+  bool admin = 8;
+  //1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
+  string dataScope = 9;
+  // 菜单ID
+  repeated int64 menuIds = 10;
 
 }
 
 
 // 更新SysRole返回
 message SysRoleUpdateReply {
-    // 返回码
-    int32 code = 1;
-    // 消息
-    string message = 2;
-    // 结果数据
-    SysRoleData result = 3;
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 结果数据
+  SysRoleData result = 3;
 }
 
 // 删除SysRole请求
 message SysRoleDeleteReq {
-    int64 id = 1;
+  int64 id = 1;
 }
 
 
 // 批量删除SysRole请求
 message SysRoleBatchDeleteReq {
-    repeated int64 ids = 1;
+  repeated int64 ids = 1;
 }
 
 
 // 删除SysRole返回
 message SysRoleDeleteReply {
-    // 返回码
-    int32 code = 1;
-    // 消息
-    string message = 2;
-    // 结果
-    bool result = 3;
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 结果
+  bool result = 3;
 }
 

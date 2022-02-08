@@ -27,10 +27,6 @@ const (
 	FieldAdmin = "admin"
 	// FieldDataScope holds the string denoting the datascope field in the database.
 	FieldDataScope = "data_scope"
-	// FieldSysDept holds the string denoting the sysdept field in the database.
-	FieldSysDept = "sys_dept"
-	// FieldSysMenu holds the string denoting the sysmenu field in the database.
-	FieldSysMenu = "sys_menu"
 	// FieldCreatedAt holds the string denoting the createdat field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updatedat field in the database.
@@ -70,8 +66,6 @@ var Columns = []string{
 	FieldRemark,
 	FieldAdmin,
 	FieldDataScope,
-	FieldSysDept,
-	FieldSysMenu,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldCreateBy,

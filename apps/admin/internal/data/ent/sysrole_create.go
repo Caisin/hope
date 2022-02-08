@@ -134,34 +134,6 @@ func (src *SysRoleCreate) SetNillableDataScope(s *string) *SysRoleCreate {
 	return src
 }
 
-// SetSysDept sets the "sysDept" field.
-func (src *SysRoleCreate) SetSysDept(s string) *SysRoleCreate {
-	src.mutation.SetSysDept(s)
-	return src
-}
-
-// SetNillableSysDept sets the "sysDept" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableSysDept(s *string) *SysRoleCreate {
-	if s != nil {
-		src.SetSysDept(*s)
-	}
-	return src
-}
-
-// SetSysMenu sets the "sysMenu" field.
-func (src *SysRoleCreate) SetSysMenu(s string) *SysRoleCreate {
-	src.mutation.SetSysMenu(s)
-	return src
-}
-
-// SetNillableSysMenu sets the "sysMenu" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableSysMenu(s *string) *SysRoleCreate {
-	if s != nil {
-		src.SetSysMenu(*s)
-	}
-	return src
-}
-
 // SetCreatedAt sets the "createdAt" field.
 func (src *SysRoleCreate) SetCreatedAt(t time.Time) *SysRoleCreate {
 	src.mutation.SetCreatedAt(t)
@@ -462,22 +434,6 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 			Column: sysrole.FieldDataScope,
 		})
 		_node.DataScope = value
-	}
-	if value, ok := src.mutation.SysDept(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldSysDept,
-		})
-		_node.SysDept = value
-	}
-	if value, ok := src.mutation.SysMenu(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldSysMenu,
-		})
-		_node.SysMenu = value
 	}
 	if value, ok := src.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

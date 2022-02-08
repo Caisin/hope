@@ -16992,8 +16992,6 @@ type SysRoleMutation struct {
 	remark        *string
 	admin         *bool
 	dataScope     *string
-	sysDept       *string
-	sysMenu       *string
 	createdAt     *time.Time
 	updatedAt     *time.Time
 	createBy      *int64
@@ -17506,104 +17504,6 @@ func (m *SysRoleMutation) ResetDataScope() {
 	delete(m.clearedFields, sysrole.FieldDataScope)
 }
 
-// SetSysDept sets the "sysDept" field.
-func (m *SysRoleMutation) SetSysDept(s string) {
-	m.sysDept = &s
-}
-
-// SysDept returns the value of the "sysDept" field in the mutation.
-func (m *SysRoleMutation) SysDept() (r string, exists bool) {
-	v := m.sysDept
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldSysDept returns the old "sysDept" field's value of the SysRole entity.
-// If the SysRole object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysRoleMutation) OldSysDept(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldSysDept is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldSysDept requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldSysDept: %w", err)
-	}
-	return oldValue.SysDept, nil
-}
-
-// ClearSysDept clears the value of the "sysDept" field.
-func (m *SysRoleMutation) ClearSysDept() {
-	m.sysDept = nil
-	m.clearedFields[sysrole.FieldSysDept] = struct{}{}
-}
-
-// SysDeptCleared returns if the "sysDept" field was cleared in this mutation.
-func (m *SysRoleMutation) SysDeptCleared() bool {
-	_, ok := m.clearedFields[sysrole.FieldSysDept]
-	return ok
-}
-
-// ResetSysDept resets all changes to the "sysDept" field.
-func (m *SysRoleMutation) ResetSysDept() {
-	m.sysDept = nil
-	delete(m.clearedFields, sysrole.FieldSysDept)
-}
-
-// SetSysMenu sets the "sysMenu" field.
-func (m *SysRoleMutation) SetSysMenu(s string) {
-	m.sysMenu = &s
-}
-
-// SysMenu returns the value of the "sysMenu" field in the mutation.
-func (m *SysRoleMutation) SysMenu() (r string, exists bool) {
-	v := m.sysMenu
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldSysMenu returns the old "sysMenu" field's value of the SysRole entity.
-// If the SysRole object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysRoleMutation) OldSysMenu(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldSysMenu is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldSysMenu requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldSysMenu: %w", err)
-	}
-	return oldValue.SysMenu, nil
-}
-
-// ClearSysMenu clears the value of the "sysMenu" field.
-func (m *SysRoleMutation) ClearSysMenu() {
-	m.sysMenu = nil
-	m.clearedFields[sysrole.FieldSysMenu] = struct{}{}
-}
-
-// SysMenuCleared returns if the "sysMenu" field was cleared in this mutation.
-func (m *SysRoleMutation) SysMenuCleared() bool {
-	_, ok := m.clearedFields[sysrole.FieldSysMenu]
-	return ok
-}
-
-// ResetSysMenu resets all changes to the "sysMenu" field.
-func (m *SysRoleMutation) ResetSysMenu() {
-	m.sysMenu = nil
-	delete(m.clearedFields, sysrole.FieldSysMenu)
-}
-
 // SetCreatedAt sets the "createdAt" field.
 func (m *SysRoleMutation) SetCreatedAt(t time.Time) {
 	m.createdAt = &t
@@ -17971,7 +17871,7 @@ func (m *SysRoleMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysRoleMutation) Fields() []string {
-	fields := make([]string, 0, 15)
+	fields := make([]string, 0, 13)
 	if m.roleName != nil {
 		fields = append(fields, sysrole.FieldRoleName)
 	}
@@ -17995,12 +17895,6 @@ func (m *SysRoleMutation) Fields() []string {
 	}
 	if m.dataScope != nil {
 		fields = append(fields, sysrole.FieldDataScope)
-	}
-	if m.sysDept != nil {
-		fields = append(fields, sysrole.FieldSysDept)
-	}
-	if m.sysMenu != nil {
-		fields = append(fields, sysrole.FieldSysMenu)
 	}
 	if m.createdAt != nil {
 		fields = append(fields, sysrole.FieldCreatedAt)
@@ -18041,10 +17935,6 @@ func (m *SysRoleMutation) Field(name string) (ent.Value, bool) {
 		return m.Admin()
 	case sysrole.FieldDataScope:
 		return m.DataScope()
-	case sysrole.FieldSysDept:
-		return m.SysDept()
-	case sysrole.FieldSysMenu:
-		return m.SysMenu()
 	case sysrole.FieldCreatedAt:
 		return m.CreatedAt()
 	case sysrole.FieldUpdatedAt:
@@ -18080,10 +17970,6 @@ func (m *SysRoleMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldAdmin(ctx)
 	case sysrole.FieldDataScope:
 		return m.OldDataScope(ctx)
-	case sysrole.FieldSysDept:
-		return m.OldSysDept(ctx)
-	case sysrole.FieldSysMenu:
-		return m.OldSysMenu(ctx)
 	case sysrole.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case sysrole.FieldUpdatedAt:
@@ -18158,20 +18044,6 @@ func (m *SysRoleMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDataScope(v)
-		return nil
-	case sysrole.FieldSysDept:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetSysDept(v)
-		return nil
-	case sysrole.FieldSysMenu:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetSysMenu(v)
 		return nil
 	case sysrole.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -18313,12 +18185,6 @@ func (m *SysRoleMutation) ClearedFields() []string {
 	if m.FieldCleared(sysrole.FieldDataScope) {
 		fields = append(fields, sysrole.FieldDataScope)
 	}
-	if m.FieldCleared(sysrole.FieldSysDept) {
-		fields = append(fields, sysrole.FieldSysDept)
-	}
-	if m.FieldCleared(sysrole.FieldSysMenu) {
-		fields = append(fields, sysrole.FieldSysMenu)
-	}
 	return fields
 }
 
@@ -18357,12 +18223,6 @@ func (m *SysRoleMutation) ClearField(name string) error {
 	case sysrole.FieldDataScope:
 		m.ClearDataScope()
 		return nil
-	case sysrole.FieldSysDept:
-		m.ClearSysDept()
-		return nil
-	case sysrole.FieldSysMenu:
-		m.ClearSysMenu()
-		return nil
 	}
 	return fmt.Errorf("unknown SysRole nullable field %s", name)
 }
@@ -18394,12 +18254,6 @@ func (m *SysRoleMutation) ResetField(name string) error {
 		return nil
 	case sysrole.FieldDataScope:
 		m.ResetDataScope()
-		return nil
-	case sysrole.FieldSysDept:
-		m.ResetSysDept()
-		return nil
-	case sysrole.FieldSysMenu:
-		m.ResetSysMenu()
 		return nil
 	case sysrole.FieldCreatedAt:
 		m.ResetCreatedAt()

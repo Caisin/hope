@@ -361,8 +361,6 @@ var (
 		{Name: "remark", Type: field.TypeString, Nullable: true},
 		{Name: "admin", Type: field.TypeBool, Nullable: true},
 		{Name: "data_scope", Type: field.TypeString, Nullable: true},
-		{Name: "sys_dept", Type: field.TypeString, Nullable: true},
-		{Name: "sys_menu", Type: field.TypeString, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "create_by", Type: field.TypeInt64, Default: 0},

@@ -24,7 +24,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetPermReply"
+              "$ref": "#/definitions/v1GetMenuReply"
             }
           },
           "default": {
@@ -153,6 +153,48 @@
     }
   },
   "definitions": {
+    "GetMenuReplyMenu": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "菜单编号"
+        },
+        "parentId": {
+          "type": "string",
+          "format": "int64",
+          "title": "父菜单Id"
+        },
+        "path": {
+          "type": "string",
+          "title": "路径"
+        },
+        "name": {
+          "type": "string",
+          "title": "菜单名"
+        },
+        "component": {
+          "type": "string",
+          "title": "组件"
+        },
+        "redirect": {
+          "type": "string",
+          "title": "跳转路径"
+        },
+        "meta": {
+          "$ref": "#/definitions/MenuMeta",
+          "title": "菜单元信息"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GetMenuReplyMenu"
+          },
+          "title": "子菜单"
+        }
+      }
+    },
     "LoginReplyRole": {
       "type": "object",
       "properties": {
@@ -207,6 +249,44 @@
         }
       }
     },
+    "MenuMeta": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "菜单标题"
+        },
+        "icon": {
+          "type": "string",
+          "title": "图标"
+        },
+        "ignoreKeepAlive": {
+          "type": "boolean",
+          "title": "不缓存"
+        },
+        "hideBreadcrumb": {
+          "type": "boolean",
+          "title": "隐藏面包屑"
+        },
+        "hideChildrenInMenu": {
+          "type": "boolean",
+          "title": "隐藏子菜单"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "排序"
+        },
+        "hideMenu": {
+          "type": "boolean",
+          "title": "影藏菜单"
+        },
+        "frameSrc": {
+          "type": "string",
+          "title": "外链地址"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -234,12 +314,34 @@
         }
       }
     },
+    "v1GetMenuReply": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "返回码"
+        },
+        "message": {
+          "type": "string",
+          "title": "消息"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GetMenuReplyMenu"
+          },
+          "title": "权限编码列表"
+        }
+      },
+      "title": "获取菜单返回"
+    },
     "v1GetPermReply": {
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -260,8 +362,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -283,8 +385,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {

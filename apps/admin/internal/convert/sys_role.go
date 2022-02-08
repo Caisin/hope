@@ -23,8 +23,6 @@ func SysRoleUpdateReq2Data(v *v1.SysRoleUpdateReq) *ent.SysRole {
 		Remark:    v.Remark,
 		Admin:     v.Admin,
 		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
 	}
 }
 
@@ -42,8 +40,6 @@ func SysRoleData2UpdateReq(v *ent.SysRole) *v1.SysRoleUpdateReq {
 		Remark:    v.Remark,
 		Admin:     v.Admin,
 		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
 	}
 }
 
@@ -60,8 +56,6 @@ func SysRoleCreateReq2Data(v *v1.SysRoleCreateReq) *ent.SysRole {
 		Remark:    v.Remark,
 		Admin:     v.Admin,
 		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
 	}
 }
 
@@ -78,8 +72,6 @@ func SysRoleData2CreateReq(v *ent.SysRole) *v1.SysRoleCreateReq {
 		Remark:    v.Remark,
 		Admin:     v.Admin,
 		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
 	}
 }
 
@@ -96,8 +88,6 @@ func SysRoleReq2Data(v *v1.SysRoleReq) *ent.SysRole {
 		Remark:    v.Remark,
 		Admin:     v.Admin,
 		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
 	}
 }
 
@@ -114,8 +104,6 @@ func SysRoleData2Req(v *ent.SysRole) *v1.SysRoleReq {
 		Remark:    v.Remark,
 		Admin:     v.Admin,
 		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
 	}
 }
 
@@ -133,8 +121,6 @@ func SysRoleData2Reply(v *ent.SysRole) *v1.SysRoleData {
 		Remark:    v.Remark,
 		Admin:     v.Admin,
 		DataScope: v.DataScope,
-		SysDept:   v.SysDept,
-		SysMenu:   v.SysMenu,
 		CreatedAt: timestamppb.New(v.CreatedAt),
 		UpdatedAt: timestamppb.New(v.UpdatedAt),
 		CreateBy:  v.CreateBy,

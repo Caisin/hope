@@ -196,46 +196,6 @@ func (sru *SysRoleUpdate) ClearDataScope() *SysRoleUpdate {
 	return sru
 }
 
-// SetSysDept sets the "sysDept" field.
-func (sru *SysRoleUpdate) SetSysDept(s string) *SysRoleUpdate {
-	sru.mutation.SetSysDept(s)
-	return sru
-}
-
-// SetNillableSysDept sets the "sysDept" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableSysDept(s *string) *SysRoleUpdate {
-	if s != nil {
-		sru.SetSysDept(*s)
-	}
-	return sru
-}
-
-// ClearSysDept clears the value of the "sysDept" field.
-func (sru *SysRoleUpdate) ClearSysDept() *SysRoleUpdate {
-	sru.mutation.ClearSysDept()
-	return sru
-}
-
-// SetSysMenu sets the "sysMenu" field.
-func (sru *SysRoleUpdate) SetSysMenu(s string) *SysRoleUpdate {
-	sru.mutation.SetSysMenu(s)
-	return sru
-}
-
-// SetNillableSysMenu sets the "sysMenu" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableSysMenu(s *string) *SysRoleUpdate {
-	if s != nil {
-		sru.SetSysMenu(*s)
-	}
-	return sru
-}
-
-// ClearSysMenu clears the value of the "sysMenu" field.
-func (sru *SysRoleUpdate) ClearSysMenu() *SysRoleUpdate {
-	sru.mutation.ClearSysMenu()
-	return sru
-}
-
 // SetUpdatedAt sets the "updatedAt" field.
 func (sru *SysRoleUpdate) SetUpdatedAt(t time.Time) *SysRoleUpdate {
 	sru.mutation.SetUpdatedAt(t)
@@ -572,32 +532,6 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysrole.FieldDataScope,
-		})
-	}
-	if value, ok := sru.mutation.SysDept(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldSysDept,
-		})
-	}
-	if sru.mutation.SysDeptCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrole.FieldSysDept,
-		})
-	}
-	if value, ok := sru.mutation.SysMenu(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldSysMenu,
-		})
-	}
-	if sru.mutation.SysMenuCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrole.FieldSysMenu,
 		})
 	}
 	if value, ok := sru.mutation.UpdatedAt(); ok {
@@ -940,46 +874,6 @@ func (sruo *SysRoleUpdateOne) SetNillableDataScope(s *string) *SysRoleUpdateOne 
 // ClearDataScope clears the value of the "dataScope" field.
 func (sruo *SysRoleUpdateOne) ClearDataScope() *SysRoleUpdateOne {
 	sruo.mutation.ClearDataScope()
-	return sruo
-}
-
-// SetSysDept sets the "sysDept" field.
-func (sruo *SysRoleUpdateOne) SetSysDept(s string) *SysRoleUpdateOne {
-	sruo.mutation.SetSysDept(s)
-	return sruo
-}
-
-// SetNillableSysDept sets the "sysDept" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableSysDept(s *string) *SysRoleUpdateOne {
-	if s != nil {
-		sruo.SetSysDept(*s)
-	}
-	return sruo
-}
-
-// ClearSysDept clears the value of the "sysDept" field.
-func (sruo *SysRoleUpdateOne) ClearSysDept() *SysRoleUpdateOne {
-	sruo.mutation.ClearSysDept()
-	return sruo
-}
-
-// SetSysMenu sets the "sysMenu" field.
-func (sruo *SysRoleUpdateOne) SetSysMenu(s string) *SysRoleUpdateOne {
-	sruo.mutation.SetSysMenu(s)
-	return sruo
-}
-
-// SetNillableSysMenu sets the "sysMenu" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableSysMenu(s *string) *SysRoleUpdateOne {
-	if s != nil {
-		sruo.SetSysMenu(*s)
-	}
-	return sruo
-}
-
-// ClearSysMenu clears the value of the "sysMenu" field.
-func (sruo *SysRoleUpdateOne) ClearSysMenu() *SysRoleUpdateOne {
-	sruo.mutation.ClearSysMenu()
 	return sruo
 }
 
@@ -1343,32 +1237,6 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysrole.FieldDataScope,
-		})
-	}
-	if value, ok := sruo.mutation.SysDept(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldSysDept,
-		})
-	}
-	if sruo.mutation.SysDeptCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrole.FieldSysDept,
-		})
-	}
-	if value, ok := sruo.mutation.SysMenu(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldSysMenu,
-		})
-	}
-	if sruo.mutation.SysMenuCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrole.FieldSysMenu,
 		})
 	}
 	if value, ok := sruo.mutation.UpdatedAt(); ok {

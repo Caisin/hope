@@ -30,7 +30,14 @@ func (s *SysRoleService) GetSysRolePage(ctx context.Context, req *pb.SysRolePage
 	}
 	items := make([]*pb.SysRoleData, 0)
 	for i := range datas {
-		items = append(items, convert.SysRoleData2Reply(datas[i]))
+		role := datas[i]
+		reply := convert.SysRoleData2Reply(role)
+		iDs, err := role.QueryMenus().IDs(ctx)
+		if err != nil {
+			return nil, err
+		}
+		reply.MenuIds = iDs
+		items = append(items, reply)
 	}
 	reply := &pb.SysRolePageReply{
 		Code:    200,

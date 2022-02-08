@@ -86,7 +86,7 @@
     "/v1/sys/role/page": {
       "get": {
         "summary": "分页查询SysRole",
-        "operationId": "SysRole_GetPageSysRole",
+        "operationId": "SysRole_GetSysRolePage",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -205,16 +205,16 @@
             "type": "string"
           },
           {
-            "name": "param.sysDept",
+            "name": "param.menuIds",
+            "description": "菜单ID.",
             "in": "query",
             "required": false,
-            "type": "string"
-          },
-          {
-            "name": "param.sysMenu",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
           },
           {
             "name": "param.createdAt",
@@ -346,16 +346,16 @@
             "type": "string"
           },
           {
-            "name": "sysDept",
+            "name": "menuIds",
+            "description": "菜单ID.",
             "in": "query",
             "required": false,
-            "type": "string"
-          },
-          {
-            "name": "sysMenu",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "int64"
+            },
+            "collectionFormat": "multi"
           },
           {
             "name": "createdAt",
@@ -497,11 +497,13 @@
                   "type": "string",
                   "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
                 },
-                "sysDept": {
-                  "type": "string"
-                },
-                "sysMenu": {
-                  "type": "string"
+                "menuIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "int64"
+                  },
+                  "title": "菜单ID"
                 }
               },
               "title": "更新SysRole请求"
@@ -575,8 +577,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -626,11 +628,13 @@
           "type": "string",
           "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
         },
-        "sysDept": {
-          "type": "string"
-        },
-        "sysMenu": {
-          "type": "string"
+        "menuIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "菜单ID"
         }
       },
       "title": "创建SysRole请求"
@@ -675,11 +679,13 @@
           "type": "string",
           "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
         },
-        "sysDept": {
-          "type": "string"
-        },
-        "sysMenu": {
-          "type": "string"
+        "menuIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "菜单ID"
         },
         "createdAt": {
           "type": "string",
@@ -713,8 +719,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -732,8 +738,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -759,8 +765,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -814,11 +820,13 @@
           "type": "string",
           "title": "1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限"
         },
-        "sysDept": {
-          "type": "string"
-        },
-        "sysMenu": {
-          "type": "string"
+        "menuIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "title": "菜单ID"
         },
         "createdAt": {
           "type": "string",
@@ -852,8 +860,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {

@@ -35,7 +35,7 @@ func (r *sysRoleRepo) CreateSysRole(ctx context.Context, req *v1.SysRoleCreateRe
 		return nil, err
 	}
 	now := time.Now()
-	return r.data.db.SysRole.Create().
+	save, err := r.data.db.SysRole.Create().
 		SetRoleName(req.RoleName).
 		SetStatus(req.Status).
 		SetRoleKey(req.RoleKey).
@@ -44,13 +44,14 @@ func (r *sysRoleRepo) CreateSysRole(ctx context.Context, req *v1.SysRoleCreateRe
 		SetRemark(req.Remark).
 		SetAdmin(req.Admin).
 		SetDataScope(req.DataScope).
-		SetSysDept(req.SysDept).
-		SetSysMenu(req.SysMenu).
 		SetCreatedAt(now).
 		SetUpdatedAt(now).
 		SetCreateBy(claims.UserId).
 		SetTenantId(claims.TenantId).
+		AddMenuIDs(req.MenuIds...).
 		Save(ctx)
+
+	return save, err
 
 }
 
@@ -78,9 +79,9 @@ func (r *sysRoleRepo) UpdateSysRole(ctx context.Context, req *v1.SysRoleUpdateRe
 		SetFlag(req.Flag).
 		SetRemark(req.Remark).
 		SetAdmin(req.Admin).
+		ClearMenus().
+		AddMenuIDs(req.MenuIds...).
 		SetDataScope(req.DataScope).
-		SetSysDept(req.SysDept).
-		SetSysMenu(req.SysMenu).
 		SetUpdateBy(claims.UserId).
 		Save(ctx)
 }
@@ -155,12 +156,6 @@ func (r *sysRoleRepo) genCondition(req *v1.SysRoleReq) []predicate.SysRole {
 	list = append(list, sysrole.Admin(req.Admin))
 	if str.IsBlank(req.DataScope) {
 		list = append(list, sysrole.DataScopeContains(req.DataScope))
-	}
-	if str.IsBlank(req.SysDept) {
-		list = append(list, sysrole.SysDeptContains(req.SysDept))
-	}
-	if str.IsBlank(req.SysMenu) {
-		list = append(list, sysrole.SysMenuContains(req.SysMenu))
 	}
 	if req.CreatedAt.IsValid() && !req.CreatedAt.AsTime().IsZero() {
 		list = append(list, sysrole.CreatedAtGTE(req.CreatedAt.AsTime()))

@@ -324,25 +324,25 @@ func init() {
 	sysroleFields := schema.SysRole{}.Fields()
 	_ = sysroleFields
 	// sysroleDescCreatedAt is the schema descriptor for createdAt field.
-	sysroleDescCreatedAt := sysroleFields[10].Descriptor()
+	sysroleDescCreatedAt := sysroleFields[8].Descriptor()
 	// sysrole.DefaultCreatedAt holds the default value on creation for the createdAt field.
 	sysrole.DefaultCreatedAt = sysroleDescCreatedAt.Default.(func() time.Time)
 	// sysroleDescUpdatedAt is the schema descriptor for updatedAt field.
-	sysroleDescUpdatedAt := sysroleFields[11].Descriptor()
+	sysroleDescUpdatedAt := sysroleFields[9].Descriptor()
 	// sysrole.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
 	sysrole.DefaultUpdatedAt = sysroleDescUpdatedAt.Default.(func() time.Time)
 	// sysrole.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
 	sysrole.UpdateDefaultUpdatedAt = sysroleDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysroleDescCreateBy is the schema descriptor for createBy field.
-	sysroleDescCreateBy := sysroleFields[12].Descriptor()
+	sysroleDescCreateBy := sysroleFields[10].Descriptor()
 	// sysrole.DefaultCreateBy holds the default value on creation for the createBy field.
 	sysrole.DefaultCreateBy = sysroleDescCreateBy.Default.(int64)
 	// sysroleDescUpdateBy is the schema descriptor for updateBy field.
-	sysroleDescUpdateBy := sysroleFields[13].Descriptor()
+	sysroleDescUpdateBy := sysroleFields[11].Descriptor()
 	// sysrole.DefaultUpdateBy holds the default value on creation for the updateBy field.
 	sysrole.DefaultUpdateBy = sysroleDescUpdateBy.Default.(int64)
 	// sysroleDescTenantId is the schema descriptor for tenantId field.
-	sysroleDescTenantId := sysroleFields[14].Descriptor()
+	sysroleDescTenantId := sysroleFields[12].Descriptor()
 	// sysrole.DefaultTenantId holds the default value on creation for the tenantId field.
 	sysrole.DefaultTenantId = sysroleDescTenantId.Default.(int64)
 	sysuserFields := schema.SysUser{}.Fields()

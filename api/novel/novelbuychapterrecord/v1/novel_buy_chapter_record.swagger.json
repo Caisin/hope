@@ -86,7 +86,7 @@
     "/v1/novel/buy/chapter/record/page": {
       "get": {
         "summary": "分页查询NovelBuyChapterRecord",
-        "operationId": "NovelBuyChapterRecord_GetPageNovelBuyChapterRecord",
+        "operationId": "NovelBuyChapterRecord_GetNovelBuyChapterRecordPage",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -635,8 +635,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -805,8 +805,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -824,8 +824,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -851,8 +851,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {
@@ -960,8 +960,8 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "string",
-          "format": "int64",
+          "type": "integer",
+          "format": "int32",
           "title": "返回码"
         },
         "message": {

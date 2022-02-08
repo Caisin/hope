@@ -38,16 +38,8 @@ type SysRole struct {
 	// 是否管理员
 	Admin bool `json:"admin,omitempty"`
 	// DataScope holds the value of the "dataScope" field.
-	// 1.全部数据权限
-	// 2.自定数据权限
-	// 3.本部门数据权限
-	// 4.本部门及以下数据权限
-	// 5.仅本人数据权限
+	// 1.全部数据权限 2.自定数据权限 3.本部门数据权限 4.本部门及以下数据权限 5.仅本人数据权限
 	DataScope string `json:"dataScope,omitempty"`
-	// SysDept holds the value of the "sysDept" field.
-	SysDept string `json:"sysDept,omitempty"`
-	// SysMenu holds the value of the "sysMenu" field.
-	SysMenu string `json:"sysMenu,omitempty"`
 	// CreatedAt holds the value of the "createdAt" field.
 	// 创建时间
 	CreatedAt time.Time `json:"createdAt,omitempty"`
@@ -106,7 +98,7 @@ func (*SysRole) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullBool)
 		case sysrole.FieldID, sysrole.FieldRoleSort, sysrole.FieldCreateBy, sysrole.FieldUpdateBy, sysrole.FieldTenantId:
 			values[i] = new(sql.NullInt64)
-		case sysrole.FieldRoleName, sysrole.FieldStatus, sysrole.FieldRoleKey, sysrole.FieldFlag, sysrole.FieldRemark, sysrole.FieldDataScope, sysrole.FieldSysDept, sysrole.FieldSysMenu:
+		case sysrole.FieldRoleName, sysrole.FieldStatus, sysrole.FieldRoleKey, sysrole.FieldFlag, sysrole.FieldRemark, sysrole.FieldDataScope:
 			values[i] = new(sql.NullString)
 		case sysrole.FieldCreatedAt, sysrole.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -178,18 +170,6 @@ func (sr *SysRole) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field dataScope", values[i])
 			} else if value.Valid {
 				sr.DataScope = value.String
-			}
-		case sysrole.FieldSysDept:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field sysDept", values[i])
-			} else if value.Valid {
-				sr.SysDept = value.String
-			}
-		case sysrole.FieldSysMenu:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field sysMenu", values[i])
-			} else if value.Valid {
-				sr.SysMenu = value.String
 			}
 		case sysrole.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -275,10 +255,6 @@ func (sr *SysRole) String() string {
 	builder.WriteString(fmt.Sprintf("%v", sr.Admin))
 	builder.WriteString(", dataScope=")
 	builder.WriteString(sr.DataScope)
-	builder.WriteString(", sysDept=")
-	builder.WriteString(sr.SysDept)
-	builder.WriteString(", sysMenu=")
-	builder.WriteString(sr.SysMenu)
 	builder.WriteString(", createdAt=")
 	builder.WriteString(sr.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", updatedAt=")

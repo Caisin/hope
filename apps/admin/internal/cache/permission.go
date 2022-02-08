@@ -6,6 +6,7 @@ import (
 	"hope/apps/admin/internal/data/ent"
 	"hope/apps/admin/internal/data/ent/sysmenu"
 	"hope/pkg/auth"
+	"hope/pkg/util/str"
 )
 
 func InitPermission(ctx context.Context, rdb *redis.Client, entc *ent.Client) error {
@@ -25,8 +26,12 @@ func InitPermission(ctx context.Context, rdb *redis.Client, entc *ent.Client) er
 	permMap := make(map[string]int64)
 	whiteListMap := make(map[int64]bool)
 	for _, menu := range menus {
-		opMap[menu.Operation] = menu.ID
-		permMap[menu.Permission] = menu.ID
+		if str.IsNotBlank(menu.Operation) {
+			opMap[menu.Operation] = menu.ID
+		}
+		if str.IsNotBlank(menu.Permission) {
+			permMap[menu.Permission] = menu.ID
+		}
 		if !menu.CheckPermission {
 			whiteListMap[menu.ID] = true
 		}

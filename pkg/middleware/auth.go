@@ -20,9 +20,11 @@ func PermissionCheck(rdc *redis.Client) middleware.Middleware {
 					if auth.HasOperationPer(ctx, rdc, operation) {
 						return handler(ctx, req)
 					}
+				} else {
+					return nil, errors.NotFound("NotFound", operation+" not register")
 				}
 			}
-			return nil, errors.Unauthorized("UNAUTHORIZED", "JWT token is missing")
+			return nil, errors.Forbidden("Forbidden", "You have no permission")
 		}
 	}
 }

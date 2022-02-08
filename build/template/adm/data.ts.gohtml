@@ -11,7 +11,7 @@ export const columns: BasicColumn[] = [
   },
 {{- range .fields}}
   {
-    title: '{{.Comment}}',
+    title: '{{block2line .Comment}}',
     dataIndex: '{{.Name}}',
     sorter: true,
     align: 'left',
@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
 {{- range .fields}}
   {
-    label: '{{.Comment}}',
+    label: '{{block2line .Comment}}',
     field: '{{.Name}}',
     component: '{{fcp .}}',
     colProps: { span: 8 },
@@ -42,7 +42,7 @@ export const formSchema: FormSchema[] = [
   },
   {{- range .fields}}
   {
-    label: '{{.Comment}}',
+    label: '{{block2line .Comment}}',
     field: '{{.Name}}',
     component: '{{fcp .}}',
   },

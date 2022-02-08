@@ -549,3 +549,7 @@ func Register{{.upSvcType}}Server(
 	grpcFileName := fmt.Sprintf("%s/apps/%s/internal/server/reg_grpc.go", projectPath, prod)
 	genFile(parse, m, grpcFileName)
 }
+
+func block2line(s string) string {
+	return strings.ReplaceAll(s, "\n", "")
+}

@@ -18,8 +18,11 @@
         </a-alert>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增 </a-button>
+        <a-button v-if="hasPermission('{{.basePerm}}:create')" type="primary" @click="handleCreate">
+          新增
+        </a-button>
         <a-button
+          v-if="hasPermission('{{.basePerm}}:batchDelete')"
           type="primary"
           @click="handleBatchDelete(checkedKeys)"
           :disabled="checkedKeys.length === 0"
@@ -31,10 +34,12 @@
         <TableAction
           :actions="[
             {
+              auth: '{{.basePerm}}:update',
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: '{{.basePerm}}:delete',
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -62,11 +67,13 @@
   import { columns, searchFormSchema } from './{{.pkg}}.data';
   import { DelReq } from '/@/api/model/baseModel';
   import { beforeFetch, transformDateFunc } from '/@/utils/hope';
+  import { usePermission } from '/@/hooks/web/usePermission';
 
   export default defineComponent({
     name: '{{.name}}Management',
     components: { AAlert: Alert, BasicTable, {{.name}}Modal, TableAction },
     setup() {
+      const { hasPermission } = usePermission();
       const checkedKeys = ref<Array<string | number>>([]);
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -90,7 +97,7 @@
           fixed: 'right',
         },
         beforeFetch: beforeFetch,
-        rowKey: '{{.pk}}',
+        rowKey: 'id',
       });
 
       function handleCreate() {
@@ -133,6 +140,7 @@
         handleBatchDelete,
         handleSuccess,
         onSelectChange,
+        hasPermission,
       };
     },
   });

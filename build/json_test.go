@@ -92,8 +92,8 @@ func TestAdmin(t *testing.T) {
 	os.MkdirAll(target, os.ModePerm)
 	defer os.RemoveAll(target)
 	storage, _ := gen.NewStorage("sql")
-	projectPath := "/Users/caisin/study/code/go/hope"
-	admPath := "/Users/caisin/study/code/vue/hope-admin"
+	projectPath := "D:/work/code/go/hope"
+	admPath := "D:/work/code/vue/vue-vben-admin"
 	prods := []string{"admin", "param", "novel"}
 	funcMap := template.FuncMap{
 		"tsType":             tsType,
@@ -107,21 +107,22 @@ func TestAdmin(t *testing.T) {
 		"genFields":          genFields,
 		"add":                add,
 		"parseType":          parseType,
+		"block2line":         block2line,
 	}
 	//dataTs模板
-	dataTsTemplate := createTemplate(projectPath, "data.ts.template", funcMap)
+	dataTsTemplate := createTemplate(projectPath, "data.ts.gohtml", funcMap)
 
 	//dataTs模板
-	indexTemplate := createTemplate(projectPath, "index.vue.template", funcMap)
+	indexTemplate := createTemplate(projectPath, "index.vue.gohtml", funcMap)
 
 	//dataTs模板
-	modalTemplate := createTemplate(projectPath, "Modal.vue.template", funcMap)
+	modalTemplate := createTemplate(projectPath, "Modal.vue.gohtml", funcMap)
 
 	//dataTs模板
-	modelTemplate := createTemplate(projectPath, "model.template", funcMap)
+	modelTemplate := createTemplate(projectPath, "model.gohtml", funcMap)
 
 	//dataTs模板
-	apiTemplate := createTemplate(projectPath, "api.ts.template", funcMap)
+	apiTemplate := createTemplate(projectPath, "api.ts.gohtml", funcMap)
 	id := 0
 	bf := str.NewBuffer()
 	for _, prod := range prods {
@@ -159,6 +160,8 @@ func TestAdmin(t *testing.T) {
 			m["pkg"] = lower
 			m["apiPath"] = str.Camel2Split(name, "/")
 			m["fields"] = fields
+			basePerm := str.Camel2Split(name, ":")
+			m["basePerm"] = basePerm
 
 			dataTsFileName := fmt.Sprintf("%s/src/views/%s/%s/%s.data.ts", admPath, prod, lower, lower)
 			genFile(dataTsTemplate, m, dataTsFileName)

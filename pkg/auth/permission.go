@@ -92,12 +92,15 @@ func RefreshFromRedis(ctx context.Context, rdc *redis.Client) {
 func SetPermissionMappingToRedis(
 	ctx context.Context,
 	rdc *redis.Client,
-	permMapping,
-	operMapping map[string]int64,
-	whiteList map[int64]bool,
+	perm,
+	oper map[string]int64,
+	white map[int64]bool,
 ) {
 	mutex.Lock()
 	defer mutex.Unlock()
+	permMapping = perm
+	operMapping = oper
+	whiteList = white
 	rediscache.SetJson(ctx, rdc, permMappingKey, permMapping, -1)
 	rediscache.SetJson(ctx, rdc, operMappingKey, operMapping, -1)
 	rediscache.SetJson(ctx, rdc, whiteListKey, whiteList, -1)

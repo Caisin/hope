@@ -150,7 +150,6 @@ func SysUserData2Reply(v *ent.SysUser) *v1.SysUserData {
 	return &v1.SysUserData{
 		Id:        v.ID,
 		Username:  v.Username,
-		Password:  v.Password,
 		NickName:  v.NickName,
 		Phone:     v.Phone,
 		DeptId:    v.DeptId,

@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/casbinrule"
 	"hope/apps/admin/internal/data/ent/predicate"
@@ -778,7 +779,7 @@ func (cruo *CasbinRuleUpdateOne) sqlSave(ctx context.Context) (_node *CasbinRule
 	}
 	id, ok := cruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing CasbinRule.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "CasbinRule.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := cruo.fields; len(fields) > 0 {

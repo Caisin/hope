@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/bookpackage"
 	"hope/apps/novel/internal/data/ent/novel"
@@ -858,7 +859,7 @@ func (bpuo *BookPackageUpdateOne) sqlSave(ctx context.Context) (_node *BookPacka
 	}
 	id, ok := bpuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing BookPackage.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "BookPackage.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := bpuo.fields; len(fields) > 0 {

@@ -466,6 +466,10 @@ func (acq *AdChannelQuery) sqlAll(ctx context.Context) ([]*AdChannel, error) {
 
 func (acq *AdChannelQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := acq.querySpec()
+	_spec.Node.Columns = acq.fields
+	if len(acq.fields) > 0 {
+		_spec.Unique = acq.unique != nil && *acq.unique
+	}
 	return sqlgraph.CountNodes(ctx, acq.driver, _spec)
 }
 
@@ -536,6 +540,9 @@ func (acq *AdChannelQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if acq.sql != nil {
 		selector = acq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if acq.unique != nil && *acq.unique {
+		selector.Distinct()
 	}
 	for _, p := range acq.predicates {
 		p(selector)
@@ -815,9 +822,7 @@ func (acgb *AdChannelGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range acgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(acgb.fields...)...)

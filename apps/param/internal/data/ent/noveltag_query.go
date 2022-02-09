@@ -336,6 +336,10 @@ func (ntq *NovelTagQuery) sqlAll(ctx context.Context) ([]*NovelTag, error) {
 
 func (ntq *NovelTagQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := ntq.querySpec()
+	_spec.Node.Columns = ntq.fields
+	if len(ntq.fields) > 0 {
+		_spec.Unique = ntq.unique != nil && *ntq.unique
+	}
 	return sqlgraph.CountNodes(ctx, ntq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (ntq *NovelTagQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if ntq.sql != nil {
 		selector = ntq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if ntq.unique != nil && *ntq.unique {
+		selector.Distinct()
 	}
 	for _, p := range ntq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (ntgb *NovelTagGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range ntgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(ntgb.fields...)...)

@@ -420,30 +420,30 @@ func (ncc *NovelCommentCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (ncc *NovelCommentCreate) check() error {
 	if _, ok := ncc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "NovelComment.userId"`)}
 	}
 	if v, ok := ncc.mutation.State(); ok {
 		if err := novelcomment.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "NovelComment.state": %w`, err)}
 		}
 	}
 	if _, ok := ncc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "NovelComment.createdAt"`)}
 	}
 	if _, ok := ncc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "NovelComment.updatedAt"`)}
 	}
 	if _, ok := ncc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "NovelComment.createBy"`)}
 	}
 	if _, ok := ncc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "NovelComment.updateBy"`)}
 	}
 	if _, ok := ncc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "NovelComment.tenantId"`)}
 	}
 	if _, ok := ncc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "NovelComment.user"`)}
 	}
 	return nil
 }

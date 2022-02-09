@@ -373,7 +373,7 @@ func (ueu *UserEventUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (ueu *UserEventUpdate) check() error {
 	if _, ok := ueu.mutation.UserID(); ueu.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "UserEvent.user"`)
 	}
 	return nil
 }
@@ -976,7 +976,7 @@ func (ueuo *UserEventUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (ueuo *UserEventUpdateOne) check() error {
 	if _, ok := ueuo.mutation.UserID(); ueuo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "UserEvent.user"`)
 	}
 	return nil
 }
@@ -994,7 +994,7 @@ func (ueuo *UserEventUpdateOne) sqlSave(ctx context.Context) (_node *UserEvent, 
 	}
 	id, ok := ueuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing UserEvent.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "UserEvent.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ueuo.fields; len(fields) > 0 {

@@ -302,25 +302,25 @@ func (nbc *NovelBookshelfCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (nbc *NovelBookshelfCreate) check() error {
 	if _, ok := nbc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "NovelBookshelf.userId"`)}
 	}
 	if _, ok := nbc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "NovelBookshelf.createdAt"`)}
 	}
 	if _, ok := nbc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "NovelBookshelf.updatedAt"`)}
 	}
 	if _, ok := nbc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "NovelBookshelf.createBy"`)}
 	}
 	if _, ok := nbc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "NovelBookshelf.updateBy"`)}
 	}
 	if _, ok := nbc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "NovelBookshelf.tenantId"`)}
 	}
 	if _, ok := nbc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "NovelBookshelf.user"`)}
 	}
 	return nil
 }

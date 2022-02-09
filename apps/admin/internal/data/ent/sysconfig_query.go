@@ -336,6 +336,10 @@ func (scq *SysConfigQuery) sqlAll(ctx context.Context) ([]*SysConfig, error) {
 
 func (scq *SysConfigQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := scq.querySpec()
+	_spec.Node.Columns = scq.fields
+	if len(scq.fields) > 0 {
+		_spec.Unique = scq.unique != nil && *scq.unique
+	}
 	return sqlgraph.CountNodes(ctx, scq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (scq *SysConfigQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if scq.sql != nil {
 		selector = scq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if scq.unique != nil && *scq.unique {
+		selector.Distinct()
 	}
 	for _, p := range scq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (scgb *SysConfigGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range scgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(scgb.fields...)...)

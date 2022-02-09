@@ -292,25 +292,25 @@ func (spc *ScoreProductCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (spc *ScoreProductCreate) check() error {
 	if _, ok := spc.mutation.EffectTime(); !ok {
-		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "effectTime"`)}
+		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "ScoreProduct.effectTime"`)}
 	}
 	if _, ok := spc.mutation.ExpiredTime(); !ok {
-		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "expiredTime"`)}
+		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "ScoreProduct.expiredTime"`)}
 	}
 	if _, ok := spc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "ScoreProduct.createdAt"`)}
 	}
 	if _, ok := spc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "ScoreProduct.updatedAt"`)}
 	}
 	if _, ok := spc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "ScoreProduct.createBy"`)}
 	}
 	if _, ok := spc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "ScoreProduct.updateBy"`)}
 	}
 	if _, ok := spc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "ScoreProduct.tenantId"`)}
 	}
 	return nil
 }

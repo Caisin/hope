@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/assetitem"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -718,7 +719,7 @@ func (aiuo *AssetItemUpdateOne) sqlSave(ctx context.Context) (_node *AssetItem, 
 	}
 	id, ok := aiuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AssetItem.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AssetItem.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := aiuo.fields; len(fields) > 0 {

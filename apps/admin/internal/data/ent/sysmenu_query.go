@@ -567,6 +567,10 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context) ([]*SysMenu, error) {
 
 func (smq *SysMenuQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smq.querySpec()
+	_spec.Node.Columns = smq.fields
+	if len(smq.fields) > 0 {
+		_spec.Unique = smq.unique != nil && *smq.unique
+	}
 	return sqlgraph.CountNodes(ctx, smq.driver, _spec)
 }
 
@@ -637,6 +641,9 @@ func (smq *SysMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if smq.sql != nil {
 		selector = smq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if smq.unique != nil && *smq.unique {
+		selector.Distinct()
 	}
 	for _, p := range smq.predicates {
 		p(selector)
@@ -916,9 +923,7 @@ func (smgb *SysMenuGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range smgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(smgb.fields...)...)

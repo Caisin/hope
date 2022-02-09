@@ -404,6 +404,10 @@ func (abq *AmBalanceQuery) sqlAll(ctx context.Context) ([]*AmBalance, error) {
 
 func (abq *AmBalanceQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := abq.querySpec()
+	_spec.Node.Columns = abq.fields
+	if len(abq.fields) > 0 {
+		_spec.Unique = abq.unique != nil && *abq.unique
+	}
 	return sqlgraph.CountNodes(ctx, abq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (abq *AmBalanceQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if abq.sql != nil {
 		selector = abq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if abq.unique != nil && *abq.unique {
+		selector.Distinct()
 	}
 	for _, p := range abq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (abgb *AmBalanceGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range abgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(abgb.fields...)...)

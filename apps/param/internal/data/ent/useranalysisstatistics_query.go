@@ -336,6 +336,10 @@ func (uasq *UserAnalysisStatisticsQuery) sqlAll(ctx context.Context) ([]*UserAna
 
 func (uasq *UserAnalysisStatisticsQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := uasq.querySpec()
+	_spec.Node.Columns = uasq.fields
+	if len(uasq.fields) > 0 {
+		_spec.Unique = uasq.unique != nil && *uasq.unique
+	}
 	return sqlgraph.CountNodes(ctx, uasq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (uasq *UserAnalysisStatisticsQuery) sqlQuery(ctx context.Context) *sql.Sele
 	if uasq.sql != nil {
 		selector = uasq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if uasq.unique != nil && *uasq.unique {
+		selector.Distinct()
 	}
 	for _, p := range uasq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (uasgb *UserAnalysisStatisticsGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range uasgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(uasgb.fields...)...)

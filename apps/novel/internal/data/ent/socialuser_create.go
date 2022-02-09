@@ -778,25 +778,25 @@ func (suc *SocialUserCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (suc *SocialUserCreate) check() error {
 	if _, ok := suc.mutation.ChId(); !ok {
-		return &ValidationError{Name: "chId", err: errors.New(`ent: missing required field "chId"`)}
+		return &ValidationError{Name: "chId", err: errors.New(`ent: missing required field "SocialUser.chId"`)}
 	}
 	if _, ok := suc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SocialUser.createdAt"`)}
 	}
 	if _, ok := suc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SocialUser.updatedAt"`)}
 	}
 	if _, ok := suc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SocialUser.createBy"`)}
 	}
 	if _, ok := suc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SocialUser.updateBy"`)}
 	}
 	if _, ok := suc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SocialUser.tenantId"`)}
 	}
 	if _, ok := suc.mutation.ChannelID(); !ok {
-		return &ValidationError{Name: "channel", err: errors.New("ent: missing required edge \"channel\"")}
+		return &ValidationError{Name: "channel", err: errors.New(`ent: missing required edge "SocialUser.channel"`)}
 	}
 	return nil
 }

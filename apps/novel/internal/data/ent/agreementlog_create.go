@@ -413,23 +413,23 @@ func (alc *AgreementLogCreate) defaults() {
 func (alc *AgreementLogCreate) check() error {
 	if v, ok := alc.mutation.AgreementType(); ok {
 		if err := agreementlog.AgreementTypeValidator(v); err != nil {
-			return &ValidationError{Name: "agreementType", err: fmt.Errorf(`ent: validator failed for field "agreementType": %w`, err)}
+			return &ValidationError{Name: "agreementType", err: fmt.Errorf(`ent: validator failed for field "AgreementLog.agreementType": %w`, err)}
 		}
 	}
 	if _, ok := alc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "AgreementLog.createdAt"`)}
 	}
 	if _, ok := alc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "AgreementLog.updatedAt"`)}
 	}
 	if _, ok := alc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "AgreementLog.createBy"`)}
 	}
 	if _, ok := alc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "AgreementLog.updateBy"`)}
 	}
 	if _, ok := alc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "AgreementLog.tenantId"`)}
 	}
 	return nil
 }

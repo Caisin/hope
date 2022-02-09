@@ -336,6 +336,10 @@ func (aiq *AssetItemQuery) sqlAll(ctx context.Context) ([]*AssetItem, error) {
 
 func (aiq *AssetItemQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := aiq.querySpec()
+	_spec.Node.Columns = aiq.fields
+	if len(aiq.fields) > 0 {
+		_spec.Unique = aiq.unique != nil && *aiq.unique
+	}
 	return sqlgraph.CountNodes(ctx, aiq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (aiq *AssetItemQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if aiq.sql != nil {
 		selector = aiq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if aiq.unique != nil && *aiq.unique {
+		selector.Distinct()
 	}
 	for _, p := range aiq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (aigb *AssetItemGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range aigb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(aigb.fields...)...)

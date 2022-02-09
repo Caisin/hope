@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userconsume"
@@ -669,7 +670,7 @@ func (ucuo *UserConsumeUpdateOne) sqlSave(ctx context.Context) (_node *UserConsu
 	}
 	id, ok := ucuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing UserConsume.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "UserConsume.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ucuo.fields; len(fields) > 0 {

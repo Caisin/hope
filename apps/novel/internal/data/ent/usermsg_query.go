@@ -404,6 +404,10 @@ func (umq *UserMsgQuery) sqlAll(ctx context.Context) ([]*UserMsg, error) {
 
 func (umq *UserMsgQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := umq.querySpec()
+	_spec.Node.Columns = umq.fields
+	if len(umq.fields) > 0 {
+		_spec.Unique = umq.unique != nil && *umq.unique
+	}
 	return sqlgraph.CountNodes(ctx, umq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (umq *UserMsgQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if umq.sql != nil {
 		selector = umq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if umq.unique != nil && *umq.unique {
+		selector.Distinct()
 	}
 	for _, p := range umq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (umgb *UserMsgGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range umgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(umgb.fields...)...)

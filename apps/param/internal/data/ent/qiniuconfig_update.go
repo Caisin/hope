@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/qiniuconfig"
@@ -725,7 +726,7 @@ func (qcuo *QiniuConfigUpdateOne) sqlSave(ctx context.Context) (_node *QiniuConf
 	}
 	id, ok := qcuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing QiniuConfig.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "QiniuConfig.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := qcuo.fields; len(fields) > 0 {

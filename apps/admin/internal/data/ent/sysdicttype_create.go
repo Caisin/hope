@@ -250,22 +250,22 @@ func (sdtc *SysDictTypeCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (sdtc *SysDictTypeCreate) check() error {
 	if _, ok := sdtc.mutation.TypeCode(); !ok {
-		return &ValidationError{Name: "typeCode", err: errors.New(`ent: missing required field "typeCode"`)}
+		return &ValidationError{Name: "typeCode", err: errors.New(`ent: missing required field "SysDictType.typeCode"`)}
 	}
 	if _, ok := sdtc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SysDictType.createdAt"`)}
 	}
 	if _, ok := sdtc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SysDictType.updatedAt"`)}
 	}
 	if _, ok := sdtc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SysDictType.createBy"`)}
 	}
 	if _, ok := sdtc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SysDictType.updateBy"`)}
 	}
 	if _, ok := sdtc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SysDictType.tenantId"`)}
 	}
 	return nil
 }

@@ -346,7 +346,7 @@ func (lru *ListenRecordUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (lru *ListenRecordUpdate) check() error {
 	if _, ok := lru.mutation.UserID(); lru.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "ListenRecord.user"`)
 	}
 	return nil
 }
@@ -910,7 +910,7 @@ func (lruo *ListenRecordUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (lruo *ListenRecordUpdateOne) check() error {
 	if _, ok := lruo.mutation.UserID(); lruo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "ListenRecord.user"`)
 	}
 	return nil
 }
@@ -928,7 +928,7 @@ func (lruo *ListenRecordUpdateOne) sqlSave(ctx context.Context) (_node *ListenRe
 	}
 	id, ok := lruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing ListenRecord.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "ListenRecord.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := lruo.fields; len(fields) > 0 {

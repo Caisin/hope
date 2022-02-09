@@ -336,6 +336,10 @@ func (ucq *UserConsumeQuery) sqlAll(ctx context.Context) ([]*UserConsume, error)
 
 func (ucq *UserConsumeQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := ucq.querySpec()
+	_spec.Node.Columns = ucq.fields
+	if len(ucq.fields) > 0 {
+		_spec.Unique = ucq.unique != nil && *ucq.unique
+	}
 	return sqlgraph.CountNodes(ctx, ucq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (ucq *UserConsumeQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if ucq.sql != nil {
 		selector = ucq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if ucq.unique != nil && *ucq.unique {
+		selector.Distinct()
 	}
 	for _, p := range ucq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (ucgb *UserConsumeGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range ucgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(ucgb.fields...)...)

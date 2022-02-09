@@ -312,19 +312,19 @@ func (cncc *CustomerNovelConfigCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (cncc *CustomerNovelConfigCreate) check() error {
 	if _, ok := cncc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "CustomerNovelConfig.createdAt"`)}
 	}
 	if _, ok := cncc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "CustomerNovelConfig.updatedAt"`)}
 	}
 	if _, ok := cncc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "CustomerNovelConfig.createBy"`)}
 	}
 	if _, ok := cncc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "CustomerNovelConfig.updateBy"`)}
 	}
 	if _, ok := cncc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "CustomerNovelConfig.tenantId"`)}
 	}
 	return nil
 }

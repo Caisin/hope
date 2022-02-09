@@ -336,6 +336,10 @@ func (vtq *VipTypeQuery) sqlAll(ctx context.Context) ([]*VipType, error) {
 
 func (vtq *VipTypeQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := vtq.querySpec()
+	_spec.Node.Columns = vtq.fields
+	if len(vtq.fields) > 0 {
+		_spec.Unique = vtq.unique != nil && *vtq.unique
+	}
 	return sqlgraph.CountNodes(ctx, vtq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (vtq *VipTypeQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if vtq.sql != nil {
 		selector = vtq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if vtq.unique != nil && *vtq.unique {
+		selector.Distinct()
 	}
 	for _, p := range vtq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (vtgb *VipTypeGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range vtgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(vtgb.fields...)...)

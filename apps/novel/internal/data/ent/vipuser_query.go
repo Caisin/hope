@@ -404,6 +404,10 @@ func (vuq *VipUserQuery) sqlAll(ctx context.Context) ([]*VipUser, error) {
 
 func (vuq *VipUserQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := vuq.querySpec()
+	_spec.Node.Columns = vuq.fields
+	if len(vuq.fields) > 0 {
+		_spec.Unique = vuq.unique != nil && *vuq.unique
+	}
 	return sqlgraph.CountNodes(ctx, vuq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (vuq *VipUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if vuq.sql != nil {
 		selector = vuq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if vuq.unique != nil && *vuq.unique {
+		selector.Distinct()
 	}
 	for _, p := range vuq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (vugb *VipUserGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range vugb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(vugb.fields...)...)

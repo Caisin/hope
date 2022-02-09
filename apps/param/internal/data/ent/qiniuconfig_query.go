@@ -336,6 +336,10 @@ func (qcq *QiniuConfigQuery) sqlAll(ctx context.Context) ([]*QiniuConfig, error)
 
 func (qcq *QiniuConfigQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := qcq.querySpec()
+	_spec.Node.Columns = qcq.fields
+	if len(qcq.fields) > 0 {
+		_spec.Unique = qcq.unique != nil && *qcq.unique
+	}
 	return sqlgraph.CountNodes(ctx, qcq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (qcq *QiniuConfigQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if qcq.sql != nil {
 		selector = qcq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if qcq.unique != nil && *qcq.unique {
+		selector.Distinct()
 	}
 	for _, p := range qcq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (qcgb *QiniuConfigGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range qcgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(qcgb.fields...)...)

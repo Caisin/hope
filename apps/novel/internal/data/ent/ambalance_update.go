@@ -401,7 +401,7 @@ func (abu *AmBalanceUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (abu *AmBalanceUpdate) check() error {
 	if _, ok := abu.mutation.UserID(); abu.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "AmBalance.user"`)
 	}
 	return nil
 }
@@ -1046,7 +1046,7 @@ func (abuo *AmBalanceUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (abuo *AmBalanceUpdateOne) check() error {
 	if _, ok := abuo.mutation.UserID(); abuo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "AmBalance.user"`)
 	}
 	return nil
 }
@@ -1064,7 +1064,7 @@ func (abuo *AmBalanceUpdateOne) sqlSave(ctx context.Context) (_node *AmBalance, 
 	}
 	id, ok := abuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AmBalance.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AmBalance.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := abuo.fields; len(fields) > 0 {

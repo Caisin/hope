@@ -346,27 +346,27 @@ func (sjc *SysJobCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (sjc *SysJobCreate) check() error {
 	if _, ok := sjc.mutation.State(); !ok {
-		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "state"`)}
+		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "SysJob.state"`)}
 	}
 	if v, ok := sjc.mutation.State(); ok {
 		if err := sysjob.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysJob.state": %w`, err)}
 		}
 	}
 	if _, ok := sjc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SysJob.createdAt"`)}
 	}
 	if _, ok := sjc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SysJob.updatedAt"`)}
 	}
 	if _, ok := sjc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SysJob.createBy"`)}
 	}
 	if _, ok := sjc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SysJob.updateBy"`)}
 	}
 	if _, ok := sjc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SysJob.tenantId"`)}
 	}
 	return nil
 }

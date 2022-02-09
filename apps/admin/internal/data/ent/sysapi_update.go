@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysapi"
@@ -672,7 +673,7 @@ func (sauo *SysApiUpdateOne) sqlSave(ctx context.Context) (_node *SysApi, err er
 	}
 	id, ok := sauo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysApi.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysApi.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := sauo.fields; len(fields) > 0 {

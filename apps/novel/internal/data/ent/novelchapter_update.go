@@ -496,7 +496,7 @@ func (ncu *NovelChapterUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (ncu *NovelChapterUpdate) check() error {
 	if _, ok := ncu.mutation.NovelID(); ncu.mutation.NovelCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"novel\"")
+		return errors.New(`ent: clearing a required unique edge "NovelChapter.novel"`)
 	}
 	return nil
 }
@@ -1337,7 +1337,7 @@ func (ncuo *NovelChapterUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (ncuo *NovelChapterUpdateOne) check() error {
 	if _, ok := ncuo.mutation.NovelID(); ncuo.mutation.NovelCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"novel\"")
+		return errors.New(`ent: clearing a required unique edge "NovelChapter.novel"`)
 	}
 	return nil
 }
@@ -1355,7 +1355,7 @@ func (ncuo *NovelChapterUpdateOne) sqlSave(ctx context.Context) (_node *NovelCha
 	}
 	id, ok := ncuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing NovelChapter.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "NovelChapter.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ncuo.fields; len(fields) > 0 {

@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/bookpackage"
 	"hope/apps/novel/internal/data/ent/novel"
@@ -2396,7 +2397,7 @@ func (nuo *NovelUpdateOne) sqlSave(ctx context.Context) (_node *Novel, err error
 	}
 	id, ok := nuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Novel.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Novel.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := nuo.fields; len(fields) > 0 {

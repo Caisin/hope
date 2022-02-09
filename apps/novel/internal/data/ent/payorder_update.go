@@ -476,27 +476,27 @@ func (pou *PayOrderUpdate) defaults() {
 func (pou *PayOrderUpdate) check() error {
 	if v, ok := pou.mutation.State(); ok {
 		if err := payorder.StateValidator(int32(v)); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "PayOrder.state": %w`, err)}
 		}
 	}
 	if v, ok := pou.mutation.Payment(); ok {
 		if err := payorder.PaymentValidator(v); err != nil {
-			return &ValidationError{Name: "payment", err: fmt.Errorf("ent: validator failed for field \"payment\": %w", err)}
+			return &ValidationError{Name: "payment", err: fmt.Errorf(`ent: validator failed for field "PayOrder.payment": %w`, err)}
 		}
 	}
 	if v, ok := pou.mutation.PayType(); ok {
 		if err := payorder.PayTypeValidator(v); err != nil {
-			return &ValidationError{Name: "payType", err: fmt.Errorf("ent: validator failed for field \"payType\": %w", err)}
+			return &ValidationError{Name: "payType", err: fmt.Errorf(`ent: validator failed for field "PayOrder.payType": %w`, err)}
 		}
 	}
 	if _, ok := pou.mutation.UserID(); pou.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "PayOrder.user"`)
 	}
 	if _, ok := pou.mutation.ChannelID(); pou.mutation.ChannelCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"channel\"")
+		return errors.New(`ent: clearing a required unique edge "PayOrder.channel"`)
 	}
 	if _, ok := pou.mutation.AgreementID(); pou.mutation.AgreementCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"agreement\"")
+		return errors.New(`ent: clearing a required unique edge "PayOrder.agreement"`)
 	}
 	return nil
 }
@@ -1341,27 +1341,27 @@ func (pouo *PayOrderUpdateOne) defaults() {
 func (pouo *PayOrderUpdateOne) check() error {
 	if v, ok := pouo.mutation.State(); ok {
 		if err := payorder.StateValidator(int32(v)); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "PayOrder.state": %w`, err)}
 		}
 	}
 	if v, ok := pouo.mutation.Payment(); ok {
 		if err := payorder.PaymentValidator(v); err != nil {
-			return &ValidationError{Name: "payment", err: fmt.Errorf("ent: validator failed for field \"payment\": %w", err)}
+			return &ValidationError{Name: "payment", err: fmt.Errorf(`ent: validator failed for field "PayOrder.payment": %w`, err)}
 		}
 	}
 	if v, ok := pouo.mutation.PayType(); ok {
 		if err := payorder.PayTypeValidator(v); err != nil {
-			return &ValidationError{Name: "payType", err: fmt.Errorf("ent: validator failed for field \"payType\": %w", err)}
+			return &ValidationError{Name: "payType", err: fmt.Errorf(`ent: validator failed for field "PayOrder.payType": %w`, err)}
 		}
 	}
 	if _, ok := pouo.mutation.UserID(); pouo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "PayOrder.user"`)
 	}
 	if _, ok := pouo.mutation.ChannelID(); pouo.mutation.ChannelCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"channel\"")
+		return errors.New(`ent: clearing a required unique edge "PayOrder.channel"`)
 	}
 	if _, ok := pouo.mutation.AgreementID(); pouo.mutation.AgreementCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"agreement\"")
+		return errors.New(`ent: clearing a required unique edge "PayOrder.agreement"`)
 	}
 	return nil
 }
@@ -1379,7 +1379,7 @@ func (pouo *PayOrderUpdateOne) sqlSave(ctx context.Context) (_node *PayOrder, er
 	}
 	id, ok := pouo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing PayOrder.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "PayOrder.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := pouo.fields; len(fields) > 0 {

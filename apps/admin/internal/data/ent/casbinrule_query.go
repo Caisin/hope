@@ -336,6 +336,10 @@ func (crq *CasbinRuleQuery) sqlAll(ctx context.Context) ([]*CasbinRule, error) {
 
 func (crq *CasbinRuleQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := crq.querySpec()
+	_spec.Node.Columns = crq.fields
+	if len(crq.fields) > 0 {
+		_spec.Unique = crq.unique != nil && *crq.unique
+	}
 	return sqlgraph.CountNodes(ctx, crq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (crq *CasbinRuleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if crq.sql != nil {
 		selector = crq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if crq.unique != nil && *crq.unique {
+		selector.Distinct()
 	}
 	for _, p := range crq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (crgb *CasbinRuleGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range crgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(crgb.fields...)...)

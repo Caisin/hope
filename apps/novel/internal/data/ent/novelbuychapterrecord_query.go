@@ -404,6 +404,10 @@ func (nbcrq *NovelBuyChapterRecordQuery) sqlAll(ctx context.Context) ([]*NovelBu
 
 func (nbcrq *NovelBuyChapterRecordQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := nbcrq.querySpec()
+	_spec.Node.Columns = nbcrq.fields
+	if len(nbcrq.fields) > 0 {
+		_spec.Unique = nbcrq.unique != nil && *nbcrq.unique
+	}
 	return sqlgraph.CountNodes(ctx, nbcrq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (nbcrq *NovelBuyChapterRecordQuery) sqlQuery(ctx context.Context) *sql.Sele
 	if nbcrq.sql != nil {
 		selector = nbcrq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if nbcrq.unique != nil && *nbcrq.unique {
+		selector.Distinct()
 	}
 	for _, p := range nbcrq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (nbcrgb *NovelBuyChapterRecordGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range nbcrgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(nbcrgb.fields...)...)

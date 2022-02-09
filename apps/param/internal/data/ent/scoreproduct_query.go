@@ -336,6 +336,10 @@ func (spq *ScoreProductQuery) sqlAll(ctx context.Context) ([]*ScoreProduct, erro
 
 func (spq *ScoreProductQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := spq.querySpec()
+	_spec.Node.Columns = spq.fields
+	if len(spq.fields) > 0 {
+		_spec.Unique = spq.unique != nil && *spq.unique
+	}
 	return sqlgraph.CountNodes(ctx, spq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (spq *ScoreProductQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if spq.sql != nil {
 		selector = spq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if spq.unique != nil && *spq.unique {
+		selector.Distinct()
 	}
 	for _, p := range spq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (spgb *ScoreProductGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range spgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(spgb.fields...)...)

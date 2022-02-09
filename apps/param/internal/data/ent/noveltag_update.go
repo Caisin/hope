@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/noveltag"
 	"hope/apps/param/internal/data/ent/predicate"
@@ -553,7 +554,7 @@ func (ntuo *NovelTagUpdateOne) sqlSave(ctx context.Context) (_node *NovelTag, er
 	}
 	id, ok := ntuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing NovelTag.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "NovelTag.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ntuo.fields; len(fields) > 0 {

@@ -404,6 +404,10 @@ func (lrq *ListenRecordQuery) sqlAll(ctx context.Context) ([]*ListenRecord, erro
 
 func (lrq *ListenRecordQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := lrq.querySpec()
+	_spec.Node.Columns = lrq.fields
+	if len(lrq.fields) > 0 {
+		_spec.Unique = lrq.unique != nil && *lrq.unique
+	}
 	return sqlgraph.CountNodes(ctx, lrq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (lrq *ListenRecordQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if lrq.sql != nil {
 		selector = lrq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if lrq.unique != nil && *lrq.unique {
+		selector.Distinct()
 	}
 	for _, p := range lrq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (lrgb *ListenRecordGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range lrgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(lrgb.fields...)...)

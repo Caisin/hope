@@ -530,6 +530,10 @@ func (poq *PayOrderQuery) sqlAll(ctx context.Context) ([]*PayOrder, error) {
 
 func (poq *PayOrderQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := poq.querySpec()
+	_spec.Node.Columns = poq.fields
+	if len(poq.fields) > 0 {
+		_spec.Unique = poq.unique != nil && *poq.unique
+	}
 	return sqlgraph.CountNodes(ctx, poq.driver, _spec)
 }
 
@@ -600,6 +604,9 @@ func (poq *PayOrderQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if poq.sql != nil {
 		selector = poq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if poq.unique != nil && *poq.unique {
+		selector.Distinct()
 	}
 	for _, p := range poq.predicates {
 		p(selector)
@@ -879,9 +886,7 @@ func (pogb *PayOrderGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range pogb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(pogb.fields...)...)

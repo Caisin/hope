@@ -401,91 +401,91 @@ func (poc *PayOrderCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (poc *PayOrderCreate) check() error {
 	if _, ok := poc.mutation.OrderId(); !ok {
-		return &ValidationError{Name: "orderId", err: errors.New(`ent: missing required field "orderId"`)}
+		return &ValidationError{Name: "orderId", err: errors.New(`ent: missing required field "PayOrder.orderId"`)}
 	}
 	if _, ok := poc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "PayOrder.userId"`)}
 	}
 	if _, ok := poc.mutation.ChId(); !ok {
-		return &ValidationError{Name: "chId", err: errors.New(`ent: missing required field "chId"`)}
+		return &ValidationError{Name: "chId", err: errors.New(`ent: missing required field "PayOrder.chId"`)}
 	}
 	if _, ok := poc.mutation.AgreementId(); !ok {
-		return &ValidationError{Name: "agreementId", err: errors.New(`ent: missing required field "agreementId"`)}
+		return &ValidationError{Name: "agreementId", err: errors.New(`ent: missing required field "PayOrder.agreementId"`)}
 	}
 	if _, ok := poc.mutation.LastRead(); !ok {
-		return &ValidationError{Name: "lastRead", err: errors.New(`ent: missing required field "lastRead"`)}
+		return &ValidationError{Name: "lastRead", err: errors.New(`ent: missing required field "PayOrder.lastRead"`)}
 	}
 	if _, ok := poc.mutation.LastChapter(); !ok {
-		return &ValidationError{Name: "lastChapter", err: errors.New(`ent: missing required field "lastChapter"`)}
+		return &ValidationError{Name: "lastChapter", err: errors.New(`ent: missing required field "PayOrder.lastChapter"`)}
 	}
 	if _, ok := poc.mutation.PaymentName(); !ok {
-		return &ValidationError{Name: "paymentName", err: errors.New(`ent: missing required field "paymentName"`)}
+		return &ValidationError{Name: "paymentName", err: errors.New(`ent: missing required field "PayOrder.paymentName"`)}
 	}
 	if _, ok := poc.mutation.PaymentId(); !ok {
-		return &ValidationError{Name: "paymentId", err: errors.New(`ent: missing required field "paymentId"`)}
+		return &ValidationError{Name: "paymentId", err: errors.New(`ent: missing required field "PayOrder.paymentId"`)}
 	}
 	if _, ok := poc.mutation.State(); !ok {
-		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "state"`)}
+		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "PayOrder.state"`)}
 	}
 	if v, ok := poc.mutation.State(); ok {
 		if err := payorder.StateValidator(int32(v)); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "PayOrder.state": %w`, err)}
 		}
 	}
 	if _, ok := poc.mutation.Payment(); !ok {
-		return &ValidationError{Name: "payment", err: errors.New(`ent: missing required field "payment"`)}
+		return &ValidationError{Name: "payment", err: errors.New(`ent: missing required field "PayOrder.payment"`)}
 	}
 	if v, ok := poc.mutation.Payment(); ok {
 		if err := payorder.PaymentValidator(v); err != nil {
-			return &ValidationError{Name: "payment", err: fmt.Errorf(`ent: validator failed for field "payment": %w`, err)}
+			return &ValidationError{Name: "payment", err: fmt.Errorf(`ent: validator failed for field "PayOrder.payment": %w`, err)}
 		}
 	}
 	if _, ok := poc.mutation.PaymentTime(); !ok {
-		return &ValidationError{Name: "paymentTime", err: errors.New(`ent: missing required field "paymentTime"`)}
+		return &ValidationError{Name: "paymentTime", err: errors.New(`ent: missing required field "PayOrder.paymentTime"`)}
 	}
 	if _, ok := poc.mutation.CloseTime(); !ok {
-		return &ValidationError{Name: "closeTime", err: errors.New(`ent: missing required field "closeTime"`)}
+		return &ValidationError{Name: "closeTime", err: errors.New(`ent: missing required field "PayOrder.closeTime"`)}
 	}
 	if _, ok := poc.mutation.PayType(); !ok {
-		return &ValidationError{Name: "payType", err: errors.New(`ent: missing required field "payType"`)}
+		return &ValidationError{Name: "payType", err: errors.New(`ent: missing required field "PayOrder.payType"`)}
 	}
 	if v, ok := poc.mutation.PayType(); ok {
 		if err := payorder.PayTypeValidator(v); err != nil {
-			return &ValidationError{Name: "payType", err: fmt.Errorf(`ent: validator failed for field "payType": %w`, err)}
+			return &ValidationError{Name: "payType", err: fmt.Errorf(`ent: validator failed for field "PayOrder.payType": %w`, err)}
 		}
 	}
 	if _, ok := poc.mutation.Coin(); !ok {
-		return &ValidationError{Name: "coin", err: errors.New(`ent: missing required field "coin"`)}
+		return &ValidationError{Name: "coin", err: errors.New(`ent: missing required field "PayOrder.coin"`)}
 	}
 	if _, ok := poc.mutation.Coupon(); !ok {
-		return &ValidationError{Name: "coupon", err: errors.New(`ent: missing required field "coupon"`)}
+		return &ValidationError{Name: "coupon", err: errors.New(`ent: missing required field "PayOrder.coupon"`)}
 	}
 	if _, ok := poc.mutation.Times(); !ok {
-		return &ValidationError{Name: "times", err: errors.New(`ent: missing required field "times"`)}
+		return &ValidationError{Name: "times", err: errors.New(`ent: missing required field "PayOrder.times"`)}
 	}
 	if _, ok := poc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "PayOrder.createdAt"`)}
 	}
 	if _, ok := poc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "PayOrder.updatedAt"`)}
 	}
 	if _, ok := poc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "PayOrder.createBy"`)}
 	}
 	if _, ok := poc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "PayOrder.updateBy"`)}
 	}
 	if _, ok := poc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "PayOrder.tenantId"`)}
 	}
 	if _, ok := poc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "PayOrder.user"`)}
 	}
 	if _, ok := poc.mutation.ChannelID(); !ok {
-		return &ValidationError{Name: "channel", err: errors.New("ent: missing required edge \"channel\"")}
+		return &ValidationError{Name: "channel", err: errors.New(`ent: missing required edge "PayOrder.channel"`)}
 	}
 	if _, ok := poc.mutation.AgreementID(); !ok {
-		return &ValidationError{Name: "agreement", err: errors.New("ent: missing required edge \"agreement\"")}
+		return &ValidationError{Name: "agreement", err: errors.New(`ent: missing required edge "PayOrder.agreement"`)}
 	}
 	return nil
 }

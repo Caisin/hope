@@ -506,6 +506,10 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context) ([]*SysRole, error) {
 
 func (srq *SysRoleQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := srq.querySpec()
+	_spec.Node.Columns = srq.fields
+	if len(srq.fields) > 0 {
+		_spec.Unique = srq.unique != nil && *srq.unique
+	}
 	return sqlgraph.CountNodes(ctx, srq.driver, _spec)
 }
 
@@ -576,6 +580,9 @@ func (srq *SysRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if srq.sql != nil {
 		selector = srq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if srq.unique != nil && *srq.unique {
+		selector.Distinct()
 	}
 	for _, p := range srq.predicates {
 		p(selector)
@@ -855,9 +862,7 @@ func (srgb *SysRoleGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range srgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(srgb.fields...)...)

@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/datasource"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -469,7 +470,7 @@ func (dsu *DataSourceUpdate) defaults() {
 func (dsu *DataSourceUpdate) check() error {
 	if v, ok := dsu.mutation.DbType(); ok {
 		if err := datasource.DbTypeValidator(v); err != nil {
-			return &ValidationError{Name: "dbType", err: fmt.Errorf("ent: validator failed for field \"dbType\": %w", err)}
+			return &ValidationError{Name: "dbType", err: fmt.Errorf(`ent: validator failed for field "DataSource.dbType": %w`, err)}
 		}
 	}
 	return nil
@@ -1214,7 +1215,7 @@ func (dsuo *DataSourceUpdateOne) defaults() {
 func (dsuo *DataSourceUpdateOne) check() error {
 	if v, ok := dsuo.mutation.DbType(); ok {
 		if err := datasource.DbTypeValidator(v); err != nil {
-			return &ValidationError{Name: "dbType", err: fmt.Errorf("ent: validator failed for field \"dbType\": %w", err)}
+			return &ValidationError{Name: "dbType", err: fmt.Errorf(`ent: validator failed for field "DataSource.dbType": %w`, err)}
 		}
 	}
 	return nil
@@ -1233,7 +1234,7 @@ func (dsuo *DataSourceUpdateOne) sqlSave(ctx context.Context) (_node *DataSource
 	}
 	id, ok := dsuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing DataSource.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "DataSource.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := dsuo.fields; len(fields) > 0 {

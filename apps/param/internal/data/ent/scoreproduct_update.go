@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/scoreproduct"
@@ -784,7 +785,7 @@ func (spuo *ScoreProductUpdateOne) sqlSave(ctx context.Context) (_node *ScorePro
 	}
 	id, ok := spuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing ScoreProduct.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "ScoreProduct.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := spuo.fields; len(fields) > 0 {

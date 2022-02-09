@@ -336,6 +336,10 @@ func (npcq *NovelPayConfigQuery) sqlAll(ctx context.Context) ([]*NovelPayConfig,
 
 func (npcq *NovelPayConfigQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := npcq.querySpec()
+	_spec.Node.Columns = npcq.fields
+	if len(npcq.fields) > 0 {
+		_spec.Unique = npcq.unique != nil && *npcq.unique
+	}
 	return sqlgraph.CountNodes(ctx, npcq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (npcq *NovelPayConfigQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if npcq.sql != nil {
 		selector = npcq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if npcq.unique != nil && *npcq.unique {
+		selector.Distinct()
 	}
 	for _, p := range npcq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (npcgb *NovelPayConfigGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range npcgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(npcgb.fields...)...)

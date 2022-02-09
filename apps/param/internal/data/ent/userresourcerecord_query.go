@@ -336,6 +336,10 @@ func (urrq *UserResourceRecordQuery) sqlAll(ctx context.Context) ([]*UserResourc
 
 func (urrq *UserResourceRecordQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := urrq.querySpec()
+	_spec.Node.Columns = urrq.fields
+	if len(urrq.fields) > 0 {
+		_spec.Unique = urrq.unique != nil && *urrq.unique
+	}
 	return sqlgraph.CountNodes(ctx, urrq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (urrq *UserResourceRecordQuery) sqlQuery(ctx context.Context) *sql.Selector
 	if urrq.sql != nil {
 		selector = urrq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if urrq.unique != nil && *urrq.unique {
+		selector.Distinct()
 	}
 	for _, p := range urrq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (urrgb *UserResourceRecordGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range urrgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(urrgb.fields...)...)

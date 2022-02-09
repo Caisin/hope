@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysjob"
@@ -840,7 +841,7 @@ func (sjluo *SysJobLogUpdateOne) sqlSave(ctx context.Context) (_node *SysJobLog,
 	}
 	id, ok := sjluo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysJobLog.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysJobLog.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := sjluo.fields; len(fields) > 0 {

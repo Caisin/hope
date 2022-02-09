@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/userresourcerecord"
@@ -964,7 +965,7 @@ func (urruo *UserResourceRecordUpdateOne) sqlSave(ctx context.Context) (_node *U
 	}
 	id, ok := urruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing UserResourceRecord.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "UserResourceRecord.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := urruo.fields; len(fields) > 0 {

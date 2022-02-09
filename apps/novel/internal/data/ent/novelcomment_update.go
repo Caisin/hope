@@ -548,11 +548,11 @@ func (ncu *NovelCommentUpdate) defaults() {
 func (ncu *NovelCommentUpdate) check() error {
 	if v, ok := ncu.mutation.State(); ok {
 		if err := novelcomment.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "NovelComment.state": %w`, err)}
 		}
 	}
 	if _, ok := ncu.mutation.UserID(); ncu.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "NovelComment.user"`)
 	}
 	return nil
 }
@@ -1490,11 +1490,11 @@ func (ncuo *NovelCommentUpdateOne) defaults() {
 func (ncuo *NovelCommentUpdateOne) check() error {
 	if v, ok := ncuo.mutation.State(); ok {
 		if err := novelcomment.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "NovelComment.state": %w`, err)}
 		}
 	}
 	if _, ok := ncuo.mutation.UserID(); ncuo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "NovelComment.user"`)
 	}
 	return nil
 }
@@ -1512,7 +1512,7 @@ func (ncuo *NovelCommentUpdateOne) sqlSave(ctx context.Context) (_node *NovelCom
 	}
 	id, ok := ncuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing NovelComment.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "NovelComment.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ncuo.fields; len(fields) > 0 {

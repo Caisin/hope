@@ -308,28 +308,28 @@ func (sddc *SysDictDataCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (sddc *SysDictDataCreate) check() error {
 	if _, ok := sddc.mutation.TypeId(); !ok {
-		return &ValidationError{Name: "typeId", err: errors.New(`ent: missing required field "typeId"`)}
+		return &ValidationError{Name: "typeId", err: errors.New(`ent: missing required field "SysDictData.typeId"`)}
 	}
 	if _, ok := sddc.mutation.TypeCode(); !ok {
-		return &ValidationError{Name: "typeCode", err: errors.New(`ent: missing required field "typeCode"`)}
+		return &ValidationError{Name: "typeCode", err: errors.New(`ent: missing required field "SysDictData.typeCode"`)}
 	}
 	if _, ok := sddc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SysDictData.createdAt"`)}
 	}
 	if _, ok := sddc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SysDictData.updatedAt"`)}
 	}
 	if _, ok := sddc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SysDictData.createBy"`)}
 	}
 	if _, ok := sddc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SysDictData.updateBy"`)}
 	}
 	if _, ok := sddc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SysDictData.tenantId"`)}
 	}
 	if _, ok := sddc.mutation.DictTypeID(); !ok {
-		return &ValidationError{Name: "dictType", err: errors.New("ent: missing required edge \"dictType\"")}
+		return &ValidationError{Name: "dictType", err: errors.New(`ent: missing required edge "SysDictData.dictType"`)}
 	}
 	return nil
 }

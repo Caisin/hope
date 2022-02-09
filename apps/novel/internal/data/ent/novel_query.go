@@ -570,6 +570,10 @@ func (nq *NovelQuery) sqlAll(ctx context.Context) ([]*Novel, error) {
 
 func (nq *NovelQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := nq.querySpec()
+	_spec.Node.Columns = nq.fields
+	if len(nq.fields) > 0 {
+		_spec.Unique = nq.unique != nil && *nq.unique
+	}
 	return sqlgraph.CountNodes(ctx, nq.driver, _spec)
 }
 
@@ -640,6 +644,9 @@ func (nq *NovelQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if nq.sql != nil {
 		selector = nq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if nq.unique != nil && *nq.unique {
+		selector.Distinct()
 	}
 	for _, p := range nq.predicates {
 		p(selector)
@@ -919,9 +926,7 @@ func (ngb *NovelGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range ngb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(ngb.fields...)...)

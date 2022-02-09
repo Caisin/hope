@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysconfig"
@@ -315,7 +316,7 @@ func (scu *SysConfigUpdate) defaults() {
 func (scu *SysConfigUpdate) check() error {
 	if v, ok := scu.mutation.State(); ok {
 		if err := sysconfig.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysConfig.state": %w`, err)}
 		}
 	}
 	return nil
@@ -794,7 +795,7 @@ func (scuo *SysConfigUpdateOne) defaults() {
 func (scuo *SysConfigUpdateOne) check() error {
 	if v, ok := scuo.mutation.State(); ok {
 		if err := sysconfig.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysConfig.state": %w`, err)}
 		}
 	}
 	return nil
@@ -813,7 +814,7 @@ func (scuo *SysConfigUpdateOne) sqlSave(ctx context.Context) (_node *SysConfig, 
 	}
 	id, ok := scuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysConfig.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysConfig.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := scuo.fields; len(fields) > 0 {

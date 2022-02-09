@@ -260,25 +260,25 @@ func (aclc *AdChangeLogCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (aclc *AdChangeLogCreate) check() error {
 	if _, ok := aclc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "AdChangeLog.userId"`)}
 	}
 	if _, ok := aclc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "AdChangeLog.createdAt"`)}
 	}
 	if _, ok := aclc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "AdChangeLog.updatedAt"`)}
 	}
 	if _, ok := aclc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "AdChangeLog.createBy"`)}
 	}
 	if _, ok := aclc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "AdChangeLog.updateBy"`)}
 	}
 	if _, ok := aclc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "AdChangeLog.tenantId"`)}
 	}
 	if _, ok := aclc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "AdChangeLog.user"`)}
 	}
 	return nil
 }

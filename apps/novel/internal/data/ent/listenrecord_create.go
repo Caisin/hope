@@ -280,28 +280,28 @@ func (lrc *ListenRecordCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (lrc *ListenRecordCreate) check() error {
 	if _, ok := lrc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "ListenRecord.userId"`)}
 	}
 	if _, ok := lrc.mutation.ChapterId(); !ok {
-		return &ValidationError{Name: "chapterId", err: errors.New(`ent: missing required field "chapterId"`)}
+		return &ValidationError{Name: "chapterId", err: errors.New(`ent: missing required field "ListenRecord.chapterId"`)}
 	}
 	if _, ok := lrc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "ListenRecord.createdAt"`)}
 	}
 	if _, ok := lrc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "ListenRecord.updatedAt"`)}
 	}
 	if _, ok := lrc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "ListenRecord.createBy"`)}
 	}
 	if _, ok := lrc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "ListenRecord.updateBy"`)}
 	}
 	if _, ok := lrc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "ListenRecord.tenantId"`)}
 	}
 	if _, ok := lrc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "ListenRecord.user"`)}
 	}
 	return nil
 }

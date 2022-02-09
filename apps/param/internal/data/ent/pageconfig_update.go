@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/pageconfig"
 	"hope/apps/param/internal/data/ent/predicate"
@@ -566,7 +567,7 @@ func (pcuo *PageConfigUpdateOne) sqlSave(ctx context.Context) (_node *PageConfig
 	}
 	id, ok := pcuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing PageConfig.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "PageConfig.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := pcuo.fields; len(fields) > 0 {

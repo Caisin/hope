@@ -336,6 +336,10 @@ func (rgq *ResourceGroupQuery) sqlAll(ctx context.Context) ([]*ResourceGroup, er
 
 func (rgq *ResourceGroupQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := rgq.querySpec()
+	_spec.Node.Columns = rgq.fields
+	if len(rgq.fields) > 0 {
+		_spec.Unique = rgq.unique != nil && *rgq.unique
+	}
 	return sqlgraph.CountNodes(ctx, rgq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (rgq *ResourceGroupQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if rgq.sql != nil {
 		selector = rgq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if rgq.unique != nil && *rgq.unique {
+		selector.Distinct()
 	}
 	for _, p := range rgq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (rggb *ResourceGroupGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range rggb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(rggb.fields...)...)

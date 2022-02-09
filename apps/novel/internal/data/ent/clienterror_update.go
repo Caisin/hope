@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/clienterror"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -693,7 +694,7 @@ func (ceuo *ClientErrorUpdateOne) sqlSave(ctx context.Context) (_node *ClientErr
 	}
 	id, ok := ceuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing ClientError.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "ClientError.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ceuo.fields; len(fields) > 0 {

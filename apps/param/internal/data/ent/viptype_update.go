@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/viptype"
@@ -788,7 +789,7 @@ func (vtuo *VipTypeUpdateOne) sqlSave(ctx context.Context) (_node *VipType, err 
 	}
 	id, ok := vtuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing VipType.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "VipType.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := vtuo.fields; len(fields) > 0 {

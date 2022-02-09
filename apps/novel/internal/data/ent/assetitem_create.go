@@ -270,28 +270,28 @@ func (aic *AssetItemCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (aic *AssetItemCreate) check() error {
 	if _, ok := aic.mutation.AssetItemId(); !ok {
-		return &ValidationError{Name: "assetItemId", err: errors.New(`ent: missing required field "assetItemId"`)}
+		return &ValidationError{Name: "assetItemId", err: errors.New(`ent: missing required field "AssetItem.assetItemId"`)}
 	}
 	if _, ok := aic.mutation.EffectTime(); !ok {
-		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "effectTime"`)}
+		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "AssetItem.effectTime"`)}
 	}
 	if _, ok := aic.mutation.ExpiredTime(); !ok {
-		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "expiredTime"`)}
+		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "AssetItem.expiredTime"`)}
 	}
 	if _, ok := aic.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "AssetItem.createdAt"`)}
 	}
 	if _, ok := aic.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "AssetItem.updatedAt"`)}
 	}
 	if _, ok := aic.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "AssetItem.createBy"`)}
 	}
 	if _, ok := aic.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "AssetItem.updateBy"`)}
 	}
 	if _, ok := aic.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "AssetItem.tenantId"`)}
 	}
 	return nil
 }

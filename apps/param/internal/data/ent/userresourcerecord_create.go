@@ -334,25 +334,25 @@ func (urrc *UserResourceRecordCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (urrc *UserResourceRecordCreate) check() error {
 	if _, ok := urrc.mutation.EffectTime(); !ok {
-		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "effectTime"`)}
+		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "UserResourceRecord.effectTime"`)}
 	}
 	if _, ok := urrc.mutation.ExpiredTime(); !ok {
-		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "expiredTime"`)}
+		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "UserResourceRecord.expiredTime"`)}
 	}
 	if _, ok := urrc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "UserResourceRecord.createdAt"`)}
 	}
 	if _, ok := urrc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "UserResourceRecord.updatedAt"`)}
 	}
 	if _, ok := urrc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "UserResourceRecord.createBy"`)}
 	}
 	if _, ok := urrc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "UserResourceRecord.updateBy"`)}
 	}
 	if _, ok := urrc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "UserResourceRecord.tenantId"`)}
 	}
 	return nil
 }

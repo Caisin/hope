@@ -288,27 +288,27 @@ func (scc *SysConfigCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (scc *SysConfigCreate) check() error {
 	if _, ok := scc.mutation.State(); !ok {
-		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "state"`)}
+		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "SysConfig.state"`)}
 	}
 	if v, ok := scc.mutation.State(); ok {
 		if err := sysconfig.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysConfig.state": %w`, err)}
 		}
 	}
 	if _, ok := scc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SysConfig.createdAt"`)}
 	}
 	if _, ok := scc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SysConfig.updatedAt"`)}
 	}
 	if _, ok := scc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SysConfig.createBy"`)}
 	}
 	if _, ok := scc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SysConfig.updateBy"`)}
 	}
 	if _, ok := scc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SysConfig.tenantId"`)}
 	}
 	return nil
 }

@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysoperalog"
@@ -1699,7 +1700,7 @@ func (soluo *SysOperaLogUpdateOne) sqlSave(ctx context.Context) (_node *SysOpera
 	}
 	id, ok := soluo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysOperaLog.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysOperaLog.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := soluo.fields; len(fields) > 0 {

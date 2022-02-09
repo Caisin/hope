@@ -404,6 +404,10 @@ func (sjlq *SysJobLogQuery) sqlAll(ctx context.Context) ([]*SysJobLog, error) {
 
 func (sjlq *SysJobLogQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sjlq.querySpec()
+	_spec.Node.Columns = sjlq.fields
+	if len(sjlq.fields) > 0 {
+		_spec.Unique = sjlq.unique != nil && *sjlq.unique
+	}
 	return sqlgraph.CountNodes(ctx, sjlq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (sjlq *SysJobLogQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sjlq.sql != nil {
 		selector = sjlq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if sjlq.unique != nil && *sjlq.unique {
+		selector.Distinct()
 	}
 	for _, p := range sjlq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (sjlgb *SysJobLogGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range sjlgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(sjlgb.fields...)...)

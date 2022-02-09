@@ -655,6 +655,10 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context) ([]*SysUser, error) {
 
 func (suq *SysUserQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := suq.querySpec()
+	_spec.Node.Columns = suq.fields
+	if len(suq.fields) > 0 {
+		_spec.Unique = suq.unique != nil && *suq.unique
+	}
 	return sqlgraph.CountNodes(ctx, suq.driver, _spec)
 }
 
@@ -725,6 +729,9 @@ func (suq *SysUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if suq.sql != nil {
 		selector = suq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if suq.unique != nil && *suq.unique {
+		selector.Distinct()
 	}
 	for _, p := range suq.predicates {
 		p(selector)
@@ -1004,9 +1011,7 @@ func (sugb *SysUserGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range sugb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(sugb.fields...)...)

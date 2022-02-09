@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/useranalysisstatistics"
@@ -1832,7 +1833,7 @@ func (uasuo *UserAnalysisStatisticsUpdateOne) sqlSave(ctx context.Context) (_nod
 	}
 	id, ok := uasuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing UserAnalysisStatistics.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "UserAnalysisStatistics.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := uasuo.fields; len(fields) > 0 {

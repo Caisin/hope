@@ -386,7 +386,7 @@ func (nbru *NovelBuyRecordUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (nbru *NovelBuyRecordUpdate) check() error {
 	if _, ok := nbru.mutation.UserID(); nbru.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "NovelBuyRecord.user"`)
 	}
 	return nil
 }
@@ -1008,7 +1008,7 @@ func (nbruo *NovelBuyRecordUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (nbruo *NovelBuyRecordUpdateOne) check() error {
 	if _, ok := nbruo.mutation.UserID(); nbruo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "NovelBuyRecord.user"`)
 	}
 	return nil
 }
@@ -1026,7 +1026,7 @@ func (nbruo *NovelBuyRecordUpdateOne) sqlSave(ctx context.Context) (_node *Novel
 	}
 	id, ok := nbruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing NovelBuyRecord.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "NovelBuyRecord.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := nbruo.fields; len(fields) > 0 {

@@ -336,6 +336,10 @@ func (ncq *NovelConsumeQuery) sqlAll(ctx context.Context) ([]*NovelConsume, erro
 
 func (ncq *NovelConsumeQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := ncq.querySpec()
+	_spec.Node.Columns = ncq.fields
+	if len(ncq.fields) > 0 {
+		_spec.Unique = ncq.unique != nil && *ncq.unique
+	}
 	return sqlgraph.CountNodes(ctx, ncq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (ncq *NovelConsumeQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if ncq.sql != nil {
 		selector = ncq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if ncq.unique != nil && *ncq.unique {
+		selector.Distinct()
 	}
 	for _, p := range ncq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (ncgb *NovelConsumeGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range ncgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(ncgb.fields...)...)

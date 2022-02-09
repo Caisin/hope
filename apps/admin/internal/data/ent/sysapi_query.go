@@ -336,6 +336,10 @@ func (saq *SysApiQuery) sqlAll(ctx context.Context) ([]*SysApi, error) {
 
 func (saq *SysApiQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := saq.querySpec()
+	_spec.Node.Columns = saq.fields
+	if len(saq.fields) > 0 {
+		_spec.Unique = saq.unique != nil && *saq.unique
+	}
 	return sqlgraph.CountNodes(ctx, saq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (saq *SysApiQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if saq.sql != nil {
 		selector = saq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if saq.unique != nil && *saq.unique {
+		selector.Distinct()
 	}
 	for _, p := range saq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (sagb *SysApiGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range sagb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(sagb.fields...)...)

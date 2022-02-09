@@ -404,6 +404,10 @@ func (alq *AgreementLogQuery) sqlAll(ctx context.Context) ([]*AgreementLog, erro
 
 func (alq *AgreementLogQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := alq.querySpec()
+	_spec.Node.Columns = alq.fields
+	if len(alq.fields) > 0 {
+		_spec.Unique = alq.unique != nil && *alq.unique
+	}
 	return sqlgraph.CountNodes(ctx, alq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (alq *AgreementLogQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if alq.sql != nil {
 		selector = alq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if alq.unique != nil && *alq.unique {
+		selector.Distinct()
 	}
 	for _, p := range alq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (algb *AgreementLogGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range algb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(algb.fields...)...)

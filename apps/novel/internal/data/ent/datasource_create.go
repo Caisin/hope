@@ -369,23 +369,23 @@ func (dsc *DataSourceCreate) defaults() {
 func (dsc *DataSourceCreate) check() error {
 	if v, ok := dsc.mutation.DbType(); ok {
 		if err := datasource.DbTypeValidator(v); err != nil {
-			return &ValidationError{Name: "dbType", err: fmt.Errorf(`ent: validator failed for field "dbType": %w`, err)}
+			return &ValidationError{Name: "dbType", err: fmt.Errorf(`ent: validator failed for field "DataSource.dbType": %w`, err)}
 		}
 	}
 	if _, ok := dsc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "DataSource.createdAt"`)}
 	}
 	if _, ok := dsc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "DataSource.updatedAt"`)}
 	}
 	if _, ok := dsc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "DataSource.createBy"`)}
 	}
 	if _, ok := dsc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "DataSource.updateBy"`)}
 	}
 	if _, ok := dsc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "DataSource.tenantId"`)}
 	}
 	return nil
 }

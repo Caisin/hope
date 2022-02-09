@@ -1244,7 +1244,7 @@ func (suu *SocialUserUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (suu *SocialUserUpdate) check() error {
 	if _, ok := suu.mutation.ChannelID(); suu.mutation.ChannelCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"channel\"")
+		return errors.New(`ent: clearing a required unique edge "SocialUser.channel"`)
 	}
 	return nil
 }
@@ -3687,7 +3687,7 @@ func (suuo *SocialUserUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (suuo *SocialUserUpdateOne) check() error {
 	if _, ok := suuo.mutation.ChannelID(); suuo.mutation.ChannelCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"channel\"")
+		return errors.New(`ent: clearing a required unique edge "SocialUser.channel"`)
 	}
 	return nil
 }
@@ -3705,7 +3705,7 @@ func (suuo *SocialUserUpdateOne) sqlSave(ctx context.Context) (_node *SocialUser
 	}
 	id, ok := suuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SocialUser.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SocialUser.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := suuo.fields; len(fields) > 0 {

@@ -404,6 +404,10 @@ func (aclq *AdChangeLogQuery) sqlAll(ctx context.Context) ([]*AdChangeLog, error
 
 func (aclq *AdChangeLogQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := aclq.querySpec()
+	_spec.Node.Columns = aclq.fields
+	if len(aclq.fields) > 0 {
+		_spec.Unique = aclq.unique != nil && *aclq.unique
+	}
 	return sqlgraph.CountNodes(ctx, aclq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (aclq *AdChangeLogQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if aclq.sql != nil {
 		selector = aclq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if aclq.unique != nil && *aclq.unique {
+		selector.Distinct()
 	}
 	for _, p := range aclq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (aclgb *AdChangeLogGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range aclgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(aclgb.fields...)...)

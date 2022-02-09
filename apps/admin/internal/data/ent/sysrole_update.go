@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysmenu"
@@ -1106,7 +1107,7 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 	}
 	id, ok := sruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysRole.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysRole.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := sruo.fields; len(fields) > 0 {

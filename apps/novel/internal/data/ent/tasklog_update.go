@@ -596,7 +596,7 @@ func (tlu *TaskLogUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (tlu *TaskLogUpdate) check() error {
 	if _, ok := tlu.mutation.UserID(); tlu.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "TaskLog.user"`)
 	}
 	return nil
 }
@@ -1575,7 +1575,7 @@ func (tluo *TaskLogUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (tluo *TaskLogUpdateOne) check() error {
 	if _, ok := tluo.mutation.UserID(); tluo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "TaskLog.user"`)
 	}
 	return nil
 }
@@ -1593,7 +1593,7 @@ func (tluo *TaskLogUpdateOne) sqlSave(ctx context.Context) (_node *TaskLog, err 
 	}
 	id, ok := tluo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing TaskLog.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "TaskLog.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := tluo.fields; len(fields) > 0 {

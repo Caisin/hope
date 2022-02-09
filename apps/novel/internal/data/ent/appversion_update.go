@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/appversion"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -693,7 +694,7 @@ func (avuo *AppVersionUpdateOne) sqlSave(ctx context.Context) (_node *AppVersion
 	}
 	id, ok := avuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AppVersion.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AppVersion.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := avuo.fields; len(fields) > 0 {

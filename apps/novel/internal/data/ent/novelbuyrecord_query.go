@@ -404,6 +404,10 @@ func (nbrq *NovelBuyRecordQuery) sqlAll(ctx context.Context) ([]*NovelBuyRecord,
 
 func (nbrq *NovelBuyRecordQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := nbrq.querySpec()
+	_spec.Node.Columns = nbrq.fields
+	if len(nbrq.fields) > 0 {
+		_spec.Unique = nbrq.unique != nil && *nbrq.unique
+	}
 	return sqlgraph.CountNodes(ctx, nbrq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (nbrq *NovelBuyRecordQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if nbrq.sql != nil {
 		selector = nbrq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if nbrq.unique != nil && *nbrq.unique {
+		selector.Distinct()
 	}
 	for _, p := range nbrq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (nbrgb *NovelBuyRecordGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range nbrgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(nbrgb.fields...)...)

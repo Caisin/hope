@@ -336,6 +336,10 @@ func (avq *AppVersionQuery) sqlAll(ctx context.Context) ([]*AppVersion, error) {
 
 func (avq *AppVersionQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := avq.querySpec()
+	_spec.Node.Columns = avq.fields
+	if len(avq.fields) > 0 {
+		_spec.Unique = avq.unique != nil && *avq.unique
+	}
 	return sqlgraph.CountNodes(ctx, avq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (avq *AppVersionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if avq.sql != nil {
 		selector = avq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if avq.unique != nil && *avq.unique {
+		selector.Distinct()
 	}
 	for _, p := range avq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (avgb *AppVersionGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range avgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(avgb.fields...)...)

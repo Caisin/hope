@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdictdata"
@@ -733,7 +734,7 @@ func (sdtuo *SysDictTypeUpdateOne) sqlSave(ctx context.Context) (_node *SysDictT
 	}
 	id, ok := sdtuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysDictType.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysDictType.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := sdtuo.fields; len(fields) > 0 {

@@ -400,7 +400,7 @@ func (aclu *AssetChangeLogUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (aclu *AssetChangeLogUpdate) check() error {
 	if _, ok := aclu.mutation.UserID(); aclu.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "AssetChangeLog.user"`)
 	}
 	return nil
 }
@@ -1050,7 +1050,7 @@ func (acluo *AssetChangeLogUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (acluo *AssetChangeLogUpdateOne) check() error {
 	if _, ok := acluo.mutation.UserID(); acluo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "AssetChangeLog.user"`)
 	}
 	return nil
 }
@@ -1068,7 +1068,7 @@ func (acluo *AssetChangeLogUpdateOne) sqlSave(ctx context.Context) (_node *Asset
 	}
 	id, ok := acluo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AssetChangeLog.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AssetChangeLog.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := acluo.fields; len(fields) > 0 {

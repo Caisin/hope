@@ -336,6 +336,10 @@ func (nmq *NovelMsgQuery) sqlAll(ctx context.Context) ([]*NovelMsg, error) {
 
 func (nmq *NovelMsgQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := nmq.querySpec()
+	_spec.Node.Columns = nmq.fields
+	if len(nmq.fields) > 0 {
+		_spec.Unique = nmq.unique != nil && *nmq.unique
+	}
 	return sqlgraph.CountNodes(ctx, nmq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (nmq *NovelMsgQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if nmq.sql != nil {
 		selector = nmq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if nmq.unique != nil && *nmq.unique {
+		selector.Distinct()
 	}
 	for _, p := range nmq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (nmgb *NovelMsgGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range nmgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(nmgb.fields...)...)

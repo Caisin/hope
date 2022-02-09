@@ -245,7 +245,7 @@ func (umu *UserMsgUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (umu *UserMsgUpdate) check() error {
 	if _, ok := umu.mutation.UserID(); umu.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "UserMsg.user"`)
 	}
 	return nil
 }
@@ -627,7 +627,7 @@ func (umuo *UserMsgUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (umuo *UserMsgUpdateOne) check() error {
 	if _, ok := umuo.mutation.UserID(); umuo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "UserMsg.user"`)
 	}
 	return nil
 }
@@ -645,7 +645,7 @@ func (umuo *UserMsgUpdateOne) sqlSave(ctx context.Context) (_node *UserMsg, err 
 	}
 	id, ok := umuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing UserMsg.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "UserMsg.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := umuo.fields; len(fields) > 0 {

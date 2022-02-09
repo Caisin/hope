@@ -404,6 +404,10 @@ func (nbq *NovelBookshelfQuery) sqlAll(ctx context.Context) ([]*NovelBookshelf, 
 
 func (nbq *NovelBookshelfQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := nbq.querySpec()
+	_spec.Node.Columns = nbq.fields
+	if len(nbq.fields) > 0 {
+		_spec.Unique = nbq.unique != nil && *nbq.unique
+	}
 	return sqlgraph.CountNodes(ctx, nbq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (nbq *NovelBookshelfQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if nbq.sql != nil {
 		selector = nbq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if nbq.unique != nil && *nbq.unique {
+		selector.Distinct()
 	}
 	for _, p := range nbq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (nbgb *NovelBookshelfGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range nbgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(nbgb.fields...)...)

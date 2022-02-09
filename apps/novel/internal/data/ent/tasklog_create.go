@@ -450,31 +450,31 @@ func (tlc *TaskLogCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (tlc *TaskLogCreate) check() error {
 	if _, ok := tlc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "TaskLog.userId"`)}
 	}
 	if _, ok := tlc.mutation.EffectTime(); !ok {
-		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "effectTime"`)}
+		return &ValidationError{Name: "effectTime", err: errors.New(`ent: missing required field "TaskLog.effectTime"`)}
 	}
 	if _, ok := tlc.mutation.ExpiredTime(); !ok {
-		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "expiredTime"`)}
+		return &ValidationError{Name: "expiredTime", err: errors.New(`ent: missing required field "TaskLog.expiredTime"`)}
 	}
 	if _, ok := tlc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "TaskLog.createdAt"`)}
 	}
 	if _, ok := tlc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "TaskLog.updatedAt"`)}
 	}
 	if _, ok := tlc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "TaskLog.createBy"`)}
 	}
 	if _, ok := tlc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "TaskLog.updateBy"`)}
 	}
 	if _, ok := tlc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "TaskLog.tenantId"`)}
 	}
 	if _, ok := tlc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "TaskLog.user"`)}
 	}
 	return nil
 }

@@ -612,11 +612,11 @@ func (smu *SysMenuUpdate) defaults() {
 func (smu *SysMenuUpdate) check() error {
 	if v, ok := smu.mutation.State(); ok {
 		if err := sysmenu.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysMenu.state": %w`, err)}
 		}
 	}
 	if _, ok := smu.mutation.ParentID(); smu.mutation.ParentCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"parent\"")
+		return errors.New(`ent: clearing a required unique edge "SysMenu.parent"`)
 	}
 	return nil
 }
@@ -1664,11 +1664,11 @@ func (smuo *SysMenuUpdateOne) defaults() {
 func (smuo *SysMenuUpdateOne) check() error {
 	if v, ok := smuo.mutation.State(); ok {
 		if err := sysmenu.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysMenu.state": %w`, err)}
 		}
 	}
 	if _, ok := smuo.mutation.ParentID(); smuo.mutation.ParentCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"parent\"")
+		return errors.New(`ent: clearing a required unique edge "SysMenu.parent"`)
 	}
 	return nil
 }
@@ -1686,7 +1686,7 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 	}
 	id, ok := smuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysMenu.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysMenu.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := smuo.fields; len(fields) > 0 {

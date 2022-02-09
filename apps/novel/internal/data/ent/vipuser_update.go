@@ -340,7 +340,7 @@ func (vuu *VipUserUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (vuu *VipUserUpdate) check() error {
 	if _, ok := vuu.mutation.UserID(); vuu.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "VipUser.user"`)
 	}
 	return nil
 }
@@ -877,7 +877,7 @@ func (vuuo *VipUserUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (vuuo *VipUserUpdateOne) check() error {
 	if _, ok := vuuo.mutation.UserID(); vuuo.mutation.UserCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"user\"")
+		return errors.New(`ent: clearing a required unique edge "VipUser.user"`)
 	}
 	return nil
 }
@@ -895,7 +895,7 @@ func (vuuo *VipUserUpdateOne) sqlSave(ctx context.Context) (_node *VipUser, err 
 	}
 	id, ok := vuuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing VipUser.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "VipUser.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := vuuo.fields; len(fields) > 0 {

@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/agreementlog"
 	"hope/apps/novel/internal/data/ent/payorder"
@@ -567,7 +568,7 @@ func (alu *AgreementLogUpdate) defaults() {
 func (alu *AgreementLogUpdate) check() error {
 	if v, ok := alu.mutation.AgreementType(); ok {
 		if err := agreementlog.AgreementTypeValidator(v); err != nil {
-			return &ValidationError{Name: "agreementType", err: fmt.Errorf("ent: validator failed for field \"agreementType\": %w", err)}
+			return &ValidationError{Name: "agreementType", err: fmt.Errorf(`ent: validator failed for field "AgreementLog.agreementType": %w`, err)}
 		}
 	}
 	return nil
@@ -1510,7 +1511,7 @@ func (aluo *AgreementLogUpdateOne) defaults() {
 func (aluo *AgreementLogUpdateOne) check() error {
 	if v, ok := aluo.mutation.AgreementType(); ok {
 		if err := agreementlog.AgreementTypeValidator(v); err != nil {
-			return &ValidationError{Name: "agreementType", err: fmt.Errorf("ent: validator failed for field \"agreementType\": %w", err)}
+			return &ValidationError{Name: "agreementType", err: fmt.Errorf(`ent: validator failed for field "AgreementLog.agreementType": %w`, err)}
 		}
 	}
 	return nil
@@ -1529,7 +1530,7 @@ func (aluo *AgreementLogUpdateOne) sqlSave(ctx context.Context) (_node *Agreemen
 	}
 	id, ok := aluo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AgreementLog.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AgreementLog.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := aluo.fields; len(fields) > 0 {

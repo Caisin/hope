@@ -218,25 +218,25 @@ func (nabc *NovelAutoBuyCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (nabc *NovelAutoBuyCreate) check() error {
 	if _, ok := nabc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "NovelAutoBuy.userId"`)}
 	}
 	if _, ok := nabc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "NovelAutoBuy.createdAt"`)}
 	}
 	if _, ok := nabc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "NovelAutoBuy.updatedAt"`)}
 	}
 	if _, ok := nabc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "NovelAutoBuy.createBy"`)}
 	}
 	if _, ok := nabc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "NovelAutoBuy.updateBy"`)}
 	}
 	if _, ok := nabc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "NovelAutoBuy.tenantId"`)}
 	}
 	if _, ok := nabc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "NovelAutoBuy.user"`)}
 	}
 	return nil
 }

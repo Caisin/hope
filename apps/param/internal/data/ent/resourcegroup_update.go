@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/predicate"
 	"hope/apps/param/internal/data/ent/resourcegroup"
@@ -460,7 +461,7 @@ func (rguo *ResourceGroupUpdateOne) sqlSave(ctx context.Context) (_node *Resourc
 	}
 	id, ok := rguo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing ResourceGroup.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "ResourceGroup.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := rguo.fields; len(fields) > 0 {

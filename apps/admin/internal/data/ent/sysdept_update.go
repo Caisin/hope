@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysdept"
@@ -1158,7 +1159,7 @@ func (sduo *SysDeptUpdateOne) sqlSave(ctx context.Context) (_node *SysDept, err 
 	}
 	id, ok := sduo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysDept.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysDept.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := sduo.fields; len(fields) > 0 {

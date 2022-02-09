@@ -616,19 +616,19 @@ func (nc *NovelCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (nc *NovelCreate) check() error {
 	if _, ok := nc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "Novel.createdAt"`)}
 	}
 	if _, ok := nc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "Novel.updatedAt"`)}
 	}
 	if _, ok := nc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "Novel.createBy"`)}
 	}
 	if _, ok := nc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "Novel.updateBy"`)}
 	}
 	if _, ok := nc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "Novel.tenantId"`)}
 	}
 	return nil
 }

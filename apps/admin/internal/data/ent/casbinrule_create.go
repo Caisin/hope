@@ -284,19 +284,19 @@ func (crc *CasbinRuleCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (crc *CasbinRuleCreate) check() error {
 	if _, ok := crc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "CasbinRule.createdAt"`)}
 	}
 	if _, ok := crc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "CasbinRule.updatedAt"`)}
 	}
 	if _, ok := crc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "CasbinRule.createBy"`)}
 	}
 	if _, ok := crc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "CasbinRule.updateBy"`)}
 	}
 	if _, ok := crc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "CasbinRule.tenantId"`)}
 	}
 	return nil
 }

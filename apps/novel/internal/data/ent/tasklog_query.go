@@ -404,6 +404,10 @@ func (tlq *TaskLogQuery) sqlAll(ctx context.Context) ([]*TaskLog, error) {
 
 func (tlq *TaskLogQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := tlq.querySpec()
+	_spec.Node.Columns = tlq.fields
+	if len(tlq.fields) > 0 {
+		_spec.Unique = tlq.unique != nil && *tlq.unique
+	}
 	return sqlgraph.CountNodes(ctx, tlq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (tlq *TaskLogQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if tlq.sql != nil {
 		selector = tlq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if tlq.unique != nil && *tlq.unique {
+		selector.Distinct()
 	}
 	for _, p := range tlq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (tlgb *TaskLogGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range tlgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(tlgb.fields...)...)

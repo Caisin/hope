@@ -256,19 +256,19 @@ func (sac *SysApiCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (sac *SysApiCreate) check() error {
 	if _, ok := sac.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SysApi.createdAt"`)}
 	}
 	if _, ok := sac.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SysApi.updatedAt"`)}
 	}
 	if _, ok := sac.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SysApi.createBy"`)}
 	}
 	if _, ok := sac.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SysApi.updateBy"`)}
 	}
 	if _, ok := sac.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SysApi.tenantId"`)}
 	}
 	return nil
 }

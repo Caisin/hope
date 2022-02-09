@@ -336,6 +336,10 @@ func (cnq *CustomerNovelsQuery) sqlAll(ctx context.Context) ([]*CustomerNovels, 
 
 func (cnq *CustomerNovelsQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := cnq.querySpec()
+	_spec.Node.Columns = cnq.fields
+	if len(cnq.fields) > 0 {
+		_spec.Unique = cnq.unique != nil && *cnq.unique
+	}
 	return sqlgraph.CountNodes(ctx, cnq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (cnq *CustomerNovelsQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if cnq.sql != nil {
 		selector = cnq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if cnq.unique != nil && *cnq.unique {
+		selector.Distinct()
 	}
 	for _, p := range cnq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (cngb *CustomerNovelsGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range cngb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(cngb.fields...)...)

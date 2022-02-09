@@ -404,6 +404,10 @@ func (sdtq *SysDictTypeQuery) sqlAll(ctx context.Context) ([]*SysDictType, error
 
 func (sdtq *SysDictTypeQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdtq.querySpec()
+	_spec.Node.Columns = sdtq.fields
+	if len(sdtq.fields) > 0 {
+		_spec.Unique = sdtq.unique != nil && *sdtq.unique
+	}
 	return sqlgraph.CountNodes(ctx, sdtq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (sdtq *SysDictTypeQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sdtq.sql != nil {
 		selector = sdtq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if sdtq.unique != nil && *sdtq.unique {
+		selector.Distinct()
 	}
 	for _, p := range sdtq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (sdtgb *SysDictTypeGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range sdtgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(sdtgb.fields...)...)

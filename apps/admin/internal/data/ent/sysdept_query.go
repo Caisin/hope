@@ -542,6 +542,10 @@ func (sdq *SysDeptQuery) sqlAll(ctx context.Context) ([]*SysDept, error) {
 
 func (sdq *SysDeptQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdq.querySpec()
+	_spec.Node.Columns = sdq.fields
+	if len(sdq.fields) > 0 {
+		_spec.Unique = sdq.unique != nil && *sdq.unique
+	}
 	return sqlgraph.CountNodes(ctx, sdq.driver, _spec)
 }
 
@@ -612,6 +616,9 @@ func (sdq *SysDeptQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sdq.sql != nil {
 		selector = sdq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if sdq.unique != nil && *sdq.unique {
+		selector.Distinct()
 	}
 	for _, p := range sdq.predicates {
 		p(selector)
@@ -891,9 +898,7 @@ func (sdgb *SysDeptGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range sdgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(sdgb.fields...)...)

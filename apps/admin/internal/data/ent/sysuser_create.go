@@ -450,28 +450,28 @@ func (suc *SysUserCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (suc *SysUserCreate) check() error {
 	if _, ok := suc.mutation.Username(); !ok {
-		return &ValidationError{Name: "username", err: errors.New(`ent: missing required field "username"`)}
+		return &ValidationError{Name: "username", err: errors.New(`ent: missing required field "SysUser.username"`)}
 	}
 	if _, ok := suc.mutation.Password(); !ok {
-		return &ValidationError{Name: "password", err: errors.New(`ent: missing required field "password"`)}
+		return &ValidationError{Name: "password", err: errors.New(`ent: missing required field "SysUser.password"`)}
 	}
 	if _, ok := suc.mutation.NickName(); !ok {
-		return &ValidationError{Name: "nickName", err: errors.New(`ent: missing required field "nickName"`)}
+		return &ValidationError{Name: "nickName", err: errors.New(`ent: missing required field "SysUser.nickName"`)}
 	}
 	if _, ok := suc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SysUser.createdAt"`)}
 	}
 	if _, ok := suc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SysUser.updatedAt"`)}
 	}
 	if _, ok := suc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SysUser.createBy"`)}
 	}
 	if _, ok := suc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SysUser.updateBy"`)}
 	}
 	if _, ok := suc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SysUser.tenantId"`)}
 	}
 	return nil
 }

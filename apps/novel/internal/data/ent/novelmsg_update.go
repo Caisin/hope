@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/novelmsg"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -619,7 +620,7 @@ func (nmuo *NovelMsgUpdateOne) sqlSave(ctx context.Context) (_node *NovelMsg, er
 	}
 	id, ok := nmuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing NovelMsg.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "NovelMsg.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := nmuo.fields; len(fields) > 0 {

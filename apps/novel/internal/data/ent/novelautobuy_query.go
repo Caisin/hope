@@ -404,6 +404,10 @@ func (nabq *NovelAutoBuyQuery) sqlAll(ctx context.Context) ([]*NovelAutoBuy, err
 
 func (nabq *NovelAutoBuyQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := nabq.querySpec()
+	_spec.Node.Columns = nabq.fields
+	if len(nabq.fields) > 0 {
+		_spec.Unique = nabq.unique != nil && *nabq.unique
+	}
 	return sqlgraph.CountNodes(ctx, nabq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (nabq *NovelAutoBuyQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if nabq.sql != nil {
 		selector = nabq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if nabq.unique != nil && *nabq.unique {
+		selector.Distinct()
 	}
 	for _, p := range nabq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (nabgb *NovelAutoBuyGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range nabgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(nabgb.fields...)...)

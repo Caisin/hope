@@ -496,45 +496,45 @@ func (smc *SysMenuCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (smc *SysMenuCreate) check() error {
 	if _, ok := smc.mutation.ParentId(); !ok {
-		return &ValidationError{Name: "parentId", err: errors.New(`ent: missing required field "parentId"`)}
+		return &ValidationError{Name: "parentId", err: errors.New(`ent: missing required field "SysMenu.parentId"`)}
 	}
 	if _, ok := smc.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "name"`)}
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "SysMenu.name"`)}
 	}
 	if _, ok := smc.mutation.Title(); !ok {
-		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "title"`)}
+		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "SysMenu.title"`)}
 	}
 	if _, ok := smc.mutation.State(); !ok {
-		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "state"`)}
+		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "SysMenu.state"`)}
 	}
 	if v, ok := smc.mutation.State(); ok {
 		if err := sysmenu.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysMenu.state": %w`, err)}
 		}
 	}
 	if _, ok := smc.mutation.CheckPermission(); !ok {
-		return &ValidationError{Name: "checkPermission", err: errors.New(`ent: missing required field "checkPermission"`)}
+		return &ValidationError{Name: "checkPermission", err: errors.New(`ent: missing required field "SysMenu.checkPermission"`)}
 	}
 	if _, ok := smc.mutation.Operation(); !ok {
-		return &ValidationError{Name: "operation", err: errors.New(`ent: missing required field "operation"`)}
+		return &ValidationError{Name: "operation", err: errors.New(`ent: missing required field "SysMenu.operation"`)}
 	}
 	if _, ok := smc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "SysMenu.createdAt"`)}
 	}
 	if _, ok := smc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "SysMenu.updatedAt"`)}
 	}
 	if _, ok := smc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "SysMenu.createBy"`)}
 	}
 	if _, ok := smc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "SysMenu.updateBy"`)}
 	}
 	if _, ok := smc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "SysMenu.tenantId"`)}
 	}
 	if _, ok := smc.mutation.ParentID(); !ok {
-		return &ValidationError{Name: "parent", err: errors.New("ent: missing required edge \"parent\"")}
+		return &ValidationError{Name: "parent", err: errors.New(`ent: missing required edge "SysMenu.parent"`)}
 	}
 	return nil
 }

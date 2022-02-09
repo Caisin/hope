@@ -358,25 +358,25 @@ func (nbcrc *NovelBuyChapterRecordCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (nbcrc *NovelBuyChapterRecordCreate) check() error {
 	if _, ok := nbcrc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "NovelBuyChapterRecord.userId"`)}
 	}
 	if _, ok := nbcrc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "NovelBuyChapterRecord.createdAt"`)}
 	}
 	if _, ok := nbcrc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "NovelBuyChapterRecord.updatedAt"`)}
 	}
 	if _, ok := nbcrc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "NovelBuyChapterRecord.createBy"`)}
 	}
 	if _, ok := nbcrc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "NovelBuyChapterRecord.updateBy"`)}
 	}
 	if _, ok := nbcrc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "NovelBuyChapterRecord.tenantId"`)}
 	}
 	if _, ok := nbcrc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "NovelBuyChapterRecord.user"`)}
 	}
 	return nil
 }

@@ -358,7 +358,7 @@ func (sddu *SysDictDataUpdate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (sddu *SysDictDataUpdate) check() error {
 	if _, ok := sddu.mutation.DictTypeID(); sddu.mutation.DictTypeCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"dictType\"")
+		return errors.New(`ent: clearing a required unique edge "SysDictData.dictType"`)
 	}
 	return nil
 }
@@ -932,7 +932,7 @@ func (sdduo *SysDictDataUpdateOne) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (sdduo *SysDictDataUpdateOne) check() error {
 	if _, ok := sdduo.mutation.DictTypeID(); sdduo.mutation.DictTypeCleared() && !ok {
-		return errors.New("ent: clearing a required unique edge \"dictType\"")
+		return errors.New(`ent: clearing a required unique edge "SysDictData.dictType"`)
 	}
 	return nil
 }
@@ -950,7 +950,7 @@ func (sdduo *SysDictDataUpdateOne) sqlSave(ctx context.Context) (_node *SysDictD
 	}
 	id, ok := sdduo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysDictData.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysDictData.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := sdduo.fields; len(fields) > 0 {

@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/novel/internal/data/ent/activitycomponent"
 	"hope/apps/novel/internal/data/ent/predicate"
@@ -1412,7 +1413,7 @@ func (acuo *ActivityComponentUpdateOne) sqlSave(ctx context.Context) (_node *Act
 	}
 	id, ok := acuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing ActivityComponent.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "ActivityComponent.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := acuo.fields; len(fields) > 0 {

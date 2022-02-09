@@ -336,6 +336,10 @@ func (dsq *DataSourceQuery) sqlAll(ctx context.Context) ([]*DataSource, error) {
 
 func (dsq *DataSourceQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := dsq.querySpec()
+	_spec.Node.Columns = dsq.fields
+	if len(dsq.fields) > 0 {
+		_spec.Unique = dsq.unique != nil && *dsq.unique
+	}
 	return sqlgraph.CountNodes(ctx, dsq.driver, _spec)
 }
 
@@ -406,6 +410,9 @@ func (dsq *DataSourceQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if dsq.sql != nil {
 		selector = dsq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if dsq.unique != nil && *dsq.unique {
+		selector.Distinct()
 	}
 	for _, p := range dsq.predicates {
 		p(selector)
@@ -685,9 +692,7 @@ func (dsgb *DataSourceGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range dsgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(dsgb.fields...)...)

@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/param/internal/data/ent/novelpayconfig"
 	"hope/apps/param/internal/data/ent/predicate"
@@ -1789,7 +1790,7 @@ func (npcuo *NovelPayConfigUpdateOne) sqlSave(ctx context.Context) (_node *Novel
 	}
 	id, ok := npcuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing NovelPayConfig.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "NovelPayConfig.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := npcuo.fields; len(fields) > 0 {

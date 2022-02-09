@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"hope/apps/admin/internal/data/ent/predicate"
 	"hope/apps/admin/internal/data/ent/sysjob"
@@ -433,7 +434,7 @@ func (sju *SysJobUpdate) defaults() {
 func (sju *SysJobUpdate) check() error {
 	if v, ok := sju.mutation.State(); ok {
 		if err := sysjob.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysJob.state": %w`, err)}
 		}
 	}
 	return nil
@@ -1143,7 +1144,7 @@ func (sjuo *SysJobUpdateOne) defaults() {
 func (sjuo *SysJobUpdateOne) check() error {
 	if v, ok := sjuo.mutation.State(); ok {
 		if err := sysjob.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "SysJob.state": %w`, err)}
 		}
 	}
 	return nil
@@ -1162,7 +1163,7 @@ func (sjuo *SysJobUpdateOne) sqlSave(ctx context.Context) (_node *SysJob, err er
 	}
 	id, ok := sjuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing SysJob.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysJob.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := sjuo.fields; len(fields) > 0 {

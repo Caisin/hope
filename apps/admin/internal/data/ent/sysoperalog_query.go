@@ -404,6 +404,10 @@ func (solq *SysOperaLogQuery) sqlAll(ctx context.Context) ([]*SysOperaLog, error
 
 func (solq *SysOperaLogQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := solq.querySpec()
+	_spec.Node.Columns = solq.fields
+	if len(solq.fields) > 0 {
+		_spec.Unique = solq.unique != nil && *solq.unique
+	}
 	return sqlgraph.CountNodes(ctx, solq.driver, _spec)
 }
 
@@ -474,6 +478,9 @@ func (solq *SysOperaLogQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if solq.sql != nil {
 		selector = solq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if solq.unique != nil && *solq.unique {
+		selector.Distinct()
 	}
 	for _, p := range solq.predicates {
 		p(selector)
@@ -753,9 +760,7 @@ func (solgb *SysOperaLogGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range solgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(solgb.fields...)...)

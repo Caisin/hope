@@ -316,25 +316,25 @@ func (nbrc *NovelBuyRecordCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (nbrc *NovelBuyRecordCreate) check() error {
 	if _, ok := nbrc.mutation.UserId(); !ok {
-		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "userId"`)}
+		return &ValidationError{Name: "userId", err: errors.New(`ent: missing required field "NovelBuyRecord.userId"`)}
 	}
 	if _, ok := nbrc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "createdAt"`)}
+		return &ValidationError{Name: "createdAt", err: errors.New(`ent: missing required field "NovelBuyRecord.createdAt"`)}
 	}
 	if _, ok := nbrc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "updatedAt"`)}
+		return &ValidationError{Name: "updatedAt", err: errors.New(`ent: missing required field "NovelBuyRecord.updatedAt"`)}
 	}
 	if _, ok := nbrc.mutation.CreateBy(); !ok {
-		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "createBy"`)}
+		return &ValidationError{Name: "createBy", err: errors.New(`ent: missing required field "NovelBuyRecord.createBy"`)}
 	}
 	if _, ok := nbrc.mutation.UpdateBy(); !ok {
-		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "updateBy"`)}
+		return &ValidationError{Name: "updateBy", err: errors.New(`ent: missing required field "NovelBuyRecord.updateBy"`)}
 	}
 	if _, ok := nbrc.mutation.TenantId(); !ok {
-		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "tenantId"`)}
+		return &ValidationError{Name: "tenantId", err: errors.New(`ent: missing required field "NovelBuyRecord.tenantId"`)}
 	}
 	if _, ok := nbrc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user", err: errors.New("ent: missing required edge \"user\"")}
+		return &ValidationError{Name: "user", err: errors.New(`ent: missing required edge "NovelBuyRecord.user"`)}
 	}
 	return nil
 }

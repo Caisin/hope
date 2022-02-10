@@ -14,6 +14,7 @@ type SysDictDataRepo interface {
 	UpdateSysDictData(context.Context, *v1.SysDictDataUpdateReq) (*ent.SysDictData, error)
 	GetSysDictData(context.Context, *v1.SysDictDataReq) (*ent.SysDictData, error)
 	PageSysDictData(context.Context, *v1.SysDictDataPageReq) ([]*ent.SysDictData, error)
+	GetSysDictDataByType(context.Context, *v1.GetDataByTypeReq) ([]*ent.SysDictData, error)
 }
 
 type SysDictDataUseCase struct {
@@ -42,4 +43,8 @@ func (uc *SysDictDataUseCase) Get(ctx context.Context, req *v1.SysDictDataReq) (
 }
 func (uc *SysDictDataUseCase) Page(ctx context.Context, req *v1.SysDictDataPageReq) ([]*ent.SysDictData, error) {
 	return uc.repo.PageSysDictData(ctx, req)
+}
+
+func (uc *SysDictDataUseCase) GetByType(ctx context.Context, req *v1.GetDataByTypeReq) ([]*ent.SysDictData, error) {
+	return uc.repo.GetSysDictDataByType(ctx, req)
 }

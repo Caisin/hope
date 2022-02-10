@@ -1,3 +1,13 @@
+# curl -X 'GET'
+#  'HTTP://localhost:8001/v1/sys/dict/data/type?typeCode=sys_sex'
+#  -H 'accept: application/json'
+GET http://localhost:8001/v1/sys/dict/data/type?typeCode=sys_sex
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImF2YXRhciI6Imh0dHBzOi8vZW5jcnlwdGVkLXRibjAuZ3N0YXRpYy5jb20vaW1hZ2VzP3E9dGJuOkFOZDlHY1NsR05zcjBfemJLa012TjBOMmRGS0Y0amgtZGw2eUZGTDRUd1x1MDAyNnVzcXA9Q0FVIiwidGVuYW50SWQiOjEsImV4cCI6MTY0NDYzNTUxMjAzMDA2MDEwMCwianRpIjoiMSIsInN1YiI6ImNhaXNpbiJ9.PeUuTcISsVEbMtDleBHj88m7S9QsJsxwRryjd6zQEbs
+accept: application/json
+
+
+###
+
 # curl -X 'POST'
 #  'https://editor.swagger.io/v1/vipuser'
 #  -H 'accept: application/json'
@@ -26,4 +36,6 @@ Content-Type: application/json
 }
 
 ###
+
+
 

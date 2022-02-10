@@ -22,6 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SysDictDataClient interface {
+	// 根据字典类型获取字典值
+	GetSysDictDataByType(ctx context.Context, in *GetDataByTypeReq, opts ...grpc.CallOption) (*GetDataByTypeReply, error)
 	// 分页查询SysDictData
 	GetSysDictDataPage(ctx context.Context, in *SysDictDataPageReq, opts ...grpc.CallOption) (*SysDictDataPageReply, error)
 	// 获取SysDictData
@@ -42,6 +44,15 @@ type sysDictDataClient struct {
 
 func NewSysDictDataClient(cc grpc.ClientConnInterface) SysDictDataClient {
 	return &sysDictDataClient{cc}
+}
+
+func (c *sysDictDataClient) GetSysDictDataByType(ctx context.Context, in *GetDataByTypeReq, opts ...grpc.CallOption) (*GetDataByTypeReply, error) {
+	out := new(GetDataByTypeReply)
+	err := c.cc.Invoke(ctx, "/sysdictdata.v1.SysDictData/GetSysDictDataByType", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *sysDictDataClient) GetSysDictDataPage(ctx context.Context, in *SysDictDataPageReq, opts ...grpc.CallOption) (*SysDictDataPageReply, error) {
@@ -102,6 +113,8 @@ func (c *sysDictDataClient) BatchDeleteSysDictData(ctx context.Context, in *SysD
 // All implementations must embed UnimplementedSysDictDataServer
 // for forward compatibility
 type SysDictDataServer interface {
+	// 根据字典类型获取字典值
+	GetSysDictDataByType(context.Context, *GetDataByTypeReq) (*GetDataByTypeReply, error)
 	// 分页查询SysDictData
 	GetSysDictDataPage(context.Context, *SysDictDataPageReq) (*SysDictDataPageReply, error)
 	// 获取SysDictData
@@ -121,6 +134,9 @@ type SysDictDataServer interface {
 type UnimplementedSysDictDataServer struct {
 }
 
+func (UnimplementedSysDictDataServer) GetSysDictDataByType(context.Context, *GetDataByTypeReq) (*GetDataByTypeReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSysDictDataByType not implemented")
+}
 func (UnimplementedSysDictDataServer) GetSysDictDataPage(context.Context, *SysDictDataPageReq) (*SysDictDataPageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSysDictDataPage not implemented")
 }
@@ -150,6 +166,24 @@ type UnsafeSysDictDataServer interface {
 
 func RegisterSysDictDataServer(s grpc.ServiceRegistrar, srv SysDictDataServer) {
 	s.RegisterService(&SysDictData_ServiceDesc, srv)
+}
+
+func _SysDictData_GetSysDictDataByType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDataByTypeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysDictDataServer).GetSysDictDataByType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sysdictdata.v1.SysDictData/GetSysDictDataByType",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysDictDataServer).GetSysDictDataByType(ctx, req.(*GetDataByTypeReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SysDictData_GetSysDictDataPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -267,6 +301,10 @@ var SysDictData_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "sysdictdata.v1.SysDictData",
 	HandlerType: (*SysDictDataServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetSysDictDataByType",
+			Handler:    _SysDictData_GetSysDictDataByType_Handler,
+		},
 		{
 			MethodName: "GetSysDictDataPage",
 			Handler:    _SysDictData_GetSysDictDataPage_Handler,

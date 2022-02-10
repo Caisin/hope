@@ -28,6 +28,18 @@ func NewSysDictDataRepo(data *Data, logger log.Logger) biz.SysDictDataRepo {
 	}
 }
 
+func (r *sysDictDataRepo) GetSysDictDataByType(ctx context.Context, req *v1.GetDataByTypeReq) ([]*ent.SysDictData, error) {
+	list := make([]*ent.SysDictData, 0)
+	err := r.GetByTypeCache(ctx, req.GetTypeCode(), &list)
+	if err != nil {
+		list, err = r.data.db.SysDictData.
+			Query().Where(sysdictdata.TypeCodeEQ(req.GetTypeCode())).
+			All(ctx)
+		_ = r.SetByTypeCache(ctx, req.GetTypeCode(), &list)
+	}
+	return list, err
+}
+
 // CreateSysDictData 创建
 func (r *sysDictDataRepo) CreateSysDictData(ctx context.Context, req *v1.SysDictDataCreateReq) (*ent.SysDictData, error) {
 	claims, err := auth.GetClaims(ctx)

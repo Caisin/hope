@@ -105,3 +105,20 @@ func (s *SysDictDataService) BatchDeleteSysDictData(ctx context.Context, req *pb
 	}
 	return &pb.SysDictDataDeleteReply{Code: 200, Message: "success", Result: err == nil && num > 0}, err
 }
+func (s *SysDictDataService) GetSysDictDataByType(ctx context.Context, req *pb.GetDataByTypeReq) (*pb.GetDataByTypeReply, error) {
+	tr := otel.Tracer("api")
+	ctx, span := tr.Start(ctx, "GetSysDictDataByType")
+	defer span.End()
+	list := make([]*pb.GetDataByTypeReply_Label, 0)
+	dts, err := s.uc.GetByType(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	for _, d := range dts {
+		list = append(list, &pb.GetDataByTypeReply_Label{
+			Label: d.DictLabel,
+			Value: d.DictValue,
+		})
+	}
+	return &pb.GetDataByTypeReply{Code: 200, Message: "success", Result: list}, err
+}

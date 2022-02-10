@@ -22,18 +22,39 @@ type SysDictDataHTTPServer interface {
 	CreateSysDictData(context.Context, *SysDictDataCreateReq) (*SysDictDataCreateReply, error)
 	DeleteSysDictData(context.Context, *SysDictDataDeleteReq) (*SysDictDataDeleteReply, error)
 	GetSysDictData(context.Context, *SysDictDataReq) (*SysDictDataReply, error)
+	GetSysDictDataByType(context.Context, *GetDataByTypeReq) (*GetDataByTypeReply, error)
 	GetSysDictDataPage(context.Context, *SysDictDataPageReq) (*SysDictDataPageReply, error)
 	UpdateSysDictData(context.Context, *SysDictDataUpdateReq) (*SysDictDataUpdateReply, error)
 }
 
 func RegisterSysDictDataHTTPServer(s *http.Server, srv SysDictDataHTTPServer) {
 	r := s.Route("/")
+	r.GET("/v1/sys/dict/data/type", _SysDictData_GetSysDictDataByType0_HTTP_Handler(srv))
 	r.GET("/v1/sys/dict/data/page", _SysDictData_GetSysDictDataPage0_HTTP_Handler(srv))
 	r.GET("/v1/sys/dict/data/{id}", _SysDictData_GetSysDictData0_HTTP_Handler(srv))
 	r.PUT("/v1/sys/dict/data/{id}", _SysDictData_UpdateSysDictData0_HTTP_Handler(srv))
 	r.POST("/v1/sys/dict/data", _SysDictData_CreateSysDictData0_HTTP_Handler(srv))
 	r.DELETE("/v1/sys/dict/data/{id}", _SysDictData_DeleteSysDictData0_HTTP_Handler(srv))
 	r.DELETE("/v1/sys/dict/data", _SysDictData_BatchDeleteSysDictData0_HTTP_Handler(srv))
+}
+
+func _SysDictData_GetSysDictDataByType0_HTTP_Handler(srv SysDictDataHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in GetDataByTypeReq
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, "/sysdictdata.v1.SysDictData/GetSysDictDataByType")
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GetSysDictDataByType(ctx, req.(*GetDataByTypeReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*GetDataByTypeReply)
+		return ctx.Result(200, reply)
+	}
 }
 
 func _SysDictData_GetSysDictDataPage0_HTTP_Handler(srv SysDictDataHTTPServer) func(ctx http.Context) error {
@@ -164,6 +185,7 @@ type SysDictDataHTTPClient interface {
 	CreateSysDictData(ctx context.Context, req *SysDictDataCreateReq, opts ...http.CallOption) (rsp *SysDictDataCreateReply, err error)
 	DeleteSysDictData(ctx context.Context, req *SysDictDataDeleteReq, opts ...http.CallOption) (rsp *SysDictDataDeleteReply, err error)
 	GetSysDictData(ctx context.Context, req *SysDictDataReq, opts ...http.CallOption) (rsp *SysDictDataReply, err error)
+	GetSysDictDataByType(ctx context.Context, req *GetDataByTypeReq, opts ...http.CallOption) (rsp *GetDataByTypeReply, err error)
 	GetSysDictDataPage(ctx context.Context, req *SysDictDataPageReq, opts ...http.CallOption) (rsp *SysDictDataPageReply, err error)
 	UpdateSysDictData(ctx context.Context, req *SysDictDataUpdateReq, opts ...http.CallOption) (rsp *SysDictDataUpdateReply, err error)
 }
@@ -220,6 +242,19 @@ func (c *SysDictDataHTTPClientImpl) GetSysDictData(ctx context.Context, in *SysD
 	pattern := "/v1/sys/dict/data/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/sysdictdata.v1.SysDictData/GetSysDictData"))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *SysDictDataHTTPClientImpl) GetSysDictDataByType(ctx context.Context, in *GetDataByTypeReq, opts ...http.CallOption) (*GetDataByTypeReply, error) {
+	var out GetDataByTypeReply
+	pattern := "/v1/sys/dict/data/type"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation("/sysdictdata.v1.SysDictData/GetSysDictDataByType"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

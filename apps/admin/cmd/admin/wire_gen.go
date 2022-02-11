@@ -73,7 +73,7 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	authUseCase := biz.NewAuthUseCase(authRepo, logger)
 	authService := service.NewAuthService(authUseCase, logger)
 	v := server.RegisterHTTPServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService, authService)
-	httpServer := provider.NewHTTPServer(confServer, v, logger)
+	httpServer := provider.NewHTTPServer(confServer, v, redisClient, logger)
 	v2 := server.RegisterGRPCServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService, authService)
 	grpcServer := provider.NewGRPCServer(confServer, v2, logger)
 	app := newApp(logger, httpServer, grpcServer)

@@ -67,7 +67,7 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	vipTypeUseCase := biz.NewVipTypeUseCase(vipTypeRepo, logger)
 	vipTypeService := service.NewVipTypeService(vipTypeUseCase, logger)
 	v := server.RegisterHTTPServer(novelPayConfigService, novelTagService, pageConfigService, qiniuConfigService, resourceGroupService, resourceStorageService, scoreProductService, taskService, userAnalysisStatisticsService, userConsumeService, userResourceService, userResourceRecordService, vipTypeService)
-	httpServer := provider.NewHTTPServer(confServer, v, logger)
+	httpServer := provider.NewHTTPServer(confServer, v, redisClient, logger)
 	v2 := server.RegisterGRPCServer(novelPayConfigService, novelTagService, pageConfigService, qiniuConfigService, resourceGroupService, resourceStorageService, scoreProductService, taskService, userAnalysisStatisticsService, userConsumeService, userResourceService, userResourceRecordService, vipTypeService)
 	grpcServer := provider.NewGRPCServer(confServer, v2, logger)
 	app := newApp(logger, httpServer, grpcServer)

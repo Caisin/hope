@@ -11,10 +11,10 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"go.opentelemetry.io/otel/sdk/trace"
 	"hope/apps/param/internal/biz"
-	"hope/apps/param/internal/conf"
 	"hope/apps/param/internal/data"
 	"hope/apps/param/internal/server"
 	"hope/apps/param/internal/service"
+	"hope/pkg/conf"
 )
 
 // Injectors from wire.go:

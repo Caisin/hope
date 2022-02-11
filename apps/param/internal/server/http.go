@@ -12,9 +12,9 @@ import (
 	"go.opentelemetry.io/otel"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	task "hope/api/param/task/v1"
-	"hope/apps/param/internal/conf"
 	"hope/apps/param/internal/service"
 	"hope/pkg/auth"
+	"hope/pkg/conf"
 )
 
 // NewHTTPServer new a HTTP server.

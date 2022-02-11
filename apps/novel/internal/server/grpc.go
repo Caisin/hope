@@ -11,8 +11,8 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/prometheus/client_golang/prometheus"
-	"hope/apps/novel/internal/conf"
 	"hope/pkg/auth"
+	"hope/pkg/conf"
 )
 
 // NewGRPCServer new a gRPC server.

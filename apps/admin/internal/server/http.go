@@ -17,8 +17,8 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"hope/apps/admin/internal/conf"
 	"hope/pkg/auth"
+	"hope/pkg/conf"
 	"hope/pkg/middleware"
 	"strings"
 )

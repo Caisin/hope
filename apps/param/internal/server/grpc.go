@@ -9,8 +9,8 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"go.opentelemetry.io/otel"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
-	"hope/apps/param/internal/conf"
 	"hope/pkg/auth"
+	"hope/pkg/conf"
 )
 
 // NewGRPCServer new a gRPC server.

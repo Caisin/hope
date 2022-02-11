@@ -13,8 +13,8 @@ import (
 	"github.com/go-kratos/swagger-api/openapiv2"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"hope/apps/novel/internal/conf"
 	"hope/pkg/auth"
+	"hope/pkg/conf"
 )
 
 // NewHTTPServer new a HTTP server.

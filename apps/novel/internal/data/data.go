@@ -11,9 +11,9 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
-	"hope/apps/novel/internal/conf"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/migrate"
+	"hope/pkg/conf"
 
 	// init mysql driver
 	_ "github.com/go-sql-driver/mysql"

@@ -9,8 +9,6 @@ import (
 	"fmt"
 	"hope/pkg/file"
 	"hope/pkg/util/str"
-	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 	"text/template"
@@ -88,10 +86,10 @@ func TestJson(t *testing.T) {
 }
 
 func TestAdmin(t *testing.T) {
-	target := filepath.Join(os.TempDir(), "ent")
-	os.MkdirAll(target, os.ModePerm)
-	defer os.RemoveAll(target)
-	storage, _ := gen.NewStorage("sql")
+	//target := filepath.Join(os.TempDir(), "ent")
+	//os.MkdirAll(target, os.ModePerm)
+	//defer os.RemoveAll(target)
+
 	projectPath := "D:/work/code/go/hope"
 	admPath := "D:/work/code/vue/vue-vben-admin"
 	prods := []string{"admin", "param", "novel"}
@@ -125,6 +123,7 @@ func TestAdmin(t *testing.T) {
 	apiTemplate := createTemplate(projectPath, "api.ts.gohtml", funcMap)
 	id := 0
 	bf := str.NewBuffer()
+	//storage, _ := gen.NewStorage("sql")
 	for _, prod := range prods {
 		tmpDir := fmt.Sprintf("%s/build/%s/schema", projectPath, prod)
 		err := file.MakeDir(tmpDir)
@@ -139,10 +138,10 @@ func TestAdmin(t *testing.T) {
 		}
 
 		graph, err := entc.LoadGraph(tmpDir, &gen.Config{
-			Storage: storage,
-			IDType:  &field.TypeInfo{Type: field.TypeInt64},
-			Target:  target,
-			Package: "entgo.io/ent/entc/integration/ent",
+			//Storage: storage,
+			IDType: &field.TypeInfo{Type: field.TypeInt64},
+			//Target:  target,
+			//Package: "entgo.io/ent/entc/integration/ent",
 		})
 		if err != nil {
 			fmt.Printf("%s", err.Error())

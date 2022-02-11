@@ -11,10 +11,10 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/prometheus/client_golang/prometheus"
 	"hope/apps/novel/internal/biz"
-	"hope/apps/novel/internal/conf"
 	"hope/apps/novel/internal/data"
 	"hope/apps/novel/internal/server"
 	"hope/apps/novel/internal/service"
+	"hope/pkg/conf"
 )
 
 // Injectors from wire.go:

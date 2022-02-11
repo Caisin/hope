@@ -9,7 +9,7 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
-	"hope/apps/admin/internal/conf"
+	"hope/pkg/conf"
 	"os"
 
 	"github.com/go-kratos/kratos/v2"

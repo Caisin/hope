@@ -23,7 +23,8 @@ import (
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
 	client := data.NewEntClient(confData, logger)
 	redisClient := provider.NewRedisClient(confData, logger)
-	dataData, cleanup, err := data.NewData(client, redisClient, logger)
+	producer := provider.NewNsqProducer(confData)
+	dataData, cleanup, err := data.NewData(client, redisClient, producer, logger)
 	if err != nil {
 		return nil, nil, err
 	}

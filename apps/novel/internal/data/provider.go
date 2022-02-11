@@ -8,6 +8,7 @@ import (
 // ProviderSet is data providers.
 var ProviderSet = wire.NewSet(
 	provider.NewRedisClient,
+	provider.NewNsqProducer,
 	NewEntClient,
 	NewData,
 	NewActivityRepo,

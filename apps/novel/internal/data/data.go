@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-redis/redis/v8"
+	"github.com/nsqio/go-nsq"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
@@ -22,9 +23,10 @@ import (
 
 // Data .
 type Data struct {
-	log *log.Helper
-	db  *ent.Client
-	rdb *redis.Client
+	log      *log.Helper
+	db       *ent.Client
+	rdb      *redis.Client
+	producer *nsq.Producer
 }
 
 func NewEntClient(c *conf.Data, logger log.Logger) *ent.Client {
@@ -65,13 +67,14 @@ func NewEntClient(c *conf.Data, logger log.Logger) *ent.Client {
 }
 
 // NewData .
-func NewData(entClient *ent.Client, rdb *redis.Client, logger log.Logger) (*Data, func(), error) {
+func NewData(entClient *ent.Client, rdb *redis.Client, producer *nsq.Producer, logger log.Logger) (*Data, func(), error) {
 	helper := log.NewHelper(log.With(logger, "module", "admin-service/data"))
 
 	d := &Data{
-		db:  entClient,
-		log: helper,
-		rdb: rdb,
+		db:       entClient,
+		log:      helper,
+		rdb:      rdb,
+		producer: producer,
 	}
 	return d, func() {
 		if err := d.db.Close(); err != nil {

@@ -9,20 +9,20 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/prometheus/client_golang/prometheus"
 	"hope/apps/admin/internal/biz"
 	"hope/apps/admin/internal/data"
 	"hope/apps/admin/internal/server"
 	"hope/apps/admin/internal/service"
 	"hope/pkg/conf"
+	"hope/pkg/provider"
 )
 
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, histogramVec *prometheus.HistogramVec, counterVec *prometheus.CounterVec) (*kratos.App, func(), error) {
+func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
 	client := data.NewEntClient(confData, logger)
-	redisClient := data.NewRedisClient(confData, logger)
+	redisClient := provider.NewRedisClient(confData, logger)
 	dataData, cleanup, err := data.NewData(client, redisClient, logger)
 	if err != nil {
 		return nil, nil, err
@@ -73,9 +73,9 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, hi
 	authUseCase := biz.NewAuthUseCase(authRepo, logger)
 	authService := service.NewAuthService(authUseCase, logger)
 	v := server.RegisterHTTPServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService, authService)
-	httpServer := server.NewHTTPServer(confServer, v, logger, histogramVec, redisClient, counterVec)
+	httpServer := provider.NewHTTPServer(confServer, v, logger)
 	v2 := server.RegisterGRPCServer(casbinRuleService, sysApiService, sysConfigService, sysDeptService, sysDictDataService, sysDictTypeService, sysJobService, sysJobLogService, sysLoginLogService, sysMenuService, sysOperaLogService, sysPostService, sysRoleService, sysUserService, authService)
-	grpcServer := server.NewGRPCServer(confServer, v2, logger, histogramVec, counterVec)
+	grpcServer := provider.NewGRPCServer(confServer, v2, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()

@@ -1,7 +1,6 @@
-package server
+package provider
 
 import (
-	"context"
 	prom "github.com/go-kratos/kratos/contrib/metrics/prometheus/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
@@ -9,27 +8,16 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/ratelimit"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
-	"github.com/go-kratos/kratos/v2/middleware/selector"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
-	"github.com/go-redis/redis/v8"
-	"github.com/gorilla/handlers"
-	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"hope/pkg/auth"
 	"hope/pkg/conf"
-	"hope/pkg/middleware"
-	"strings"
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server,
-	regFun []func(server *http.Server),
-	logger log.Logger,
-	hv *prometheus.HistogramVec,
-	rdc *redis.Client,
-	cv *prometheus.CounterVec) *http.Server {
+func NewHTTPServer(c *conf.Server, regFun []func(*http.Server), logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			//限流
@@ -46,23 +34,8 @@ func NewHTTPServer(c *conf.Server,
 				metrics.WithRequests(prom.NewCounter(cv)),
 			),
 			//应用授权
-			selector.Server(
-				jwt.Server(auth.SecretKeyFun),
-			).Match(func(ctx context.Context, operation string) bool {
-				if strings.HasSuffix(operation, "/Login") || strings.HasSuffix(operation, "Logout") {
-					return false
-				}
-				return true
-			}).Build(),
-			//权限校验
-			middleware.PermissionCheck(rdc),
+			jwt.Server(auth.SecretKeyFun),
 		),
-		//cors
-		http.Filter(handlers.CORS(
-			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
-			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}),
-			handlers.AllowedOrigins([]string{"*"}),
-		)),
 	}
 	if c.Http.Network != "" {
 		opts = append(opts, http.Network(c.Http.Network))

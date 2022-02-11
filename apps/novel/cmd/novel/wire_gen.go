@@ -9,20 +9,20 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/prometheus/client_golang/prometheus"
 	"hope/apps/novel/internal/biz"
 	"hope/apps/novel/internal/data"
 	"hope/apps/novel/internal/server"
 	"hope/apps/novel/internal/service"
 	"hope/pkg/conf"
+	"hope/pkg/provider"
 )
 
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, histogramVec *prometheus.HistogramVec, counterVec *prometheus.CounterVec) (*kratos.App, func(), error) {
+func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
 	client := data.NewEntClient(confData, logger)
-	redisClient := data.NewRedisClient(confData, logger)
+	redisClient := provider.NewRedisClient(confData, logger)
 	dataData, cleanup, err := data.NewData(client, redisClient, logger)
 	if err != nil {
 		return nil, nil, err
@@ -121,9 +121,9 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, hi
 	vipUserUseCase := biz.NewVipUserUseCase(vipUserRepo, logger)
 	vipUserService := service.NewVipUserService(vipUserUseCase, logger)
 	v := server.RegisterHTTPServer(activityService, activityComponentService, adChangeLogService, adChannelService, agreementLogService, amBalanceService, appVersionService, assetChangeLogService, assetItemService, bookPackageService, clientErrorService, customerNovelConfigService, customerNovelsService, dataSourceService, listenRecordService, novelService, novelAutoBuyService, novelBookshelfService, novelBuyChapterRecordService, novelBuyRecordService, novelChapterService, novelClassifyService, novelCommentService, novelConsumeService, novelMsgService, payOrderService, socialUserService, taskLogService, userEventService, userMsgService, vipUserService)
-	httpServer := server.NewHTTPServer(confServer, v, logger, histogramVec, counterVec)
+	httpServer := provider.NewHTTPServer(confServer, v, logger)
 	v2 := server.RegisterGRPCServer(activityService, activityComponentService, adChangeLogService, adChannelService, agreementLogService, amBalanceService, appVersionService, assetChangeLogService, assetItemService, bookPackageService, clientErrorService, customerNovelConfigService, customerNovelsService, dataSourceService, listenRecordService, novelService, novelAutoBuyService, novelBookshelfService, novelBuyChapterRecordService, novelBuyRecordService, novelChapterService, novelClassifyService, novelCommentService, novelConsumeService, novelMsgService, payOrderService, socialUserService, taskLogService, userEventService, userMsgService, vipUserService)
-	grpcServer := server.NewGRPCServer(confServer, v2, logger, histogramVec, counterVec)
+	grpcServer := provider.NewGRPCServer(confServer, v2, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()

@@ -9,20 +9,20 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"go.opentelemetry.io/otel/sdk/trace"
 	"hope/apps/param/internal/biz"
 	"hope/apps/param/internal/data"
 	"hope/apps/param/internal/server"
 	"hope/apps/param/internal/service"
 	"hope/pkg/conf"
+	"hope/pkg/provider"
 )
 
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, tracerProvider *trace.TracerProvider) (*kratos.App, func(), error) {
+func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
 	client := data.NewEntClient(confData, logger)
-	redisClient := data.NewRedisClient(confData, logger)
+	redisClient := provider.NewRedisClient(confData, logger)
 	dataData, cleanup, err := data.NewData(client, redisClient, logger)
 	if err != nil {
 		return nil, nil, err
@@ -67,9 +67,9 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, tr
 	vipTypeUseCase := biz.NewVipTypeUseCase(vipTypeRepo, logger)
 	vipTypeService := service.NewVipTypeService(vipTypeUseCase, logger)
 	v := server.RegisterHTTPServer(novelPayConfigService, novelTagService, pageConfigService, qiniuConfigService, resourceGroupService, resourceStorageService, scoreProductService, taskService, userAnalysisStatisticsService, userConsumeService, userResourceService, userResourceRecordService, vipTypeService)
-	httpServer := server.NewHTTPServer(confServer, v, tracerProvider, logger)
+	httpServer := provider.NewHTTPServer(confServer, v, logger)
 	v2 := server.RegisterGRPCServer(novelPayConfigService, novelTagService, pageConfigService, qiniuConfigService, resourceGroupService, resourceStorageService, scoreProductService, taskService, userAnalysisStatisticsService, userConsumeService, userResourceService, userResourceRecordService, vipTypeService)
-	grpcServer := server.NewGRPCServer(confServer, v2, tracerProvider, logger)
+	grpcServer := provider.NewGRPCServer(confServer, v2, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()

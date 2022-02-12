@@ -1,0 +1,20 @@
+trace:
+  endpoint: http://jaegertracing:14268/api/traces
+server:
+  http:
+    addr: 0.0.0.0:8000
+    timeout: 60s
+  grpc:
+    addr: 0.0.0.0:9000
+    timeout: 60s
+data:
+  database:
+    driver: mysql
+    source: root:root@tcp(mysql:3306)/test?parseTime=true
+  redis:
+    addr: redis:6379
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+  nsq:
+    lookupEndpoint: nsqlookupd:4161
+    nsqEndpoint: nsqd:4150

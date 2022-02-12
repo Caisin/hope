@@ -16,5 +16,5 @@ data:
     read_timeout: 0.2s
     write_timeout: 0.2s
   nsq:
-    lookup_endpoint: http://127.0.0.1:4160
-    nsq_endpoint: http://127.0.0.1:4150
+    lookupEndpoint: 127.0.0.1:4161
+    nsqEndpoint: 127.0.0.1:4150

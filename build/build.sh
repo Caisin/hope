@@ -48,6 +48,13 @@ function genWire() {
   done
   #error_reason.proto
 }
+#编译镜像
+function buildImage() {
+  for n in "$@"; do
+    cd "$projectPath/apps/$n/cmd/$n" && go build
+  done
+  #error_reason.proto
+}
 #生成配置
 function genConfig() {
   for n in "$@"; do
@@ -77,6 +84,10 @@ config)
   echo 'You select config'
   genConfig "${prods[@]}"
   ;;
+build)
+  echo 'You select build'
+  buildImage "${prods[@]}"
+  ;;
 all)
   echo 'You select all'
   genWire "${prods[@]}"
@@ -90,5 +101,5 @@ all)
   exit 1
   ;;
 esac
-sleep 1m
+#sleep 1m
 

@@ -1,0 +1,87 @@
+#https://docs.docker.com/compose/compose-file/compose-versioning/
+version: '3.8'
+services:
+  admin-server:
+    image: test
+    #    container_name: admin-server
+    command: ./admin -conf conf
+    restart: always
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1  # 一次更新2个容器
+        delay: 10s  # 开始下一组更新之前，等待的时间
+        failure_action: pause  # 如果更新失败，执行的动作：continue, rollback, pause，默认为pause
+        max_failure_ratio: 20 # 在更新过程中容忍的失败率
+        order: stop-first   # 更新时的操作顺序，停止优先（stop-first，先停止旧容器，再启动新容器）还是开始优先（start-first，先启动新容器，再停止旧容器），默认为停止优先，从version 3.4才引入该配置项
+    depends_on:
+      - jaegertracing
+      - mysql
+      - nsqlookupd
+      - nsqd
+    ports:
+      - "8000"
+      - "9000"
+    volumes:
+      - D:/work/code/go/hope/configs/data:/app/conf #数据文件挂载
+
+  novel-server:
+    image: test
+#    container_name: novel-server
+    command: ./novel -conf conf
+    restart: always
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 2  # 一次更新2个容器
+        delay: 10s  # 开始下一组更新之前，等待的时间
+        failure_action: pause  # 如果更新失败，执行的动作：continue, rollback, pause，默认为pause
+        max_failure_ratio: 20 # 在更新过程中容忍的失败率
+        order: stop-first   # 更新时的操作顺序，停止优先（stop-first，先停止旧容器，再启动新容器）还是开始优先（start-first，先启动新容器，再停止旧容器），默认为停止优先，从version 3.4才引入该配置项
+    depends_on:
+      - jaegertracing
+      - mysql
+      - nsqlookupd
+      - nsqd
+    ports:
+      - "8000"
+      - "9000"
+    volumes:
+      - D:/work/code/go/hope/configs/data:/app/conf #数据文件挂载
+
+  param-server:
+    image: test
+#    container_name: param-server
+    command: ./param -conf conf
+    restart: always
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1  # 一次更新2个容器
+        delay: 10s  # 开始下一组更新之前，等待的时间
+        failure_action: pause  # 如果更新失败，执行的动作：continue, rollback, pause，默认为pause
+        max_failure_ratio: 20 # 在更新过程中容忍的失败率
+        order: stop-first   # 更新时的操作顺序，停止优先（stop-first，先停止旧容器，再启动新容器）还是开始优先（start-first，先启动新容器，再停止旧容器），默认为停止优先，从version 3.4才引入该配置项
+    depends_on:
+      - jaegertracing
+      - mysql
+      - nsqlookupd
+      - nsqd
+    ports:
+      - "8000"
+      - "9000"
+    volumes:
+      - D:/work/code/go/hope/configs/data:/app/conf #数据文件挂载
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    depends_on:
+      - param-server
+      - admin-server
+      - novel-server
+    ports:
+      - "8001:80"
+    volumes:
+      - D:/work/code/go/hope/configs/nginx:/etc/nginx/conf.d #数据文件挂载

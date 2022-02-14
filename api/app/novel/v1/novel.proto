@@ -1,0 +1,219 @@
+syntax = "proto3";
+
+package novel.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/app/novel/v1;v1";
+
+// 小说服务
+service Novel {
+  //获取小说信息
+  rpc Info(InfoReq) returns (InfoReply){
+    option (google.api.http) = {
+      get: "/v1/novel/info"
+    };
+  }
+  //购买整本or章节
+  rpc Buy(BuyReq) returns (BuyReply){
+    option (google.api.http) = {
+      post: "/v1/novel/buy"
+    };
+  }
+  //根据分类获取小说列表
+  rpc GetByClass(GetByClassReq) returns (GetByClassReply){
+    option (google.api.http) = {
+      get: "/v1/novel/class"
+    };
+  }
+  //根据分类获取小说列表
+  rpc Search(SearchReq) returns (SearchReply){
+    option (google.api.http) = {
+      get: "/v1/novel/search"
+    };
+  }
+}
+
+//章节列表请求信息
+message BuyReq{
+  //书号
+  int64 novelId = 1;
+  //章节号
+  repeated int64 chapterIds = 2;
+  //购买类型
+  BuyType buyType = 3;
+
+}
+//购买类型
+enum BuyType{
+  //整本购买
+  all = 0;
+  //指定章节购买
+  approve = 1;
+}
+//章节列表返回信息
+message BuyReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 结果
+  bool result = 3;
+}
+
+//根据分类获取小说列表请求
+message  SearchReq{
+  //搜索关键字
+  int64 keyWord = 1;
+}
+//根据分类获取小说列表返回结果
+message  SearchReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 总条数
+  int64 total = 3;
+  //书本信息列表
+  repeated NovelInfo items = 4;
+}
+
+//根据分类获取小说列表请求
+message  GetByClassReq{
+  //分类ID
+  int64 classifyId = 1;
+}
+//根据分类获取小说列表返回结果
+message  GetByClassReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 总条数
+  int64 total = 3;
+  //书本信息列表
+  repeated NovelInfo items = 4;
+}
+
+// 小说信息获取接口
+message InfoReq{
+  // 书号
+  int64 novelId = 1;
+  // 查询类型
+  QryType qryType = 2;
+}
+//查询类型
+enum QryType{
+  BOOK = 0;
+  CHANNEL = 1;
+}
+// 书本信息返回
+message InfoReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 书本信息
+  NovelInfo result = 3;
+}
+// 小说信息
+message NovelInfo{
+  //书号
+  int64 novelId = 1;
+  //书名
+  string title = 2;
+  //分类ID
+  int64 classifyId = 3;
+  //分类名称
+  string classifyName = 4;
+  //作者ID
+  string authorId = 5;
+  //简介
+  string summary = 6;
+  //作者
+  string author = 7;
+  //主播
+  string anchor = 8;
+  //点击量
+  int64 hits = 9;
+  //关键字
+  string keywords = 10;
+  //来源
+  string source = 11;
+  //评分
+  int32 score = 12;
+  //封面
+  string cover = 13;
+  //标签
+  string tagIds = 14;
+  //字数
+  int32 wordNum = 15;
+  //免费章节数
+  int32 freeNum = 16;
+  //书本状态 完本,连载
+  int32 onlineState = 17;
+  //整本价格
+  int64 price = 18;
+  //发布状态 上架,下架
+  bool publish = 19;
+  //原价
+  int64 oldPrice = 20;
+  //默认章节千字价格
+  int32 chapterPrice = 21;
+  //章节数
+  int32 chapterCount = 22;
+  //签约类型
+  int32 signType = 23;
+  //签约时间
+  google.protobuf.Timestamp signDate = 24;
+  //男主角
+  string leadingMan = 25;
+  //女主角
+  string leadingLady = 26;
+  //备注
+  string remark = 27;
+  //是否加入书架
+  bool inBookShelf = 28;
+  //是否购买
+  bool isBuy = 29;
+  //是否自动购买
+  bool autoBuy = 30;
+  //最近阅读章节
+  Chapter lastReadChapter = 31;
+  //最近更新章节
+  Chapter lastPublishChapter = 32;
+  //书本标签
+  repeated Tag tags = 33;
+  //收藏数
+  int64 starNum = 34;
+  //收听次数
+  int64 listenTimes = 35;
+  Comment comment = 36;
+}
+//评论信息
+message Comment{
+  //评论数量
+  int64 recordNum = 1;
+  //评论人数
+  int64 userNum = 2;
+}
+//章节信息
+message Chapter{
+  //章节ID
+  int64 id = 1;
+  //章节名
+  string title = 2;
+  //章节内容
+  string content = 3;
+}
+//标签
+message Tag{
+  //标签ID
+  int64 id = 1;
+  //标签名
+  string name = 2;
+}

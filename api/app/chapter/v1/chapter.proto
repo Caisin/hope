@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package chapter.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/app/chapter/v1;v1";
+
+// 章节服务
+service Chapter {
+  //获取章节内容
+  rpc Info(ChapterInfoReq) returns (ChapterInfoReply){
+    option (google.api.http) = {
+      get: "/v1/chapter/info"
+    };
+  }
+  //获取章节列表
+  rpc List(ChapterListReq) returns (ChapterListReply){
+    option (google.api.http) = {
+      get: "/v1/chapter/list"
+    };
+  }
+}
+//章节列表请求信息
+message ChapterListReq{
+  //书号
+  int64 novelId = 1;
+  //分页查询参数
+  pagin.Pagination pagin = 2;
+}
+//章节列表返回信息
+message ChapterListReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  //总条目
+  int64 total = 3;
+  // 章节内容
+  repeated ChapterData result = 4;
+}
+//章节请求信息
+message ChapterInfoReq{
+  //书号
+  int64 novelId = 1;
+  //章节号
+  int64 chapterId = 2;
+  //章节序号
+  int64 chapterNum = 3;
+}
+//章节返回信息
+message ChapterInfoReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 章节内容
+  ChapterData result = 3;
+}
+//章节信息
+message ChapterData {
+  int64 id = 1;
+  //小说编号
+  int64 novelId = 2;
+  //章节序号
+  int32 orderNum = 3;
+  //章节名称
+  string chapterName = 4;
+  //章节内容
+  string content = 5;
+  //阿里云音频目录
+  string mediaKey = 6;
+  //音频时长
+  string duration = 7;
+  //发布时间
+  google.protobuf.Timestamp publishTime = 8;
+  //状态：0 草稿 ，1 发布
+  int32 status = 9;
+  //是否免费
+  bool isFree = 10;
+  //价格
+  int64 price = 11;
+  //章节字数
+  int32 wordNum = 12;
+
+}

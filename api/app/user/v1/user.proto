@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package order.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+import "pagin.proto";
+
+option go_package = "hope/api/app/chapter/v1;v1";
+
+// 用户服务
+service User {
+  //用户登陆
+  rpc Login(LoginReq) returns (LoginReply){
+    option (google.api.http) = {
+      post: "/v1/user/login"
+      body: "*"
+    };
+  }
+  //用户登陆
+  rpc Info(InfoReq) returns (InfoReply){
+    option (google.api.http) = {
+      get: "/v1/user/info"
+    };
+  }
+}
+
+message InfoReq{
+
+}
+//用户信息返回
+message InfoReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 结果
+  UserInfo result = 3;
+}
+//用户信息
+message UserInfo{
+  //用户ID
+  int64 id = 1;
+  //用户名
+  string userName = 2;
+  //性别
+  string gender = 3;
+  //个人简介
+  string summary = 4;
+  //头像
+  string headImg = 5;
+}
+//登陆请求信息
+message LoginReq{
+  //登陆类型
+  LoginType loginType = 1;
+  //用户名
+  string userName = 2;
+  //密码
+  string password = 3;
+  //openId
+  string openId = 4;
+  //unionId
+  string  unionId = 5;
+  //验证码
+  string code = 6;
+}
+//登陆类型枚举
+enum LoginType{
+  Normal = 0;
+  Phone = 1;
+  WeChat = 2;
+  Alipay = 3;
+  Google = 4;
+  Facebook = 5;
+  Line = 6;
+}
+//登陆返回
+message LoginReply{
+  // 返回码
+  int32 code = 1;
+  // 消息
+  string message = 2;
+  // 结果
+  string token = 3;
+
+}

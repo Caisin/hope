@@ -22,6 +22,7 @@ service Novel {
   rpc Buy(BuyReq) returns (BuyReply){
     option (google.api.http) = {
       post: "/v1/novel/buy"
+      body: "*"
     };
   }
   //根据分类获取小说列表

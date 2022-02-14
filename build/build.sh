@@ -3,7 +3,7 @@
 projectPath="D:/work/code/go/hope"
 echo "项目路径为：$projectPath"
 # 模块
-prods=({"admin","param","novel"})
+prods=({"admin","param","novel","app"})
 echo 模块为: "${prods[@]}"
 
 #函数定义
@@ -62,8 +62,9 @@ function genConfig() {
     cd "$projectPath/apps/$n/internal" && find . -name "*.proto" -exec kratos proto client {} \;
   done
 }
-mode=$1
-case $mode in
+type=$1
+mode=$2
+case $type in
 wire)
   echo 'You select wire'
   genWire "${prods[@]}"
@@ -96,7 +97,7 @@ all)
   genConfig "${prods[@]}"
   ;;
 *)
-  "Usage: $mode [swg|wire|ent|api|config|all]"
+  "Usage: $type [swg|wire|ent|api|config|all]"
   sleep 1m
   exit 1
   ;;

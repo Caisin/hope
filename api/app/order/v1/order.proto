@@ -17,6 +17,7 @@ service Order {
   rpc Create(CreateOrderReq) returns (CreateOrderReply){
     option (google.api.http) = {
       post: "/v1/order/create"
+      body: "*"
     };
   }
 

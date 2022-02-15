@@ -1,4 +1,5 @@
-syntax = "proto3";
+syntax = "proto3";
+
 package activity.v1;
 
 import "google/api/annotations.proto";
@@ -6,6 +7,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/descriptor.proto";
 import "pagin.proto";
+import "reply.proto";
 
 option go_package = "hope/api/novel/activity/v1;v1";
 
@@ -13,21 +15,21 @@ option go_package = "hope/api/novel/activity/v1;v1";
 service Activity {
 
   // 分页查询Activity
-  rpc GetActivityPage (ActivityPageReq) returns (ActivityPageReply)  {
+  rpc GetActivityPage (ActivityPageReq) returns (reply.Reply)  {
     option (google.api.http) = {
       get: "/v1/activity/page"
     };
   }
 
   // 获取Activity
-  rpc GetActivity (ActivityReq) returns (ActivityReply)  {
+  rpc GetActivity (ActivityReq) returns (reply.Reply)  {
     option (google.api.http) = {
       get: "/v1/activity/{id}"
     };
   }
 
   // 更新Activity
-  rpc UpdateActivity (ActivityUpdateReq) returns (ActivityUpdateReply)  {
+  rpc UpdateActivity (ActivityUpdateReq) returns (reply.Reply)  {
     option (google.api.http) = {
       put: "/v1/activity/{id}"
       body: "*"
@@ -35,7 +37,7 @@ service Activity {
   }
 
   // 创建Activity
-  rpc CreateActivity (ActivityCreateReq) returns (ActivityCreateReply)  {
+  rpc CreateActivity (ActivityCreateReq) returns (reply.Reply)  {
     option (google.api.http) = {
       post: "/v1/activity"
       body: "*"
@@ -43,14 +45,14 @@ service Activity {
   }
 
   // 删除Activity
-  rpc DeleteActivity (ActivityDeleteReq) returns (ActivityDeleteReply)  {
+  rpc DeleteActivity (ActivityDeleteReq) returns (reply.Reply)  {
     option (google.api.http) = {
       delete: "/v1/activity/{id}"
     };
   }
 
   // 批量删除Activity
-  rpc BatchDeleteActivity (ActivityBatchDeleteReq) returns (ActivityDeleteReply)  {
+  rpc BatchDeleteActivity (ActivityBatchDeleteReq) returns (reply.Reply)  {
     option (google.api.http) = {
       delete: "/v1/activity"
     };

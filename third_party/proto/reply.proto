@@ -12,4 +12,6 @@ message Reply{
   int32 code = 1;
   // 消息
   string message = 2;
+  // 返回结果
+  google.protobuf.Any result = 3;
 }

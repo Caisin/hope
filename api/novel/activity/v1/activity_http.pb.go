@@ -8,6 +8,7 @@ import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	result "hope/pkg/result"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,12 +19,12 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 type ActivityHTTPServer interface {
-	BatchDeleteActivity(context.Context, *ActivityBatchDeleteReq) (*ActivityDeleteReply, error)
-	CreateActivity(context.Context, *ActivityCreateReq) (*ActivityCreateReply, error)
-	DeleteActivity(context.Context, *ActivityDeleteReq) (*ActivityDeleteReply, error)
-	GetActivity(context.Context, *ActivityReq) (*ActivityReply, error)
-	GetActivityPage(context.Context, *ActivityPageReq) (*ActivityPageReply, error)
-	UpdateActivity(context.Context, *ActivityUpdateReq) (*ActivityUpdateReply, error)
+	BatchDeleteActivity(context.Context, *ActivityBatchDeleteReq) (*result.Reply, error)
+	CreateActivity(context.Context, *ActivityCreateReq) (*result.Reply, error)
+	DeleteActivity(context.Context, *ActivityDeleteReq) (*result.Reply, error)
+	GetActivity(context.Context, *ActivityReq) (*result.Reply, error)
+	GetActivityPage(context.Context, *ActivityPageReq) (*result.Reply, error)
+	UpdateActivity(context.Context, *ActivityUpdateReq) (*result.Reply, error)
 }
 
 func RegisterActivityHTTPServer(s *http.Server, srv ActivityHTTPServer) {
@@ -50,7 +51,7 @@ func _Activity_GetActivityPage0_HTTP_Handler(srv ActivityHTTPServer) func(ctx ht
 		if err != nil {
 			return err
 		}
-		reply := out.(*ActivityPageReply)
+		reply := out.(*result.Reply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -72,7 +73,7 @@ func _Activity_GetActivity0_HTTP_Handler(srv ActivityHTTPServer) func(ctx http.C
 		if err != nil {
 			return err
 		}
-		reply := out.(*ActivityReply)
+		reply := out.(*result.Reply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -94,7 +95,7 @@ func _Activity_UpdateActivity0_HTTP_Handler(srv ActivityHTTPServer) func(ctx htt
 		if err != nil {
 			return err
 		}
-		reply := out.(*ActivityUpdateReply)
+		reply := out.(*result.Reply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -113,7 +114,7 @@ func _Activity_CreateActivity0_HTTP_Handler(srv ActivityHTTPServer) func(ctx htt
 		if err != nil {
 			return err
 		}
-		reply := out.(*ActivityCreateReply)
+		reply := out.(*result.Reply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -135,7 +136,7 @@ func _Activity_DeleteActivity0_HTTP_Handler(srv ActivityHTTPServer) func(ctx htt
 		if err != nil {
 			return err
 		}
-		reply := out.(*ActivityDeleteReply)
+		reply := out.(*result.Reply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -154,18 +155,18 @@ func _Activity_BatchDeleteActivity0_HTTP_Handler(srv ActivityHTTPServer) func(ct
 		if err != nil {
 			return err
 		}
-		reply := out.(*ActivityDeleteReply)
+		reply := out.(*result.Reply)
 		return ctx.Result(200, reply)
 	}
 }
 
 type ActivityHTTPClient interface {
-	BatchDeleteActivity(ctx context.Context, req *ActivityBatchDeleteReq, opts ...http.CallOption) (rsp *ActivityDeleteReply, err error)
-	CreateActivity(ctx context.Context, req *ActivityCreateReq, opts ...http.CallOption) (rsp *ActivityCreateReply, err error)
-	DeleteActivity(ctx context.Context, req *ActivityDeleteReq, opts ...http.CallOption) (rsp *ActivityDeleteReply, err error)
-	GetActivity(ctx context.Context, req *ActivityReq, opts ...http.CallOption) (rsp *ActivityReply, err error)
-	GetActivityPage(ctx context.Context, req *ActivityPageReq, opts ...http.CallOption) (rsp *ActivityPageReply, err error)
-	UpdateActivity(ctx context.Context, req *ActivityUpdateReq, opts ...http.CallOption) (rsp *ActivityUpdateReply, err error)
+	BatchDeleteActivity(ctx context.Context, req *ActivityBatchDeleteReq, opts ...http.CallOption) (rsp *result.Reply, err error)
+	CreateActivity(ctx context.Context, req *ActivityCreateReq, opts ...http.CallOption) (rsp *result.Reply, err error)
+	DeleteActivity(ctx context.Context, req *ActivityDeleteReq, opts ...http.CallOption) (rsp *result.Reply, err error)
+	GetActivity(ctx context.Context, req *ActivityReq, opts ...http.CallOption) (rsp *result.Reply, err error)
+	GetActivityPage(ctx context.Context, req *ActivityPageReq, opts ...http.CallOption) (rsp *result.Reply, err error)
+	UpdateActivity(ctx context.Context, req *ActivityUpdateReq, opts ...http.CallOption) (rsp *result.Reply, err error)
 }
 
 type ActivityHTTPClientImpl struct {
@@ -176,8 +177,8 @@ func NewActivityHTTPClient(client *http.Client) ActivityHTTPClient {
 	return &ActivityHTTPClientImpl{client}
 }
 
-func (c *ActivityHTTPClientImpl) BatchDeleteActivity(ctx context.Context, in *ActivityBatchDeleteReq, opts ...http.CallOption) (*ActivityDeleteReply, error) {
-	var out ActivityDeleteReply
+func (c *ActivityHTTPClientImpl) BatchDeleteActivity(ctx context.Context, in *ActivityBatchDeleteReq, opts ...http.CallOption) (*result.Reply, error) {
+	var out result.Reply
 	pattern := "/v1/activity"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/activity.v1.Activity/BatchDeleteActivity"))
@@ -189,8 +190,8 @@ func (c *ActivityHTTPClientImpl) BatchDeleteActivity(ctx context.Context, in *Ac
 	return &out, err
 }
 
-func (c *ActivityHTTPClientImpl) CreateActivity(ctx context.Context, in *ActivityCreateReq, opts ...http.CallOption) (*ActivityCreateReply, error) {
-	var out ActivityCreateReply
+func (c *ActivityHTTPClientImpl) CreateActivity(ctx context.Context, in *ActivityCreateReq, opts ...http.CallOption) (*result.Reply, error) {
+	var out result.Reply
 	pattern := "/v1/activity"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/activity.v1.Activity/CreateActivity"))
@@ -202,8 +203,8 @@ func (c *ActivityHTTPClientImpl) CreateActivity(ctx context.Context, in *Activit
 	return &out, err
 }
 
-func (c *ActivityHTTPClientImpl) DeleteActivity(ctx context.Context, in *ActivityDeleteReq, opts ...http.CallOption) (*ActivityDeleteReply, error) {
-	var out ActivityDeleteReply
+func (c *ActivityHTTPClientImpl) DeleteActivity(ctx context.Context, in *ActivityDeleteReq, opts ...http.CallOption) (*result.Reply, error) {
+	var out result.Reply
 	pattern := "/v1/activity/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/activity.v1.Activity/DeleteActivity"))
@@ -215,8 +216,8 @@ func (c *ActivityHTTPClientImpl) DeleteActivity(ctx context.Context, in *Activit
 	return &out, err
 }
 
-func (c *ActivityHTTPClientImpl) GetActivity(ctx context.Context, in *ActivityReq, opts ...http.CallOption) (*ActivityReply, error) {
-	var out ActivityReply
+func (c *ActivityHTTPClientImpl) GetActivity(ctx context.Context, in *ActivityReq, opts ...http.CallOption) (*result.Reply, error) {
+	var out result.Reply
 	pattern := "/v1/activity/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/activity.v1.Activity/GetActivity"))
@@ -228,8 +229,8 @@ func (c *ActivityHTTPClientImpl) GetActivity(ctx context.Context, in *ActivityRe
 	return &out, err
 }
 
-func (c *ActivityHTTPClientImpl) GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...http.CallOption) (*ActivityPageReply, error) {
-	var out ActivityPageReply
+func (c *ActivityHTTPClientImpl) GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...http.CallOption) (*result.Reply, error) {
+	var out result.Reply
 	pattern := "/v1/activity/page"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/activity.v1.Activity/GetActivityPage"))
@@ -241,8 +242,8 @@ func (c *ActivityHTTPClientImpl) GetActivityPage(ctx context.Context, in *Activi
 	return &out, err
 }
 
-func (c *ActivityHTTPClientImpl) UpdateActivity(ctx context.Context, in *ActivityUpdateReq, opts ...http.CallOption) (*ActivityUpdateReply, error) {
-	var out ActivityUpdateReply
+func (c *ActivityHTTPClientImpl) UpdateActivity(ctx context.Context, in *ActivityUpdateReq, opts ...http.CallOption) (*result.Reply, error) {
+	var out result.Reply
 	pattern := "/v1/activity/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/activity.v1.Activity/UpdateActivity"))

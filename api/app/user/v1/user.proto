@@ -64,18 +64,27 @@ message LoginReq{
   string openId = 4;
   //unionId
   string  unionId = 5;
+  //手机
+  string  phone = 6;
+  //邮箱
+  string  email = 7;
   //验证码
-  string code = 6;
+  string code = 8;
+  //设备号
+  string device = 9;
 }
 //登陆类型枚举
 enum LoginType{
-  Normal = 0;
-  Phone = 1;
-  WeChat = 2;
-  Alipay = 3;
-  Google = 4;
-  Facebook = 5;
-  Line = 6;
+  //注册一个用户
+  Register = 0;
+  Normal = 1;
+  Phone = 2;
+  WeChat = 3;
+  Alipay = 4;
+  Google = 5;
+  Facebook = 6;
+  Line = 7;
+  Device = 8;
 }
 //登陆返回
 message LoginReply{

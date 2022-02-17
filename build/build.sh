@@ -3,7 +3,7 @@
 projectPath="D:/work/code/go/hope"
 echo "项目路径为：$projectPath"
 # 模块
-prods=({"admin","param","novel","app"})
+prods=({"app","admin","param","novel"})
 echo 模块为: "${prods[@]}"
 
 #函数定义

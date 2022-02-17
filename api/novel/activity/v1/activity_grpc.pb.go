@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	result "hope/pkg/result"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,17 +24,17 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ActivityClient interface {
 	// 分页查询Activity
-	GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*ActivityPageReply, error)
+	GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*result.Reply, error)
 	// 获取Activity
-	GetActivity(ctx context.Context, in *ActivityReq, opts ...grpc.CallOption) (*ActivityReply, error)
+	GetActivity(ctx context.Context, in *ActivityReq, opts ...grpc.CallOption) (*result.Reply, error)
 	// 更新Activity
-	UpdateActivity(ctx context.Context, in *ActivityUpdateReq, opts ...grpc.CallOption) (*ActivityUpdateReply, error)
+	UpdateActivity(ctx context.Context, in *ActivityUpdateReq, opts ...grpc.CallOption) (*result.Reply, error)
 	// 创建Activity
-	CreateActivity(ctx context.Context, in *ActivityCreateReq, opts ...grpc.CallOption) (*ActivityCreateReply, error)
+	CreateActivity(ctx context.Context, in *ActivityCreateReq, opts ...grpc.CallOption) (*result.Reply, error)
 	// 删除Activity
-	DeleteActivity(ctx context.Context, in *ActivityDeleteReq, opts ...grpc.CallOption) (*ActivityDeleteReply, error)
+	DeleteActivity(ctx context.Context, in *ActivityDeleteReq, opts ...grpc.CallOption) (*result.Reply, error)
 	// 批量删除Activity
-	BatchDeleteActivity(ctx context.Context, in *ActivityBatchDeleteReq, opts ...grpc.CallOption) (*ActivityDeleteReply, error)
+	BatchDeleteActivity(ctx context.Context, in *ActivityBatchDeleteReq, opts ...grpc.CallOption) (*result.Reply, error)
 }
 
 type activityClient struct {
@@ -44,8 +45,8 @@ func NewActivityClient(cc grpc.ClientConnInterface) ActivityClient {
 	return &activityClient{cc}
 }
 
-func (c *activityClient) GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*ActivityPageReply, error) {
-	out := new(ActivityPageReply)
+func (c *activityClient) GetActivityPage(ctx context.Context, in *ActivityPageReq, opts ...grpc.CallOption) (*result.Reply, error) {
+	out := new(result.Reply)
 	err := c.cc.Invoke(ctx, "/activity.v1.Activity/GetActivityPage", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -53,8 +54,8 @@ func (c *activityClient) GetActivityPage(ctx context.Context, in *ActivityPageRe
 	return out, nil
 }
 
-func (c *activityClient) GetActivity(ctx context.Context, in *ActivityReq, opts ...grpc.CallOption) (*ActivityReply, error) {
-	out := new(ActivityReply)
+func (c *activityClient) GetActivity(ctx context.Context, in *ActivityReq, opts ...grpc.CallOption) (*result.Reply, error) {
+	out := new(result.Reply)
 	err := c.cc.Invoke(ctx, "/activity.v1.Activity/GetActivity", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -62,8 +63,8 @@ func (c *activityClient) GetActivity(ctx context.Context, in *ActivityReq, opts 
 	return out, nil
 }
 
-func (c *activityClient) UpdateActivity(ctx context.Context, in *ActivityUpdateReq, opts ...grpc.CallOption) (*ActivityUpdateReply, error) {
-	out := new(ActivityUpdateReply)
+func (c *activityClient) UpdateActivity(ctx context.Context, in *ActivityUpdateReq, opts ...grpc.CallOption) (*result.Reply, error) {
+	out := new(result.Reply)
 	err := c.cc.Invoke(ctx, "/activity.v1.Activity/UpdateActivity", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,8 +72,8 @@ func (c *activityClient) UpdateActivity(ctx context.Context, in *ActivityUpdateR
 	return out, nil
 }
 
-func (c *activityClient) CreateActivity(ctx context.Context, in *ActivityCreateReq, opts ...grpc.CallOption) (*ActivityCreateReply, error) {
-	out := new(ActivityCreateReply)
+func (c *activityClient) CreateActivity(ctx context.Context, in *ActivityCreateReq, opts ...grpc.CallOption) (*result.Reply, error) {
+	out := new(result.Reply)
 	err := c.cc.Invoke(ctx, "/activity.v1.Activity/CreateActivity", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,8 +81,8 @@ func (c *activityClient) CreateActivity(ctx context.Context, in *ActivityCreateR
 	return out, nil
 }
 
-func (c *activityClient) DeleteActivity(ctx context.Context, in *ActivityDeleteReq, opts ...grpc.CallOption) (*ActivityDeleteReply, error) {
-	out := new(ActivityDeleteReply)
+func (c *activityClient) DeleteActivity(ctx context.Context, in *ActivityDeleteReq, opts ...grpc.CallOption) (*result.Reply, error) {
+	out := new(result.Reply)
 	err := c.cc.Invoke(ctx, "/activity.v1.Activity/DeleteActivity", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,8 +90,8 @@ func (c *activityClient) DeleteActivity(ctx context.Context, in *ActivityDeleteR
 	return out, nil
 }
 
-func (c *activityClient) BatchDeleteActivity(ctx context.Context, in *ActivityBatchDeleteReq, opts ...grpc.CallOption) (*ActivityDeleteReply, error) {
-	out := new(ActivityDeleteReply)
+func (c *activityClient) BatchDeleteActivity(ctx context.Context, in *ActivityBatchDeleteReq, opts ...grpc.CallOption) (*result.Reply, error) {
+	out := new(result.Reply)
 	err := c.cc.Invoke(ctx, "/activity.v1.Activity/BatchDeleteActivity", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -103,17 +104,17 @@ func (c *activityClient) BatchDeleteActivity(ctx context.Context, in *ActivityBa
 // for forward compatibility
 type ActivityServer interface {
 	// 分页查询Activity
-	GetActivityPage(context.Context, *ActivityPageReq) (*ActivityPageReply, error)
+	GetActivityPage(context.Context, *ActivityPageReq) (*result.Reply, error)
 	// 获取Activity
-	GetActivity(context.Context, *ActivityReq) (*ActivityReply, error)
+	GetActivity(context.Context, *ActivityReq) (*result.Reply, error)
 	// 更新Activity
-	UpdateActivity(context.Context, *ActivityUpdateReq) (*ActivityUpdateReply, error)
+	UpdateActivity(context.Context, *ActivityUpdateReq) (*result.Reply, error)
 	// 创建Activity
-	CreateActivity(context.Context, *ActivityCreateReq) (*ActivityCreateReply, error)
+	CreateActivity(context.Context, *ActivityCreateReq) (*result.Reply, error)
 	// 删除Activity
-	DeleteActivity(context.Context, *ActivityDeleteReq) (*ActivityDeleteReply, error)
+	DeleteActivity(context.Context, *ActivityDeleteReq) (*result.Reply, error)
 	// 批量删除Activity
-	BatchDeleteActivity(context.Context, *ActivityBatchDeleteReq) (*ActivityDeleteReply, error)
+	BatchDeleteActivity(context.Context, *ActivityBatchDeleteReq) (*result.Reply, error)
 	mustEmbedUnimplementedActivityServer()
 }
 
@@ -121,22 +122,22 @@ type ActivityServer interface {
 type UnimplementedActivityServer struct {
 }
 
-func (UnimplementedActivityServer) GetActivityPage(context.Context, *ActivityPageReq) (*ActivityPageReply, error) {
+func (UnimplementedActivityServer) GetActivityPage(context.Context, *ActivityPageReq) (*result.Reply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActivityPage not implemented")
 }
-func (UnimplementedActivityServer) GetActivity(context.Context, *ActivityReq) (*ActivityReply, error) {
+func (UnimplementedActivityServer) GetActivity(context.Context, *ActivityReq) (*result.Reply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActivity not implemented")
 }
-func (UnimplementedActivityServer) UpdateActivity(context.Context, *ActivityUpdateReq) (*ActivityUpdateReply, error) {
+func (UnimplementedActivityServer) UpdateActivity(context.Context, *ActivityUpdateReq) (*result.Reply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateActivity not implemented")
 }
-func (UnimplementedActivityServer) CreateActivity(context.Context, *ActivityCreateReq) (*ActivityCreateReply, error) {
+func (UnimplementedActivityServer) CreateActivity(context.Context, *ActivityCreateReq) (*result.Reply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateActivity not implemented")
 }
-func (UnimplementedActivityServer) DeleteActivity(context.Context, *ActivityDeleteReq) (*ActivityDeleteReply, error) {
+func (UnimplementedActivityServer) DeleteActivity(context.Context, *ActivityDeleteReq) (*result.Reply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteActivity not implemented")
 }
-func (UnimplementedActivityServer) BatchDeleteActivity(context.Context, *ActivityBatchDeleteReq) (*ActivityDeleteReply, error) {
+func (UnimplementedActivityServer) BatchDeleteActivity(context.Context, *ActivityBatchDeleteReq) (*result.Reply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchDeleteActivity not implemented")
 }
 func (UnimplementedActivityServer) mustEmbedUnimplementedActivityServer() {}

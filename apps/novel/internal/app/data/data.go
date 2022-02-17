@@ -8,12 +8,16 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-redis/redis/v8"
 	"github.com/nsqio/go-nsq"
+	"github.com/spf13/cast"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 	"hope/apps/novel/internal/data/ent"
 	"hope/apps/novel/internal/data/ent/migrate"
 	"hope/pkg/conf"
+	"hope/pkg/provider"
+	"time"
+
 	// init mysql driver
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -22,13 +26,14 @@ import (
 
 // Data .
 type Data struct {
-	log *log.Helper
-	db  *ent.Client
-	rdb *redis.Client
+	log      *log.Helper
+	db       *ent.Client
+	rdb      *redis.Client
+	producer *nsq.Producer
 }
 
 func NewEntClient(c *conf.Data, logger log.Logger) *ent.Client {
-	helper := log.NewHelper(log.With(logger, "module", "novel-service/data/ent"))
+	helper := log.NewHelper(log.With(logger, "module", "admin-service/data/ent"))
 	drv, err := sql.Open(
 		c.Database.Driver,
 		c.Database.Source,
@@ -61,6 +66,7 @@ func NewEntClient(c *conf.Data, logger log.Logger) *ent.Client {
 	); err != nil {
 		helper.Fatalf("failed creating schema resources: %v", err)
 	}
+	provider.NewNsqConsumer("test", "test-c", c.Nsq.LookupEndpoint, &Handler{})
 	return client
 }
 
@@ -81,15 +87,28 @@ func (h Handler) HandleMessage(message *nsq.Message) error {
 func NewData(
 	entClient *ent.Client,
 	rdb *redis.Client,
+	producer *nsq.Producer,
 	logger log.Logger,
 ) (*Data, func(), error) {
-	helper := log.NewHelper(log.With(logger, "module", "admin-service/data"))
+	helper := log.NewHelper(log.With(logger, "module", "app-service/data"))
 
 	d := &Data{
-		db:  entClient,
-		log: helper,
-		rdb: rdb,
+		db:       entClient,
+		log:      helper,
+		rdb:      rdb,
+		producer: producer,
 	}
+	go func() {
+		i := 0
+		for {
+			i++
+			err := producer.Publish("test", []byte(cast.ToString(i)))
+			if err != nil {
+				helper.Error(err)
+			}
+			time.Sleep(time.Millisecond)
+		}
+	}()
 	return d, func() {
 		if err := d.db.Close(); err != nil {
 			helper.Error(err)

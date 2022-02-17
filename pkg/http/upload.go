@@ -12,6 +12,7 @@ import (
 func RegisterUploadFileHTTPServer(s *http.Server) {
 	r := s.Route("/")
 	r.POST("/upload", UploadFile)
+	r.POST("/uploads", Uploads)
 }
 
 // UploadFile 上传文件

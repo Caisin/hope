@@ -13,11 +13,13 @@ services:
       - D:/work/data/mysql/db:/var/lib/mysql #数据文件挂载
       - D:/work/data/mysql/conf:/etc/mysql/conf.d #配置文件挂载
       - D:/work/data/mysql/log:/var/log/mysql #日志文件挂载
-
+#docker run -p 6379:6379 --name redismod \
+#  -v /mydata/redismod/data:/data \
+#  -d redislabs/redismod:preview
   redis:
-    image: redis
+    image: redislabs/redismod:preview
     container_name: redis
-    command: redis-server --appendonly yes
+#    command: redis-server --appendonly yes
     restart: always
     volumes:
       - D:/work/data/redis/data:/data #数据文件挂载
